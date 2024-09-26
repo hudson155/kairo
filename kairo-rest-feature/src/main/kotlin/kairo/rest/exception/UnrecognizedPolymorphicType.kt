@@ -8,7 +8,7 @@ public class UnrecognizedPolymorphicType(
 ) : JacksonBadRequestException.WithPathAndLocation(
   message = "Unrecognized polymorphic type." +
     " This property could be one of several types, but the given type was not recognized.",
-  ) {
+) {
   public companion object {
     internal fun from(e: MismatchedInputException): UnrecognizedPolymorphicType =
       UnrecognizedPolymorphicType(

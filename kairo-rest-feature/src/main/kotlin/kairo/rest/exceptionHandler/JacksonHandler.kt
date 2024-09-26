@@ -24,6 +24,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * Converts Jackson deserialization exceptions into API-friendly exceptions.
  */
 internal class JacksonHandler : ExceptionHandler() {
+  @Suppress("UnnecessaryLet")
   override fun handle(e: Throwable): ExceptionResult {
     val jsonException = e.findCause<BadRequestException>()?.findCause<JsonConvertException>()
       ?: return ExceptionResult.Unhandled

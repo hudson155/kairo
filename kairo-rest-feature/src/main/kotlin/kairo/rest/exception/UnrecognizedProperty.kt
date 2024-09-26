@@ -8,7 +8,7 @@ public class UnrecognizedProperty(
 ) : JacksonBadRequestException.WithPathAndLocation(
   message = "Unrecognized property." +
     " This property is not recognized. Is it named incorrectly?",
-  ) {
+) {
   public companion object {
     internal fun from(e: MismatchedInputException): UnrecognizedProperty =
       UnrecognizedProperty(
