@@ -5,7 +5,7 @@ import kairo.serialization.ObjectMapperFactory
 import kairo.serialization.ObjectMapperFormat
 import kairo.serialization.module.primitives.TrimWhitespace
 
-internal val ktorMapper: JsonMapper =
+internal val ktorServerMapper: JsonMapper =
   ObjectMapperFactory.builder(ObjectMapperFormat.Json) {
     prettyPrint = true
     trimWhitespace = TrimWhitespace.Type.TrimBoth

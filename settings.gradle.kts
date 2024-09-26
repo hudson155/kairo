@@ -1,6 +1,5 @@
 rootProject.name = "kairo"
 
-include(":kairo-client")
 include(":kairo-clock-feature")
 include(":kairo-command-runner")
 include(":kairo-config")
@@ -20,6 +19,7 @@ include(":kairo-logging:testing")
 include(":kairo-logging-feature")
 include(":kairo-protected-string")
 include(":kairo-reflect")
+include(":kairo-rest-client")
 include(":kairo-rest-feature")
 include(":kairo-rest-feature:testing")
 include(":kairo-serialization")

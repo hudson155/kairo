@@ -1,4 +1,4 @@
-# `kairo-client`
+# `kairo-rest-client`
 
 A thin wrapper around [Ktor](https://ktor.io/)'s `HttpClient`.
 
@@ -18,7 +18,7 @@ See [kairo-rest-feature](/kairo-rest-feature/) for more information.
 // build.gradle.kts
 
 dependencies {
-  implementation("kairo:kairo-client:$kairoVersion")
+  implementation("kairo:kairo-rest-client:$kairoVersion")
 }
 ```
 
