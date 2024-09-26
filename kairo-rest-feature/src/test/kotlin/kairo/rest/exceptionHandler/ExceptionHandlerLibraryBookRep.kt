@@ -1,16 +1,36 @@
 package kairo.rest.exceptionHandler
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
+
 internal data class ExceptionHandlerLibraryBookRep(
   val title: String,
   val authors: List<Author>,
+  val type: Type,
 ) {
   internal data class Creator(
     // Title is passed as a query param.
     val authors: List<Author>,
-  )
+    val type: Type,
+  ) {
+    @JsonIgnore
+    val firstAuthor: Author? = authors.firstOrNull()
+  }
 
-  internal data class Author(
-    val firstName: String,
-    val lastName: String,
+  @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+  @JsonSubTypes(
+    JsonSubTypes.Type(Author.Named::class, name = "Named"),
+    JsonSubTypes.Type(Author.Anonymous::class, name = "Anonymous"),
   )
+  internal sealed class Author {
+    internal data class Named(
+      val firstName: String,
+      val lastName: String,
+    ) : Author()
+
+    internal data object Anonymous : Author()
+  }
+
+  internal enum class Type { Audio, Print }
 }

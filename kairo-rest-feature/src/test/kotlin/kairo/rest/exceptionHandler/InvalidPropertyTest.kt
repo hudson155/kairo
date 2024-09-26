@@ -6,7 +6,7 @@ import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-internal class WrongParameterTypeTest : ExceptionHandlerTest() {
+internal class InvalidPropertyTest : ExceptionHandlerTest() {
   @Test
   fun `number in place of string`(): Unit = runTest {
     val (statusCode, response) = request {
@@ -14,9 +14,10 @@ internal class WrongParameterTypeTest : ExceptionHandlerTest() {
         """
           {
             "authors": [
-              { "firstName": "Patrick", "lastName": 42 },
-              { "firstName": "Betsy", "lastName": "Wollheim" }
-            ]
+              { "type": "Named", "firstName": "Patrick", "lastName": 42 },
+              { "type": "Named", "firstName": "Betsy", "lastName": "Wollheim" }
+            ],
+            "type": "Print"
           }
         """.trimIndent(),
       )
@@ -27,43 +28,12 @@ internal class WrongParameterTypeTest : ExceptionHandlerTest() {
       """
         {
           "location": {
-            "column": 43,
+            "column": 60,
             "line": 3
           },
-          "message": "Wrong parameter type.",
+          "message": "Invalid property.",
           "path": "authors[0].lastName",
-          "type": "WrongParameterType"
-        }
-      """.trimIndent(),
-    )
-  }
-
-  @Test
-  fun `number in place of object`(): Unit = runTest {
-    val (statusCode, response) = request {
-      setBody(
-        """
-          {
-            "authors": [
-              42,
-              { "firstName": "Betsy", "lastName": "Wollheim" }
-            ]
-          }
-        """.trimIndent(),
-      )
-    }
-
-    statusCode.shouldBe(HttpStatusCode.BadRequest)
-    response.shouldBe(
-      """
-        {
-          "location": {
-            "column": 5,
-            "line": 3
-          },
-          "message": "Wrong parameter type.",
-          "path": "authors[0]",
-          "type": "WrongParameterType"
+          "type": "InvalidProperty"
         }
       """.trimIndent(),
     )
@@ -75,7 +45,8 @@ internal class WrongParameterTypeTest : ExceptionHandlerTest() {
       setBody(
         """
           {
-            "authors": 42
+            "authors": 42,
+            "type": "Print"
           }
         """.trimIndent(),
       )
@@ -89,9 +60,41 @@ internal class WrongParameterTypeTest : ExceptionHandlerTest() {
             "column": 14,
             "line": 2
           },
-          "message": "Wrong parameter type.",
+          "message": "Invalid property.",
           "path": "authors",
-          "type": "WrongParameterType"
+          "type": "InvalidProperty"
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `unsupported enum`(): Unit = runTest {
+    val (statusCode, response) = request {
+      setBody(
+        """
+          {
+            "authors": [
+              { "type": "Named", "firstName": "Patrick", "lastName": "Rothfuss" },
+              { "type": "Named", "firstName": "Betsy", "lastName": "Wollheim" }
+            ],
+            "type": "Digital"
+          }
+        """.trimIndent(),
+      )
+    }
+
+    statusCode.shouldBe(HttpStatusCode.BadRequest)
+    response.shouldBe(
+      """
+        {
+          "location": {
+            "column": 11,
+            "line": 6
+          },
+          "message": "Invalid property.",
+          "path": "type",
+          "type": "InvalidProperty"
         }
       """.trimIndent(),
     )
