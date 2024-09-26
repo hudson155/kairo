@@ -370,13 +370,13 @@ Make corresponding changes as necessary in [the config file](.detekt/config.yaml
 
 Kairo's integration with Jackson is very tight. Be careful when upgrading versions.
 Search for any new or modified usages of `JsonMappingException`s
-and ensure these are handled by [ExceptionManager].
+and ensure these are handled by `ExceptionManager`.
 
 ### Ktor
 
 Kairo's integration with Ktor is very tight. Be careful when upgrading versions.
 Search for any new or modified usages of exceptions from `io.ktor.server.plugins.ErrorsKt`
-and ensure these are handled by [ExceptionManager].
+and ensure these are handled by `ExceptionManager`.
 
 ## Releasing
 
