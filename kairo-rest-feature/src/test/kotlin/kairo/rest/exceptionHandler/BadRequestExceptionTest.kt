@@ -16,12 +16,10 @@ internal class BadRequestExceptionTest : ExceptionHandlerTest() {
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "message": "Custom test message.",
-          "type": "MyException"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "MyException",
+        "message" to "Custom test message.",
+      ),
     )
   }
 }

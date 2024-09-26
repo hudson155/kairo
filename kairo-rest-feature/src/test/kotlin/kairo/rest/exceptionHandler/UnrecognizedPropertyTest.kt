@@ -11,31 +11,24 @@ internal class UnrecognizedPropertyTest : ExceptionHandlerTest() {
   fun typical(): Unit = runTest {
     val (statusCode, response) = request {
       setBody(
-        """
-          {
-            "authors": [
-              { "type": "Named", "firstName": "Patrick", "middleName": "James", "lastName": "Rothfuss" },
-              { "type": "Named", "firstName": "Betsy", "lastName": "Wollheim" }
-            ],
-            "type": "Print"
-          }
-        """.trimIndent(),
+        mapOf(
+          "authors" to listOf(
+            mapOf("type" to "Named", "firstName" to "Patrick", "middleName" to "James", "lastName" to "Rothfuss"),
+            mapOf("type" to "Named", "firstName" to "Betsy", "lastName" to "Wollheim"),
+          ),
+          "type" to "Print",
+        ),
       )
     }
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "location": {
-            "column": 95,
-            "line": 3
-          },
-          "message": "Unrecognized property. This property is not recognized. Is it named incorrectly?",
-          "path": "authors[0].middleName",
-          "type": "UnrecognizedProperty"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "UnrecognizedProperty",
+        "message" to "Unrecognized property. This property is not recognized. Is it named incorrectly?",
+        "path" to "authors[0].middleName",
+        "location" to mapOf("column" to 22, "line" to 7),
+      ),
     )
   }
 
@@ -43,32 +36,25 @@ internal class UnrecognizedPropertyTest : ExceptionHandlerTest() {
   fun ignored(): Unit = runTest {
     val (statusCode, response) = request {
       setBody(
-        """
-          {
-            "authors": [
-              { "type": "Named", "firstName": "Patrick", "lastName": "Rothfuss" },
-              { "type": "Named", "firstName": "Betsy", "lastName": "Wollheim" }
-            ],
-            "firstAuthor": { "type": "Named", "firstName": "Patrick", "lastName": "Rothfuss" },
-            "type": "Print"
-          }
-        """.trimIndent(),
+        mapOf(
+          "authors" to listOf(
+            mapOf("type" to "Named", "firstName" to "Patrick", "lastName" to "Rothfuss"),
+            mapOf("type" to "Named", "firstName" to "Betsy", "lastName" to "Wollheim"),
+          ),
+          "firstAuthor" to mapOf("type" to "Named", "firstName" to "Patrick", "lastName" to "Rothfuss"),
+          "type" to "Print",
+        ),
       )
     }
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "location": {
-            "column": 19,
-            "line": 6
-          },
-          "message": "Unrecognized property. This property is not recognized. Is it named incorrectly?",
-          "path": "firstAuthor",
-          "type": "UnrecognizedProperty"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "UnrecognizedProperty",
+        "message" to "Unrecognized property. This property is not recognized. Is it named incorrectly?",
+        "path" to "firstAuthor",
+        "location" to mapOf("column" to 19, "line" to 14),
+      ),
     )
   }
 }

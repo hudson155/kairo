@@ -11,30 +11,23 @@ internal class UnrecognizedPolymorphicTypeTest : ExceptionHandlerTest() {
   fun test(): Unit = runTest {
     val (statusCode, response) = request {
       setBody(
-        """
-          {
-            "authors": [
-              { "type": "Ai", "firstName": "ChatGPT" }
-            ],
-            "type": "Print"
-          }
-        """.trimIndent(),
+        mapOf(
+          "authors" to listOf(
+            mapOf("type" to "Ai", "name" to "ChatGPT"),
+          ),
+          "type" to "Print",
+        ),
       )
     }
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "location": {
-            "column": 15,
-            "line": 3
-          },
-          "message": "Unrecognized polymorphic type. This property could be one of several types, but the given type was not recognized.",
-          "path": "authors[0]",
-          "type": "UnrecognizedPolymorphicType"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "UnrecognizedPolymorphicType",
+        "message" to "Unrecognized polymorphic type. This property could be one of several types, but the given type was not recognized.",
+        "path" to "authors[0]",
+        "location" to mapOf("column" to 15, "line" to 5),
+      ),
     )
   }
 }

@@ -11,92 +11,69 @@ internal class InvalidPropertyTest : ExceptionHandlerTest() {
   fun `number in place of string`(): Unit = runTest {
     val (statusCode, response) = request {
       setBody(
-        """
-          {
-            "authors": [
-              { "type": "Named", "firstName": "Patrick", "lastName": 42 },
-              { "type": "Named", "firstName": "Betsy", "lastName": "Wollheim" }
-            ],
-            "type": "Print"
-          }
-        """.trimIndent(),
+        mapOf(
+          "authors" to listOf(
+            mapOf("type" to "Named", "firstName" to "Patrick", "lastName" to 42),
+            mapOf("type" to "Named", "firstName" to "Betsy", "lastName" to "Wollheim"),
+          ),
+          "type" to "Print",
+        ),
       )
     }
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "location": {
-            "column": 60,
-            "line": 3
-          },
-          "message": "Invalid property.",
-          "path": "authors[0].lastName",
-          "type": "InvalidProperty"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "InvalidProperty",
+        "message" to "Invalid property.",
+        "path" to "authors[0].lastName",
+        "location" to mapOf("column" to 15, "line" to 6),
+      ),
     )
   }
 
   @Test
   fun `number in place of array`(): Unit = runTest {
     val (statusCode, response) = request {
-      setBody(
-        """
-          {
-            "authors": 42,
-            "type": "Print"
-          }
-        """.trimIndent(),
+      setBody(mapOf(
+        "authors" to 42,
+        "type" to "Print",
+      ),
       )
     }
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "location": {
-            "column": 14,
-            "line": 2
-          },
-          "message": "Invalid property.",
-          "path": "authors",
-          "type": "InvalidProperty"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "InvalidProperty",
+        "message" to "Invalid property.",
+        "path" to "authors",
+        "location" to mapOf("line" to 2, "column" to 14),
+      ),
     )
   }
 
   @Test
   fun `unsupported enum`(): Unit = runTest {
     val (statusCode, response) = request {
-      setBody(
-        """
-          {
-            "authors": [
-              { "type": "Named", "firstName": "Patrick", "lastName": "Rothfuss" },
-              { "type": "Named", "firstName": "Betsy", "lastName": "Wollheim" }
-            ],
-            "type": "Digital"
-          }
-        """.trimIndent(),
+      setBody(mapOf(
+        "authors" to listOf(
+          mapOf("type" to "Named", "firstName" to "Patrick", "lastName" to "Rothfuss"),
+          mapOf("type" to "Named", "firstName" to "Betsy", "lastName" to "Wollheim"),
+        ),
+        "type" to "Digital",
+      ),
       )
     }
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "location": {
-            "column": 11,
-            "line": 6
-          },
-          "message": "Invalid property.",
-          "path": "type",
-          "type": "InvalidProperty"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "InvalidProperty",
+        "message" to "Invalid property.",
+        "path" to "type",
+        "location" to mapOf("line" to 14, "column" to 11),
+      ),
     )
   }
 }

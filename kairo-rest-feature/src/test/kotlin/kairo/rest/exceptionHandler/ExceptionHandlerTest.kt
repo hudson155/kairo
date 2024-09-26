@@ -1,5 +1,6 @@
 package kairo.rest.exceptionHandler
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.accept
@@ -15,6 +16,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kairo.client.KairoClient
 import kairo.client.createKairoClient
+import kairo.client.ktorClientMapper
 import kairo.featureTesting.KairoServerTest
 import kairo.serverTesting.TestServer
 import org.junit.jupiter.api.BeforeEach
@@ -62,7 +64,7 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
     every { libraryBookService.create(any()) } answers { answer() }
   }
 
-  protected suspend fun request(block: HttpRequestBuilder.() -> Unit): Pair<HttpStatusCode, String> {
+  protected suspend fun request(block: HttpRequestBuilder.() -> Unit): Pair<HttpStatusCode, Map<String, Any?>?> {
     val response = client.request {
       method = HttpMethod.Post
       url {
@@ -72,18 +74,22 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
       accept(ContentType.Application.Json)
       contentType(ContentType.Application.Json)
       setBody(
-        """
-          {
-            "authors": [
-              { "type": "Named", "firstName": "Patrick", "lastName": "Rothfuss" },
-              { "type": "Named", "firstName": "Betsy", "lastName": "Wollheim" }
-            ],
-            "type": "Print"
-          }
-        """.trimIndent(),
+        mapOf(
+          "authors" to listOf(
+            mapOf("type" to "Named", "firstName" to "Patrick", "lastName" to "Rothfuss"),
+            mapOf("type" to "Named", "firstName" to "Betsy", "lastName" to "Wollheim"),
+          ),
+          "type" to "Print",
+        ),
       )
       block()
     }
-    return Pair(response.status, response.bodyAsText())
+    return Pair(
+      first = response.status,
+      second = response.bodyAsText().let { string ->
+        if (string.isEmpty()) return@let null
+        return@let ktorClientMapper.readValue(string)
+      },
+    )
   }
 }

@@ -25,12 +25,10 @@ internal class MalformedJsonTest : ExceptionHandlerTest() {
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "message": "Malformed JSON. The JSON provided was not well-formed.",
-          "type": "MalformedJson"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "MalformedJson",
+        "message" to "Malformed JSON. The JSON provided was not well-formed.",
+      ),
     )
   }
 
@@ -51,12 +49,10 @@ internal class MalformedJsonTest : ExceptionHandlerTest() {
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "message": "Malformed JSON. The JSON provided was not well-formed.",
-          "type": "MalformedJson"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "MalformedJson",
+        "message" to "Malformed JSON. The JSON provided was not well-formed.",
+      ),
     )
   }
 
@@ -78,12 +74,10 @@ internal class MalformedJsonTest : ExceptionHandlerTest() {
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "message": "Malformed JSON. The JSON provided was not well-formed.",
-          "type": "MalformedJson"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "MalformedJson",
+        "message" to "Malformed JSON. The JSON provided was not well-formed.",
+      ),
     )
   }
 
@@ -105,12 +99,10 @@ internal class MalformedJsonTest : ExceptionHandlerTest() {
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "message": "Malformed JSON. The JSON provided was not well-formed.",
-          "type": "MalformedJson"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "MalformedJson",
+        "message" to "Malformed JSON. The JSON provided was not well-formed.",
+      ),
     )
   }
 
@@ -132,12 +124,10 @@ internal class MalformedJsonTest : ExceptionHandlerTest() {
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "message": "Malformed JSON. The JSON provided was not well-formed.",
-          "type": "MalformedJson"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "MalformedJson",
+        "message" to "Malformed JSON. The JSON provided was not well-formed.",
+      ),
     )
   }
 }

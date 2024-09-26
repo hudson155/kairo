@@ -12,24 +12,14 @@ internal class NoExceptionTest : ExceptionHandlerTest() {
 
     statusCode.shouldBe(HttpStatusCode.OK)
     response.shouldBe(
-      """
-        {
-          "authors": [
-            {
-              "type": "Named",
-              "firstName": "Patrick",
-              "lastName": "Rothfuss"
-            },
-            {
-              "type": "Named",
-              "firstName": "Betsy",
-              "lastName": "Wollheim"
-            }
-          ],
-          "title": "The Name of the Wind",
-          "type": "Print"
-        }
-      """.trimIndent(),
+      mapOf(
+        "title" to "The Name of the Wind",
+        "authors" to listOf(
+          mapOf("type" to "Named", "firstName" to "Patrick", "lastName" to "Rothfuss"),
+          mapOf("type" to "Named", "firstName" to "Betsy", "lastName" to "Wollheim"),
+        ),
+        "type" to "Print",
+      ),
     )
   }
 }

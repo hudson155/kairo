@@ -13,12 +13,10 @@ internal class EntityNotFoundTest : ExceptionHandlerTest() {
 
     statusCode.shouldBe(HttpStatusCode.NotFound)
     response.shouldBe(
-      """
-        {
-          "message": "Entity not found.",
-          "type": "EntityNotFound"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "EntityNotFound",
+        "message" to "Entity not found.",
+      ),
     )
   }
 }

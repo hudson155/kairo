@@ -11,31 +11,24 @@ internal class MissingRequiredPropertyTest : ExceptionHandlerTest() {
   fun missing(): Unit = runTest {
     val (statusCode, response) = request {
       setBody(
-        """
-          {
-            "authors": [
-              { "type": "Named", "firstName": "Patrick", "lastName": "Rothfuss" },
-              { "type": "Named", "lastName": "Wollheim" }
-            ],
-            "type": "Print"
-          }
-        """.trimIndent(),
+        mapOf(
+          "authors" to listOf(
+            mapOf("type" to "Named", "firstName" to "Patrick", "lastName" to "Rothfuss"),
+            mapOf("type" to "Named", "lastName" to "Wollheim"),
+          ),
+          "type" to "Print",
+        ),
       )
     }
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "location": {
-            "column": 47,
-            "line": 4
-          },
-          "message": "Missing required property. This property is required, but was not provided or was null.",
-          "path": "authors[1].firstName",
-          "type": "MissingRequiredProperty"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "MissingRequiredProperty",
+        "message" to "Missing required property. This property is required, but was not provided or was null.",
+        "path" to "authors[1].firstName",
+        "location" to mapOf("column" to 5, "line" to 11),
+      ),
     )
   }
 
@@ -43,31 +36,24 @@ internal class MissingRequiredPropertyTest : ExceptionHandlerTest() {
   fun `null`(): Unit = runTest {
     val (statusCode, response) = request {
       setBody(
-        """
-          {
-            "authors": [
-              { "type": "Named", "firstName": "Patrick", "lastName": "Rothfuss" },
-              { "type": "Named", "firstName": null, "lastName": "Wollheim" }
-            ],
-            "type": "Print"
-          }
-        """.trimIndent(),
+        mapOf(
+          "authors" to listOf(
+            mapOf("type" to "Named", "firstName" to "Patrick", "lastName" to "Rothfuss"),
+            mapOf("type" to "Named", "firstName" to null, "lastName" to "Wollheim"),
+          ),
+          "type" to "Print",
+        ),
       )
     }
 
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
-      """
-        {
-          "location": {
-            "column": 66,
-            "line": 4
-          },
-          "message": "Missing required property. This property is required, but was not provided or was null.",
-          "path": "authors[1].firstName",
-          "type": "MissingRequiredProperty"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "MissingRequiredProperty",
+        "message" to "Missing required property. This property is required, but was not provided or was null.",
+        "path" to "authors[1].firstName",
+        "location" to mapOf("column" to 5, "line" to 12),
+      ),
     )
   }
 }
