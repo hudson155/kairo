@@ -6,6 +6,9 @@ import kairo.exception.KairoException
 
 private val logger: KLogger = KotlinLogging.logger {}
 
+/**
+ * Handles exceptions native to Kairo.
+ */
 internal class KairoHandler : ExceptionHandler() {
   override fun handle(e: Throwable): ExceptionResult {
     if (e !is KairoException) return ExceptionResult.Unhandled

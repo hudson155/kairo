@@ -48,7 +48,7 @@ public abstract class JacksonBadRequestException(message: String) : BadRequestEx
     private fun JsonMappingException.Reference.isNumbered(): Boolean =
       fieldName == null && index >= 0
 
-    internal fun parseLocation(location: JsonLocation): Location? =
+    internal fun parseLocation(location: JsonLocation): Location =
       Location(
         line = location.lineNr,
         column = location.columnNr,
