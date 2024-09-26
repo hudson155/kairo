@@ -87,8 +87,6 @@ Each modules falls into one of 3 categories:
 
 ### Optional modules
 
-- [kairo-client](kairo-client/):
-  A thin wrapper around [Ktor](https://ktor.io/)'s `HttpClient`.
 - [kairo-darb](kairo-darb/):
   Home of `DarbEncoder`, which encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
 - [kairo-dependency-injection](kairo-dependency-injection/):
@@ -102,6 +100,8 @@ Each modules falls into one of 3 categories:
 - [kairo-reflect](kairo-reflect/):
   This is a wrapper for Kotlin's reflection library
   that also includes some reflection-related utilities.
+- [kairo-rest-client](kairo-rest-client/):
+  A thin wrapper around [Ktor](https://ktor.io/)'s `HttpClient`.
 - [kairo-transaction-manager](kairo-transaction-manager/):
   The Kairo `TransactionManager` offers explicit automatic handling of transactions that span multiple systems.
 - [kairo-updater](kairo-updater/):

@@ -2,7 +2,7 @@ package kairo.rest.reader
 
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
-import kairo.rest.ktorMapper
+import kairo.rest.ktorServerMapper
 import kairo.rest.util.typeInfo
 import kotlin.reflect.KParameter
 import kotlin.reflect.jvm.javaType
@@ -34,7 +34,7 @@ internal sealed class RestEndpointArgument(
       val parameters = call.parameters.getAll(name) ?: return null
       val parameter = parameters.single() // Lists are not supported yet.
       @Suppress("ForbiddenMethodCall")
-      return ktorMapper.convertValue(parameter, ktorMapper.constructType(param.type.javaType))
+      return ktorServerMapper.convertValue(parameter, ktorServerMapper.constructType(param.type.javaType))
     }
   }
 }

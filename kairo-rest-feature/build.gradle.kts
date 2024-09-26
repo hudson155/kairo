@@ -12,12 +12,12 @@ dependencies {
 
   api(libs.ktorHttpJvm) // Exposed for clients.
   implementation(libs.ktorSerializationJackson)
-  implementation(libs.ktorServerCio)
+  api(libs.ktorServerCio)
   implementation(libs.ktorServerContentNegotiation)
   implementation(libs.ktorServerCore)
   implementation(libs.ktorServerStatusPages)
 
-  testImplementation(project(":kairo-client"))
+  testImplementation(project(":kairo-rest-client"))
   testImplementation(project(":kairo-feature:testing"))
   testImplementation(project(":kairo-id-feature"))
   testImplementation(project(":kairo-logging:testing"))

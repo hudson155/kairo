@@ -5,7 +5,7 @@ import com.google.inject.Inject
 import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.handler.RestHandler
 import kairo.rest.handler.RestHandlerRegistry
-import kairo.rest.ktorMapper
+import kairo.rest.ktorServerMapper
 import kairo.serialization.module.primitives.TrimWhitespace
 
 public class RestClient @Inject constructor(
@@ -21,6 +21,6 @@ public class RestClient @Inject constructor(
      * Without doing this, Jackson transformations such as [TrimWhitespace] wouldn't get called.
      */
     @Suppress("ForbiddenMethodCall")
-    return handler.handle(ktorMapper.convertValue(endpoint, handler.endpoint.java))
+    return handler.handle(ktorServerMapper.convertValue(endpoint, handler.endpoint.java))
   }
 }
