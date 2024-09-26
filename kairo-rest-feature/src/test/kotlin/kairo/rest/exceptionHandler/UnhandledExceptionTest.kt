@@ -1,7 +1,7 @@
 package kairo.rest.exceptionHandler
 
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldBeEmpty
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -13,6 +13,6 @@ internal class UnhandledExceptionTest : ExceptionHandlerTest() {
     val (statusCode, response) = request {}
 
     statusCode.shouldBe(HttpStatusCode.InternalServerError)
-    response.shouldBeEmpty()
+    response.shouldBeNull()
   }
 }

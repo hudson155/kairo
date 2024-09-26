@@ -16,11 +16,9 @@ internal class UnauthorizedExceptionTest : ExceptionHandlerTest() {
 
     statusCode.shouldBe(HttpStatusCode.Unauthorized)
     response.shouldBe(
-      """
-        {
-          "type": "MyException"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "MyException",
+      ),
     )
   }
 }

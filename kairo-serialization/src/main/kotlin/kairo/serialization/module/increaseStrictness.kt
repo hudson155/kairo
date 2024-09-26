@@ -44,7 +44,7 @@ private fun ObjectMapperFactoryBuilder.configureSerializationFeatures() {
 
 private fun ObjectMapperFactoryBuilder.configureDeserializationFeatures() {
   configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true)
-  configure(DeserializationFeature.USE_BIG_INTEGER_FOR_INTS, true)
+  configure(DeserializationFeature.USE_BIG_INTEGER_FOR_INTS, false)
   configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, true)
   configure(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS, true)
   configure(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY, true)

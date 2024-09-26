@@ -16,11 +16,9 @@ internal class ForbiddenExceptionTest : ExceptionHandlerTest() {
 
     statusCode.shouldBe(HttpStatusCode.Forbidden)
     response.shouldBe(
-      """
-        {
-          "type": "MyException"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "MyException",
+      ),
     )
   }
 }

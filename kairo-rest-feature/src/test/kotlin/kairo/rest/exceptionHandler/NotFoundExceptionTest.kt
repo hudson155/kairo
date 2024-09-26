@@ -16,12 +16,10 @@ internal class NotFoundExceptionTest : ExceptionHandlerTest() {
 
     statusCode.shouldBe(HttpStatusCode.NotFound)
     response.shouldBe(
-      """
-        {
-          "message": "Custom test message.",
-          "type": "MyException"
-        }
-      """.trimIndent(),
+      mapOf(
+        "type" to "MyException",
+        "message" to "Custom test message.",
+      ),
     )
   }
 }
