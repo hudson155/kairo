@@ -14,7 +14,7 @@ internal object BrokenLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal class NotDataClass(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books")

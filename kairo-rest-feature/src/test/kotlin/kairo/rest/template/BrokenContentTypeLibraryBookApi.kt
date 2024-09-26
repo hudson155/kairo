@@ -16,7 +16,7 @@ internal object BrokenContentTypeLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal data class ContentTypePresentOnGet(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("POST")
   @RestEndpoint.Path("/library-books")

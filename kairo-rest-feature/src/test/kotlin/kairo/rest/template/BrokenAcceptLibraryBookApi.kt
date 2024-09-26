@@ -14,7 +14,7 @@ internal object BrokenAcceptLibraryBookApi {
   @RestEndpoint.Path("/library-books/:libraryBookId")
   internal data class AcceptNotPresentOnGet(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("POST")
   @RestEndpoint.Path("/library-books")
@@ -31,7 +31,7 @@ internal object BrokenAcceptLibraryBookApi {
   @RestEndpoint.Accept("")
   internal data class EmptyAccept(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   /**
    * This is actually valid; means "Any" content type.
@@ -41,12 +41,12 @@ internal object BrokenAcceptLibraryBookApi {
   @RestEndpoint.Accept("*/*")
   internal data class StarAccept(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application")
   internal data class MalformedAccept(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 }

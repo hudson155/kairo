@@ -8,7 +8,6 @@ import io.ktor.server.routing.RoutingCall
 import io.ktor.util.reflect.typeInfo
 import kairo.reflect.typeParam
 import kairo.rest.endpoint.RestEndpoint
-import kairo.rest.exception.EntityNotFound
 import kairo.rest.reader.RestEndpointReader
 import kairo.rest.template.RestEndpointTemplate
 import kotlin.reflect.KClass
@@ -19,7 +18,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * A [RestHandler] implementation is the entrypoint for a specific [RestEndpoint].
  * See this Feature's README or tests for some examples.
  */
-public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any?> {
+public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any> {
   internal val endpoint: KClass<E> = typeParam(RestHandler::class, 0, this::class)
 
   internal val template: RestEndpointTemplate = RestEndpointTemplate.from(endpoint)
@@ -29,10 +28,9 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any?
     val endpoint = reader.endpoint(call)
     logger.debug { "Read endpoint: $endpoint." }
     val response = handle(endpoint)
-    logger.debug { "Result: ${response?.toString() ?: "null"}." }
+    logger.debug { "Result: $response." }
     val statusCode = statusCode(response)
     logger.debug { "Status code: $statusCode." }
-    response ?: throw EntityNotFound()
     call.respond(statusCode, response)
   }
 

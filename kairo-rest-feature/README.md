@@ -81,7 +81,7 @@ object TypicalLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   data class Get(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books")
@@ -138,8 +138,8 @@ They are intended to be grouped together using Kotlin singleton objects.
 // src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookHandler.kt
 
 class OrganizationHandler @Inject constructor() {
-  inner class Get : RestHandler<LibraryBookApi.Get, LibraryBookRep?>() {
-    override suspend fun handle(endpoint: LibraryBookApi.Get): LibraryBookRep? {
+  inner class Get : RestHandler<LibraryBookApi.Get, LibraryBookRep>() {
+    override suspend fun handle(endpoint: LibraryBookApi.Get): LibraryBookRep {
       TODO()
     }
   }
