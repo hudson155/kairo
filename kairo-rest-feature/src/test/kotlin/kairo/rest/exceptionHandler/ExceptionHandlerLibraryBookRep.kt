@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 internal data class ExceptionHandlerLibraryBookRep(
   val title: String,
   val authors: List<Author>,
+  val isSeries: Boolean,
   val type: Type,
 ) {
   internal data class Creator(
-    // Title is passed as a query param.
     val authors: List<Author>,
     val type: Type,
   ) {

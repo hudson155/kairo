@@ -2,11 +2,28 @@ package kairo.rest.exceptionHandler
 
 import io.kotest.matchers.shouldBe
 import io.ktor.client.request.setBody
+import io.ktor.client.utils.EmptyContent
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class InvalidPropertyTest : ExceptionHandlerTest() {
+  @Test
+  fun `missing body`(): Unit = runTest {
+    val (statusCode, response) = request {
+      setBody(EmptyContent)
+    }
+
+    statusCode.shouldBe(HttpStatusCode.BadRequest)
+    response.shouldBe(
+      mapOf(
+        "type" to "InvalidProperty",
+        "message" to "Invalid property.",
+        "location" to mapOf("column" to 0, "line" to 1),
+      ),
+    )
+  }
+
   @Test
   fun `number in place of string`(): Unit = runTest {
     val (statusCode, response) = request {
@@ -75,6 +92,24 @@ internal class InvalidPropertyTest : ExceptionHandlerTest() {
         "message" to "Invalid property.",
         "path" to "type",
         "location" to mapOf("line" to 14, "column" to 11),
+      ),
+    )
+  }
+
+  @Test
+  fun param(): Unit = runTest {
+    val (statusCode, response) = request {
+      url {
+        parameters["isSeries"] = "Unknown"
+      }
+    }
+
+    statusCode.shouldBe(HttpStatusCode.BadRequest)
+    response.shouldBe(
+      mapOf(
+        "type" to "InvalidProperty",
+        "message" to "Invalid property.",
+        "path" to "isSeries",
       ),
     )
   }

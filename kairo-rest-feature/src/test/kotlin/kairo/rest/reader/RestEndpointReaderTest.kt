@@ -31,7 +31,7 @@ internal class RestEndpointReaderTest {
         append("libraryBookId", "2eDS1sMt")
       }
     }
-    shouldThrow<IllegalArgumentException> {
+    shouldThrow<RestEndpointParamException> {
       reader.endpoint(call)
     }
   }
@@ -236,7 +236,7 @@ internal class RestEndpointReaderTest {
         append("libraryBookId", "2eDS1sMt")
       }
     }
-    shouldThrow<IllegalArgumentException> {
+    shouldThrow<RestEndpointParamException> {
       reader.endpoint(call)
     }
   }

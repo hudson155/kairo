@@ -25,6 +25,7 @@ internal class ExceptionManager {
   private val handlers: List<ExceptionHandler> =
     listOf(
       JacksonHandler(),
+      KtorHandler(),
       KairoHandler(),
     )
 
