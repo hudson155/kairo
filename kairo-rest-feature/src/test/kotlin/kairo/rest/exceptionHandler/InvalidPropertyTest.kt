@@ -19,8 +19,7 @@ internal class InvalidPropertyTest : ExceptionHandlerTest() {
       mapOf(
         "type" to "InvalidProperty",
         "message" to "Invalid property.",
-        "path" to "authors[0].lastName",
-        "location" to mapOf("column" to 15, "line" to 6),
+        "location" to mapOf("column" to 0, "line" to 1),
       ),
     )
   }

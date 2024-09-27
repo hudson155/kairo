@@ -10,8 +10,6 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.serialization.JsonConvertException
-import io.ktor.server.plugins.BadRequestException
 import kairo.rest.exception.InvalidProperty
 import kairo.rest.exception.JsonBadRequestException
 import kairo.rest.exception.MalformedJson
@@ -19,6 +17,7 @@ import kairo.rest.exception.MissingRequiredProperty
 import kairo.rest.exception.UnknownJsonError
 import kairo.rest.exception.UnrecognizedPolymorphicType
 import kairo.rest.exception.UnrecognizedProperty
+import kairo.rest.reader.RestEndpointBodyException
 import kairo.rest.reader.RestEndpointParamException
 import kotlin.reflect.KFunction0
 import kotlin.reflect.KFunction2
@@ -33,7 +32,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  */
 internal class JacksonHandler : ExceptionHandler() {
   override fun handle(e: Throwable): ExceptionResult {
-    e.findCause<BadRequestException>()?.findCause<JsonConvertException>()?.let { intermediary ->
+    e.findCause<RestEndpointBodyException>()?.let { intermediary ->
       logger.info(e) { "Converting Jackson exception from body." }
       fromBody(intermediary)?.let { return it }
       logger.warn(e) { "No known way to convert Jackson exception from body." }
@@ -49,12 +48,12 @@ internal class JacksonHandler : ExceptionHandler() {
   }
 
   @Suppress("UnnecessaryLet")
-  private fun fromBody(e: JsonConvertException): ExceptionResult? {
+  private fun fromBody(e: RestEndpointBodyException): ExceptionResult? {
     fun result(
       constructor: KFunction2<String?, JsonBadRequestException.Location?, JsonBadRequestException>,
       cause: JsonMappingException,
     ): ExceptionResult.Exception {
-      val path = JsonBadRequestException.parsePath(cause.path)
+      val path = JsonBadRequestException.parsePath(cause.path)?.ifEmpty { null }
       val location = cause.location?.let { JsonBadRequestException.parseLocation(it) }
       return ExceptionResult.Exception(constructor(path, location))
     }

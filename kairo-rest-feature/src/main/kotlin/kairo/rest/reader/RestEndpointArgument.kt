@@ -21,8 +21,13 @@ internal sealed class RestEndpointArgument(
     call: ApplicationCall,
     param: KParameter,
   ) : RestEndpointArgument(call, param) {
-    override suspend fun read(call: ApplicationCall): Any =
-      call.receive(typeInfo(param.type))
+    override suspend fun read(call: ApplicationCall): Any {
+      try {
+        return call.receive(typeInfo(param.type))
+      } catch (e: Exception) {
+        throw RestEndpointBodyException(e)
+      }
+    }
   }
 
   internal class Param(
