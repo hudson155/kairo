@@ -17,7 +17,7 @@ internal class BadRequestExceptionTest : ExceptionHandlerTest() {
     statusCode.shouldBe(HttpStatusCode.BadRequest)
     response.shouldBe(
       mapOf(
-        "type" to "BadRequestException",
+        "type" to "BadRequest",
       ),
     )
   }
