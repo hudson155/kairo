@@ -17,6 +17,7 @@ internal object ExceptionHandlerLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal data class Create(
     @QueryParam val title: String,
+    @QueryParam val isSeries: Boolean,
     override val body: ExceptionHandlerLibraryBookRep.Creator,
   ) : RestEndpoint<ExceptionHandlerLibraryBookRep.Creator, ExceptionHandlerLibraryBookRep>()
 }

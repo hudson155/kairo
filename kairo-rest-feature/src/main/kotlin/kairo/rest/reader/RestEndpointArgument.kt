@@ -34,7 +34,11 @@ internal sealed class RestEndpointArgument(
     override suspend fun read(call: ApplicationCall): Any? {
       val parameters = call.parameters.getAll(name) ?: return null
       val parameter = parameters.single() // Lists are not supported yet.
-      return convert(parameter)
+      try {
+        return convert(parameter)
+      } catch (e: Exception) {
+        throw RestEndpointParamException(name, e)
+      }
     }
 
     /**

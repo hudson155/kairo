@@ -55,6 +55,7 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
       return@answers ExceptionHandlerLibraryBookRep(
         title = endpoint.title,
         authors = creator.authors,
+        isSeries = endpoint.isSeries,
         type = creator.type,
       )
     }
@@ -69,6 +70,7 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
       method = HttpMethod.Post
       url {
         path("/library-books")
+        parameters["isSeries"] = true.toString()
         parameters["title"] = "The Name of the Wind"
       }
       accept(ContentType.Application.Json)

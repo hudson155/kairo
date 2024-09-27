@@ -12,7 +12,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 internal class KairoHandler : ExceptionHandler() {
   override fun handle(e: Throwable): ExceptionResult {
     if (e !is KairoException) return ExceptionResult.Unhandled
-    logger.info(e) { "${e.statusCode} Kairo Exception." }
+    logger.info(e) { "${e.statusCode} Kairo Exception: ${e.response}." }
     return ExceptionResult.Handled(e.statusCode, e.response)
   }
 }

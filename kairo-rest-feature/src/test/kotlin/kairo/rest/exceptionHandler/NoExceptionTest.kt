@@ -18,6 +18,7 @@ internal class NoExceptionTest : ExceptionHandlerTest() {
           mapOf("type" to "Named", "firstName" to "Patrick", "lastName" to "Rothfuss"),
           mapOf("type" to "Named", "firstName" to "Betsy", "lastName" to "Wollheim"),
         ),
+        "isSeries" to true,
         "type" to "Print",
       ),
     )
