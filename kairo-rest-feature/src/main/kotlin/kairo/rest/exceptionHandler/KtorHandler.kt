@@ -14,9 +14,8 @@ private val logger: KLogger = KotlinLogging.logger {}
 internal class KtorHandler : ExceptionHandler() {
   @Suppress("UnnecessaryLet")
   override fun handle(e: Throwable): ExceptionResult {
-    logger.info(e) { "Converting Ktor exception." }
-
     e.findCause<BadContentTypeFormatException>()?.let {
+      logger.info(e) { "Converting Ktor exception." }
       return ExceptionResult.Exception(MalformedContentType())
     }
     e.findCause<io.ktor.server.plugins.BadRequestException>()?.let {
