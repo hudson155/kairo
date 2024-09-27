@@ -34,7 +34,7 @@ internal class RestEndpointTemplateTest {
     RestEndpointTemplate.from(TypicalLibraryBookApi.SearchByIsbn::class).toString()
       .shouldBe(
         "RestEndpointTemplate([ -> application/json]" +
-          " GET /library-books (isbn))",
+          " GET /library-books (isbn, strict?))",
       )
   }
 

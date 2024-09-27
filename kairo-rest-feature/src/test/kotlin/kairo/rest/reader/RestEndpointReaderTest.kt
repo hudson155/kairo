@@ -66,7 +66,9 @@ internal class RestEndpointReaderTest {
   fun `searchByIsbn, missing isbn`(): Unit = runTest {
     val reader = RestEndpointReader.from(TypicalLibraryBookApi.SearchByIsbn::class)
     val call = mockk<RoutingCall> {
-      every { parameters } returns Parameters.Empty
+      every { parameters } returns Parameters.build {
+        append("strict", "true")
+      }
     }
     shouldThrow<InvocationTargetException> {
       reader.endpoint(call)
@@ -79,12 +81,14 @@ internal class RestEndpointReaderTest {
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.build {
         append("isbn", "978-0756405892")
+        append("strict", "true")
       }
     }
     reader.endpoint(call)
       .shouldBe(
         TypicalLibraryBookApi.SearchByIsbn(
           isbn = "978-0756405892",
+          strict = true,
         ),
       )
   }
