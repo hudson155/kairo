@@ -55,6 +55,7 @@ internal class TypicalRestEndpointTemplateTest {
           ),
           query = RestEndpointQuery.of(
             RestEndpointQuery.Param("isbn", required = true),
+            RestEndpointQuery.Param("strict", required = false),
           ),
           contentType = null,
           accept = ContentType.Application.Json,

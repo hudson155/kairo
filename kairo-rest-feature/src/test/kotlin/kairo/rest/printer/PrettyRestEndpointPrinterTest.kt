@@ -25,7 +25,7 @@ internal class PrettyRestEndpointPrinterTest {
   fun searchByIsbn(): Unit = runTest {
     val template = RestEndpointTemplate.from(TypicalLibraryBookApi.SearchByIsbn::class)
     PrettyRestEndpointPrinter.write(template)
-      .shouldBe("[ -> application/json] GET /library-books (isbn)")
+      .shouldBe("[ -> application/json] GET /library-books (isbn, strict?)")
   }
 
   @Test

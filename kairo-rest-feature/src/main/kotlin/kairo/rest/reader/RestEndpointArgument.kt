@@ -1,5 +1,6 @@
 package kairo.rest.reader
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import kairo.rest.ktorServerMapper
@@ -33,8 +34,28 @@ internal sealed class RestEndpointArgument(
     override suspend fun read(call: ApplicationCall): Any? {
       val parameters = call.parameters.getAll(name) ?: return null
       val parameter = parameters.single() // Lists are not supported yet.
-      @Suppress("ForbiddenMethodCall")
-      return ktorServerMapper.convertValue(parameter, ktorServerMapper.constructType(param.type.javaType))
+      return convert(parameter)
+    }
+
+    /**
+     * Params are always strings, but sometimes they need to be converted to non-string-like types.
+     * To achieve this, we first try using [ObjectMapper.convertValue] which should work for string-like types.
+     * We then try using [ObjectMapper.readValue] which should work for non-string-like types.
+     *
+     * This is a fairly hacky approach. Improvements are welcomed!
+     */
+    @Suppress("ForbiddenMethodCall")
+    private fun convert(parameter: String): Any? {
+      val type = ktorServerMapper.constructType(param.type.javaType)
+      try {
+        return ktorServerMapper.convertValue(parameter, type)
+      } catch (e: IllegalArgumentException) {
+        try {
+          return ktorServerMapper.readValue(parameter, type)
+        } catch (_: Exception) {
+          throw e
+        }
+      }
     }
   }
 }

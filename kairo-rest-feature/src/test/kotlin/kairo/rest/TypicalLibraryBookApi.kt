@@ -25,6 +25,7 @@ internal object TypicalLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal data class SearchByIsbn(
     @QueryParam val isbn: String,
+    @QueryParam val strict: Boolean?,
   ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("GET")
