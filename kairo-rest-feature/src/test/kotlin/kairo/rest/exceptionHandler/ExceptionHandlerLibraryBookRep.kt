@@ -11,7 +11,6 @@ internal data class ExceptionHandlerLibraryBookRep(
   val type: Type,
 ) {
   internal data class Creator(
-    // Title is passed as a query param.
     val authors: List<Author>,
     val type: Type,
   ) {
