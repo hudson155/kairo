@@ -4,7 +4,7 @@ import io.ktor.http.HttpStatusCode
 import kairo.exception.KairoException
 
 public class ContentTypeMismatch : KairoException(
-  message = "This endpoint does not support the provided content type header.",
+  message = "This endpoint does not support the provided Content-Type header.",
 ) {
   override val statusCode: HttpStatusCode = HttpStatusCode.UnsupportedMediaType
 }
