@@ -70,8 +70,8 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
       method = HttpMethod.Post
       url {
         path("/library-books")
-        parameters["isSeries"] = true.toString()
         parameters["title"] = "The Name of the Wind"
+        parameters["isSeries"] = true.toString()
       }
       accept(ContentType.Application.Json)
       contentType(ContentType.Application.Json)
