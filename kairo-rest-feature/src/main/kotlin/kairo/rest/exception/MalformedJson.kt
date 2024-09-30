@@ -1,12 +1,6 @@
 package kairo.rest.exception
 
-import kairo.rest.exceptionHandler.JacksonHandler
-
-/**
- * Thrown from [JacksonHandler]
- * Not intended to be thrown externally.
- */
-public class MalformedJson(
+internal class MalformedJson(
   cause: Exception,
 ) : JsonBadRequestException(
   message = "Malformed JSON." +

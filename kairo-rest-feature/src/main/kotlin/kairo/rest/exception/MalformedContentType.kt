@@ -1,13 +1,8 @@
 package kairo.rest.exception
 
 import kairo.exception.BadRequestException
-import kairo.rest.exceptionHandler.KtorHandler
 
-/**
- * Thrown from [KtorHandler]
- * Not intended to be thrown externally.
- */
-public class MalformedContentType(
+internal class MalformedContentType(
   cause: Exception,
 ) : BadRequestException(
   message = "Malformed content type." +
