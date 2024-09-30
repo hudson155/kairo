@@ -8,8 +8,6 @@ import com.fasterxml.jackson.databind.exc.IgnoredPropertyException
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
-import io.github.oshai.kotlinlogging.KLogger
-import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.rest.exception.InvalidProperty
 import kairo.rest.exception.JsonBadRequestException
 import kairo.rest.exception.MalformedJson
@@ -19,82 +17,65 @@ import kairo.rest.exception.UnrecognizedPolymorphicType
 import kairo.rest.exception.UnrecognizedProperty
 import kairo.rest.reader.RestEndpointBodyException
 import kairo.rest.reader.RestEndpointParamException
-import kotlin.reflect.KFunction0
-import kotlin.reflect.KFunction2
-
-private val logger: KLogger = KotlinLogging.logger {}
 
 /**
  * Converts Jackson deserialization exceptions into API-friendly exceptions.
- *
- * Note: Between [fromBody] and [fromParam] there is some duplicate/similar code.
- * Please be mindful to update both instances when changing this code.
  */
 internal class JacksonHandler : ExceptionHandler() {
   override fun handle(e: Throwable): ExceptionResult {
+    if (e !is Exception) return ExceptionResult.Unhandled
+
     e.findCause<RestEndpointBodyException>()?.let { intermediary ->
-      logger.info(e) { "Converting Jackson exception from body." }
-      fromBody(intermediary)?.let { return it }
-      logger.warn(e) { "No known way to convert Jackson exception from body." }
-      return ExceptionResult.Exception(UnknownJsonError())
+      fromBody(intermediary, e)?.let { return it }
+      return ExceptionResult.Exception(UnknownJsonError(e))
     }
     e.findCause<RestEndpointParamException>()?.let { intermediary ->
-      logger.info(e) { "Converting Jackson exception from param." }
-      fromParam(intermediary)?.let { return it }
-      logger.warn(e) { "No known way to convert Jackson exception from param." }
-      return ExceptionResult.Exception(UnknownJsonError())
+      fromParam(intermediary, e)?.let { return it }
+      return ExceptionResult.Exception(UnknownJsonError(e))
     }
+
     return ExceptionResult.Unhandled
   }
 
   @Suppress("UnnecessaryLet")
-  private fun fromBody(e: RestEndpointBodyException): ExceptionResult? {
-    fun result(
-      constructor: KFunction2<String?, JsonBadRequestException.Location?, JsonBadRequestException>,
-      cause: JsonMappingException,
-    ): ExceptionResult.Exception {
-      val path = JsonBadRequestException.parsePath(cause.path)?.ifEmpty { null }
-      val location = cause.location?.let { JsonBadRequestException.parseLocation(it) }
-      return ExceptionResult.Exception(constructor(path, location))
+  private fun fromBody(
+    intermediary: RestEndpointBodyException,
+    e: Exception,
+  ): ExceptionResult.Exception? {
+    intermediary.findCause<MissingKotlinParameterException>()?.let { cause ->
+      val (path, location) = JsonBadRequestException.metadata(cause)
+      return ExceptionResult.Exception(MissingRequiredProperty(path, location, e))
     }
-
-    fun result(constructor: KFunction0<JsonBadRequestException>): ExceptionResult.Exception =
-      ExceptionResult.Exception(constructor())
-
-    e.findCause<MissingKotlinParameterException>()?.let { cause ->
-      return result(::MissingRequiredProperty, cause)
+    intermediary.findCause<UnrecognizedPropertyException>()?.let { cause ->
+      val (path, location) = JsonBadRequestException.metadata(cause)
+      return ExceptionResult.Exception(UnrecognizedProperty(path, location, e))
     }
-    e.findCause<UnrecognizedPropertyException>()?.let { cause ->
-      return result(::UnrecognizedProperty, cause)
+    intermediary.findCause<IgnoredPropertyException>()?.let { cause ->
+      val (path, location) = JsonBadRequestException.metadata(cause)
+      return ExceptionResult.Exception(UnrecognizedProperty(path, location, e))
     }
-    e.findCause<IgnoredPropertyException>()?.let { cause ->
-      return result(::UnrecognizedProperty, cause)
+    intermediary.findCause<InvalidTypeIdException>()?.let { cause ->
+      val (path, location) = JsonBadRequestException.metadata(cause)
+      return ExceptionResult.Exception(UnrecognizedPolymorphicType(path, location, e))
     }
-    e.findCause<InvalidTypeIdException>()?.let { cause ->
-      return result(::UnrecognizedPolymorphicType, cause)
+    intermediary.findCause<JsonParseException>()?.let {
+      return ExceptionResult.Exception(MalformedJson(e))
     }
-    e.findCause<JsonParseException>()?.let {
-      return result(::MalformedJson)
-    }
-    e.findCause<JsonMappingException>()?.let { cause ->
-      return result(::InvalidProperty, cause)
+    intermediary.findCause<JsonMappingException>()?.let { cause ->
+      val (path, location) = JsonBadRequestException.metadata(cause)
+      return ExceptionResult.Exception(InvalidProperty(path, location, e))
     }
 
     return null
   }
 
   @Suppress("UnnecessaryLet")
-  private fun fromParam(e: RestEndpointParamException): ExceptionResult? {
-    fun result(
-      constructor: KFunction2<String?, JsonBadRequestException.Location?, JsonBadRequestException>,
-    ): ExceptionResult.Exception {
-      val path = e.name
-      val location = null
-      return ExceptionResult.Exception(constructor(path, location))
-    }
-
-    e.findCause<JsonMappingException>()?.let {
-      return result(::InvalidProperty)
+  private fun fromParam(
+    intermediary: RestEndpointParamException,
+    e: Exception,
+  ): ExceptionResult.Exception? {
+    intermediary.findCause<JsonMappingException>()?.let {
+      return ExceptionResult.Exception(InvalidProperty(intermediary.name, null, e))
     }
 
     return null

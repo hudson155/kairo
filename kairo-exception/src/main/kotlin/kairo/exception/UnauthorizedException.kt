@@ -3,8 +3,7 @@ package kairo.exception
 import io.ktor.http.HttpStatusCode
 
 public abstract class UnauthorizedException(
-  message: String?,
   cause: Exception? = null,
-) : KairoException(message, cause) {
+) : KairoException(null, cause) {
   final override val statusCode: HttpStatusCode = HttpStatusCode.Unauthorized
 }
