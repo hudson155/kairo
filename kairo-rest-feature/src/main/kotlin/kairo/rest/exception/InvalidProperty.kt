@@ -1,6 +1,10 @@
 package kairo.rest.exception
 
-public class InvalidProperty(
+internal class InvalidProperty(
   override val path: String?,
   override val location: Location?,
-) : JsonBadRequestException("Invalid property.")
+  cause: Exception,
+) : JsonBadRequestException(
+  message = "Invalid property.",
+  cause = cause,
+)

@@ -1,10 +1,7 @@
 package kairo.rest.exception
 
-import io.ktor.http.HttpStatusCode
-import kairo.exception.KairoException
+import kairo.exception.NotAcceptableException
 
-public class AcceptMismatch : KairoException(
+internal class AcceptMismatch : NotAcceptableException(
   message = "This endpoint does not support the provided Accept header.",
-) {
-  override val statusCode: HttpStatusCode = HttpStatusCode.NotAcceptable
-}
+)

@@ -8,15 +8,18 @@ import kairo.exception.BadRequestException
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-public abstract class JsonBadRequestException(message: String) : BadRequestException(message) {
-  public data class Location(
+internal abstract class JsonBadRequestException(
+  message: String,
+  cause: Exception,
+) : BadRequestException(message, cause) {
+  internal data class Location(
     val line: Int,
     val column: Int,
   )
 
-  public open val path: String? = null
+  open val path: String? = null
 
-  public open val location: Location? = null
+  open val location: Location? = null
 
   override val response: Map<String, Any>
     get() = super.response + buildMap {
@@ -24,8 +27,16 @@ public abstract class JsonBadRequestException(message: String) : BadRequestExcep
       location?.let { put("location", it) }
     }
 
-  public companion object {
-    internal fun parsePath(path: List<JsonMappingException.Reference>): String? {
+  internal companion object {
+    fun metadata(
+      cause: JsonMappingException,
+    ): Pair<String?, Location?> {
+      val path = parsePath(cause.path)?.ifEmpty { null }
+      val location = cause.location?.let { parseLocation(it) }
+      return Pair(path, location)
+    }
+
+    fun parsePath(path: List<JsonMappingException.Reference>): String? {
       try {
         return path.joinToString("") { reference ->
           buildString {
@@ -48,7 +59,7 @@ public abstract class JsonBadRequestException(message: String) : BadRequestExcep
     private fun JsonMappingException.Reference.isNumbered(): Boolean =
       fieldName == null && index >= 0
 
-    internal fun parseLocation(location: JsonLocation): Location =
+    fun parseLocation(location: JsonLocation): Location =
       Location(
         line = location.lineNr,
         column = location.columnNr,

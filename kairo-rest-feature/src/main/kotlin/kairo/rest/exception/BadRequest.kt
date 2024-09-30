@@ -5,4 +5,4 @@ import kairo.exception.BadRequestException
 /**
  * Generic bad request exception. Use a more specific type whenever possible.
  */
-public class BadRequest : BadRequestException(null)
+internal class BadRequest(cause: Exception) : BadRequestException(null, cause)
