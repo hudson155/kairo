@@ -7,6 +7,7 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.RoutingCall
 import io.ktor.util.reflect.typeInfo
 import kairo.reflect.typeParam
+import kairo.rest.auth.Auth
 import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.reader.RestEndpointReader
 import kairo.rest.template.RestEndpointTemplate
@@ -27,12 +28,24 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
   internal suspend fun handle(call: RoutingCall) {
     val endpoint = reader.endpoint(call)
     logger.debug { "Read endpoint: $endpoint." }
+    auth(endpoint)
     val response = handle(endpoint)
     logger.debug { "Result: $response." }
     val statusCode = statusCode(response)
     logger.debug { "Status code: $statusCode." }
     call.respond(statusCode, response)
   }
+
+  private suspend fun auth(endpoint: E) {
+    Auth().auth(endpoint)
+  }
+
+  public abstract suspend fun Auth.auth(endpoint: E): Auth.Success
+
+  public abstract suspend fun handle(endpoint: E): Response
+
+  protected open fun statusCode(response: Response): HttpStatusCode =
+    HttpStatusCode.OK
 
   @Suppress("SuspendFunWithCoroutineScopeReceiver")
   private suspend fun RoutingCall.respond(statusCode: HttpStatusCode, response: Response) {
@@ -42,9 +55,4 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
     }
     respond(statusCode, response, typeInfo<Any>())
   }
-
-  public abstract suspend fun handle(endpoint: E): Response
-
-  protected open fun statusCode(response: Response): HttpStatusCode =
-    HttpStatusCode.OK
 }

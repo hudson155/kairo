@@ -1,7 +1,11 @@
 package kairo.rest.exceptionHandler
 
+import kairo.protectedString.ProtectedString
 import kairo.rest.KairoRestConfig
 import kairo.rest.KairoRestFeature
+import kairo.rest.auth.AuthConfig
+import kairo.rest.auth.AuthVerifierConfig
+import kairo.rest.auth.JwtAuthMechanismConfig
 import kairo.restTesting.TestKairoRestFeature
 
 internal const val exceptionHandlerTestRestPort: Int = 8081
@@ -10,6 +14,7 @@ internal const val exceptionHandlerTestRestPort: Int = 8081
  * This test Feature intentionally extends [KairoRestFeature], not [TestKairoRestFeature].
  * In order for [ExceptionHandler]s to be tested properly, the entirety of Ktor's REST handling needs to be invoked.
  */
+@OptIn(ProtectedString.Access::class)
 internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
   KairoRestConfig(
     connector = KairoRestConfig.Connector(
@@ -24,6 +29,20 @@ internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
       connectionGroupSize = 4,
       workerGroupSize = 8,
       callGroupSize = 16,
+    ),
+    auth = AuthConfig(
+      verifiers = listOf(
+        AuthVerifierConfig.Jwt(
+          schemes = listOf("Bearer"),
+          mechanisms = listOf(
+            JwtAuthMechanismConfig.Jwt(
+              issuers = listOf("https://localhost:8081/"),
+              algorithm = JwtAuthMechanismConfig.Jwt.Algorithm.Hmac256,
+              secret = ProtectedString("Fake JWT secret value"),
+            ),
+          ),
+        ),
+      ),
     ),
   ),
 )
