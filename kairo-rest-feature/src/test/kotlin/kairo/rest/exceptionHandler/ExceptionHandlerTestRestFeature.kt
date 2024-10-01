@@ -11,7 +11,7 @@ internal const val exceptionHandlerTestRestPort: Int = 8081
  * In order for [ExceptionHandler]s to be tested properly, the entirety of Ktor's REST handling needs to be invoked.
  */
 internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
-  KairoRestConfig(
+  config = KairoRestConfig(
     connector = KairoRestConfig.Connector(
       host = "0.0.0.0",
       port = exceptionHandlerTestRestPort,
@@ -26,4 +26,5 @@ internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
       callGroupSize = 16,
     ),
   ),
+  authVerifiers = emptyList(),
 )

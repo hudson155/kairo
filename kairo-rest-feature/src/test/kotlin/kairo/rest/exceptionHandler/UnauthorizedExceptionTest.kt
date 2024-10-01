@@ -7,7 +7,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class UnauthorizedExceptionTest : ExceptionHandlerTest() {
-  internal class MyException : UnauthorizedException()
+  internal class MyException : UnauthorizedException(null)
 
   @Test
   fun test(): Unit = runTest {

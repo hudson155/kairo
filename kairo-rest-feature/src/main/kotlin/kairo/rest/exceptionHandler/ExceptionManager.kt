@@ -30,6 +30,8 @@ internal class ExceptionManager {
     )
 
   suspend fun handle(call: ApplicationCall, cause: Throwable) {
+    logger.debug(cause) { "Handling exception." }
+
     var e = cause
 
     handlers.forEach { handler ->

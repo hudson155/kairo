@@ -140,42 +140,63 @@ They are intended to be grouped together using Kotlin singleton objects.
 
 class OrganizationHandler @Inject constructor() {
   inner class Get : RestHandler<LibraryBookApi.Get, LibraryBookRep>() {
+    override suspend fun Auth.auth(endpoint: LibraryBookApi.Get): Auth.Result =
+      TODO()
+
     override suspend fun handle(endpoint: LibraryBookApi.Get): LibraryBookRep {
       TODO()
     }
   }
 
   inner class ListAll : RestHandler<LibraryBookApi.ListAll, List<LibraryBookRep>>() {
+    override suspend fun Auth.auth(endpoint: LibraryBookApi.ListAll): Auth.Result =
+      TODO()
+
     override suspend fun handle(endpoint: LibraryBookApi.ListAll): List<LibraryBookRep> {
       TODO()
     }
   }
 
   inner class SearchByIsbn : RestHandler<LibraryBookApi.SearchByIsbn, List<LibraryBookRep>>() {
+    override suspend fun Auth.auth(endpoint: LibraryBookApi.SearchByIsbn): Auth.Result =
+      TODO()
+
     override suspend fun handle(endpoint: LibraryBookApi.SearchByIsbn): List<LibraryBookRep> {
       TODO()
     }
   }
 
   inner class SearchByText : RestHandler<LibraryBookApi.SearchByText, List<LibraryBookRep>>() {
+    override suspend fun Auth.auth(endpoint: LibraryBookApi.SearchByText): Auth.Result =
+      TODO()
+
     override suspend fun handle(endpoint: LibraryBookApi.SearchByText): List<LibraryBookRep> {
       TODO()
     }
   }
 
   inner class Create : RestHandler<LibraryBookApi.Create, LibraryBookRep>() {
+    override suspend fun Auth.auth(endpoint: LibraryBookApi.Create): Auth.Result =
+      TODO()
+
     override suspend fun handle(endpoint: LibraryBookApi.Create): LibraryBookRep {
       TODO()
     }
   }
 
   inner class Update : RestHandler<LibraryBookApi.Update, LibraryBookRep>() {
+    override suspend fun Auth.auth(endpoint: LibraryBookApi.Update): Auth.Result =
+      TODO()
+
     override suspend fun handle(endpoint: LibraryBookApi.Update): LibraryBookRep {
       TODO()
     }
   }
 
   inner class Delete : RestHandler<LibraryBookApi.Delete, LibraryBookRep>() {
+    override suspend fun Auth.auth(endpoint: LibraryBookApi.Delete): Auth.Result =
+      TODO()
+
     override suspend fun handle(endpoint: LibraryBookApi.Delete): LibraryBookRep {
       TODO()
     }
