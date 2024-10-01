@@ -11,7 +11,7 @@ dependencies {
   implementation(project(":kairo-reflect"))
   api(project(":kairo-serialization")) // Exposed for clients.
 
-  implementation(libs.auth0JavaJwt)
+  api(libs.auth0JavaJwt)
   api(libs.ktorHttpJvm) // Exposed for clients.
   implementation(libs.ktorSerializationJackson)
   implementation(libs.ktorServerAuth)
