@@ -16,11 +16,11 @@ private val logger: KLogger = KotlinLogging.logger {}
 
 public open class KairoRestFeature(
   private val config: KairoRestConfig,
-  private val authVerifiers: List<AuthVerifier>,
+  private val authVerifiers: List<AuthVerifier<*>>,
 ) : BaseKairoRestFeature() {
   override fun bind(binder: Binder) {
     binder.bind<KairoRestConfig>().toInstance(config)
-    binder.bind<List<AuthVerifier>>().toInstance(authVerifiers)
+    binder.bind<List<AuthVerifier<*>>>().toInstance(authVerifiers)
     binder.bind<KtorServer>().toProvider(KtorServerProvider::class)
     super.bind(binder)
   }

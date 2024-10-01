@@ -21,7 +21,7 @@ import kairo.rest.handler.RestHandler
 @Singleton
 internal class KtorServerProvider @Inject constructor(
   private val config: KairoRestConfig,
-  private val authVerifiers: List<AuthVerifier>,
+  private val authVerifiers: List<AuthVerifier<*>>,
   private val handlers: Set<RestHandler<*, *>>,
 ) : LazySingletonProvider<KtorServer>() {
   override fun create(): KtorServer =

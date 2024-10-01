@@ -3,7 +3,6 @@ package kairo.rest.exceptionHandler
 import kairo.protectedString.ProtectedString
 import kairo.rest.KairoRestConfig
 import kairo.rest.KairoRestFeature
-import kairo.rest.auth.KairoAuthConfig
 import kairo.restTesting.TestKairoRestFeature
 
 internal const val exceptionHandlerTestRestPort: Int = 8081

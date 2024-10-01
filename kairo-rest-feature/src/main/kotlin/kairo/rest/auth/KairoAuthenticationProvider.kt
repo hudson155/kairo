@@ -17,11 +17,11 @@ private val logger: KLogger = KotlinLogging.logger {}
  * WARNING: Be careful not to log sensitive data in this class.
  */
 public class KairoAuthenticationProvider(
-  verifiers: List<AuthVerifier>,
+  verifiers: List<AuthVerifier<*>>,
 ) : AuthenticationProvider(Config(null)) {
   public class Config(name: Nothing?) : AuthenticationProvider.Config(name)
 
-  private val verifiers: Map<String, AuthVerifier> =
+  private val verifiers: Map<String, AuthVerifier<*>> =
     verifiers
       .flatMap { verifier -> verifier.schemes.map { Pair(it.lowercase(), verifier) } }
       .toMap()
@@ -40,12 +40,6 @@ public class KairoAuthenticationProvider(
     }
   }
 
-  // TODO: Test happy path (missing)
-  // TODO: Test happy path (present)
-  // TODO: Test for multiple headers?
-  // TODO: Test for invalid header, such as "Bearer abc def", "Bearer", "Bearer ", etc.
-  // TODO: Test for malformed, invalid, expired, etc. JWT.
-
   private fun getAuthHeader(context: AuthenticationContext): HttpAuthHeader.Single? {
     logger.debug { "Getting auth principal." }
     val authHeader = context.call.request.parseAuthorizationHeader() ?: return null
@@ -53,7 +47,7 @@ public class KairoAuthenticationProvider(
     return authHeader
   }
 
-  private fun getVerifier(authHeader: HttpAuthHeader.Single): AuthVerifier? {
+  private fun getVerifier(authHeader: HttpAuthHeader.Single): AuthVerifier<*>? {
     logger.debug { "Getting verifier." }
     val scheme = authHeader.authScheme.lowercase()
     return verifiers[scheme]

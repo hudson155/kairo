@@ -7,7 +7,7 @@ import kairo.rest.auth.AuthVerifier
 import kairo.rest.auth.KairoAuthenticationProvider
 
 internal fun Application.installAuth(
-  verifiers: List<AuthVerifier>,
+  verifiers: List<AuthVerifier<*>>,
 ) {
   val provider = KairoAuthenticationProvider(verifiers)
 

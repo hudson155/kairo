@@ -26,7 +26,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * [createModule] returns a function that sets up a single module.
  */
 internal fun createModule(
-  authVerifiers: List<AuthVerifier>,
+  authVerifiers: List<AuthVerifier<*>>,
   handlers: Set<RestHandler<*, *>>,
 ): Application.() -> Unit =
   {
