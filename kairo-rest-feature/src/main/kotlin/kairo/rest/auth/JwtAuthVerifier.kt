@@ -15,7 +15,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 public class JwtAuthVerifier(
   override val schemes: List<String>,
   private val mechanisms: Map<String?, JwtAuthMechanism>,
-) : AuthVerifier() {
+) : AuthVerifier<JwtPrincipal>() {
   override fun verify(authHeader: HttpAuthHeader.Single): JwtPrincipal {
     logger.debug { "Verifying scheme: ${authHeader.authScheme}." }
     val decodedJwt = decodeJwt(authHeader)
