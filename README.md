@@ -240,12 +240,18 @@ object TypicalLibraryBookApi {
 
 class LibraryBookHandler @Inject constructor() {
   inner class Get : RestHandler<LibraryBookApi.Get, LibraryBookRep>() {
+    override suspend fun Auth.auth(endpoint: LibraryBookApi.Get): Auth.Result =
+      TODO()
+
     override suspend fun handle(endpoint: LibraryBookApi.Get): LibraryBookRep {
       TODO()
     }
   }
 
   inner class Create : RestHandler<LibraryBookApi.Create, LibraryBookRep>() {
+    override suspend fun Auth.auth(endpoint: LibraryBookApi.Create): Auth.Result =
+      TODO()
+
     override suspend fun handle(endpoint: LibraryBookApi.Create): LibraryBookRep {
       TODO()
     }
