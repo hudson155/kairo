@@ -25,7 +25,7 @@ internal abstract class ConfigDeserializer<T : Any>(
   private val config: ConfigLoaderConfig,
 ) : StdDeserializer<T>(kClass.java) {
   private val allowInsecureConfigSources: Boolean =
-    config.environmentVariableSupplier.get("KAIRO_ALLOW_INSECURE_CONFIG_SOURCES") == true.toString()
+    config.environmentVariableSupplier["KAIRO_ALLOW_INSECURE_CONFIG_SOURCES"] == true.toString()
 
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): T? {
     val source = p.readValue<ConfigLoaderSource>()
@@ -58,13 +58,13 @@ internal abstract class ConfigDeserializer<T : Any>(
   private fun fromEnvironmentVariable(source: ConfigLoaderSource.EnvironmentVariable): ProtectedString? {
     val (name, default) = source
     logger.debug { "Config value is from environment variable: $name." }
-    return config.environmentVariableSupplier.get(name, default)?.let { ProtectedString(it) }
+    return config.environmentVariableSupplier[name, default]?.let { ProtectedString(it) }
   }
 
   private fun fromGcpSecret(source: ConfigLoaderSource.GcpSecret): ProtectedString? {
     val (id) = source
     logger.debug { "Config value is from GCP secret: $id." }
-    return config.gcpSecretSupplier.get(id)
+    return config.gcpSecretSupplier[id]
   }
 
   /**

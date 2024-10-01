@@ -12,7 +12,7 @@ public class StaticEnvironmentVariableSupplier(
   /**
    * Note: This implementation ignores [default].
    */
-  public override fun get(name: String, default: String?): String? {
+  public override operator fun get(name: String, default: String?): String? {
     logger.debug { "Getting environment variable: $name." }
     if (name !in environmentVariables) throw NotImplementedError("Environment variable not provided: $name.")
     return environmentVariables[name]

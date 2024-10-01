@@ -30,6 +30,7 @@ public open class KairoSqlFeature(
   override fun start(injector: Injector, features: Set<Feature>) {
     logger.info { "Getting a connection to initialize the SQL data source." }
     val dataSource = injector.getInstance<HikariDataSource>()
+    @Suppress("UsePropertyAccessSyntax")
     dataSource.getConnection()
   }
 

@@ -26,12 +26,12 @@ internal class JacksonHandler : ExceptionHandler() {
     if (e !is Exception) return ExceptionResult.Unhandled
 
     e.findCause<RestEndpointBodyException>()?.let { intermediary ->
-      fromBody(intermediary, e)?.let { return it }
-      return ExceptionResult.Exception(UnknownJsonError(e))
+      fromBody(intermediary, e)?.let { return@handle it }
+      return@handle ExceptionResult.Exception(UnknownJsonError(e))
     }
     e.findCause<RestEndpointParamException>()?.let { intermediary ->
-      fromParam(intermediary, e)?.let { return it }
-      return ExceptionResult.Exception(UnknownJsonError(e))
+      fromParam(intermediary, e)?.let { return@handle it }
+      return@handle ExceptionResult.Exception(UnknownJsonError(e))
     }
 
     return ExceptionResult.Unhandled
@@ -44,26 +44,26 @@ internal class JacksonHandler : ExceptionHandler() {
   ): ExceptionResult.Exception? {
     intermediary.findCause<MissingKotlinParameterException>()?.let { cause ->
       val (path, location) = JsonBadRequestException.metadata(cause)
-      return ExceptionResult.Exception(MissingRequiredProperty(path, location, e))
+      return@fromBody ExceptionResult.Exception(MissingRequiredProperty(path, location, e))
     }
     intermediary.findCause<UnrecognizedPropertyException>()?.let { cause ->
       val (path, location) = JsonBadRequestException.metadata(cause)
-      return ExceptionResult.Exception(UnrecognizedProperty(path, location, e))
+      return@fromBody ExceptionResult.Exception(UnrecognizedProperty(path, location, e))
     }
     intermediary.findCause<IgnoredPropertyException>()?.let { cause ->
       val (path, location) = JsonBadRequestException.metadata(cause)
-      return ExceptionResult.Exception(UnrecognizedProperty(path, location, e))
+      return@fromBody ExceptionResult.Exception(UnrecognizedProperty(path, location, e))
     }
     intermediary.findCause<InvalidTypeIdException>()?.let { cause ->
       val (path, location) = JsonBadRequestException.metadata(cause)
-      return ExceptionResult.Exception(UnrecognizedPolymorphicType(path, location, e))
+      return@fromBody ExceptionResult.Exception(UnrecognizedPolymorphicType(path, location, e))
     }
     intermediary.findCause<JsonParseException>()?.let {
-      return ExceptionResult.Exception(MalformedJson(e))
+      return@fromBody ExceptionResult.Exception(MalformedJson(e))
     }
     intermediary.findCause<JsonMappingException>()?.let { cause ->
       val (path, location) = JsonBadRequestException.metadata(cause)
-      return ExceptionResult.Exception(InvalidProperty(path, location, e))
+      return@fromBody ExceptionResult.Exception(InvalidProperty(path, location, e))
     }
 
     return null
@@ -75,7 +75,7 @@ internal class JacksonHandler : ExceptionHandler() {
     e: Exception,
   ): ExceptionResult.Exception? {
     intermediary.findCause<JsonMappingException>()?.let {
-      return ExceptionResult.Exception(InvalidProperty(intermediary.name, null, e))
+      return@fromParam ExceptionResult.Exception(InvalidProperty(intermediary.name, null, e))
     }
 
     return null

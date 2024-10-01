@@ -4,6 +4,8 @@
 
 !/codeStyles/
 !/codeStyles/**
+!/inspectionProfiles/
+!/inspectionProfiles/**
 !/runConfigurations/
 !/runConfigurations/**
 

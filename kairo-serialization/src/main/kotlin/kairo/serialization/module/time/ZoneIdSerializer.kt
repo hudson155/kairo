@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import java.time.ZoneId
 import java.time.ZoneOffset
+import java.time.ZoneRegion
 
 /**
  * We don't use com.fasterxml.jackson.datatype:jackson-datatype-jsr310,
@@ -24,9 +25,7 @@ public class ZoneIdSerializer : StdSerializer<ZoneId>(ZoneId::class.java) {
       if (timeZone == ZoneOffset.UTC) return "UTC"
       throw IllegalArgumentException("The only supported ZoneOffset is UTC.")
     }
-    if (timeZone == ZoneId.of("UTC")) {
-      throw IllegalArgumentException("Prefer ZoneOffset.UTC to ZoneId.of(\"UTC\").")
-    }
+    require(timeZone != ZoneId.of("UTC")) { "Prefer ZoneOffset.UTC to ZoneId.of(\"UTC\")." }
     return timeZone.id
   }
 }

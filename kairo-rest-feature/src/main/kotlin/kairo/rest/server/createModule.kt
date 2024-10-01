@@ -52,9 +52,8 @@ private fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) {
 internal fun Route.route(template: RestEndpointTemplate): Route {
   var route = createRouteFromPath(KtorPathTemplateRestEndpointPrinter.write(template))
   route = route.createChild(HttpMethodRouteSelector(template.method))
-  template.query.params.forEach { param ->
-    val value = param.value
-    route = if (param.required) route.param(value) {} else route.optionalParam(value) {}
+  template.query.params.forEach { (value, required) ->
+    route = if (required) route.param(value) {} else route.optionalParam(value) {}
   }
   if (template.contentType != null) {
     route = route.contentType(template.contentType) {}

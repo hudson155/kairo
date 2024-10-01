@@ -36,7 +36,7 @@ public inline fun <T> Iterable<T>.singleNullOrThrow(predicate: (T) -> Boolean): 
   var found = false
   for (element in this) {
     if (!predicate(element)) continue
-    if (found) throw IllegalArgumentException("Predicate matches more than one element.")
+    require(!found) { "Predicate matches more than one element." }
     single = element
     found = true
   }

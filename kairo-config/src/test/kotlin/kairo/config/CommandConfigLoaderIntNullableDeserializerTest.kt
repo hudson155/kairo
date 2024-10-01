@@ -18,7 +18,7 @@ internal class CommandConfigLoaderIntNullableDeserializerTest : ConfigLoaderDese
     val message: Int?,
   )
 
-  val nonNullString = """
+  private val nonNullString: String = """
     {
       "message": {
         "source": "Command",
@@ -27,7 +27,7 @@ internal class CommandConfigLoaderIntNullableDeserializerTest : ConfigLoaderDese
     }
   """.trimIndent()
 
-  val nullString = """
+  private val nullString: String = """
     {
       "message": {
         "source": "Command",
@@ -36,7 +36,7 @@ internal class CommandConfigLoaderIntNullableDeserializerTest : ConfigLoaderDese
     }
   """.trimIndent()
 
-  val incorrectTypeString = """
+  private val incorrectTypeString: String = """
     {
       "message": {
         "source": "Command",

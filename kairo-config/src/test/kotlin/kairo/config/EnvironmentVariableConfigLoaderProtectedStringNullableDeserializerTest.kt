@@ -19,7 +19,7 @@ internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserialize
     val message: ProtectedString?,
   )
 
-  val stringWithDefault = """
+  private val stringWithDefault: String = """
     {
       "message": {
         "source": "EnvironmentVariable",
@@ -29,7 +29,7 @@ internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserialize
     }
   """.trimIndent()
 
-  val stringWithoutDefault = """
+  private val stringWithoutDefault: String = """
     {
       "message": {
         "source": "EnvironmentVariable",
@@ -93,7 +93,7 @@ internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserialize
   }
 
   private fun environmentVariable(value: String?) {
-    every { environmentVariableSupplier.get("MESSAGE", any()) } answers {
+    every { environmentVariableSupplier["MESSAGE", any()] } answers {
       return@answers value ?: secondArg()
     }
   }

@@ -66,7 +66,7 @@ internal class EndpointNotFoundTest : ExceptionHandlerTest() {
      * I can't find a reasonable way to test this, because the Ktor client manages Content-Type headers internally.
      * Manual QA is required instead.
      *
-     * Manually QA missing, malformed, and mismatched Content-Type headers.
+     * Manually QA missing, malformed, and mismatched "Content-Type" headers.
      */
   }
 
@@ -76,7 +76,7 @@ internal class EndpointNotFoundTest : ExceptionHandlerTest() {
      * I can't find a reasonable way to test this, because the Ktor client manages Content-Type headers internally.
      * Manual QA is required instead.
      *
-     * Manually QA missing, malformed, and mismatched Content-Type headers.
+     * Manually QA missing, malformed, and mismatched "Content-Type" headers.
      */
   }
 
@@ -86,7 +86,7 @@ internal class EndpointNotFoundTest : ExceptionHandlerTest() {
      * I can't find a reasonable way to test this, because the Ktor client manages Accept headers internally.
      * Manual QA is required instead.
      *
-     * Manually QA missing, malformed, and mismatched Accept headers.
+     * Manually QA missing, malformed, and mismatched "Accept" headers.
      */
   }
 
@@ -96,7 +96,7 @@ internal class EndpointNotFoundTest : ExceptionHandlerTest() {
      * I can't find a reasonable way to test this, because the Ktor client manages Accept headers internally.
      * Manual QA is required instead.
      *
-     * Manually QA missing, malformed, and mismatched Accept headers.
+     * Manually QA missing, malformed, and mismatched "Accept" headers.
      */
   }
 }

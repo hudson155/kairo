@@ -46,7 +46,7 @@ internal class ExceptionManager {
         is ExceptionResult.Handled -> {
           // Handled exceptions cause a response and stop propagation.
           call.respond(result.statusCode, result.response)
-          return
+          return@handle
         }
       }
     }

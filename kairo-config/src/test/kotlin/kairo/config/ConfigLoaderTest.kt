@@ -56,7 +56,7 @@ internal class ConfigLoaderTest {
 
   @Test
   fun `environment variable not set`(): Unit = runTest {
-    every { environmentVariableSupplier.get("KAIRO_CONFIG", any()) } returns null
+    every { environmentVariableSupplier["KAIRO_CONFIG", any()] } returns null
     shouldThrow<IllegalStateException> {
       configLoader.load<TestConfig>()
     }.shouldHaveMessage("Config name was not provided and KAIRO_CONFIG is not set.")
@@ -64,7 +64,7 @@ internal class ConfigLoaderTest {
 
   @Test
   fun `basic config from environment variable`(): Unit = runTest {
-    every { environmentVariableSupplier.get("KAIRO_CONFIG", any()) } returns "basic-config"
+    every { environmentVariableSupplier["KAIRO_CONFIG", any()] } returns "basic-config"
     configLoader.load<TestConfig>().shouldBe(testConfig)
   }
 

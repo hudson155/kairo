@@ -4,6 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.ktor.http.HttpMethod
+import kairo.rest.endpoint.RestEndpoint
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 

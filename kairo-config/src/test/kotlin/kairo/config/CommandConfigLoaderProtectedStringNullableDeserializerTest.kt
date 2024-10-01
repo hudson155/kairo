@@ -18,7 +18,7 @@ internal class CommandConfigLoaderProtectedStringNullableDeserializerTest : Conf
     val message: ProtectedString?,
   )
 
-  val nonNullString = """
+  private val nonNullString: String = """
     {
       "message": {
         "source": "Command",
@@ -27,7 +27,7 @@ internal class CommandConfigLoaderProtectedStringNullableDeserializerTest : Conf
     }
   """.trimIndent()
 
-  val nullString = """
+  private val nullString: String = """
     {
       "message": {
         "source": "Command",
