@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 /**
  * This test is intended to test behaviour strictly related to [ProtectedString] plaintext values.
  */
+@OptIn(ProtectedString.Access::class)
 internal class PlaintextConfigLoaderProtectedStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
    * This test is specifically for nullable [ProtectedString] properties.
@@ -44,9 +45,7 @@ internal class PlaintextConfigLoaderProtectedStringNullableDeserializerTest : Co
   fun `non-null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(nonNullString)
-    }
+    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass(ProtectedString("Hello, World!")))
   }
 
   @Test

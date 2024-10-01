@@ -24,15 +24,13 @@ internal abstract class ConfigDeserializer<T : Any>(
   kClass: KClass<T>,
   private val config: ConfigLoaderConfig,
 ) : StdDeserializer<T>(kClass.java) {
-  private val allowInsecureConfigSources: Boolean =
+  protected val allowInsecureConfigSources: Boolean =
     config.environmentVariableSupplier["KAIRO_ALLOW_INSECURE_CONFIG_SOURCES"] == true.toString()
 
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): T? {
     val source = p.readValue<ConfigLoaderSource>()
     if (!isSecure(source)) {
-      require(allowInsecureConfigSources) {
-        "Config loader source ${source::class.simpleName!!} is considered insecure."
-      }
+      requireInsecure(source::class.simpleName!!)
       logger.warn { "Config loader source ${source::class.simpleName!!} is considered insecure." }
     }
     val string = when (source) {
@@ -47,6 +45,12 @@ internal abstract class ConfigDeserializer<T : Any>(
    * Depending on the type [T], different sources may be secure or insecure.
    */
   protected abstract fun isSecure(source: ConfigLoaderSource): Boolean
+
+  protected fun requireInsecure(source: String) {
+    require(allowInsecureConfigSources) {
+      "Config loader source $source is considered insecure."
+    }
+  }
 
   private fun fromCommand(source: ConfigLoaderSource.Command): ProtectedString? {
     val (command) = source
