@@ -21,14 +21,15 @@ private val logger: KLogger = KotlinLogging.logger {}
  * WARNING: Be careful not to log sensitive data in this class.
  */
 public class KairoAuthenticationProvider(
-  verifiers: List<AuthVerifier<*>>,
+  private val verifiers: Map<String, AuthVerifier<*>>,
 ) : AuthenticationProvider(Config(null)) {
   public class Config(name: Nothing?) : AuthenticationProvider.Config(name)
 
-  private val verifiers: Map<String, AuthVerifier<*>> =
-    verifiers
+  public constructor(verifiers: List<AuthVerifier<*>>) : this(
+    verifiers = verifiers
       .flatMap { verifier -> verifier.schemes.map { Pair(it.lowercase(), verifier) } }
-      .toMap()
+      .toMap(),
+  )
 
   override suspend fun onAuthenticate(context: AuthenticationContext) {
     try {
