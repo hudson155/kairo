@@ -56,7 +56,7 @@ public open class TestKairoSqlFeature(
   private fun filterTables(injector: Injector, tables: List<String>): List<String> {
     val migrationConfig = injector.getInstanceOptional<KairoSqlMigrationConfig>() ?: return tables
     return tables.filter { table ->
-      // Don't truncate the migration table or we'll have to run migrations again.
+      // Don't truncate the migration table, or we'll have to run migrations again.
       table != "${migrationConfig.defaultSchema}.${migrationConfig.tableName}"
     }
   }

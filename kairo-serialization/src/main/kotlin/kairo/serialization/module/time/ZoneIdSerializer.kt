@@ -24,9 +24,7 @@ public class ZoneIdSerializer : StdSerializer<ZoneId>(ZoneId::class.java) {
       if (timeZone == ZoneOffset.UTC) return "UTC"
       throw IllegalArgumentException("The only supported ZoneOffset is UTC.")
     }
-    if (timeZone == ZoneId.of("UTC")) {
-      throw IllegalArgumentException("Prefer ZoneOffset.UTC to ZoneId.of(\"UTC\").")
-    }
+    require(timeZone != ZoneId.of("UTC")) { "Prefer ZoneOffset.UTC to ZoneId.of(\"UTC\")." }
     return timeZone.id
   }
 }

@@ -65,7 +65,7 @@ public class ConfigLoader(
 
     val environmentVariableName = "KAIRO_CONFIG"
     logger.info { "Getting config name from $environmentVariableName environment variable." }
-    return config.environmentVariableSupplier.get(environmentVariableName)
+    return config.environmentVariableSupplier[environmentVariableName]
       ?: error("Config name was not provided and $environmentVariableName is not set.")
   }
 

@@ -21,7 +21,7 @@ Kairo is an application framework built for Kotlin.
 
 Kairo is split up into several separate modules.
 You will need a number of these.
-Each modules falls into one of 3 categories:
+Each module falls into one of 3 categories:
 
 1. **Common modules:**
    These are intended for your use.

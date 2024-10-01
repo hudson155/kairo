@@ -13,7 +13,6 @@ config:
 processors:
   active: false
   exclude:
-#    - 'DetektProgressListener'
     - 'KtFileCountProcessor'
     - 'PackageCountProcessor'
     - 'ClassCountProcessor'
@@ -30,12 +29,7 @@ processors:
 console-reports:
   active: true
   exclude:
-#    - 'ProjectStatisticsReport'
-#    - 'ComplexityReport'
-#    - 'NotificationReport'
-#    - 'FindingsReport'
     - 'FileBasedFindingsReport'
-#    - 'LiteFindingsReport'
 
 output-reports:
   active: false
@@ -588,8 +582,12 @@ style:
     active: true
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
-      - 'com.google.inject.TypeLiteral' # Use the Kotlin overload.
+
+      # Use the Kotlin overload.
+      - 'com.google.inject.TypeLiteral'
+
       - 'io.ktor.client.HttpClient' # Use kairo.client.KairoClient instead.
+
       - 'io.ktor.server.plugins.BadRequestException' # Use kairo.exception.BadRequestException instead.
       - 'io.ktor.server.plugins.CannotTransformContentToTypeException'
       - 'io.ktor.server.plugins.MissingRequestParameterException'
@@ -597,45 +595,60 @@ style:
       - 'io.ktor.server.plugins.ParameterConversionException'
       - 'io.ktor.server.plugins.PayloadTooLargeException'
       - 'io.ktor.server.plugins.UnsupportedMediaTypeException'
+
       - 'jakarta.validation.constraints.*'
+
       - 'java.util.UUID' # Use kotlin.uuid.Uuid instead.
+
       - 'javax.inject.*'
+
       - 'kotlin.time.Duration'
+
       - 'org.junit.jupiter.api.Assertions.*'
       - 'org.slf4j.Logger'
       - 'org.slf4j.LoggerFactory'
   ForbiddenMethodCall:
     active: true
     methods:
-      - 'com.fasterxml.jackson.core.JsonParser.readValueAs' # Use the Kotlin overload.
-      - 'com.fasterxml.jackson.databind.BeanProperty.getAnnotation' # Use the Kotlin overload.
-      - 'com.fasterxml.jackson.databind.ObjectMapper.convertValue' # Use the Kotlin overload.
-      - 'com.fasterxml.jackson.databind.ObjectMapper.readValue' # Use the Kotlin overload.
-      - 'com.google.inject.Binder.bind' # Use the Kotlin overload.
-      - 'com.google.inject.Injector.getExistingBinding' # Use the Kotlin overload.
-      - 'com.google.inject.Injector.getInstance' # Use the Kotlin overload.
-      - 'com.google.inject.binder.ScopedBindingBuilder.in' # Use the Kotlin overload.
-      - 'com.google.inject.binder.LinkedBindingBuilder.to' # Use the Kotlin overload.
-      - 'com.google.inject.binder.LinkedBindingBuilder.toConstructor' # Use the Kotlin overload.
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(jakarta.inject.Provider)' # Use the Kotlin overload.
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(java.lang.Class)' # Use the Kotlin overload.
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.TypeLiteral)' # Use the Kotlin overload.
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.Key)' # Use the Kotlin overload.
+
+      # Use the Kotlin overload.
+      - 'com.fasterxml.jackson.core.JsonParser.readValueAs'
+      - 'com.fasterxml.jackson.databind.BeanProperty.getAnnotation'
+      - 'com.fasterxml.jackson.databind.ObjectMapper.convertValue'
+      - 'com.fasterxml.jackson.databind.ObjectMapper.readValue'
+
+      # Use the Kotlin overload.
+      - 'com.google.inject.Binder.bind'
+      - 'com.google.inject.Injector.getExistingBinding'
+      - 'com.google.inject.Injector.getInstance'
+      - 'com.google.inject.binder.ScopedBindingBuilder.in'
+      - 'com.google.inject.binder.LinkedBindingBuilder.to'
+      - 'com.google.inject.binder.LinkedBindingBuilder.toConstructor'
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(jakarta.inject.Provider)'
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(java.lang.Class)'
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.TypeLiteral)'
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.Key)'
+
       - 'java.lang.Runtime.getRuntime'
       - 'java.lang.System.getenv'
       - 'java.lang.Thread.currentThread'
       - 'java.time.format.DateTimeFormatter.ofPattern(java.lang.String)' # Use the overload that takes a Locale.
       - 'java.time.Instant.now()' # Use the overload that takes a Clock.
       - 'java.time.LocalDate.now()' # Use the overload that takes a Clock.
-      - 'java.time.LocalDateTime.now' # Class should never be used.
-      - 'java.time.LocalTime.now' # Class should never be used.
-      - 'java.time.OffsetDateTime.now' # Class should never be used.
-      - 'java.time.OffsetTime.now' # Class should never be used.
-      - 'java.time.ZonedDateTime.now' # Class should never be used.
+
+      # Class should never be used.
+      - 'java.time.LocalDateTime.now'
+      - 'java.time.LocalTime.now'
+      - 'java.time.OffsetDateTime.now'
+      - 'java.time.OffsetTime.now'
+      - 'java.time.ZonedDateTime.now'
+
       - 'kotlin.collections.singleOrNull' # singleNullOrThrow is less surprising.
       - 'kotlin.io.print'
       - 'kotlin.io.println'
-      - 'org.jdbi.v3.core.result.ResultBearing.mapTo' # Use the Kotlin overload.
+
+      # Use the Kotlin overload.
+      - 'org.jdbi.v3.core.result.ResultBearing.mapTo'
   ForbiddenSuppress:
     active: false
   ForbiddenVoid:

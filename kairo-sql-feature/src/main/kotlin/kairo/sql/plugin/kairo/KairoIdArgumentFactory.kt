@@ -9,6 +9,6 @@ import org.jdbi.v3.core.config.ConfigRegistry
 internal class KairoIdArgumentFactory : AbstractArgumentFactory<KairoId>(Types.VARCHAR) {
   override fun build(value: KairoId, config: ConfigRegistry): Argument =
     Argument { position, statement, _ ->
-      statement.setString(position, value.toString())
+      statement.setString(position, "$value")
     }
 }

@@ -2,6 +2,7 @@ package kairo.rest.template
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kairo.rest.endpoint.RestEndpoint
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 

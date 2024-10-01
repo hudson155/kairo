@@ -9,6 +9,7 @@ import kairo.serialization.module.configurePrettyPrinting
 import kairo.serialization.module.increaseStrictness
 import kairo.serialization.module.java.configureJava
 import kairo.serialization.module.kotlin.configureKotlin
+import kairo.serialization.module.primitives.StringDeserializer
 import kairo.serialization.module.primitives.TrimWhitespace
 import kairo.serialization.module.primitives.configurePrimitives
 import kairo.serialization.module.setUnknownPropertyHandling

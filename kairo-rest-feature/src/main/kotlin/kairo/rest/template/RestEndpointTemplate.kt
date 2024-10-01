@@ -59,7 +59,7 @@ internal data class RestEndpointTemplate(
         val isQuery = param.hasAnnotation<RestEndpoint.QueryParam>()
         if (param.name == RestEndpoint<*, *>::body.name) {
           require(!isPath && !isQuery) { "REST endpoint ${endpoint.qualifiedName!!} body cannot be param." }
-          return
+          return@validateParams
         }
         require(!(isPath && isQuery)) {
           "REST endpoint ${endpoint.qualifiedName!!} param cannot be both path and query: ${param.name!!}."
@@ -187,13 +187,12 @@ internal data class RestEndpointTemplate(
           }
           throw IllegalArgumentException(error, e)
         }
-      } else {
-        require(annotation == null) {
-          "REST endpoint ${endpoint.qualifiedName!!} may not have @${RestEndpoint.ContentType::class.simpleName!!}" +
-            " since it does not have a body."
-        }
-        return null
       }
+      require(annotation == null) {
+        "REST endpoint ${endpoint.qualifiedName!!} may not have @${RestEndpoint.ContentType::class.simpleName!!}" +
+          " since it does not have a body."
+      }
+      return null
     }
 
     private fun parseAccept(endpoint: KClass<out RestEndpoint<*, *>>): ContentType? {

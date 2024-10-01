@@ -8,5 +8,5 @@ import kairo.protectedString.ProtectedString
  * This abstract class is for testability.
  */
 public abstract class GcpSecretSupplier {
-  public abstract fun get(id: String): ProtectedString?
+  public abstract operator fun get(id: String): ProtectedString?
 }

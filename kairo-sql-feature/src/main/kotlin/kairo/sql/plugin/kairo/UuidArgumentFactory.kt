@@ -12,7 +12,7 @@ internal class UuidArgumentFactory : AbstractArgumentFactory<Uuid>(Types.OTHER) 
     Argument { position, statement, _ ->
       val pgObject = PGobject().apply {
         this.type = "uuid"
-        this.value = value.toString()
+        this.value = "$value"
       }
       statement.setObject(position, pgObject)
     }

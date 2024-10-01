@@ -21,7 +21,7 @@ internal class GcpSecretConfigLoaderStringDefaultDeserializerTest : ConfigLoader
     val message: String,
   )
 
-  val string = """
+  private val string: String = """
     {
       "message": {
         "source": "GcpSecret",
@@ -69,6 +69,6 @@ internal class GcpSecretConfigLoaderStringDefaultDeserializerTest : ConfigLoader
   }
 
   private fun gcpSecret(value: ProtectedString?) {
-    every { gcpSecretSupplier.get("projects/012345678900/secrets/example/versions/1") } returns value
+    every { gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"] } returns value
   }
 }

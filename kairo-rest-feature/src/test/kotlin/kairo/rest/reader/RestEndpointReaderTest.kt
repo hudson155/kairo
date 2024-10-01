@@ -12,6 +12,7 @@ import java.util.Optional
 import kairo.id.KairoId
 import kairo.rest.LibraryBookRep
 import kairo.rest.TypicalLibraryBookApi
+import kairo.rest.endpoint.RestEndpoint
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 

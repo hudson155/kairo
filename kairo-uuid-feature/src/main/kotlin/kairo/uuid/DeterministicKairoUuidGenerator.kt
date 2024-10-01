@@ -26,6 +26,6 @@ public class DeterministicKairoUuidGenerator : KairoUuidGenerator() {
 
   public companion object {
     public fun generate(id: Int): Uuid =
-      Uuid.parse("00000000-0000-0000-0000-${id.toString().padStart(12, '0')}")
+      Uuid.parse("00000000-0000-0000-0000-${"$id".padStart(12, '0')}")
   }
 }

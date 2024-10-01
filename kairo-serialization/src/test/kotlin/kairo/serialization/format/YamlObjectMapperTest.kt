@@ -96,7 +96,7 @@ internal class YamlObjectMapperTest {
       localDate = LocalDate.parse("2023-11-13"),
     )
 
-  val string = """
+  private val string: String = """
     booleans:
       booleanFalse: false
       booleanNull: null

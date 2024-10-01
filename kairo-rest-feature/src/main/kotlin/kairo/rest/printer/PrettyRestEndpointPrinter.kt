@@ -36,10 +36,10 @@ internal object PrettyRestEndpointPrinter : RestEndpointPrinter() {
 
   private fun StringBuilder.query(template: RestEndpointTemplate) {
     if (template.query.params.isEmpty()) return
-    val query = template.query.params.joinToString { param ->
+    val query = template.query.params.joinToString { (value, required) ->
       buildString {
-        append(param.value)
-        if (!param.required) append('?')
+        append(value)
+        if (!required) append('?')
       }
     }
     append(" ($query)")

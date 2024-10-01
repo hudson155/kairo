@@ -1,6 +1,7 @@
 package kairo.sql
 
 import com.google.inject.Inject
+import kairo.sql.store.SqlStore
 import kairo.transactionManager.TransactionManager
 import org.jdbi.v3.core.Handle
 
