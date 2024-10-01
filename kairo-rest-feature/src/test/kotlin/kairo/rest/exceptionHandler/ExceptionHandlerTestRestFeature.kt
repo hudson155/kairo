@@ -1,6 +1,5 @@
 package kairo.rest.exceptionHandler
 
-import kairo.protectedString.ProtectedString
 import kairo.rest.KairoRestConfig
 import kairo.rest.KairoRestFeature
 import kairo.restTesting.TestKairoRestFeature
@@ -11,7 +10,6 @@ internal const val exceptionHandlerTestRestPort: Int = 8081
  * This test Feature intentionally extends [KairoRestFeature], not [TestKairoRestFeature].
  * In order for [ExceptionHandler]s to be tested properly, the entirety of Ktor's REST handling needs to be invoked.
  */
-@OptIn(ProtectedString.Access::class)
 internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
   config = KairoRestConfig(
     connector = KairoRestConfig.Connector(
