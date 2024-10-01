@@ -12,7 +12,7 @@ private val fixtureMapper: JsonMapper =
     prettyPrint = true
   }.build()
 
-public abstract class Fixture<T : Any>(private val name: String) {
+public abstract class Fixture<out T : Any>(private val name: String) {
   private val typeParam: KClass<T> = typeParam(Fixture::class, 0, this::class)
 
   protected operator fun get(key: Any): T {

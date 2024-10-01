@@ -30,8 +30,8 @@ internal abstract class ConfigDeserializer<T : Any>(
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): T? {
     val source = p.readValue<ConfigLoaderSource>()
     if (!isSecure(source)) {
-      if (!allowInsecureConfigSources) {
-        throw IllegalArgumentException("Config loader source ${source::class.simpleName!!} is considered insecure.")
+      require(allowInsecureConfigSources) {
+        "Config loader source ${source::class.simpleName!!} is considered insecure."
       }
       logger.warn { "Config loader source ${source::class.simpleName!!} is considered insecure." }
     }
