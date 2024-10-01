@@ -7,7 +7,7 @@ import kairo.serialization.ObjectMapperFactory
 import kairo.serialization.ObjectMapperFormat
 import kotlin.reflect.KClass
 
-private val mapper: JsonMapper =
+private val fixtureMapper: JsonMapper =
   ObjectMapperFactory.builder(ObjectMapperFormat.Json) {
     prettyPrint = true
   }.build()
@@ -18,6 +18,6 @@ public abstract class Fixture<T : Any>(private val name: String) {
   protected operator fun get(key: Any): T {
     val resource = Resources.getResource("fixture/$name/$key.json")
     @Suppress("ForbiddenMethodCall")
-    return mapper.readValue(resource, typeParam.java)
+    return fixtureMapper.readValue(resource, typeParam.java)
   }
 }
