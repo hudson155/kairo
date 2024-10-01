@@ -12,7 +12,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 /**
  * WARNING: Be careful not to log sensitive data in this class.
  */
-internal class JwtAuthVerifier(
+public class JwtAuthVerifier(
   override val schemes: List<String>,
   private val mechanisms: Map<String?, JwtAuthMechanism>,
 ) : AuthVerifier() {
@@ -30,8 +30,8 @@ internal class JwtAuthVerifier(
   private fun getMechanism(decodedJwt: DecodedJWT): JwtAuthMechanism? =
     mechanisms[decodedJwt.issuer]
 
-  internal companion object {
-    fun from(config: AuthVerifierConfig.Jwt): JwtAuthVerifier =
+  public companion object {
+    public fun from(config: AuthVerifierConfig.Jwt): JwtAuthVerifier =
       JwtAuthVerifier(
         schemes = config.schemes,
         mechanisms = JwtAuthMechanism.from(config.mechanisms),

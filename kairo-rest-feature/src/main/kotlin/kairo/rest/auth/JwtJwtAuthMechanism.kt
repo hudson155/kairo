@@ -9,7 +9,7 @@ import kairo.protectedString.ProtectedString
 /**
  * WARNING: Be careful not to log sensitive data in this class.
  */
-internal class JwtJwtAuthMechanism(
+public class JwtJwtAuthMechanism(
   override val issuers: List<String?>,
   private val verifier: JWTVerifier,
 ) : JwtAuthMechanism() {
@@ -17,9 +17,9 @@ internal class JwtJwtAuthMechanism(
     verifier.verify(decodedJwt)
   }
 
-  internal companion object {
+  public companion object {
     @OptIn(ProtectedString.Access::class)
-    fun from(config: JwtAuthMechanismConfig.Jwt): JwtJwtAuthMechanism {
+    public fun from(config: JwtAuthMechanismConfig.Jwt): JwtJwtAuthMechanism {
       val algorithm = when (val algorithm = config.algorithm) {
         is JwtAuthMechanismConfig.Jwt.Algorithm.Hmac256 -> Algorithm.HMAC256(algorithm.secret.value)
       }

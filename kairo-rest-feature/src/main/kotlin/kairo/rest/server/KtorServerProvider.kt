@@ -7,7 +7,7 @@ import io.ktor.server.engine.applicationEnvironment
 import io.ktor.server.engine.embeddedServer
 import kairo.dependencyInjection.LazySingletonProvider
 import kairo.rest.KairoRestConfig
-import kairo.rest.auth.KairoAuthConfig
+import kairo.rest.auth.AuthVerifier
 import kairo.rest.handler.RestHandler
 
 /**
@@ -21,7 +21,7 @@ import kairo.rest.handler.RestHandler
 @Singleton
 internal class KtorServerProvider @Inject constructor(
   private val config: KairoRestConfig,
-  private val authConfig: KairoAuthConfig,
+  private val authVerifiers: List<AuthVerifier>,
   private val handlers: Set<RestHandler<*, *>>,
 ) : LazySingletonProvider<KtorServer>() {
   override fun create(): KtorServer =
@@ -29,6 +29,6 @@ internal class KtorServerProvider @Inject constructor(
       factory = CIO,
       environment = applicationEnvironment(),
       configure = configureEmbeddedServer(config),
-      module = createModule(authConfig, handlers),
+      module = createModule(authVerifiers, handlers),
     )
 }
