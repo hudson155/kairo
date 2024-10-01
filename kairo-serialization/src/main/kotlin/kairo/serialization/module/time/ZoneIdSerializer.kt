@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import java.time.ZoneId
 import java.time.ZoneOffset
-import java.time.ZoneRegion
 
 /**
  * We don't use com.fasterxml.jackson.datatype:jackson-datatype-jsr310,

@@ -22,5 +22,5 @@ dependencies {
 // src/main/kotlin/yourPackage/.../YourFile.kt
 
 val environmentVariableSupplier: EnvironmentVariableSupplier = DefaultEnvironmentVariableSupplier
-environmentVariableSupplier.get("MESSAGE", "Default value.")
+environmentVariableSupplier["MESSAGE", "Default value."]
 ```
