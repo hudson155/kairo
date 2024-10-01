@@ -8,6 +8,7 @@ import kairo.dependencyInjection.bind
 import kairo.dependencyInjection.getInstance
 import kairo.dependencyInjection.toProvider
 import kairo.feature.Feature
+import kairo.rest.auth.KairoAuthConfig
 import kairo.rest.server.KtorServer
 import kairo.rest.server.KtorServerProvider
 
@@ -15,9 +16,11 @@ private val logger: KLogger = KotlinLogging.logger {}
 
 public open class KairoRestFeature(
   private val config: KairoRestConfig,
+  private val authConfig: KairoAuthConfig,
 ) : BaseKairoRestFeature() {
   override fun bind(binder: Binder) {
     binder.bind<KairoRestConfig>().toInstance(config)
+    binder.bind<KairoAuthConfig>().toInstance(authConfig)
     binder.bind<KtorServer>().toProvider(KtorServerProvider::class)
     super.bind(binder)
   }

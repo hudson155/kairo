@@ -3,9 +3,7 @@ package kairo.rest.exceptionHandler
 import kairo.protectedString.ProtectedString
 import kairo.rest.KairoRestConfig
 import kairo.rest.KairoRestFeature
-import kairo.rest.auth.AuthConfig
-import kairo.rest.auth.AuthVerifierConfig
-import kairo.rest.auth.JwtAuthMechanismConfig
+import kairo.rest.auth.KairoAuthConfig
 import kairo.restTesting.TestKairoRestFeature
 
 internal const val exceptionHandlerTestRestPort: Int = 8081
@@ -16,7 +14,7 @@ internal const val exceptionHandlerTestRestPort: Int = 8081
  */
 @OptIn(ProtectedString.Access::class)
 internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
-  KairoRestConfig(
+  config = KairoRestConfig(
     connector = KairoRestConfig.Connector(
       host = "0.0.0.0",
       port = exceptionHandlerTestRestPort,
@@ -30,21 +28,8 @@ internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
       workerGroupSize = 8,
       callGroupSize = 16,
     ),
-    auth = AuthConfig(
-      verifiers = listOf(
-        AuthVerifierConfig.Jwt(
-          schemes = listOf("Bearer"),
-          mechanisms = listOf(
-            JwtAuthMechanismConfig.Jwt(
-              issuers = listOf("https://localhost:8081/"),
-              algorithm = JwtAuthMechanismConfig.Jwt.Algorithm.Hmac256(
-                secret = ProtectedString("Fake JWT secret value"),
-              ),
-              leewaySec = 0,
-            ),
-          ),
-        ),
-      ),
-    ),
+  ),
+  authConfig = KairoAuthConfig(
+    verifiers = emptyList(),
   ),
 )

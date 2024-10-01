@@ -1,5 +1,5 @@
 package kairo.rest.auth
 
-public data class AuthConfig(
+public data class KairoAuthConfig(
   val verifiers: List<AuthVerifierConfig>,
 )

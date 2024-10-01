@@ -1,13 +1,11 @@
 package kairo.rest
 
 import io.ktor.server.engine.ApplicationEngine
-import kairo.rest.auth.AuthConfig
 
 public data class KairoRestConfig(
   val connector: Connector,
   val lifecycle: Lifecycle,
   val parallelism: Parallelism,
-  val auth: AuthConfig,
 ) {
   /**
    * [host] and [port] specify where the server should listen.

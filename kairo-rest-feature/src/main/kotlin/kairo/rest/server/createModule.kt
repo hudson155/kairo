@@ -12,7 +12,7 @@ import io.ktor.server.routing.createRouteFromPath
 import io.ktor.server.routing.optionalParam
 import io.ktor.server.routing.param
 import io.ktor.server.routing.routing
-import kairo.rest.auth.AuthConfig
+import kairo.rest.auth.KairoAuthConfig
 import kairo.rest.handler.RestHandler
 import kairo.rest.printer.KtorPathTemplateRestEndpointPrinter
 import kairo.rest.template.RestEndpointTemplate
@@ -26,7 +26,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * [createModule] returns a function that sets up a single module.
  */
 internal fun createModule(
-  authConfig: AuthConfig,
+  authConfig: KairoAuthConfig,
   handlers: Set<RestHandler<*, *>>,
 ): Application.() -> Unit =
   {
