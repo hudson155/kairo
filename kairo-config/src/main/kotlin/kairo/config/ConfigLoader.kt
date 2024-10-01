@@ -142,7 +142,7 @@ public class ConfigLoader(
         ConfigLoaderConfig(
           commandRunner = NoopCommandRunner,
           environmentVariableSupplier = StaticEnvironmentVariableSupplier(
-            mapOf("KAIRO_ALLOW_INSECURE_CONFIG_SOURCES" to false.toString()),
+            mapOf("KAIRO_ALLOW_INSECURE_CONFIG_SOURCES" to true.toString()),
           ),
           gcpSecretSupplier = NoopGcpSecretSupplier,
         ),
