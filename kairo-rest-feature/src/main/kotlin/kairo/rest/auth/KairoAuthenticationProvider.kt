@@ -29,6 +29,7 @@ internal class KairoAuthenticationProvider(
       context.principal(name, principal)
     } catch (e: Exception) {
       logger.warn(e) { "Authentication failed." }
+      @Suppress("InstanceOfCheckForException")
       if (e is KairoException) throw e
       throw Unauthorized(e)
     }

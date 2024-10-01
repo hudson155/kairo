@@ -2,7 +2,7 @@ package kairo.rest.auth
 
 import kairo.exception.KairoException
 
-@Suppress("ConvertObjectToDataObject")
+@Suppress("ConvertObjectToDataObject", "UseDataClass")
 public class Auth(
   public val principal: Principal?,
 ) {
