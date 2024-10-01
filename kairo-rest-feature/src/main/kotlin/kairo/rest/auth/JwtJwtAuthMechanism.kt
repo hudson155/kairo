@@ -13,7 +13,6 @@ public class JwtJwtAuthMechanism(
   private val verifier: JWTVerifier,
 ) : JwtAuthMechanism() {
   public constructor(
-
     issuers: List<String?>,
     algorithm: Algorithm,
     leewaySec: Long,
