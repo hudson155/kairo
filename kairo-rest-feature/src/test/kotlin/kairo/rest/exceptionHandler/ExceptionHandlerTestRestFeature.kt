@@ -28,7 +28,5 @@ internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
       callGroupSize = 16,
     ),
   ),
-  authConfig = KairoAuthConfig(
-    verifiers = emptyList(),
-  ),
+  authVerifiers = emptyList(),
 )
