@@ -8,6 +8,10 @@ import io.ktor.http.auth.HttpAuthHeader
  * WARNING: Be careful not to log sensitive data in this class.
  */
 public abstract class AuthVerifier<out P : Principal> {
+  /**
+   * The authorization header schemes supported by this verifier.
+   * For example, "Bearer".
+   */
   public abstract val schemes: List<String>
 
   public abstract fun verify(authHeader: HttpAuthHeader.Single): P
