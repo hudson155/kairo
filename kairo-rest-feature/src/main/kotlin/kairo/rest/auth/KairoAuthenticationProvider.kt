@@ -14,6 +14,10 @@ import kairo.rest.exception.UnrecognizedAuthScheme
 private val logger: KLogger = KotlinLogging.logger {}
 
 /**
+ * A custom authentication provider is used for multiple reasons.
+ * Firstly, Ktor's native JWT authentication provider doesn't support dynamic schemes and JWT issuers.
+ * Secondly, this approach allows for custom implementations for API tokens.
+ *
  * WARNING: Be careful not to log sensitive data in this class.
  */
 public class KairoAuthenticationProvider(
