@@ -3,6 +3,7 @@ package kairo.rest.server
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.server.application.Application
+import io.ktor.server.auth.authenticate
 import io.ktor.server.routing.HttpMethodRouteSelector
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.accept
@@ -11,6 +12,7 @@ import io.ktor.server.routing.createRouteFromPath
 import io.ktor.server.routing.optionalParam
 import io.ktor.server.routing.param
 import io.ktor.server.routing.routing
+import kairo.rest.auth.AuthConfig
 import kairo.rest.handler.RestHandler
 import kairo.rest.printer.KtorPathTemplateRestEndpointPrinter
 import kairo.rest.template.RestEndpointTemplate
@@ -23,8 +25,12 @@ private val logger: KLogger = KotlinLogging.logger {}
  * Kairo does not use Ktor's module system.
  * [createModule] returns a function that sets up a single module.
  */
-internal fun createModule(handlers: Set<RestHandler<*, *>>): Application.() -> Unit =
+internal fun createModule(
+  authConfig: AuthConfig,
+  handlers: Set<RestHandler<*, *>>,
+): Application.() -> Unit =
   {
+    installAuth(authConfig)
     installContentNegotiation()
     installStatusPages()
     registerRestHandlers(handlers)
@@ -36,7 +42,9 @@ private fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) {
     val template = handler.template
     logger.info { "Registering REST handler: $template." }
     routing {
-      route(template).handle { handler.handle(call) }
+      authenticate(optional = true) {
+        route(template).handle { handler.handle(call) }
+      }
     }
   }
 }

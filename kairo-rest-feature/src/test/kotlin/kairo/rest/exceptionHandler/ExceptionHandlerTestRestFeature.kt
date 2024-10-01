@@ -37,8 +37,10 @@ internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
           mechanisms = listOf(
             JwtAuthMechanismConfig.Jwt(
               issuers = listOf("https://localhost:8081/"),
-              algorithm = JwtAuthMechanismConfig.Jwt.Algorithm.Hmac256,
-              secret = ProtectedString("Fake JWT secret value"),
+              algorithm = JwtAuthMechanismConfig.Jwt.Algorithm.Hmac256(
+                secret = ProtectedString("Fake JWT secret value"),
+              ),
+              leewaySec = 0,
             ),
           ),
         ),

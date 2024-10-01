@@ -7,6 +7,7 @@ dependencies {
   api(project(":kairo-exception")) // Exposed for clients.
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
+  api(project(":kairo-protected-string"))
   implementation(project(":kairo-reflect"))
   api(project(":kairo-serialization")) // Exposed for clients.
 
