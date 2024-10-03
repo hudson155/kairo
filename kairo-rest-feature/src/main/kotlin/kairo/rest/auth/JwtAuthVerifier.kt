@@ -1,10 +1,12 @@
 package kairo.rest.auth
 
 import com.auth0.jwt.JWT
+import com.auth0.jwt.exceptions.JWTDecodeException
 import com.auth0.jwt.interfaces.DecodedJWT
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.auth.HttpAuthHeader
+import kairo.rest.exception.MalformedJwt
 import kairo.rest.exception.UnrecognizedJwtIssuer
 
 private val logger: KLogger = KotlinLogging.logger {}
@@ -34,8 +36,13 @@ public class JwtAuthVerifier(
     return JwtPrincipal(decodedJwt)
   }
 
-  private fun decodeJwt(authHeader: HttpAuthHeader.Single): DecodedJWT =
-    JWT.decode(authHeader.blob)
+  private fun decodeJwt(authHeader: HttpAuthHeader.Single): DecodedJWT {
+    try {
+      return JWT.decode(authHeader.blob)
+    } catch (e: JWTDecodeException) {
+      throw MalformedJwt(e)
+    }
+  }
 
   private fun getMechanism(decodedJwt: DecodedJWT): JwtAuthMechanism? =
     mechanisms[decodedJwt.issuer]
