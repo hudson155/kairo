@@ -27,4 +27,13 @@ public class JwtPrincipal(
     @Suppress("ForbiddenMethodCall")
     return jwtMapper.readValue("$claim", type)
   }
+
+  override fun equals(other: Any?): Boolean {
+    if (other !is JwtPrincipal) return false
+    if (decodedJwt.token != other.decodedJwt.token) return false
+    return true
+  }
+
+  override fun hashCode(): Int =
+    decodedJwt.token.hashCode()
 }

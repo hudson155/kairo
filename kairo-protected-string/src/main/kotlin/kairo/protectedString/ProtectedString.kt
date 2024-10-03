@@ -23,7 +23,8 @@ constructor(
 
   override fun equals(other: Any?): Boolean {
     if (other !is ProtectedString) return false
-    return value == other.value
+    if (value != other.value) return false
+    return true
   }
 
   override fun hashCode(): Int =

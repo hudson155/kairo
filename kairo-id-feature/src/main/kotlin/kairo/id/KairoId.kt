@@ -29,14 +29,9 @@ public class KairoId(
   }
 
   override fun equals(other: Any?): Boolean {
-    if (this === other) return true
-    if (javaClass != other?.javaClass) return false
-
-    other as KairoId
-
+    if (other !is KairoId) return false
     if (prefix != other.prefix) return false
     if (id != other.id) return false
-
     return true
   }
 
