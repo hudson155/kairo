@@ -26,8 +26,13 @@ import org.junit.jupiter.api.Test
 
 /**
  * All thrown exceptions should extend [UnauthorizedException].
+ *
+ * Note that claim verification uses a real clock.
  */
+@Suppress("ForbiddenMethodCall")
 internal class KairoAuthenticationProviderTest {
+  private val issuer: String = "https://example.com/"
+
   private val algorithm: Algorithm = Algorithm.HMAC256("Fake JWT secret.")
 
   private val provider: KairoAuthenticationProvider =
@@ -37,7 +42,7 @@ internal class KairoAuthenticationProviderTest {
           schemes = listOf("Bearer"),
           mechanisms = listOf(
             JwtJwtAuthMechanism(
-              issuers = listOf("https://example.com/"),
+              issuers = listOf(issuer),
               algorithm = algorithm,
               leewaySec = 0,
             ),
@@ -156,8 +161,9 @@ internal class KairoAuthenticationProviderTest {
     }
   }
 
+  @Suppress("LongParameterList")
   private fun createJwtString(
-    issuer: String = "https://example.com/",
+    issuer: String = this.issuer,
     expiresAt: Instant = Instant.now().plusSeconds(60),
     notBefore: Instant = Instant.now().minusSeconds(120),
     issuedAt: Instant = Instant.now().minusSeconds(180),

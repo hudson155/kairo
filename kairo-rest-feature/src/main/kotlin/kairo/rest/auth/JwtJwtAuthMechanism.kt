@@ -22,7 +22,7 @@ public class JwtJwtAuthMechanism(
     leewaySec: Long,
   ) : this(
     issuers = issuers,
-    verifier = JWT.require(algorithm).acceptLeeway(leewaySec).build(),
+    verifier = JWT.require(algorithm).acceptLeeway(leewaySec).build(), // Claim verification uses a real clock.
   )
 
   override fun verify(decodedJwt: DecodedJWT) {
