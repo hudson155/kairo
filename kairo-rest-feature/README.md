@@ -230,6 +230,14 @@ KairoRestFeature(config.rest, emptyList())
 
 ### Step 5: Configure auth
 
+```yaml
+# src/main/resources/config/config.yaml
+
+auth:
+  jwtSecret: { source: "GcpSecret", id: "projects/012345678900/secrets/example/versions/1" }
+  leewaySec: 20 # 20 seconds.
+```
+
 ```kotlin
 // src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
 
