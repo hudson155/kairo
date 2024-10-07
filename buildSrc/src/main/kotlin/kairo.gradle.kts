@@ -10,13 +10,13 @@ repositories {
 
 java {
   toolchain {
-    languageVersion = JavaLanguageVersion.of(23)
+    languageVersion = JavaLanguageVersion.of(21)
   }
 }
 
 kotlin {
   jvmToolchain {
-    languageVersion = JavaLanguageVersion.of(23)
+    languageVersion = JavaLanguageVersion.of(21)
   }
   explicitApi()
   compilerOptions {
