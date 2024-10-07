@@ -6,12 +6,12 @@ Kairo is an application framework built for Kotlin.
 
 ### Major dependencies
 
-- Gradle 8.9
-- Kotlin 2.0.20
+- Gradle 8.10
+- Kotlin 2.0
 - Java 21
-- Ktor 3.0.0-rc-2
-- Guice 7.0.0
-- Jackson 2.17.2
+- Ktor 3.0
+- Guice 7.0
+- Jackson 2.18
 
 ### Brand guidelines
 
