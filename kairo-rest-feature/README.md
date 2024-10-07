@@ -1,6 +1,6 @@
 # `kairo-rest-feature`
 
-The REST Feature adds support for REST endpoints.
+The REST Feature adds support for REST endpoints, including auth.
 Under the hood, this Feature uses [Ktor](https://ktor.io/).
 Even if you're not building a REST API, you might need to include this to support health checks.
 
@@ -225,5 +225,35 @@ rest:
 ```kotlin
 // src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
 
-KairoRestFeature(config.rest)
+KairoRestFeature(config.rest, emptyList())
+```
+
+### Step 5: Configure auth
+
+```yaml
+# src/main/resources/config/config.yaml
+
+auth:
+  jwtSecret: { source: "GcpSecret", id: "projects/012345678900/secrets/example/versions/1" }
+  leewaySec: 20 # 20 seconds.
+```
+
+```kotlin
+// src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
+
+KairoRestFeature(
+  config = config.rest,
+  authVerifiers = listOf(
+    JwtAuthVerifier(
+      schemes = listOf("Bearer"),
+      mechanisms = listOf(
+        JwtJwtAuthMechanism(
+          issuers = listOf("https://example.com/"),
+          algorithm = Algorithm.HMAC256(config.auth.jwtSecret.value),
+          leewaySec = config.auth.leewaySec,
+        ),
+      ),
+    ),
+  ),
+)
 ```

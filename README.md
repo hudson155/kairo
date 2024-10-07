@@ -73,7 +73,7 @@ Each module falls into one of 3 categories:
 - [kairo-logging-feature](kairo-logging-feature/):
   This Feature supports logging within Kairo Servers.
 - [kairo-rest-feature](kairo-rest-feature/):
-  The REST Feature adds support for REST endpoints.
+  The REST Feature adds support for REST endpoints, including auth.
   Under the hood, this Feature uses [Ktor](https://ktor.io/).
 - [kairo-sql-feature](kairo-sql-feature/):
   The SQL Feature adds support for SQL databases.
