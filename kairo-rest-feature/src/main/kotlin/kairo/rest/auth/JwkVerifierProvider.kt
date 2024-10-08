@@ -27,19 +27,18 @@ public class JwkVerifierProvider internal constructor(
    *
    * [provider] has a built-in cache of its own.
    */
-  public operator fun get(keyId: String): JWTVerifier? {
-    return verifiers.compute(keyId) { _, verifier ->
+  public operator fun get(keyId: String): JWTVerifier? =
+    verifiers.compute(keyId) { _, verifier ->
       if (verifier != null) return@compute verifier
       val jwk = provider[keyId] ?: return@compute null
       val algorithm = createAlgorithm(jwk)
       return@compute JWT.require(algorithm).acceptLeeway(leewaySec).build() // Claim verification uses a real clock.
     }
-  }
 
-  private fun createAlgorithm(jwk: Jwk): Algorithm {
-    return when (val algorithm = jwk.algorithm) {
+  @Suppress("UseIfInsteadOfWhen")
+  private fun createAlgorithm(jwk: Jwk): Algorithm =
+    when (val algorithm = jwk.algorithm) {
       "RS256" -> Algorithm.RSA256(jwk.publicKey as RSAPublicKey, null)
       else -> error("Unsupported algorithm $algorithm.") // Add more as necessary.
     }
-  }
 }
