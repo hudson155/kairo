@@ -367,6 +367,12 @@ fun main() {
 
 ## Upgrading dependencies
 
+### Gradle
+
+```shell
+./gradlew wrapper --gradle-version=<version>
+```
+
 ### Detekt
 
 When upgrading Detekt versions, review `default-detekt-config.yaml` as well as the changelog.
