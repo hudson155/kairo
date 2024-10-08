@@ -11,6 +11,7 @@
       <name>io.ktor.server.plugins.ParameterConversionException</name>
       <name>io.ktor.server.plugins.PayloadTooLargeException</name>
       <name>io.ktor.server.plugins.UnsupportedMediaTypeException</name>
+      <name>jakarta.inject.*</name>
       <name>jakarta.validation.constraints.*</name>
       <name>java.util.UUID</name>
       <name>javax.inject.*</name>

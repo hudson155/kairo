@@ -596,6 +596,7 @@ style:
       - 'io.ktor.server.plugins.PayloadTooLargeException'
       - 'io.ktor.server.plugins.UnsupportedMediaTypeException'
 
+      - 'jakarta.inject.*'
       - 'jakarta.validation.constraints.*'
 
       - 'java.util.UUID' # Use kotlin.uuid.Uuid instead.
