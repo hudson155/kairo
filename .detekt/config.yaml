@@ -582,32 +582,33 @@ style:
     active: true
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
+      - 'com.google.inject.TypeLiteral' # Use the Kotlin overload.
 
-      # Use the Kotlin overload.
-      - 'com.google.inject.TypeLiteral'
+      - 'io.kotest.core.spec.*' # Use JUnit test annotations.
 
-      - 'io.ktor.client.HttpClient' # Use kairo.client.KairoClient instead.
+      - 'io.ktor.client.HttpClient' # Use kairo.client.KairoClient.
 
-      - 'io.ktor.server.plugins.BadRequestException' # Use kairo.exception.BadRequestException instead.
+      - 'io.ktor.server.plugins.BadRequestException' # Use kairo.exception.BadRequestException.
       - 'io.ktor.server.plugins.CannotTransformContentToTypeException'
       - 'io.ktor.server.plugins.MissingRequestParameterException'
-      - 'io.ktor.server.plugins.NotFoundException' # Use kairo.exception.NotFoundException instead.
+      - 'io.ktor.server.plugins.NotFoundException' # Use kairo.exception.NotFoundException.
       - 'io.ktor.server.plugins.ParameterConversionException'
       - 'io.ktor.server.plugins.PayloadTooLargeException'
       - 'io.ktor.server.plugins.UnsupportedMediaTypeException'
 
-      - 'jakarta.inject.*'
+      - 'jakarta.inject.*' # Use Google's injection annotations.
       - 'jakarta.validation.constraints.*'
 
-      - 'java.util.UUID' # Use kotlin.uuid.Uuid instead.
+      - 'java.util.UUID' # Use kotlin.uuid.Uuid.
 
-      - 'javax.inject.*'
+      - 'javax.inject.*' # Use Google's injection annotations.
 
-      - 'kotlin.time.Duration'
+      - 'kotlin.time.Duration' # Use java.time.Duration.
 
-      - 'org.junit.jupiter.api.Assertions.*'
-      - 'org.slf4j.Logger'
-      - 'org.slf4j.LoggerFactory'
+      - 'org.junit.jupiter.api.Assertions.*' # Use Kotest.
+
+      - 'org.slf4j.Logger' # Use KLogger.
+      - 'org.slf4j.LoggerFactory' # Use KotlinLogging.
   ForbiddenMethodCall:
     active: true
     methods:
