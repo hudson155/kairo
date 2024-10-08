@@ -3,6 +3,7 @@
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
       <name>com.google.inject.TypeLiteral</name>
+      <name>io.kotest.core.spec.*</name>
       <name>io.ktor.client.HttpClient</name>
       <name>io.ktor.server.plugins.BadRequestException</name>
       <name>io.ktor.server.plugins.CannotTransformContentToTypeException</name>
