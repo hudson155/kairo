@@ -36,7 +36,7 @@ internal abstract class JsonBadRequestException(
       return Pair(path, location)
     }
 
-    fun parsePath(path: List<JsonMappingException.Reference>): String? {
+    private fun parsePath(path: List<JsonMappingException.Reference>): String? {
       try {
         return path.joinToString("") { reference ->
           buildString {
@@ -59,7 +59,7 @@ internal abstract class JsonBadRequestException(
     private fun JsonMappingException.Reference.isNumbered(): Boolean =
       fieldName == null && index >= 0
 
-    fun parseLocation(location: JsonLocation): Location =
+    private fun parseLocation(location: JsonLocation): Location =
       Location(
         line = location.lineNr,
         column = location.columnNr,

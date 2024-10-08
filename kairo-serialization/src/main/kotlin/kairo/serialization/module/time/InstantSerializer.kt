@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter
  *
  * This implementation for [Instant] formats strings using [DateTimeFormatter.ISO_INSTANT].
  */
+@Suppress("RedundantNullableReturnType")
 public class InstantSerializer : StdSerializer<Instant>(Instant::class.java) {
   override fun serialize(value: Instant, gen: JsonGenerator, provider: SerializerProvider) {
     val formatter = DateTimeFormatter.ISO_INSTANT

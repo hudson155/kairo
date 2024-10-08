@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter
  *
  * This implementation for [LocalDate] formats strings using [DateTimeFormatter.ISO_DATE].
  */
+@Suppress("RedundantNullableReturnType")
 public class LocalDateSerializer : StdSerializer<LocalDate>(LocalDate::class.java) {
   override fun serialize(value: LocalDate, gen: JsonGenerator, provider: SerializerProvider) {
     val formatter = DateTimeFormatter.ISO_DATE

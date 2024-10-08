@@ -16,6 +16,7 @@ import kairo.serialization.util.readValue
  * This deserializer intentionally only supports [ZoneRegion] and [ZoneOffset.UTC].
  * Non-UTC [ZoneOffset]s are not supported.
  */
+@Suppress("RedundantNullableReturnType")
 public class ZoneIdDeserializer : StdDeserializer<ZoneId>(ZoneId::class.java) {
   /**
    * Return type is nullable to support subclasses.

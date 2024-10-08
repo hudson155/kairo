@@ -7,8 +7,8 @@ internal class TestHealthCheckService @Inject constructor() : HealthCheckService
 
   override val healthChecks: Map<String, HealthCheck> =
     mapOf(
-      "server" to HealthCheck(::serverHealthCheck),
-      "test" to HealthCheck(::testHealthCheck),
+      "server" to HealthCheck { serverHealthCheck() },
+      "test" to HealthCheck { testHealthCheck() },
     )
 
   private fun testHealthCheck(): HealthCheckRep.Status =

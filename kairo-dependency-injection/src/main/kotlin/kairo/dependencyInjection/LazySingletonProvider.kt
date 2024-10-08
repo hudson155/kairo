@@ -18,7 +18,7 @@ public abstract class LazySingletonProvider<T : Any> : Provider<T> {
     }
   }
 
-  private val value: Lazy<T> = lazy(::create)
+  private val value: Lazy<T> = lazy { create() }
 
   final override fun get(): T =
     value.value
