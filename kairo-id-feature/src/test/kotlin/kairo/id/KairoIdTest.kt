@@ -42,7 +42,7 @@ internal class KairoIdTest {
 
   @Test
   fun `toString method`(): Unit = runTest {
-    "${KairoId("library_book", "2eDS1sMt")}"
+    KairoId("library_book", "2eDS1sMt").toString()
       .shouldBe("library_book_2eDS1sMt")
   }
 

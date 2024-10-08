@@ -11,6 +11,7 @@ import kotlin.uuid.Uuid
 /**
  * Jackson supports [java.util.UUID] by default, but not [kotlin.uuid.Uuid] which we use.
  */
+@Suppress("RedundantNullableReturnType")
 public class UuidDeserializer : StdDeserializer<Uuid>(Uuid::class.java) {
   /**
    * Return type is nullable to support subclasses.

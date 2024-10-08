@@ -15,6 +15,7 @@ import kairo.serialization.util.readValue
  *
  * This implementation for [Instant] only accepts strings formatted as [DateTimeFormatter.ISO_INSTANT].
  */
+@Suppress("RedundantNullableReturnType")
 public class InstantDeserializer : StdDeserializer<Instant>(Instant::class.java) {
   /**
    * Return type is nullable to support subclasses.

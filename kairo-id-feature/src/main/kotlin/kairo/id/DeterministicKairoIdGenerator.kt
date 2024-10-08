@@ -41,6 +41,6 @@ public class DeterministicKairoIdGenerator(
     private const val length: Int = 8
 
     public fun generate(prefix: String, id: Int): KairoId =
-      KairoId(prefix, "$id".padStart(length, '0'))
+      KairoId(prefix, id.toString().padStart(length, '0'))
   }
 }

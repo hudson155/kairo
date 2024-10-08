@@ -15,6 +15,7 @@ import kairo.serialization.util.readValue
  *
  * This implementation for [LocalDate] only accepts strings formatted as [DateTimeFormatter.ISO_DATE].
  */
+@Suppress("RedundantNullableReturnType")
 public class LocalDateDeserializer : StdDeserializer<LocalDate>(LocalDate::class.java) {
   /**
    * Return type is nullable to support subclasses.

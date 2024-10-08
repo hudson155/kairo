@@ -25,7 +25,7 @@ public class JwtPrincipal(
     val claim = decodedJwt.getClaim(name)
     if (claim.isMissing || claim.isNull) return null
     @Suppress("ForbiddenMethodCall")
-    return jwtMapper.readValue("$claim", type)
+    return jwtMapper.readValue(claim.toString(), type)
   }
 
   override fun equals(other: Any?): Boolean {

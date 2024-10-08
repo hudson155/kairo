@@ -11,7 +11,7 @@ import kotlin.reflect.full.memberProperties
  * [I] represents the type of the request body. If none, use [Nothing].
  * [O] represents the type of the response body. If none, use [Unit].
  */
-public abstract class RestEndpoint<I : Any, O : Any> {
+public abstract class RestEndpoint<out I : Any, O : Any> {
   /**
    * Mandatory: the [Method] must be one of [io.ktor.http.HttpMethod]; it must be all-caps.
    */

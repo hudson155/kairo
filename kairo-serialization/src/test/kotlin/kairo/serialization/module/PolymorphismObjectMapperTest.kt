@@ -92,11 +92,7 @@ internal class PolymorphismObjectMapperTest {
     mapper.readValue<Vehicle>(string).shouldBe(vehicle)
   }
 
-  /**
-   * TODO: There is an open bug for this:
-   *  https://github.com/FasterXML/jackson-module-kotlin/issues/824
-   */
-  @Disabled
+  @Disabled("There is an open bug for this: https://github.com/FasterXML/jackson-module-kotlin/issues/824")
   @Test
   fun `deserialize, bicycle`(): Unit = runTest {
     val vehicle = Vehicle.Bicycle
