@@ -10,6 +10,9 @@ import java.net.URI
 import java.security.interfaces.RSAPublicKey
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * WARNING: Be careful not to log sensitive data in this class.
+ */
 public class JwkVerifierProvider internal constructor(
   jwksEndpoint: String,
   private val leewaySec: Long,
@@ -18,6 +21,12 @@ public class JwkVerifierProvider internal constructor(
 
   private val verifiers: MutableMap<String, JWTVerifier> = ConcurrentHashMap()
 
+  /**
+   * Attempts to get an existing [JWTVerifier] from the [verifiers] cache,
+   * using [provider] if necessary.
+   *
+   * [provider] has a built-in cache of its own.
+   */
   public operator fun get(keyId: String): JWTVerifier? {
     return verifiers.compute(keyId) { _, verifier ->
       if (verifier != null) return@compute verifier
