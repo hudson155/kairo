@@ -1,5 +1,6 @@
 package kairo.transactionManager
 
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
@@ -15,7 +16,7 @@ internal class TransactionContext : AbstractCoroutineContextElement(Key) {
     val notes: MutableList<String> = mutableListOf()
   }
 
-  private val types: MutableMap<KClass<out TransactionType>, Content> = mutableMapOf()
+  private val types: MutableMap<KClass<out TransactionType>, Content> = ConcurrentHashMap()
 
   operator fun contains(type: KClass<out TransactionType>): Boolean =
     type in types
