@@ -1,6 +1,6 @@
 package kairo.rest.exception
 
-internal class InvalidProperty(
+public class InvalidProperty(
   override val path: String?,
   override val location: Location?,
   cause: Exception,

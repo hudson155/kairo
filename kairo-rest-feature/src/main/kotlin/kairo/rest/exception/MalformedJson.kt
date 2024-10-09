@@ -1,6 +1,6 @@
 package kairo.rest.exception
 
-internal class MalformedJson(
+public class MalformedJson(
   cause: Exception,
 ) : JsonBadRequestException(
   message = "Malformed JSON." +

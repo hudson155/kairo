@@ -2,7 +2,7 @@ package kairo.rest.exception
 
 import kairo.exception.BadRequestException
 
-internal class MalformedContentType(
+public class MalformedContentType(
   cause: Exception,
 ) : BadRequestException(
   message = "Malformed content type." +

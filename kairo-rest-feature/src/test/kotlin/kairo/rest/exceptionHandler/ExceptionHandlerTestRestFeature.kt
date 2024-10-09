@@ -29,7 +29,6 @@ internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
       callGroupSize = 16,
     ),
   ),
-  authVerifiers = emptyList(),
   module = {
     install(ContentNegotiation) {
       kairoConfigure()

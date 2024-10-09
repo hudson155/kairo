@@ -1,6 +1,6 @@
 package kairo.rest.exception
 
-internal class MissingRequiredProperty(
+public class MissingRequiredProperty(
   override val path: String?,
   override val location: Location?,
   cause: Exception,

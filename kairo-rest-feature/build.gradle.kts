@@ -14,8 +14,10 @@ dependencies {
   api(libs.auth0JavaJwt)
   api(libs.auth0JwksRsa)
   api(libs.ktorHttpJvm) // Exposed for clients.
-  implementation(libs.ktorServerAuth)
+  implementation(libs.ktorSerializationJackson)
+  api(libs.ktorServerAuth)
   api(libs.ktorServerCio)
+  api(libs.ktorServerContentNegotiation)
   api(libs.ktorServerCore)
   implementation(libs.ktorServerStatusPages)
 
@@ -23,7 +25,6 @@ dependencies {
   testImplementation(project(":kairo-feature:testing"))
   testImplementation(project(":kairo-id-feature"))
   testImplementation(project(":kairo-logging:testing"))
-  testImplementation(project(":kairo-rest-feature:content-negotiation"))
   testImplementation(project(":kairo-rest-feature:testing"))
   testImplementation(project(":kairo-testing"))
 }

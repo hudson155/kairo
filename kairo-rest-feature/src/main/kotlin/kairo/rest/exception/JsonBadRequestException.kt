@@ -8,18 +8,18 @@ import kairo.exception.BadRequestException
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-internal abstract class JsonBadRequestException(
+public abstract class JsonBadRequestException(
   message: String,
   cause: Exception,
 ) : BadRequestException(message, cause) {
-  internal data class Location(
+  public data class Location(
     val line: Int,
     val column: Int,
   )
 
-  open val path: String? = null
+  public open val path: String? = null
 
-  open val location: Location? = null
+  public open val location: Location? = null
 
   override val response: Map<String, Any>
     get() = super.response + buildMap {
@@ -27,8 +27,8 @@ internal abstract class JsonBadRequestException(
       location?.let { put("location", it) }
     }
 
-  internal companion object {
-    fun metadata(
+  public companion object {
+    public fun metadata(
       cause: JsonMappingException,
     ): Pair<String?, Location?> {
       val path = parsePath(cause.path)?.ifEmpty { null }

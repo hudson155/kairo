@@ -3,10 +3,13 @@ package kairo.rest.server
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.server.application.Application
+import io.ktor.server.application.pluginOrNull
+import io.ktor.server.auth.Authentication
 import io.ktor.server.auth.authenticate
 import io.ktor.server.routing.HttpMethodRouteSelector
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.accept
+import io.ktor.server.routing.application
 import io.ktor.server.routing.contentType
 import io.ktor.server.routing.createRouteFromPath
 import io.ktor.server.routing.optionalParam
@@ -24,10 +27,21 @@ internal fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) 
     val template = handler.template
     logger.info { "Registering REST handler: $template." }
     routing {
-      authenticate(optional = true) {
+      kairoAuthenticate {
         route(template).handle { handler.handle(call) }
       }
     }
+  }
+}
+
+internal fun Route.kairoAuthenticate(build: Route.() -> Unit) {
+  val authenticationIsInstalled = application.pluginOrNull(Authentication) != null
+  if (authenticationIsInstalled) {
+    authenticate(optional = true) {
+      build()
+    }
+  } else {
+    build()
   }
 }
 

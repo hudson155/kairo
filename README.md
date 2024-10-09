@@ -144,7 +144,6 @@ dependencies {
   api("kairo:kairo-id-feature:$kairoVersion")
   api("kairo:kairo-logging-feature:$kairoVersion")
   api("kairo:kairo-rest-feature:$kairoVersion")
-  api("kairo:kairo-rest-feature-content-negotiation:$kairoVersion")
   api("kairo:kairo-serialization:$kairoVersion")
   api("kairo:kairo-server:$kairoVersion")
 
@@ -306,6 +305,12 @@ data class MonolithServerConfig(
 
 ```yaml
 # src/main/resources/config/config.yaml
+
+auth:
+  jwtIssuer: "https://example.com/"
+  jwtSecret: { source: "GcpSecret", id: "projects/012345678900/secrets/example/versions/1" }
+  leewaySec: 20 # 20 seconds.
+
 clock:
   type: "System"
   timeZone: "UTC"
@@ -359,6 +364,22 @@ class MonolithServer(
         KairoIdFeature(config.id),
         KairoLoggingFeature(config.logging),
         KairoRestFeature(config.rest) {
+          install(Auth) {
+            kairoConfigure {
+              add(
+                JwtAuthVerifier(
+                  schemes = listOf("Bearer"),
+                  mechanisms = listOf(
+                    JwtJwtAuthMechanism(
+                      issuers = listOf(authConfig.jwtIssuer),
+                      algorithm = Algorithm.HMAC256(authConfig.jwtSecret.value),
+                      leewaySec = authConfig.leewaySec,
+                    ),
+                  ),
+                ),
+              )
+            }
+          }
           install(ContentNegotiation) {
             kairoConfigure()
           }
