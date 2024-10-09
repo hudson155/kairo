@@ -29,6 +29,6 @@ internal class KtorServerProvider @Inject constructor(
       factory = CIO,
       environment = applicationEnvironment(),
       configure = configureEmbeddedServer(config),
-      module = createModule(authVerifiers, handlers),
+      module = createModule(authVerifiers, config.cors, handlers),
     )
 }
