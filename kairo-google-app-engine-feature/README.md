@@ -2,7 +2,7 @@
 
 Kairo's Google App Engine Feature uses the health check readiness endpoint
 to configure a GAE warmup endpoint: `GET /_ah/warmup`.
-[kairo-health-check-feature](/kairo-health-check-feature) must also be installed.
+[kairo-health-check-feature](../kairo-health-check-feature) must also be installed.
 
 ## Usage
 

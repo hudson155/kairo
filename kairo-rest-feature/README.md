@@ -59,7 +59,7 @@ data class LibraryBookRep(
 Updates must be marked with `@JsonInclude(value = JsonInclude.Include.NON_NULL)`
 so that Kairo can differentiate between `null` and `undefined` from the frontend
 using Java's `Optional` class.
-See [kairo-serialization](/kairo-serialization/) fore more detail.
+See [kairo-serialization](../kairo-serialization) fore more detail.
 
 ### Step 3: Define your REST endpoints
 
