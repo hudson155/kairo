@@ -36,7 +36,8 @@ There probably aren't a lot, but it's nice to delete them every once in a while.
 
 ## Ensure Terraform's GCP API list is up-to-date
 
-We maintain a list of enabled GCP services in Terraform.
+We maintain a list of enabled GCP services in Terraform:
+[gcp_services.tf](../terraform/gcp_services.tf).
 This can go stale if APIs are enabled manually, which sometimes happens.
 
 ```shell
