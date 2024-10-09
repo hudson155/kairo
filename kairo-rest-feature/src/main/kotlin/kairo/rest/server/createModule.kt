@@ -12,6 +12,7 @@ import io.ktor.server.routing.createRouteFromPath
 import io.ktor.server.routing.optionalParam
 import io.ktor.server.routing.param
 import io.ktor.server.routing.routing
+import kairo.rest.KairoCorsConfig
 import kairo.rest.auth.AuthVerifier
 import kairo.rest.handler.RestHandler
 import kairo.rest.printer.KtorPathTemplateRestEndpointPrinter
@@ -27,11 +28,13 @@ private val logger: KLogger = KotlinLogging.logger {}
  */
 internal fun createModule(
   authVerifiers: List<AuthVerifier<*>>,
+  corsConfig: KairoCorsConfig,
   handlers: Set<RestHandler<*, *>>,
 ): Application.() -> Unit =
   {
     installAuth(authVerifiers)
     installContentNegotiation()
+    installCors(corsConfig)
     installStatusPages()
     registerRestHandlers(handlers)
   }
