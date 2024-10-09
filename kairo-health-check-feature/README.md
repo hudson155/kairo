@@ -29,8 +29,8 @@ dependencies {
 internal class MonolithHealthCheckService @Inject constructor() : HealthCheckService() {
   override val healthChecks: Map<String, HealthCheck> =
     mapOf(
-      "server" to HealthCheck(::serverHealthCheck),
-      "custom" to HealthCheck(::customHealthCheck),
+      "server" to HealthCheck { serverHealthCheck() },
+      "custom" to HealthCheck { customHealthCheck() },
     )
 
   private fun customHealthCheck(): HealthCheckRep.Status {
