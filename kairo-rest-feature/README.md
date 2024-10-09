@@ -247,8 +247,5 @@ KairoRestFeature(config.rest) {
       )
     }
   }
-  install(ContentNegotiation) {
-    kairoConfigure()
-  }
 }
 ```

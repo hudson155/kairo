@@ -1,10 +1,7 @@
 package kairo.rest.exceptionHandler
 
-import io.ktor.server.application.install
-import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import kairo.rest.KairoRestConfig
 import kairo.rest.KairoRestFeature
-import kairo.rest.contentNegotiation.kairoConfigure
 import kairo.restTesting.TestKairoRestFeature
 
 internal const val exceptionHandlerTestRestPort: Int = 8081
@@ -29,9 +26,4 @@ internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
       callGroupSize = 16,
     ),
   ),
-  module = {
-    install(ContentNegotiation) {
-      kairoConfigure()
-    }
-  },
 )
