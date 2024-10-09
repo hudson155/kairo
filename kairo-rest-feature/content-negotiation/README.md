@@ -1,4 +1,4 @@
-# `kairo-rest-feature:cors`
+# `kairo-rest-feature:content-negotiation`
 
 The content negotiation extension to the REST Feature adds support for JSON serialization and deserialization.
 
@@ -10,7 +10,7 @@ The content negotiation extension to the REST Feature adds support for JSON seri
 // build.gradle.kts
 
 dependencies {
-  implementation("kairo:kairo-rest-feature-cors:$kairoVersion")
+  implementation("kairo:kairo-rest-feature-content-negotiation:$kairoVersion")
 }
 ```
 
