@@ -12,34 +12,13 @@ import io.ktor.server.routing.createRouteFromPath
 import io.ktor.server.routing.optionalParam
 import io.ktor.server.routing.param
 import io.ktor.server.routing.routing
-import kairo.rest.KairoCorsConfig
-import kairo.rest.auth.AuthVerifier
 import kairo.rest.handler.RestHandler
 import kairo.rest.printer.KtorPathTemplateRestEndpointPrinter
 import kairo.rest.template.RestEndpointTemplate
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-/**
- * [createModule] is not a great name for a function, so here's a better (but brief) explanation.
- * Ktor servers have "modules", which are basically just extension functions on [Application].
- * Kairo does not use Ktor's module system.
- * [createModule] returns a function that sets up a single module.
- */
-internal fun createModule(
-  authVerifiers: List<AuthVerifier<*>>,
-  corsConfig: KairoCorsConfig,
-  handlers: Set<RestHandler<*, *>>,
-): Application.() -> Unit =
-  {
-    installAuth(authVerifiers)
-    installContentNegotiation()
-    installCors(corsConfig)
-    installStatusPages()
-    registerRestHandlers(handlers)
-  }
-
-private fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) {
+internal fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) {
   logger.info { "Registering ${handlers.size} REST handlers." }
   handlers.forEach { handler ->
     val template = handler.template

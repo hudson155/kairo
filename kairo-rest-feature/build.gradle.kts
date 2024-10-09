@@ -18,7 +18,7 @@ dependencies {
   implementation(libs.ktorServerAuth)
   api(libs.ktorServerCio)
   implementation(libs.ktorServerContentNegotiation)
-  implementation(libs.ktorServerCore)
+  api(libs.ktorServerCore)
   implementation(libs.ktorServerCors)
   implementation(libs.ktorServerStatusPages)
 

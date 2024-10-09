@@ -231,7 +231,7 @@ rest:
 ```kotlin
 // src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
 
-KairoRestFeature(config.rest, emptyList())
+KairoRestFeature(config.rest)
 ```
 
 ### Step 5: Configure auth
