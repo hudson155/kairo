@@ -30,7 +30,7 @@ because of its limited support for polymorphism.
 
 Some additional functionality is supported for string deserialization.
 
-- The [TrimWhitespace] annotation removes whitespace from the start and/or end of strings during deserialization.
+- The `TrimWhitespace` annotation removes whitespace from the start and/or end of strings during deserialization.
 
 ## Usage
 
