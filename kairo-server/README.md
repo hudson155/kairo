@@ -89,9 +89,6 @@ class MonolithServer(
               )
             }
           }
-          install(ContentNegotiation) {
-            kairoConfigure()
-          }
         },
         LibraryFeature(),
       ),
