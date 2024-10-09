@@ -65,7 +65,11 @@ class MonolithServer(
   override val featureManager: FeatureManager =
     FeatureManager(
       features = setOf(
-        KairoRestFeature(config.rest),
+        KairoRestFeature(config.rest) {
+          install(ContentNegotiation) {
+            kairoConfigure()
+          }
+        },
         LibraryFeature(),
       ),
       config = config.featureManager,

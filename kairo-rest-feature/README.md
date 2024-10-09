@@ -26,6 +26,7 @@ are wrong when using CIO.
 
 dependencies {
   implementation("kairo:kairo-rest-feature:$kairoVersion")
+  implementation("kairo:kairo-rest-feature-content-negotiation:$kairoVersion")
 }
 ```
 
@@ -225,7 +226,11 @@ rest:
 ```kotlin
 // src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
 
-KairoRestFeature(config.rest)
+KairoRestFeature(config.rest) {
+  install(ContentNegotiation) {
+    kairoConfigure()
+  }
+}
 ```
 
 ### Step 5: Configure auth

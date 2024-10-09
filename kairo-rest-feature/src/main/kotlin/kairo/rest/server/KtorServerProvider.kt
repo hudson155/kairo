@@ -33,7 +33,6 @@ internal class KtorServerProvider @Inject constructor(
       configure = configureEmbeddedServer(config),
       module = {
         installAuth(authVerifiers)
-        installContentNegotiation()
         installStatusPages()
         registerRestHandlers(handlers)
         with(module) {
