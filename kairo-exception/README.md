@@ -1,7 +1,7 @@
 # `kairo-exception`
 
 Base classes representing exceptions that Kairo knows how to handle.
-This is primarily used by [kairo-rest-feature](/kairo-rest-feature/).
+This is primarily used by [kairo-rest-feature](../kairo-rest-feature).
 
 ## Usage
 

@@ -1,6 +1,6 @@
 # `kairo-logging-feature`
 
-See [kairo-logging](/kairo-logging/) for the underlying logging implementation.
+See [kairo-logging](../kairo-logging) for the underlying logging implementation.
 
 This Feature supports logging within Kairo Servers.
 After installing this Feature you can disable Log4j2's shutdown hook

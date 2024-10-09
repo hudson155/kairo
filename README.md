@@ -13,9 +13,16 @@ Kairo is an application framework built for Kotlin.
 - Guice 7.0
 - Jackson 2.18
 
-### Brand guidelines
+### Style guide
 
-- Treat Kairo _Features_ and _Servers_ as proper nouns (the first letter should be capitalized).
+- **Product terminology:**
+  Treat Kairo _Features_ and _Servers_ as proper nouns (the first letter should be capitalized).
+
+See the [style guide](./docs/style-guide.md) for more.
+
+### Chores
+
+See [chores](./docs/chores.md).
 
 ## Modules
 
@@ -38,87 +45,87 @@ Each module falls into one of 3 categories:
 
 **Core modules:**
 
-- [kairo-server](kairo-server/):
+- [kairo-server](./kairo-server):
   A Server is an application that runs a set of Features.
-- [kairo-feature](kairo-feature/):
+- [kairo-feature](./kairo-feature):
   Features are Kairo's main building block.
-- [kairo-logging](kairo-logging/):
+- [kairo-logging](./kairo-logging):
   Logging uses the [kotlin-logging](https://github.com/oshai/kotlin-logging) interface,
   which should be configured to use Apache Log4j2 under the hood.
-- [kairo-config](kairo-config/):
+- [kairo-config](./kairo-config):
   Home of `ConfigLoader`, which loads configs for Kairo Servers from YAML files.
   Includes support for config extension and application,
   as well as various sources.
-- [kairo-serialization](kairo-serialization/):
+- [kairo-serialization](./kairo-serialization):
   Uses [Jackson](https://github.com/FasterXML/jackson).
   to handle JSON and YAML serialization.
-- [kairo-testing](kairo-testing/):
+- [kairo-testing](./kairo-testing):
   A convenient testing library which includes some helpful test dependencies.
-- [kairo-util](kairo-util/):
+- [kairo-util](./kairo-util):
   Some useful utilities.
 
 **Feature modules:**
 
-- [kairo-clock-feature](kairo-clock-feature/):
+- [kairo-clock-feature](./kairo-clock-feature):
   The Clock Feature allows for configuration and injection of a Java `Clock`.
-- [kairo-google-app-engine-feature](kairo-google-app-engine-feature/):
+- [kairo-google-app-engine-feature](./kairo-google-app-engine-feature):
   Kairo's Google App Engine Feature uses the health check readiness endpoint
   to configure a GAE warmup endpoint.
-- [kairo-health-check-feature](kairo-health-check-feature/):
+- [kairo-health-check-feature](./kairo-health-check-feature):
   Kairo's Health Check Feature configures liveness and readiness health check REST endpoints.
-- [kairo-id-feature](kairo-id-feature/):
+- [kairo-id-feature](./kairo-id-feature):
   Kairo IDs are an optional way to uniquely identify entities.
   Think of them as an alternative to `UUID`s or serial IDs, but with a few perks.
   Includes testable ID generation code.
-- [kairo-logging-feature](kairo-logging-feature/):
+- [kairo-logging-feature](./kairo-logging-feature):
   This Feature supports logging within Kairo Servers.
-- [kairo-rest-feature](kairo-rest-feature/):
+- [kairo-rest-feature](./kairo-rest-feature):
   The REST Feature adds support for REST endpoints, including auth.
   Under the hood, this Feature uses [Ktor](https://ktor.io/).
-- [kairo-sql-feature](kairo-sql-feature/):
+- [kairo-sql-feature](./kairo-sql-feature):
   The SQL Feature adds support for SQL databases.
   Under the hood, this Feature uses [JDBI](https://jdbi.org/).
-- [kairo-sql-migration-feature](kairo-sql-migration-feature/):
-  The SQL Migration Feature complements [kairo-sql-feature](kairo-sql-feature/).
+- [kairo-sql-migration-feature](./kairo-sql-migration-feature):
+  The SQL Migration Feature complements [kairo-sql-feature](./kairo-sql-feature).
   by adding support for database migrations.
   Under the hood, this Feature uses [Flyway Community](https://www.red-gate.com/products/flyway/community/).
-- [kairo-uuid-feature](kairo-uuid-feature/):
+- [kairo-uuid-feature](./kairo-uuid-feature):
   Includes testable UUID generation code.
 
 ### Optional modules
 
-- [kairo-darb](kairo-darb/):
+- [kairo-darb](./kairo-darb):
   Home of `DarbEncoder`, which encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
-- [kairo-dependency-injection](kairo-dependency-injection/):
+- [kairo-dependency-injection](./kairo-dependency-injection):
   Makes Guice available,
   along with some utilities to make its use more idiomatic.
-- [kairo-exception](kairo-exception/):
+- [kairo-exception](./kairo-exception):
   Base classes representing exceptions that Kairo knows how to handle.
-  This is primarily used by [kairo-rest-feature](kairo-rest-feature/).
-- [kairo-protected-string](kairo-protected-string/):
+  This is primarily used by [kairo-rest-feature](./kairo-rest-feature).
+- [kairo-protected-string](./kairo-protected-string):
   `ProtectedString` represents a string value that should not be logged or otherwise exposed.
-- [kairo-reflect](kairo-reflect/):
+- [kairo-reflect](./kairo-reflect):
   This is a wrapper for Kotlin's reflection library
   that also includes some reflection-related utilities.
-- [kairo-rest-client](kairo-rest-client/):
+- [kairo-rest-client](./kairo-rest-client):
   A thin wrapper around [Ktor](https://ktor.io/)'s `HttpClient`.
-- [kairo-transaction-manager](kairo-transaction-manager/):
+- [kairo-transaction-manager](./kairo-transaction-manager):
   The Kairo `TransactionManager` offers explicit automatic handling of transactions that span multiple systems.
-- [kairo-updater](kairo-updater/):
+- [kairo-updater](./kairo-updater):
   A utility library for updating existing entities
   that supports `Optional`s to differentiate between `null` and `undefined` from the frontend.
 
 ### Internal modules
 
-- [kairo-command-runner](kairo-command-runner/):
+- [kairo-command-runner](./kairo-command-runner):
   `CommandRunner` runs shell commands.
   It delegates to Java's built-in way of doing this,
   but uses an abstract class for testability.
-- [kairo-environment-variable-supplier](kairo-environment-variable-supplier/):
+- [kairo-environment-variable-supplier](./kairo-environment-variable-supplier):
   `EnvironmentVariableSupplier` supplies environment variables.
   It delegates to Java's built-in way of doing this,
   but uses an abstract class for testability.
-- [kairo-gcp-secret-supplier](kairo-gcp-secret-supplier/):
+- [kairo-gcp-secret-supplier](./kairo-gcp-secret-supplier):
   `GcpSecretSupplier` supplies GCP secrets.
   It delegates to the GCP Secret Manager SDK,
   but uses an abstract class for testability.
@@ -365,36 +372,11 @@ fun main() {
 }
 ```
 
-## Upgrading dependencies
-
-### Gradle
-
-```shell
-./gradlew wrapper --gradle-version=<version>
-```
-
-### Detekt
-
-When upgrading Detekt versions, review `default-detekt-config.yaml` as well as the changelog.
-Make corresponding changes as necessary in [the config file](.detekt/config.yaml).
-
-### Jackson
-
-Kairo's integration with Jackson is very tight. Be careful when upgrading versions.
-Search for any new or modified usages of `JsonMappingException`s
-and ensure these are handled by `ExceptionManager`.
-
-### Ktor
-
-Kairo's integration with Ktor is very tight. Be careful when upgrading versions.
-Search for any new or modified usages of exceptions from `io.ktor.server.plugins.ErrorsKt`
-and ensure these are handled by `ExceptionManager`.
-
 ## Releasing
 
 1. Familiarize yourself with [semantic versioning](https://semver.org/).
 2. Create a new branch called `release/X.Y.Z`.
-3. Bump the version in `kairo-publish.gradle.kts`.
+3. Bump the version in [kairo-publish.gradle.kts](./buildSrc/src/main/kotlin/kairo-publish.gradle.kts).
 4. Commit "Release X.Y.Z".
 5. Create and merge a PR "Release X.Y.Z". No description is necessary.
 6. [Draft a new release](https://github.com/hudson155/kairo/releases/new).
