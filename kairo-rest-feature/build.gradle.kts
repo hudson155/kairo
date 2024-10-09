@@ -14,10 +14,8 @@ dependencies {
   api(libs.auth0JavaJwt)
   api(libs.auth0JwksRsa)
   api(libs.ktorHttpJvm) // Exposed for clients.
-  implementation(libs.ktorSerializationJackson)
   implementation(libs.ktorServerAuth)
   api(libs.ktorServerCio)
-  implementation(libs.ktorServerContentNegotiation)
   api(libs.ktorServerCore)
   implementation(libs.ktorServerStatusPages)
 
