@@ -1,6 +1,5 @@
 package kairo.rest.exceptionHandler
 
-import kairo.rest.KairoCorsConfig
 import kairo.rest.KairoRestConfig
 import kairo.rest.KairoRestFeature
 import kairo.restTesting.TestKairoRestFeature
@@ -16,10 +15,6 @@ internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
     connector = KairoRestConfig.Connector(
       host = "0.0.0.0",
       port = exceptionHandlerTestRestPort,
-    ),
-    cors = KairoCorsConfig(
-      hosts = emptyList(),
-      headers = emptyList(),
     ),
     lifecycle = KairoRestConfig.Lifecycle(
       shutdownGracePeriodMs = 25_000, // 25 seconds.

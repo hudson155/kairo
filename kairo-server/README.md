@@ -45,12 +45,6 @@ rest:
   connector:
     host: "0.0.0.0"
     port: 8080
-  cors:
-    hosts:
-      - { host: "localhost:3000", scheme: "http" }
-    headers:
-      - "Authorization"
-      - "Content-Type"
   lifecycle:
     shutdownGracePeriodMs: 15_000 # 15 seconds.
     shutdownTimeoutMs: 25_000 # 25 seconds.

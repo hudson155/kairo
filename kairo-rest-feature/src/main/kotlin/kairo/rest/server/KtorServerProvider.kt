@@ -34,7 +34,6 @@ internal class KtorServerProvider @Inject constructor(
       module = {
         installAuth(authVerifiers)
         installContentNegotiation()
-        installCors(config.cors)
         installStatusPages()
         registerRestHandlers(handlers)
         with(module) {
