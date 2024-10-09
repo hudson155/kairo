@@ -4,7 +4,6 @@ import io.ktor.server.engine.ApplicationEngine
 
 public data class KairoRestConfig(
   val connector: Connector,
-  val cors: KairoCorsConfig,
   val lifecycle: Lifecycle,
   val parallelism: Parallelism,
 ) {

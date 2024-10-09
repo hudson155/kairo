@@ -1,4 +1,4 @@
-package kairo.rest
+package kairo.rest.cors
 
 public data class KairoCorsConfig(
   val hosts: List<Host>,
