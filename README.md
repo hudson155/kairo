@@ -144,6 +144,7 @@ dependencies {
   api("kairo:kairo-id-feature:$kairoVersion")
   api("kairo:kairo-logging-feature:$kairoVersion")
   api("kairo:kairo-rest-feature:$kairoVersion")
+  api("kairo:kairo-rest-feature-content-negotiation:$kairoVersion")
   api("kairo:kairo-serialization:$kairoVersion")
   api("kairo:kairo-server:$kairoVersion")
 
@@ -357,7 +358,11 @@ class MonolithServer(
         KairoHealthCheckFeature(MonolithHealthCheckService::class),
         KairoIdFeature(config.id),
         KairoLoggingFeature(config.logging),
-        KairoRestFeature(config.rest),
+        KairoRestFeature(config.rest) {
+          install(ContentNegotiation) {
+            kairoConfigure()
+          }
+        },
 
         LibraryFeature(),
       ),
