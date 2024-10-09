@@ -19,10 +19,9 @@ publishing {
       groupId = "kairo"
       /**
        * Derives the artifact ID from the project path.
-       * The only valid nested project path is ":testing" (for example, ":kairo-feature:testing").
        */
       artifactId = run {
-        val regex = Regex(":([a-z]+(-[a-z]+)*(:testing)?)")
+        val regex = Regex(":([a-z]+(-[a-z]+)*(:[a-z]+(-[a-z]+)*)?)")
         val path = project.path
         val match = requireNotNull(regex.matchEntire(path)) { "Invalid project name: $path." }
         return@run match.groupValues[1].replace(':', '-')
