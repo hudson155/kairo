@@ -8,7 +8,6 @@ import io.ktor.server.engine.embeddedServer
 import kairo.dependencyInjection.LazySingletonProvider
 import kairo.rest.KairoRestConfig
 import kairo.rest.KtorModuleFunction
-import kairo.rest.auth.AuthVerifier
 import kairo.rest.handler.RestHandler
 
 /**
@@ -22,7 +21,6 @@ import kairo.rest.handler.RestHandler
 @Singleton
 internal class KtorServerProvider @Inject constructor(
   private val config: KairoRestConfig,
-  private val authVerifiers: List<AuthVerifier<*>>,
   private val handlers: Set<RestHandler<*, *>>,
   private val module: KtorModuleFunction,
 ) : LazySingletonProvider<KtorServer>() {
@@ -32,7 +30,6 @@ internal class KtorServerProvider @Inject constructor(
       environment = applicationEnvironment(),
       configure = configureEmbeddedServer(config),
       module = {
-        installAuth(authVerifiers)
         installStatusPages()
         registerRestHandlers(handlers)
         with(module) {

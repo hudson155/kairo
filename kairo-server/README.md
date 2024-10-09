@@ -36,6 +36,13 @@ data class MonolithServerConfig(
 ```
 
 ```yaml
+# src/main/resources/config/config.yaml
+
+auth:
+  jwtIssuer: "https://example.com/"
+  jwtSecret: { source: "GcpSecret", id: "projects/012345678900/secrets/example/versions/1" }
+  leewaySec: 20 # 20 seconds.
+
 featureManager:
   lifecycle:
     startupDelayMs: 2000 # 2 seconds.
@@ -66,6 +73,22 @@ class MonolithServer(
     FeatureManager(
       features = setOf(
         KairoRestFeature(config.rest) {
+          install(Auth) {
+            kairoConfigure {
+              add(
+                JwtAuthVerifier(
+                  schemes = listOf("Bearer"),
+                  mechanisms = listOf(
+                    JwtJwtAuthMechanism(
+                      issuers = listOf(authConfig.jwtIssuer),
+                      algorithm = Algorithm.HMAC256(authConfig.jwtSecret.value),
+                      leewaySec = authConfig.leewaySec,
+                    ),
+                  ),
+                ),
+              )
+            }
+          }
           install(ContentNegotiation) {
             kairoConfigure()
           }

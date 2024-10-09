@@ -1,6 +1,6 @@
 package kairo.rest.exception
 
-internal class UnrecognizedPolymorphicType(
+public class UnrecognizedPolymorphicType(
   override val path: String?,
   override val location: Location?,
   cause: Exception,

@@ -26,7 +26,6 @@ are wrong when using CIO.
 
 dependencies {
   implementation("kairo:kairo-rest-feature:$kairoVersion")
-  implementation("kairo:kairo-rest-feature-content-negotiation:$kairoVersion")
 }
 ```
 
@@ -210,6 +209,11 @@ class OrganizationHandler @Inject constructor() {
 ```yaml
 # src/main/resources/config/config.yaml
 
+auth:
+  jwtIssuer: "https://example.com/"
+  jwtSecret: { source: "GcpSecret", id: "projects/012345678900/secrets/example/versions/1" }
+  leewaySec: 20 # 20 seconds.
+
 rest:
   connector:
     host: "0.0.0.0"
@@ -227,38 +231,24 @@ rest:
 // src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
 
 KairoRestFeature(config.rest) {
+  install(Auth) {
+    kairoConfigure {
+      add(
+        JwtAuthVerifier(
+          schemes = listOf("Bearer"),
+          mechanisms = listOf(
+            JwtJwtAuthMechanism(
+              issuers = listOf(authConfig.jwtIssuer),
+              algorithm = Algorithm.HMAC256(authConfig.jwtSecret.value),
+              leewaySec = authConfig.leewaySec,
+            ),
+          ),
+        ),
+      )
+    }
+  }
   install(ContentNegotiation) {
     kairoConfigure()
   }
 }
-```
-
-### Step 5: Configure auth
-
-```yaml
-# src/main/resources/config/config.yaml
-
-auth:
-  jwtSecret: { source: "GcpSecret", id: "projects/012345678900/secrets/example/versions/1" }
-  leewaySec: 20 # 20 seconds.
-```
-
-```kotlin
-// src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
-
-KairoRestFeature(
-  config = config.rest,
-  authVerifiers = listOf(
-    JwtAuthVerifier(
-      schemes = listOf("Bearer"),
-      mechanisms = listOf(
-        JwtJwtAuthMechanism(
-          issuers = listOf("https://example.com/"),
-          algorithm = Algorithm.HMAC256(config.auth.jwtSecret.value),
-          leewaySec = config.auth.leewaySec,
-        ),
-      ),
-    ),
-  ),
-)
 ```
