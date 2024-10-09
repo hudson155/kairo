@@ -376,7 +376,7 @@ fun main() {
 
 1. Familiarize yourself with [semantic versioning](https://semver.org/).
 2. Create a new branch called `release/X.Y.Z`.
-3. Bump the version in `kairo-publish.gradle.kts`.
+3. Bump the version in [kairo-publish.gradle.kts](./buildSrc/src/main/kotlin/kairo-publish.gradle.kts).
 4. Commit "Release X.Y.Z".
 5. Create and merge a PR "Release X.Y.Z". No description is necessary.
 6. [Draft a new release](https://github.com/hudson155/kairo/releases/new).
