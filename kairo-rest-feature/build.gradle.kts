@@ -23,6 +23,7 @@ dependencies {
   testImplementation(project(":kairo-feature:testing"))
   testImplementation(project(":kairo-id-feature"))
   testImplementation(project(":kairo-logging:testing"))
+  testImplementation(project(":kairo-rest-feature:content-negotiation"))
   testImplementation(project(":kairo-rest-feature:testing"))
   testImplementation(project(":kairo-testing"))
 }
