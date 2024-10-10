@@ -23,6 +23,10 @@ internal class MdcGenerator(
   fun generate(): Map<String, Any?> =
     restMdc() + endpointMdc()
 
+  /**
+   * Includes some default REST-related properties.
+   * These will be the same for all endpoints.
+   */
   private fun restMdc(): Map<String, Any?> =
     mapOf(
       "ktor.rest.method" to PrettyRestEndpointPrinter.writeMethod(template),
@@ -32,11 +36,16 @@ internal class MdcGenerator(
       "ktor.rest.accept" to PrettyRestEndpointPrinter.writeAccept(template),
     )
 
-  @Suppress("UNCHECKED_CAST")
+  /**
+   * Finds and includes path and query params.
+   *
+   * There might be a better way to do this.
+   */
   private fun endpointMdc(): Map<String, Any?> {
+    @Suppress("UNCHECKED_CAST")
     val properties = endpoint::class.declaredMemberProperties as Collection<KProperty1<RestEndpoint<*, *>, *>>
-    val names = template.path.components.filterIsInstance<RestEndpointPath.Component.Param>()
-      .map { it.value } + template.query.params.map { it.value }
+    val names = template.path.components.filterIsInstance<RestEndpointPath.Component.Param>().map { it.value } +
+      template.query.params.map { it.value }
     logger.debug { "Names are $names." }
     return names.associate { name ->
       val property = properties.single { it.name == name }
