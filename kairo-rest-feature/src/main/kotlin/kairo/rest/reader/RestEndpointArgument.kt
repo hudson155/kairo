@@ -5,6 +5,7 @@ import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import kairo.rest.ktorServerMapper
 import kairo.rest.util.typeInfo
+import kairo.serialization.util.readValueSpecial
 import kotlin.reflect.KParameter
 import kotlin.reflect.jvm.javaType
 
@@ -56,15 +57,7 @@ internal sealed class RestEndpointArgument(
     @Suppress("ForbiddenMethodCall")
     private fun convert(parameter: String): Any? {
       val type = ktorServerMapper.constructType(param.type.javaType)
-      try {
-        return ktorServerMapper.convertValue(parameter, type)
-      } catch (e: IllegalArgumentException) {
-        try {
-          return ktorServerMapper.readValue(parameter, type)
-        } catch (_: Exception) {
-          throw e
-        }
-      }
+      return ktorServerMapper.readValueSpecial(parameter, type)
     }
   }
 }
