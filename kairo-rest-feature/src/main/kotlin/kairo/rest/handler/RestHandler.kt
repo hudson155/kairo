@@ -7,6 +7,7 @@ import io.ktor.server.auth.principal
 import io.ktor.server.response.respond
 import io.ktor.server.routing.RoutingCall
 import io.ktor.util.reflect.typeInfo
+import kairo.mdc.withMdc
 import kairo.reflect.typeParam
 import kairo.rest.auth.Auth
 import kairo.rest.auth.Principal
@@ -29,14 +30,26 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
 
   internal suspend fun handle(call: RoutingCall) {
     val endpoint = reader.endpoint(call)
-    logger.debug { "Read endpoint: $endpoint." }
-    auth(call, endpoint)
-    val response = handle(endpoint)
-    logger.debug { "Result: $response." }
-    val statusCode = statusCode(response)
-    logger.debug { "Status code: $statusCode." }
-    call.respond(statusCode, response)
+    withMdc(mdc(call, endpoint)) {
+      logger.debug { "Read endpoint: $endpoint." }
+      auth(call, endpoint)
+      val response = handle(endpoint)
+      logger.debug { "Result: $response." }
+      val statusCode = statusCode(response)
+      logger.debug { "Status code: $statusCode." }
+      call.respond(statusCode, response)
+    }
   }
+
+  private fun mdc(call: RoutingCall, endpoint: E): Map<String, Any?> =
+    MdcGenerator(call, template, endpoint).generate() + mdc(endpoint)
+
+  /**
+   * Provides MDC to accompany default MDC.
+   * Elements in the map are included in every log line.
+   */
+  protected open fun mdc(endpoint: E): Map<String, Any?> =
+    emptyMap()
 
   private suspend fun auth(call: RoutingCall, endpoint: E) {
     val authResult = Auth(call.principal<Principal>()).auth(endpoint)
@@ -46,8 +59,15 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
     }
   }
 
+  /**
+   * Must check if the call to this endpoint is authorized.
+   */
   public abstract suspend fun Auth.auth(endpoint: E): Auth.Result
 
+  /**
+   * Does the endpoint's "actual work".
+   * Invoked only if the call is authorized.
+   */
   public abstract suspend fun handle(endpoint: E): Response
 
   protected open fun statusCode(response: Response): HttpStatusCode =
