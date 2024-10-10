@@ -29,7 +29,12 @@ public fun <T : Any> Binder.bindRestHandlers(kClass: KClass<T>) {
       require(restHandler.isInner) { "REST handlers must be inner classes: ${restHandler.qualifiedName!!}." }
       val constructor = restHandler.primaryConstructor
       requireNotNull(constructor) { "REST handlers must have a primary constructor: ${restHandler.qualifiedName!!}." }
-      multibinder.addBinding().toProvider(DelegatingProvider { constructor.call(it.getInstanceByClass(kClass)) })
+      val provider = DelegatingProvider { injector ->
+        constructor.call(injector.getInstanceByClass(kClass)).apply {
+          injector.injectMembers(this)
+        }
+      }
+      multibinder.addBinding().toProvider(provider)
     }
   }
 }
