@@ -102,6 +102,9 @@ Each module falls into one of 3 categories:
 - [kairo-exception](./kairo-exception):
   Base classes representing exceptions that Kairo knows how to handle.
   This is primarily used by [kairo-rest-feature](./kairo-rest-feature).
+- [kairo-mdc](./kairo-mdc):
+  Adds support for mapped diagnostic context (MDC),
+  which is the JVM's way of adding context to log lines.
 - [kairo-protected-string](./kairo-protected-string):
   `ProtectedString` represents a string value that should not be logged or otherwise exposed.
 - [kairo-reflect](./kairo-reflect):

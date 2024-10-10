@@ -32,10 +32,10 @@ internal class KtorServerProvider @Inject constructor(
       module = {
         installContentNegotiation()
         installStatusPages()
-        registerRestHandlers(handlers)
         with(module) {
           module()
         }
+        registerRestHandlers(handlers)
       },
     )
 }

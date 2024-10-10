@@ -10,14 +10,17 @@ import kairo.rest.template.RestEndpointTemplate
 internal object PrettyRestEndpointPrinter : RestEndpointPrinter() {
   override fun write(template: RestEndpointTemplate): String =
     listOfNotNull(
-      writeContentType(template),
+      "[${writeContentType(template).orEmpty()} -> ${writeAccept(template).orEmpty()}]",
       writeMethod(template),
       writePath(template),
-      writeQuery(template),
+      writeQuery(template)?.let { "($it)" },
     ).joinToString(" ")
 
-  fun writeContentType(template: RestEndpointTemplate): String =
-    "[${template.contentType?.toString().orEmpty()} -> ${template.accept?.toString().orEmpty()}]"
+  fun writeContentType(template: RestEndpointTemplate): String? =
+    template.contentType?.toString()
+
+  fun writeAccept(template: RestEndpointTemplate): String? =
+    template.accept?.toString()
 
   fun writeMethod(template: RestEndpointTemplate): String =
     template.method.value
@@ -34,12 +37,11 @@ internal object PrettyRestEndpointPrinter : RestEndpointPrinter() {
 
   fun writeQuery(template: RestEndpointTemplate): String? {
     if (template.query.params.isEmpty()) return null
-    val query = template.query.params.joinToString { (value, required) ->
+    return template.query.params.joinToString { (value, required) ->
       buildString {
         append(value)
         if (!required) append('?')
       }
     }
-    return "($query)"
   }
 }
