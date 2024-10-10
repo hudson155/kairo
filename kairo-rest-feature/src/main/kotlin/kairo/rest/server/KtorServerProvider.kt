@@ -8,6 +8,7 @@ import io.ktor.server.engine.embeddedServer
 import kairo.dependencyInjection.LazySingletonProvider
 import kairo.rest.KairoRestConfig
 import kairo.rest.KtorModuleFunction
+import kairo.rest.exceptionHandler.ExceptionManager
 import kairo.rest.handler.RestHandler
 
 /**
@@ -21,6 +22,7 @@ import kairo.rest.handler.RestHandler
 @Singleton
 internal class KtorServerProvider @Inject constructor(
   private val config: KairoRestConfig,
+  private val exceptionManager: ExceptionManager,
   private val handlers: Set<RestHandler<*, *>>,
   private val module: KtorModuleFunction,
 ) : LazySingletonProvider<KtorServer>() {
@@ -31,7 +33,7 @@ internal class KtorServerProvider @Inject constructor(
       configure = configureEmbeddedServer(config),
       module = {
         installContentNegotiation()
-        installStatusPages()
+        installStatusPages(exceptionManager)
         with(module) {
           module()
         }
