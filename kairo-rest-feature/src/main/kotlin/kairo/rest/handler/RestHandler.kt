@@ -48,7 +48,7 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
    * Provides MDC to accompany default MDC.
    * Elements in the map are included in every log line.
    */
-  protected open fun mdc(endpoint: E): Map<String, Any> =
+  protected open fun mdc(endpoint: E): Map<String, Any?> =
     emptyMap()
 
   private suspend fun auth(call: RoutingCall, endpoint: E) {

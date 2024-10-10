@@ -17,8 +17,8 @@ internal class MdcGenerator(
   private val template: RestEndpointTemplate,
   private val endpoint: RestEndpoint<*, *>,
 ) {
-
-  fun generate(): Map<String, Any?> = restMdc() + endpointMdc()
+  fun generate(): Map<String, Any?> =
+    restMdc() + endpointMdc()
 
   private fun restMdc(): Map<String, Any?> =
     mapOf(
@@ -30,15 +30,14 @@ internal class MdcGenerator(
     )
 
   @Suppress("UNCHECKED_CAST")
-  private fun endpointMdc(): Map<String, Any> {
+  private fun endpointMdc(): Map<String, Any?> {
     val properties = endpoint::class.declaredMemberProperties as Collection<KProperty1<RestEndpoint<*, *>, *>>
     val names = template.path.components.filterIsInstance<RestEndpointPath.Component.Param>()
       .map { it.value } + template.query.params.map { it.value }
     logger.debug { "Names are $names." }
-    return names.mapNotNull { name ->
+    return names.associate { name ->
       val property = properties.single { it.name == name }
-      val value = property.get(endpoint) ?: return@mapNotNull null
-      return@mapNotNull Pair("ktor.rest.param.$name", value)
-    }.associate { it }
+      return@associate Pair("ktor.rest.param.$name", property.get(endpoint))
+    }
   }
 }
