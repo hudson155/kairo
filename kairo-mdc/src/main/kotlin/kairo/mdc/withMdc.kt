@@ -6,6 +6,7 @@ import kairo.serialization.ObjectMapperFactory
 import kairo.serialization.ObjectMapperFormat
 import kotlinx.coroutines.slf4j.MDCContext
 import kotlinx.coroutines.withContext
+import org.slf4j.MDC
 
 private val mdcMapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
