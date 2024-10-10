@@ -3,8 +3,6 @@ package kairo.rest.exceptionHandler
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.ApplicationCall
-import io.ktor.server.response.respond
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -29,7 +27,7 @@ internal class ExceptionManager {
       KairoHandler(),
     )
 
-  suspend fun handle(call: ApplicationCall, cause: Throwable) {
+  fun handle(cause: Throwable): Pair<HttpStatusCode, Any?> {
     logger.debug(cause) { "Handling exception." }
 
     var e = cause
@@ -45,14 +43,13 @@ internal class ExceptionManager {
         }
         is ExceptionResult.Handled -> {
           // Handled exceptions cause a response and stop propagation.
-          call.respond(result.statusCode, result.response)
-          return@handle
+          return@handle Pair(result.statusCode, result.response)
         }
       }
     }
 
     // If the exception wasn't handled by any of the exception handlers...
     logger.error(cause) { "Unhandled exception." }
-    call.respond(HttpStatusCode.InternalServerError)
+    return Pair(HttpStatusCode.InternalServerError, null)
   }
 }

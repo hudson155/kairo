@@ -91,6 +91,8 @@ complexity:
     constructorThreshold: 4
     ignoreDefaultParameters: false
     ignoreDataClasses: true
+    ignoreAnnotated:
+      - 'com.google.inject.Inject'
   MethodOverloading:
     active: true
     threshold: 4
