@@ -12,6 +12,9 @@ import kotlin.reflect.full.declaredMemberProperties
 
 private val logger: KLogger = KotlinLogging.logger {}
 
+/**
+ * Defines MDC for [RestEndpoint]s.
+ */
 internal class MdcGenerator(
   @Suppress("unused") private val call: RoutingCall,
   private val template: RestEndpointTemplate,

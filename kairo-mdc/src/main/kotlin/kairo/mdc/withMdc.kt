@@ -9,6 +9,10 @@ import org.slf4j.MDC
 
 private val mdcMapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
+/**
+ * Use this to make MDC work properly with Kotlin coroutines.
+ * Null values will be excluded.
+ */
 public suspend fun withMdc(mdc: Map<String, Any?>, block: suspend () -> Unit) {
   val contextMap = buildMap {
     putAll(MDC.getCopyOfContextMap())
