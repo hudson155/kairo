@@ -9,39 +9,37 @@ import kairo.rest.template.RestEndpointTemplate
  */
 internal object PrettyRestEndpointPrinter : RestEndpointPrinter() {
   override fun write(template: RestEndpointTemplate): String =
-    buildString {
-      contentType(template)
-      method(template)
-      path(template)
-      query(template)
-    }
+    listOfNotNull(
+      writeContentType(template),
+      writeMethod(template),
+      writePath(template),
+      writeQuery(template),
+    ).joinToString(" ")
 
-  private fun StringBuilder.contentType(template: RestEndpointTemplate) {
-    append("[${template.contentType?.toString().orEmpty()} -> ${template.accept?.toString().orEmpty()}] ")
-  }
+  fun writeContentType(template: RestEndpointTemplate): String =
+    "[${template.contentType?.toString().orEmpty()} -> ${template.accept?.toString().orEmpty()}]"
 
-  private fun StringBuilder.method(template: RestEndpointTemplate) {
-    append("${template.method.value} ")
-  }
+  fun writeMethod(template: RestEndpointTemplate): String =
+    template.method.value
 
-  private fun StringBuilder.path(template: RestEndpointTemplate) {
+  fun writePath(template: RestEndpointTemplate): String {
     val path = template.path.components.joinToString("/") { component ->
       when (component) {
         is RestEndpointPath.Component.Constant -> component.value
         is RestEndpointPath.Component.Param -> ":${component.value}"
       }
     }
-    append("/$path")
+    return "/$path"
   }
 
-  private fun StringBuilder.query(template: RestEndpointTemplate) {
-    if (template.query.params.isEmpty()) return
+  fun writeQuery(template: RestEndpointTemplate): String? {
+    if (template.query.params.isEmpty()) return null
     val query = template.query.params.joinToString { (value, required) ->
       buildString {
         append(value)
         if (!required) append('?')
       }
     }
-    append(" ($query)")
+    return "($query)"
   }
 }
