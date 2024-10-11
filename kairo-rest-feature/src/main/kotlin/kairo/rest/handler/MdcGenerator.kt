@@ -5,6 +5,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.server.routing.RoutingCall
 import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.printer.PrettyRestEndpointPrinter
+import kairo.rest.server.startTime
 import kairo.rest.template.RestEndpointPath
 import kairo.rest.template.RestEndpointTemplate
 import kotlin.reflect.KProperty1
@@ -16,24 +17,31 @@ private val logger: KLogger = KotlinLogging.logger {}
  * Defines MDC for [RestEndpoint]s.
  */
 internal class MdcGenerator(
-  @Suppress("unused") private val call: RoutingCall,
+  private val call: RoutingCall,
   private val template: RestEndpointTemplate,
   private val endpoint: RestEndpoint<*, *>,
 ) {
   fun generate(): Map<String, Any?> =
-    restMdc() + endpointMdc()
+    restEndpointMdc() + otherRestMdc() + endpointMdc()
 
   /**
-   * Includes some default REST-related properties.
-   * These will be the same for all endpoints.
+   * Includes properties related to the specific REST endpoint.
    */
-  private fun restMdc(): Map<String, Any?> =
+  private fun restEndpointMdc(): Map<String, Any?> =
     mapOf(
       "ktor.rest.method" to PrettyRestEndpointPrinter.writeMethod(template),
       "ktor.rest.path" to PrettyRestEndpointPrinter.writePath(template),
       "ktor.rest.query" to PrettyRestEndpointPrinter.writeQuery(template),
       "ktor.rest.contentType" to PrettyRestEndpointPrinter.writeContentType(template),
       "ktor.rest.accept" to PrettyRestEndpointPrinter.writeAccept(template),
+    )
+
+  /**
+   * Includes REST-related properties not related to the specific endpoint.
+   */
+  private fun otherRestMdc(): Map<String, Any?> =
+    mapOf(
+      "ktor.rest.callStartTime" to call.startTime,
     )
 
   /**
