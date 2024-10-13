@@ -1,10 +1,6 @@
 package kairo.serialization.module.primitives
 
-import com.fasterxml.jackson.databind.deser.Deserializers
-import com.fasterxml.jackson.databind.module.SimpleDeserializers
 import com.fasterxml.jackson.databind.module.SimpleModule
-import com.fasterxml.jackson.databind.module.SimpleSerializers
-import com.fasterxml.jackson.databind.ser.Serializers
 import kairo.serialization.ObjectMapperFactoryBuilder
 import kotlin.uuid.Uuid
 
@@ -15,45 +11,61 @@ import kotlin.uuid.Uuid
  * Regarding UUIDs, Jackson supports [java.util.UUID] by default, but not [kotlin.uuid.Uuid] which we use.
  */
 internal class PrimitivesModule(
-  private val builder: ObjectMapperFactoryBuilder,
+  builder: ObjectMapperFactoryBuilder,
 ) : SimpleModule() {
-  override fun setupModule(context: SetupContext) {
-    super.setupModule(context)
-    context.addSerializers(buildSerializers())
-    context.addDeserializers(buildDeserializers())
+  init {
+    configureBoolean()
+    configureDouble()
+    configureFloat()
+    configureInt()
+    configureLong()
+    configureString(builder)
+    configureUuid()
   }
 
-  private fun buildSerializers(): Serializers =
-    SimpleSerializers().apply {
-      addSerializer(Uuid::class.javaObjectType, UuidSerializer())
+  private fun configureBoolean() {
+    BooleanDeserializer().let { deserializer ->
+      addDeserializer(Boolean::class.javaPrimitiveType, deserializer)
+      addDeserializer(Boolean::class.javaObjectType, deserializer)
     }
+  }
 
-  private fun buildDeserializers(): Deserializers =
-    SimpleDeserializers().apply {
-      BooleanDeserializer().let { deserializer ->
-        addDeserializer(Boolean::class.javaPrimitiveType, deserializer)
-        addDeserializer(Boolean::class.javaObjectType, deserializer)
-      }
-      DoubleDeserializer().let { deserializer ->
-        addDeserializer(Double::class.javaPrimitiveType, deserializer)
-        addDeserializer(Double::class.javaObjectType, deserializer)
-      }
-      FloatDeserializer().let { deserializer ->
-        addDeserializer(Float::class.javaPrimitiveType, deserializer)
-        addDeserializer(Float::class.javaObjectType, deserializer)
-      }
-      IntDeserializer().let { deserializer ->
-        addDeserializer(Int::class.javaPrimitiveType, deserializer)
-        addDeserializer(Int::class.javaObjectType, deserializer)
-      }
-      LongDeserializer().let { deserializer ->
-        addDeserializer(Long::class.javaPrimitiveType, deserializer)
-        addDeserializer(Long::class.javaObjectType, deserializer)
-      }
-
-      addDeserializer(String::class.javaObjectType, StringDeserializer(trimWhitespace = builder.trimWhitespace))
-      addDeserializer(Uuid::class.javaObjectType, UuidDeserializer())
+  private fun configureDouble() {
+    DoubleDeserializer().let { deserializer ->
+      addDeserializer(Double::class.javaPrimitiveType, deserializer)
+      addDeserializer(Double::class.javaObjectType, deserializer)
     }
+  }
+
+  private fun configureFloat() {
+    FloatDeserializer().let { deserializer ->
+      addDeserializer(Float::class.javaPrimitiveType, deserializer)
+      addDeserializer(Float::class.javaObjectType, deserializer)
+    }
+  }
+
+  private fun configureInt() {
+    IntDeserializer().let { deserializer ->
+      addDeserializer(Int::class.javaPrimitiveType, deserializer)
+      addDeserializer(Int::class.javaObjectType, deserializer)
+    }
+  }
+
+  private fun configureLong() {
+    LongDeserializer().let { deserializer ->
+      addDeserializer(Long::class.javaPrimitiveType, deserializer)
+      addDeserializer(Long::class.javaObjectType, deserializer)
+    }
+  }
+
+  private fun configureString(builder: ObjectMapperFactoryBuilder) {
+    addDeserializer(String::class.javaObjectType, StringDeserializer(trimWhitespace = builder.trimWhitespace))
+  }
+
+  private fun configureUuid() {
+    addSerializer(Uuid::class.javaObjectType, UuidSerializer())
+    addDeserializer(Uuid::class.javaObjectType, UuidDeserializer())
+  }
 }
 
 internal fun ObjectMapperFactoryBuilder.configurePrimitives(builder: ObjectMapperFactoryBuilder) {
