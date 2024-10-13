@@ -1,7 +1,5 @@
 package kairo.config
 
-import com.fasterxml.jackson.databind.deser.Deserializers
-import com.fasterxml.jackson.databind.module.SimpleDeserializers
 import com.fasterxml.jackson.databind.module.SimpleModule
 import kairo.protectedString.ProtectedString
 
@@ -12,23 +10,24 @@ import kairo.protectedString.ProtectedString
 internal class ConfigLoaderModule(
   private val config: ConfigLoaderConfig,
 ) : SimpleModule() {
-  override fun setupModule(context: SetupContext) {
-    super.setupModule(context)
-    context.addDeserializers(buildDeserializers())
+  init {
+    configureInt()
+    configureProtectedString()
+    configureString()
   }
 
-  @Suppress("ComplexRedundantLet", "UnnecessaryLet")
-  private fun buildDeserializers(): Deserializers =
-    SimpleDeserializers().apply {
-      ConfigIntDeserializer(config).let { deserializer ->
-        addDeserializer(Int::class.javaPrimitiveType, deserializer)
-        addDeserializer(Int::class.javaObjectType, deserializer)
-      }
-      ConfigProtectedStringDeserializer(config).let { deserializer ->
-        addDeserializer(ProtectedString::class.javaObjectType, deserializer)
-      }
-      ConfigStringDeserializer(config).let { deserializer ->
-        addDeserializer(String::class.javaObjectType, deserializer)
-      }
+  private fun configureInt() {
+    ConfigIntDeserializer(config).let { deserializer ->
+      addDeserializer(Int::class.javaPrimitiveType, deserializer)
+      addDeserializer(Int::class.javaObjectType, deserializer)
     }
+  }
+
+  private fun configureProtectedString() {
+    addDeserializer(ProtectedString::class.javaObjectType, ConfigProtectedStringDeserializer(config))
+  }
+
+  private fun configureString() {
+    addDeserializer(String::class.javaObjectType, ConfigStringDeserializer(config))
+  }
 }
