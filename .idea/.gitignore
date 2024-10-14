@@ -13,5 +13,6 @@
 !/compiler.xml
 !/kotlinc.xml
 !/misc.xml
+!/modules.xml
 !/sqldialects.xml
 !/vcs.xml
