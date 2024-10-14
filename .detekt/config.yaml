@@ -222,7 +222,7 @@ formatting:
   DiscouragedCommentLocation:
     active: true
   EnumEntryNameCase:
-    active: true
+    active: false # Overlaps with naming>EnumNaming.
   EnumWrapping:
     active: true
     indentSize: 2
@@ -233,8 +233,8 @@ formatting:
     insertFinalNewLine: true
   FunKeywordSpacing:
     active: true
-  FunctionName:
-    active: true
+  FunctionName: # Overlaps with naming>FunctionNaming.
+    active: false
   FunctionReturnTypeSpacing:
     active: true
     maxLineLength: 120
@@ -403,7 +403,8 @@ naming:
     active: true
     minimumFunctionNameLength: 2
   FunctionNaming:
-    active: false # Overlaps with formatting>FunctionName.
+    active: true
+    functionPattern: '[a-z][A-Za-z0-9]*'
   FunctionParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
@@ -585,6 +586,8 @@ style:
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
       - 'com.google.inject.TypeLiteral' # Use the Kotlin overload.
+
+      - 'com.sun.security.*'
 
       - 'io.kotest.core.spec.*' # Use JUnit test annotations.
 
