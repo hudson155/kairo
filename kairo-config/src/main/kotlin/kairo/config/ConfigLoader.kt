@@ -13,7 +13,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.commandRunner.DefaultCommandRunner
 import kairo.commandRunner.NoopCommandRunner
 import kairo.environmentVariableSupplier.DefaultEnvironmentVariableSupplier
-import kairo.environmentVariableSupplier.StaticEnvironmentVariableSupplier
 import kairo.gcpSecretSupplier.DefaultGcpSecretSupplier
 import kairo.gcpSecretSupplier.NoopGcpSecretSupplier
 import kairo.serialization.ObjectMapperFactory
@@ -128,6 +127,10 @@ public class ConfigLoader(
   }
 
   public companion object {
+    /**
+     * Creates a [ConfigLoader] instance that works as you'd expect.
+     * All sources use default (real) implementations.
+     */
     public fun createDefault(): ConfigLoader =
       ConfigLoader(
         ConfigLoaderConfig(
@@ -137,13 +140,15 @@ public class ConfigLoader(
         ),
       )
 
-    public fun noop(): ConfigLoader =
+    /**
+     * Creates a [ConfigLoader] instance that uses no-op implementations
+     * except for the environment variable supplier which is default (real).
+     */
+    public fun createTesting(): ConfigLoader =
       ConfigLoader(
         ConfigLoaderConfig(
           commandRunner = NoopCommandRunner,
-          environmentVariableSupplier = StaticEnvironmentVariableSupplier(
-            mapOf("KAIRO_ALLOW_INSECURE_CONFIG_SOURCES" to true.toString()),
-          ),
+          environmentVariableSupplier = DefaultEnvironmentVariableSupplier,
           gcpSecretSupplier = NoopGcpSecretSupplier,
         ),
       )

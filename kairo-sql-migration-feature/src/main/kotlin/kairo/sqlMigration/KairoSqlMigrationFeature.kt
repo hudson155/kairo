@@ -25,7 +25,7 @@ public open class KairoSqlMigrationFeature(
     binder.bind<Flyway>().toProvider(FlywayProvider::class)
   }
 
-  override fun start(injector: Injector, features: Set<Feature>) {
+  override fun start(injector: Injector) {
     logger.info { "Running SQL migrations." }
     val flyway = injector.getInstance<Flyway>()
     flyway.migrate()
