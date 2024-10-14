@@ -19,3 +19,14 @@ public class Auth(
     public class Exception(public val e: KairoException) : Result()
   }
 }
+
+/**
+ * Returns successful if either [this] or any of [alternatives] are successful.
+ * [this] is separated from [alternatives] because in an unsuccessful evaluation,
+ * only [this]'s exception is thrown.
+ */
+public fun Auth.Result.overriddenBy(vararg alternatives: Auth.Result): Auth.Result {
+  if (this == Auth.Result.Success) return this
+  alternatives.firstOrNull { it == Auth.Result.Success }?.let { return@overriddenBy it }
+  return this
+}
