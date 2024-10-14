@@ -20,8 +20,9 @@ internal class ConfigProtectedStringDeserializer(
    */
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): ProtectedString? {
     if (p.currentToken in stringDeserializer.tokens) {
-      requireInsecure("plaintext")
-      return stringDeserializer.deserialize(p, ctxt)?.let { ProtectedString(it) }
+      val string = stringDeserializer.deserialize(p, ctxt)
+      if (!string.isNullOrEmpty()) requireInsecure("plaintext")
+      return string?.let { ProtectedString(it) }
     }
     return super.deserialize(p, ctxt)
   }

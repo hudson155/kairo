@@ -24,6 +24,12 @@ internal class PlaintextConfigLoaderStringNullableDeserializerTest : ConfigLoade
     }
   """.trimIndent()
 
+  private val emptyString: String = """
+    {
+      "message": ""
+    }
+  """.trimIndent()
+
   private val nullString = """
     {
       "message": null
@@ -48,6 +54,20 @@ internal class PlaintextConfigLoaderStringNullableDeserializerTest : ConfigLoade
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass("Hello, World!"))
+  }
+
+  @Test
+  fun `empty (allowInsecureConfigSources = false)`(): Unit = runTest {
+    allowInsecureConfigSources(false)
+    val mapper = createMapper()
+    mapper.readValue<MyClass>(emptyString).shouldBe(MyClass(""))
+  }
+
+  @Test
+  fun `empty (allowInsecureConfigSources = true)`(): Unit = runTest {
+    allowInsecureConfigSources(true)
+    val mapper = createMapper()
+    mapper.readValue<MyClass>(emptyString).shouldBe(MyClass(""))
   }
 
   @Test
