@@ -39,7 +39,7 @@ internal class ServerTest {
     server.shutDown()
 
     verifyOrder {
-      testFeature.start(any(), eq(setOf(testFeature)))
+      testFeature.start(any())
       testFeature.afterStart(any())
       testFeature.beforeStop(any())
       testFeature.stop(any())

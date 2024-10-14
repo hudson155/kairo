@@ -27,7 +27,7 @@ public open class KairoSqlFeature(
     binder.bind<Jdbi>().toProvider(JdbiProvider::class)
   }
 
-  override fun start(injector: Injector, features: Set<Feature>) {
+  override fun start(injector: Injector) {
     logger.info { "Getting a connection to initialize the SQL data source." }
     val dataSource = injector.getInstance<HikariDataSource>()
     dataSource.getConnection()

@@ -23,7 +23,7 @@ public class FeatureManager(
     with(features.sortedBy { it.priority.ordinal }) {
       forEach { feature ->
         logger.info { "Start Feature: ${feature.name}." }
-        feature.start(injector, features)
+        feature.start(injector)
       }
       Thread.sleep(config.lifecycle.startupDelayMs)
       forEach { feature ->

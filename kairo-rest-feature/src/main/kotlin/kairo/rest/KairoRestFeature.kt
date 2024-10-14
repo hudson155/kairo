@@ -7,7 +7,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.dependencyInjection.bind
 import kairo.dependencyInjection.getInstance
 import kairo.dependencyInjection.toProvider
-import kairo.feature.Feature
 import kairo.rest.server.KtorServer
 import kairo.rest.server.KtorServerProvider
 
@@ -24,7 +23,7 @@ public open class KairoRestFeature(
     super.bind(binder)
   }
 
-  override fun start(injector: Injector, features: Set<Feature>) {
+  override fun start(injector: Injector) {
     logger.info { "Starting Ktor REST server." }
     val server = injector.getInstance<KtorServer>()
     server.start()
