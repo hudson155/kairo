@@ -9,6 +9,6 @@ Configuration:
         pattern: "%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %c - %message %mdc%n"
   Loggers:
     Root:
-      level: debug
+      level: "${env:LOG_LEVEL:-debug}"
       AppenderRef:
         ref: Plaintext
