@@ -7,3 +7,9 @@ resource "google_artifact_registry_repository" "maven_repo" {
     version_policy = "RELEASE"
   }
 }
+
+resource "google_artifact_registry_repository_iam_member" "maven_repo_public" {
+  repository = google_artifact_registry_repository.maven_repo.id
+  member = "allUsers"
+  role = "roles/artifactregistry.reader"
+}
