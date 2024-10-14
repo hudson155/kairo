@@ -384,7 +384,6 @@ class MonolithServer(
             }
           }
         },
-
         LibraryFeature(),
       ),
       config = config.featureManager,

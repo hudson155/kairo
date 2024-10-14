@@ -4,5 +4,5 @@ package kairo.serialization.util
 
 import com.fasterxml.jackson.core.JsonParser
 
-public inline fun <reified T : Any> JsonParser.readValue(): T =
+public inline fun <reified T> JsonParser.readValue(): T =
   readValueAs(T::class.java)

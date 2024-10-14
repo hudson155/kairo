@@ -38,7 +38,7 @@ public abstract class Feature : AbstractModule() {
   /**
    * Startup work; initializing state (such as connection pools).
    */
-  public open fun start(injector: Injector, features: Set<Feature>): Unit = Unit
+  public open fun start(injector: Injector): Unit = Unit
 
   /**
    * Change state after startup.
