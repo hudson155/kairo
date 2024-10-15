@@ -36,7 +36,6 @@ internal class TimeModule : SimpleModule() {
 
   private fun configureZoneId() {
     addSerializer(ZoneId::class.javaObjectType, ZoneIdSerializer())
-    addKeySerializer(ZoneId::class.javaObjectType, ZoneIdSerializer.Key())
     addDeserializer(ZoneId::class.javaObjectType, ZoneIdDeserializer())
     addKeyDeserializer(ZoneId::class.javaObjectType, ZoneIdDeserializer.Key())
   }
