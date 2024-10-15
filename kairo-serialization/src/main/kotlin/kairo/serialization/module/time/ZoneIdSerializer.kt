@@ -15,6 +15,13 @@ import java.time.ZoneOffset
  */
 @Suppress("RedundantNullableReturnType")
 public class ZoneIdSerializer : StdSerializer<ZoneId>(ZoneId::class.java) {
+  public class Key : StdSerializer<ZoneId>(ZoneId::class.java) {
+    override fun serialize(value: ZoneId, gen: JsonGenerator, provider: SerializerProvider) {
+      val string = convert(value)
+      gen.writeFieldName(string)
+    }
+  }
+
   override fun serialize(value: ZoneId, gen: JsonGenerator, provider: SerializerProvider) {
     val string = convert(value)
     gen.writeString(string)

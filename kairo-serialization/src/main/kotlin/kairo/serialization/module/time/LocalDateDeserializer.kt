@@ -3,6 +3,7 @@ package kairo.serialization.module.time
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.JsonToken
 import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.KeyDeserializer
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -17,6 +18,11 @@ import kairo.serialization.util.readValue
  */
 @Suppress("RedundantNullableReturnType")
 public class LocalDateDeserializer : StdDeserializer<LocalDate>(LocalDate::class.java) {
+  public class Key : KeyDeserializer() {
+    override fun deserializeKey(key: String, ctxt: DeserializationContext): LocalDate =
+      convert(key)
+  }
+
   /**
    * Return type is nullable to support subclasses.
    */
