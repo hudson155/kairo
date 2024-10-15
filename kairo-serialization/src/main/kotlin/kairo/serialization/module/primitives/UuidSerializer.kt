@@ -10,7 +10,12 @@ import kotlin.uuid.Uuid
  */
 public class UuidSerializer : StdSerializer<Uuid>(Uuid::class.java) {
   override fun serialize(value: Uuid, gen: JsonGenerator, provider: SerializerProvider) {
-    val string = value.toString()
+    val string = convert(value)
     gen.writeString(string)
+  }
+
+  public companion object {
+    private fun convert(value: Uuid): String =
+      value.toString()
   }
 }
