@@ -3,6 +3,7 @@ package kairo.serialization.module.primitives
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.JsonToken
 import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.KeyDeserializer
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import kairo.serialization.util.expectCurrentToken
 import kairo.serialization.util.readValue
@@ -13,6 +14,11 @@ import kotlin.uuid.Uuid
  */
 @Suppress("RedundantNullableReturnType")
 public class UuidDeserializer : StdDeserializer<Uuid>(Uuid::class.java) {
+  public class Key : KeyDeserializer() {
+    override fun deserializeKey(key: String, ctxt: DeserializationContext): Uuid =
+      convert(key)
+  }
+
   /**
    * Return type is nullable to support subclasses.
    */
