@@ -27,15 +27,17 @@ public class ZoneIdDeserializer : StdDeserializer<ZoneId>(ZoneId::class.java) {
     return convert(string)
   }
 
-  private fun convert(string: String): ZoneId {
-    val timeZone = ZoneId.of(string)
-    if (timeZone is ZoneOffset) {
-      if (timeZone == ZoneOffset.UTC) return timeZone
-      throw IllegalArgumentException("The only supported ZoneOffset is UTC.")
+  public companion object {
+    private fun convert(string: String): ZoneId {
+      val timeZone = ZoneId.of(string)
+      if (timeZone is ZoneOffset) {
+        if (timeZone == ZoneOffset.UTC) return timeZone
+        throw IllegalArgumentException("The only supported ZoneOffset is UTC.")
+      }
+      if (timeZone == ZoneId.of("UTC")) {
+        return ZoneOffset.UTC
+      }
+      return timeZone
     }
-    if (timeZone == ZoneId.of("UTC")) {
-      return ZoneOffset.UTC
-    }
-    return timeZone
   }
 }

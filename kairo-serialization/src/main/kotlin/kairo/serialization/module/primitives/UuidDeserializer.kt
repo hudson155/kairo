@@ -19,6 +19,11 @@ public class UuidDeserializer : StdDeserializer<Uuid>(Uuid::class.java) {
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Uuid? {
     expectCurrentToken(p, ctxt, JsonToken.VALUE_STRING)
     val string = p.readValue<String>()
-    return Uuid.parse(string)
+    return convert(string)
+  }
+
+  public companion object {
+    private fun convert(string: String): Uuid =
+      Uuid.parse(string)
   }
 }

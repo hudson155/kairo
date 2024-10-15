@@ -36,7 +36,6 @@ internal class ZoneIdDefaultObjectMapperTest {
   fun `serialize, UTC region`(): Unit = runTest {
     serializationShouldFail {
       mapper.writeValueAsString(MyClass(ZoneId.of("UTC")))
-        .shouldBe("{\"value\":\"UTC\"}")
     }
   }
 

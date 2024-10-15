@@ -22,8 +22,12 @@ public class LocalDateDeserializer : StdDeserializer<LocalDate>(LocalDate::class
    */
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): LocalDate? {
     expectCurrentToken(p, ctxt, JsonToken.VALUE_STRING)
-    val formatter = DateTimeFormatter.ISO_DATE
     val string = p.readValue<String>()
-    return LocalDate.from(formatter.parse(string))
+    return convert(string)
+  }
+
+  public companion object {
+    private fun convert(string: String): LocalDate =
+      LocalDate.from(localDateFormatter.parse(string))
   }
 }

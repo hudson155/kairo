@@ -22,8 +22,12 @@ public class InstantDeserializer : StdDeserializer<Instant>(Instant::class.java)
    */
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Instant? {
     expectCurrentToken(p, ctxt, JsonToken.VALUE_STRING)
-    val formatter = DateTimeFormatter.ISO_INSTANT
     val string = p.readValue<String>()
-    return Instant.from(formatter.parse(string))
+    return convert(string)
+  }
+
+  public companion object {
+    private fun convert(string: String): Instant =
+      Instant.from(instantFormatter.parse(string))
   }
 }

@@ -20,12 +20,14 @@ public class ZoneIdSerializer : StdSerializer<ZoneId>(ZoneId::class.java) {
     gen.writeString(string)
   }
 
-  private fun convert(timeZone: ZoneId): String {
-    if (timeZone is ZoneOffset) {
-      if (timeZone == ZoneOffset.UTC) return "UTC"
-      throw IllegalArgumentException("The only supported ZoneOffset is UTC.")
+  public companion object {
+    private fun convert(value: ZoneId): String {
+      if (value is ZoneOffset) {
+        if (value == ZoneOffset.UTC) return "UTC"
+        throw IllegalArgumentException("The only supported ZoneOffset is UTC.")
+      }
+      require(value != ZoneId.of("UTC")) { "Prefer ZoneOffset.UTC to ZoneId.of(\"UTC\")." }
+      return value.id
     }
-    require(timeZone != ZoneId.of("UTC")) { "Prefer ZoneOffset.UTC to ZoneId.of(\"UTC\")." }
-    return timeZone.id
   }
 }

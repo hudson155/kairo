@@ -19,8 +19,15 @@ public class StringDeserializer(
     )
 
   override fun extract(p: JsonParser): String {
-    var result = p.text
-    result = trimWhitespace.transform(result)
-    return result
+    val string = p.text
+    return convert(string, trimWhitespace = trimWhitespace)
+  }
+
+  public companion object {
+    private fun convert(string: String, trimWhitespace: TrimWhitespace.Type): String {
+      var result = string
+      result = trimWhitespace.transform(result)
+      return result
+    }
   }
 }
