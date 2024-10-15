@@ -28,6 +28,10 @@ internal class PrimitivesModule(
       addSerializer(Boolean::class.javaPrimitiveType, serializer)
       addSerializer(Boolean::class.javaObjectType, serializer)
     }
+    BooleanSerializer.Key().let { serializer ->
+      addKeySerializer(Boolean::class.javaPrimitiveType, serializer)
+      addKeySerializer(Boolean::class.javaObjectType, serializer)
+    }
     BooleanDeserializer().let { deserializer ->
       addDeserializer(Boolean::class.javaPrimitiveType, deserializer)
       addDeserializer(Boolean::class.javaObjectType, deserializer)
@@ -42,6 +46,10 @@ internal class PrimitivesModule(
     DoubleSerializer().let { serializer ->
       addSerializer(Double::class.javaPrimitiveType, serializer)
       addSerializer(Double::class.javaObjectType, serializer)
+    }
+    DoubleSerializer.Key().let { serializer ->
+      addKeySerializer(Double::class.javaPrimitiveType, serializer)
+      addKeySerializer(Double::class.javaObjectType, serializer)
     }
     DoubleDeserializer().let { deserializer ->
       addDeserializer(Double::class.javaPrimitiveType, deserializer)
@@ -58,6 +66,10 @@ internal class PrimitivesModule(
       addSerializer(Float::class.javaPrimitiveType, serializer)
       addSerializer(Float::class.javaObjectType, serializer)
     }
+    FloatSerializer.Key().let { serializer ->
+      addKeySerializer(Float::class.javaPrimitiveType, serializer)
+      addKeySerializer(Float::class.javaObjectType, serializer)
+    }
     FloatDeserializer().let { deserializer ->
       addDeserializer(Float::class.javaPrimitiveType, deserializer)
       addDeserializer(Float::class.javaObjectType, deserializer)
@@ -72,6 +84,10 @@ internal class PrimitivesModule(
     IntSerializer().let { serializer ->
       addSerializer(Int::class.javaPrimitiveType, serializer)
       addSerializer(Int::class.javaObjectType, serializer)
+    }
+    IntSerializer.Key().let { serializer ->
+      addKeySerializer(Int::class.javaPrimitiveType, serializer)
+      addKeySerializer(Int::class.javaObjectType, serializer)
     }
     IntDeserializer().let { deserializer ->
       addDeserializer(Int::class.javaPrimitiveType, deserializer)
@@ -88,6 +104,10 @@ internal class PrimitivesModule(
       addSerializer(Long::class.javaPrimitiveType, serializer)
       addSerializer(Long::class.javaObjectType, serializer)
     }
+    LongSerializer.Key().let { serializer ->
+      addKeySerializer(Long::class.javaPrimitiveType, serializer)
+      addKeySerializer(Long::class.javaObjectType, serializer)
+    }
     LongDeserializer().let { deserializer ->
       addDeserializer(Long::class.javaPrimitiveType, deserializer)
       addDeserializer(Long::class.javaObjectType, deserializer)
@@ -100,12 +120,14 @@ internal class PrimitivesModule(
 
   private fun configureString(builder: ObjectMapperFactoryBuilder) {
     addSerializer(String::class.javaObjectType, StringSerializer())
+    addKeySerializer(String::class.javaObjectType, StringSerializer.Key())
     addDeserializer(String::class.javaObjectType, StringDeserializer(trimWhitespace = builder.trimWhitespace))
     addKeyDeserializer(String::class.javaObjectType, StringDeserializer.Key())
   }
 
   private fun configureUuid() {
     addSerializer(Uuid::class.javaObjectType, UuidSerializer())
+    addKeySerializer(Uuid::class.javaObjectType, UuidSerializer.Key())
     addDeserializer(Uuid::class.javaObjectType, UuidDeserializer())
     addKeyDeserializer(Uuid::class.javaObjectType, UuidDeserializer.Key())
   }

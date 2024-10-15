@@ -23,6 +23,19 @@ internal class UuidKeyObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
+  fun `serialize, default`(): Unit = runTest {
+    mapper.writeValueAsString(MyClass(mapOf(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8") to "value")))
+      .shouldBe("{\"values\":{\"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\":\"value\"}}")
+  }
+
+  @Test
+  fun `serialize, null`(): Unit = runTest {
+    serializationShouldFail {
+      mapper.writeValueAsString(MyClass(mapOf(null to "value")))
+    }
+  }
+
+  @Test
   fun `deserialize, default`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"values\": { \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\": \"value\" } }")
       .shouldBe(MyClass(mapOf(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8") to "value")))

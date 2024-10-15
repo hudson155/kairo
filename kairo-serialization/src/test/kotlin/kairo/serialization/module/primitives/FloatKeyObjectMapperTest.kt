@@ -22,6 +22,19 @@ internal class FloatKeyObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
+  fun `serialize, default`(): Unit = runTest {
+    mapper.writeValueAsString(MyClass(mapOf(1.23F to "value")))
+      .shouldBe("{\"values\":{\"1.23\":\"value\"}}")
+  }
+
+  @Test
+  fun `serialize, null`(): Unit = runTest {
+    serializationShouldFail {
+      mapper.writeValueAsString(MyClass(mapOf(null to "value")))
+    }
+  }
+
+  @Test
   fun `deserialize, default`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"values\": { \"1.23\": \"value\" } }")
       .shouldBe(MyClass(mapOf(1.23F to "value")))

@@ -24,18 +24,21 @@ internal class TimeModule : SimpleModule() {
 
   private fun configureInstant() {
     addSerializer(Instant::class.javaObjectType, InstantSerializer())
+    addKeySerializer(Instant::class.javaObjectType, InstantSerializer.Key())
     addDeserializer(Instant::class.javaObjectType, InstantDeserializer())
     addKeyDeserializer(Instant::class.javaObjectType, InstantDeserializer.Key())
   }
 
   private fun configureLocalDate() {
     addSerializer(LocalDate::class.javaObjectType, LocalDateSerializer())
+    addKeySerializer(LocalDate::class.javaObjectType, LocalDateSerializer.Key())
     addDeserializer(LocalDate::class.javaObjectType, LocalDateDeserializer())
     addKeyDeserializer(LocalDate::class.javaObjectType, LocalDateDeserializer.Key())
   }
 
   private fun configureZoneId() {
     addSerializer(ZoneId::class.javaObjectType, ZoneIdSerializer())
+    addKeySerializer(ZoneId::class.javaObjectType, ZoneIdSerializer.Key())
     addDeserializer(ZoneId::class.javaObjectType, ZoneIdDeserializer())
     addKeyDeserializer(ZoneId::class.javaObjectType, ZoneIdDeserializer.Key())
   }
