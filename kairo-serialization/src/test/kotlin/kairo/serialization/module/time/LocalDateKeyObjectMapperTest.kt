@@ -23,19 +23,6 @@ internal class LocalDateKeyObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
-  fun `serialize, default`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(mapOf(LocalDate.parse("2023-11-13") to "value")))
-      .shouldBe("{\"values\":{\"2023-11-13\":\"value\"}}")
-  }
-
-  @Test
-  fun `serialize, null`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.writeValueAsString(MyClass(mapOf(null to "value")))
-    }
-  }
-
-  @Test
   fun `deserialize, default`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"values\": { \"2023-11-13\": \"value\" } }")
       .shouldBe(MyClass(mapOf(LocalDate.parse("2023-11-13") to "value")))

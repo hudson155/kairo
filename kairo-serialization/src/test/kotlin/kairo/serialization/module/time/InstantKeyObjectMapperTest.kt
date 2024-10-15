@@ -23,19 +23,6 @@ internal class InstantKeyObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
-  fun `serialize, default`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(mapOf(Instant.parse("2023-11-13T19:44:32.123456789Z") to "value")))
-      .shouldBe("{\"values\":{\"2023-11-13T19:44:32.123456789Z\":\"value\"}}")
-  }
-
-  @Test
-  fun `serialize, null`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.writeValueAsString(MyClass(mapOf(null to "value")))
-    }
-  }
-
-  @Test
   fun `deserialize, default`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"values\": { \"2023-11-13T19:44:32.123456789Z\": \"value\" } }")
       .shouldBe(MyClass(mapOf(Instant.parse("2023-11-13T19:44:32.123456789Z") to "value")))

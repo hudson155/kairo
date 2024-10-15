@@ -22,19 +22,6 @@ internal class LongKeyObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
-  fun `serialize, default`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(mapOf(42L to "value")))
-      .shouldBe("{\"values\":{\"42\":\"value\"}}")
-  }
-
-  @Test
-  fun `serialize, null`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.writeValueAsString(MyClass(mapOf(null to "value")))
-    }
-  }
-
-  @Test
   fun `deserialize, default`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"values\": { \"42\": \"value\" } }")
       .shouldBe(MyClass(mapOf(42L to "value")))

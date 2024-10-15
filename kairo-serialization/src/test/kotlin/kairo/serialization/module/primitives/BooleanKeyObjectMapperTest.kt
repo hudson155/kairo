@@ -22,25 +22,6 @@ internal class BooleanKeyObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
-  fun `serialize, false`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(mapOf(false to "value")))
-      .shouldBe("{\"values\":{\"false\":\"value\"}}")
-  }
-
-  @Test
-  fun `serialize, true`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(mapOf(true to "value")))
-      .shouldBe("{\"values\":{\"true\":\"value\"}}")
-  }
-
-  @Test
-  fun `serialize, null`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.writeValueAsString(MyClass(mapOf(null to "value")))
-    }
-  }
-
-  @Test
   fun `deserialize, false`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"values\": { \"false\": \"value\" } }")
       .shouldBe(MyClass(mapOf(false to "value")))

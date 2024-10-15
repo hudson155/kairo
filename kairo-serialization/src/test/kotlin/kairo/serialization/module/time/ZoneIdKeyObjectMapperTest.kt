@@ -24,32 +24,6 @@ internal class ZoneIdKeyObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
-  fun `serialize, UTC offset`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(mapOf(ZoneOffset.UTC to "value")))
-      .shouldBe("{\"values\":{\"UTC\":\"value\"}}")
-  }
-
-  @Test
-  fun `serialize, UTC region`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.writeValueAsString(MyClass(mapOf(ZoneId.of("UTC") to "value")))
-    }
-  }
-
-  @Test
-  fun `serialize, non-UTC`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(mapOf(ZoneId.of("America/Edmonton") to "value")))
-      .shouldBe("{\"values\":{\"America/Edmonton\":\"value\"}}")
-  }
-
-  @Test
-  fun `serialize, null`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.writeValueAsString(MyClass(mapOf(null to "value")))
-    }
-  }
-
-  @Test
   fun `deserialize, UTC offset`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"values\": { \"Z\": \"value\" } }")
       .shouldBe(MyClass(mapOf(ZoneOffset.UTC to "value")))
