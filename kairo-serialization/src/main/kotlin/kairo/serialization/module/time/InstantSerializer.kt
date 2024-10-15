@@ -14,6 +14,13 @@ import java.time.format.DateTimeFormatter
  */
 @Suppress("RedundantNullableReturnType")
 public class InstantSerializer : StdSerializer<Instant>(Instant::class.java) {
+  public class Key : StdSerializer<Instant>(Instant::class.java) {
+    override fun serialize(value: Instant, gen: JsonGenerator, provider: SerializerProvider) {
+      val string = convert(value)
+      gen.writeFieldName(string)
+    }
+  }
+
   override fun serialize(value: Instant, gen: JsonGenerator, provider: SerializerProvider) {
     val string = convert(value)
     gen.writeString(string)

@@ -14,6 +14,13 @@ import java.time.format.DateTimeFormatter
  */
 @Suppress("RedundantNullableReturnType")
 public class LocalDateSerializer : StdSerializer<LocalDate>(LocalDate::class.java) {
+  public class Key : StdSerializer<LocalDate>(LocalDate::class.java) {
+    override fun serialize(value: LocalDate, gen: JsonGenerator, provider: SerializerProvider) {
+      val string = convert(value)
+      gen.writeFieldName(string)
+    }
+  }
+
   override fun serialize(value: LocalDate, gen: JsonGenerator, provider: SerializerProvider) {
     val string = convert(value)
     gen.writeString(string)
