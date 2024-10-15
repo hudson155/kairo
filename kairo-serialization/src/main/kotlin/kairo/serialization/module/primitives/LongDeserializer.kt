@@ -4,12 +4,11 @@ import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.JsonToken
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.KeyDeserializer
-import kairo.serialization.util.readValue
 
 public class LongDeserializer : PrimitiveDeserializer<Long>(Long::class) {
   public class Key : KeyDeserializer() {
     override fun deserializeKey(key: String, ctxt: DeserializationContext): Long =
-      fromString(key)
+      convert(key)
   }
 
   override val tokens: Set<JsonToken> =
@@ -19,7 +18,7 @@ public class LongDeserializer : PrimitiveDeserializer<Long>(Long::class) {
     p.longValue
 
   public companion object {
-    private fun fromString(string: String): Long =
+    private fun convert(string: String): Long =
       string.toLong()
   }
 }

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.KeyDeserializer
 public class DoubleDeserializer : PrimitiveDeserializer<Double>(Double::class) {
   public class Key : KeyDeserializer() {
     override fun deserializeKey(key: String, ctxt: DeserializationContext): Double =
-      fromString(key)
+      convert(key)
   }
 
   override val tokens: Set<JsonToken> =
@@ -18,7 +18,7 @@ public class DoubleDeserializer : PrimitiveDeserializer<Double>(Double::class) {
     p.doubleValue
 
   public companion object {
-    private fun fromString(string: String): Double =
+    private fun convert(string: String): Double =
       string.toDouble()
   }
 }

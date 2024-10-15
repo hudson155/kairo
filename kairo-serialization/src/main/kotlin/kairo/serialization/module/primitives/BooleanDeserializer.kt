@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.KeyDeserializer
 public class BooleanDeserializer : PrimitiveDeserializer<Boolean>(Boolean::class) {
   public class Key : KeyDeserializer() {
     override fun deserializeKey(key: String, ctxt: DeserializationContext): Boolean =
-      fromString(key)
+      convert(key)
   }
 
   override val tokens: Set<JsonToken> =
@@ -18,7 +18,7 @@ public class BooleanDeserializer : PrimitiveDeserializer<Boolean>(Boolean::class
     p.booleanValue
 
   public companion object {
-    private fun fromString(string: String): Boolean =
+    private fun convert(string: String): Boolean =
       string.toBooleanStrict()
   }
 }

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.KeyDeserializer
 public class FloatDeserializer : PrimitiveDeserializer<Float>(Float::class) {
   public class Key : KeyDeserializer() {
     override fun deserializeKey(key: String, ctxt: DeserializationContext): Float =
-      fromString(key)
+      convert(key)
   }
 
   override val tokens: Set<JsonToken> =
@@ -18,7 +18,7 @@ public class FloatDeserializer : PrimitiveDeserializer<Float>(Float::class) {
     p.floatValue
 
   public companion object {
-    private fun fromString(string: String): Float =
+    private fun convert(string: String): Float =
       string.toFloat()
   }
 }
