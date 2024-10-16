@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
   implementation(project(":kairo-logging"))
-  api(project(":kairo-rest-feature"))
+  implementation(project(":kairo-rest-feature"))
 
   api(libs.ktorServerCors)
 }

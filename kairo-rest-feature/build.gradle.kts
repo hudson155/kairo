@@ -8,7 +8,7 @@ dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
   implementation(project(":kairo-mdc"))
-  api(project(":kairo-protected-string"))
+  implementation(project(":kairo-protected-string"))
   implementation(project(":kairo-reflect"))
   api(project(":kairo-serialization")) // Exposed for clients.
 

@@ -5,11 +5,11 @@ plugins {
 
 dependencies {
   api(project(":kairo-feature"))
-  api(project(":kairo-id-feature")) // Used in the SqlStore public interface.
+  implementation(project(":kairo-id-feature"))
   implementation(project(":kairo-logging"))
-  api(project(":kairo-protected-string")) // Used in the config.
-  api(project(":kairo-reflect")) // SqlContext is public.
-  api(project(":kairo-transaction-manager")) // SqlTransaction is public.
+  implementation(project(":kairo-protected-string"))
+  implementation(project(":kairo-reflect"))
+  implementation(project(":kairo-transaction-manager"))
   api(project(":kairo-updater"))  // Exposed for clients.
 
   implementation(libs.guava) // For [Resources.getResource].
