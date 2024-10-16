@@ -94,7 +94,7 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel
     updater: Updater<LibraryBookModel.Update>,
   ): LibraryBookModel =
     sql { handle ->
-      val libraryBook = get(id, forUpdate = true) ?: throw LibraryBookDoesNotExist()
+      val libraryBook = get(id, forUpdate = true) ?: throw unprocessable(LibraryBookNotFound())
       val update = updater.update(LibraryBookModel.Update(libraryBook))
       logger.info { "Updating library book: $update." }
       val query = handle.createQuery(rs("store/libraryBook/update.sql"))
@@ -107,7 +107,7 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel
     sql { handle ->
       val query = handle.createQuery(rs("store/libraryBook/delete.sql"))
       query.bind("id", id)
-      return@sql query.mapToType().singleNullOrThrow() ?: throw LibraryBookDoesNotExist()
+      return@sql query.mapToType().singleNullOrThrow() ?: throw unprocessable(LibraryBookNotFound())
     }
 
   private suspend fun get(id: KairoId, forUpdate: Boolean): LibraryBookModel? =
