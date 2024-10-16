@@ -2,7 +2,6 @@ Configuration:
   status: info # For internal Log4j2 logs.
   Appenders:
     Console:
-      type: Console
       name: Plaintext
       target: SYSTEM_OUT
       PatternLayout:
