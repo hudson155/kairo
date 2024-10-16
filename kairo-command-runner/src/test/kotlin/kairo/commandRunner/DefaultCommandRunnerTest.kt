@@ -5,7 +5,6 @@ import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-@OptIn(CommandRunner.Insecure::class)
 internal class DefaultCommandRunnerTest {
   private val commandRunner: CommandRunner = DefaultCommandRunner
 

@@ -46,6 +46,11 @@ tasks.named("check").configure {
 }
 
 tasks.test {
+  kotlin {
+    compilerOptions {
+      freeCompilerArgs.add("-opt-in=kairo.protectedString.ProtectedString.Access")
+    }
+  }
   testLogging {
     events("passed", "skipped", "failed")
   }

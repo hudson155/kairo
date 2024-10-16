@@ -5,7 +5,6 @@ import io.kotest.matchers.shouldNotBe
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-@OptIn(ProtectedString.Access::class)
 internal class ProtectedStringTest {
   @Test
   fun value(): Unit = runTest {

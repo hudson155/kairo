@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
 /**
  * This test is intended to test behaviour strictly related to [ConfigLoaderSource.GcpSecret].
  */
-@OptIn(ProtectedString.Access::class)
 internal class GcpSecretConfigLoaderIntDefaultDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
    * This test is specifically for non-nullable [Int] properties.

@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test
 /**
  * This test is intended to test behaviour strictly related to [ConfigLoaderSource.EnvironmentVariable].
  */
-@OptIn(ProtectedString.Access::class)
 internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
    * This test is specifically for nullable [ProtectedString] properties.

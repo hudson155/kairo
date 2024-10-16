@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
 /**
  * This test is intended to test behaviour strictly related to [ProtectedString] plaintext values.
  */
-@OptIn(ProtectedString.Access::class)
 internal class PlaintextConfigLoaderProtectedStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
    * This test is specifically for nullable [ProtectedString] properties.

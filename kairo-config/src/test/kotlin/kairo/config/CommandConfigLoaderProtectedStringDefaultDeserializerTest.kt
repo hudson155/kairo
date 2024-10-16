@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
 /**
  * This test is intended to test behaviour strictly related to [ConfigLoaderSource.Command].
  */
-@OptIn(ProtectedString.Access::class)
 internal class CommandConfigLoaderProtectedStringDefaultDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
    * This test is specifically for non-nullable [ProtectedString] properties.
