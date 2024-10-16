@@ -3,7 +3,7 @@ package kairo.exception
 import io.ktor.http.HttpStatusCode
 
 public class UnprocessableException internal constructor(
-  private val e: NotFoundException,
+  public val e: NotFoundException,
 ) : KairoException(e.message, e.cause) {
   override val statusCode: HttpStatusCode = HttpStatusCode.UnprocessableEntity
 
