@@ -2,8 +2,9 @@
 
 Library for date range types:
 
-- `LocalDateRange`
 - `InstantRange`
+- `LocalDateRange`
+- `YearMonthRange`
 
 ## Usage
 
