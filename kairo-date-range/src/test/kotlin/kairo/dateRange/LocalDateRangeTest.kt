@@ -177,19 +177,11 @@ internal class LocalDateRangeTest {
       LocalDate.parse("2023-11-13")..LocalDate.parse("2023-11-11")
     }
     (LocalDate.parse("2023-11-13")..LocalDate.parse("2023-11-12"))
-      .shouldBe(
-        LocalDateRange.inclusive(
-          start = LocalDate.parse("2023-11-13"),
-          endInclusive = LocalDate.parse("2023-11-12"),
-        ),
-      )
+      .shouldBe(emptyRange)
+    (LocalDate.parse("2023-11-13")..LocalDate.parse("2023-11-13"))
+      .shouldBe(singleDateRange)
     (LocalDate.parse("2023-11-13")..LocalDate.parse("2024-01-04"))
-      .shouldBe(
-        LocalDateRange.inclusive(
-          start = LocalDate.parse("2023-11-13"),
-          endInclusive = LocalDate.parse("2024-01-04"),
-        ),
-      )
+      .shouldBe(typicalRange)
   }
 
   @Test
@@ -198,19 +190,11 @@ internal class LocalDateRangeTest {
       LocalDate.parse("2023-11-13")..<LocalDate.parse("2023-11-12")
     }
     (LocalDate.parse("2023-11-13")..<LocalDate.parse("2023-11-13"))
-      .shouldBe(
-        LocalDateRange.exclusive(
-          start = LocalDate.parse("2023-11-13"),
-          endExclusive = LocalDate.parse("2023-11-13"),
-        ),
-      )
+      .shouldBe(emptyRange)
+    (LocalDate.parse("2023-11-13")..<LocalDate.parse("2023-11-14"))
+      .shouldBe(singleDateRange)
     (LocalDate.parse("2023-11-13")..<LocalDate.parse("2024-01-05"))
-      .shouldBe(
-        LocalDateRange.exclusive(
-          start = LocalDate.parse("2023-11-13"),
-          endExclusive = LocalDate.parse("2024-01-05"),
-        ),
-      )
+      .shouldBe(typicalRange)
   }
 
   @Test

@@ -20,7 +20,7 @@ public data class LocalDateRange private constructor(
   override val endExclusive: LocalDate = endInclusive.plusDays(1)
 
   init {
-    require(start <= endExclusive) { "Invalid date range." }
+    require(start <= endExclusive) { "Invalid range." }
   }
 
   public val size: Long
