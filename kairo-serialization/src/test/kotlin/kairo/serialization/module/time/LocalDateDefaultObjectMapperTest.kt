@@ -64,6 +64,13 @@ internal class LocalDateDefaultObjectMapperTest {
   }
 
   @Test
+  fun `deserialize, has time`(): Unit = runTest {
+    serializationShouldFail {
+      mapper.readValue<MyClass>("{ \"value\": \"2023-11-13T19:44:32.123456789Z\" }")
+    }
+  }
+
+  @Test
   fun `deserialize, missing leading zero from year`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": \"1-02-03\" }")
