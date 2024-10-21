@@ -27,7 +27,7 @@ public class Auth(
     internal fun from(call: RoutingCall): Auth =
       Auth(
         request = call.request,
-        principal = call.principal<Principal>()
+        principal = call.principal<Principal>(),
       )
   }
 }
@@ -47,10 +47,4 @@ public fun Auth.Result.overriddenBy(vararg alternatives: Auth.Result): Auth.Resu
   if (this == Auth.Result.Success) return this
   alternatives.firstOrNull { it == Auth.Result.Success }?.let { return@overriddenBy it }
   return this
-}
-
-public fun Auth.Result?.defaultingTo(alternative: Auth.Result): Auth.Result {
-  if (this == Auth.Result.Success) return this
-  if (alternative == Auth.Result.Success) return alternative
-  return this ?: alternative
 }
