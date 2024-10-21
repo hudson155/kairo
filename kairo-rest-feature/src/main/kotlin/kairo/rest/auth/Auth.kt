@@ -1,5 +1,8 @@
 package kairo.rest.auth
 
+import io.ktor.server.auth.principal
+import io.ktor.server.routing.RoutingCall
+import io.ktor.server.routing.RoutingRequest
 import kairo.exception.KairoException
 
 /**
@@ -7,6 +10,7 @@ import kairo.exception.KairoException
  */
 @Suppress("ConvertObjectToDataObject", "UseDataClass")
 public class Auth(
+  public val request: RoutingRequest,
   public val principal: Principal?,
 ) {
   /**
@@ -17,6 +21,20 @@ public class Auth(
     public object Success : Result()
 
     public class Exception(public val e: KairoException) : Result()
+  }
+
+  public companion object {
+    internal fun from(call: RoutingCall): Auth =
+      Auth(
+        request = call.request,
+        principal = call.principal<Principal>()
+      )
+  }
+}
+
+public inline fun overriddenBy(result: Auth.Result, block: (result: Auth.Result) -> Unit) {
+  if (result == Auth.Result.Success) {
+    block(result)
   }
 }
 
@@ -29,4 +47,10 @@ public fun Auth.Result.overriddenBy(vararg alternatives: Auth.Result): Auth.Resu
   if (this == Auth.Result.Success) return this
   alternatives.firstOrNull { it == Auth.Result.Success }?.let { return@overriddenBy it }
   return this
+}
+
+public fun Auth.Result?.defaultingTo(alternative: Auth.Result): Auth.Result {
+  if (this == Auth.Result.Success) return this
+  if (alternative == Auth.Result.Success) return alternative
+  return this ?: alternative
 }

@@ -3,14 +3,12 @@ package kairo.rest.handler
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpStatusCode
-import io.ktor.server.auth.principal
 import io.ktor.server.response.respond
 import io.ktor.server.routing.RoutingCall
 import io.ktor.util.reflect.typeInfo
 import kairo.mdc.withMdc
 import kairo.reflect.typeParam
 import kairo.rest.auth.Auth
-import kairo.rest.auth.Principal
 import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.reader.RestEndpointReader
 import kairo.rest.template.RestEndpointTemplate
@@ -52,7 +50,7 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
     emptyMap()
 
   private suspend fun auth(call: RoutingCall, endpoint: E) {
-    val authResult = Auth(call.principal<Principal>()).auth(endpoint)
+    val authResult = Auth.from(call).auth(endpoint)
     when (authResult) {
       is Auth.Result.Success -> Unit
       is Auth.Result.Exception -> throw authResult.e
