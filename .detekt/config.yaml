@@ -646,6 +646,11 @@ style:
       - 'java.time.format.DateTimeFormatter.ofPattern(java.lang.String)' # Use the overload that takes a Locale.
       - 'java.time.Instant.now()' # Use the overload that takes a Clock.
       - 'java.time.LocalDate.now()' # Use the overload that takes a Clock.
+      - 'java.time.LocalTime.now()' # Use the overload that takes a Clock.
+      - 'java.time.Month.now()' # Use the overload that takes a Clock.
+      - 'java.time.MonthDay.now()' # Use the overload that takes a Clock.
+      - 'java.time.Year.now()' # Use the overload that takes a Clock.
+      - 'java.time.YearMonth.now()' # Use the overload that takes a Clock.
 
       # Class should never be used.
       - 'java.time.LocalDateTime.now'
