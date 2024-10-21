@@ -33,8 +33,8 @@ public data class LocalDateRange private constructor(
   override fun contains(value: LocalDate): Boolean =
     value >= start && value <= endInclusive
 
-  public fun toList(increment: Period = Period.ofDays(1)): List<LocalDate> {
-    return buildList {
+  public fun toList(increment: Period = Period.ofDays(1)): List<LocalDate> =
+    buildList {
       var i = 0
       while (true) {
         val date = start.plus(increment.multipliedBy(i))
@@ -43,7 +43,6 @@ public data class LocalDateRange private constructor(
         i++
       }
     }
-  }
 
   public companion object {
     public fun inclusive(start: LocalDate, endInclusive: LocalDate): LocalDateRange =
