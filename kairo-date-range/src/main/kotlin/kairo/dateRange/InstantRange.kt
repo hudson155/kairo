@@ -18,7 +18,7 @@ public data class InstantRange private constructor(
   override val endExclusive: Instant,
 ) : OpenEndRange<Instant> {
   init {
-    require(start <= endExclusive) { "Invalid date range." }
+    require(start <= endExclusive) { "Invalid range." }
   }
 
   override fun isEmpty(): Boolean =
