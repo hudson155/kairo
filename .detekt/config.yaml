@@ -606,6 +606,8 @@ style:
       - 'jakarta.inject.*' # Use Google's injection annotations.
       - 'jakarta.validation.constraints.*'
 
+      - 'java.awt.*'
+
       - 'java.util.UUID' # Use kotlin.uuid.Uuid.
 
       - 'javax.inject.*' # Use Google's injection annotations.
