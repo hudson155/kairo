@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.module.SimpleModule
 import java.time.Instant
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.ZoneId
 import kairo.serialization.ObjectMapperFactoryBuilder
 
@@ -19,6 +20,7 @@ internal class TimeModule : SimpleModule() {
   init {
     configureInstant()
     configureLocalDate()
+    configureYearMonth()
     configureZoneId()
   }
 
@@ -34,6 +36,13 @@ internal class TimeModule : SimpleModule() {
     addKeySerializer(LocalDate::class.javaObjectType, LocalDateSerializer.Key())
     addDeserializer(LocalDate::class.javaObjectType, LocalDateDeserializer())
     addKeyDeserializer(LocalDate::class.javaObjectType, LocalDateDeserializer.Key())
+  }
+
+  private fun configureYearMonth() {
+    addSerializer(YearMonth::class.javaObjectType, YearMonthSerializer())
+    addKeySerializer(YearMonth::class.javaObjectType, YearMonthSerializer.Key())
+    addDeserializer(YearMonth::class.javaObjectType, YearMonthDeserializer())
+    addKeyDeserializer(YearMonth::class.javaObjectType, YearMonthDeserializer.Key())
   }
 
   private fun configureZoneId() {

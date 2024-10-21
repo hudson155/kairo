@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.KeyDeserializer
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import java.time.Instant
-import java.time.format.DateTimeFormatter
 import kairo.serialization.util.expectCurrentToken
 import kairo.serialization.util.readValue
 
@@ -14,7 +13,7 @@ import kairo.serialization.util.readValue
  * We don't use com.fasterxml.jackson.datatype:jackson-datatype-jsr310,
  * and instead roll our own time module. See [TimeModule].
  *
- * This implementation for [Instant] only accepts strings formatted as [DateTimeFormatter.ISO_INSTANT].
+ * This implementation for [Instant] only accepts strings formatted according to ISO-8601.
  */
 @Suppress("RedundantNullableReturnType")
 public class InstantDeserializer : StdDeserializer<Instant>(Instant::class.java) {
@@ -34,6 +33,6 @@ public class InstantDeserializer : StdDeserializer<Instant>(Instant::class.java)
 
   public companion object {
     private fun convert(string: String): Instant =
-      Instant.from(instantFormatter.parse(string))
+      Instant.parse(string)
   }
 }
