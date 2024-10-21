@@ -13,7 +13,6 @@ import java.time.ZoneOffset
  * This serializer intentionally only supports [ZoneRegion] and [ZoneOffset.UTC].
  * Non-UTC [ZoneOffset]s are not supported.
  */
-@Suppress("RedundantNullableReturnType")
 public class ZoneIdSerializer : StdSerializer<ZoneId>(ZoneId::class.java) {
   public class Key : StdSerializer<ZoneId>(ZoneId::class.java) {
     override fun serialize(value: ZoneId, gen: JsonGenerator, provider: SerializerProvider) {

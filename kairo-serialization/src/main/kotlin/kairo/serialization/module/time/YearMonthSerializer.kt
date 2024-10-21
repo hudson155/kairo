@@ -3,29 +3,29 @@ package kairo.serialization.module.time
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
-import java.time.LocalDate
+import java.time.YearMonth
 
 /**
  * We don't use com.fasterxml.jackson.datatype:jackson-datatype-jsr310,
  * and instead roll our own time module. See [TimeModule].
  *
- * This implementation for [LocalDate] formats strings according to ISO-8601.
+ * This implementation for [YearMonth] formats strings according to ISO-8601.
  */
-public class LocalDateSerializer : StdSerializer<LocalDate>(LocalDate::class.java) {
-  public class Key : StdSerializer<LocalDate>(LocalDate::class.java) {
-    override fun serialize(value: LocalDate, gen: JsonGenerator, provider: SerializerProvider) {
+public class YearMonthSerializer : StdSerializer<YearMonth>(YearMonth::class.java) {
+  public class Key : StdSerializer<YearMonth>(YearMonth::class.java) {
+    override fun serialize(value: YearMonth, gen: JsonGenerator, provider: SerializerProvider) {
       val string = convert(value)
       gen.writeFieldName(string)
     }
   }
 
-  override fun serialize(value: LocalDate, gen: JsonGenerator, provider: SerializerProvider) {
+  override fun serialize(value: YearMonth, gen: JsonGenerator, provider: SerializerProvider) {
     val string = convert(value)
     gen.writeString(string)
   }
 
   public companion object {
-    private fun convert(value: LocalDate): String =
+    private fun convert(value: YearMonth): String =
       value.toString()
   }
 }

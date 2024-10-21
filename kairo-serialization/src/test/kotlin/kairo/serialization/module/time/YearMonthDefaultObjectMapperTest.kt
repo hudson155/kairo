@@ -3,7 +3,7 @@ package kairo.serialization.module.time
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
-import java.time.LocalDate
+import java.time.YearMonth
 import kairo.serialization.ObjectMapperFactory
 import kairo.serialization.ObjectMapperFormat
 import kairo.serialization.serializationShouldFail
@@ -15,38 +15,38 @@ import org.junit.jupiter.api.Test
  * Therefore, some test cases (such as unknown properties, pretty printing) are not included
  * since they are not strictly related to local dates.
  */
-internal class LocalDateDefaultObjectMapperTest {
+internal class YearMonthDefaultObjectMapperTest {
   /**
    * This test is specifically for non-nullable properties.
    */
   internal data class MyClass(
-    val value: LocalDate,
+    val value: YearMonth,
   )
 
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
   fun `serialize, recent`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(LocalDate.parse("2023-11-13")))
-      .shouldBe("{\"value\":\"2023-11-13\"}")
+    mapper.writeValueAsString(MyClass(YearMonth.parse("2023-11")))
+      .shouldBe("{\"value\":\"2023-11\"}")
   }
 
   @Test
   fun `serialize, old`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(LocalDate.parse("0005-01-01")))
-      .shouldBe("{\"value\":\"0005-01-01\"}")
+    mapper.writeValueAsString(MyClass(YearMonth.parse("0005-01")))
+      .shouldBe("{\"value\":\"0005-01\"}")
   }
 
   @Test
   fun `deserialize, recent`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"2023-11-13\" }")
-      .shouldBe(MyClass(LocalDate.parse("2023-11-13")))
+    mapper.readValue<MyClass>("{ \"value\": \"2023-11\" }")
+      .shouldBe(MyClass(YearMonth.parse("2023-11")))
   }
 
   @Test
   fun `deserialize, old`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"0005-01-01\" }")
-      .shouldBe(MyClass(LocalDate.parse("0005-01-01")))
+    mapper.readValue<MyClass>("{ \"value\": \"0005-01\" }")
+      .shouldBe(MyClass(YearMonth.parse("0005-01")))
   }
 
   @Test
@@ -64,65 +64,44 @@ internal class LocalDateDefaultObjectMapperTest {
   }
 
   @Test
-  fun `deserialize, has time`(): Unit = runTest {
+  fun `deserialize, has day`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"2023-11-13T19:44:32.123456789Z\" }")
+      mapper.readValue<MyClass>("{ \"value\": \"2023-11-13\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from year`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"1-02-03\" }")
+      mapper.readValue<MyClass>("{ \"value\": \"1-02\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from month`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"2023-2-03\" }")
-    }
-  }
-
-  @Test
-  fun `deserialize, missing leading zero from day`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"2023-02-3\" }")
+      mapper.readValue<MyClass>("{ \"value\": \"2023-2\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (low month)`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"2023-00-03\" }")
+      mapper.readValue<MyClass>("{ \"value\": \"2023-00\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (high month)`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"2023-13-03\" }")
-    }
-  }
-
-  @Test
-  fun `deserialize, nonexistent date (low day)`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"2023-02-00\" }")
-    }
-  }
-
-  @Test
-  fun `deserialize, nonexistent date (high day)`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"2023-02-29\" }")
+      mapper.readValue<MyClass>("{ \"value\": \"2023-13\" }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, number`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": 20231113 }")
+      mapper.readValue<MyClass>("{ \"value\": 202311 }")
     }
   }
 }

@@ -89,9 +89,9 @@ internal class LocalDateRangeTest {
 
   @Test
   fun size(): Unit = runTest {
-    emptyRange.size.shouldBe(0L)
-    singleDateRange.size.shouldBe(1L)
-    typicalRange.size.shouldBe(53L)
+    emptyRange.size.shouldBe(0)
+    singleDateRange.size.shouldBe(1)
+    typicalRange.size.shouldBe(53)
   }
 
   @Test
