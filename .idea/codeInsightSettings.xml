@@ -15,6 +15,7 @@
       <name>io.ktor.server.plugins.UnsupportedMediaTypeException</name>
       <name>jakarta.inject.*</name>
       <name>jakarta.validation.constraints.*</name>
+      <name>java.awt.*</name>
       <name>java.util.UUID</name>
       <name>javax.inject.*</name>
       <name>kotlin.time.Duration</name>
