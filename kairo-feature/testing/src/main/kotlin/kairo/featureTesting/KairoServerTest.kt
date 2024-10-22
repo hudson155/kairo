@@ -13,15 +13,21 @@ public abstract class KairoServerTest {
     get() = checkNotNull(server.injector)
 
   @BeforeEach
-  public open fun beforeEach(): Unit = runTest {
+  public fun rootBeforeEach(): Unit = runTest {
     server.start(wait = false)
     server.featureManager.features
       .filterIsInstance<TestFeature.BeforeEach>()
       .forEach { it.beforeEach(injector) }
+    beforeEach()
   }
 
   @AfterEach
-  public open fun afterEach(): Unit = runTest {
+  public fun rootAfterEach(): Unit = runTest {
+    afterEach()
     server.shutDown()
   }
+
+  public open suspend fun beforeEach(): Unit = Unit
+
+  public open suspend fun afterEach(): Unit = Unit
 }
