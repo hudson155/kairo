@@ -1,5 +1,7 @@
 # `kairo-server`
 
+**Refer to the [kairo-sample](https://github.com/hudson155/kairo-sample) repository to see it in action.**
+
 A Server is an application that runs a set of Features.
 
 Note: Treat Kairo _Servers_ as proper nouns (the first letter should be capitalized).

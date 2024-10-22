@@ -1,5 +1,7 @@
 # `kairo-config`
 
+**Refer to the [kairo-sample](https://github.com/hudson155/kairo-sample) repository to see it in action.**
+
 Home of `ConfigLoader`, which loads configs for Kairo Servers from YAML files.
 Includes support for config extension and application,
 as well as various sources.

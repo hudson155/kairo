@@ -1,5 +1,7 @@
 # `kairo-updater`
 
+**Refer to the [kairo-sample](https://github.com/hudson155/kairo-sample) repository to see it in action.**
+
 A utility library for updating existing entities
 that supports `Optional`s to differentiate between `null` and `undefined` from the frontend.
 

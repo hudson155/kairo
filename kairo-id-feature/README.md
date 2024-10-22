@@ -1,5 +1,7 @@
 # `kairo-id-feature`
 
+**This Feature is used by the [kairo-sample](https://github.com/hudson155/kairo-sample) repository.**
+
 Kairo IDs (`KairoId`s) are an optional way to uniquely identify entities.
 Think of them as an alternative to `UUID`s or serial IDs, but with a few perks.
 Kairo IDs consist of a prefix portion and an ID portion.

@@ -1,5 +1,7 @@
 # `kairo-health-check-feature`
 
+**This Feature is used by the [kairo-sample](https://github.com/hudson155/kairo-sample) repository.**
+
 Kairo's Health Check Feature configures liveness and readiness health check REST endpoints:
 
 - `GET /health/liveness` is designed to always respond with `200 OK` and no response body.

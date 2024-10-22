@@ -1,5 +1,7 @@
 # `kairo-clock-feature`
 
+**This Feature is used by the [kairo-sample](https://github.com/hudson155/kairo-sample) repository.**
+
 The Clock Feature allows for configuration and injection of a Java `Clock`.
 In production this will more than likely be a real UTC-based clock,
 but for tests it may be a fixed clock instead.

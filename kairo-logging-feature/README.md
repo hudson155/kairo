@@ -1,5 +1,7 @@
 # `kairo-logging-feature`
 
+**This Feature is used by the [kairo-sample](https://github.com/hudson155/kairo-sample) repository.**
+
 See [kairo-logging](../kairo-logging) for the underlying logging implementation.
 
 This Feature supports logging within Kairo Servers.
