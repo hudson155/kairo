@@ -10,9 +10,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to local date serialization/deserialization.
+ * This test is intended to test behaviour strictly related to year-month serialization/deserialization.
  * Therefore, some test cases (such as unknown properties, pretty printing) are not included
- * since they are not strictly related to local dates.
+ * since they are not strictly related to year-months.
  */
 internal class YearMonthNullableObjectMapperTest {
   /**

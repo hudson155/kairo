@@ -11,9 +11,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to local date map key serialization/deserialization.
+ * This test is intended to test behaviour strictly related to year-month map key serialization/deserialization.
  * Therefore, some test cases are not included
- * since they are not strictly related to local date map keys.
+ * since they are not strictly related to year-month map keys.
  */
 internal class YearMonthKeyObjectMapperTest {
   internal data class MyClass(
