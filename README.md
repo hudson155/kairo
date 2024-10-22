@@ -96,6 +96,8 @@ Each module falls into one of 3 categories:
 
 - [kairo-darb](./kairo-darb):
   Home of `DarbEncoder`, which encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
+- [kairo-date-range](./kairo-date-range):
+  Library for date range types.
 - [kairo-dependency-injection](./kairo-dependency-injection):
   Makes Guice available,
   along with some utilities to make its use more idiomatic.
@@ -105,6 +107,8 @@ Each module falls into one of 3 categories:
 - [kairo-mdc](./kairo-mdc):
   Adds support for mapped diagnostic context (MDC),
   which is the JVM's way of adding context to log lines.
+- [kairo-money](./kairo-money):
+  The `Money` type is provided by JSR-354.
 - [kairo-protected-string](./kairo-protected-string):
   `ProtectedString` represents a string value that should not be logged or otherwise exposed.
 - [kairo-reflect](./kairo-reflect):

@@ -8,6 +8,7 @@ guava = "33.3.1-jre" # https://github.com/google/guava/releases
 guice = "7.0.0" # https://github.com/google/guice/releases
 hikari = "6.0.0" # https://github.com/brettwooldridge/HikariCP/tags
 jackson = "2.18.0" # https://github.com/FasterXML/jackson-core/tags
+javaxMoney = "1.1" # https://mvnrepository.com/artifact/javax.money/money-api
 jdbi = "3.45.4" # https://github.com/jdbi/jdbi/releases
 kotest = "5.9.1" # https://github.com/kotest/kotest/releases
 kotlinLogging = "7.0.0" # https://github.com/oshai/kotlin-logging/releases
@@ -15,6 +16,7 @@ kotlinxCoroutines = "1.9.0" # https://github.com/Kotlin/kotlinx.coroutines/relea
 ktor = "3.0.0" # https://ktor.io/docs/releases.html#release-details
 log4j2 = "3.0.0-beta2" # https://github.com/apache/logging-log4j2/releases
 mockK = "1.13.13" # https://github.com/mockk/mockk/releases
+moneta = "1.4.4" # https://mvnrepository.com/artifact/org.javamoney/moneta
 postgres = "42.7.4" # https://github.com/pgjdbc/pgjdbc/releases
 
 [libraries]
@@ -31,6 +33,7 @@ jacksonCore = { module = "com.fasterxml.jackson.core:jackson-core", version.ref 
 jacksonDataformatYaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
 jacksonDatatypeJdk8 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jdk8", version.ref = "jackson" }
 jacksonModuleKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+javaxMoney = { module = "javax.money:money-api", version.ref = "javaxMoney" }
 jdbiCore = { module = "org.jdbi:jdbi3-core", version.ref = "jdbi" }
 jdbiKotlin = { module = "org.jdbi:jdbi3-kotlin", version.ref = "jdbi" }
 jdbiPostgres = { module = "org.jdbi:jdbi3-postgres", version.ref = "jdbi" }
@@ -54,4 +57,5 @@ log4j2Core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "lo
 log4j2LayoutTemplateJson = { module = "org.apache.logging.log4j:log4j-layout-template-json", version.ref = "log4j2" }
 log4j2Slf4j2Impl = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j2" }
 mockK = { module = "io.mockk:mockk", version.ref = "mockK" }
+moneta = { module = "org.javamoney:moneta", version.ref = "moneta" }
 postgres = { module = "org.postgresql:postgresql", version.ref = "postgres" }
