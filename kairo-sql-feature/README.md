@@ -1,5 +1,7 @@
 # `kairo-sql-feature`
 
+**This Feature is used by the [kairo-sample](https://github.com/hudson155/kairo-sample) repository.**
+
 The SQL Feature adds support for SQL databases.
 Under the hood, this Feature uses [JDBI](https://jdbi.org/).
 

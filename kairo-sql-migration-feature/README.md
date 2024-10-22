@@ -1,5 +1,7 @@
 # `kairo-sql-migration-feature`
 
+**This Feature is used by the [kairo-sample](https://github.com/hudson155/kairo-sample) repository.**
+
 The SQL Migration Feature complements [kairo-sql-feature](../kairo-sql-feature)
 by adding support for database migrations.
 Under the hood, this Feature uses [Flyway Community](https://www.red-gate.com/products/flyway/community/).

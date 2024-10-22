@@ -1,5 +1,7 @@
 # `kairo-testing`
 
+**Refer to the [kairo-sample](https://github.com/hudson155/kairo-sample) repository to see it in action.**
+
 This is a convenient testing library which includes some helpful test dependencies and utility code.
 
 - [Kotest](https://kotest.io/) is provided as both the test runner and for assertions.

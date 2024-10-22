@@ -1,5 +1,7 @@
 # `kairo-rest-feature`
 
+**This Feature is used by the [kairo-sample](https://github.com/hudson155/kairo-sample) repository.**
+
 The REST Feature adds support for REST endpoints, including auth.
 Under the hood, this Feature uses [Ktor](https://ktor.io/).
 Even if you're not building a REST API, you might need to include this to support health checks.
