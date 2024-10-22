@@ -19,7 +19,6 @@ import kairo.client.createKairoClient
 import kairo.client.ktorClientMapper
 import kairo.featureTesting.KairoServerTest
 import kairo.serverTesting.TestServer
-import org.junit.jupiter.api.BeforeEach
 
 /**
  * The exception handler tests spin up a real Ktor Server and hit it with requests.
@@ -45,10 +44,7 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
       }
     }
 
-  @BeforeEach
-  override fun beforeEach() {
-    super.beforeEach()
-
+  override suspend fun beforeEach() {
     every { libraryBookService.create(any()) } answers {
       val endpoint = firstArg<ExceptionHandlerLibraryBookApi.Create>()
       val creator = endpoint.body
