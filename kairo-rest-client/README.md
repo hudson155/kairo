@@ -29,7 +29,7 @@ dependencies {
 
 val client = createKairoClient {
   defaultRequest {
-    url("https://example.com")
+    url("https://example.com/")
   }
 }
 
