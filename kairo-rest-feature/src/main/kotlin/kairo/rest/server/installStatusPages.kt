@@ -18,7 +18,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 
 internal fun Application.installStatusPages(exceptionManager: ExceptionManager) {
   install(StatusPages) {
-    exception<Throwable> { call, cause ->
+    exception<Exception> { call, cause ->
       call.respondWithError(exceptionManager.handle(cause))
     }
 

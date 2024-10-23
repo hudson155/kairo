@@ -28,7 +28,9 @@ internal fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) 
     logger.info { "Registering REST handler: $template." }
     routing {
       kairoAuthenticate {
-        route(template).handle { handler.handle(call) }
+        route(template).handle {
+          handler.handle(call)
+        }
       }
     }
   }
