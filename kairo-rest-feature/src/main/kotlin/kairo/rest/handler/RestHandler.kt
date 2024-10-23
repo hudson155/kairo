@@ -1,5 +1,6 @@
 package kairo.rest.handler
 
+import com.google.inject.Inject
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpStatusCode
@@ -10,7 +11,10 @@ import kairo.mdc.withMdc
 import kairo.reflect.typeParam
 import kairo.rest.auth.Auth
 import kairo.rest.endpoint.RestEndpoint
+import kairo.rest.exceptionHandler.ExceptionManager
+import kairo.rest.exceptionHandler.respondWithError
 import kairo.rest.reader.RestEndpointReader
+import kairo.rest.server.installStatusPages
 import kairo.rest.template.RestEndpointTemplate
 import kotlin.reflect.KClass
 
@@ -21,6 +25,9 @@ private val logger: KLogger = KotlinLogging.logger {}
  * See this Feature's README or tests for some examples.
  */
 public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any> {
+  @Inject
+  private lateinit var exceptionManager: ExceptionManager
+
   internal val endpoint: KClass<E> = typeParam(RestHandler::class, 0, this::class)
 
   internal val template: RestEndpointTemplate = RestEndpointTemplate.from(endpoint)
@@ -29,13 +36,24 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
   internal suspend fun handle(call: RoutingCall) {
     val endpoint = reader.endpoint(call)
     withMdc(mdc(call, endpoint)) {
-      logger.debug { "Read endpoint: $endpoint." }
-      auth(call, endpoint)
-      val response = handle(endpoint)
-      logger.debug { "Result: $response." }
-      val statusCode = statusCode(response)
-      logger.debug { "Status code: $statusCode." }
-      call.respond(statusCode, response)
+      try {
+        logger.debug { "Read endpoint: $endpoint." }
+        auth(call, endpoint)
+        val response = handle(endpoint)
+        logger.debug { "Result: $response." }
+        val statusCode = statusCode(response)
+        logger.debug { "Status code: $statusCode." }
+        call.respond(statusCode, response)
+      } catch (e: Exception) {
+        /**
+         * Doing error handling here duplicates the work done within [installStatusPages].
+         * However, it is duplicated intentionally
+         * so that error handling can be done within the MDC context when possible.
+         */
+        call.respondWithError(exceptionManager.handle(e))
+      } finally {
+        call.log()
+      }
     }
   }
 
