@@ -53,20 +53,21 @@ internal abstract class ConfigDeserializer<T : Any>(
   }
 
   private fun fromCommand(source: ConfigLoaderSource.Command): ProtectedString? {
-    val (command) = source
+    val command = source.command
     logger.debug { "Config value is from command: $command." }
     @OptIn(CommandRunner.Insecure::class)
     return config.commandRunner.run(command)?.let { ProtectedString(it) }
   }
 
   private fun fromEnvironmentVariable(source: ConfigLoaderSource.EnvironmentVariable): ProtectedString? {
-    val (name, default) = source
+    val name = source.name
+    val default = source.default
     logger.debug { "Config value is from environment variable: $name." }
     return config.environmentVariableSupplier[name, default]?.let { ProtectedString(it) }
   }
 
   private fun fromGcpSecret(source: ConfigLoaderSource.GcpSecret): ProtectedString? {
-    val (id) = source
+    val id = source.id
     logger.debug { "Config value is from GCP secret: $id." }
     return config.gcpSecretSupplier[id]
   }
