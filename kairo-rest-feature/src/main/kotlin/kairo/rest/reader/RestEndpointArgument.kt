@@ -3,7 +3,7 @@ package kairo.rest.reader
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
-import kairo.rest.ktorServerMapper
+import kairo.rest.KtorServerMapper
 import kairo.rest.util.typeInfo
 import kairo.serialization.util.readValueSpecial
 import kotlin.reflect.KParameter
@@ -56,8 +56,8 @@ internal sealed class RestEndpointArgument(
      */
     @Suppress("ForbiddenMethodCall")
     private fun convert(parameter: String): Any? {
-      val type = ktorServerMapper.constructType(param.type.javaType)
-      return ktorServerMapper.readValueSpecial(parameter, type)
+      val type = KtorServerMapper.json.constructType(param.type.javaType)
+      return KtorServerMapper.json.readValueSpecial(parameter, type)
     }
   }
 }

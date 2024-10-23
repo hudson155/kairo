@@ -5,13 +5,17 @@ import io.ktor.serialization.jackson.JacksonConverter
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
-import kairo.rest.ktorServerMapper
+import kairo.rest.KtorServerMapper
 
 internal fun Application.installContentNegotiation() {
   install(ContentNegotiation) {
     register(
       contentType = ContentType.Application.Json,
-      converter = JacksonConverter(objectMapper = ktorServerMapper, streamRequestBody = false),
+      converter = JacksonConverter(objectMapper = KtorServerMapper.json, streamRequestBody = false),
+    )
+    register(
+      contentType = ContentType.Text.Xml,
+      converter = JacksonConverter(objectMapper = KtorServerMapper.xml, streamRequestBody = false),
     )
   }
 }

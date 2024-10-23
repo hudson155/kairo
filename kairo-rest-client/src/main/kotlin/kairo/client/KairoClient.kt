@@ -19,7 +19,11 @@ public fun createKairoClient(
     install(ContentNegotiation) {
       register(
         contentType = ContentType.Application.Json,
-        converter = JacksonConverter(objectMapper = ktorClientMapper, streamRequestBody = false),
+        converter = JacksonConverter(objectMapper = KtorClientMapper.json, streamRequestBody = false),
+      )
+      register(
+        contentType = ContentType.Text.Xml,
+        converter = JacksonConverter(objectMapper = KtorClientMapper.xml, streamRequestBody = false),
       )
     }
     block()
