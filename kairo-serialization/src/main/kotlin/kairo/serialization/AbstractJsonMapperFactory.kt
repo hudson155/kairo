@@ -10,8 +10,10 @@ import com.fasterxml.jackson.databind.cfg.MapperBuilder
 public abstract class AbstractJsonMapperFactory<M : ObjectMapper, B : MapperBuilder<M, B>> internal constructor(
   modules: List<Module>,
 ) : ObjectMapperFactory<M, B>(modules) {
-  override fun B.configurePrettyPrinting() {
-    defaultPrettyPrinter(
+  override fun configurePrettyPrinting(builder: B) {
+    super.configurePrettyPrinting(builder)
+
+    builder.defaultPrettyPrinter(
       DefaultPrettyPrinter()
         .withArrayIndenter(DefaultIndenter.SYSTEM_LINEFEED_INSTANCE)
         .withSeparators(

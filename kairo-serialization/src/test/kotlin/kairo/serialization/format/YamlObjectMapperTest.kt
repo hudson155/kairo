@@ -3,13 +3,13 @@ package kairo.serialization.format
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import com.fasterxml.jackson.databind.json.JsonMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.time.Instant
 import java.time.LocalDate
 import java.util.Optional
-import kairo.serialization.jsonMapper
+import kairo.serialization.yamlMapper
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -65,8 +65,8 @@ internal class YamlObjectMapperTest {
     }
   }
 
-  private val mapper: JsonMapper =
-    jsonMapper {
+  private val mapper: YAMLMapper =
+    yamlMapper {
       prettyPrint = true
     }
 

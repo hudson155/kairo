@@ -1,7 +1,6 @@
 package kairo.serialization
 
 import com.fasterxml.jackson.databind.Module
-import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
@@ -26,6 +25,6 @@ public class YamlMapperFactory internal constructor(
 
 public fun yamlMapper(
   vararg modules: Module,
-  block: JsonMapperFactory.() -> Unit = {},
-): JsonMapper =
-  JsonMapperFactory(modules.toList()).apply(block).build()
+  block: YamlMapperFactory.() -> Unit = {},
+): YAMLMapper =
+  YamlMapperFactory(modules.toList()).apply(block).build()

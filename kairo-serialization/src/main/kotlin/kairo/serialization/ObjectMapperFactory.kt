@@ -46,15 +46,15 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
     logger.debug { "Creating object mapper." }
 
     return createBuilder().apply {
-      configureKotlin()
-      configureJava()
-      configureMoney()
-      configurePrimitives()
-      configureTime()
+      configureKotlin(this)
+      configureJava(this)
+      configureMoney(this)
+      configurePrimitives(this)
+      configureTime(this)
 
       increaseStrictness()
-      configurePrettyPrinting()
-      setUnknownPropertyHandling()
+      configurePrettyPrinting(this)
+      setUnknownPropertyHandling(this)
 
       addModules(modules)
     }.build()
@@ -66,11 +66,11 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
    * Besides just installing the Kotlin module,
    * we change a few config params to have more sensible values.
    */
-  private fun B.configureKotlin() {
-    addModule(
+  private fun configureKotlin(builder: B) {
+    builder.addModule(
       kotlinModule {
-        configure(KotlinFeature.SingletonSupport, true)
-        configure(KotlinFeature.StrictNullChecks, true)
+        this.configure(KotlinFeature.SingletonSupport, true)
+        this.configure(KotlinFeature.StrictNullChecks, true)
       },
     )
   }
@@ -81,45 +81,45 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
    *
    * See the corresponding test for more spec.
    */
-  private fun B.configureJava() {
-    addModule(
+  private fun configureJava(builder: B) {
+    builder.addModule(
       Jdk8Module().apply {
-        configureReadAbsentAsNull(true)
+        this.configureReadAbsentAsNull(true)
       },
     )
   }
 
-  private fun B.configureMoney() {
-    addModule(MoneyModule())
+  private fun configureMoney(builder: B) {
+    builder.addModule(MoneyModule())
   }
 
-  private fun B.configurePrimitives() {
-    addModule(PrimitivesModule(trimWhitespace = trimWhitespace))
+  private fun configurePrimitives(builder: B) {
+    builder.addModule(PrimitivesModule(trimWhitespace = this.trimWhitespace))
   }
 
-  private fun B.configureTime() {
-    addModule(TimeModule())
-    configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-    configure(SerializationFeature.WRITE_DATES_WITH_ZONE_ID, true)
-    configure(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS, false)
+  private fun configureTime(builder: B) {
+    builder.addModule(TimeModule())
+    builder.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+    builder.configure(SerializationFeature.WRITE_DATES_WITH_ZONE_ID, true)
+    builder.configure(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS, false)
   }
 
   /**
    * See the corresponding test for more spec.
    */
-  protected open fun B.configurePrettyPrinting() {
-    configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, prettyPrint)
-    configure(MapperFeature.SORT_CREATOR_PROPERTIES_FIRST, false)
+  protected open fun configurePrettyPrinting(builder: B) {
+    builder.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, this.prettyPrint)
+    builder.configure(MapperFeature.SORT_CREATOR_PROPERTIES_FIRST, false)
 
-    configure(SerializationFeature.INDENT_OUTPUT, prettyPrint)
-    configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, prettyPrint)
+    builder.configure(SerializationFeature.INDENT_OUTPUT, this.prettyPrint)
+    builder.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, this.prettyPrint)
 
-    configure(JsonNodeFeature.WRITE_PROPERTIES_SORTED, prettyPrint)
+    builder.configure(JsonNodeFeature.WRITE_PROPERTIES_SORTED, this.prettyPrint)
   }
 
-  private fun B.setUnknownPropertyHandling() {
-    configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, !allowUnknownProperties)
-    configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, !allowUnknownProperties)
-    configure(DeserializationFeature.FAIL_ON_UNEXPECTED_VIEW_PROPERTIES, !allowUnknownProperties)
+  private fun setUnknownPropertyHandling(builder: B) {
+    builder.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, !this.allowUnknownProperties)
+    builder.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, !this.allowUnknownProperties)
+    builder.configure(DeserializationFeature.FAIL_ON_UNEXPECTED_VIEW_PROPERTIES, !this.allowUnknownProperties)
   }
 }
