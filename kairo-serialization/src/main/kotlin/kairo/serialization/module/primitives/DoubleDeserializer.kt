@@ -5,8 +5,8 @@ import com.fasterxml.jackson.core.JsonToken
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.KeyDeserializer
 
-public class DoubleDeserializer : PrimitiveDeserializer<Double>(Double::class) {
-  public class Key : KeyDeserializer() {
+public open class DoubleDeserializer : PrimitiveDeserializer<Double>(Double::class) {
+  public open class Key : KeyDeserializer() {
     override fun deserializeKey(key: String, ctxt: DeserializationContext): Double =
       convert(key)
   }
@@ -18,7 +18,8 @@ public class DoubleDeserializer : PrimitiveDeserializer<Double>(Double::class) {
     p.doubleValue
 
   public companion object {
-    private fun convert(string: String): Double =
+    @JvmStatic
+    protected fun convert(string: String): Double =
       string.toDouble()
   }
 }

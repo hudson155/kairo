@@ -3,22 +3,22 @@ package kairo.serialization.format
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
+import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.time.Instant
 import java.time.LocalDate
 import java.util.Optional
-import kairo.serialization.yamlMapper
+import kairo.serialization.xmlMapper
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to the YAML data format.
- * Therefore, some test cases are not included since they are not strictly related to YAML.
+ * This test is intended to test behaviour strictly related to the XML data format.
+ * Therefore, some test cases are not included since they are not strictly related to XML.
  */
-internal class YamlObjectMapperTest {
+internal class XmlObjectMapperTest {
   internal data class MyClass(
     val booleans: Booleans,
     val float: Float,
@@ -66,8 +66,8 @@ internal class YamlObjectMapperTest {
     }
   }
 
-  private val mapper: YAMLMapper =
-    yamlMapper {
+  private val mapper: XmlMapper =
+    xmlMapper {
       prettyPrint = true
     }
 
@@ -98,29 +98,36 @@ internal class YamlObjectMapperTest {
     )
 
   private val string: String = """
-    booleans:
-      booleanFalse: false
-      booleanNull: null
-      booleanTrue: true
-    float: 1.23
-    floats:
-      - 0.0
-      - 1.11
-      - 2.22
-    instant: "2023-11-13T19:44:32.123456789Z"
-    int: 42
-    localDate: "2023-11-13"
-    nested:
-      type: "NestB"
-      b: "bravo"
-    optionals:
-      optionalEmpty: null
-      optionalPresent: 42
-    strings:
-      stringFloat: "1.23"
-      stringInt: "42"
-      stringTrue: "true"
-    uuid: "3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8"
+    <?xml version='1.0' encoding='UTF-8'?>
+    <MyClass>
+      <booleans>
+        <booleanFalse>false</booleanFalse>
+        <booleanNull xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+        <booleanTrue>true</booleanTrue>
+      </booleans>
+      <float>1.23</float>
+      <floats>
+        <floats>0.0</floats>
+        <floats>1.11</floats>
+        <floats>2.22</floats>
+      </floats>
+      <instant>2023-11-13T19:44:32.123456789Z</instant>
+      <int>42</int>
+      <localDate>2023-11-13</localDate>
+      <nested type="NestB">
+        <b>bravo</b>
+      </nested>
+      <optionals>
+        <optionalEmpty xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+        <optionalPresent>42</optionalPresent>
+      </optionals>
+      <strings>
+        <stringFloat>1.23</stringFloat>
+        <stringInt>42</stringInt>
+        <stringTrue>true</stringTrue>
+      </strings>
+      <uuid>3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8</uuid>
+    </MyClass>
   """.trimIndent() + '\n'
 
   @Test

@@ -17,6 +17,7 @@ public class DoubleSerializer : StdSerializer<Double>(Double::class.java) {
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(value: Double): String =
       value.toString()
   }

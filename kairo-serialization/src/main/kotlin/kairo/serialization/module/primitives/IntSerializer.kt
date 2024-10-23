@@ -17,6 +17,7 @@ public class IntSerializer : StdSerializer<Int>(Int::class.java) {
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(value: Int): String =
       value.toString()
   }

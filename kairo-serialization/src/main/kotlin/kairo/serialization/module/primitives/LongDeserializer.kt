@@ -5,8 +5,8 @@ import com.fasterxml.jackson.core.JsonToken
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.KeyDeserializer
 
-public class LongDeserializer : PrimitiveDeserializer<Long>(Long::class) {
-  public class Key : KeyDeserializer() {
+public open class LongDeserializer : PrimitiveDeserializer<Long>(Long::class) {
+  public open class Key : KeyDeserializer() {
     override fun deserializeKey(key: String, ctxt: DeserializationContext): Long =
       convert(key)
   }
@@ -18,7 +18,8 @@ public class LongDeserializer : PrimitiveDeserializer<Long>(Long::class) {
     p.longValue
 
   public companion object {
-    private fun convert(string: String): Long =
+    @JvmStatic
+    protected fun convert(string: String): Long =
       string.toLong()
   }
 }

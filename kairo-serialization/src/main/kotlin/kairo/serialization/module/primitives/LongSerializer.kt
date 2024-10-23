@@ -17,6 +17,7 @@ public class LongSerializer : StdSerializer<Long>(Long::class.java) {
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(value: Long): String =
       value.toString()
   }

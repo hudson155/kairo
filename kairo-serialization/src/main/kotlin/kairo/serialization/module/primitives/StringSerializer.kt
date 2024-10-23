@@ -17,6 +17,7 @@ public class StringSerializer : StdSerializer<String>(String::class.java) {
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(value: String): String =
       value
   }

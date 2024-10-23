@@ -25,6 +25,7 @@ public class InstantSerializer : StdSerializer<Instant>(Instant::class.java) {
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(value: Instant): String =
       value.toString()
   }

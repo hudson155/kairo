@@ -27,6 +27,7 @@ public class ZoneIdSerializer : StdSerializer<ZoneId>(ZoneId::class.java) {
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(value: ZoneId): String {
       if (value is ZoneOffset) {
         if (value == ZoneOffset.UTC) return "UTC"

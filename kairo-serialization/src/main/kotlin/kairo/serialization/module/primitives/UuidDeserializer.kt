@@ -29,6 +29,7 @@ public class UuidDeserializer : StdDeserializer<Uuid>(Uuid::class.java) {
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(string: String): Uuid =
       Uuid.parse(string)
   }

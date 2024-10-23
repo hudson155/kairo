@@ -17,6 +17,7 @@ public class FloatSerializer : StdSerializer<Float>(Float::class.java) {
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(value: Float): String =
       value.toString()
   }

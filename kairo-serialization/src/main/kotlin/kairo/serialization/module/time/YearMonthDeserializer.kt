@@ -32,6 +32,7 @@ public class YearMonthDeserializer : StdDeserializer<YearMonth>(YearMonth::class
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(string: String): YearMonth =
       YearMonth.parse(string)
   }
