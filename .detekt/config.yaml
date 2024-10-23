@@ -587,6 +587,8 @@ style:
     active: true
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
+      - 'com.fasterxml.jackson.module.kotlin.jsonMapper'
+
       - 'com.google.inject.TypeLiteral' # Use the Kotlin overload.
 
       - 'com.sun.security.*'

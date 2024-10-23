@@ -4,13 +4,12 @@ import com.auth0.jwt.interfaces.DecodedJWT
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.jsonMapper
 
 private val jwtMapper: JsonMapper =
-  ObjectMapperFactory.builder(ObjectMapperFormat.Json) {
+  jsonMapper {
     allowUnknownProperties = true
-  }.build()
+  }
 
 /**
  * WARNING: Be careful not to log sensitive data in this class.

@@ -6,13 +6,12 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import java.time.YearMonth
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.jsonMapper
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class YearMonthRangeSerializationTest {
-  private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
+  private val mapper: JsonMapper = jsonMapper()
 
   private val typicalRange: YearMonthRange =
     YearMonthRange.inclusive(

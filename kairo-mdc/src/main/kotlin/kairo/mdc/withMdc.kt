@@ -1,13 +1,12 @@
 package kairo.mdc
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.jsonMapper
 import kotlinx.coroutines.slf4j.MDCContext
 import kotlinx.coroutines.withContext
 import org.slf4j.MDC
 
-private val mdcMapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
+private val mdcMapper: JsonMapper = jsonMapper()
 
 /**
  * Use this to make MDC work properly with Kotlin coroutines.

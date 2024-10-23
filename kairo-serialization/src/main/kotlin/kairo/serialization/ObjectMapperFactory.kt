@@ -1,40 +1,125 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.core.JsonFactory
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.Module
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
-import com.fasterxml.jackson.dataformat.yaml.YAMLParser
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.databind.cfg.JsonNodeFeature
+import com.fasterxml.jackson.databind.cfg.MapperBuilder
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
+import com.fasterxml.jackson.module.kotlin.KotlinFeature
+import com.fasterxml.jackson.module.kotlin.kotlinModule
+import io.github.oshai.kotlinlogging.KLogger
+import io.github.oshai.kotlinlogging.KotlinLogging
+import kairo.serialization.module.increaseStrictness
+import kairo.serialization.module.money.MoneyModule
+import kairo.serialization.module.primitives.PrimitivesModule
+import kairo.serialization.module.primitives.StringDeserializer
+import kairo.serialization.module.primitives.TrimWhitespace
+import kairo.serialization.module.time.TimeModule
 
-public object ObjectMapperFactory {
+private val logger: KLogger = KotlinLogging.logger {}
+
+public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M, B>> internal constructor(
+  private val modules: List<Module>,
+) {
   /**
-   * This is the main function to create a Jackson object mapper (well, actually a [JsonFactory]).
-   * To configure the object mapper, use [block].
+   * Unknown properties are prohibited by default by Jackson, and we respect that default here.
+   * This is an appropriate choice for internal use.
+   * However, it's not an appropriate choice for object mappers that communicate with 3rd-party APIs.
    */
-  public fun builder(
-    format: ObjectMapperFormat,
-    modules: List<Module> = emptyList(),
-    block: ObjectMapperFactoryBuilder.() -> Unit = {},
-  ): ObjectMapperFactoryBuilder =
-    ObjectMapperFactoryBuilder(factory(format), modules, block)
+  public var allowUnknownProperties: Boolean = false
 
-  private fun factory(format: ObjectMapperFormat): JsonFactory =
-    when (format) {
-      ObjectMapperFormat.Json -> jsonFactory()
-      ObjectMapperFormat.Yaml -> yamlFactory()
-    }
+  /**
+   * Pretty printing usually isn't desirable since it creates longer output,
+   * but it can sometimes be nice.
+   */
+  public var prettyPrint: Boolean = false
 
-  private fun jsonFactory(): JsonFactory =
-    JsonFactory()
+  /**
+   * See [TrimWhitespace] and [StringDeserializer].
+   */
+  public var trimWhitespace: TrimWhitespace.Type = TrimWhitespace.Type.TrimNone
 
-  private fun yamlFactory(): JsonFactory =
-    YAMLFactory()
-      .configure(YAMLGenerator.Feature.WRITE_DOC_START_MARKER, false)
-      .configure(YAMLGenerator.Feature.USE_NATIVE_OBJECT_ID, false)
-      .configure(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID, false)
-      .configure(YAMLGenerator.Feature.LITERAL_BLOCK_STYLE, true)
-      .configure(YAMLGenerator.Feature.INDENT_ARRAYS, true)
-      .configure(YAMLGenerator.Feature.INDENT_ARRAYS_WITH_INDICATOR, true)
-      .configure(YAMLParser.Feature.EMPTY_STRING_AS_NULL, false)
-      .configure(YAMLParser.Feature.PARSE_BOOLEAN_LIKE_WORDS_AS_STRINGS, true)
+  public fun build(): M {
+    logger.debug { "Creating object mapper." }
+
+    return createBuilder().apply {
+      configureKotlin()
+      configureJava()
+      configureMoney()
+      configurePrimitives()
+      configureTime()
+
+      increaseStrictness()
+      configurePrettyPrinting()
+      setUnknownPropertyHandling()
+
+      addModules(modules)
+    }.build()
+  }
+
+  protected abstract fun createBuilder(): B
+
+  /**
+   * Besides just installing the Kotlin module,
+   * we change a few config params to have more sensible values.
+   */
+  private fun B.configureKotlin() {
+    addModule(
+      kotlinModule {
+        configure(KotlinFeature.SingletonSupport, true)
+        configure(KotlinFeature.StrictNullChecks, true)
+      },
+    )
+  }
+
+  /**
+   * The only thing we need to configure is support for [Optional]s,
+   * which is not included in Jackson's core until 3.0.
+   *
+   * See the corresponding test for more spec.
+   */
+  private fun B.configureJava() {
+    addModule(
+      Jdk8Module().apply {
+        configureReadAbsentAsNull(true)
+      },
+    )
+  }
+
+  private fun B.configureMoney() {
+    addModule(MoneyModule())
+  }
+
+  private fun B.configurePrimitives() {
+    addModule(PrimitivesModule(trimWhitespace = trimWhitespace))
+  }
+
+  private fun B.configureTime() {
+    addModule(TimeModule())
+    configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+    configure(SerializationFeature.WRITE_DATES_WITH_ZONE_ID, true)
+    configure(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS, false)
+  }
+
+  /**
+   * See the corresponding test for more spec.
+   */
+  protected open fun B.configurePrettyPrinting() {
+    configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, prettyPrint)
+    configure(MapperFeature.SORT_CREATOR_PROPERTIES_FIRST, false)
+
+    configure(SerializationFeature.INDENT_OUTPUT, prettyPrint)
+    configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, prettyPrint)
+
+    configure(JsonNodeFeature.WRITE_PROPERTIES_SORTED, prettyPrint)
+  }
+
+  private fun B.setUnknownPropertyHandling() {
+    configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, !allowUnknownProperties)
+    configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, !allowUnknownProperties)
+    configure(DeserializationFeature.FAIL_ON_UNEXPECTED_VIEW_PROPERTIES, !allowUnknownProperties)
+  }
 }

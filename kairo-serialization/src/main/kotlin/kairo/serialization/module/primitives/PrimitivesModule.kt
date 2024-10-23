@@ -1,7 +1,6 @@
 package kairo.serialization.module.primitives
 
 import com.fasterxml.jackson.databind.module.SimpleModule
-import kairo.serialization.ObjectMapperFactoryBuilder
 import kotlin.uuid.Uuid
 
 /**
@@ -11,7 +10,7 @@ import kotlin.uuid.Uuid
  * Regarding UUIDs, Jackson supports [java.util.UUID] by default, but not [kotlin.uuid.Uuid] which we use.
  */
 internal class PrimitivesModule(
-  builder: ObjectMapperFactoryBuilder,
+  private val trimWhitespace: TrimWhitespace.Type,
 ) : SimpleModule() {
   init {
     configureBoolean()
@@ -19,7 +18,7 @@ internal class PrimitivesModule(
     configureFloat()
     configureInt()
     configureLong()
-    configureString(builder)
+    configureString()
     configureUuid()
   }
 
@@ -118,10 +117,10 @@ internal class PrimitivesModule(
     }
   }
 
-  private fun configureString(builder: ObjectMapperFactoryBuilder) {
+  private fun configureString() {
     addSerializer(String::class.javaObjectType, StringSerializer())
     addKeySerializer(String::class.javaObjectType, StringSerializer.Key())
-    addDeserializer(String::class.javaObjectType, StringDeserializer(trimWhitespace = builder.trimWhitespace))
+    addDeserializer(String::class.javaObjectType, StringDeserializer(trimWhitespace = trimWhitespace))
     addKeyDeserializer(String::class.javaObjectType, StringDeserializer.Key())
   }
 
@@ -131,8 +130,4 @@ internal class PrimitivesModule(
     addDeserializer(Uuid::class.javaObjectType, UuidDeserializer())
     addKeyDeserializer(Uuid::class.javaObjectType, UuidDeserializer.Key())
   }
-}
-
-internal fun ObjectMapperFactoryBuilder.configurePrimitives(builder: ObjectMapperFactoryBuilder) {
-  addModule(PrimitivesModule(builder))
 }

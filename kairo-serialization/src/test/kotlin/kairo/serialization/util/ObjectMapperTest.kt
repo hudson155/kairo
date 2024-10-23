@@ -2,12 +2,11 @@ package kairo.serialization.util
 
 import com.fasterxml.jackson.databind.json.JsonMapper
 import io.kotest.matchers.shouldBe
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.jsonMapper
 import org.junit.jupiter.api.Test
 
 internal class ObjectMapperTest {
-  private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
+  private val mapper: JsonMapper = jsonMapper()
 
   @Test
   fun `readValueSpecial, string`() {

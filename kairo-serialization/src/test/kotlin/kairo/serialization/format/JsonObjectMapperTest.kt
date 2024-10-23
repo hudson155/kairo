@@ -9,8 +9,7 @@ import io.kotest.matchers.shouldBe
 import java.time.Instant
 import java.time.LocalDate
 import java.util.Optional
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.jsonMapper
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -67,9 +66,9 @@ internal class JsonObjectMapperTest {
   }
 
   private val mapper: JsonMapper =
-    ObjectMapperFactory.builder(ObjectMapperFormat.Json) {
+    jsonMapper {
       prettyPrint = true
-    }.build()
+    }
 
   private val myClass: MyClass =
     MyClass(

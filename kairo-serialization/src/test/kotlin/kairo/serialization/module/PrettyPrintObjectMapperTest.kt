@@ -1,8 +1,7 @@
 package kairo.serialization.module
 
 import io.kotest.matchers.shouldBe
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.jsonMapper
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -20,7 +19,7 @@ internal class PrettyPrintObjectMapperTest {
 
   @Test
   fun `serialize, prettyPrint = false (default)`(): Unit = runTest {
-    val mapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
+    val mapper = jsonMapper()
     val myClass = MyClass(
       string = "s v",
       map = mapOf("key1" to "val1", "key0" to "val0"),
@@ -32,7 +31,9 @@ internal class PrettyPrintObjectMapperTest {
 
   @Test
   fun `serialize, prettyPrint = true`(): Unit = runTest {
-    val mapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json) { prettyPrint = true }.build()
+    val mapper = jsonMapper {
+      prettyPrint = true
+    }
     val myClass = MyClass(
       string = "string value",
       map = mapOf("second key" to "second value", "first key" to "first value"),

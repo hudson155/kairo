@@ -3,14 +3,13 @@ package kairo.protectedString
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.jsonMapper
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 @OptIn(ProtectedString.Access::class)
 internal class ProtectedStringSerializationTest {
-  private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
+  private val mapper: JsonMapper = jsonMapper()
 
   @Test
   fun serialize(): Unit = runTest {

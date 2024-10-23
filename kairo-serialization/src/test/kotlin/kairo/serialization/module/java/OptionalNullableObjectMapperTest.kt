@@ -5,8 +5,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.util.Optional
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.jsonMapper
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -28,7 +27,7 @@ internal class OptionalNullableObjectMapperTest {
     val value: Optional<Int>?,
   )
 
-  private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
+  private val mapper: JsonMapper = jsonMapper()
 
   @Test
   fun `serialize, present`(): Unit = runTest {

@@ -15,8 +15,7 @@ import kairo.commandRunner.NoopCommandRunner
 import kairo.environmentVariableSupplier.DefaultEnvironmentVariableSupplier
 import kairo.gcpSecretSupplier.DefaultGcpSecretSupplier
 import kairo.gcpSecretSupplier.NoopGcpSecretSupplier
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.yamlMapper
 import kotlin.reflect.KClass
 
 private val logger: KLogger = KotlinLogging.logger {}
@@ -38,11 +37,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 public class ConfigLoader(
   private val config: ConfigLoaderConfig,
 ) {
-  private val mapper: JsonMapper =
-    ObjectMapperFactory.builder(
-      format = ObjectMapperFormat.Yaml,
-      modules = listOf(ConfigLoaderModule(config)),
-    ).build()
+  private val mapper: JsonMapper = yamlMapper(ConfigLoaderModule(config))
 
   public inline fun <reified C : Any> load(configName: String? = null): C =
     load(configName, C::class)
