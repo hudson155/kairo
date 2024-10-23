@@ -25,7 +25,6 @@ public class XmlMapperFactory internal constructor(
 
   override fun configurePrettyPrinting(builder: XmlMapper.Builder) {
     super.configurePrettyPrinting(builder)
-
     builder.defaultPrettyPrinter(DefaultXmlPrettyPrinter())
   }
 }

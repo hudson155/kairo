@@ -17,7 +17,6 @@ public abstract class AbstractJsonMapperFactory<M : ObjectMapper, B : MapperBuil
 
   override fun configurePrettyPrinting(builder: B) {
     super.configurePrettyPrinting(builder)
-
     builder.defaultPrettyPrinter(
       DefaultPrettyPrinter()
         .withArrayIndenter(DefaultIndenter.SYSTEM_LINEFEED_INSTANCE)

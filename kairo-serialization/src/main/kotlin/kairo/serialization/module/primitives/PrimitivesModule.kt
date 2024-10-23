@@ -11,7 +11,7 @@ import kotlin.uuid.Uuid
  */
 @Suppress("LeakingThis")
 internal abstract class PrimitivesModule(
-  protected val trimWhitespace: TrimWhitespace.Type,
+  private val trimWhitespace: TrimWhitespace.Type,
 ) : SimpleModule() {
   init {
     configureBoolean()
