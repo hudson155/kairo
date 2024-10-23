@@ -25,6 +25,7 @@ public class YearMonthSerializer : StdSerializer<YearMonth>(YearMonth::class.jav
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(value: YearMonth): String =
       value.toString()
   }

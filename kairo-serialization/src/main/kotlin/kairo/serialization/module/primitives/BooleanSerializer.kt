@@ -17,6 +17,7 @@ public class BooleanSerializer : StdSerializer<Boolean>(Boolean::class.java) {
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(value: Boolean): String =
       value.toString()
   }

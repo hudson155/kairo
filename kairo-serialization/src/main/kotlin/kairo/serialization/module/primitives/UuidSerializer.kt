@@ -22,6 +22,7 @@ public class UuidSerializer : StdSerializer<Uuid>(Uuid::class.java) {
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(value: Uuid): String =
       value.toString()
   }

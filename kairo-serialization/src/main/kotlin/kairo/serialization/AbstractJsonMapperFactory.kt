@@ -6,10 +6,15 @@ import com.fasterxml.jackson.core.util.Separators
 import com.fasterxml.jackson.databind.Module
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.cfg.MapperBuilder
+import kairo.serialization.module.primitives.DefaultPrimitivesModule
 
 public abstract class AbstractJsonMapperFactory<M : ObjectMapper, B : MapperBuilder<M, B>> internal constructor(
   modules: List<Module>,
 ) : ObjectMapperFactory<M, B>(modules) {
+  override fun configurePrimitives(builder: B) {
+    builder.addModule(DefaultPrimitivesModule(trimWhitespace = trimWhitespace))
+  }
+
   override fun configurePrettyPrinting(builder: B) {
     super.configurePrettyPrinting(builder)
 

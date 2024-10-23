@@ -30,6 +30,7 @@ public class StringDeserializer(
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(string: String, trimWhitespace: TrimWhitespace.Type): String {
       var result = string
       result = trimWhitespace.transform(result)

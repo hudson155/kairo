@@ -34,6 +34,7 @@ public class ZoneIdDeserializer : StdDeserializer<ZoneId>(ZoneId::class.java) {
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(string: String): ZoneId {
       val timeZone = ZoneId.of(string)
       if (timeZone is ZoneOffset) {

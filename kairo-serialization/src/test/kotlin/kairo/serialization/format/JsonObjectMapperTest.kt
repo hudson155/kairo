@@ -22,6 +22,7 @@ internal class JsonObjectMapperTest {
   internal data class MyClass(
     val booleans: Booleans,
     val float: Float,
+    val floats: List<Float>,
     val int: Int,
     val strings: Strings,
     val uuid: Uuid,
@@ -78,6 +79,7 @@ internal class JsonObjectMapperTest {
         booleanNull = null,
       ),
       float = 1.23F,
+      floats = listOf(0F, 1.11F, 2.22F),
       int = 42,
       strings = MyClass.Strings(
         stringTrue = "true",
@@ -103,6 +105,11 @@ internal class JsonObjectMapperTest {
         "booleanTrue": true
       },
       "float": 1.23,
+      "floats": [
+        0.0,
+        1.11,
+        2.22
+      ],
       "instant": "2023-11-13T19:44:32.123456789Z",
       "int": 42,
       "localDate": "2023-11-13",

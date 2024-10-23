@@ -32,6 +32,7 @@ public class InstantDeserializer : StdDeserializer<Instant>(Instant::class.java)
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(string: String): Instant =
       Instant.parse(string)
   }

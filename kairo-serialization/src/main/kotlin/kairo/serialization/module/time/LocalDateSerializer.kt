@@ -25,6 +25,7 @@ public class LocalDateSerializer : StdSerializer<LocalDate>(LocalDate::class.jav
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(value: LocalDate): String =
       value.toString()
   }

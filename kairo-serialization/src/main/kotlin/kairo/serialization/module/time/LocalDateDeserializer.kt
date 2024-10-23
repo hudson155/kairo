@@ -32,6 +32,7 @@ public class LocalDateDeserializer : StdDeserializer<LocalDate>(LocalDate::class
   }
 
   public companion object {
+    @JvmStatic
     private fun convert(string: String): LocalDate =
       LocalDate.parse(string)
   }

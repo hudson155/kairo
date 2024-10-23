@@ -14,7 +14,6 @@ import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.serialization.module.increaseStrictness
 import kairo.serialization.module.money.MoneyModule
-import kairo.serialization.module.primitives.PrimitivesModule
 import kairo.serialization.module.primitives.StringDeserializer
 import kairo.serialization.module.primitives.TrimWhitespace
 import kairo.serialization.module.time.TimeModule
@@ -93,9 +92,7 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
     builder.addModule(MoneyModule())
   }
 
-  private fun configurePrimitives(builder: B) {
-    builder.addModule(PrimitivesModule(trimWhitespace = this.trimWhitespace))
-  }
+  protected abstract fun configurePrimitives(builder: B)
 
   private fun configureTime(builder: B) {
     builder.addModule(TimeModule())
