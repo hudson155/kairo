@@ -8,7 +8,7 @@ dependencies {
   implementation(project(":kairo-money"))
 
   api(libs.jacksonCore) // Exposed for clients.
-  implementation(libs.jacksonDataformatYaml)
+  api(libs.jacksonDataformatYaml)
   implementation(libs.jacksonDatatypeJdk8)
   api(libs.jacksonModuleKotlin) // There are some extension functions to expose.
 

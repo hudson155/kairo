@@ -1,12 +1,10 @@
 package kairo.serialization.module.time
 
-import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.module.SimpleModule
 import java.time.Instant
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.ZoneId
-import kairo.serialization.ObjectMapperFactoryBuilder
 
 /**
  * We don't use com.fasterxml.jackson.datatype:jackson-datatype-jsr310,
@@ -51,12 +49,4 @@ internal class TimeModule : SimpleModule() {
     addDeserializer(ZoneId::class.javaObjectType, ZoneIdDeserializer())
     addKeyDeserializer(ZoneId::class.javaObjectType, ZoneIdDeserializer.Key())
   }
-}
-
-internal fun ObjectMapperFactoryBuilder.configureTime() {
-  addModule(TimeModule())
-
-  configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-  configure(SerializationFeature.WRITE_DATES_WITH_ZONE_ID, true)
-  configure(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS, false)
 }

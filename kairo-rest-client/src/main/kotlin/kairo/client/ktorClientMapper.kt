@@ -1,11 +1,10 @@
 package kairo.client
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.jsonMapper
 
 public val ktorClientMapper: JsonMapper =
-  ObjectMapperFactory.builder(ObjectMapperFormat.Json) {
+  jsonMapper {
     allowUnknownProperties = true
     prettyPrint = true
-  }.build()
+  }

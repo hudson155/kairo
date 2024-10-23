@@ -2,6 +2,7 @@
 <project version="4">
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
+      <name>com.fasterxml.jackson.module.kotlin.jsonMapper</name>
       <name>com.google.inject.TypeLiteral</name>
       <name>com.sun.security.*</name>
       <name>io.kotest.core.spec.*</name>

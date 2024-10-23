@@ -7,8 +7,7 @@ import kairo.commandRunner.CommandRunner
 import kairo.commandRunner.DefaultCommandRunner
 import kairo.environmentVariableSupplier.EnvironmentVariableSupplier
 import kairo.gcpSecretSupplier.GcpSecretSupplier
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.jsonMapper
 
 /**
  * There are a lot of test cases for config loader deserialization,
@@ -31,9 +30,6 @@ internal abstract class ConfigLoaderDeserializerTest {
       environmentVariableSupplier = environmentVariableSupplier,
       gcpSecretSupplier = gcpSecretSupplier,
     )
-    return ObjectMapperFactory.builder(
-      format = ObjectMapperFormat.Json,
-      modules = listOf(ConfigLoaderModule(config)),
-    ).build()
+    return jsonMapper(ConfigLoaderModule(config))
   }
 }

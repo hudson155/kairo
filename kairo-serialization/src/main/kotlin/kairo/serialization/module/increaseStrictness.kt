@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.cfg.JsonNodeFeature
-import kairo.serialization.ObjectMapperFactoryBuilder
+import com.fasterxml.jackson.databind.cfg.MapperBuilder
 
 /**
  * Jackson has some fairly lenient defaults for things from property naming to type coercion and others.
@@ -13,7 +13,7 @@ import kairo.serialization.ObjectMapperFactoryBuilder
  *
  * Here we try to make Jackson reasonably strict instead.
  */
-internal fun ObjectMapperFactoryBuilder.increaseStrictness() {
+internal fun MapperBuilder<*, *>.increaseStrictness() {
   configureMapperFeatures()
   configureSerializationFeatures()
   configureDeserializationFeatures()
@@ -21,7 +21,7 @@ internal fun ObjectMapperFactoryBuilder.increaseStrictness() {
   configureStreamReadFeatures()
 }
 
-private fun ObjectMapperFactoryBuilder.configureMapperFeatures() {
+private fun MapperBuilder<*, *>.configureMapperFeatures() {
   configure(MapperFeature.USE_GETTERS_AS_SETTERS, false)
   configure(MapperFeature.AUTO_DETECT_CREATORS, false)
   configure(MapperFeature.AUTO_DETECT_FIELDS, false)
@@ -38,11 +38,11 @@ private fun ObjectMapperFactoryBuilder.configureMapperFeatures() {
   configure(MapperFeature.BLOCK_UNSAFE_POLYMORPHIC_BASE_TYPES, true)
 }
 
-private fun ObjectMapperFactoryBuilder.configureSerializationFeatures() {
+private fun MapperBuilder<*, *>.configureSerializationFeatures() {
   configure(SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID, true)
 }
 
-private fun ObjectMapperFactoryBuilder.configureDeserializationFeatures() {
+private fun MapperBuilder<*, *>.configureDeserializationFeatures() {
   configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true)
   configure(DeserializationFeature.USE_BIG_INTEGER_FOR_INTS, false)
   configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, true)
@@ -52,11 +52,11 @@ private fun ObjectMapperFactoryBuilder.configureDeserializationFeatures() {
   configure(DeserializationFeature.ACCEPT_FLOAT_AS_INT, false)
 }
 
-private fun ObjectMapperFactoryBuilder.configureJsonNodeFeatures() {
+private fun MapperBuilder<*, *>.configureJsonNodeFeatures() {
   configure(JsonNodeFeature.STRIP_TRAILING_BIGDECIMAL_ZEROES, false)
   configure(JsonNodeFeature.FAIL_ON_NAN_TO_BIG_DECIMAL_COERCION, true)
 }
 
-private fun ObjectMapperFactoryBuilder.configureStreamReadFeatures() {
+private fun MapperBuilder<*, *>.configureStreamReadFeatures() {
   configure(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION, true)
 }

@@ -1,10 +1,10 @@
 package kairo.config
 
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.databind.node.ValueNode
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.common.io.Resources
@@ -15,8 +15,7 @@ import kairo.commandRunner.NoopCommandRunner
 import kairo.environmentVariableSupplier.DefaultEnvironmentVariableSupplier
 import kairo.gcpSecretSupplier.DefaultGcpSecretSupplier
 import kairo.gcpSecretSupplier.NoopGcpSecretSupplier
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.yamlMapper
 import kotlin.reflect.KClass
 
 private val logger: KLogger = KotlinLogging.logger {}
@@ -38,11 +37,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 public class ConfigLoader(
   private val config: ConfigLoaderConfig,
 ) {
-  private val mapper: JsonMapper =
-    ObjectMapperFactory.builder(
-      format = ObjectMapperFormat.Yaml,
-      modules = listOf(ConfigLoaderModule(config)),
-    ).build()
+  private val mapper: YAMLMapper = yamlMapper(ConfigLoaderModule(config))
 
   public inline fun <reified C : Any> load(configName: String? = null): C =
     load(configName, C::class)

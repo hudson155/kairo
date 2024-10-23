@@ -3,8 +3,7 @@ package kairo.serialization.module.money
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
-import kairo.serialization.ObjectMapperFactory
-import kairo.serialization.ObjectMapperFormat
+import kairo.serialization.jsonMapper
 import kotlinx.coroutines.test.runTest
 import org.javamoney.moneta.Money
 import org.junit.jupiter.api.Test
@@ -22,7 +21,7 @@ internal class MoneyNullableObjectMapperTest {
     val value: Money?,
   )
 
-  private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
+  private val mapper: JsonMapper = jsonMapper()
 
   @Test
   fun `serialize, positive`(): Unit = runTest {
