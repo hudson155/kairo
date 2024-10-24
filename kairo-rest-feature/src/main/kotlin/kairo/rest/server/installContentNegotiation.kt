@@ -13,9 +13,5 @@ internal fun Application.installContentNegotiation() {
       contentType = ContentType.Application.Json,
       converter = JacksonConverter(objectMapper = KtorServerMapper.json, streamRequestBody = false),
     )
-    register(
-      contentType = ContentType.Text.Xml,
-      converter = JacksonConverter(objectMapper = KtorServerMapper.xml, streamRequestBody = false),
-    )
   }
 }
