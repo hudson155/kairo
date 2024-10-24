@@ -93,7 +93,7 @@ internal data class RestEndpointTemplate(
 
         HttpMethod.Post, HttpMethod.Put, HttpMethod.Patch -> {
           require(endpoint.hasBody) {
-            "REST endpoint ${endpoint.qualifiedName!!} has method $value but specifies a body."
+            "REST endpoint ${endpoint.qualifiedName!!} has method $value but does not specify a body."
           }
         }
 
