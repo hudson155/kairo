@@ -12,7 +12,7 @@ private val mdcMapper: JsonMapper = jsonMapper()
  * Use this to make MDC work properly with Kotlin coroutines.
  * Null values will be excluded.
  */
-public suspend fun withMdc(mdc: Map<String, Any?>, block: suspend () -> Unit) {
+public suspend fun <T> withMdc(mdc: Map<String, Any?>, block: suspend () -> T): T {
   val contextMap = buildMap {
     putAll(MDC.getCopyOfContextMap())
     mdc.forEach { (key, value) ->
@@ -21,7 +21,7 @@ public suspend fun withMdc(mdc: Map<String, Any?>, block: suspend () -> Unit) {
     }
   }
 
-  withContext(MDCContext(contextMap)) {
+  return withContext(MDCContext(contextMap)) {
     block()
   }
 }
