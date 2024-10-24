@@ -37,7 +37,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
       RestEndpointTemplate.from(BrokenTypeLibraryBookApi.PostWithoutBodyProvided::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenTypeLibraryBookApi.PostWithoutBodyProvided" +
-        " has method POST but specifies a body.",
+        " has method POST but does not specify a body.",
     )
   }
 
@@ -47,7 +47,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
       RestEndpointTemplate.from(BrokenTypeLibraryBookApi.PostWithoutBodyNotProvided::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenTypeLibraryBookApi.PostWithoutBodyNotProvided" +
-        " has method POST but specifies a body.",
+        " has method POST but does not specify a body.",
     )
   }
 }
