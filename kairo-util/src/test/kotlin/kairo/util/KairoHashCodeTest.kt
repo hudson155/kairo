@@ -6,7 +6,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class KairoHashCodeTest {
-  @Suppress("EqualsOrHashCode")
+  @Suppress("EqualsOrHashCode", "EqualsWithHashCodeExist")
   private open class Subject(
     val something: String,
     val somethingElse: String,
