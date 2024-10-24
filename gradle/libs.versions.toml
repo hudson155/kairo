@@ -36,6 +36,7 @@ jacksonDatatypeJdk8 = { module = "com.fasterxml.jackson.datatype:jackson-datatyp
 jacksonModuleKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 javaxMoney = { module = "javax.money:money-api", version.ref = "javaxMoney" }
 jdbiCore = { module = "org.jdbi:jdbi3-core", version.ref = "jdbi" }
+jdbiJackson = { module = "org.jdbi:jdbi3-jackson2", version.ref = "jdbi" }
 jdbiKotlin = { module = "org.jdbi:jdbi3-kotlin", version.ref = "jdbi" }
 jdbiPostgres = { module = "org.jdbi:jdbi3-postgres", version.ref = "jdbi" }
 kotestRunner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
