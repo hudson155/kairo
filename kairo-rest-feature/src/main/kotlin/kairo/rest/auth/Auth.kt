@@ -4,6 +4,7 @@ import io.ktor.server.auth.principal
 import io.ktor.server.routing.RoutingCall
 import io.ktor.server.routing.RoutingRequest
 import kairo.exception.KairoException
+import kairo.rest.exception.EndpointAlwaysDenies
 
 /**
  * This is the receiver used for auth on REST handlers.
@@ -31,6 +32,31 @@ public class Auth(
       )
   }
 }
+
+/**
+ * Requires that all the provided [Auth] instances are successful.
+ */
+@Suppress("UnusedReceiverParameter")
+public suspend fun Auth.all(block: suspend MutableList<Auth.Result>.() -> Unit): Auth.Result {
+  buildList { block() }.forEach { auth ->
+    if (auth != Auth.Result.Success) return@all auth
+  }
+  return Auth.Result.Success
+}
+
+/**
+ * Allows all requests, including unauthenticated requests without an auth principal at all.
+ */
+@Suppress("UnusedReceiverParameter")
+public fun Auth.public(): Auth.Result =
+  Auth.Result.Success
+
+/**
+ * Denies all requests.
+ */
+@Suppress("UnusedReceiverParameter")
+public fun Auth.deny(): Auth.Result =
+  Auth.Result.Exception(EndpointAlwaysDenies())
 
 public inline fun overriddenBy(result: Auth.Result, block: (result: Auth.Result) -> Unit) {
   if (result == Auth.Result.Success) {
