@@ -36,7 +36,8 @@ public class Auth(
 /**
  * Requires that all the provided [Auth] instances are successful.
  */
-public suspend fun all(block: suspend MutableList<Auth.Result>.() -> Unit): Auth.Result {
+@Suppress("UnusedReceiverParameter")
+public suspend fun AuthProvider.all(block: suspend MutableList<Auth.Result>.() -> Unit): Auth.Result {
   buildList { block() }.forEach { auth ->
     if (auth != Auth.Result.Success) return@all auth
   }
@@ -46,13 +47,15 @@ public suspend fun all(block: suspend MutableList<Auth.Result>.() -> Unit): Auth
 /**
  * Allows all requests, including unauthenticated requests without an auth principal at all.
  */
-public fun public(): Auth.Result =
+@Suppress("UnusedReceiverParameter")
+public fun AuthProvider.public(): Auth.Result =
   Auth.Result.Success
 
 /**
  * Denies all requests.
  */
-public fun deny(): Auth.Result =
+@Suppress("UnusedReceiverParameter")
+public fun AuthProvider.deny(): Auth.Result =
   Auth.Result.Exception(EndpointAlwaysDenies())
 
 public inline fun overriddenBy(result: Auth.Result, block: (result: Auth.Result) -> Unit) {

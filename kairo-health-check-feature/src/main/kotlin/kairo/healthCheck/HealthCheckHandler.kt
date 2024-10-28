@@ -3,6 +3,7 @@ package kairo.healthCheck
 import com.google.inject.Inject
 import io.ktor.http.HttpStatusCode
 import kairo.rest.auth.Auth
+import kairo.rest.auth.AuthProvider
 import kairo.rest.auth.public
 import kairo.rest.handler.RestHandler
 
@@ -11,7 +12,7 @@ internal class HealthCheckHandler @Inject constructor(
   private val healthCheckService: HealthCheckService,
 ) {
   internal inner class Liveness : RestHandler<HealthCheckApi.Liveness, Unit>() {
-    override suspend fun Auth.auth(endpoint: HealthCheckApi.Liveness): Auth.Result =
+    override suspend fun AuthProvider.auth(endpoint: HealthCheckApi.Liveness): Auth.Result =
       public()
 
     override suspend fun handle(endpoint: HealthCheckApi.Liveness) {
@@ -20,7 +21,7 @@ internal class HealthCheckHandler @Inject constructor(
   }
 
   internal inner class Readiness : RestHandler<HealthCheckApi.Readiness, HealthCheckRep>() {
-    override suspend fun Auth.auth(endpoint: HealthCheckApi.Readiness): Auth.Result =
+    override suspend fun AuthProvider.auth(endpoint: HealthCheckApi.Readiness): Auth.Result =
       public()
 
     override suspend fun handle(endpoint: HealthCheckApi.Readiness): HealthCheckRep =
