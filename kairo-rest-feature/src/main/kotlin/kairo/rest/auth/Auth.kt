@@ -34,7 +34,7 @@ public class Auth(
 }
 
 /**
- * Allows all requests, including unauthenticated requests without an auth principal at all.
+ * Requires that all the provided [Auth] instances are successful.
  */
 @Suppress("UnusedReceiverParameter")
 public suspend fun Auth.all(block: suspend MutableList<Auth.Result>.() -> Unit): Auth.Result {
