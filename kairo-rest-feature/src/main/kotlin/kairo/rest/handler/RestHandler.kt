@@ -1,6 +1,7 @@
 package kairo.rest.handler
 
 import com.google.inject.Inject
+import com.google.inject.Injector
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpStatusCode
@@ -10,6 +11,7 @@ import io.ktor.util.reflect.typeInfo
 import kairo.mdc.withMdc
 import kairo.reflect.typeParam
 import kairo.rest.auth.Auth
+import kairo.rest.auth.AuthProvider
 import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.exceptionHandler.ExceptionManager
 import kairo.rest.exceptionHandler.respondWithError
@@ -27,6 +29,9 @@ private val logger: KLogger = KotlinLogging.logger {}
 public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any> {
   @Inject
   private lateinit var exceptionManager: ExceptionManager
+
+  @Inject
+  private lateinit var injector: Injector
 
   internal val endpoint: KClass<E> = typeParam(RestHandler::class, 0, this::class)
 
@@ -68,7 +73,9 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
     emptyMap()
 
   private suspend fun auth(call: RoutingCall, endpoint: E) {
-    val authResult = Auth.from(call).auth(endpoint)
+    val auth = Auth.from(call)
+    val authProvider = AuthProvider(auth, injector)
+    val authResult = authProvider.auth(endpoint)
     when (authResult) {
       is Auth.Result.Success -> Unit
       is Auth.Result.Exception -> throw authResult.e
@@ -78,7 +85,7 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
   /**
    * Must check if the call to this endpoint is authorized.
    */
-  public abstract suspend fun Auth.auth(endpoint: E): Auth.Result
+  public abstract suspend fun AuthProvider.auth(endpoint: E): Auth.Result
 
   /**
    * Does the endpoint's "actual work".
