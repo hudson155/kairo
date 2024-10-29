@@ -74,13 +74,13 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
   }
 
   private fun configureMoney(builder: B) {
-    builder.addModule(MoneyModule.from(this))
+    builder.addModule(MoneyModule.create())
   }
 
   protected abstract fun configurePrimitives(builder: B)
 
   private fun configureTime(builder: B) {
-    builder.addModule(TimeModule.from(this))
+    builder.addModule(TimeModule.create())
     builder.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
     builder.configure(SerializationFeature.WRITE_DATES_WITH_ZONE_ID, true)
     builder.configure(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS, false)

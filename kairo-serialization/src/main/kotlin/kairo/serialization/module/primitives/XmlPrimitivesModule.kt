@@ -101,7 +101,7 @@ internal class XmlPrimitivesModule private constructor(
   }
 
   internal companion object {
-    fun from(factory: ObjectMapperFactory<*, *>): XmlPrimitivesModule =
+    fun create(factory: ObjectMapperFactory<*, *>): XmlPrimitivesModule =
       XmlPrimitivesModule(
         trimWhitespace = factory.trimWhitespace,
       )

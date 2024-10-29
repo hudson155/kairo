@@ -10,7 +10,7 @@ import kairo.serialization.module.primitives.DefaultPrimitivesModule
 public abstract class AbstractJsonMapperFactory<M : ObjectMapper, B : MapperBuilder<M, B>> internal constructor() :
   ObjectMapperFactory<M, B>() {
   override fun configurePrimitives(builder: B) {
-    builder.addModule(DefaultPrimitivesModule.from(this))
+    builder.addModule(DefaultPrimitivesModule.create(this))
   }
 
   override fun configurePrettyPrinting(builder: B) {

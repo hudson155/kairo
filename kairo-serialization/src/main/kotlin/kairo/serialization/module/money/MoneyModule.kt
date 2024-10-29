@@ -1,7 +1,6 @@
 package kairo.serialization.module.money
 
 import com.fasterxml.jackson.databind.module.SimpleModule
-import kairo.serialization.ObjectMapperFactory
 import org.javamoney.moneta.Money
 
 /**
@@ -18,7 +17,7 @@ internal class MoneyModule private constructor() : SimpleModule() {
   }
 
   internal companion object {
-    fun from(factory: ObjectMapperFactory<*, *>): MoneyModule =
+    fun create(): MoneyModule =
       MoneyModule()
   }
 }

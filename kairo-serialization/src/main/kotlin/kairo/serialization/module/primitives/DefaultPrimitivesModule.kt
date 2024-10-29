@@ -101,7 +101,7 @@ internal class DefaultPrimitivesModule private constructor(
   }
 
   internal companion object {
-    fun from(factory: ObjectMapperFactory<*, *>): DefaultPrimitivesModule =
+    fun create(factory: ObjectMapperFactory<*, *>): DefaultPrimitivesModule =
       DefaultPrimitivesModule(
         trimWhitespace = factory.trimWhitespace,
       )

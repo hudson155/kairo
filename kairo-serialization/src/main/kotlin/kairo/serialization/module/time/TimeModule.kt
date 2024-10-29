@@ -5,7 +5,6 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.ZoneId
-import kairo.serialization.ObjectMapperFactory
 
 /**
  * We don't use com.fasterxml.jackson.datatype:jackson-datatype-jsr310,
@@ -52,7 +51,7 @@ internal class TimeModule private constructor() : SimpleModule() {
   }
 
   internal companion object {
-    fun from(factory: ObjectMapperFactory<*, *>): TimeModule =
+    fun create(): TimeModule =
       TimeModule()
   }
 }

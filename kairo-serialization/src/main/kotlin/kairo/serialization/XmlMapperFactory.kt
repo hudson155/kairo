@@ -18,7 +18,7 @@ public class XmlMapperFactory internal constructor() :
   }
 
   override fun configurePrimitives(builder: XmlMapper.Builder) {
-    builder.addModule(XmlPrimitivesModule.from(this))
+    builder.addModule(XmlPrimitivesModule.create(this))
   }
 
   override fun configurePrettyPrinting(builder: XmlMapper.Builder) {
