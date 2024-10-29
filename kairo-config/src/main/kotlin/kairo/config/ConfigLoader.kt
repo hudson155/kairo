@@ -39,7 +39,7 @@ public class ConfigLoader(
 ) {
   private val mapper: YAMLMapper =
     yamlMapper().build {
-      addModule(ConfigLoaderModule.from(config))
+      addModule(ConfigLoaderModule.create(config))
     }
 
   public inline fun <reified C : Any> load(configName: String? = null): C =

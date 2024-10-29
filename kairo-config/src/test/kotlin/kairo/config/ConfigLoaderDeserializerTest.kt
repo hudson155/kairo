@@ -31,7 +31,7 @@ internal abstract class ConfigLoaderDeserializerTest {
       gcpSecretSupplier = gcpSecretSupplier,
     )
     return jsonMapper().build {
-      addModule(ConfigLoaderModule.from(config))
+      addModule(ConfigLoaderModule.create(config))
     }
   }
 }

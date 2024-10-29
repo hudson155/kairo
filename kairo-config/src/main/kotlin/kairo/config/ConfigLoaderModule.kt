@@ -32,7 +32,7 @@ internal class ConfigLoaderModule private constructor(
   }
 
   internal companion object {
-    fun from(config: ConfigLoaderConfig): ConfigLoaderModule =
+    fun create(config: ConfigLoaderConfig): ConfigLoaderModule =
       ConfigLoaderModule(
         config = config,
       )
