@@ -1,5 +1,7 @@
 package kairo.serialization.module.primitives
 
+import kairo.serialization.ObjectMapperFactory
+
 /**
  * Removes whitespace from the start and/or end of strings during deserialization.
  */
@@ -23,3 +25,9 @@ public annotation class TrimWhitespace(val type: Type) {
     }
   }
 }
+
+public var ObjectMapperFactory<*, *>.trimWhitespace: TrimWhitespace.Type
+  get() = properties["trimWhitespace"] as TrimWhitespace.Type? ?: TrimWhitespace.Type.TrimNone
+  set(value) {
+    properties["trimWhitespace"] = value
+  }

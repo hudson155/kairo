@@ -70,7 +70,7 @@ internal class JsonObjectMapperTest {
   private val mapper: JsonMapper =
     jsonMapper {
       prettyPrint = true
-    }
+    }.build()
 
   private val myClass: MyClass =
     MyClass(

@@ -10,7 +10,7 @@ import kairo.serialization.property.allowUnknownProperties
 private val jwtMapper: JsonMapper =
   jsonMapper {
     allowUnknownProperties = true
-  }
+  }.build()
 
 /**
  * WARNING: Be careful not to log sensitive data in this class.

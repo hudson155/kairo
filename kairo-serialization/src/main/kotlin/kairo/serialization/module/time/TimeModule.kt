@@ -5,6 +5,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.ZoneId
+import kairo.serialization.ObjectMapperFactory
 
 /**
  * We don't use com.fasterxml.jackson.datatype:jackson-datatype-jsr310,
@@ -14,7 +15,7 @@ import java.time.ZoneId
  * are very generous in what formats they accept,
  * and we want to be stricter.
  */
-internal class TimeModule : SimpleModule() {
+internal class TimeModule private constructor() : SimpleModule() {
   init {
     configureInstant()
     configureLocalDate()
@@ -48,5 +49,10 @@ internal class TimeModule : SimpleModule() {
     addKeySerializer(ZoneId::class.javaObjectType, ZoneIdSerializer.Key())
     addDeserializer(ZoneId::class.javaObjectType, ZoneIdDeserializer())
     addKeyDeserializer(ZoneId::class.javaObjectType, ZoneIdDeserializer.Key())
+  }
+
+  internal companion object {
+    fun from(factory: ObjectMapperFactory<*, *>): TimeModule =
+      TimeModule()
   }
 }

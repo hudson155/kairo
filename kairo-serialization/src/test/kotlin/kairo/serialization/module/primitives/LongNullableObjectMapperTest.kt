@@ -20,7 +20,7 @@ internal class LongNullableObjectMapperTest {
     val value: Long?,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, positive`(): Unit = runTest {

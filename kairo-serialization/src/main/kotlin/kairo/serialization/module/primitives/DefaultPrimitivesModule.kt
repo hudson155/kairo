@@ -1,6 +1,8 @@
 package kairo.serialization.module.primitives
 
-internal class DefaultPrimitivesModule(
+import kairo.serialization.ObjectMapperFactory
+
+internal class DefaultPrimitivesModule private constructor(
   trimWhitespace: TrimWhitespace.Type,
 ) : PrimitivesModule(trimWhitespace) {
   override fun configureBoolean() {
@@ -96,5 +98,12 @@ internal class DefaultPrimitivesModule(
       addKeyDeserializer(Long::class.javaPrimitiveType, deserializer)
       addKeyDeserializer(Long::class.javaObjectType, deserializer)
     }
+  }
+
+  internal companion object {
+    fun from(factory: ObjectMapperFactory<*, *>): DefaultPrimitivesModule =
+      DefaultPrimitivesModule(
+        trimWhitespace = factory.trimWhitespace,
+      )
   }
 }

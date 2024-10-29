@@ -21,7 +21,7 @@ internal class MoneyNullableObjectMapperTest {
     val value: Money?,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, positive`(): Unit = runTest {

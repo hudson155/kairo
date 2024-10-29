@@ -20,7 +20,7 @@ internal class ZoneIdKeyObjectMapperTest {
     val values: Map<ZoneId?, String>,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, UTC offset`(): Unit = runTest {

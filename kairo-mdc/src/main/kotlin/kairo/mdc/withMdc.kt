@@ -6,7 +6,7 @@ import kotlinx.coroutines.slf4j.MDCContext
 import kotlinx.coroutines.withContext
 import org.slf4j.MDC
 
-private val mdcMapper: JsonMapper = jsonMapper()
+private val mdcMapper: JsonMapper = jsonMapper().build()
 
 /**
  * Use this to make MDC work properly with Kotlin coroutines.

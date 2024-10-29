@@ -23,7 +23,7 @@ internal class ZoneIdDefaultObjectMapperTest {
     val value: ZoneId,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, UTC offset`(): Unit = runTest {

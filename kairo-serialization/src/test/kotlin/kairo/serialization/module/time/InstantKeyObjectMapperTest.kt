@@ -19,7 +19,7 @@ internal class InstantKeyObjectMapperTest {
     val values: Map<Instant?, String>,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, default`(): Unit = runTest {

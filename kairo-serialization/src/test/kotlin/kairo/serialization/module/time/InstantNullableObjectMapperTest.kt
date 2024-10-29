@@ -21,7 +21,7 @@ internal class InstantNullableObjectMapperTest {
     val value: Instant?,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, recent`(): Unit = runTest {

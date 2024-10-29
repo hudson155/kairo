@@ -18,7 +18,7 @@ internal class DoubleKeyObjectMapperTest {
     val values: Map<Double?, String>,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, default`(): Unit = runTest {

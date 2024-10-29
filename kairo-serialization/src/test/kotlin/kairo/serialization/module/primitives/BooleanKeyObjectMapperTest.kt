@@ -18,7 +18,7 @@ internal class BooleanKeyObjectMapperTest {
     val values: Map<Boolean?, String>,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, false`(): Unit = runTest {

@@ -6,7 +6,7 @@ import kairo.serialization.jsonMapper
 import org.junit.jupiter.api.Test
 
 internal class ObjectMapperTest {
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `readValueSpecial, string`() {

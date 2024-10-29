@@ -11,7 +11,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class LocalDateRangeSerializationTest {
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   private val typicalRange: LocalDateRange =
     LocalDateRange.inclusive(

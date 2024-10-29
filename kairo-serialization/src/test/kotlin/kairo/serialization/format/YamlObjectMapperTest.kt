@@ -70,7 +70,7 @@ internal class YamlObjectMapperTest {
   private val mapper: YAMLMapper =
     yamlMapper {
       prettyPrint = true
-    }
+    }.build()
 
   private val myClass: MyClass =
     MyClass(

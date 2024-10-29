@@ -19,7 +19,7 @@ internal class YearMonthKeyObjectMapperTest {
     val values: Map<YearMonth?, String>,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, default`(): Unit = runTest {

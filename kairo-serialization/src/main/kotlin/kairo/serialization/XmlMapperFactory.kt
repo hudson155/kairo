@@ -1,16 +1,13 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.Module
 import com.fasterxml.jackson.dataformat.xml.XmlFactory
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator
 import com.fasterxml.jackson.dataformat.xml.util.DefaultXmlPrettyPrinter
 import kairo.serialization.module.primitives.XmlPrimitivesModule
-import kairo.serialization.property.trimWhitespace
 
-public class XmlMapperFactory internal constructor(
-  modules: List<Module>,
-) : ObjectMapperFactory<XmlMapper, XmlMapper.Builder>(modules) {
+public class XmlMapperFactory internal constructor() :
+  ObjectMapperFactory<XmlMapper, XmlMapper.Builder>() {
   override fun createBuilder(): XmlMapper.Builder {
     val factory = XmlFactory()
       .configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true)
@@ -21,7 +18,7 @@ public class XmlMapperFactory internal constructor(
   }
 
   override fun configurePrimitives(builder: XmlMapper.Builder) {
-    builder.addModule(XmlPrimitivesModule(trimWhitespace = trimWhitespace))
+    builder.addModule(XmlPrimitivesModule.from(this))
   }
 
   override fun configurePrettyPrinting(builder: XmlMapper.Builder) {
@@ -30,8 +27,5 @@ public class XmlMapperFactory internal constructor(
   }
 }
 
-public fun xmlMapper(
-  vararg modules: Module,
-  block: XmlMapperFactory.() -> Unit = {},
-): XmlMapper =
-  XmlMapperFactory(modules.toList()).apply(block).build()
+public fun xmlMapper(configure: XmlMapperFactory.() -> Unit = {}): XmlMapperFactory =
+  XmlMapperFactory().apply(configure)

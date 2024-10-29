@@ -70,7 +70,7 @@ internal class XmlObjectMapperTest {
   private val mapper: XmlMapper =
     xmlMapper {
       prettyPrint = true
-    }
+    }.build()
 
   private val myClass: MyClass =
     MyClass(

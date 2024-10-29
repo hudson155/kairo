@@ -12,12 +12,12 @@ public object KtorClientMapper {
   public val json: JsonMapper =
     jsonMapper {
       configureKtorClientMapper()
-    }
+    }.build()
 
   public val xml: XmlMapper =
     xmlMapper {
       configureKtorClientMapper()
-    }
+    }.build()
 
   private fun ObjectMapperFactory<*, *>.configureKtorClientMapper() {
     allowUnknownProperties = true

@@ -11,7 +11,7 @@ internal class JacksonPlugin : Jackson2Plugin() {
   private val mapper: JsonMapper =
     jsonMapper {
       allowUnknownProperties = true
-    }
+    }.build()
 
   override fun customizeHandle(handle: Handle): Handle =
     super.customizeHandle(handle).apply {
