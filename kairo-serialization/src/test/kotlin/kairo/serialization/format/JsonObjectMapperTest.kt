@@ -10,6 +10,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.util.Optional
 import kairo.serialization.jsonMapper
+import kairo.serialization.property.prettyPrint
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test

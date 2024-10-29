@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import kairo.serialization.jsonMapper
+import kairo.serialization.property.allowUnknownProperties
 
 private val jwtMapper: JsonMapper =
   jsonMapper {

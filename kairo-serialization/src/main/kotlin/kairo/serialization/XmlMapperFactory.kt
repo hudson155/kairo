@@ -6,6 +6,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator
 import com.fasterxml.jackson.dataformat.xml.util.DefaultXmlPrettyPrinter
 import kairo.serialization.module.primitives.XmlPrimitivesModule
+import kairo.serialization.property.trimWhitespace
 
 public class XmlMapperFactory internal constructor(
   modules: List<Module>,

@@ -471,7 +471,7 @@ potential-bugs:
   CastNullableToNonNullableType:
     active: false # This rule has poor support for platform types.
   CastToNullableType:
-    active: true
+    active: false
   Deprecation:
     active: true
   DontDowncastCollectionTypes:
