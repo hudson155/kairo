@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import com.google.common.io.Resources
 import kairo.reflect.typeParam
 import kairo.serialization.jsonMapper
+import kairo.serialization.property.prettyPrint
 import kotlin.reflect.KClass
 
 private val fixtureMapper: JsonMapper =

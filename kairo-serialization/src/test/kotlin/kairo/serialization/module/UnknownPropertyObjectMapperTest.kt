@@ -3,6 +3,7 @@ package kairo.serialization.module
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.property.allowUnknownProperties
 import kairo.serialization.serializationShouldFail
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test

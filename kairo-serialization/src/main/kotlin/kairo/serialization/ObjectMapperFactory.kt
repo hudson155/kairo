@@ -14,32 +14,16 @@ import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.serialization.module.increaseStrictness
 import kairo.serialization.module.money.MoneyModule
-import kairo.serialization.module.primitives.StringDeserializer
-import kairo.serialization.module.primitives.TrimWhitespace
 import kairo.serialization.module.time.TimeModule
+import kairo.serialization.property.allowUnknownProperties
+import kairo.serialization.property.prettyPrint
 
 private val logger: KLogger = KotlinLogging.logger {}
 
 public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M, B>> internal constructor(
   private val modules: List<Module>,
 ) {
-  /**
-   * Unknown properties are prohibited by default by Jackson, and we respect that default here.
-   * This is an appropriate choice for internal use.
-   * However, it's not an appropriate choice for object mappers that communicate with 3rd-party APIs.
-   */
-  public var allowUnknownProperties: Boolean = false
-
-  /**
-   * Pretty printing usually isn't desirable since it creates longer output,
-   * but it can sometimes be nice.
-   */
-  public var prettyPrint: Boolean = false
-
-  /**
-   * See [TrimWhitespace] and [StringDeserializer].
-   */
-  public var trimWhitespace: TrimWhitespace.Type = TrimWhitespace.Type.TrimNone
+  public val properties: MutableMap<String, Any> = mutableMapOf()
 
   public fun build(): M {
     logger.debug { "Creating object mapper." }

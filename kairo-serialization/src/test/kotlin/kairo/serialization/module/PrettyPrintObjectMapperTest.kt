@@ -2,6 +2,7 @@ package kairo.serialization.module
 
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.property.prettyPrint
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 

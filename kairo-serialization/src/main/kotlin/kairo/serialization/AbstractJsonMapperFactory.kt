@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.Module
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.cfg.MapperBuilder
 import kairo.serialization.module.primitives.DefaultPrimitivesModule
+import kairo.serialization.property.trimWhitespace
 
 public abstract class AbstractJsonMapperFactory<M : ObjectMapper, B : MapperBuilder<M, B>> internal constructor(
   modules: List<Module>,

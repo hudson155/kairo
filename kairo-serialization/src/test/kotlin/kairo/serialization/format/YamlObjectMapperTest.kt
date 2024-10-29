@@ -9,6 +9,7 @@ import io.kotest.matchers.shouldBe
 import java.time.Instant
 import java.time.LocalDate
 import java.util.Optional
+import kairo.serialization.property.prettyPrint
 import kairo.serialization.yamlMapper
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.test.runTest
