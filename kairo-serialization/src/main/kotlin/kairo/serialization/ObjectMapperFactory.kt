@@ -23,6 +23,10 @@ private val logger: KLogger = KotlinLogging.logger {}
 public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M, B>> internal constructor(
   private val modules: List<Module>,
 ) {
+  /**
+   * Properties are stored in a weakly-typed map
+   * to make this builder more extensible.
+   */
   public val properties: MutableMap<String, Any> = mutableMapOf()
 
   public fun build(): M {
