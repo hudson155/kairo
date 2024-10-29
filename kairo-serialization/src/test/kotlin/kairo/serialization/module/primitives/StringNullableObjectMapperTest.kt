@@ -20,7 +20,7 @@ internal class StringNullableObjectMapperTest {
     val value: String?,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, non-empty`(): Unit = runTest {

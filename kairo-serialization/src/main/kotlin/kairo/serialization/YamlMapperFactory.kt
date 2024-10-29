@@ -1,14 +1,12 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.Module
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLParser
 
-public class YamlMapperFactory internal constructor(
-  modules: List<Module>,
-) : AbstractJsonMapperFactory<YAMLMapper, YAMLMapper.Builder>(modules) {
+public class YamlMapperFactory internal constructor() :
+  AbstractJsonMapperFactory<YAMLMapper, YAMLMapper.Builder>() {
   override fun createBuilder(): YAMLMapper.Builder {
     val factory = YAMLFactory()
       .configure(YAMLGenerator.Feature.WRITE_DOC_START_MARKER, false)
@@ -23,8 +21,5 @@ public class YamlMapperFactory internal constructor(
   }
 }
 
-public fun yamlMapper(
-  vararg modules: Module,
-  block: YamlMapperFactory.() -> Unit = {},
-): YAMLMapper =
-  YamlMapperFactory(modules.toList()).apply(block).build()
+public fun yamlMapper(configure: YamlMapperFactory.() -> Unit = {}): YamlMapperFactory =
+  YamlMapperFactory().apply(configure)

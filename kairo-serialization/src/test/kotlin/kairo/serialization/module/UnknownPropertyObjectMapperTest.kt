@@ -19,7 +19,7 @@ internal class UnknownPropertyObjectMapperTest {
 
   @Test
   fun `unknown properties disallowed (default)`(): Unit = runTest {
-    val mapper = jsonMapper()
+    val mapper = jsonMapper().build()
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"foo\": \"bar\", \"baz\": \"qux\" }")
     }
@@ -29,7 +29,7 @@ internal class UnknownPropertyObjectMapperTest {
   fun `unknown properties allowed`(): Unit = runTest {
     val mapper = jsonMapper {
       allowUnknownProperties = true
-    }
+    }.build()
     mapper.readValue<MyClass>("{ \"foo\": \"bar\", \"baz\": \"qux\" }").shouldBe(MyClass("bar"))
   }
 }

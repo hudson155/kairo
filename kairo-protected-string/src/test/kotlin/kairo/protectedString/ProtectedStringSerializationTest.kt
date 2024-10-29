@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 
 @OptIn(ProtectedString.Access::class)
 internal class ProtectedStringSerializationTest {
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun serialize(): Unit = runTest {

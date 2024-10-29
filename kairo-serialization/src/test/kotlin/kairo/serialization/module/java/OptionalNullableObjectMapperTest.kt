@@ -27,7 +27,7 @@ internal class OptionalNullableObjectMapperTest {
     val value: Optional<Int>?,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, present`(): Unit = runTest {

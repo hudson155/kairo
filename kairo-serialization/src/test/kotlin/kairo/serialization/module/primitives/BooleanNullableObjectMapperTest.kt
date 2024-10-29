@@ -20,7 +20,7 @@ internal class BooleanNullableObjectMapperTest {
     val value: Boolean?,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, false`(): Unit = runTest {

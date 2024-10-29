@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class KairoIdSerializationTest {
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun serialize(): Unit = runTest {

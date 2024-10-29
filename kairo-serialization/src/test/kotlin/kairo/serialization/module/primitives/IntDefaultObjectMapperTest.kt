@@ -21,7 +21,7 @@ internal class IntDefaultObjectMapperTest {
     val value: Int,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, positive`(): Unit = runTest {

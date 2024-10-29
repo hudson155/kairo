@@ -20,7 +20,7 @@ internal class DoubleNullableObjectMapperTest {
     val value: Double?,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, positive`(): Unit = runTest {

@@ -10,7 +10,7 @@ import kotlin.reflect.KClass
 private val fixtureMapper: JsonMapper =
   jsonMapper {
     prettyPrint = true
-  }
+  }.build()
 
 public abstract class Fixture<out T : Any>(private val name: String) {
   private val typeParam: KClass<T> = typeParam(Fixture::class, 0, this::class)

@@ -2,7 +2,6 @@ package kairo.serialization
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.MapperFeature
-import com.fasterxml.jackson.databind.Module
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.cfg.JsonNodeFeature
@@ -20,16 +19,14 @@ import kairo.serialization.property.prettyPrint
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M, B>> internal constructor(
-  private val modules: List<Module>,
-) {
+public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M, B>> {
   /**
    * Properties are stored in a weakly-typed map
    * to make this builder more extensible.
    */
   public val properties: MutableMap<String, Any> = mutableMapOf()
 
-  public fun build(): M {
+  public fun build(block: B.(factory: ObjectMapperFactory<M, B>) -> Unit = {}): M {
     logger.debug { "Creating object mapper." }
 
     return createBuilder().apply {
@@ -43,7 +40,7 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
       configurePrettyPrinting(this)
       setUnknownPropertyHandling(this)
 
-      addModules(modules)
+      block(this@ObjectMapperFactory)
     }.build()
   }
 
@@ -77,13 +74,13 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
   }
 
   private fun configureMoney(builder: B) {
-    builder.addModule(MoneyModule())
+    builder.addModule(MoneyModule.create())
   }
 
   protected abstract fun configurePrimitives(builder: B)
 
   private fun configureTime(builder: B) {
-    builder.addModule(TimeModule())
+    builder.addModule(TimeModule.create())
     builder.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
     builder.configure(SerializationFeature.WRITE_DATES_WITH_ZONE_ID, true)
     builder.configure(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS, false)

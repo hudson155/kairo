@@ -37,7 +37,10 @@ private val logger: KLogger = KotlinLogging.logger {}
 public class ConfigLoader(
   private val config: ConfigLoaderConfig,
 ) {
-  private val mapper: YAMLMapper = yamlMapper(ConfigLoaderModule(config))
+  private val mapper: YAMLMapper =
+    yamlMapper().build {
+      addModule(ConfigLoaderModule.from(config))
+    }
 
   public inline fun <reified C : Any> load(configName: String? = null): C =
     load(configName, C::class)

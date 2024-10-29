@@ -22,7 +22,7 @@ internal class InstantDefaultObjectMapperTest {
     val value: Instant,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, recent`(): Unit = runTest {

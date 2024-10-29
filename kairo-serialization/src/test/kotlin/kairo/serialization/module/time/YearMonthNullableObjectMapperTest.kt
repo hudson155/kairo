@@ -21,7 +21,7 @@ internal class YearMonthNullableObjectMapperTest {
     val value: YearMonth?,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, recent`(): Unit = runTest {

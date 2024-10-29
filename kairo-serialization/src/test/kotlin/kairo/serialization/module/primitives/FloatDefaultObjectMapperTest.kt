@@ -21,7 +21,7 @@ internal class FloatDefaultObjectMapperTest {
     val value: Float,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, positive`(): Unit = runTest {

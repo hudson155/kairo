@@ -49,7 +49,7 @@ internal class PolymorphismObjectMapperTest {
     abstract val wheels: Int
   }
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, car`(): Unit = runTest {

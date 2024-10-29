@@ -7,7 +7,7 @@ import kairo.protectedString.ProtectedString
  * A Jackson module that adds support for [ConfigLoaderSource].
  * See the Feature README for more information.
  */
-internal class ConfigLoaderModule(
+internal class ConfigLoaderModule private constructor(
   private val config: ConfigLoaderConfig,
 ) : SimpleModule() {
   init {
@@ -29,5 +29,12 @@ internal class ConfigLoaderModule(
 
   private fun configureString() {
     addDeserializer(String::class.javaObjectType, ConfigStringDeserializer(config))
+  }
+
+  internal companion object {
+    fun from(config: ConfigLoaderConfig): ConfigLoaderModule =
+      ConfigLoaderModule(
+        config = config,
+      )
   }
 }

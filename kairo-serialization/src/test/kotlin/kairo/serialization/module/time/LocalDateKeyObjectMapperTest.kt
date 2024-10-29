@@ -19,7 +19,7 @@ internal class LocalDateKeyObjectMapperTest {
     val values: Map<LocalDate?, String>,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, default`(): Unit = runTest {

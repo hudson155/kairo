@@ -21,7 +21,7 @@ internal class UuidNullableObjectMapperTest {
     val value: Uuid?,
   )
 
-  private val mapper: JsonMapper = jsonMapper()
+  private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `serialize, default`(): Unit = runTest {

@@ -20,7 +20,7 @@ internal class PrettyPrintObjectMapperTest {
 
   @Test
   fun `serialize, prettyPrint = false (default)`(): Unit = runTest {
-    val mapper = jsonMapper()
+    val mapper = jsonMapper().build()
     val myClass = MyClass(
       string = "s v",
       map = mapOf("key1" to "val1", "key0" to "val0"),
@@ -34,7 +34,7 @@ internal class PrettyPrintObjectMapperTest {
   fun `serialize, prettyPrint = true`(): Unit = runTest {
     val mapper = jsonMapper {
       prettyPrint = true
-    }
+    }.build()
     val myClass = MyClass(
       string = "string value",
       map = mapOf("second key" to "second value", "first key" to "first value"),
