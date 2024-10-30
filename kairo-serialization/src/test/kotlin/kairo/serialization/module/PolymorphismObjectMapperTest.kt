@@ -22,6 +22,10 @@ internal class PolymorphismObjectMapperTest {
     JsonSubTypes.Type(Vehicle.Bicycle::class, name = "Bicycle"),
   )
   internal sealed class Vehicle {
+    abstract val model: String?
+
+    abstract val wheels: Int
+
     internal data class Car(
       override val model: String,
       val plate: String,
@@ -43,10 +47,6 @@ internal class PolymorphismObjectMapperTest {
 
       override val wheels: Int = 2
     }
-
-    abstract val model: String?
-
-    abstract val wheels: Int
   }
 
   private val mapper: JsonMapper = jsonMapper().build()
