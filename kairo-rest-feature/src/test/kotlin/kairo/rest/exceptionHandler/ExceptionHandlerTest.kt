@@ -15,8 +15,8 @@ import io.ktor.http.path
 import io.mockk.every
 import io.mockk.mockk
 import kairo.client.KairoClient
-import kairo.client.KtorClientMapper
 import kairo.client.createKairoClient
+import kairo.client.ktorClientMapper
 import kairo.featureTesting.KairoServerTest
 import kairo.serverTesting.TestServer
 
@@ -86,7 +86,7 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
       first = response.status,
       second = response.bodyAsText().let { string ->
         if (string.isEmpty()) return@let null
-        return@let KtorClientMapper.json.readValue(string)
+        return@let ktorClientMapper.readValue(string)
       },
     )
   }
