@@ -10,6 +10,8 @@ internal data class ExceptionHandlerLibraryBookRep(
   val isSeries: Boolean,
   val type: Type,
 ) {
+  internal enum class Type { Audio, Print }
+
   internal data class Creator(
     val authors: List<Author>,
     val type: Type,
@@ -31,6 +33,4 @@ internal data class ExceptionHandlerLibraryBookRep(
 
     internal data object Anonymous : Author()
   }
-
-  internal enum class Type { Audio, Print }
 }
