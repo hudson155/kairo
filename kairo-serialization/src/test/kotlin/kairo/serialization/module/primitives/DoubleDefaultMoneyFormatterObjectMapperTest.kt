@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
  * Therefore, some test cases (such as unknown properties, pretty printing) are not included
  * since they are not strictly related to doubles.
  */
-internal class DoubleDefaultObjectMapperTest {
+internal class DoubleDefaultMoneyFormatterObjectMapperTest {
   /**
    * This test is specifically for non-nullable properties.
    */

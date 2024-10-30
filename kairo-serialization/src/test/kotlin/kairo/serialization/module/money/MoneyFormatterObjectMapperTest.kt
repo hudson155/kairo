@@ -143,7 +143,7 @@ internal class MoneyFormatterObjectMapperTest {
 
   @Test
   fun `serialize, ambiguous string, positive`(): Unit = runTest {
-    val mapper = createMapper(MoneyFormatter.AmbiguousString)
+    val mapper = createMapper(AmbiguousStringMoneyFormatter)
     mapper.writeValueAsString(positive).shouldBe(
       """
         {
@@ -157,7 +157,7 @@ internal class MoneyFormatterObjectMapperTest {
 
   @Test
   fun `serialize, ambiguous string, negative`(): Unit = runTest {
-    val mapper = createMapper(MoneyFormatter.AmbiguousString)
+    val mapper = createMapper(AmbiguousStringMoneyFormatter)
     mapper.writeValueAsString(negative).shouldBe(
       """
         {
@@ -171,7 +171,7 @@ internal class MoneyFormatterObjectMapperTest {
 
   @Test
   fun `serialize, ambiguous string, no decimals`(): Unit = runTest {
-    val mapper = createMapper(MoneyFormatter.AmbiguousString)
+    val mapper = createMapper(AmbiguousStringMoneyFormatter)
     mapper.writeValueAsString(noDecimals).shouldBe(
       """
         {
@@ -185,13 +185,69 @@ internal class MoneyFormatterObjectMapperTest {
 
   @Test
   fun `serialize, ambiguous string, extra decimals`(): Unit = runTest {
-    val mapper = createMapper(MoneyFormatter.AmbiguousString)
+    val mapper = createMapper(AmbiguousStringMoneyFormatter)
     mapper.writeValueAsString(extraDecimals).shouldBe(
       """
         {
           "jpy": "¥12,345.5",
           "tnd": "TND12,345.6785",
           "usd": "$12,345.675"
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `serialize, amount as string, positive`(): Unit = runTest {
+    val mapper = createMapper(AmountAsStringMoneyFormatter)
+    mapper.writeValueAsString(positive).shouldBe(
+      """
+        {
+          "jpy": "12345",
+          "tnd": "12345.678",
+          "usd": "12345.67"
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `serialize, amount as string, negative`(): Unit = runTest {
+    val mapper = createMapper(AmountAsStringMoneyFormatter)
+    mapper.writeValueAsString(negative).shouldBe(
+      """
+        {
+          "jpy": "-12345",
+          "tnd": "-12345.678",
+          "usd": "-12345.67"
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `serialize, amount as string, no decimals`(): Unit = runTest {
+    val mapper = createMapper(AmountAsStringMoneyFormatter)
+    mapper.writeValueAsString(noDecimals).shouldBe(
+      """
+        {
+          "jpy": "12345",
+          "tnd": "12345.000",
+          "usd": "12345.00"
+        }
+      """.trimIndent(),
+    )
+  }
+
+  @Test
+  fun `serialize, amount as string, extra decimals`(): Unit = runTest {
+    val mapper = createMapper(AmountAsStringMoneyFormatter)
+    mapper.writeValueAsString(extraDecimals).shouldBe(
+      """
+        {
+          "jpy": "12345.5",
+          "tnd": "12345.6785",
+          "usd": "12345.675"
         }
       """.trimIndent(),
     )
@@ -291,7 +347,7 @@ internal class MoneyFormatterObjectMapperTest {
 
   @Test
   fun `deserialize, ambiguous string, positive`(): Unit = runTest {
-    val mapper = createMapper(MoneyFormatter.AmbiguousString)
+    val mapper = createMapper(AmbiguousStringMoneyFormatter)
     shouldThrow<NotImplementedError> {
       mapper.readValue<MyClass>(
         """
@@ -307,7 +363,7 @@ internal class MoneyFormatterObjectMapperTest {
 
   @Test
   fun `deserialize, ambiguous string, negative`(): Unit = runTest {
-    val mapper = createMapper(MoneyFormatter.AmbiguousString)
+    val mapper = createMapper(AmbiguousStringMoneyFormatter)
     shouldThrow<NotImplementedError> {
       mapper.readValue<MyClass>(
         """
@@ -323,7 +379,7 @@ internal class MoneyFormatterObjectMapperTest {
 
   @Test
   fun `deserialize, ambiguous string, no decimals`(): Unit = runTest {
-    val mapper = createMapper(MoneyFormatter.AmbiguousString)
+    val mapper = createMapper(AmbiguousStringMoneyFormatter)
     shouldThrow<NotImplementedError> {
       mapper.readValue<MyClass>(
         """
@@ -339,7 +395,7 @@ internal class MoneyFormatterObjectMapperTest {
 
   @Test
   fun `deserialize, ambiguous string, extra decimals`(): Unit = runTest {
-    val mapper = createMapper(MoneyFormatter.AmbiguousString)
+    val mapper = createMapper(AmbiguousStringMoneyFormatter)
     shouldThrow<NotImplementedError> {
       mapper.readValue<MyClass>(
         """
@@ -347,6 +403,70 @@ internal class MoneyFormatterObjectMapperTest {
             "jpy": "¥12,345.5",
             "tnd": "TND12,345.6785",
             "usd": "$12,345.675"
+          }
+        """.trimIndent(),
+      )
+    }
+  }
+
+  @Test
+  fun `deserialize, amount as string, positive`(): Unit = runTest {
+    val mapper = createMapper(AmountAsStringMoneyFormatter)
+    shouldThrow<NotImplementedError> {
+      mapper.readValue<MyClass>(
+        """
+          {
+            "jpy": "12345",
+            "tnd": "12345.678",
+            "usd": "12345.67"
+          }
+        """.trimIndent(),
+      )
+    }
+  }
+
+  @Test
+  fun `deserialize, amount as string, negative`(): Unit = runTest {
+    val mapper = createMapper(AmountAsStringMoneyFormatter)
+    shouldThrow<NotImplementedError> {
+      mapper.readValue<MyClass>(
+        """
+          {
+            "jpy": "-12345",
+            "tnd": "-12345.678",
+            "usd": "-12345.67"
+          }
+        """.trimIndent(),
+      )
+    }
+  }
+
+  @Test
+  fun `deserialize, amount as string, no decimals`(): Unit = runTest {
+    val mapper = createMapper(AmountAsStringMoneyFormatter)
+    shouldThrow<NotImplementedError> {
+      mapper.readValue<MyClass>(
+        """
+          {
+            "jpy": "12345",
+            "tnd": "12345.000",
+            "usd": "12345.00"
+          }
+        """.trimIndent(),
+      )
+    }
+  }
+
+  @Test
+  fun `deserialize, amount as string, extra decimals`(): Unit = runTest {
+    val mapper = createMapper(AmountAsStringMoneyFormatter)
+    shouldThrow<NotImplementedError> {
+      mapper.readValue<MyClass>(
+        """
+          {
+            "jpy": "12345.5",
+            "tnd": "12345.6785",
+            "usd": "12345.675"
           }
         """.trimIndent(),
       )
