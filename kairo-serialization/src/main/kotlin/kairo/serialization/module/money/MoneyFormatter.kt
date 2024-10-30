@@ -11,9 +11,9 @@ import org.javamoney.moneta.Money
 public abstract class MoneyFormatter<T : Any> {
   internal val kClass: KClass<T> = typeParam(MoneyFormatter::class, 0, this::class)
 
-  internal abstract fun parse(value: Any): Money
+  public abstract fun parse(value: Any): Money
 
-  internal abstract fun format(money: Money): T
+  public abstract fun format(money: Money): T
 
   protected fun amountAsString(money: Money): String =
     money.number.numberValueExact(BigDecimal::class.java).let { amount ->
