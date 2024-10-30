@@ -9,10 +9,6 @@ import kotlinx.coroutines.test.runTest
 import org.javamoney.moneta.Money
 import org.junit.jupiter.api.Test
 
-/**
- * This test is intended to test behaviour strictly related to money formatting.
- * Therefore, some test cases are not included since they are not strictly related to money formatting.
- */
 internal class DefaultMoneyFormatterTest {
   internal data class MyClass(
     val usd: Money,
