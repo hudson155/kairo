@@ -6,6 +6,7 @@ plugins {
 dependencies {
   implementation(project(":kairo-logging"))
   implementation(project(":kairo-money"))
+  implementation(project(":kairo-reflect"))
 
   api(libs.jacksonCore) // Exposed for clients.
   api(libs.jacksonDataformatXml)

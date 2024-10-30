@@ -74,7 +74,7 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
   }
 
   private fun configureMoney(builder: B) {
-    builder.addModule(MoneyModule.create())
+    builder.addModule(MoneyModule.create(this))
   }
 
   protected abstract fun configurePrimitives(builder: B)
