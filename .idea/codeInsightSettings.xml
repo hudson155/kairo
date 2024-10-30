@@ -3,8 +3,10 @@
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
       <name>com.fasterxml.jackson.module.kotlin.jsonMapper</name>
+      <name>com.google.common.base.Optional</name>
       <name>com.google.inject.TypeLiteral</name>
       <name>com.sun.security.*</name>
+      <name>com.typesafe.config.Optional</name>
       <name>io.kotest.core.spec.*</name>
       <name>io.ktor.client.HttpClient</name>
       <name>io.ktor.server.plugins.BadRequestException</name>
@@ -17,12 +19,15 @@
       <name>jakarta.inject.*</name>
       <name>jakarta.validation.constraints.*</name>
       <name>java.awt.*</name>
+      <name>java.security.AuthProvider</name>
+      <name>java.security.Permission</name>
       <name>java.util.UUID</name>
       <name>javax.inject.*</name>
       <name>kotlin.time.Duration</name>
       <name>org.junit.jupiter.api.Assertions.*</name>
       <name>org.slf4j.Logger</name>
       <name>org.slf4j.LoggerFactory</name>
+      <name>sun.net.ftp.FtpDirEntry</name>
     </excluded-names>
   </component>
 </project>
