@@ -1,9 +1,10 @@
-package kairo.serialization.module.money
+package kairo.alternativeMoneyFormatters
 
 import java.math.RoundingMode
 import java.text.NumberFormat
 import java.util.Currency
 import java.util.Locale
+import kairo.serialization.module.money.MoneyFormatter
 import org.javamoney.moneta.Money
 
 /**

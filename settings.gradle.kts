@@ -1,5 +1,6 @@
 rootProject.name = "kairo"
 
+include(":kairo-alternative-money-formatters")
 include(":kairo-clock-feature")
 include(":kairo-command-runner")
 include(":kairo-config")

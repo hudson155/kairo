@@ -58,7 +58,7 @@ Each module falls into one of 3 categories:
   as well as various sources.
 - [kairo-serialization](./kairo-serialization):
   Uses [Jackson](https://github.com/FasterXML/jackson).
-  to handle JSON and YAML serialization.
+  to handle JSON, YAML, and even XML serialization.
 - [kairo-testing](./kairo-testing):
   A convenient testing library which includes some helpful test dependencies.
 - [kairo-util](./kairo-util):
@@ -94,6 +94,8 @@ Each module falls into one of 3 categories:
 
 ### Optional modules
 
+- [kairo-alternative-money-formatters](./kairo-alternative-money-formatters):
+  Contains alternative non-default money formatters for serialization.
 - [kairo-darb](./kairo-darb):
   Home of `DarbEncoder`, which encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
 - [kairo-date-range](./kairo-date-range):

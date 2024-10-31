@@ -1,5 +1,6 @@
-package kairo.serialization.module.money
+package kairo.alternativeMoneyFormatters
 
+import kairo.serialization.module.money.MoneyFormatter
 import org.javamoney.moneta.Money
 
 /**
