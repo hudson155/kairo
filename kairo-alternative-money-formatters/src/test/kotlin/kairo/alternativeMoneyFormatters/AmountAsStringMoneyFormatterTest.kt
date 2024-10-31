@@ -1,10 +1,11 @@
-package kairo.serialization.module.money
+package kairo.alternativeMoneyFormatters
 
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.module.money.moneyFormatter
 import kairo.serialization.property.prettyPrint
 import kotlinx.coroutines.test.runTest
 import org.javamoney.moneta.Money

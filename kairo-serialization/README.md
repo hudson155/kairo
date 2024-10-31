@@ -1,7 +1,7 @@
 # `kairo-serialization`
 
 Uses [Jackson](https://github.com/FasterXML/jackson)
-to handle JSON and YAML serialization in many contexts,
+to handle JSON, YAML, and even XML serialization in many contexts,
 including Kairo Server configs, REST request and response bodies, and more.
 
 We don't use [kotlinx-serialization](https://github.com/Kotlin/kotlinx.serialization)
@@ -18,6 +18,7 @@ because of its limited support for polymorphism.
   - `Long`
   - `String`
 - Java
+  - `Money` (see [kairo-alternative-money-formatters](../kairo-alternative-money-formatters))
   - `Optional`
 - Kotlin
   - `Uuid`
