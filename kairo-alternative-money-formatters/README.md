@@ -17,3 +17,26 @@ This module contains alternative non-default money formatters.
   - JPY: `12345`
   - TND: `12345.678`
   - USD: `12345.67`
+
+## Usage
+
+### Step 1: Include the dependency
+
+```kotlin
+// build.gradle.kts
+
+dependencies {
+  implementation("kairo:kairo-alternative-money-formatters:$kairoVersion")
+}
+```
+
+### Step 2: Set the money formatter
+
+```kotlin
+// src/main/kotlin/yourPackage/.../YourFile.kt
+
+val mapper: JsonMapper =
+  jsonMapper {
+    moneyFormatter = MoneyFormatter.AmbiguousString
+  }.build()
+```
