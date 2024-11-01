@@ -36,15 +36,15 @@ internal class MoneyRoundTest {
 
   @Test
   fun tnd(): Unit = runTest {
-    Money.of(12_345.6785, "TND").round()
+    Money.of(12_345.678_5, "TND").round()
       .shouldBe(Money.of(12_345.678, "TND"))
-    Money.of(12_345.6775, "TND").round()
+    Money.of(12_345.677_5, "TND").round()
       .shouldBe(Money.of(12_345.678, "TND"))
     Money.of(0, "TND").round()
       .shouldBe(Money.of(0, "TND"))
-    Money.of(-12_345.6775, "TND").round()
+    Money.of(-12_345.677_5, "TND").round()
       .shouldBe(Money.of(-12_345.678, "TND"))
-    Money.of(-12_345.6785, "TND").round()
+    Money.of(-12_345.678_5, "TND").round()
       .shouldBe(Money.of(-12_345.678, "TND"))
   }
 }

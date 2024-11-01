@@ -25,7 +25,7 @@ internal class DefaultMoneyFormatterTest {
 
   private val extraDecimalsUsd: Money = Money.of(12_345.675, "USD")
   private val extraDecimalsJpy: Money = Money.of(12_345.5, "JPY")
-  private val extraDecimalsTnd: Money = Money.of(12_345.6785, "TND")
+  private val extraDecimalsTnd: Money = Money.of(12_345.678_5, "TND")
 
   @Test
   fun `serialize, positive`(): Unit = runTest {
