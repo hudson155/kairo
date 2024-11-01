@@ -1,5 +1,6 @@
 package kairo.alternativeMoneyFormatters
 
+import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.NumberFormat
 import java.util.Currency
@@ -14,7 +15,7 @@ import org.javamoney.moneta.Money
  *
  * This format is compatible with Google Sheets.
  */
-public object AmbiguousStringMoneyFormatter : MoneyFormatter<String>() {
+public class AmbiguousStringMoneyFormatter : MoneyFormatter<String>() {
   @Suppress("NotImplementedDeclaration")
   override fun parse(value: Any): Money {
     throw NotImplementedError()
@@ -27,6 +28,6 @@ public object AmbiguousStringMoneyFormatter : MoneyFormatter<String>() {
       currency = Currency.getInstance(money.currency.currencyCode)
       roundingMode = RoundingMode.UNNECESSARY
     }
-    return format.format(money.numberStripped)
+    return format.format(money.number.numberValueExact(BigDecimal::class.java))
   }
 }

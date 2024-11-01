@@ -10,13 +10,17 @@ This module contains alternative non-default money formatters.
 ### Formatters
 
 - `AmbiguousStringMoneyFormatter`
-  - JPY: `¥12,345`
-  - TND: `TND12,345.678`
-  - USD: `$12,345.67`
+  - USD: `"$12,345.67"`
+  - JPY: `"¥12,345"`
+  - TND: `"TND12,345.678"`
 - `AmountAsStringMoneyFormatter`
-  - JPY: `12345`
-  - TND: `12345.678`
-  - USD: `12345.67`
+  - USD: `"12345.67"`
+  - JPY: `"12345"`
+  - TND: `"12345.678"`
+- `CentsMoneyFormatter`
+  - USD: `"1234567"`
+  - JPY: `"12345"`
+  - TND: `"12345678"`
 
 ## Usage
 
