@@ -10,9 +10,9 @@ import kotlinx.coroutines.test.runTest
 import org.javamoney.moneta.Money
 import org.junit.jupiter.api.Test
 
-internal class AmountAsStringMoneyFormatterTest {
+internal class AmountAsStringMoneyFormatterCurrencyTest {
   private val mapper: JsonMapper = jsonMapper {
-    moneyFormatter = AmountAsStringMoneyFormatter()
+    moneyFormatter = AmountAsStringMoneyFormatter("USD")
   }.build()
 
   private val positiveUsd: Money = Money.of(12_345.67, "USD")
@@ -29,85 +29,69 @@ internal class AmountAsStringMoneyFormatterTest {
 
   private val extraDecimalsUsd: Money = Money.of(12_345.675, "USD")
   private val extraDecimalsJpy: Money = Money.of(12_345.5, "JPY")
-  private val extraDecimalsTnd: Money = Money.of(12_345.6785, "TND")
+  private val extraDecimalsTnd: Money = Money.of(12_345.678_5, "TND")
 
   @Test
   fun `serialize, positive`(): Unit = runTest {
     mapper.convertValue<String>(positiveUsd).shouldBe("12345.67")
-    mapper.convertValue<String>(positiveJpy).shouldBe("12345")
-    mapper.convertValue<String>(positiveTnd).shouldBe("12345.678")
+    shouldThrow<IllegalArgumentException> {
+      mapper.convertValue<String>(positiveJpy)
+    }
+    shouldThrow<IllegalArgumentException> {
+      mapper.convertValue<String>(positiveTnd)
+    }
   }
 
   @Test
   fun `serialize, negative`(): Unit = runTest {
     mapper.convertValue<String>(negativeUsd).shouldBe("-12345.67")
-    mapper.convertValue<String>(negativeJpy).shouldBe("-12345")
-    mapper.convertValue<String>(negativeTnd).shouldBe("-12345.678")
+    shouldThrow<IllegalArgumentException> {
+      mapper.convertValue<String>(negativeJpy)
+    }
+    shouldThrow<IllegalArgumentException> {
+      mapper.convertValue<String>(negativeTnd)
+    }
   }
 
   @Test
   fun `serialize, no decimals`(): Unit = runTest {
     mapper.convertValue<String>(noDecimalsUsd).shouldBe("12345.00")
-    mapper.convertValue<String>(noDecimalsJpy).shouldBe("12345")
-    mapper.convertValue<String>(noDecimalsTnd).shouldBe("12345.000")
+    shouldThrow<IllegalArgumentException> {
+      mapper.convertValue<String>(noDecimalsJpy)
+    }
+    shouldThrow<IllegalArgumentException> {
+      mapper.convertValue<String>(noDecimalsTnd)
+    }
   }
 
   @Test
   fun `serialize, extra decimals`(): Unit = runTest {
     mapper.convertValue<String>(extraDecimalsUsd).shouldBe("12345.675")
-    mapper.convertValue<String>(extraDecimalsJpy).shouldBe("12345.5")
-    mapper.convertValue<String>(extraDecimalsTnd).shouldBe("12345.6785")
+    shouldThrow<IllegalArgumentException> {
+      mapper.convertValue<String>(extraDecimalsJpy)
+    }
+    shouldThrow<IllegalArgumentException> {
+      mapper.convertValue<String>(extraDecimalsTnd)
+    }
   }
 
   @Test
   fun `deserialize, positive`(): Unit = runTest {
-    shouldThrow<NotImplementedError> {
-      mapper.convertValue<Money>("12345.67")
-    }
-    shouldThrow<NotImplementedError> {
-      mapper.convertValue<Money>("12345")
-    }
-    shouldThrow<NotImplementedError> {
-      mapper.convertValue<Money>("12345.678")
-    }
+    mapper.convertValue<Money>("12345.67").shouldBe(positiveUsd)
   }
 
   @Test
   fun `deserialize, negative`(): Unit = runTest {
-    shouldThrow<NotImplementedError> {
-      mapper.convertValue<Money>("-12345.67")
-    }
-    shouldThrow<NotImplementedError> {
-      mapper.convertValue<Money>("-12345")
-    }
-    shouldThrow<NotImplementedError> {
-      mapper.convertValue<Money>("-12345.678")
-    }
+    mapper.convertValue<Money>("-12345.67").shouldBe(negativeUsd)
   }
 
   @Test
   fun `deserialize, no decimals`(): Unit = runTest {
-    shouldThrow<NotImplementedError> {
-      mapper.convertValue<Money>("12345.00")
-    }
-    shouldThrow<NotImplementedError> {
-      mapper.convertValue<Money>("12345")
-    }
-    shouldThrow<NotImplementedError> {
-      mapper.convertValue<Money>("12345.000")
-    }
+    mapper.convertValue<Money>("12345.00").shouldBe(noDecimalsUsd)
   }
 
   @Test
   fun `deserialize, extra decimals`(): Unit = runTest {
-    shouldThrow<NotImplementedError> {
-      mapper.convertValue<Money>("12345.675")
-    }
-    shouldThrow<NotImplementedError> {
-      mapper.convertValue<Money>("12345.5")
-    }
-    shouldThrow<NotImplementedError> {
-      mapper.convertValue<Money>("12345.6785")
-    }
+    mapper.convertValue<Money>("12345.675").shouldBe(extraDecimalsUsd)
   }
 }

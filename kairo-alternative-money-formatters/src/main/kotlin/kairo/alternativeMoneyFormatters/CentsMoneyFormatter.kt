@@ -18,19 +18,21 @@ import org.javamoney.moneta.Money
  * Should be used with caution.
  */
 public class CentsMoneyFormatter(
-  currencyCode: String,
+  currencyCode: String? = null,
 ) : MoneyFormatter<Long>() {
-  private val currency: CurrencyUnit = Monetary.getCurrency(currencyCode)
+  private val currency: CurrencyUnit? = currencyCode?.let { Monetary.getCurrency(it) }
 
+  @Suppress("NotImplementedDeclaration")
   override fun parse(value: Any): Money {
+    currency ?: throw UnsupportedOperationException()
     value as Long
     return Money.ofMinor(currency, value)
   }
 
   override fun format(money: Money): Long {
-    check(money.currency == currency)
+    if (currency != null) check(money.currency == currency)
     return money.number.numberValueExact(BigDecimal::class.java)
-      .multiply(BigDecimal.TEN.pow(currency.defaultFractionDigits))
+      .multiply(BigDecimal.TEN.pow(money.currency.defaultFractionDigits))
       .longValueExact()
   }
 }
