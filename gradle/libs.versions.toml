@@ -2,7 +2,7 @@
 auth0JavaJwt = "4.4.0" # https://github.com/auth0/java-jwt/releases
 auth0JwksRsa = "0.22.1" # https://github.com/auth0/jwks-rsa-java/releases
 flyway = "10.20.1" # https://github.com/flyway/flyway/releases
-gcpSecretManager = "2.52.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-secretmanager
+gcpSecretManager = "2.53.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-secretmanager
 geantyref = "2.0.0" # https://mvnrepository.com/artifact/io.leangen.geantyref/geantyref
 guava = "33.3.1-jre" # https://github.com/google/guava/releases
 guice = "7.0.0" # https://github.com/google/guice/releases
@@ -13,7 +13,7 @@ jdbi = "3.47.0" # https://github.com/jdbi/jdbi/releases
 kotest = "5.9.1" # https://github.com/kotest/kotest/releases
 kotlinLogging = "7.0.0" # https://github.com/oshai/kotlin-logging/releases
 kotlinxCoroutines = "1.9.0" # https://github.com/Kotlin/kotlinx.coroutines/releases
-ktor = "3.0.0" # https://ktor.io/docs/releases.html#release-details
+ktor = "3.0.1" # https://ktor.io/docs/releases.html#release-details
 log4j2 = "3.0.0-beta2" # https://github.com/apache/logging-log4j2/releases
 mockK = "1.13.13" # https://github.com/mockk/mockk/releases
 moneta = "1.4.4" # https://mvnrepository.com/artifact/org.javamoney/moneta
