@@ -4,10 +4,10 @@ package kairo.rest.template
  * Part of [RestEndpointTemplate] that represents query params.
  * See the KDoc there.
  */
-internal data class RestEndpointQuery(
+public data class RestEndpointQuery(
   val params: List<Param>,
 ) {
-  internal data class Param(
+  public data class Param(
     val value: String,
     val required: Boolean,
   ) {
@@ -18,8 +18,8 @@ internal data class RestEndpointQuery(
     }
   }
 
-  internal companion object {
-    fun of(vararg params: Param): RestEndpointQuery =
+  public companion object {
+    public fun of(vararg params: Param): RestEndpointQuery =
       RestEndpointQuery(params.toList())
   }
 }
