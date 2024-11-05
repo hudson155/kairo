@@ -3,6 +3,8 @@
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
       <name>com.fasterxml.jackson.module.kotlin.jsonMapper</name>
+      <name>com.google.cloud.secretmanager.v1beta*.*</name>
+      <name>com.google.cloud.tasks.v2beta*.*</name>
       <name>com.google.common.base.Optional</name>
       <name>com.google.inject.TypeLiteral</name>
       <name>com.sun.security.*</name>

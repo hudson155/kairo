@@ -590,6 +590,9 @@ style:
     imports:
       - 'com.fasterxml.jackson.module.kotlin.jsonMapper'
 
+      - 'com.google.cloud.secretmanager.v1beta*.*'
+      - 'com.google.cloud.tasks.v2beta*.*'
+
       - 'com.google.common.base.Optional' # Use the JDK version instead.
 
       - 'com.google.inject.TypeLiteral' # Use the Kotlin overload.
