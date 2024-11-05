@@ -14,7 +14,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-@Suppress("LongMethod", "UnnecessaryInnerClass", "UNREACHABLE_CODE")
+@Suppress("UnnecessaryInnerClass", "UNREACHABLE_CODE")
 internal class TransactionManagerTest {
   private abstract inner class TestTransactionType : TransactionType(), TransactionType.WithContext {
     override suspend fun createContext(): CoroutineContext {

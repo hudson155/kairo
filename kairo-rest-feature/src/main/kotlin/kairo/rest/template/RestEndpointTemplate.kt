@@ -32,18 +32,21 @@ internal data class RestEndpointTemplate(
     "RestEndpointTemplate(${PrettyRestEndpointPrinter.write(this)})"
 
   internal companion object {
-    fun from(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
-      logger.debug { "Building REST endpoint template for endpoint $endpoint." }
-      require(endpoint.isData) { "REST endpoint ${endpoint.qualifiedName!!} must be a data class or data object." }
-      validateParams(endpoint)
+    fun from(endpointKClass: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
+      logger.debug { "Building REST endpoint template for endpoint $endpointKClass." }
+      require(endpointKClass.isData) {
+        "REST endpoint ${endpointKClass.qualifiedName!!}" +
+          " must be a data class or data object."
+      }
+      validateParams(endpointKClass)
       val result = RestEndpointTemplate(
-        method = parseMethod(endpoint),
-        path = parsePath(endpoint),
-        query = parseQuery(endpoint),
-        contentType = parseContentType(endpoint),
-        accept = parseAccept(endpoint),
+        method = parseMethod(endpointKClass),
+        path = parsePath(endpointKClass),
+        query = parseQuery(endpointKClass),
+        contentType = parseContentType(endpointKClass),
+        accept = parseAccept(endpointKClass),
       )
-      logger.debug { "Built REST endpoint template $result for endpoint $endpoint." }
+      logger.debug { "Built REST endpoint template $result for endpoint $endpointKClass." }
       return result
     }
 
@@ -52,64 +55,77 @@ internal data class RestEndpointTemplate(
      * Param specifics and how their annotations relate to class-level annotations such as [RestEndpoint.Path]
      * are validated within the appropriate parse methods in this class.
      */
-    private fun validateParams(endpoint: KClass<out RestEndpoint<*, *>>) {
-      val params = getAllParams(endpoint)
+    private fun validateParams(endpointKClass: KClass<out RestEndpoint<*, *>>) {
+      val params = getAllParams(endpointKClass)
       params.forEach { param ->
         val isPath = param.hasAnnotation<RestEndpoint.PathParam>()
         val isQuery = param.hasAnnotation<RestEndpoint.QueryParam>()
         if (param.name == RestEndpoint<*, *>::body.name) {
-          require(!isPath && !isQuery) { "REST endpoint ${endpoint.qualifiedName!!} body cannot be param." }
+          require(!isPath && !isQuery) {
+            "REST endpoint ${endpointKClass.qualifiedName!!}" +
+              " body cannot be param."
+          }
           return@validateParams
         }
         require(!(isPath && isQuery)) {
-          "REST endpoint ${endpoint.qualifiedName!!} param cannot be both path and query: ${param.name!!}."
+          "REST endpoint ${endpointKClass.qualifiedName!!}" +
+            " param cannot be both path and query: ${param.name!!}."
         }
         require(isPath || isQuery) {
-          "REST endpoint ${endpoint.qualifiedName!!} param must be path or query: ${param.name!!}."
+          "REST endpoint ${endpointKClass.qualifiedName!!}" +
+            " param must be path or query: ${param.name!!}."
         }
       }
     }
 
-    private fun parseMethod(endpoint: KClass<out RestEndpoint<*, *>>): HttpMethod {
-      val annotation = endpoint.findAnnotation<RestEndpoint.Method>()
+    private fun parseMethod(endpointKClass: KClass<out RestEndpoint<*, *>>): HttpMethod {
+      val annotation = endpointKClass.findAnnotation<RestEndpoint.Method>()
       requireNotNull(annotation) {
-        "REST endpoint ${endpoint.qualifiedName!!} is missing @${RestEndpoint.Method::class.simpleName!!}."
+        "REST endpoint ${endpointKClass.qualifiedName!!}" +
+          " is missing @${RestEndpoint.Method::class.simpleName!!}."
       }
       val result = HttpMethod.parse(annotation.method) // This does not fail, even for arbitrary strings.
-      result.validate(endpoint)
+      result.validate(endpointKClass)
       return result
     }
 
     /**
      * Ensures that the types match the method.
      */
-    private fun HttpMethod.validate(endpoint: KClass<out RestEndpoint<*, *>>) {
+    private fun HttpMethod.validate(endpointKClass: KClass<out RestEndpoint<*, *>>) {
       when (this) {
         HttpMethod.Get, HttpMethod.Delete, HttpMethod.Head, HttpMethod.Options -> {
-          require(!endpoint.hasBody) {
-            "REST endpoint ${endpoint.qualifiedName!!} has method $value but specifies a body."
+          require(!endpointKClass.hasBody) {
+            "REST endpoint ${endpointKClass.qualifiedName!!}" +
+              " has method $value but specifies a body."
           }
         }
 
         HttpMethod.Post, HttpMethod.Put, HttpMethod.Patch -> {
-          require(endpoint.hasBody) {
-            "REST endpoint ${endpoint.qualifiedName!!} has method $value but does not specify a body."
+          require(endpointKClass.hasBody) {
+            "REST endpoint ${endpointKClass.qualifiedName!!}" +
+              " has method $value but does not specify a body."
           }
         }
 
         else -> {
-          throw IllegalArgumentException("REST endpoint ${endpoint.qualifiedName!!} has invalid method: $value.")
+          throw IllegalArgumentException(
+            "REST endpoint ${endpointKClass.qualifiedName!!}" +
+              " has invalid method: $value.",
+          )
         }
       }
     }
 
-    private fun parsePath(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointPath {
-      val annotation = endpoint.findAnnotation<RestEndpoint.Path>()
+    private fun parsePath(endpointKClass: KClass<out RestEndpoint<*, *>>): RestEndpointPath {
+      val annotation = endpointKClass.findAnnotation<RestEndpoint.Path>()
       requireNotNull(annotation) {
-        "REST endpoint ${endpoint.qualifiedName!!} is missing @${RestEndpoint.Path::class.simpleName!!}."
+        "REST endpoint ${endpointKClass.qualifiedName!!}" +
+          " is missing @${RestEndpoint.Path::class.simpleName!!}."
       }
       require(annotation.path.startsWith("/")) {
-        "REST endpoint ${endpoint.qualifiedName!!} path must start with a slash: ${annotation.path}."
+        "REST endpoint ${endpointKClass.qualifiedName!!}" +
+          " path must start with a slash: ${annotation.path}."
       }
       try {
         val result = RestEndpointPath(
@@ -119,11 +135,11 @@ internal data class RestEndpointTemplate(
             return@map component
           },
         )
-        result.validate(endpoint)
+        result.validate(endpointKClass)
         return result
       } catch (e: IllegalArgumentException) {
         val error = buildString {
-          append("REST endpoint ${endpoint.qualifiedName!!} path is invalid.")
+          append("REST endpoint ${endpointKClass.qualifiedName!!} path is invalid.")
           e.message?.let { append(" $it") }
         }
         throw IllegalArgumentException(error, e)
@@ -134,28 +150,34 @@ internal data class RestEndpointTemplate(
      * Ensures that the path params specified in the constructor
      * are consistent with the param path components from the [RestEndpoint.Path] annotation.
      */
-    private fun RestEndpointPath.validate(endpoint: KClass<out RestEndpoint<*, *>>) {
+    private fun RestEndpointPath.validate(endpointKClass: KClass<out RestEndpoint<*, *>>) {
       val componentNames = components.filterIsInstance<RestEndpointPath.Component.Param>().map { it.value }
-      val params = getParams<RestEndpoint.PathParam>(endpoint)
+      val params = getParams<RestEndpoint.PathParam>(endpointKClass)
       params.forEach { param ->
         require(!param.type.isMarkedNullable) { "Path param must not be nullable: ${param.name!!}." }
         require(!param.isOptional) { "Path param must not be optional: ${param.name!!}." }
       }
       val paramNames = params.map { it.name!! }
       componentNames.forEachIndexed { i, componentName ->
-        require(componentName !in componentNames.subList(0, i)) { "Duplicate path param in path: $componentName." }
-        require(componentName in paramNames) { "Path param in path but not in constructor: $componentName." }
+        require(componentName !in componentNames.subList(0, i)) {
+          "Duplicate path param in path: $componentName."
+        }
+        require(componentName in paramNames) {
+          "Path param in path but not in constructor: $componentName."
+        }
       }
       paramNames.forEach { paramName ->
-        require(paramName in componentNames) { "Path param in constructor but not in path: $paramName." }
+        require(paramName in componentNames) {
+          "Path param in constructor but not in path: $paramName."
+        }
       }
     }
 
-    private fun parseQuery(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointQuery {
-      val params = getParams<RestEndpoint.QueryParam>(endpoint)
+    private fun parseQuery(endpointKClass: KClass<out RestEndpoint<*, *>>): RestEndpointQuery {
+      val params = getParams<RestEndpoint.QueryParam>(endpointKClass)
       params.forEach { param ->
         require(!param.isOptional) {
-          "REST endpoint ${endpoint.qualifiedName!!} query is invalid." +
+          "REST endpoint ${endpointKClass.qualifiedName!!} query is invalid." +
             " Query param must not be optional: ${param.name!!}."
         }
       }
@@ -166,39 +188,41 @@ internal data class RestEndpointTemplate(
       )
     }
 
-    private fun parseContentType(endpoint: KClass<out RestEndpoint<*, *>>): ContentType? {
-      val annotation = endpoint.findAnnotation<RestEndpoint.ContentType>()
-      val hasBody = endpoint.hasBody
+    private fun parseContentType(endpointKClass: KClass<out RestEndpoint<*, *>>): ContentType? {
+      val annotation = endpointKClass.findAnnotation<RestEndpoint.ContentType>()
+      val hasBody = endpointKClass.hasBody
       if (hasBody) {
         requireNotNull(annotation) {
-          "REST endpoint ${endpoint.qualifiedName!!} requires @${RestEndpoint.ContentType::class.simpleName!!}" +
+          "REST endpoint ${endpointKClass.qualifiedName!!}" +
+            " requires @${RestEndpoint.ContentType::class.simpleName!!}" +
             " since it has a body."
         }
         try {
           val result = ContentType.parse(annotation.contentType)
           require(result != ContentType.Any) {
-            "REST endpoint ${endpoint.qualifiedName!!} content type cannot be */*."
+            "REST endpoint ${endpointKClass.qualifiedName!!} content type cannot be */*."
           }
           return result
         } catch (e: BadContentTypeFormatException) {
           val error = buildString {
-            append("REST endpoint ${endpoint.qualifiedName!!} content type is invalid.")
+            append("REST endpoint ${endpointKClass.qualifiedName!!} content type is invalid.")
             e.message?.let { append(" $it.") }
           }
           throw IllegalArgumentException(error, e)
         }
       }
       require(annotation == null) {
-        "REST endpoint ${endpoint.qualifiedName!!} may not have @${RestEndpoint.ContentType::class.simpleName!!}" +
+        "REST endpoint ${endpointKClass.qualifiedName!!}" +
+          " may not have @${RestEndpoint.ContentType::class.simpleName!!}" +
           " since it does not have a body."
       }
       return null
     }
 
-    private fun parseAccept(endpoint: KClass<out RestEndpoint<*, *>>): ContentType? {
-      val annotation = endpoint.findAnnotation<RestEndpoint.Accept>()
+    private fun parseAccept(endpointKClass: KClass<out RestEndpoint<*, *>>): ContentType? {
+      val annotation = endpointKClass.findAnnotation<RestEndpoint.Accept>()
       requireNotNull(annotation) {
-        "REST endpoint ${endpoint.qualifiedName!!} requires @${RestEndpoint.Accept::class.simpleName!!}."
+        "REST endpoint ${endpointKClass.qualifiedName!!} requires @${RestEndpoint.Accept::class.simpleName!!}."
       }
       try {
         val result = ContentType.parse(annotation.accept)
@@ -206,7 +230,7 @@ internal data class RestEndpointTemplate(
         return result
       } catch (e: BadContentTypeFormatException) {
         val error = buildString {
-          append("REST endpoint ${endpoint.qualifiedName!!} accept is invalid.")
+          append("REST endpoint ${endpointKClass.qualifiedName!!} accept is invalid.")
           e.message?.let { append(" $it.") }
         }
         throw IllegalArgumentException(error, e)
@@ -214,17 +238,19 @@ internal data class RestEndpointTemplate(
     }
 
     private inline fun <reified T : Annotation> getParams(
-      endpoint: KClass<out RestEndpoint<*, *>>,
+      endpointKClass: KClass<out RestEndpoint<*, *>>,
     ): List<KParameter> {
-      val params = getAllParams(endpoint)
+      val params = getAllParams(endpointKClass)
       return params.filter { parameter -> parameter.hasAnnotation<T>() }
     }
 
     private fun getAllParams(
-      endpoint: KClass<out RestEndpoint<*, *>>,
+      endpointKClass: KClass<out RestEndpoint<*, *>>,
     ): List<KParameter> {
-      if (endpoint.objectInstance != null) return emptyList()
-      val constructor = checkNotNull(endpoint.primaryConstructor) { "Data classes always have primary constructors." }
+      if (endpointKClass.objectInstance != null) return emptyList()
+      val constructor = checkNotNull(endpointKClass.primaryConstructor) {
+        "Data classes always have primary constructors."
+      }
       return constructor.valueParameters
     }
   }

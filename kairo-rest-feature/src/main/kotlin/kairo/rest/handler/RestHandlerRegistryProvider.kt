@@ -9,5 +9,5 @@ internal class RestHandlerRegistryProvider @Inject constructor(
   private val handlers: Set<RestHandler<*, *>>,
 ) : Provider<RestHandlerRegistry> {
   override fun get(): RestHandlerRegistry =
-    handlers.associateBy { it.endpoint }
+    handlers.associateBy { it.endpointKClass }
 }
