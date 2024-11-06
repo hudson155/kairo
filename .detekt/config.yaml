@@ -84,7 +84,7 @@ complexity:
     active: false # Good practice, but leave this up to the developer.
   LongMethod:
     active: true
-    threshold: 30
+    threshold: 40
   LongParameterList:
     active: true
     functionThreshold: 4

@@ -21,6 +21,6 @@ public class RestClient @Inject constructor(
      * Without doing this, Jackson transformations such as [TrimWhitespace] wouldn't get called.
      */
     @Suppress("ForbiddenMethodCall")
-    return handler.handle(ktorServerMapper.convertValue(endpoint, handler.endpoint.java))
+    return handler.handle(ktorServerMapper.convertValue(endpoint, handler.endpointKClass.java))
   }
 }

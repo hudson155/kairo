@@ -17,15 +17,17 @@ internal abstract class RestEndpointReader<out E : RestEndpoint<*, *>> {
   abstract suspend fun endpoint(call: RoutingCall): E
 
   internal companion object {
-    fun <E : RestEndpoint<*, *>> from(endpoint: KClass<E>): RestEndpointReader<E> {
-      logger.debug { "Building REST endpoint reader for endpoint $endpoint." }
-      require(endpoint.isData) { "REST endpoint ${endpoint.qualifiedName!!} must be a data class or data object." }
-      if (endpoint.objectInstance != null) {
-        logger.debug { "Using object instance REST endpoint reader for $endpoint." }
-        return DataObjectRestEndpointReader(endpoint)
+    fun <E : RestEndpoint<*, *>> from(endpointKClass: KClass<E>): RestEndpointReader<E> {
+      logger.debug { "Building REST endpoint reader for endpoint $endpointKClass." }
+      require(endpointKClass.isData) {
+        "REST endpoint ${endpointKClass.qualifiedName!!} must be a data class or data object."
       }
-      logger.debug { "Using data class REST endpoint reader for $endpoint." }
-      return DataClassRestEndpointReader(endpoint)
+      if (endpointKClass.objectInstance != null) {
+        logger.debug { "Using object instance REST endpoint reader for $endpointKClass." }
+        return DataObjectRestEndpointReader(endpointKClass)
+      }
+      logger.debug { "Using data class REST endpoint reader for $endpointKClass." }
+      return DataClassRestEndpointReader(endpointKClass)
     }
   }
 }

@@ -33,10 +33,10 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
   @Inject
   private lateinit var injector: Injector
 
-  internal val endpoint: KClass<E> = typeParam(RestHandler::class, 0, this::class)
+  internal val endpointKClass: KClass<E> = typeParam(RestHandler::class, 0, this::class)
 
-  internal val template: RestEndpointTemplate = RestEndpointTemplate.from(endpoint)
-  internal val reader: RestEndpointReader<E> = RestEndpointReader.from(endpoint)
+  internal val template: RestEndpointTemplate = RestEndpointTemplate.from(endpointKClass)
+  internal val reader: RestEndpointReader<E> = RestEndpointReader.from(endpointKClass)
 
   internal suspend fun handle(call: RoutingCall) {
     val endpoint = reader.endpoint(call)

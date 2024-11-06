@@ -13,10 +13,10 @@ private val logger: KLogger = KotlinLogging.logger {}
  * This makes our job easy, since we just return the singleton!
  */
 internal class DataObjectRestEndpointReader<out E : RestEndpoint<*, *>>(
-  endpoint: KClass<E>,
+  endpointKClass: KClass<E>,
 ) : RestEndpointReader<E>() {
   private val objectInstance: E =
-    checkNotNull(endpoint.objectInstance)
+    checkNotNull(endpointKClass.objectInstance)
 
   override suspend fun endpoint(call: RoutingCall): E {
     logger.debug { "Using object instance." }

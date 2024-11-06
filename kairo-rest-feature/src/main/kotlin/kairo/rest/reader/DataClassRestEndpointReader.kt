@@ -20,10 +20,10 @@ private val logger: KLogger = KotlinLogging.logger {}
  * to call the primary constructor of the data class.
  */
 internal class DataClassRestEndpointReader<out E : RestEndpoint<*, *>>(
-  endpoint: KClass<E>,
+  endpointKClass: KClass<E>,
 ) : RestEndpointReader<E>() {
   private val constructor: KFunction<E> =
-    checkNotNull(endpoint.primaryConstructor)
+    checkNotNull(endpointKClass.primaryConstructor)
 
   override suspend fun endpoint(call: RoutingCall): E {
     logger.debug { "Creating data class." }
