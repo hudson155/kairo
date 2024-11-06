@@ -27,6 +27,7 @@ public sealed class KairoGoogleCloudTasksConfig {
     val projectId: String,
     val location: String,
     val queueName: QueueName,
+    val service: String,
   ) : KairoGoogleCloudTasksConfig()
 
   /**

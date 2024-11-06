@@ -1,6 +1,7 @@
 package kairo.googleCloudTasks
 
 import com.google.cloud.tasks.v2.AppEngineHttpRequest
+import com.google.cloud.tasks.v2.AppEngineRouting
 import com.google.cloud.tasks.v2.CloudTasksClient
 import com.google.cloud.tasks.v2.CreateTaskRequest
 import com.google.cloud.tasks.v2.HttpMethod
@@ -52,6 +53,7 @@ public class RealTaskCreator(
     val details = RestEndpointWriter.from(endpoint::class).write(endpoint)
     return Task.newBuilder().apply {
       appEngineHttpRequest = AppEngineHttpRequest.newBuilder().apply {
+        appEngineRouting = buildAppEngineRouting()
         httpMethod = HttpMethod.valueOf(details.method.value)
         relativeUri = details.path
         details.contentType?.let { putHeaders(HttpHeaders.ContentType, it.toString()) }
@@ -60,4 +62,9 @@ public class RealTaskCreator(
       }.build()
     }.build()
   }
+
+  private fun buildAppEngineRouting(): AppEngineRouting =
+    AppEngineRouting.newBuilder().apply {
+      service = config.service
+    }.build()
 }
