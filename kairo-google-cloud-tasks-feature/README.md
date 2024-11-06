@@ -43,7 +43,7 @@ object LibraryBookApi {
 class MyClass @Inject constructor(
   private val taskCreator: TaskCreator,
 ) {
-  fun myMethod(libraryBookId: String) {
+  fun myMethod(libraryBookId: KairoId) {
     taskCreator.create(LibraryBookApi.Read(libraryBookId))
   }
 }
