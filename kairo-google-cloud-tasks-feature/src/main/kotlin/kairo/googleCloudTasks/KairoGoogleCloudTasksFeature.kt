@@ -8,19 +8,14 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.dependencyInjection.bind
 import kairo.dependencyInjection.getInstance
 import kairo.dependencyInjection.toProvider
-import kairo.feature.Feature
-import kairo.feature.FeaturePriority
 
 private val logger: KLogger = KotlinLogging.logger {}
 
 public open class KairoGoogleCloudTasksFeature(
   private val config: KairoGoogleCloudTasksConfig,
-) : Feature() {
-  final override val name: String = "Google Cloud Tasks"
-
-  final override val priority: FeaturePriority = FeaturePriority.Framework
-
+) : BaseKairoGoogleCloudTasksFeature() {
   override fun bind(binder: Binder) {
+    super.bind(binder)
     binder.bind<KairoGoogleCloudTasksConfig>().toInstance(config)
     binder.bind<CloudTasksClient>().toProvider(CloudTasksClientProvider::class)
     binder.bind<TaskCreator>().toProvider(TaskCreatorProvider::class)
