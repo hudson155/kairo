@@ -19,28 +19,11 @@ public class RealTaskCreator(
   private val cloudTasksClient: CloudTasksClient,
   private val config: KairoGoogleCloudTasksConfig.Real,
 ) : TaskCreator() {
-  public override suspend fun <E : RestEndpoint<I, *>, I : Any> create(endpoint: E) {
-    val details = RestEndpointWriter.from(endpoint::class).write(endpoint)
+  public override suspend fun create(endpoint: RestEndpoint<*, *>) {
     val queueName = deriveQueueName(endpoint::class)
-    val parent = QueueName.of(config.projectId, config.location, queueName).toString();
-    val task = Task.newBuilder().apply {
-      appEngineHttpRequest = AppEngineHttpRequest.newBuilder().apply {
-        httpMethod = HttpMethod.valueOf(details.method.value)
-        relativeUri = details.path
-        details.contentType?.let { contentType ->
-          putHeaders(HttpHeaders.ContentType, contentType.toString())
-        }
-        details.accept?.let { accept ->
-          putHeaders(HttpHeaders.Accept, accept.toString())
-        }
-        details.body?.let { body ->
-          this.body = ByteString.copyFrom(ktorServerMapper.writeValueAsBytes(body))
-        }
-      }.build()
-    }.build()
     val request = CreateTaskRequest.newBuilder().apply {
-      this.parent = parent
-      this.task = task
+      parent = buildParent(queueName)
+      task = buildTask(endpoint)
     }.build()
     cloudTasksClient.createTaskCallable().futureCall(request).await()
   }
@@ -55,5 +38,21 @@ public class RealTaskCreator(
       annotation.name,
       config.queueName.suffix,
     ).joinToString("")
+  }
+
+  private fun buildParent(queueName: String): String =
+    QueueName.of(config.projectId, config.location, queueName).toString()
+
+  private fun buildTask(endpoint: RestEndpoint<*, *>): Task? {
+    val details = RestEndpointWriter.from(endpoint::class).write(endpoint)
+    return Task.newBuilder().apply {
+      appEngineHttpRequest = AppEngineHttpRequest.newBuilder().apply {
+        httpMethod = HttpMethod.valueOf(details.method.value)
+        relativeUri = details.path
+        details.contentType?.let { putHeaders(HttpHeaders.ContentType, it.toString()) }
+        details.accept?.let { putHeaders(HttpHeaders.Accept, it.toString()) }
+        details.body?.let { body = ByteString.copyFrom(ktorServerMapper.writeValueAsBytes(it)) }
+      }.build()
+    }.build()
   }
 }

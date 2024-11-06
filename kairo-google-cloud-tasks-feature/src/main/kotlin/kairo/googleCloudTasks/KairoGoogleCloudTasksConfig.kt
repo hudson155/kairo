@@ -15,14 +15,23 @@ public sealed class KairoGoogleCloudTasksConfig {
     val suffix: String?,
   )
 
+  /**
+   * See [NoopTaskCreator].
+   */
   public data object Noop : KairoGoogleCloudTasksConfig()
 
+  /**
+   * See [RealTaskCreator].
+   */
   public data class Real(
     val projectId: String,
     val location: String,
     val queueName: QueueName,
   ) : KairoGoogleCloudTasksConfig()
 
+  /**
+   * See [TransactionAwareTaskCreator].
+   */
   public data class TransactionAware(
     val delegate: KairoGoogleCloudTasksConfig,
   ) : KairoGoogleCloudTasksConfig()

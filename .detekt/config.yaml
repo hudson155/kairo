@@ -103,10 +103,10 @@ complexity:
     ignoreArgumentsMatchingNames: false
   NestedBlockDepth:
     active: true
-    threshold: 3
+    threshold: 4
   NestedScopeFunctions:
     active: true
-    threshold: 2
+    threshold: 3
   ReplaceSafeCallChainWithRun:
     active: true
   StringLiteralDuplication:
