@@ -5,6 +5,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.BadContentTypeFormatException
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
+import java.util.concurrent.ConcurrentHashMap
 import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.endpoint.hasBody
 import kairo.rest.printer.PrettyRestEndpointPrinter
@@ -32,7 +33,14 @@ public data class RestEndpointTemplate(
     "RestEndpointTemplate(${PrettyRestEndpointPrinter.write(this)})"
 
   public companion object {
-    public fun from(endpointKClass: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
+    private val cache: MutableMap<KClass<out RestEndpoint<*, *>>, RestEndpointTemplate> = ConcurrentHashMap()
+
+    public fun from(endpointKClass: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate =
+      cache.computeIfAbsent(endpointKClass) {
+        build(endpointKClass)
+      }
+
+    private fun build(endpointKClass: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
       logger.debug { "Building REST endpoint template for endpoint $endpointKClass." }
       require(endpointKClass.isData) {
         "REST endpoint ${endpointKClass.qualifiedName!!}" +
