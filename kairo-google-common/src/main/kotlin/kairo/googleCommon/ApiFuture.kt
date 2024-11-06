@@ -11,6 +11,8 @@ import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 /**
+ * Allows Google's [ApiFuture] class to work seamlessly with Kotlin coroutines.
+ *
  * Adapted from https://github.com/JetBrains/teamcity-google-agent/blob/master/google-cloud-server/src/main/kotlin/jetbrains/buildServer/clouds/google/connector/ApiFuture.kt
  */
 public suspend fun <T> ApiFuture<T>.await(): T {
