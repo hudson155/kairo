@@ -31,7 +31,7 @@ object LibraryBookApi {
   @TaskCreator.Queue("integration-center")
   data class Read(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, Unit>()
 }
 ```
 
