@@ -15,7 +15,7 @@ import io.mockk.mockk
 import io.mockk.slot
 import java.time.Instant
 import kairo.exception.UnauthorizedException
-import kairo.rest.exception.DuplicateAuthorizationHeader
+import kairo.rest.exception.DuplicateHeader
 import kairo.rest.exception.ExpiredJwt
 import kairo.rest.exception.JwtVerificationFailed
 import kairo.rest.exception.MalformedJwt
@@ -62,7 +62,7 @@ internal class KairoAuthenticationProviderTest {
   @Test
   fun `duplicate authorization header`(): Unit = runTest {
     val jwtString = createJwtString()
-    shouldThrow<DuplicateAuthorizationHeader> {
+    shouldThrow<DuplicateHeader> {
       authenticate {
         append("Authorization", "Bearer $jwtString")
         append("Authorization", "Bearer $jwtString")
