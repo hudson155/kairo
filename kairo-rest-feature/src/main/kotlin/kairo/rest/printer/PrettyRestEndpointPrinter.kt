@@ -25,15 +25,13 @@ internal object PrettyRestEndpointPrinter : RestEndpointPrinter() {
   fun writeMethod(template: RestEndpointTemplate): String =
     template.method.value
 
-  fun writePath(template: RestEndpointTemplate): String {
-    val path = template.path.components.joinToString("/") { component ->
+  fun writePath(template: RestEndpointTemplate): String =
+    template.path.components.joinToString("/", prefix = "/") { component ->
       when (component) {
         is RestEndpointPath.Component.Constant -> component.value
         is RestEndpointPath.Component.Param -> ":${component.value}"
       }
     }
-    return "/$path"
-  }
 
   fun writeQuery(template: RestEndpointTemplate): String? {
     if (template.query.params.isEmpty()) return null

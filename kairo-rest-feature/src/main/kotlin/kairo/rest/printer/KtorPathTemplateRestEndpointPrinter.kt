@@ -14,12 +14,12 @@ internal object KtorPathTemplateRestEndpointPrinter : RestEndpointPrinter() {
     }
 
   private fun StringBuilder.path(template: RestEndpointTemplate) {
-    val path = template.path.components.joinToString("/") { component ->
+    val path = template.path.components.joinToString("/", prefix = "/") { component ->
       when (component) {
         is RestEndpointPath.Component.Constant -> component.value
         is RestEndpointPath.Component.Param -> "{${component.value}}"
       }
     }
-    append("/$path")
+    append(path)
   }
 }
