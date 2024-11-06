@@ -7,6 +7,8 @@ import com.google.cloud.tasks.v2.HttpMethod
 import com.google.cloud.tasks.v2.QueueName
 import com.google.cloud.tasks.v2.Task
 import com.google.protobuf.ByteString
+import io.github.oshai.kotlinlogging.KLogger
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpHeaders
 import kairo.googleCommon.await
 import kairo.rest.endpoint.RestEndpoint
@@ -15,11 +17,14 @@ import kairo.rest.writer.RestEndpointWriter
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 
+private val logger: KLogger = KotlinLogging.logger {}
+
 public class RealTaskCreator(
   private val cloudTasksClient: CloudTasksClient,
   private val config: KairoGoogleCloudTasksConfig.Real,
 ) : TaskCreator() {
   public override suspend fun create(endpoint: RestEndpoint<*, *>) {
+    logger.info { "Creating task: $endpoint." }
     val queueName = deriveQueueName(endpoint::class)
     val request = CreateTaskRequest.newBuilder().apply {
       parent = buildParent(queueName)
