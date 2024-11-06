@@ -16,9 +16,9 @@ private val logger: KLogger = KotlinLogging.logger {}
 public open class KairoGoogleCloudTasksFeature(
   private val config: KairoGoogleCloudTasksConfig,
 ) : Feature() {
-  override val name: String = "Google Cloud Tasks"
+  final override val name: String = "Google Cloud Tasks"
 
-  override val priority: FeaturePriority = FeaturePriority.Framework
+  final override val priority: FeaturePriority = FeaturePriority.Framework
 
   override fun bind(binder: Binder) {
     binder.bind<KairoGoogleCloudTasksConfig>().toInstance(config)

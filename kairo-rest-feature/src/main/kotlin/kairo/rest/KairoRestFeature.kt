@@ -17,10 +17,10 @@ public open class KairoRestFeature(
   private val module: KtorModuleFunction = KtorModuleFunction {},
 ) : BaseKairoRestFeature() {
   override fun bind(binder: Binder) {
+    super.bind(binder)
     binder.bind<KairoRestConfig>().toInstance(config)
     binder.bind<KtorModuleFunction>().toInstance(module)
     binder.bind<KtorServer>().toProvider(KtorServerProvider::class)
-    super.bind(binder)
   }
 
   override fun start(injector: Injector) {

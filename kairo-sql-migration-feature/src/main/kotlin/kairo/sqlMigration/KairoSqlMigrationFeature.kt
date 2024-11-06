@@ -16,9 +16,9 @@ private val logger: KLogger = KotlinLogging.logger {}
 public open class KairoSqlMigrationFeature(
   private val config: KairoSqlMigrationConfig,
 ) : Feature() {
-  override val name: String = "SQL Migration"
+  final override val name: String = "SQL Migration"
 
-  override val priority: FeaturePriority = FeaturePriority.Framework
+  final override val priority: FeaturePriority = FeaturePriority.Framework
 
   override fun bind(binder: Binder) {
     binder.bind<KairoSqlMigrationConfig>().toInstance(config)
