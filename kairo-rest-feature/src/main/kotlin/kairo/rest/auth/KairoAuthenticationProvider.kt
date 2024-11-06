@@ -9,10 +9,10 @@ import io.ktor.server.auth.AuthenticationContext
 import io.ktor.server.auth.AuthenticationProvider
 import io.ktor.server.auth.parseAuthorizationHeader
 import kairo.exception.KairoException
-import kairo.rest.exception.DuplicateAuthorizationHeader
 import kairo.rest.exception.MalformedAuthHeader
 import kairo.rest.exception.Unauthorized
 import kairo.rest.exception.UnrecognizedAuthScheme
+import kairo.rest.util.headerSingleNullOrThrow
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -50,9 +50,9 @@ public class KairoAuthenticationProvider(
 
   private fun getAuthHeader(context: AuthenticationContext): HttpAuthHeader.Single? {
     logger.debug { "Getting auth principal." }
-    val authorizationHeaderValues = context.call.request.headers.getAll(HttpHeaders.Authorization) ?: return null
-    if (authorizationHeaderValues.size != 1) throw DuplicateAuthorizationHeader()
-    val authHeader = parseAuthorizationHeader(authorizationHeaderValues.single())
+    val authorizationHeaderValue = context.call.request.headerSingleNullOrThrow(HttpHeaders.Authorization)
+      ?: return null
+    val authHeader = parseAuthorizationHeader(authorizationHeaderValue)
     context.call.request.parseAuthorizationHeader() ?: return null
     if (authHeader !is HttpAuthHeader.Single) throw MalformedAuthHeader()
     return authHeader
