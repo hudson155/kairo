@@ -18,13 +18,16 @@ public class TaskCreatorProvider @Inject constructor(
 
   private fun create(config: KairoGoogleCloudTasksConfig): TaskCreator =
     when (config) {
-      is KairoGoogleCloudTasksConfig.Noop -> NoopTaskCreator()
-      is KairoGoogleCloudTasksConfig.Real -> RealTaskCreator(
-        cloudTasksClient = cloudTasksClient,
-        config = config,
-      )
-      is KairoGoogleCloudTasksConfig.TransactionAware -> TransactionAwareTaskCreator(
-        delegate = create(config.delegate),
-      )
+      is KairoGoogleCloudTasksConfig.Noop ->
+        NoopTaskCreator()
+      is KairoGoogleCloudTasksConfig.Real ->
+        RealTaskCreator(
+          cloudTasksClient = cloudTasksClient,
+          config = config,
+        )
+      is KairoGoogleCloudTasksConfig.TransactionAware ->
+        TransactionAwareTaskCreator(
+          delegate = create(config.delegate),
+        )
     }
 }
