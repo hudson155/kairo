@@ -4,13 +4,13 @@ package kairo.rest.template
  * Part of [RestEndpointTemplate] that represents the path, including path params.
  * See the KDoc there.
  */
-internal data class RestEndpointPath(
+public data class RestEndpointPath(
   val components: List<Component>,
 ) {
-  internal sealed class Component {
-    abstract fun validate()
+  public sealed class Component {
+    public abstract fun validate()
 
-    internal data class Constant(val value: String) : Component() {
+    public data class Constant(val value: String) : Component() {
       private val regex: Regex = Regex("[a-z][a-z0-9]*(-[a-z][a-z0-9]*)*")
 
       override fun validate() {
@@ -18,7 +18,7 @@ internal data class RestEndpointPath(
       }
     }
 
-    internal data class Param(val value: String) : Component() {
+    public data class Param(val value: String) : Component() {
       private val regex: Regex = Regex("[a-z][A-Za-z0-9]*")
 
       override fun validate() {
@@ -26,8 +26,8 @@ internal data class RestEndpointPath(
       }
     }
 
-    internal companion object {
-      fun from(string: String): Component =
+    public companion object {
+      public fun from(string: String): Component =
         if (string.startsWith(':')) {
           Param(string.substring(1))
         } else {
@@ -36,8 +36,8 @@ internal data class RestEndpointPath(
     }
   }
 
-  internal companion object {
-    fun of(vararg components: Component): RestEndpointPath =
+  public companion object {
+    public fun of(vararg components: Component): RestEndpointPath =
       RestEndpointPath(components.toList())
   }
 }
