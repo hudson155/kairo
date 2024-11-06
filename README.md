@@ -138,6 +138,9 @@ Each module falls into one of 3 categories:
   `GcpSecretSupplier` supplies GCP secrets.
   It delegates to the GCP Secret Manager SDK,
   but uses an abstract class for testability.
+- [kairo-google-common](./kairo-google-common):
+  This common library contains adaptive utils
+  for integrating Google's GCP libraries with Kotlin and Kairo.
 
 ## Getting started
 
