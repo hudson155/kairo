@@ -13,9 +13,9 @@ import kotlin.reflect.KClass
 public open class KairoHealthCheckFeature(
   private val healthCheckServiceClass: KClass<out HealthCheckService>,
 ) : Feature() {
-  override val name: String = "Health Check"
+  final override val name: String = "Health Check"
 
-  override val priority: FeaturePriority = FeaturePriority.Normal
+  final override val priority: FeaturePriority = FeaturePriority.Normal
 
   override fun bind(binder: Binder) {
     binder.bind<HealthCheckService>().toClass(healthCheckServiceClass).asEagerSingleton()

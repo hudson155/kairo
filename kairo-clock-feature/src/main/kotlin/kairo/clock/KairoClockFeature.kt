@@ -9,9 +9,9 @@ import kairo.feature.FeaturePriority
 public open class KairoClockFeature(
   private val config: KairoClockConfig,
 ) : Feature() {
-  override val name: String = "Kairo Clock"
+  final override val name: String = "Kairo Clock"
 
-  override val priority: FeaturePriority = FeaturePriority.Normal
+  final override val priority: FeaturePriority = FeaturePriority.Normal
 
   override fun bind(binder: Binder) {
     binder.bind<Clock>().toInstance(createClock(config))

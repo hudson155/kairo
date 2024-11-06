@@ -8,9 +8,9 @@ import org.apache.logging.log4j.LogManager
 public open class KairoLoggingFeature(
   private val config: KairoLoggingConfig,
 ) : Feature() {
-  override val name: String = "Logging"
+  final override val name: String = "Logging"
 
-  override val priority: FeaturePriority = FeaturePriority.Monitoring
+  final override val priority: FeaturePriority = FeaturePriority.Monitoring
 
   override fun stop(injector: Injector?) {
     if (config.shutDownManually) {

@@ -17,9 +17,9 @@ private val logger: KLogger = KotlinLogging.logger {}
 public open class KairoSqlFeature(
   private val config: KairoSqlConfig,
 ) : Feature() {
-  override val name: String = "SQL"
+  final override val name: String = "SQL"
 
-  override val priority: FeaturePriority = FeaturePriority.Framework
+  final override val priority: FeaturePriority = FeaturePriority.Framework
 
   override fun bind(binder: Binder) {
     binder.bind<KairoSqlConfig>().toInstance(config)

@@ -8,9 +8,9 @@ import kairo.feature.FeaturePriority
 public open class KairoIdFeature(
   private val config: KairoIdConfig,
 ) : Feature() {
-  override val name: String = "KairoId"
+  final override val name: String = "KairoId"
 
-  override val priority: FeaturePriority = FeaturePriority.Normal
+  final override val priority: FeaturePriority = FeaturePriority.Normal
 
   override fun bind(binder: Binder) {
     binder.bind<KairoIdGenerator.Factory>().toInstance(createGenerator(config.generator))
