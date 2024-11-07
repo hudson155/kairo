@@ -1,15 +1,17 @@
-package kairo.healthCheck
+package kairo.googleAppEngine
 
 import io.kotest.matchers.shouldBe
 import kairo.dependencyInjection.getInstance
+import kairo.healthCheck.HealthCheckRep
+import kairo.healthCheck.HealthCheckService
 import kairo.restTesting.client
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-internal class HealthCheckHandlerReadinessTest : HealthCheckHandlerTest() {
+internal class GoogleAppEngineWarmupTest : GoogleAppEngineFeatureTest() {
   @Test
   fun healthy(): Unit = runTest {
-    client.request(HealthCheckApi.Readiness)
+    client.request(GoogleAppEngineApi.Warmup)
       .shouldBe(
         HealthCheckRep(
           status = HealthCheckRep.Status.Healthy,
@@ -26,7 +28,7 @@ internal class HealthCheckHandlerReadinessTest : HealthCheckHandlerTest() {
     val healthCheckService = injector.getInstance<HealthCheckService>() as TestHealthCheckService
     healthCheckService.testStatus = HealthCheckRep.Status.Unhealthy
 
-    client.request(HealthCheckApi.Readiness)
+    client.request(GoogleAppEngineApi.Warmup)
       .shouldBe(
         HealthCheckRep(
           status = HealthCheckRep.Status.Unhealthy,
