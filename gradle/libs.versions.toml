@@ -1,7 +1,7 @@
 [versions]
 auth0JavaJwt = "4.4.0" # https://github.com/auth0/java-jwt/releases
 auth0JwksRsa = "0.22.1" # https://github.com/auth0/jwks-rsa-java/releases
-flyway = "10.20.1" # https://github.com/flyway/flyway/releases
+flyway = "10.21.0" # https://github.com/flyway/flyway/releases
 gcpCloudScheduler = "2.53.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-scheduler
 gcpCloudTasks = "2.53.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-tasks
 gcpSecretManager = "2.53.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-secretmanager
