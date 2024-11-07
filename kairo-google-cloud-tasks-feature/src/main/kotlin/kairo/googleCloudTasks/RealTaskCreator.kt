@@ -15,43 +15,41 @@ import kairo.googleCommon.await
 import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.ktorServerMapper
 import kairo.rest.writer.RestEndpointWriter
-import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 
 private val logger: KLogger = KotlinLogging.logger {}
 
 public class RealTaskCreator(
   private val cloudTasksClient: CloudTasksClient,
-  private val config: KairoGoogleCloudTasksConfig.Real,
+  private val tasksConfig: KairoGoogleCloudTasksConfig.Real,
 ) : TaskCreator() {
   public override suspend fun create(endpoint: RestEndpoint<*, *>) {
     logger.info { "Creating task: $endpoint." }
-    val queueName = deriveQueueName(endpoint::class)
     val request = CreateTaskRequest.newBuilder().apply {
-      parent = buildParent(queueName)
+      parent = buildQueueName(endpoint).toString()
       task = buildTask(endpoint)
     }.build()
     cloudTasksClient.createTaskCallable().futureCall(request).await()
   }
 
-  private fun <E : RestEndpoint<*, *>> deriveQueueName(endpoint: KClass<E>): String {
-    val annotation = endpoint.findAnnotation<Queue>()
+  private fun buildQueueName(endpoint: RestEndpoint<*, *>): QueueName {
+    val endpointKClass = endpoint::class
+    val annotation = endpointKClass.findAnnotation<Queue>()
     requireNotNull(annotation) {
-      "REST endpoint ${endpoint.qualifiedName!!} is missing @${Queue::class.simpleName!!}."
+      "REST endpoint ${endpointKClass.qualifiedName!!} is missing @${Queue::class.simpleName!!}."
     }
-    return listOfNotNull(
-      config.queueName.prefix,
+    val queue = listOfNotNull(
+      tasksConfig.queueName.prefix,
       annotation.name,
-      config.queueName.suffix,
+      tasksConfig.queueName.suffix,
     ).joinToString("")
+    return QueueName.of(tasksConfig.projectId, tasksConfig.location, queue)
   }
 
-  private fun buildParent(queueName: String): String =
-    QueueName.of(config.projectId, config.location, queueName).toString()
-
-  private fun buildTask(endpoint: RestEndpoint<*, *>): Task? {
+  private fun buildTask(endpoint: RestEndpoint<*, *>): Task {
     val details = RestEndpointWriter.from(endpoint::class).write(endpoint)
     return Task.newBuilder().apply {
+      @Suppress("DuplicatedCode")
       appEngineHttpRequest = AppEngineHttpRequest.newBuilder().apply {
         appEngineRouting = buildAppEngineRouting()
         httpMethod = HttpMethod.valueOf(details.method.value)
@@ -65,6 +63,6 @@ public class RealTaskCreator(
 
   private fun buildAppEngineRouting(): AppEngineRouting =
     AppEngineRouting.newBuilder().apply {
-      service = config.service
+      service = tasksConfig.service
     }.build()
 }

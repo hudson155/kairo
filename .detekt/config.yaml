@@ -590,6 +590,7 @@ style:
     imports:
       - 'com.fasterxml.jackson.module.kotlin.jsonMapper'
 
+      - 'com.google.cloud.scheduler.v1beta*.*'
       - 'com.google.cloud.secretmanager.v1beta*.*'
       - 'com.google.cloud.tasks.v2beta*.*'
 

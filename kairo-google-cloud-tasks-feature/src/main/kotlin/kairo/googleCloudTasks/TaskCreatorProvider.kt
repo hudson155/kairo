@@ -23,7 +23,7 @@ public class TaskCreatorProvider @Inject constructor(
       is KairoGoogleCloudTasksConfig.Real ->
         RealTaskCreator(
           cloudTasksClient = cloudTasksClient,
-          config = config,
+          tasksConfig = config,
         )
       is KairoGoogleCloudTasksConfig.TransactionAware ->
         TransactionAwareTaskCreator(

@@ -71,6 +71,9 @@ Each module falls into one of 3 categories:
 - [kairo-google-app-engine-feature](./kairo-google-app-engine-feature):
   Kairo's Google App Engine Feature uses the health check readiness endpoint
   to configure a GAE warmup endpoint.
+- [kairo-google-cloud-scheduler-feature](./kairo-google-cloud-scheduler-feature):
+  Kairo's Google Cloud Scheduler Feature enables CRON
+  using Google Cloud Scheduler.
 - [kairo-google-cloud-tasks-feature](./kairo-google-cloud-tasks-feature):
   Kairo's Google Cloud Tasks Feature enables task management
   using Google Cloud Tasks.
