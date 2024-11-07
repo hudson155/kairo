@@ -1,6 +1,5 @@
 package kairo.googleCloudTasks
 
-import kairo.rest.endpoint.RestEndpoint
 import kotlin.coroutines.coroutineContext
 
 /**
@@ -10,12 +9,12 @@ import kotlin.coroutines.coroutineContext
 public class TransactionAwareTaskCreator(
   private val delegate: TaskCreator,
 ) : TaskCreator() {
-  public override suspend fun create(endpoint: RestEndpoint<*, *>) {
+  override suspend fun create(task: Task) {
     val context = coroutineContext[TaskContext]
     if (context != null) {
-      context.add { delegate.create(endpoint) }
+      context.add { delegate.create(task) }
     } else {
-      delegate.create(endpoint)
+      delegate.create(task)
     }
   }
 }

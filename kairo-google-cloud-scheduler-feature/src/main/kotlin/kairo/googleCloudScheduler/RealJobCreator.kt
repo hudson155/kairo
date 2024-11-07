@@ -13,9 +13,8 @@ import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpHeaders
 import kairo.googleCommon.await
-import kairo.rest.endpoint.RestEndpoint
+import kairo.rest.endpoint.RestEndpointDetails
 import kairo.rest.ktorServerMapper
-import kairo.rest.writer.RestEndpointWriter
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -23,11 +22,11 @@ public class RealJobCreator(
   private val cloudSchedulerClient: CloudSchedulerClient,
   private val schedulerConfig: KairoGoogleCloudSchedulerConfig.Real,
 ) : JobCreator() {
-  public override suspend fun create(endpoint: RestEndpoint<*, *>, config: Config) {
-    logger.info { "Creating job: $endpoint." }
+  public override suspend fun create(job: Job, config: Config) {
+    logger.info { "Creating job: $job (config: $config)." }
     val request = CreateJobRequest.newBuilder().apply {
       parent = buildLocationName().toString()
-      job = buildJob(endpoint, config)
+      this.job = buildJob(job.details, config)
     }.build()
     cloudSchedulerClient.createJobCallable().futureCall(request).await()
   }
@@ -35,9 +34,8 @@ public class RealJobCreator(
   private fun buildLocationName(): LocationName =
     LocationName.of(schedulerConfig.projectId, schedulerConfig.location)
 
-  private fun buildJob(endpoint: RestEndpoint<*, *>, config: Config): Job {
-    val details = RestEndpointWriter.from(endpoint::class).write(endpoint)
-    return Job.newBuilder().apply {
+  private fun buildJob(details: RestEndpointDetails, config: Config): com.google.cloud.scheduler.v1.Job =
+    com.google.cloud.scheduler.v1.Job.newBuilder().apply {
       name = buildJobName(config).toString()
       description = buildJobDescription(config)
       @Suppress("DuplicatedCode")
@@ -51,7 +49,6 @@ public class RealJobCreator(
       }.build()
       schedule = config.schedule
     }.build()
-  }
 
   private fun buildJobName(config: Config): JobName {
     val job = listOfNotNull(
