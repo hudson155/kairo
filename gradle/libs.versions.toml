@@ -2,6 +2,7 @@
 auth0JavaJwt = "4.4.0" # https://github.com/auth0/java-jwt/releases
 auth0JwksRsa = "0.22.1" # https://github.com/auth0/jwks-rsa-java/releases
 flyway = "10.20.1" # https://github.com/flyway/flyway/releases
+gcpCloudScheduler = "2.53.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-scheduler
 gcpCloudTasks = "2.53.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-tasks
 gcpSecretManager = "2.53.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-secretmanager
 geantyref = "2.0.0" # https://mvnrepository.com/artifact/io.leangen.geantyref/geantyref
@@ -26,6 +27,7 @@ auth0JavaJwt = { module = "com.auth0:java-jwt", version.ref = "auth0JavaJwt" }
 auth0JwksRsa = { module = "com.auth0:jwks-rsa", version.ref = "auth0JwksRsa" }
 flywayCore = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 flywayDatabasePostgres = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
+gcpCloudScheduler = { module = "com.google.cloud:google-cloud-scheduler", version.ref = "gcpCloudScheduler" }
 gcpCloudTasks = { module = "com.google.cloud:google-cloud-tasks", version.ref = "gcpCloudTasks" }
 gcpSecretManager = { module = "com.google.cloud:google-cloud-secretmanager", version.ref = "gcpSecretManager" }
 geantyref = { module = "io.leangen.geantyref:geantyref", version.ref = "geantyref" }
