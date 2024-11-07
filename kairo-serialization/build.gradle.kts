@@ -13,6 +13,7 @@ dependencies {
   api(libs.jacksonDataformatYaml)
   implementation(libs.jacksonDatatypeJdk8)
   api(libs.jacksonModuleKotlin) // There are some extension functions to expose.
+  implementation(libs.ktorHttpJvm)
 
   testImplementation(project(":kairo-logging:testing"))
   testImplementation(project(":kairo-testing"))

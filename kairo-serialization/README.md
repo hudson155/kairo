@@ -22,6 +22,9 @@ because of its limited support for polymorphism.
   - `Optional`
 - Kotlin
   - `Uuid`
+- Ktor
+  - `ContentType`
+  - `HttpMethod`
 - Date/time
   - `Instant`
   - `LocalDate`

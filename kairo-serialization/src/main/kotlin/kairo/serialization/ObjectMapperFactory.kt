@@ -12,6 +12,7 @@ import com.fasterxml.jackson.module.kotlin.kotlinModule
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.serialization.module.increaseStrictness
+import kairo.serialization.module.ktor.KtorModule
 import kairo.serialization.module.money.MoneyModule
 import kairo.serialization.module.time.TimeModule
 import kairo.serialization.property.allowUnknownProperties
@@ -30,8 +31,9 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
     logger.debug { "Creating object mapper." }
 
     return createBuilder().apply {
-      configureKotlin(this)
       configureJava(this)
+      configureKotlin(this)
+      configureKtor(this)
       configureMoney(this)
       configurePrimitives(this)
       configureTime(this)
@@ -47,6 +49,20 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
   protected abstract fun createBuilder(): B
 
   /**
+   * The only thing we need to configure is support for [Optional]s,
+   * which is not included in Jackson's core until 3.0.
+   *
+   * See the corresponding test for more spec.
+   */
+  private fun configureJava(builder: B) {
+    builder.addModule(
+      Jdk8Module().apply {
+        this.configureReadAbsentAsNull(true)
+      },
+    )
+  }
+
+  /**
    * Besides just installing the Kotlin module,
    * we change a few config params to have more sensible values.
    */
@@ -59,18 +75,8 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
     )
   }
 
-  /**
-   * The only thing we need to configure is support for [Optional]s,
-   * which is not included in Jackson's core until 3.0.
-   *
-   * See the corresponding test for more spec.
-   */
-  private fun configureJava(builder: B) {
-    builder.addModule(
-      Jdk8Module().apply {
-        this.configureReadAbsentAsNull(true)
-      },
-    )
+  private fun configureKtor(builder: B) {
+    builder.addModule(KtorModule.create())
   }
 
   private fun configureMoney(builder: B) {
