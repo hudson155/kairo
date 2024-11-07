@@ -6,16 +6,16 @@ import kairo.dependencyInjection.bind
 import kairo.dependencyInjection.getInstance
 import kairo.featureTesting.TestFeature
 import kairo.googleCloudTasks.BaseKairoGoogleCloudTasksFeature
-import kairo.googleCloudTasks.TaskCreator
+import kairo.googleCloudTasks.GoogleCloudTasks
 
 public class TestGoogleCloudTasksFeature : BaseKairoGoogleCloudTasksFeature(), TestFeature.BeforeEach {
   override fun bind(binder: Binder) {
     super.bind(binder)
-    binder.bind<TaskCreator>().toInstance(FakeTaskCreator())
+    binder.bind<GoogleCloudTasks>().toInstance(FakeGoogleCloudTasks())
   }
 
   override suspend fun beforeEach(injector: Injector) {
-    val taskCreator = injector.getInstance<TaskCreator>() as FakeTaskCreator
-    taskCreator.reset()
+    val googleCloudTasks = injector.getInstance<GoogleCloudTasks>() as FakeGoogleCloudTasks
+    googleCloudTasks.reset()
   }
 }

@@ -3,12 +3,12 @@ package kairo.googleCloudTasks
 import kotlin.coroutines.coroutineContext
 
 /**
- * Wraps an existing [TaskCreator] instance to make it aware of Kairo transactions.
+ * Wraps an existing [GoogleCloudTasks] instance to make it aware of Kairo transactions.
  * See [TaskTransaction].
  */
-public class TransactionAwareTaskCreator(
-  private val delegate: TaskCreator,
-) : TaskCreator() {
+public class TransactionAwareGoogleCloudTasks(
+  private val delegate: GoogleCloudTasks,
+) : GoogleCloudTasks() {
   override suspend fun create(task: Task) {
     val context = coroutineContext[TaskContext]
     if (context != null) {

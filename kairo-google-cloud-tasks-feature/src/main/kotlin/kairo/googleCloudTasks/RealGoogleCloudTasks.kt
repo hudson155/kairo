@@ -16,10 +16,10 @@ import kairo.rest.ktorServerMapper
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-public class RealTaskCreator(
+public class RealGoogleCloudTasks(
   private val cloudTasksClient: CloudTasksClient,
   private val tasksConfig: KairoGoogleCloudTasksConfig.Real,
-) : TaskCreator() {
+) : GoogleCloudTasks() {
   public override suspend fun create(task: Task) {
     logger.info { "Creating task: $task." }
     val request = CreateTaskRequest.newBuilder().apply {

@@ -10,9 +10,9 @@ import kotlin.reflect.full.findAnnotation
 private val logger: KLogger = KotlinLogging.logger {}
 
 /**
- * Primarily, [RealTaskCreator].
+ * Primarily, [RealGoogleCloudTasks].
  */
-public abstract class TaskCreator {
+public abstract class GoogleCloudTasks {
   @Target(AnnotationTarget.CLASS)
   public annotation class Queue(val name: String)
 

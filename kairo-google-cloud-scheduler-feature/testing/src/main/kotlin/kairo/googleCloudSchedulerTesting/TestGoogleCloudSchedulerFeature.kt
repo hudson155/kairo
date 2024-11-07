@@ -15,7 +15,7 @@ public class TestGoogleCloudSchedulerFeature : BaseKairoGoogleCloudSchedulerFeat
   }
 
   override suspend fun beforeEach(injector: Injector) {
-    val taskCreator = injector.getInstance<GoogleCloudScheduler>() as FakeGoogleCloudScheduler
-    taskCreator.reset()
+    val googleCloudScheduler = injector.getInstance<GoogleCloudScheduler>() as FakeGoogleCloudScheduler
+    googleCloudScheduler.reset()
   }
 }

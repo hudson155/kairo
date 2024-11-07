@@ -9,7 +9,7 @@ import kairo.dependencyInjection.LazySingletonProvider
  * There is a single global [GoogleCloudScheduler] instance in Kairo.
  */
 @Singleton
-public class JobCreatorProvider @Inject constructor(
+public class GoogleCloudSchedulerProvider @Inject constructor(
   private val cloudSchedulerClient: CloudSchedulerClient,
   private val config: KairoGoogleCloudSchedulerConfig,
 ) : LazySingletonProvider<GoogleCloudScheduler>() {
