@@ -4,8 +4,8 @@ import com.google.cloud.scheduler.v1.AppEngineHttpTarget
 import com.google.cloud.scheduler.v1.AppEngineRouting
 import com.google.cloud.scheduler.v1.CloudSchedulerClient
 import com.google.cloud.scheduler.v1.CreateJobRequest
+import com.google.cloud.scheduler.v1.DeleteJobRequest
 import com.google.cloud.scheduler.v1.HttpMethod
-import com.google.cloud.scheduler.v1.Job
 import com.google.cloud.scheduler.v1.JobName
 import com.google.cloud.scheduler.v1.LocationName
 import com.google.protobuf.ByteString
@@ -18,10 +18,10 @@ import kairo.rest.ktorServerMapper
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-public class RealJobCreator(
+public class RealGoogleCloudScheduler(
   private val cloudSchedulerClient: CloudSchedulerClient,
   private val schedulerConfig: KairoGoogleCloudSchedulerConfig.Real,
-) : JobCreator() {
+) : GoogleCloudScheduler() {
   public override suspend fun create(job: Job, config: Config) {
     logger.info { "Creating job: $job (config: $config)." }
     val request = CreateJobRequest.newBuilder().apply {
@@ -31,12 +31,20 @@ public class RealJobCreator(
     cloudSchedulerClient.createJobCallable().futureCall(request).await()
   }
 
+  public override suspend fun delete(name: String) {
+    logger.info { "Deleting job: $name." }
+    val request = DeleteJobRequest.newBuilder().apply {
+      this.name = buildJobName(name).toString()
+    }.build()
+    cloudSchedulerClient.deleteJobCallable().futureCall(request).await()
+  }
+
   private fun buildLocationName(): LocationName =
     LocationName.of(schedulerConfig.projectId, schedulerConfig.location)
 
   private fun buildJob(details: RestEndpointDetails, config: Config): com.google.cloud.scheduler.v1.Job =
     com.google.cloud.scheduler.v1.Job.newBuilder().apply {
-      name = buildJobName(config).toString()
+      name = buildJobName(config.name).toString()
       description = buildJobDescription(config)
       @Suppress("DuplicatedCode")
       appEngineHttpTarget = AppEngineHttpTarget.newBuilder().apply {
@@ -50,10 +58,10 @@ public class RealJobCreator(
       schedule = config.schedule
     }.build()
 
-  private fun buildJobName(config: Config): JobName {
+  private fun buildJobName(jobName: String): JobName {
     val job = listOfNotNull(
       schedulerConfig.jobName.prefix,
-      config.name,
+      jobName,
       schedulerConfig.jobName.suffix,
     ).joinToString("")
     return JobName.of(schedulerConfig.projectId, schedulerConfig.location, job)

@@ -1,20 +1,23 @@
 package kairo.googleCloudScheduler
 
-import io.github.oshai.kotlinlogging.KLogger
-import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.endpoint.RestEndpointDetails
 import kairo.rest.writer.RestEndpointWriter
 
-private val logger: KLogger = KotlinLogging.logger {}
-
 /**
- * Primarily, [RealJobCreator].
+ * Primarily, [RealGoogleCloudScheduler].
  */
-public abstract class JobCreator {
+public abstract class GoogleCloudScheduler {
   public data class Job(
     val details: RestEndpointDetails,
-  )
+  ) {
+    public companion object {
+      public fun from(endpoint: RestEndpoint<*, *>): Job =
+        Job(
+          details = RestEndpointWriter.from(endpoint::class).write(endpoint),
+        )
+    }
+  }
 
   public data class Config(
     val name: String,
@@ -23,12 +26,11 @@ public abstract class JobCreator {
   )
 
   public suspend fun create(endpoint: RestEndpoint<*, *>, config: Config) {
-    logger.info { "Creating job for endpoint: $endpoint (config $config)." }
-    val job = Job(
-      details = RestEndpointWriter.from(endpoint::class).write(endpoint),
-    )
+    val job = Job.from(endpoint)
     return create(job, config)
   }
 
   public abstract suspend fun create(job: Job, config: Config)
+
+  public abstract suspend fun delete(name: String)
 }
