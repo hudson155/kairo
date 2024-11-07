@@ -16,7 +16,9 @@ public class FakeGoogleCloudTasks : GoogleCloudTasks() {
   }
 }
 
-public fun getCreatedTasks(injector: Injector): List<GoogleCloudTasks.Task> {
+public fun getCreatedTasks(
+  injector: Injector,
+): MutableList<GoogleCloudTasks.Task> {
   val googleCloudTasks = injector.getInstance<GoogleCloudTasks>() as FakeGoogleCloudTasks
   return googleCloudTasks.createdTasks
 }
