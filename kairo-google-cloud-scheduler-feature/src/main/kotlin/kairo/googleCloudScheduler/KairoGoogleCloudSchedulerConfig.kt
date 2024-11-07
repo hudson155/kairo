@@ -15,12 +15,12 @@ public sealed class KairoGoogleCloudSchedulerConfig {
   )
 
   /**
-   * See [NoopJobCreator].
+   * See [NoopGoogleCloudScheduler].
    */
   public data object Noop : KairoGoogleCloudSchedulerConfig()
 
   /**
-   * See [RealJobCreator].
+   * See [RealGoogleCloudScheduler].
    */
   public data class Real(
     val projectId: String,

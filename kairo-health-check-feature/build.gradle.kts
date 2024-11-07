@@ -6,7 +6,7 @@ plugins {
 dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
-  api(project(":kairo-rest-feature"))
+  implementation(project(":kairo-rest-feature")) // Peer dependency.
 
   testImplementation(project(":kairo-feature:testing"))
   testImplementation(project(":kairo-logging:testing"))

@@ -2,9 +2,9 @@ package kairo.googleCloudTasksTesting
 
 import com.google.inject.Injector
 import kairo.dependencyInjection.getInstance
-import kairo.googleCloudTasks.TaskCreator
+import kairo.googleCloudTasks.GoogleCloudTasks
 
-public class FakeTaskCreator : TaskCreator() {
+public class FakeGoogleCloudTasks : GoogleCloudTasks() {
   internal val createdTasks: MutableList<Task> = mutableListOf()
 
   override suspend fun create(task: Task) {
@@ -16,7 +16,7 @@ public class FakeTaskCreator : TaskCreator() {
   }
 }
 
-public fun getCreatedTasks(injector: Injector): List<TaskCreator.Task> {
-  val taskCreator = injector.getInstance<TaskCreator>() as FakeTaskCreator
-  return taskCreator.createdTasks
+public fun getCreatedTasks(injector: Injector): List<GoogleCloudTasks.Task> {
+  val googleCloudTasks = injector.getInstance<GoogleCloudTasks>() as FakeGoogleCloudTasks
+  return googleCloudTasks.createdTasks
 }

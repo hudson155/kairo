@@ -6,22 +6,22 @@ import com.google.inject.Singleton
 import kairo.dependencyInjection.LazySingletonProvider
 
 /**
- * There is a single global [JobCreator] instance in Kairo.
+ * There is a single global [GoogleCloudScheduler] instance in Kairo.
  */
 @Singleton
-public class JobCreatorProvider @Inject constructor(
+public class GoogleCloudSchedulerProvider @Inject constructor(
   private val cloudSchedulerClient: CloudSchedulerClient,
   private val config: KairoGoogleCloudSchedulerConfig,
-) : LazySingletonProvider<JobCreator>() {
-  override fun create(): JobCreator =
+) : LazySingletonProvider<GoogleCloudScheduler>() {
+  override fun create(): GoogleCloudScheduler =
     create(config)
 
-  private fun create(config: KairoGoogleCloudSchedulerConfig): JobCreator =
+  private fun create(config: KairoGoogleCloudSchedulerConfig): GoogleCloudScheduler =
     when (config) {
       is KairoGoogleCloudSchedulerConfig.Noop ->
-        NoopJobCreator()
+        NoopGoogleCloudScheduler()
       is KairoGoogleCloudSchedulerConfig.Real ->
-        RealJobCreator(
+        RealGoogleCloudScheduler(
           cloudSchedulerClient = cloudSchedulerClient,
           schedulerConfig = config,
         )

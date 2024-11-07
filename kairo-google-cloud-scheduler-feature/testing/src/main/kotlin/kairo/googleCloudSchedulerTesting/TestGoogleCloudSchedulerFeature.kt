@@ -6,16 +6,16 @@ import kairo.dependencyInjection.bind
 import kairo.dependencyInjection.getInstance
 import kairo.featureTesting.TestFeature
 import kairo.googleCloudScheduler.BaseKairoGoogleCloudSchedulerFeature
-import kairo.googleCloudScheduler.JobCreator
+import kairo.googleCloudScheduler.GoogleCloudScheduler
 
 public class TestGoogleCloudSchedulerFeature : BaseKairoGoogleCloudSchedulerFeature(), TestFeature.BeforeEach {
   override fun bind(binder: Binder) {
     super.bind(binder)
-    binder.bind<JobCreator>().toInstance(FakeJobCreator())
+    binder.bind<GoogleCloudScheduler>().toInstance(FakeGoogleCloudScheduler())
   }
 
   override suspend fun beforeEach(injector: Injector) {
-    val taskCreator = injector.getInstance<JobCreator>() as FakeJobCreator
-    taskCreator.reset()
+    val googleCloudScheduler = injector.getInstance<GoogleCloudScheduler>() as FakeGoogleCloudScheduler
+    googleCloudScheduler.reset()
   }
 }

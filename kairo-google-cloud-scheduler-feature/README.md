@@ -21,13 +21,14 @@ dependencies {
 // src/main/kotlin/yourPackage/.../YourFile.kt
 
 class MyClass @Inject constructor(
-  private val jobCreator: JobCreator,
+  private val googleCloudScheduler: GoogleCloudScheduler,
 ) {
   fun myMethod(libraryBookId: KairoId) {
-    jobCreator.create(
+    googleCloudScheduler.create(
       endpoint = LibraryBookApi.Read(libraryBookId),
-      config = JobCreator.Config(...),
+      config = GoogleCloudScheduler.Config(...),
     )
+    googleCloudScheduler.delete(...)
   }
 }
 ```

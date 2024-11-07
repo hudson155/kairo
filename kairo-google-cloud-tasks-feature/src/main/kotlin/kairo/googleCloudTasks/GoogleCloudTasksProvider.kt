@@ -6,27 +6,27 @@ import com.google.inject.Singleton
 import kairo.dependencyInjection.LazySingletonProvider
 
 /**
- * There is a single global [TaskCreator] instance in Kairo.
+ * There is a single global [GoogleCloudTasks] instance in Kairo.
  */
 @Singleton
-public class TaskCreatorProvider @Inject constructor(
+public class GoogleCloudTasksProvider @Inject constructor(
   private val cloudTasksClient: CloudTasksClient,
   private val config: KairoGoogleCloudTasksConfig,
-) : LazySingletonProvider<TaskCreator>() {
-  override fun create(): TaskCreator =
+) : LazySingletonProvider<GoogleCloudTasks>() {
+  override fun create(): GoogleCloudTasks =
     create(config)
 
-  private fun create(config: KairoGoogleCloudTasksConfig): TaskCreator =
+  private fun create(config: KairoGoogleCloudTasksConfig): GoogleCloudTasks =
     when (config) {
       is KairoGoogleCloudTasksConfig.Noop ->
-        NoopTaskCreator()
+        NoopGoogleCloudTasks()
       is KairoGoogleCloudTasksConfig.Real ->
-        RealTaskCreator(
+        RealGoogleCloudTasks(
           cloudTasksClient = cloudTasksClient,
           tasksConfig = config,
         )
       is KairoGoogleCloudTasksConfig.TransactionAware ->
-        TransactionAwareTaskCreator(
+        TransactionAwareGoogleCloudTasks(
           delegate = create(config.delegate),
         )
     }

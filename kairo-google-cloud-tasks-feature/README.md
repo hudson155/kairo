@@ -17,7 +17,7 @@ dependencies {
 
 ### Step 2: Annotate your endpoint
 
-Add the `@TaskCreator.Queue` annotation to your endpoint
+Add the `@GoogleCloudTasks.Queue` annotation to your endpoint
 to specify which GCP queue it should go on
 
 ```kotlin
@@ -28,7 +28,7 @@ object LibraryBookApi {
   @RestEndpoint.Path("/library-books/:libraryBookId/read")
   @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
-  @TaskCreator.Queue("integration-center")
+  @GoogleCloudTasks.Queue("integration-center")
   data class Read(
     @PathParam val libraryBookId: KairoId,
   ) : RestEndpoint<Nothing, Unit>()
@@ -41,10 +41,10 @@ object LibraryBookApi {
 // src/main/kotlin/yourPackage/.../YourFile.kt
 
 class MyClass @Inject constructor(
-  private val taskCreator: TaskCreator,
+  private val googleCloudTasks: GoogleCloudTasks,
 ) {
   fun myMethod(libraryBookId: KairoId) {
-    taskCreator.create(LibraryBookApi.Read(libraryBookId))
+    googleCloudTasks.create(LibraryBookApi.Read(libraryBookId))
   }
 }
 ```
