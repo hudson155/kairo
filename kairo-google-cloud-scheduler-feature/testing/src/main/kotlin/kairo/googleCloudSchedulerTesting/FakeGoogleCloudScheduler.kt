@@ -23,12 +23,16 @@ public class FakeGoogleCloudScheduler : GoogleCloudScheduler() {
   }
 }
 
-public fun getCreatedJobs(injector: Injector): List<Pair<GoogleCloudScheduler.Job, GoogleCloudScheduler.Config>> {
+public fun getCreatedJobs(
+  injector: Injector,
+): MutableList<Pair<GoogleCloudScheduler.Job, GoogleCloudScheduler.Config>> {
   val googleCloudScheduler = injector.getInstance<GoogleCloudScheduler>() as FakeGoogleCloudScheduler
   return googleCloudScheduler.createdJobs
 }
 
-public fun getDeletedJobs(injector: Injector): List<String> {
+public fun getDeletedJobs(
+  injector: Injector,
+): MutableList<String> {
   val googleCloudScheduler = injector.getInstance<GoogleCloudScheduler>() as FakeGoogleCloudScheduler
   return googleCloudScheduler.deletedJobs
 }
