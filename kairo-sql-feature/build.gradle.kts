@@ -10,7 +10,7 @@ dependencies {
   implementation(project(":kairo-protected-string"))
   implementation(project(":kairo-reflect"))
   implementation(project(":kairo-serialization"))
-  implementation(project(":kairo-transaction-manager"))
+  implementation(project(":kairo-transaction-manager")) // Optional peer dependency.
   api(project(":kairo-updater"))  // Exposed for clients.
 
   implementation(libs.guava) // For [Resources.getResource].

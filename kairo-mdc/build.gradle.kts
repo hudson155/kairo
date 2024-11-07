@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-logging"))
+  implementation(project(":kairo-logging")) // Peer dependency.
   implementation(project(":kairo-serialization"))
 
   implementation(libs.kotlinxCoroutinesSlf4j)
