@@ -11,8 +11,8 @@ import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpHeaders
 import kairo.googleCommon.await
+import kairo.rest.KtorServerMapper
 import kairo.rest.endpoint.RestEndpointDetails
-import kairo.rest.ktorServerMapper
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -47,7 +47,7 @@ public class RealGoogleCloudTasks(
         relativeUri = details.path
         details.contentType?.let { putHeaders(HttpHeaders.ContentType, it.toString()) }
         details.accept?.let { putHeaders(HttpHeaders.Accept, it.toString()) }
-        details.body?.let { body = ByteString.copyFrom(ktorServerMapper.writeValueAsBytes(it)) }
+        details.body?.let { body = ByteString.copyFrom(KtorServerMapper.json.writeValueAsBytes(it)) }
       }.build()
     }.build()
 

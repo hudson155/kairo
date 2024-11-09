@@ -5,9 +5,9 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.Parameters
 import io.ktor.http.formUrlEncode
 import java.util.concurrent.ConcurrentHashMap
+import kairo.rest.KtorServerMapper
 import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.endpoint.RestEndpointDetails
-import kairo.rest.ktorServerMapper
 import kairo.rest.template.RestEndpointPath
 import kairo.rest.template.RestEndpointTemplate
 import kairo.serialization.util.writeValueAsStringSpecial
@@ -62,7 +62,7 @@ public class RestEndpointWriter<in E : RestEndpoint<*, *>>(
 
   private fun property(endpoint: E, name: String): String? {
     val property = properties.single { it.name == name }
-    return property.get(endpoint)?.let { ktorServerMapper.writeValueAsStringSpecial(it) }
+    return property.get(endpoint)?.let { KtorServerMapper.json.writeValueAsStringSpecial(it) }
   }
 
   public companion object {
