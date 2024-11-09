@@ -27,7 +27,7 @@ public fun <T : KairoCloseable, R> T.use(block: (T) -> R): R {
 }
 
 @OptIn(ExperimentalContracts::class)
-public suspend fun <T : KairoCloseable.Suspend, R> T.use(block: (T) -> R): R {
+public suspend fun <T : KairoCloseable.Suspend, R> T.use(block: suspend (T) -> R): R {
   contract {
     callsInPlace(block, InvocationKind.EXACTLY_ONCE)
   }
