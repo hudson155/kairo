@@ -92,7 +92,6 @@ complexity:
     ignoreDefaultParameters: false
     ignoreDataClasses: true
     ignoreAnnotated:
-      - 'com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty'
       - 'com.google.inject.Inject'
   MethodOverloading:
     active: true
@@ -441,8 +440,7 @@ naming:
     propertyPattern: '[a-z][A-Za-z0-9]*'
     privatePropertyPattern: '[a-z][A-Za-z0-9]*'
   VariableMaxLength:
-    active: true
-    maximumVariableNameLength: 30
+    active: false
   VariableMinLength:
     active: true
     minimumVariableNameLength: 1
