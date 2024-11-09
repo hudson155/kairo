@@ -10,5 +10,7 @@ kotlin {
 }
 
 dependencies {
+  implementation(project(":kairo-reflect"))
+
   testImplementation(project(":kairo-testing"))
 }
