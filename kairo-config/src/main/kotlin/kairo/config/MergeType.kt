@@ -16,9 +16,17 @@ import com.fasterxml.jackson.databind.node.ObjectNode
   JsonSubTypes.Type(MergeType.Replace::class, name = "replace"),
 )
 internal sealed class MergeType {
-  internal data class Merge @JsonCreator constructor(@JsonValue val value: ObjectNode) : MergeType()
+  internal data class Merge
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+  constructor(
+    @JsonValue val value: ObjectNode,
+  ) : MergeType()
 
   internal data object Remove : MergeType()
 
-  internal data class Replace @JsonCreator constructor(@JsonValue val value: ObjectNode) : MergeType()
+  internal data class Replace
+  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+  constructor(
+    @JsonValue val value: ObjectNode,
+  ) : MergeType()
 }

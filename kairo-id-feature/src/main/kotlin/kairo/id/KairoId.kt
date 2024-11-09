@@ -46,7 +46,7 @@ public class KairoId(
     listOf(prefix, id).joinToString("_")
 
   public companion object {
-    @JsonCreator
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     @JvmStatic
     public fun fromString(string: String): KairoId {
       val match = requireNotNull(fullRegex.matchEntire(string)) { "Invalid Kairo ID: $string." }
