@@ -440,7 +440,8 @@ naming:
     propertyPattern: '[a-z][A-Za-z0-9]*'
     privatePropertyPattern: '[a-z][A-Za-z0-9]*'
   VariableMaxLength:
-    active: false
+    active: true
+    maximumVariableNameLength: 30
   VariableMinLength:
     active: true
     minimumVariableNameLength: 1
