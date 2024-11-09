@@ -92,7 +92,6 @@ complexity:
     ignoreDefaultParameters: false
     ignoreDataClasses: true
     ignoreAnnotated:
-      - 'com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty'
       - 'com.google.inject.Inject'
   MethodOverloading:
     active: true
