@@ -102,6 +102,8 @@ Each module falls into one of 3 categories:
 
 - [kairo-alternative-money-formatters](./kairo-alternative-money-formatters):
   Contains alternative non-default money formatters for serialization.
+- [kairo-closeable](./kairo-closeable):
+  `KairoCloseable` is similar to Java's `Closeable`, but it supports coroutines.
 - [kairo-darb](./kairo-darb):
   Home of `DarbEncoder`, which encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
 - [kairo-date-range](./kairo-date-range):
