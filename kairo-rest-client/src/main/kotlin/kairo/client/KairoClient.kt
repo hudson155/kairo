@@ -16,7 +16,6 @@ public fun createKairoClient(
   block: HttpClientConfig<CIOEngineConfig>.() -> Unit = {},
 ): KairoClient =
   HttpClient(CIO) {
-    expectSuccess = true
     install(ContentNegotiation) {
       register(
         contentType = ContentType.Application.Json,
