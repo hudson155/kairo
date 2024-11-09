@@ -39,6 +39,7 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
 
   private val client: KairoClient =
     createKairoClient {
+      expectSuccess = false
       defaultRequest {
         url("http://localhost:$exceptionHandlerTestRestPort")
       }
