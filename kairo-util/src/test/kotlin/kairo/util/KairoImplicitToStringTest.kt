@@ -4,23 +4,17 @@ import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-internal class KairoToStringTest {
+internal class KairoImplicitToStringTest {
   @Suppress("EqualsOrHashCode")
-  private open class Subject(
+  internal open class Subject(
     val something: String,
     val somethingElse: String,
   ) {
     override fun toString(): String =
-      kairoToString(
-        name = "Subject",
-        properties = listOf(
-          "something" to something,
-          "somethingElse" to somethingElse,
-        ),
-      )
+      kairoToString(this, Subject::class)
   }
 
-  private class Subclass(
+  internal class Subclass(
     something: String,
     somethingElse: String,
   ) : Subject(
