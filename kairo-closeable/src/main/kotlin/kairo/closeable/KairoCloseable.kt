@@ -34,10 +34,14 @@ public suspend fun <T : KairoCloseable.Suspend, R> T.use(block: (T) -> R): R {
   return use(block = { block(this) }, close = { close() })
 }
 
+@OptIn(ExperimentalContracts::class)
 private inline fun <R> use(
   block: () -> R,
   close: () -> Unit,
 ): R {
+  contract {
+    callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+  }
   var exception: Throwable? = null
   try {
     return block()
