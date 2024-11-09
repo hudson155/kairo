@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonValue
 @OptIn(ProtectedString.Access::class)
 public class ProtectedString
 @Access
-@JsonCreator
+@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 constructor(
   @Access @JsonValue public val value: String,
 ) {
