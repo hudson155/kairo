@@ -504,6 +504,7 @@ potential-bugs:
   LateinitUsage:
     active: true
     ignoreAnnotated:
+      - 'com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText'
       - 'com.google.inject.Inject'
   MapGetWithNotNullAssertionOperator:
     active: true
