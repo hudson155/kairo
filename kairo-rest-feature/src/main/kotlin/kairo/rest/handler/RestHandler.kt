@@ -9,7 +9,7 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.RoutingCall
 import io.ktor.util.reflect.typeInfo
 import kairo.mdc.withMdc
-import kairo.reflect.typeParam
+import kairo.reflect.typeParamKclass
 import kairo.rest.auth.Auth
 import kairo.rest.auth.AuthProvider
 import kairo.rest.endpoint.RestEndpoint
@@ -33,7 +33,7 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
   @Inject
   private lateinit var injector: Injector
 
-  internal val endpointKClass: KClass<E> = typeParam(RestHandler::class, 0, this::class)
+  internal val endpointKClass: KClass<E> = typeParamKclass(RestHandler::class, 0, this::class)
 
   internal val template: RestEndpointTemplate = RestEndpointTemplate.from(endpointKClass)
   internal val reader: RestEndpointReader<E> = RestEndpointReader.from(endpointKClass)
