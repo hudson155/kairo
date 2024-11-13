@@ -59,7 +59,7 @@ public abstract class SqlStore {
   public abstract class ForType<T : Any> : SqlStore() {
     private val type: Type = typeParam(ForType::class, 0, this::class)
 
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("ForbiddenMethodCall", "UNCHECKED_CAST")
     protected fun Query.mapToType(): ResultIterable<T> =
       mapTo(type) as ResultIterable<T>
   }
