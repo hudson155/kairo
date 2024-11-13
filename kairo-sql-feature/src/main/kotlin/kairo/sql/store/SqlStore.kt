@@ -2,12 +2,11 @@ package kairo.sql.store
 
 import com.google.common.io.Resources
 import com.google.inject.Inject
+import java.lang.reflect.Type
 import java.sql.BatchUpdateException
 import kairo.reflect.typeParam
 import kairo.sql.Sql
-import kotlin.reflect.KClass
 import org.jdbi.v3.core.Handle
-import org.jdbi.v3.core.kotlin.mapTo
 import org.jdbi.v3.core.result.ResultIterable
 import org.jdbi.v3.core.statement.Query
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
@@ -58,9 +57,10 @@ public abstract class SqlStore {
     Resources.getResource(resourceName).readText()
 
   public abstract class ForType<T : Any> : SqlStore() {
-    private val type: KClass<T> = typeParam(ForType::class, 0, this::class)
+    private val type: Type = typeParam(ForType::class, 0, this::class)
 
+    @Suppress("ForbiddenMethodCall", "UNCHECKED_CAST")
     protected fun Query.mapToType(): ResultIterable<T> =
-      mapTo(type)
+      mapTo(type) as ResultIterable<T>
   }
 }

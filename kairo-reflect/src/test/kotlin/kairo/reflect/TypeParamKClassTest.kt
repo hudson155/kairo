@@ -1,15 +1,14 @@
 package kairo.reflect
 
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
-import java.lang.reflect.Type
+import kotlin.reflect.KClass
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-internal class TypeParamTest {
+internal class TypeParamKClassTest {
   internal abstract class AbstractExampleClass<T : Any> {
-    val typeParam: Type = typeParam(AbstractExampleClass::class, 0, this::class)
+    val typeParam: KClass<T> = typeParamKclass(AbstractExampleClass::class, 0, this::class)
   }
 
   internal class AbstractExampleIntSubclass : AbstractExampleClass<Int>()
@@ -19,27 +18,23 @@ internal class TypeParamTest {
   internal class AbstractExampleStringListSubclass : AbstractExampleClass<List<String>>()
 
   internal class ConcreteExampleClass<T : Any> {
-    val typeParam: Type = typeParam(ConcreteExampleClass::class, 0, this::class)
+    val typeParam: KClass<T> = typeParamKclass(ConcreteExampleClass::class, 0, this::class)
   }
 
   @Test
   fun `abstract int subclass`(): Unit = runTest {
-    AbstractExampleIntSubclass().typeParam.should { typeParam ->
-      typeParam.typeName.shouldBe("java.lang.Integer")
-    }
+    AbstractExampleIntSubclass().typeParam.shouldBe(Int::class)
   }
 
   @Test
   fun `abstract string subclass`(): Unit = runTest {
-    AbstractExampleStringSubclass().typeParam.should { typeParam ->
-      typeParam.typeName.shouldBe("java.lang.String")
-    }
+    AbstractExampleStringSubclass().typeParam.shouldBe(String::class)
   }
 
   @Test
   fun `abstract string list subclass`(): Unit = runTest {
-    AbstractExampleStringListSubclass().typeParam.should { typeParam ->
-      typeParam.typeName.shouldBe("java.util.List<? extends java.lang.String>")
+    shouldThrow<ClassCastException> {
+      AbstractExampleStringListSubclass().typeParam.shouldBe(String::class)
     }
   }
 

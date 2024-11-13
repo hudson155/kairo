@@ -1,7 +1,12 @@
 package kairo.reflect
 
 import io.leangen.geantyref.GenericTypeReflector
+import java.lang.reflect.Type
 import kotlin.reflect.KClass
+
+@Suppress("UNCHECKED_CAST")
+public fun <T : Any> typeParamKclass(baseClass: KClass<*>, i: Int, thisClass: KClass<*>): KClass<T> =
+  (typeParam(baseClass, i, thisClass) as Class<T>).kotlin
 
 /**
  * USE THIS SPARINGLY, probably only in framework code.
@@ -14,9 +19,7 @@ import kotlin.reflect.KClass
  * Taking an index as an argument is a bit fragile,
  * but given that this should be used quite sparingly, it's okay.
  */
-@Suppress("UNCHECKED_CAST")
-public fun <T : Any> typeParam(baseClass: KClass<*>, i: Int, thisClass: KClass<*>): KClass<T> {
+public fun typeParam(baseClass: KClass<*>, i: Int, thisClass: KClass<*>): Type {
   val param = baseClass.java.typeParameters[i]
-  val typeParameter = GenericTypeReflector.getTypeParameter(thisClass.java, param)
-  return (typeParameter as Class<T>).kotlin
+  return GenericTypeReflector.getTypeParameter(thisClass.java, param)
 }
