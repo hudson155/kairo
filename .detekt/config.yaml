@@ -94,8 +94,7 @@ complexity:
     ignoreAnnotated:
       - 'com.google.inject.Inject'
   MethodOverloading:
-    active: true
-    threshold: 4
+    active: false
   NamedArguments:
     active: true
     threshold: 3
@@ -252,7 +251,7 @@ formatting:
     indentSize: 2
   ImportOrdering:
     active: true
-    layout: '*'
+    layout: '*,^'
   Indentation:
     active: true
     indentSize: 2
