@@ -17,6 +17,7 @@ public class RealSlackClient(
   @OptIn(ProtectedString.Access::class)
   override suspend fun sendMessage(channelName: String, message: List<LayoutBlock>) {
     val channelId = deriveChannelId(channelName) ?: return
+    logger.debug { "Sending message to channel: $channelName." }
     try {
       slack.methodsAsync(config.token.value).chatPostMessage(
         ChatPostMessageRequest.builder()
