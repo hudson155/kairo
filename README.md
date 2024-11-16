@@ -88,6 +88,8 @@ Each module falls into one of 3 categories:
 - [kairo-rest-feature](./kairo-rest-feature):
   The REST Feature adds support for REST endpoints, including auth.
   Under the hood, this Feature uses [Ktor](https://ktor.io/).
+- [kairo-slack-feature](./kairo-slack-feature):
+  Kairo's Slack Feature provides a basic interface to send Slack messages.
 - [kairo-sql-feature](./kairo-sql-feature):
   The SQL Feature adds support for SQL databases.
   Under the hood, this Feature uses [JDBI](https://jdbi.org/).

@@ -9,7 +9,7 @@ dependencies {
   api(project(":kairo-gcp-secret-supplier"))
   implementation(project(":kairo-logging"))
   api(project(":kairo-protected-string")) // Exposed for clients.
-  implementation(project(":kairo-serialization"))
+  api(project(":kairo-serialization")) // Exposed for clients.
 
   implementation(libs.guava) // For [Resources.getResource].
 

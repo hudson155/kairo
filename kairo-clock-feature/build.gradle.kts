@@ -5,5 +5,4 @@ plugins {
 
 dependencies {
   api(project(":kairo-feature"))
-  implementation(project(":kairo-serialization"))
 }
