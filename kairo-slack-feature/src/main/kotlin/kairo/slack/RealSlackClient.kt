@@ -24,7 +24,7 @@ public class RealSlackClient(
           .channel(channelId)
           .blocks(message)
           .mrkdwn(true)
-          .build()
+          .build(),
       ).await()
     } catch (e: Exception) {
       logger.error(e) { "Failed to send Slack message." }
