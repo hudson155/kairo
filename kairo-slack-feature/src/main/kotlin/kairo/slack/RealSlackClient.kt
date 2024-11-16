@@ -6,6 +6,7 @@ import com.slack.api.model.block.LayoutBlock
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.protectedString.ProtectedString
+import kotlinx.coroutines.future.await
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -17,13 +18,13 @@ public class RealSlackClient(
   override suspend fun sendMessage(channelName: String, message: List<LayoutBlock>) {
     val channelId = deriveChannelId(channelName) ?: return
     try {
-      slack.methods(config.token.value).chatPostMessage(
+      slack.methodsAsync(config.token.value).chatPostMessage(
         ChatPostMessageRequest.builder()
           .channel(channelId)
           .blocks(message)
           .mrkdwn(true)
           .build()
-      )
+      ).await()
     } catch (e: Exception) {
       logger.error(e) { "Failed to send Slack message." }
     }
