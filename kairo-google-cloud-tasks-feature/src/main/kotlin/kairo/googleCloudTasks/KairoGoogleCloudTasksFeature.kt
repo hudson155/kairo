@@ -1,6 +1,5 @@
 package kairo.googleCloudTasks
 
-import com.google.cloud.tasks.v2.CloudTasksClient
 import com.google.inject.Binder
 import com.google.inject.Injector
 import io.github.oshai.kotlinlogging.KLogger
@@ -22,8 +21,8 @@ public open class KairoGoogleCloudTasksFeature(
 
   override fun stop(injector: Injector?) {
     injector ?: return
-    logger.info { "Closing the GCP Cloud Tasks client." }
-    val cloudTasksClient = injector.getInstance<CloudTasksClient>()
-    cloudTasksClient.close()
+    logger.info { "Closing Google Cloud Tasks." }
+    val googleCloudTasks = injector.getInstance<GoogleCloudTasks>()
+    googleCloudTasks.close()
   }
 }

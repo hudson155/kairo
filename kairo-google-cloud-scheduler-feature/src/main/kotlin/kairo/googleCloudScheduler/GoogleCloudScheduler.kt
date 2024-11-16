@@ -33,4 +33,6 @@ public abstract class GoogleCloudScheduler {
   public abstract suspend fun create(job: Job, config: Config)
 
   public abstract suspend fun delete(name: String)
+
+  public abstract fun close()
 }

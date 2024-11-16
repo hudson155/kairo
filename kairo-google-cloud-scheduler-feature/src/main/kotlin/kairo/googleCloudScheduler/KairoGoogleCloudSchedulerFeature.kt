@@ -1,6 +1,5 @@
 package kairo.googleCloudScheduler
 
-import com.google.cloud.scheduler.v1.CloudSchedulerClient
 import com.google.inject.Binder
 import com.google.inject.Injector
 import io.github.oshai.kotlinlogging.KLogger
@@ -22,8 +21,8 @@ public open class KairoGoogleCloudSchedulerFeature(
 
   override fun stop(injector: Injector?) {
     injector ?: return
-    logger.info { "Closing the GCP Cloud Scheduler client." }
-    val cloudSchedulerClient = injector.getInstance<CloudSchedulerClient>()
-    cloudSchedulerClient.close()
+    logger.info { "Closing Google Cloud Scheduler." }
+    val googleCloudScheduler = injector.getInstance<GoogleCloudScheduler>()
+    googleCloudScheduler.close()
   }
 }

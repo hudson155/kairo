@@ -11,6 +11,8 @@ public class FakeGoogleCloudTasks : GoogleCloudTasks() {
     createdTasks += task
   }
 
+  override fun close(): Unit = Unit
+
   public fun reset() {
     createdTasks.clear()
   }
