@@ -10,7 +10,6 @@ import kairo.dependencyInjection.LazySingletonProvider
  */
 @Singleton
 public class GoogleCloudTasksProvider @Inject constructor(
-  private val cloudTasksClient: CloudTasksClient,
   private val config: KairoGoogleCloudTasksConfig,
 ) : LazySingletonProvider<GoogleCloudTasks>() {
   override fun create(): GoogleCloudTasks =
@@ -22,7 +21,7 @@ public class GoogleCloudTasksProvider @Inject constructor(
         NoopGoogleCloudTasks()
       is KairoGoogleCloudTasksConfig.Real ->
         RealGoogleCloudTasks(
-          cloudTasksClient = cloudTasksClient,
+          cloudTasksClient = CloudTasksClient.create(),
           tasksConfig = config,
         )
       is KairoGoogleCloudTasksConfig.TransactionAware ->

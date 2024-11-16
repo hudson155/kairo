@@ -17,7 +17,6 @@ public open class KairoGoogleCloudTasksFeature(
   override fun bind(binder: Binder) {
     super.bind(binder)
     binder.bind<KairoGoogleCloudTasksConfig>().toInstance(config)
-    binder.bind<CloudTasksClient>().toProvider(CloudTasksClientProvider::class)
     binder.bind<GoogleCloudTasks>().toProvider(GoogleCloudTasksProvider::class)
   }
 

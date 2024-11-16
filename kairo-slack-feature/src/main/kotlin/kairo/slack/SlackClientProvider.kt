@@ -11,7 +11,6 @@ import kairo.dependencyInjection.LazySingletonProvider
 @Singleton
 public class SlackClientProvider @Inject constructor(
   private val config: KairoSlackConfig,
-  private val slack: Slack,
 ) : LazySingletonProvider<SlackClient>() {
   override fun create(): SlackClient =
     create(config)
@@ -23,7 +22,7 @@ public class SlackClientProvider @Inject constructor(
       is KairoSlackConfig.Real ->
         RealSlackClient(
           config = config,
-          slack = slack,
+          slack = Slack.getInstance(),
         )
     }
 }

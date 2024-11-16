@@ -10,7 +10,6 @@ import kairo.dependencyInjection.LazySingletonProvider
  */
 @Singleton
 public class GoogleCloudSchedulerProvider @Inject constructor(
-  private val cloudSchedulerClient: CloudSchedulerClient,
   private val config: KairoGoogleCloudSchedulerConfig,
 ) : LazySingletonProvider<GoogleCloudScheduler>() {
   override fun create(): GoogleCloudScheduler =
@@ -22,7 +21,7 @@ public class GoogleCloudSchedulerProvider @Inject constructor(
         NoopGoogleCloudScheduler()
       is KairoGoogleCloudSchedulerConfig.Real ->
         RealGoogleCloudScheduler(
-          cloudSchedulerClient = cloudSchedulerClient,
+          cloudSchedulerClient = CloudSchedulerClient.create(),
           schedulerConfig = config,
         )
     }
