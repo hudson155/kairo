@@ -8,7 +8,7 @@ import kairo.feature.FeaturePriority
 public open class KairoUuidFeature(
   private val config: KairoUuidConfig,
 ) : Feature() {
-  final override val name: String = "KairoUuid"
+  final override val name: String = "Kairo UUID"
 
   final override val priority: FeaturePriority = FeaturePriority.Normal
 
