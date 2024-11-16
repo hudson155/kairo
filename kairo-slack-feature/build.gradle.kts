@@ -9,7 +9,4 @@ dependencies {
 
   api(libs.slackClient) // Exposed for clients.
   api(libs.slackClientKotlin) // Exposed for clients.
-
-  testImplementation(project(":kairo-feature:testing"))
-  testImplementation(project(":kairo-logging:testing"))
 }
