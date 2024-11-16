@@ -17,7 +17,6 @@ public open class KairoGoogleCloudSchedulerFeature(
   override fun bind(binder: Binder) {
     super.bind(binder)
     binder.bind<KairoGoogleCloudSchedulerConfig>().toInstance(config)
-    binder.bind<CloudSchedulerClient>().toProvider(CloudSchedulerClientProvider::class)
     binder.bind<GoogleCloudScheduler>().toProvider(GoogleCloudSchedulerProvider::class)
   }
 
