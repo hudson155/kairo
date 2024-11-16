@@ -29,6 +29,10 @@ public class RealGoogleCloudTasks(
     cloudTasksClient.createTaskCallable().futureCall(request).await()
   }
 
+  override fun close() {
+    cloudTasksClient.close()
+  }
+
   private fun buildQueueName(queueName: String): QueueName {
     val queue = listOfNotNull(
       tasksConfig.queueName.prefix,

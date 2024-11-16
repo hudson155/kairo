@@ -17,6 +17,8 @@ public class FakeGoogleCloudScheduler : GoogleCloudScheduler() {
     deletedJobs += name
   }
 
+  override fun close(): Unit = Unit
+
   public fun reset() {
     createdJobs.clear()
     deletedJobs.clear()

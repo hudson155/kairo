@@ -40,4 +40,6 @@ public abstract class GoogleCloudTasks {
     }
     return annotation.name
   }
+
+  public abstract fun close()
 }

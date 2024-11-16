@@ -39,6 +39,10 @@ public class RealGoogleCloudScheduler(
     cloudSchedulerClient.deleteJobCallable().futureCall(request).await()
   }
 
+  override fun close() {
+    cloudSchedulerClient.close()
+  }
+
   private fun buildLocationName(): LocationName =
     LocationName.of(schedulerConfig.projectId, schedulerConfig.location)
 

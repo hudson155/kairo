@@ -17,4 +17,8 @@ public class TransactionAwareGoogleCloudTasks(
       delegate.create(task)
     }
   }
+
+  override fun close() {
+    delegate.close()
+  }
 }
