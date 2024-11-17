@@ -2,6 +2,7 @@ package kairo.mdc
 
 import com.fasterxml.jackson.databind.json.JsonMapper
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.writeValueAsStringSpecial
 import kotlinx.coroutines.slf4j.MDCContext
 import kotlinx.coroutines.withContext
 import org.slf4j.MDC
@@ -17,7 +18,7 @@ public suspend fun <T> withMdc(mdc: Map<String, Any?>, block: suspend () -> T): 
     putAll(MDC.getCopyOfContextMap())
     mdc.forEach { (key, value) ->
       value ?: return@forEach // Don't include null values in MDC.
-      put(key, mdcMapper.writeValueAsString(value))
+      put(key, mdcMapper.writeValueAsStringSpecial(value))
     }
   }
 
