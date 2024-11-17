@@ -2,6 +2,7 @@ package kairo.time
 
 import java.time.Duration
 
+@Suppress("CognitiveComplexMethod", "ComplexCondition", "CyclomaticComplexMethod", "LongMethod")
 public fun Duration.kairoFormat(): String {
   val days = toDaysPart()
   val hours = toHoursPart()
