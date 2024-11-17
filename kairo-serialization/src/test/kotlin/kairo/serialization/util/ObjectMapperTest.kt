@@ -21,6 +21,12 @@ internal class ObjectMapperTest {
   }
 
   @Test
+  fun `readValueSpecial, null`() {
+    mapper.readValueSpecial("null", mapper.constructType(Boolean::class.java))
+      .shouldBe(null)
+  }
+
+  @Test
   fun `writeValueAsStringSpecial, string`() {
     mapper.writeValueAsStringSpecial("foo")
       .shouldBe("foo")
@@ -28,7 +34,13 @@ internal class ObjectMapperTest {
 
   @Test
   fun `writeValueAsStringSpecial, boolean`() {
-    mapper.writeValueAsStringSpecial("true")
+    mapper.writeValueAsStringSpecial(true)
       .shouldBe("true")
+  }
+
+  @Test
+  fun `writeValueAsStringSpecial, null`() {
+    mapper.writeValueAsStringSpecial(null)
+      .shouldBe("null")
   }
 }

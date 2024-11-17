@@ -27,7 +27,10 @@ public fun ObjectMapper.readValueSpecial(value: String, type: JavaType): Any? {
   }
 }
 
-public fun ObjectMapper.writeValueAsStringSpecial(value: Any?): String? {
+public fun ObjectMapper.writeValueAsStringSpecial(value: Any?): String {
+  if (value == null) {
+    return writeValueAsString(null)
+  }
   try {
     return convertValue(value)
   } catch (e: IllegalArgumentException) {
