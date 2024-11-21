@@ -18,9 +18,9 @@ This module contains alternative non-default money formatters.
   - JPY: `"12345"`
   - TND: `"12345.678"`
 - `CentsMoneyFormatter`
-  - USD: `"1234567"`
-  - JPY: `"12345"`
-  - TND: `"12345678"`
+  - USD: `1234567`
+  - JPY: `12345`
+  - TND: `12345678`
 
 ## Usage
 
