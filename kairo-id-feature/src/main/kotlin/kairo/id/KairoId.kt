@@ -22,11 +22,14 @@ private val fullRegex: Regex = Regex("($prefixRegex)_($idRegex)")
 public class KairoId(
   public val prefix: String,
   public val id: String,
-) {
+) : Comparable<KairoId> {
   init {
     require(prefixRegex.matches(prefix)) { "Invalid prefix component: $prefix." }
     require(idRegex.matches(id)) { "Invalid ID component: $id." }
   }
+
+  override fun compareTo(other: KairoId): Int =
+    toString().compareTo(other.toString())
 
   override fun equals(other: Any?): Boolean {
     if (other !is KairoId) return false
