@@ -3,7 +3,7 @@ package kairo.updater
 import java.util.Optional
 
 public fun interface Updater<T> {
-  public fun update(model: T): T
+  public suspend fun update(model: T): T
 }
 
 /**
