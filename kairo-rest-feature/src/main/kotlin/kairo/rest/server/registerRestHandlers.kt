@@ -21,7 +21,7 @@ import kairo.rest.template.RestEndpointTemplate
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-internal fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) {
+public fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) {
   logger.info { "Registering ${handlers.size} REST handlers." }
   handlers.forEach { handler ->
     val template = handler.template
@@ -36,7 +36,7 @@ internal fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) 
   }
 }
 
-internal fun Route.kairoAuthenticate(build: Route.() -> Unit) {
+public fun Route.kairoAuthenticate(build: Route.() -> Unit) {
   val authenticationIsInstalled = application.pluginOrNull(Authentication) != null
   if (authenticationIsInstalled) {
     authenticate(optional = true) {
@@ -47,7 +47,7 @@ internal fun Route.kairoAuthenticate(build: Route.() -> Unit) {
   }
 }
 
-internal fun Route.route(template: RestEndpointTemplate): Route {
+public fun Route.route(template: RestEndpointTemplate): Route {
   var route = createRouteFromPath(KtorPathTemplateRestEndpointPrinter.write(template))
   route = route.createChild(HttpMethodRouteSelector(template.method))
   template.query.params.forEach { (value, required) ->
