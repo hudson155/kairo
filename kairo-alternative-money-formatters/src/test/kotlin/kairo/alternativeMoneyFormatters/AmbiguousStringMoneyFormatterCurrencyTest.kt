@@ -38,9 +38,9 @@ internal class AmbiguousStringMoneyFormatterCurrencyTest {
     shouldThrow<IllegalArgumentException> {
       mapper.convertValue<String>(positiveJpy)
     }
-    // shouldThrow<IllegalArgumentException> {
-    //   mapper.convertValue<String>(positiveTnd)
-    // }
+    shouldThrow<IllegalArgumentException> {
+      mapper.convertValue<String>(positiveTnd)
+    }
   }
 
   @Test
