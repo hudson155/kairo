@@ -16,24 +16,20 @@ import org.javamoney.moneta.Money
  */
 public class AmbiguousStringMoneyFormatter(
   /**
-   * Providing a non-null [currencyCode] enables deserialization for the given currency.
    * During deserialization this formatter will (rightly or wrongly) always assume the value is for that currency.
-   *
-   * Leaving [currencyCode] null means deserialization won't work at all.
    */
-  currencyCode: String? = null,
+  currencyCode: String,
 ) : MoneyFormatter<String>() {
-  private val currency: CurrencyUnit? = currencyCode?.let { Monetary.getCurrency(it) }
+  private val currency: CurrencyUnit = Monetary.getCurrency(currencyCode)
 
   override fun parse(value: Any): Money {
-    currency ?: throw UnsupportedOperationException()
     value as String
     val format = formatForCurrency(currency)
     return Money.of(format.parse(value.toString()), currency)
   }
 
   override fun format(money: Money): String {
-    if (currency != null) check(money.currency == currency)
+    check(money.currency == currency)
     val format = formatForCurrency(money.currency)
     return format.format(money.number.numberValueExact(BigDecimal::class.java))
   }

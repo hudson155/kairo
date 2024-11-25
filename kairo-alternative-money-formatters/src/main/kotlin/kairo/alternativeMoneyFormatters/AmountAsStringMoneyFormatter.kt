@@ -13,23 +13,19 @@ import org.javamoney.moneta.Money
  */
 public class AmountAsStringMoneyFormatter(
   /**
-   * Providing a non-null [currencyCode] enables deserialization for the given currency.
    * During deserialization this formatter will (rightly or wrongly) always assume the value is for that currency.
-   *
-   * Leaving [currencyCode] null means deserialization won't work at all.
    */
-  currencyCode: String? = null,
+  currencyCode: String,
 ) : MoneyFormatter<String>() {
-  private val currency: CurrencyUnit? = currencyCode?.let { Monetary.getCurrency(it) }
+  private val currency: CurrencyUnit = Monetary.getCurrency(currencyCode)
 
   override fun parse(value: Any): Money {
-    currency ?: throw UnsupportedOperationException()
     value as String
     return Money.of(BigDecimal(value), currency)
   }
 
   override fun format(money: Money): String {
-    if (currency != null) check(money.currency == currency)
+    check(money.currency == currency)
     return amountAsString(money)
   }
 }
