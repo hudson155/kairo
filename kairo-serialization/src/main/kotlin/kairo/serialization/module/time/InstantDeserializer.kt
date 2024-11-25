@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.KeyDeserializer
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import java.time.Instant
+import java.time.ZonedDateTime
 import kairo.serialization.util.expectCurrentToken
 import kairo.serialization.util.readValue
 
@@ -34,6 +35,6 @@ public class InstantDeserializer : StdDeserializer<Instant>(Instant::class.java)
   public companion object {
     @JvmStatic
     private fun convert(string: String): Instant =
-      Instant.parse(string)
+      ZonedDateTime.parse(string).toInstant()
   }
 }

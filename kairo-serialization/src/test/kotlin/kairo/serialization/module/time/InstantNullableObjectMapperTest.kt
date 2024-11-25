@@ -36,6 +36,12 @@ internal class InstantNullableObjectMapperTest {
   }
 
   @Test
+  fun `serialize, without seconds`(): Unit = runTest {
+    mapper.writeValueAsString(MyClass(Instant.parse("2023-12-10T12:30:00Z")))
+      .shouldBe("{\"value\":\"2023-12-10T12:30:00Z\"}") // Include the seconds, even if 0.
+  }
+
+  @Test
   fun `serialize, null`(): Unit = runTest {
     mapper.writeValueAsString(MyClass(null))
       .shouldBe("{\"value\":null}")
@@ -51,6 +57,12 @@ internal class InstantNullableObjectMapperTest {
   fun `deserialize, old`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": \"0005-01-01T00:00:00Z\" }")
       .shouldBe(MyClass(Instant.parse("0005-01-01T00:00:00.000000000Z")))
+  }
+
+  @Test
+  fun `deserialize, without seconds`(): Unit = runTest {
+    mapper.readValue<MyClass>("{ \"value\": \"2023-12-10T12:30Z\" }")
+      .shouldBe(MyClass(Instant.parse("2023-12-10T12:30:00Z")))
   }
 
   @Test
