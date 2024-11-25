@@ -7,7 +7,7 @@ import org.jdbi.v3.core.argument.Argument
 import org.jdbi.v3.core.config.ConfigRegistry
 import org.postgresql.util.PGobject
 
-internal class UuidArgumentFactory : AbstractArgumentFactory<Uuid>(Types.OTHER) {
+public class UuidArgumentFactory : AbstractArgumentFactory<Uuid>(Types.OTHER) {
   override fun build(value: Uuid, config: ConfigRegistry): Argument =
     Argument { position, statement, _ ->
       val pgObject = PGobject().apply {

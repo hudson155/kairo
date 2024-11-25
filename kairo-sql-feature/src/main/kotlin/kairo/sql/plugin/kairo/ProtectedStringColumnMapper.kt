@@ -6,7 +6,7 @@ import org.jdbi.v3.core.mapper.ColumnMapper
 import org.jdbi.v3.core.statement.StatementContext
 
 @OptIn(ProtectedString.Access::class)
-internal class ProtectedStringColumnMapper : ColumnMapper<ProtectedString> {
+public class ProtectedStringColumnMapper : ColumnMapper<ProtectedString> {
   override fun map(r: ResultSet, columnNumber: Int, ctx: StatementContext): ProtectedString? {
     val string = r.getString(columnNumber) ?: return null
     return ProtectedString(string)

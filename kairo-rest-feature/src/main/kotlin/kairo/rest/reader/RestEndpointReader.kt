@@ -14,14 +14,14 @@ private val logger: KLogger = KotlinLogging.logger {}
  * Doing this dynamically at runtime involves some nontrivial JVM reflection magic,
  * but it's a huge win for reducing boilerplate.
  */
-internal abstract class RestEndpointReader<out E : RestEndpoint<*, *>> {
-  abstract suspend fun endpoint(call: RoutingCall): E
+public abstract class RestEndpointReader<out E : RestEndpoint<*, *>> {
+  public abstract suspend fun endpoint(call: RoutingCall): E
 
-  internal companion object {
+  public companion object {
     private val cache: MutableMap<KClass<out RestEndpoint<*, *>>, RestEndpointReader<*>> = ConcurrentHashMap()
 
     @Suppress("UNCHECKED_CAST")
-    fun <E : RestEndpoint<*, *>> from(endpointKClass: KClass<E>): RestEndpointReader<E> =
+    public fun <E : RestEndpoint<*, *>> from(endpointKClass: KClass<E>): RestEndpointReader<E> =
       cache.computeIfAbsent(endpointKClass) {
         build(endpointKClass)
       } as RestEndpointReader<E>
