@@ -17,23 +17,19 @@ import org.javamoney.moneta.Money
  */
 public class CentsMoneyFormatter(
   /**
-   * Providing a non-null [currencyCode] enables deserialization for the given currency.
    * During deserialization this formatter will (rightly or wrongly) always assume the value is for that currency.
-   *
-   * Leaving [currencyCode] null means deserialization won't work at all.
    */
-  currencyCode: String? = null,
+  currencyCode: String,
 ) : MoneyFormatter<Long>() {
-  private val currency: CurrencyUnit? = currencyCode?.let { Monetary.getCurrency(it) }
+  private val currency: CurrencyUnit = Monetary.getCurrency(currencyCode)
 
   override fun parse(value: Any): Money {
-    currency ?: throw UnsupportedOperationException()
     value as Long
     return Money.ofMinor(currency, value)
   }
 
   override fun format(money: Money): Long {
-    if (currency != null) check(money.currency == currency)
+    check(money.currency == currency)
     return money.number.numberValueExact(BigDecimal::class.java)
       .multiply(BigDecimal.TEN.pow(money.currency.defaultFractionDigits))
       .longValueExact()
