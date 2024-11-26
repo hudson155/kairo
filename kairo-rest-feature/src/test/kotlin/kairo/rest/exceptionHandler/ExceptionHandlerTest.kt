@@ -1,6 +1,7 @@
 package kairo.rest.exceptionHandler
 
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.accept
@@ -12,12 +13,15 @@ import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.path
+import io.ktor.serialization.jackson.JacksonConverter
 import io.mockk.every
 import io.mockk.mockk
 import kairo.client.KairoClient
-import kairo.client.KtorClientMapper
 import kairo.client.createKairoClient
 import kairo.featureTesting.KairoServerTest
+import kairo.serialization.jsonMapper
+import kairo.serialization.property.allowUnknownProperties
+import kairo.serialization.property.prettyPrint
 import kairo.serverTesting.TestServer
 
 /**
@@ -37,9 +41,24 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
 
   override val server: Server = Server(libraryBookService)
 
+  private val clientMapper =
+    jsonMapper {
+      allowUnknownProperties = true
+      prettyPrint = true
+    }.build()
+
   private val client: KairoClient =
     createKairoClient {
       expectSuccess = false
+      install(ContentNegotiation) {
+        register(
+          contentType = ContentType.Application.Json,
+          converter = JacksonConverter(
+            objectMapper = clientMapper,
+            streamRequestBody = false,
+          ),
+        )
+      }
       defaultRequest {
         url("http://localhost:$exceptionHandlerTestRestPort")
       }
@@ -87,7 +106,7 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
       first = response.status,
       second = response.bodyAsText().let { string ->
         if (string.isEmpty()) return@let null
-        return@let KtorClientMapper.json.readValue(string)
+        return@let clientMapper.readValue(string)
       },
     )
   }
