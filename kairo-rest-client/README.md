@@ -28,6 +28,18 @@ dependencies {
 // src/main/kotlin/yourPackage/.../YourFile.kt
 
 val client = createKairoClient {
+  install(ContentNegotiation) {
+    register(
+      contentType = ContentType.Application.Json,
+      converter = JacksonConverter(
+        objectMapper = jsonMapper {
+          allowUnknownProperties = true
+          prettyPrint = true
+        }.build(),
+        streamRequestBody = false,
+      ),
+    )
+  }
   defaultRequest {
     url("https://example.com/")
   }
