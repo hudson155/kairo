@@ -2,6 +2,7 @@ package kairo.slack
 
 import com.slack.api.Slack
 import com.slack.api.methods.request.chat.ChatPostMessageRequest
+import com.slack.api.methods.response.chat.ChatPostMessageResponse
 import com.slack.api.model.block.LayoutBlock
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -15,19 +16,29 @@ public class RealSlackClient(
   private val slack: Slack,
 ) : SlackClient() {
   @OptIn(ProtectedString.Access::class)
-  override suspend fun sendMessage(channelName: String, message: List<LayoutBlock>) {
-    val channelId = deriveChannelId(channelName) ?: return
+  override suspend fun sendMessage(
+    channelName: String,
+    threadTs: String?,
+    message: List<LayoutBlock>,
+  ): ChatPostMessageResponse? {
+    val channelId = deriveChannelId(channelName) ?: return null
     logger.debug { "Sending message to channel: $channelName." }
     try {
-      slack.methodsAsync(config.token.value).chatPostMessage(
+      val response = slack.methodsAsync(config.token.value).chatPostMessage(
         ChatPostMessageRequest.builder()
           .channel(channelId)
+          .threadTs(threadTs)
           .blocks(message)
           .mrkdwn(true)
           .build(),
       ).await()
+      if (!response.isOk) {
+        error(response.error)
+      }
+      return response
     } catch (e: Exception) {
       logger.error(e) { "Failed to send Slack message." }
+      return null
     }
   }
 
