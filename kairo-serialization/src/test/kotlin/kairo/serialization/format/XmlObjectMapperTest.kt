@@ -31,6 +31,7 @@ internal class XmlObjectMapperTest {
     val optionals: Optionals,
     val instant: Instant,
     val localDate: LocalDate,
+    val xAxis: String,
   ) {
     internal data class Booleans(
       val booleanTrue: Boolean,
@@ -96,6 +97,7 @@ internal class XmlObjectMapperTest {
       ),
       instant = Instant.parse("2023-11-13T19:44:32.123456789Z"),
       localDate = LocalDate.parse("2023-11-13"),
+      xAxis = "This property verifies standard bean naming isn't used.",
     )
 
   private val string: String = """
@@ -128,6 +130,7 @@ internal class XmlObjectMapperTest {
         <stringTrue>true</stringTrue>
       </strings>
       <uuid>3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8</uuid>
+      <xAxis>This property verifies standard bean naming isn't used.</xAxis>
     </MyClass>
   """.trimIndent() + '\n'
 

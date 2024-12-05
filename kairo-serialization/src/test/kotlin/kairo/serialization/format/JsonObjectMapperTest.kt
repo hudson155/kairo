@@ -31,6 +31,7 @@ internal class JsonObjectMapperTest {
     val optionals: Optionals,
     val instant: Instant,
     val localDate: LocalDate,
+    val xAxis: String,
   ) {
     internal data class Booleans(
       val booleanTrue: Boolean,
@@ -96,6 +97,7 @@ internal class JsonObjectMapperTest {
       ),
       instant = Instant.parse("2023-11-13T19:44:32.123456789Z"),
       localDate = LocalDate.parse("2023-11-13"),
+      xAxis = "This property verifies standard bean naming isn't used.",
     )
 
   private val string: String = """
@@ -127,7 +129,8 @@ internal class JsonObjectMapperTest {
         "stringInt": "42",
         "stringTrue": "true"
       },
-      "uuid": "3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8"
+      "uuid": "3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8",
+      "xAxis": "This property verifies standard bean naming isn't used."
     }
   """.trimIndent()
 

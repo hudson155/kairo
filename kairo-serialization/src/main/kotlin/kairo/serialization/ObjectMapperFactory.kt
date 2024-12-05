@@ -71,6 +71,7 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
       kotlinModule {
         this.configure(KotlinFeature.SingletonSupport, true)
         this.configure(KotlinFeature.StrictNullChecks, true)
+        this.configure(KotlinFeature.KotlinPropertyNameAsImplicitName, true)
       },
     )
   }

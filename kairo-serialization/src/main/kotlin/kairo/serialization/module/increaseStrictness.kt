@@ -31,7 +31,7 @@ private fun MapperBuilder<*, *>.configureMapperFeatures() {
   configure(MapperFeature.ALLOW_VOID_VALUED_PROPERTIES, true)
   configure(MapperFeature.INFER_BUILDER_TYPE_BINDINGS, false)
   configure(MapperFeature.DEFAULT_VIEW_INCLUSION, false)
-  configure(MapperFeature.USE_STD_BEAN_NAMING, true)
+  configure(MapperFeature.USE_STD_BEAN_NAMING, false)
   configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, false)
   configure(MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS, false)
   configure(MapperFeature.IGNORE_MERGE_FOR_UNMERGEABLE, false)
