@@ -13,7 +13,7 @@ public object DefaultGcpSecretSupplier : GcpSecretSupplier() {
   /**
    * Note: This approach is blocking; it does not leverage Kotlin coroutines.
    */
-  public override fun get(id: String): ProtectedString? {
+  override fun get(id: String): ProtectedString? {
     logger.debug { "Getting GCP secret: $id." }
     return SecretManagerServiceClient.create().use { client ->
       val secretVersionName = SecretVersionName.parse(id)

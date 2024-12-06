@@ -2,12 +2,20 @@ package kairo.rest.client
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.inject.Inject
+import com.google.inject.Provider
+import com.google.inject.Singleton
 import kairo.rest.KtorServerMapper
 import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.handler.RestHandler
 import kairo.rest.handler.RestHandlerRegistry
 import kairo.serialization.module.primitives.TrimWhitespace
 
+/**
+ * Provides access to all [RestHandler]s.
+ *
+ * When injecting this in production code, always inject a [Provider].
+ */
+@Singleton
 public class RestClient @Inject constructor(
   private val registry: RestHandlerRegistry,
 ) {

@@ -21,16 +21,12 @@ public abstract class GoogleCloudTasks {
     val details: RestEndpointDetails,
   )
 
-  public suspend fun create(endpoint: RestEndpoint<*, *>) {
-    logger.info { "Creating task for endpoint: $endpoint." }
-    val task = Task(
-      queueName = queueName(endpoint),
-      details = RestEndpointWriter.from(endpoint::class).write(endpoint),
-    )
-    return create(task)
-  }
+  public abstract suspend fun create(endpoint: RestEndpoint<*, *>)
 
-  public abstract suspend fun create(task: Task)
+  protected fun task(endpoint: RestEndpoint<*, *>): Task = Task(
+    queueName = queueName(endpoint),
+    details = RestEndpointWriter.from(endpoint::class).write(endpoint),
+  )
 
   private fun queueName(endpoint: RestEndpoint<*, *>): String {
     val endpointKClass = endpoint::class

@@ -12,6 +12,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpHeaders
 import kairo.googleCommon.await
 import kairo.rest.KtorServerMapper
+import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.endpoint.RestEndpointDetails
 
 private val logger: KLogger = KotlinLogging.logger {}
@@ -20,7 +21,9 @@ public class RealGoogleCloudTasks(
   private val cloudTasksClient: CloudTasksClient,
   private val tasksConfig: KairoGoogleCloudTasksConfig.Real,
 ) : GoogleCloudTasks() {
-  public override suspend fun create(task: Task) {
+  override suspend fun create(endpoint: RestEndpoint<*, *>) {
+    logger.info { "Creating task for endpoint: $endpoint." }
+    val task = task(endpoint)
     logger.info { "Creating task: $task." }
     val request = CreateTaskRequest.newBuilder().apply {
       parent = buildQueueName(task.queueName).toString()

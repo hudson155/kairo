@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes(
+  JsonSubTypes.Type(KairoGoogleCloudTasksConfig.Local::class, name = "Local"),
   JsonSubTypes.Type(KairoGoogleCloudTasksConfig.Noop::class, name = "Noop"),
   JsonSubTypes.Type(KairoGoogleCloudTasksConfig.Real::class, name = "Real"),
   JsonSubTypes.Type(KairoGoogleCloudTasksConfig.TransactionAware::class, name = "TransactionAware"),
@@ -14,6 +15,11 @@ public sealed class KairoGoogleCloudTasksConfig {
     val prefix: String?,
     val suffix: String?,
   )
+
+  /**
+   * See [LocalGoogleCloudTasks].
+   */
+  public data object Local : KairoGoogleCloudTasksConfig()
 
   /**
    * See [NoopGoogleCloudTasks].
