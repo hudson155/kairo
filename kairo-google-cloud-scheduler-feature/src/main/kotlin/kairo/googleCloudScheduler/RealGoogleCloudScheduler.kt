@@ -22,7 +22,7 @@ public class RealGoogleCloudScheduler(
   private val cloudSchedulerClient: CloudSchedulerClient,
   private val schedulerConfig: KairoGoogleCloudSchedulerConfig.Real,
 ) : GoogleCloudScheduler() {
-  public override suspend fun create(job: Job, config: Config) {
+  override suspend fun create(job: Job, config: Config) {
     logger.info { "Creating job: $job (config: $config)." }
     val request = CreateJobRequest.newBuilder().apply {
       parent = buildLocationName().toString()
@@ -31,7 +31,7 @@ public class RealGoogleCloudScheduler(
     cloudSchedulerClient.createJobCallable().futureCall(request).await()
   }
 
-  public override suspend fun delete(name: String) {
+  override suspend fun delete(name: String) {
     logger.info { "Deleting job: $name." }
     val request = DeleteJobRequest.newBuilder().apply {
       this.name = buildJobName(name).toString()
