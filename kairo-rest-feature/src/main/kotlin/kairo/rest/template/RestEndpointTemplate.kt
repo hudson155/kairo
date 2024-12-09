@@ -109,12 +109,14 @@ public data class RestEndpointTemplate(
           }
         }
 
-        HttpMethod.Post, HttpMethod.Put, HttpMethod.Patch -> {
+        HttpMethod.Patch -> {
           require(endpointKClass.hasBody) {
             "REST endpoint ${endpointKClass.qualifiedName!!}" +
               " has method $value but does not specify a body."
           }
         }
+
+        HttpMethod.Post, HttpMethod.Put -> Unit
 
         else -> {
           throw IllegalArgumentException(
