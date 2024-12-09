@@ -2,8 +2,8 @@ package kairo.updater
 
 import java.util.Optional
 
-public fun interface Updater<T, U> {
-  public suspend fun update(model: T): U
+public fun interface Updater<T> {
+  public suspend fun update(model: T): T
 }
 
 /**
