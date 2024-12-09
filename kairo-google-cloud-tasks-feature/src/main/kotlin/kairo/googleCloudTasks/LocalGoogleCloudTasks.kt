@@ -16,7 +16,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 public class LocalGoogleCloudTasks(
   private val restClient: Provider<RestClient>,
 ) : GoogleCloudTasks() {
-  private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+  private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
   override suspend fun create(endpoint: RestEndpoint<*, *>) {
     logger.info { "Creating task for endpoint: $endpoint." }
