@@ -7,6 +7,7 @@ dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-id-feature"))
   implementation(project(":kairo-logging"))
+  implementation(project(":kairo-money"))
   implementation(project(":kairo-protected-string"))
   implementation(project(":kairo-reflect"))
   implementation(project(":kairo-serialization"))
