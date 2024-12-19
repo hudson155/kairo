@@ -116,7 +116,7 @@ public data class RestEndpointTemplate(
           }
         }
 
-        HttpMethod.Post, HttpMethod.Put -> Unit
+        HttpMethod.Post, HttpMethod.Put -> {}
 
         else -> {
           throw IllegalArgumentException(
