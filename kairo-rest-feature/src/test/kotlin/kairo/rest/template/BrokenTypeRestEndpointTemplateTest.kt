@@ -32,22 +32,22 @@ internal class BrokenTypeRestEndpointTemplateTest {
   }
 
   @Test
-  fun postWithoutBodyNotProvided(): Unit = runTest {
+  fun patchWithoutBodyNotProvided(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenTypeLibraryBookApi.PostWithoutBodyProvided::class)
+      RestEndpointTemplate.from(BrokenTypeLibraryBookApi.PatchWithoutBodyNotProvided::class)
     }.shouldHaveMessage(
-      "REST endpoint kairo.rest.template.BrokenTypeLibraryBookApi.PostWithoutBodyProvided" +
-        " has method POST but does not specify a body.",
+      "REST endpoint kairo.rest.template.BrokenTypeLibraryBookApi.PatchWithoutBodyNotProvided" +
+        " has method PATCH but does not specify a body.",
     )
   }
 
   @Test
-  fun postWithoutBodyProvided(): Unit = runTest {
+  fun patchWithoutBodyProvided(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenTypeLibraryBookApi.PostWithoutBodyNotProvided::class)
+      RestEndpointTemplate.from(BrokenTypeLibraryBookApi.PatchWithoutBodyProvided::class)
     }.shouldHaveMessage(
-      "REST endpoint kairo.rest.template.BrokenTypeLibraryBookApi.PostWithoutBodyNotProvided" +
-        " has method POST but does not specify a body.",
+      "REST endpoint kairo.rest.template.BrokenTypeLibraryBookApi.PatchWithoutBodyProvided" +
+        " has method PATCH but does not specify a body.",
     )
   }
 }
