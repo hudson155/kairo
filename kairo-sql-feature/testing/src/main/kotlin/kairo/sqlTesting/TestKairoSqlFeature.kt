@@ -3,8 +3,8 @@ package kairo.sqlTesting
 import com.google.inject.Injector
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
-import kairo.dependencyInjection.getInstanceOptional
 import kairo.dependencyInjection.getNamedInstance
+import kairo.dependencyInjection.getNamedInstanceOptional
 import kairo.featureTesting.TestFeature
 import kairo.sql.KairoSqlConfig
 import kairo.sql.KairoSqlFeature
@@ -46,7 +46,8 @@ public open class TestKairoSqlFeature(
 
   private fun getSchemas(injector: Injector): List<String> {
     if (schemas != null) return schemas
-    val migrationConfig = injector.getInstanceOptional<KairoSqlMigrationConfig>() ?: return emptyList()
+    val migrationConfig = injector.getNamedInstanceOptional<KairoSqlMigrationConfig>(config.name)
+      ?: return emptyList()
     return buildList {
       add(migrationConfig.defaultSchema)
       addAll(migrationConfig.schemas)
@@ -54,7 +55,8 @@ public open class TestKairoSqlFeature(
   }
 
   private fun filterTables(injector: Injector, tables: List<String>): List<String> {
-    val migrationConfig = injector.getInstanceOptional<KairoSqlMigrationConfig>() ?: return tables
+    val migrationConfig = injector.getNamedInstanceOptional<KairoSqlMigrationConfig>(config.name)
+      ?: return tables
     return tables.filter { table ->
       // Don't truncate the migration table, or we'll have to run migrations again.
       table != "${migrationConfig.defaultSchema}.${migrationConfig.tableName}"

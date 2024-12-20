@@ -1,9 +1,11 @@
 package kairo.sql
 
 import com.google.inject.Inject
+import com.google.inject.Injector
 import com.google.inject.Singleton
 import com.zaxxer.hikari.HikariDataSource
 import kairo.dependencyInjection.LazySingletonProvider
+import kairo.dependencyInjection.getNamedInstance
 import kairo.sql.plugin.jackson.JacksonPlugin
 import kairo.sql.plugin.kairo.KairoPlugin
 import org.jdbi.v3.core.Jdbi
@@ -12,8 +14,13 @@ import org.jdbi.v3.postgres.PostgresPlugin
 
 @Singleton
 public class JdbiProvider @Inject constructor(
-  private val dataSource: HikariDataSource,
+  private val name: String,
 ) : LazySingletonProvider<Jdbi>() {
+  @Inject
+  private lateinit var injector: Injector
+
+  private val dataSource: HikariDataSource by lazy { injector.getNamedInstance(name) }
+
   override fun create(): Jdbi =
     Jdbi.create(dataSource).apply {
       installPlugin(JacksonPlugin())
