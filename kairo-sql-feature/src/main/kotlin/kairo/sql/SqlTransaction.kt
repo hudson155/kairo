@@ -1,6 +1,5 @@
 package kairo.sql
 
-import com.google.inject.Inject
 import kairo.transactionManager.TransactionManager
 import kairo.transactionManager.TransactionType
 import kotlin.coroutines.CoroutineContext
@@ -9,7 +8,7 @@ import org.jdbi.v3.core.Jdbi
 /**
  * Implementing SQL transactions manually allows this Feature to play nicely with [TransactionManager].
  */
-public class SqlTransaction @Inject constructor(
+public class SqlTransaction(
   private val jdbi: Jdbi,
 ) : TransactionType(), TransactionType.WithContext {
   override suspend fun createContext(): SqlContext =

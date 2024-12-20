@@ -7,8 +7,8 @@ import org.jdbi.v3.core.Handle
 
 public class SqlContext(
   internal val handle: Handle,
-) : AbstractCoroutineContextElement(Key) {
-  internal companion object Key : CoroutineContext.Key<SqlContext>
+) : AbstractCoroutineContextElement(ContextKey) {
+  internal companion object ContextKey : CoroutineContext.Key<SqlContext>
 }
 
 internal suspend fun getSqlContext(): SqlContext? =

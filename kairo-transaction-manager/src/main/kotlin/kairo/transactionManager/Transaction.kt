@@ -100,7 +100,7 @@ internal class Transaction(
         }
         throw TransactionBeginFailedException(e)
       }
-      context += type::class
+      context += type
     }
   }
 
@@ -128,7 +128,7 @@ internal class Transaction(
         }
         throw TransactionCommitFailedException(e)
       }
-      context -= type::class
+      context -= type
     }
   }
 
@@ -145,14 +145,7 @@ internal class Transaction(
             " Data corruption is possible. Please investigate."
         }
       }
-      val notes = context.getNotes(type::class)
-      notes.forEach { note ->
-        logger.error {
-          "The transaction is being rolled back, but $note." +
-            " Data corruption is likely. Please investigate."
-        }
-      }
-      context -= type::class
+      context -= type
     }
   }
 

@@ -645,7 +645,7 @@ style:
       # Use the Kotlin overload.
       - 'com.google.inject.Binder.bind'
       - 'com.google.inject.Injector.getExistingBinding'
-      - 'com.google.inject.Injector.getInstance'
+      - 'com.google.inject.Injector.getInstance(java.lang.Class)'
       - 'com.google.inject.binder.ScopedBindingBuilder.in'
       - 'com.google.inject.binder.LinkedBindingBuilder.to'
       - 'com.google.inject.binder.LinkedBindingBuilder.toConstructor'

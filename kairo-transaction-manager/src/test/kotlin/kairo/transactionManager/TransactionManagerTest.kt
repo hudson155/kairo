@@ -9,6 +9,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.matchers.types.shouldBeInstanceOf
 import kairo.dependencyInjection.bind
+import kairo.dependencyInjection.key
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlinx.coroutines.test.runTest
@@ -88,7 +89,7 @@ internal class TransactionManagerTest {
 
   @Test
   fun `single transaction, successful`(): Unit = runTest {
-    transactionManager.transaction(Type0::class, Type1::class) {
+    transactionManager.transaction(key<Type0>(), key<Type1>()) {
       events.add("Operation 0")
     }
     events.shouldContainExactly(
@@ -107,7 +108,7 @@ internal class TransactionManagerTest {
   @Test
   fun `single transaction, rollback`(): Unit = runTest {
     shouldThrow<IllegalStateException> {
-      transactionManager.transaction<Unit>(Type0::class, Type1::class) {
+      transactionManager.transaction<Unit>(key<Type0>(), key<Type1>()) {
         events.add("Operation 0")
         error("Error 0")
       }
@@ -127,10 +128,10 @@ internal class TransactionManagerTest {
 
   @Test
   fun `consecutive transactions, successful`(): Unit = runTest {
-    transactionManager.transaction(Type0::class, Type1::class) {
+    transactionManager.transaction(key<Type0>(), key<Type1>()) {
       events.add("Operation 0")
     }
-    transactionManager.transaction(Type0::class, Type2::class) {
+    transactionManager.transaction(key<Type0>(), key<Type2>()) {
       events.add("Operation 1")
     }
     events.shouldContainExactly(
@@ -158,13 +159,13 @@ internal class TransactionManagerTest {
   @Test
   fun `consecutive transactions, rollback`(): Unit = runTest {
     shouldThrow<IllegalStateException> {
-      transactionManager.transaction<Unit>(Type0::class, Type1::class) {
+      transactionManager.transaction<Unit>(key<Type0>(), key<Type1>()) {
         events.add("Operation 0")
         error("Error 0")
       }
     }.shouldHaveMessage("Error 0")
     shouldThrow<IllegalStateException> {
-      transactionManager.transaction<Unit>(Type0::class, Type2::class) {
+      transactionManager.transaction<Unit>(key<Type0>(), key<Type2>()) {
         events.add("Operation 1")
         error("Error 1")
       }
@@ -193,9 +194,9 @@ internal class TransactionManagerTest {
 
   @Test
   fun `nested transactions, successful`(): Unit = runTest {
-    transactionManager.transaction(Type0::class, Type1::class) {
+    transactionManager.transaction(key<Type0>(), key<Type1>()) {
       events.add("Operation 0")
-      transactionManager.transaction(Type0::class, Type2::class) {
+      transactionManager.transaction(key<Type0>(), key<Type2>()) {
         events.add("Operation 1")
       }
       events.add("Operation 2")
@@ -222,9 +223,9 @@ internal class TransactionManagerTest {
   @Test
   fun `nested transactions, inner rollback not caught`(): Unit = runTest {
     val e = shouldThrow<IllegalStateException> {
-      transactionManager.transaction(Type0::class, Type1::class) {
+      transactionManager.transaction(key<Type0>(), key<Type1>()) {
         events.add("Operation 0")
-        transactionManager.transaction(Type0::class, Type2::class) {
+        transactionManager.transaction(key<Type0>(), key<Type2>()) {
           events.add("Operation 1")
           error("Error 1")
         }
@@ -252,10 +253,10 @@ internal class TransactionManagerTest {
 
   @Test
   fun `nested transactions, inner rollback caught`(): Unit = runTest {
-    transactionManager.transaction(Type0::class, Type1::class) {
+    transactionManager.transaction(key<Type0>(), key<Type1>()) {
       events.add("Operation 0")
       try {
-        transactionManager.transaction(Type0::class, Type2::class) {
+        transactionManager.transaction(key<Type0>(), key<Type2>()) {
           events.add("Operation 1")
           error("Error 1")
         }
@@ -285,9 +286,9 @@ internal class TransactionManagerTest {
   @Test
   fun `nested transactions, outer rollback`(): Unit = runTest {
     shouldThrow<IllegalStateException> {
-      transactionManager.transaction<Unit>(Type0::class, Type1::class) {
+      transactionManager.transaction<Unit>(key<Type0>(), key<Type1>()) {
         events.add("Operation 0")
-        transactionManager.transaction(Type0::class, Type2::class) {
+        transactionManager.transaction(key<Type0>(), key<Type2>()) {
           events.add("Operation 1")
         }
         events.add("Operation 2")
@@ -317,7 +318,7 @@ internal class TransactionManagerTest {
   fun `single transaction, error during create context`(): Unit = runTest {
     shouldThrow<TransactionContextCreationFailedException> {
       nextCreateContextShouldThrow = "Create context error"
-      transactionManager.transaction<Unit>(Type0::class, Type1::class) {
+      transactionManager.transaction<Unit>(key<Type0>(), key<Type1>()) {
         events.add("Operation 0")
       }
     }.cause.shouldBeInstanceOf<IllegalStateException>().shouldHaveMessage("Create context error")
@@ -328,7 +329,7 @@ internal class TransactionManagerTest {
   fun `single transaction, error during begin`(): Unit = runTest {
     shouldThrow<TransactionBeginFailedException> {
       nextBeginShouldThrow = "Begin error"
-      transactionManager.transaction<Unit>(Type0::class, Type1::class) {
+      transactionManager.transaction<Unit>(key<Type0>(), key<Type1>()) {
         events.add("Operation 0")
       }
     }.cause.shouldBeInstanceOf<IllegalStateException>().shouldHaveMessage("Begin error")
@@ -344,7 +345,7 @@ internal class TransactionManagerTest {
   fun `single transaction, error during commit`(): Unit = runTest {
     shouldThrow<TransactionCommitFailedException> {
       nextCommitShouldThrow = "Commit error"
-      transactionManager.transaction<Unit>(Type0::class, Type1::class) {
+      transactionManager.transaction<Unit>(key<Type0>(), key<Type1>()) {
         events.add("Operation 0")
       }
     }.cause.shouldBeInstanceOf<IllegalStateException>().shouldHaveMessage("Commit error")
@@ -365,7 +366,7 @@ internal class TransactionManagerTest {
   fun `single transaction, error during rollback`(): Unit = runTest {
     shouldThrow<IllegalStateException> {
       nextRollbackShouldThrow = "Rollback error"
-      transactionManager.transaction<Unit>(Type0::class, Type1::class) {
+      transactionManager.transaction<Unit>(key<Type0>(), key<Type1>()) {
         events.add("Operation 0")
         error("Error 0")
       }
@@ -385,7 +386,7 @@ internal class TransactionManagerTest {
   @Test
   fun `single transaction, error during close context`(): Unit = runTest {
     nextCloseContextShouldThrow = "Close context error"
-    transactionManager.transaction<Unit>(Type0::class, Type1::class) {
+    transactionManager.transaction<Unit>(key<Type0>(), key<Type1>()) {
       events.add("Operation 0")
     }
     events.shouldContainExactly(

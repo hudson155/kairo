@@ -7,6 +7,7 @@ import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.dependencyInjection.bind
 import kairo.dependencyInjection.getInstance
+import kairo.dependencyInjection.named
 import kairo.dependencyInjection.toProvider
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
@@ -24,7 +25,9 @@ public open class KairoSqlFeature(
   override fun bind(binder: Binder) {
     binder.bind<KairoSqlConfig>().toInstance(config)
     binder.bind<HikariDataSource>().toProvider(HikariDataSourceProvider::class)
-    binder.bind<Jdbi>().toProvider(JdbiProvider::class)
+    binder.bind<Jdbi>().named(config.name).toProvider(JdbiProvider::class)
+    binder.bind<Sql>().named(config.name).toProvider(SqlProvider::class)
+    binder.bind<SqlTransaction>().named(config.name).toProvider(SqlTransactionProvider::class)
   }
 
   override fun start(injector: Injector) {

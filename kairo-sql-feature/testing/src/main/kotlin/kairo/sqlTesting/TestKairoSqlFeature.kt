@@ -3,8 +3,8 @@ package kairo.sqlTesting
 import com.google.inject.Injector
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
-import kairo.dependencyInjection.getInstance
 import kairo.dependencyInjection.getInstanceOptional
+import kairo.dependencyInjection.getNamedInstance
 import kairo.featureTesting.TestFeature
 import kairo.sql.KairoSqlConfig
 import kairo.sql.KairoSqlFeature
@@ -21,11 +21,11 @@ private val logger: KLogger = KotlinLogging.logger {}
  * If [schemas] is null, [KairoSqlMigrationConfig.schemas] will be used instead.
  */
 public open class TestKairoSqlFeature(
-  config: KairoSqlConfig,
+  private val config: KairoSqlConfig,
   private val schemas: List<String>? = null,
 ) : KairoSqlFeature(config), TestFeature.BeforeEach {
   override suspend fun beforeEach(injector: Injector) {
-    injector.getInstance<Sql>().sql { handle ->
+    injector.getNamedInstance<Sql>(config.name).sql { handle ->
       val tables = handle.getTables(injector)
       handle.truncateTables(tables)
     }

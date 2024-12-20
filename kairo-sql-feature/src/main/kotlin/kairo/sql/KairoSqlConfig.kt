@@ -3,6 +3,7 @@ package kairo.sql
 import kairo.protectedString.ProtectedString
 
 public data class KairoSqlConfig(
+  val name: String,
   val jdbcUrl: String,
   val username: String?,
   val password: ProtectedString?,

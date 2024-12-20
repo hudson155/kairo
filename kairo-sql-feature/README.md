@@ -58,7 +58,9 @@ data class LibraryBookModel(
 ```kotlin
 // src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookStore.kt
 
-class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel>() {
+class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel>(
+  databaseName = "library",
+) {
   suspend fun get(id: KairoId): LibraryBookModel? =
     get(id, forUpdate = false)
 
@@ -188,6 +190,7 @@ returning *
 # src/main/resources/config/config.yaml
 
 sql:
+  name: "library"
   jdbcUrl: "jdbc:postgresql://localhost/monolith"
   properties: { }
   connectionTimeoutMs: 5000 # 5 seconds.

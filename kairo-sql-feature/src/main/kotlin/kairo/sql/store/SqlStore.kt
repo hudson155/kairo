@@ -2,8 +2,10 @@ package kairo.sql.store
 
 import com.google.common.io.Resources
 import com.google.inject.Inject
+import com.google.inject.Injector
 import java.lang.reflect.Type
 import java.sql.BatchUpdateException
+import kairo.dependencyInjection.getNamedInstance
 import kairo.reflect.typeParam
 import kairo.sql.Sql
 import org.jdbi.v3.core.Handle
@@ -20,9 +22,13 @@ import org.postgresql.util.ServerErrorMessage
  * Queries are done using [sql].
  * Error handling is done using [onError].
  */
-public abstract class SqlStore {
+public abstract class SqlStore(databaseName: String) {
   @Inject
-  private lateinit var sql: Sql
+  private lateinit var injector: Injector
+
+  private val sql: Sql by lazy {
+    injector.getNamedInstance(databaseName)
+  }
 
   /**
    * Use this to access [Handle] and make SQL queries.
@@ -56,7 +62,7 @@ public abstract class SqlStore {
   protected fun rs(resourceName: String): String =
     Resources.getResource(resourceName).readText()
 
-  public abstract class ForType<T : Any> : SqlStore() {
+  public abstract class ForType<T : Any>(databaseName: String) : SqlStore(databaseName) {
     private val type: Type = typeParam(ForType::class, 0, this::class)
 
     @Suppress("ForbiddenMethodCall", "UNCHECKED_CAST")
