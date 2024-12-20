@@ -2,8 +2,7 @@ package kairo.transactionManager
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import kairo.dependencyInjection.getInstanceByClass
-import kotlin.reflect.KClass
+import com.google.inject.Key
 
 /**
  * A transaction is a wrapper for some code that should be either committed or rolled back
@@ -42,13 +41,13 @@ public class TransactionManager @Inject constructor(
    * and runs the given [block].
    */
   public suspend fun <T> transaction(
-    vararg types: KClass<out TransactionType>,
+    vararg types: Key<out TransactionType>,
     block: suspend () -> T,
   ): T =
     transaction(types.toList(), block)
 
   private suspend fun <T> transaction(
-    types: List<KClass<out TransactionType>>,
+    types: List<Key<out TransactionType>>,
     block: suspend () -> T,
   ): T {
     require(types.isNotEmpty()) { "Please specify at least 1 transaction type." }
@@ -56,26 +55,8 @@ public class TransactionManager @Inject constructor(
     val context = getTransactionContext()
     val transaction =
       Transaction(
-        types = types.filter { context == null || it !in context }.map { injector.getInstanceByClass(it) },
+        types = types.map { injector.getInstance(it) }.filter { context == null || it !in context },
       )
     return transaction.transaction(block)
   }
-}
-
-/**
- * Not all operations work properly inside of transactions.
- * For example, external API calls generally cannot be rolled back.
- *
- * Runs the [block].
- * If it succeeds, adds a note that if any of the ongoing transactions are rolled back,
- * an error should be logged.
- */
-public suspend fun <T> rollbackNote(
-  note: String,
-  block: suspend () -> T,
-): T {
-  val context = getTransactionContext() ?: return block()
-  val result = block()
-  context.addNote(note)
-  return result
 }

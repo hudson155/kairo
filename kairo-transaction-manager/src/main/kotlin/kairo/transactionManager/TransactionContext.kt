@@ -4,39 +4,27 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
-import kotlin.reflect.KClass
 
 /**
  * When inside a transaction, [TransactionContext] keeps track of what transaction types are active.
  * This allows nested transactions to avoid creating duplicate resources.
  * It also allows for proper cleanup of transaction resources.
  */
-internal class TransactionContext : AbstractCoroutineContextElement(Key) {
-  private class Content {
-    val notes: MutableList<String> = mutableListOf()
-  }
+internal class TransactionContext : AbstractCoroutineContextElement(ContextKey) {
+  private val types: MutableMap<TransactionType, Unit> = ConcurrentHashMap()
 
-  private val types: MutableMap<KClass<out TransactionType>, Content> = ConcurrentHashMap()
-
-  operator fun contains(type: KClass<out TransactionType>): Boolean =
+  operator fun contains(type: TransactionType): Boolean =
     type in types
 
-  operator fun plusAssign(type: KClass<out TransactionType>) {
-    types += type to Content()
+  operator fun plusAssign(type: TransactionType) {
+    types += type to Unit
   }
 
-  operator fun minusAssign(type: KClass<out TransactionType>) {
+  operator fun minusAssign(type: TransactionType) {
     types -= type
   }
 
-  fun addNote(note: String) {
-    types.values.forEach { it.notes += note }
-  }
-
-  fun getNotes(type: KClass<out TransactionType>): List<String> =
-    checkNotNull(types[type]).notes
-
-  internal companion object Key : CoroutineContext.Key<TransactionContext>
+  internal companion object ContextKey : CoroutineContext.Key<TransactionContext>
 }
 
 internal suspend fun getTransactionContext(): TransactionContext? =

@@ -10,9 +10,6 @@ import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.KotlinPlugin
 import org.jdbi.v3.postgres.PostgresPlugin
 
-/**
- * There is a single global [Jdbi] instance in Kairo.
- */
 @Singleton
 public class JdbiProvider @Inject constructor(
   private val dataSource: HikariDataSource,

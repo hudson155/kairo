@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
  * Each distinct type of transaction (SQL transaction, event transaction, etc.)
  * will have exactly 1 implementation of [TransactionType].
  *
- *  If the transaction needs to support [CoroutineContext]s, implement [TransactionType.WithContext] too.
+ * If the transaction needs to support [CoroutineContext]s, implement [TransactionType.WithContext] too.
  */
 public abstract class TransactionType {
   public interface WithContext {
