@@ -1,19 +1,26 @@
 package kairo.sql
 
 import com.google.inject.Inject
+import com.google.inject.Injector
 import com.google.inject.Singleton
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kairo.dependencyInjection.LazySingletonProvider
+import kairo.dependencyInjection.getNamedInstance
 import kairo.protectedString.ProtectedString
 
 /**
  * There is a single global [HikariDataSource] instance in Kairo.
  */
 @Singleton
-public class HikariDataSourceProvider @Inject constructor(
-  private val config: KairoSqlConfig,
+public class HikariDataSourceProvider(
+  private val name: String,
 ) : LazySingletonProvider<HikariDataSource>() {
+  @Inject
+  private lateinit var injector: Injector
+
+  private val config: KairoSqlConfig by lazy { injector.getNamedInstance(name) }
+
   @OptIn(ProtectedString.Access::class)
   override fun create(): HikariDataSource =
     HikariDataSource(

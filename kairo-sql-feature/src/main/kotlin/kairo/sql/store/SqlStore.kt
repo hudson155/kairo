@@ -26,9 +26,7 @@ public abstract class SqlStore(databaseName: String) {
   @Inject
   private lateinit var injector: Injector
 
-  private val sql: Sql by lazy {
-    injector.getNamedInstance(databaseName)
-  }
+  private val sql: Sql by lazy { injector.getNamedInstance(databaseName) }
 
   /**
    * Use this to access [Handle] and make SQL queries.

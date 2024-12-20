@@ -5,8 +5,8 @@ import com.google.inject.Injector
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.dependencyInjection.bind
-import kairo.dependencyInjection.getInstance
-import kairo.dependencyInjection.toProvider
+import kairo.dependencyInjection.getNamedInstance
+import kairo.dependencyInjection.named
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
 import org.flywaydb.core.Flyway
@@ -21,13 +21,13 @@ public open class KairoSqlMigrationFeature(
   final override val priority: FeaturePriority = FeaturePriority.Framework
 
   override fun bind(binder: Binder) {
-    binder.bind<KairoSqlMigrationConfig>().toInstance(config)
-    binder.bind<Flyway>().toProvider(FlywayProvider::class)
+    binder.bind<KairoSqlMigrationConfig>().named(config.name).toInstance(config)
+    binder.bind<Flyway>().named(config.name).toProvider(FlywayProvider(config.name))
   }
 
   override fun start(injector: Injector) {
     logger.info { "Running SQL migrations." }
-    val flyway = injector.getInstance<Flyway>()
+    val flyway = injector.getNamedInstance<Flyway>(config.name)
     flyway.migrate()
   }
 }

@@ -20,3 +20,6 @@ public inline fun <reified T : Any> Injector.getInstanceOptional(): T? =
 
 public fun <T : Any> Injector.getInstanceOptionalByClass(kClass: KClass<T>): T? =
   getExistingBinding(Key.get(kClass.java))?.let { it.provider.get() }
+
+public inline fun <reified T : Any> Injector.getNamedInstanceOptional(name: String): T? =
+  getExistingBinding(namedKey<T>(name))?.let { it.provider.get() }

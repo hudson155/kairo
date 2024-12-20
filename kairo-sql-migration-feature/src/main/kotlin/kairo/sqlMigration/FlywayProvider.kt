@@ -1,9 +1,11 @@
 package kairo.sqlMigration
 
 import com.google.inject.Inject
+import com.google.inject.Injector
 import com.google.inject.Singleton
 import com.zaxxer.hikari.HikariDataSource
 import kairo.dependencyInjection.LazySingletonProvider
+import kairo.dependencyInjection.getNamedInstance
 import kairo.environmentVariableSupplier.DefaultEnvironmentVariableSupplier
 import org.flywaydb.core.Flyway
 
@@ -13,10 +15,15 @@ import org.flywaydb.core.Flyway
  * This is a protective measure to avoid accidentally cleaning production databases.
  */
 @Singleton
-internal class FlywayProvider @Inject constructor(
-  private val config: KairoSqlMigrationConfig,
-  private val dataSource: HikariDataSource,
+internal class FlywayProvider(
+  private val name: String,
 ) : LazySingletonProvider<Flyway>() {
+  @Inject
+  private lateinit var injector: Injector
+
+  private val config: KairoSqlMigrationConfig by lazy { injector.getNamedInstance(name) }
+  private val dataSource: HikariDataSource by lazy { injector.getNamedInstance(name) }
+
   @Suppress("SpreadOperator") // The spread operator causes a full array copy, which is fine at startup time.
   override fun create(): Flyway =
     Flyway.configure()
