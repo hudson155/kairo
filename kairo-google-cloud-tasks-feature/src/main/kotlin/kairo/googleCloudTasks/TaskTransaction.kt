@@ -3,9 +3,6 @@ package kairo.googleCloudTasks
 import com.google.inject.Inject
 import kairo.transactionManager.TransactionManager
 import kairo.transactionManager.TransactionType
-import kairo.util.kairoEquals
-import kairo.util.kairoHashCode
-import kairo.util.kairoToString
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -40,19 +37,4 @@ public class TaskTransaction @Inject constructor() : TransactionType(), Transact
   }
 
   override suspend fun closeContext(context: CoroutineContext): Unit = Unit
-
-  override fun equals(other: Any?): Boolean =
-    kairoEquals(
-      other = other,
-      properties = emptyList()
-    )
-
-  override fun hashCode(): Int =
-    kairoHashCode()
-
-  override fun toString(): String =
-    kairoToString(
-      name = TaskTransaction::class.simpleName!!,
-      properties = emptyList(),
-    )
 }
