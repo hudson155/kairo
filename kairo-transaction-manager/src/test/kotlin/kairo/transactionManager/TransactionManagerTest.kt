@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test
 
 @Suppress("UnnecessaryInnerClass", "UNREACHABLE_CODE")
 internal class TransactionManagerTest {
-  internal abstract inner class TestTransactionType : TransactionType(), TransactionType.WithContext {
+  private abstract inner class TestTransactionType : TransactionType(), TransactionType.WithContext {
     override suspend fun createContext(): CoroutineContext {
       nextCreateContextShouldThrow?.let { message ->
         nextCreateContextShouldThrow = null
