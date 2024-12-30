@@ -22,11 +22,7 @@ public open class KairoSqlFeature(
   final override val priority: FeaturePriority = FeaturePriority.Framework
 
   override fun bind(binder: Binder) {
-    binder.bind<KairoSqlConfig>().named(config.name).toInstance(config)
-    binder.bind<HikariDataSource>().named(config.name).toProvider(HikariDataSourceProvider(config.name))
-    binder.bind<Jdbi>().named(config.name).toProvider(JdbiProvider(config.name))
-    binder.bind<Sql>().named(config.name).toProvider(SqlProvider(config.name))
-    binder.bind<SqlTransaction>().named(config.name).toProvider(SqlTransactionProvider(config.name))
+    binder.bindSql(config)
   }
 
   override fun start(injector: Injector) {
@@ -41,4 +37,12 @@ public open class KairoSqlFeature(
     val dataSource = injector.getNamedInstance<HikariDataSource>(config.name)
     dataSource.close()
   }
+}
+
+public fun Binder.bindSql(config: KairoSqlConfig) {
+  bind<KairoSqlConfig>().named(config.name).toInstance(config)
+  bind<HikariDataSource>().named(config.name).toProvider(HikariDataSourceProvider(config.name))
+  bind<Jdbi>().named(config.name).toProvider(JdbiProvider(config.name))
+  bind<Sql>().named(config.name).toProvider(SqlProvider(config.name))
+  bind<SqlTransaction>().named(config.name).toProvider(SqlTransactionProvider(config.name))
 }
