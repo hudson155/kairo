@@ -17,6 +17,9 @@ public sealed class KairoGoogleCloudTasksConfig {
     val suffix: String?,
   )
 
+  /**
+   * See [GoogleAppEngineGoogleCloudTasks].
+   */
   public data class GoogleAppEngine(
     override val projectId: String,
     override val location: String,
@@ -24,6 +27,9 @@ public sealed class KairoGoogleCloudTasksConfig {
     val service: String,
   ) : Real()
 
+  /**
+   * See [HttpGoogleCloudTasks].
+   */
   public data class Http(
     val baseUrl: String,
     override val projectId: String,
@@ -41,9 +47,6 @@ public sealed class KairoGoogleCloudTasksConfig {
    */
   public data object Noop : KairoGoogleCloudTasksConfig()
 
-  /**
-   * See [RealGoogleCloudTasks].
-   */
   public sealed class Real : KairoGoogleCloudTasksConfig() {
     public abstract val projectId: String
     public abstract val location: String
