@@ -57,7 +57,7 @@ class MyClass @Inject constructor(
 googleCloudTasks:
   type: "TransactionAware"
   delegate:
-    type: "Real"
+    type: "GoogleAppEngine"
     projectId: "secret-grammar-201908"
     location: "us-central1"
     queueName: { }
