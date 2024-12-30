@@ -65,20 +65,20 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel
     get(id, forUpdate = false)
 
   suspend fun listAll(): List<LibraryBookModel> =
-    sql { handle ->
+    transaction { handle ->
       val query = handle.createQuery(rs("store/libraryBook/listAll.sql"))
       return@sql query.mapToType().toList()
     }
 
   suspend fun searchByIsbn(isbn: String): List<LibraryBookModel> =
-    sql { handle ->
+    transaction { handle ->
       val query = handle.createQuery(rs("store/libraryBook/searchByIsbn.sql"))
       query.bind("isbn", isbn)
       return@sql query.mapToType().toList()
     }
 
   suspend fun searchByText(title: String?, author: String?): List<LibraryBookModel> =
-    sql { handle ->
+    transaction { handle ->
       val query = handle.createQuery(rs("store/libraryBook/searchByIsbn.sql"))
       query.bind("title", title)
       query.bind("author", author)
@@ -86,7 +86,7 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel
     }
 
   suspend fun create(creator: LibraryBookModel.Creator): LibraryBookModel =
-    sql { handle ->
+    transaction { handle ->
       logger.info { "Creating library book: $creator." }
       val query = handle.createQuery(rs("store/libraryBook/create.sql"))
       query.bindKotlin(creator)
@@ -97,7 +97,7 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel
     id: KairoId,
     updater: Updater<LibraryBookModel.Update>,
   ): LibraryBookModel =
-    sql { handle ->
+    transaction { handle ->
       val libraryBook = get(id, forUpdate = true) ?: throw unprocessable(LibraryBookNotFound())
       val update = updater.update(LibraryBookModel.Update(libraryBook))
       logger.info { "Updating library book: $update." }
@@ -108,14 +108,14 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel
     }
 
   suspend fun delete(id: KairoId): LibraryBookModel =
-    sql { handle ->
+    transaction { handle ->
       val query = handle.createQuery(rs("store/libraryBook/delete.sql"))
       query.bind("id", id)
       return@sql query.mapToType().singleNullOrThrow() ?: throw unprocessable(LibraryBookNotFound())
     }
 
   private suspend fun get(id: KairoId, forUpdate: Boolean): LibraryBookModel? =
-    sql { handle ->
+    transaction { handle ->
       val query = handle.createQuery(rs("store/libraryBook/get.sql"))
       query.define("lockingClause", if (forUpdate) "for no key update" else "")
       query.bind("id", id)

@@ -25,7 +25,7 @@ public open class TestKairoSqlFeature(
   private val schemas: List<String>? = null,
 ) : KairoSqlFeature(config), TestFeature.BeforeEach {
   override suspend fun beforeEach(injector: Injector) {
-    injector.getNamedInstance<Sql>(config.name).sql { handle ->
+    injector.getNamedInstance<Sql>(config.name).transaction { handle ->
       val tables = handle.getTables(injector)
       handle.truncateTables(tables)
     }

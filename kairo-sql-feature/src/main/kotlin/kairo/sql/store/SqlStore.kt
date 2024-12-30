@@ -19,7 +19,7 @@ import org.postgresql.util.ServerErrorMessage
  * A SQL store provides access to the database.
  * This will typically be [SqlStore.ForType].
  *
- * Queries are done using [sql].
+ * Queries are done using [transaction].
  * Error handling is done using [onError].
  */
 public abstract class SqlStore(databaseName: String) {
@@ -31,8 +31,8 @@ public abstract class SqlStore(databaseName: String) {
   /**
    * Use this to access [Handle] and make SQL queries.
    */
-  protected suspend fun <T> sql(block: suspend (handle: Handle) -> T): T =
-    sql.sql inner@{ handle ->
+  protected suspend fun <T> transaction(block: suspend (handle: Handle) -> T): T =
+    sql.transaction inner@{ handle ->
       try {
         return@inner block(handle)
       } catch (e: UnableToExecuteStatementException) {
