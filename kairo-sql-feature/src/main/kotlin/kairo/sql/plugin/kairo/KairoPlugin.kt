@@ -15,6 +15,7 @@ internal class KairoPlugin : JdbiPlugin {
     jdbi.register(KairoIdColumnMapper(), KairoIdArgumentFactory())
     jdbi.register(MoneyColumnMapper(), MoneyArgumentFactory())
     jdbi.register(ProtectedStringColumnMapper(), ProtectedStringArgumentFactory())
+    jdbi.register(YearMonthColumnMapper(), YearMonthArgumentFactory())
     jdbi.register(UuidColumnMapper(), UuidArgumentFactory())
   }
 
