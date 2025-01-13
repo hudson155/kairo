@@ -26,6 +26,10 @@ public open class KairoSqlMigrationFeature(
   }
 
   override fun start(injector: Injector) {
+    if (!config.run) {
+      logger.info { "Skipping SQL migrations." }
+      return
+    }
     logger.info { "Running SQL migrations." }
     val flyway = injector.getNamedInstance<Flyway>(config.name)
     flyway.migrate()
