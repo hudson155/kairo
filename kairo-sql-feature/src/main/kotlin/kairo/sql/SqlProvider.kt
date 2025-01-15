@@ -24,6 +24,7 @@ public class SqlProvider @Inject constructor(
   override fun create(): Sql {
     val sqlTransaction = namedKey<SqlTransaction>(config.name)
     return Sql(
+      injector = injector,
       jdbi = jdbi,
       sqlTransaction = sqlTransaction,
       transactionManager = transactionManager,
