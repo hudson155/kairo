@@ -11,6 +11,7 @@ import org.jdbi.v3.core.Jdbi
  * This wrapper is useful both for injecting into [SqlStore]
  * and for using SQL transactions from outside stores.
  */
+@Suppress("LongParameterList")
 public class Sql(
   private val injector: Injector,
   private val jdbi: Jdbi,
