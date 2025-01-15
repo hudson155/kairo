@@ -44,19 +44,17 @@ public class TransactionManager @Inject constructor(
     vararg types: Key<out TransactionType>,
     block: suspend () -> T,
   ): T =
-    transaction(types.toList(), block)
+    transaction(types.map { injector.getInstance(it) }, block)
 
-  private suspend fun <T> transaction(
-    types: List<Key<out TransactionType>>,
+  public suspend fun <T> transaction(
+    types: List<TransactionType>,
     block: suspend () -> T,
   ): T {
     require(types.isNotEmpty()) { "Please specify at least 1 transaction type." }
     require(types.distinct() == types) { "Duplicate transaction types specified." }
     val context = getTransactionContext()
     val transaction =
-      Transaction(
-        types = types.map { injector.getInstance(it) }.filter { context == null || it !in context },
-      )
+      Transaction(types.filter { context == null || it !in context })
     return transaction.transaction(block)
   }
 }
