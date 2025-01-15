@@ -10,7 +10,7 @@ public inline fun <reified T : Any> Injector.getInstance(): T =
   getInstance(key())
 
 public inline fun <reified T : Any> Injector.hasInstance(): Boolean =
-  getExistingBinding(key<T>()) != null
+  hasInstance(key<T>())
 
 public inline fun <reified T : Any> Injector.hasInstance(key: Key<T>): Boolean =
   getExistingBinding<T>(key) != null
