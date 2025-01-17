@@ -54,12 +54,6 @@ public abstract class SqlStore(databaseName: String) {
       else -> null
     }?.serverErrorMessage
 
-  /**
-   * Call this to access a resource from the classpath, containing a SQL query.
-   */
-  protected fun rs(resourceName: String): String =
-    Resources.getResource(resourceName).readText()
-
   public abstract class ForType<T : Any>(databaseName: String) : SqlStore(databaseName) {
     private val type: Type = typeParam(ForType::class, 0, this::class)
 
@@ -68,3 +62,9 @@ public abstract class SqlStore(databaseName: String) {
       mapTo(type) as ResultIterable<T>
   }
 }
+
+/**
+ * Call this to access a resource from the classpath, containing a SQL query.
+ */
+public fun rs(resourceName: String): String =
+  Resources.getResource(resourceName).readText()
