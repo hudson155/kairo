@@ -26,6 +26,7 @@ public class HikariDataSourceProvider(
     HikariDataSource(
       HikariConfig().apply {
         jdbcUrl = config.jdbcUrl
+        config.schema?.let { schema = it }
         config.username?.let { username = it }
         config.password?.let { password = it.value }
         config.properties.forEach { (propertyName, value) ->
