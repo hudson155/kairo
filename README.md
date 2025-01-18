@@ -131,7 +131,7 @@ Each module falls into one of 3 categories:
 - [kairo-rest-client](./kairo-rest-client):
   A thin wrapper around [Ktor](https://ktor.io/)'s `HttpClient`.
 - [kairo-time](./kairo-time):
-  Contains some helpers for time classes.
+  Contains some helpers an utilities for time classes.
 - [kairo-transaction-manager](./kairo-transaction-manager):
   The Kairo `TransactionManager` offers explicit automatic handling of transactions that span multiple systems.
 - [kairo-updater](./kairo-updater):
