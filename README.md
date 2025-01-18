@@ -116,6 +116,8 @@ Each module falls into one of 3 categories:
 - [kairo-exception](./kairo-exception):
   Base classes representing exceptions that Kairo knows how to handle.
   This is primarily used by [kairo-rest-feature](./kairo-rest-feature).
+- [kairo-hashing](./kairo-hashing):
+  Kairo's hashing library currently only supports simple MD5.
 - [kairo-mdc](./kairo-mdc):
   Adds support for mapped diagnostic context (MDC),
   which is the JVM's way of adding context to log lines.
