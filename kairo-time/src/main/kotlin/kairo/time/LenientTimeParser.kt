@@ -13,6 +13,10 @@ import java.time.format.DateTimeParseException
 import java.time.format.SignStyle
 import java.time.temporal.ChronoField
 
+/**
+ * Parses times leniently, meaning not all fields have to be present.
+ * Stricter time parsing should be used when possible.
+ */
 public object LenientTimeParser {
   private val year: DateTimeFormatter = build(SmallestRequiredUnit.Year)
 

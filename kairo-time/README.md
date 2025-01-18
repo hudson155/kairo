@@ -1,6 +1,6 @@
 # `kairo-time`
 
-Contains some helpers for time classes.
+Contains some helpers an utilities for time classes.
 
 ## Usage
 
