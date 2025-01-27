@@ -3,6 +3,7 @@ package kairo.time
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.Month
 import java.time.Year
 import java.time.YearMonth
 import java.time.ZoneOffset
@@ -20,9 +21,9 @@ import java.time.temporal.ChronoField
 public object LenientTimeParser {
   private val year: DateTimeFormatter = build(SmallestRequiredUnit.Year)
 
-  private val yearMonth: DateTimeFormatter = build(SmallestRequiredUnit.Month)
+  private val yearMonth: DateTimeFormatter = build(SmallestRequiredUnit.Year)
 
-  private val localDate: DateTimeFormatter = build(SmallestRequiredUnit.Day)
+  private val localDate: DateTimeFormatter = build(SmallestRequiredUnit.Year)
 
   private val localDateTime: DateTimeFormatter = build(SmallestRequiredUnit.Day)
 
@@ -96,6 +97,8 @@ public object LenientTimeParser {
         appendZoneRegionId()
         appendLiteral(']')
       }
+      parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
+      parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
       parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
     }.toFormatter()
 
