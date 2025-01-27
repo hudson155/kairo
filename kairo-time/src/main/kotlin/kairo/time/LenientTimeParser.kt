@@ -3,7 +3,6 @@ package kairo.time
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.Month
 import java.time.Year
 import java.time.YearMonth
 import java.time.ZoneOffset
@@ -60,6 +59,7 @@ public object LenientTimeParser {
     Day(monthIsRequired = true, dayIsRequired = true),
   }
 
+  @Suppress("LongMethod")
   private fun build(smallestRequiredUnit: SmallestRequiredUnit): DateTimeFormatter =
     DateTimeFormatterBuilder().apply {
       appendValue(ChronoField.YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
