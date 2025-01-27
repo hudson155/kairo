@@ -56,9 +56,8 @@ internal class LenientTimeParserTest {
 
   @Test
   fun `yearMonth, insufficient`() {
-    shouldThrow<DateTimeParseException> {
-      LenientTimeParser.yearMonth("2023")
-    }
+    LenientTimeParser.yearMonth("2023")
+      .shouldBe(YearMonth.of(2023, Month.JANUARY))
   }
 
   @Test
@@ -104,12 +103,10 @@ internal class LenientTimeParserTest {
 
   @Test
   fun `localDate, insufficient`() {
-    shouldThrow<DateTimeParseException> {
-      LenientTimeParser.localDate("2023")
-    }
-    shouldThrow<DateTimeParseException> {
-      LenientTimeParser.localDate("2023-12")
-    }
+    LenientTimeParser.localDate("2023")
+      .shouldBe(LocalDate.of(2023, Month.JANUARY, 1))
+    LenientTimeParser.localDate("2023-12")
+      .shouldBe(LocalDate.of(2023, Month.DECEMBER, 1))
   }
 
   @Test
