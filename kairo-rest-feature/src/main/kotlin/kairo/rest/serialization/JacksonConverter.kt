@@ -31,7 +31,7 @@ public class JacksonConverter(
     val text = mapper.writerFor(type).writeValueAsString(value)
     return TextContent(
       text = text,
-      contentType = contentType.withCharsetIfNeeded(charset)
+      contentType = contentType.withCharsetIfNeeded(charset),
     )
   }
 
