@@ -21,11 +21,11 @@ public class JwtPrincipal(
   public inline fun <reified T : Any> getClaim(name: String): T? =
     getClaim(name, jacksonTypeRef())
 
+  @Suppress("ForbiddenMethodCall")
   public fun <T : Any> getClaim(name: String, type: TypeReference<T>): T? {
     val claim = decodedJwt.getClaim(name)
     if (claim.isMissing || claim.isNull) return null
-    @Suppress("ForbiddenMethodCall")
-    return jwtMapper.readValue(claim.toString(), type)
+    return jwtMapper.readerFor(type).readValue(claim.toString())
   }
 
   override fun equals(other: Any?): Boolean {

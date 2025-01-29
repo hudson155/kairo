@@ -9,7 +9,7 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.RoutingCall
 import io.ktor.util.reflect.typeInfo
 import kairo.mdc.withMdc
-import kairo.reflect.typeParamKclass
+import kairo.reflect.KairoType
 import kairo.rest.auth.Auth
 import kairo.rest.auth.AuthProvider
 import kairo.rest.endpoint.RestEndpoint
@@ -18,7 +18,6 @@ import kairo.rest.exceptionHandler.respondWithError
 import kairo.rest.reader.RestEndpointReader
 import kairo.rest.server.installStatusPages
 import kairo.rest.template.RestEndpointTemplate
-import kotlin.reflect.KClass
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -33,10 +32,10 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
   @Inject
   private lateinit var injector: Injector
 
-  public val endpointKClass: KClass<E> = typeParamKclass(RestHandler::class, 0, this::class)
+  public val endpointType: KairoType<E> = KairoType.from(RestHandler::class, 0, this::class)
 
-  public val template: RestEndpointTemplate = RestEndpointTemplate.from(endpointKClass)
-  public val reader: RestEndpointReader<E> = RestEndpointReader.from(endpointKClass)
+  public val template: RestEndpointTemplate = RestEndpointTemplate.from(endpointType.kotlinClass)
+  public val reader: RestEndpointReader<E> = RestEndpointReader.from(endpointType.kotlinClass)
 
   public suspend fun handle(call: RoutingCall) {
     val endpoint = reader.endpoint(call)

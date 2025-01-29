@@ -2,10 +2,9 @@ package kairo.serialization.module.money
 
 import java.math.BigDecimal
 import java.math.RoundingMode
-import kairo.reflect.typeParamKclass
+import kairo.reflect.KairoType
 import kairo.serialization.ObjectMapperFactory
 import kotlin.math.max
-import kotlin.reflect.KClass
 import org.javamoney.moneta.Money
 
 public abstract class MoneyFormatter<T : Any> {
@@ -31,7 +30,7 @@ public abstract class MoneyFormatter<T : Any> {
       )
   }
 
-  internal val kClass: KClass<T> = typeParamKclass(MoneyFormatter::class, 0, this::class)
+  internal val type: KairoType<T> = KairoType.from(MoneyFormatter::class, 0, this::class)
 
   public abstract fun parse(value: Any): Money
 

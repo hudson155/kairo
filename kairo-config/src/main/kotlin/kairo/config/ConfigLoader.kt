@@ -45,11 +45,11 @@ public class ConfigLoader(
   public inline fun <reified C : Any> load(configName: String? = null): C =
     load(configName, C::class)
 
+  @Suppress("ForbiddenMethodCall")
   public fun <C : Any> load(configName: String?, configKClass: KClass<C>): C {
     val actualConfigName = getActualConfigName(configName)
     logger.info { "Loading config: $actualConfigName." }
     val config = loadAsJson(actualConfigName)
-    @Suppress("ForbiddenMethodCall")
     return mapper.convertValue(config, configKClass.java)
   }
 

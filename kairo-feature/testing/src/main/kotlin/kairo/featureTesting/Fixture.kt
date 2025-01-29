@@ -1,11 +1,11 @@
 package kairo.featureTesting
 
-import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.google.common.io.Resources
-import kairo.reflect.typeParam
+import kairo.reflect.KairoType
 import kairo.serialization.jsonMapper
 import kairo.serialization.property.prettyPrint
+import kairo.serialization.typeReference
 
 private val fixtureMapper: JsonMapper =
   jsonMapper {
@@ -13,11 +13,11 @@ private val fixtureMapper: JsonMapper =
   }.build()
 
 public abstract class Fixture<out T : Any>(private val name: String) {
-  private val type: JavaType = fixtureMapper.constructType(typeParam(Fixture::class, 0, this::class))
+  private val type: KairoType<T> = KairoType.from(Fixture::class, 0, this::class)
 
+  @Suppress("ForbiddenMethodCall")
   protected operator fun get(key: Any): T {
     val resource = Resources.getResource("fixture/$name/$key.json")
-    @Suppress("ForbiddenMethodCall")
-    return fixtureMapper.readValue(resource, type)
+    return fixtureMapper.readerFor(type.typeReference).readValue(resource)
   }
 }
