@@ -49,8 +49,8 @@ internal class MdcGenerator(
    *
    * There might be a better way to do this.
    */
+  @Suppress("UNCHECKED_CAST")
   private fun endpointMdc(): Map<String, Any?> {
-    @Suppress("UNCHECKED_CAST")
     val properties = endpoint::class.declaredMemberProperties as Collection<KProperty1<RestEndpoint<*, *>, *>>
     val names = template.path.components.filterIsInstance<RestEndpointPath.Component.Param>().map { it.value } +
       template.query.params.map { it.value }

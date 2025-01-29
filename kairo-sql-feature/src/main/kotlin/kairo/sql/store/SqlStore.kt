@@ -3,10 +3,9 @@ package kairo.sql.store
 import com.google.common.io.Resources
 import com.google.inject.Inject
 import com.google.inject.Injector
-import java.lang.reflect.Type
 import java.sql.BatchUpdateException
 import kairo.dependencyInjection.getNamedInstance
-import kairo.reflect.typeParam
+import kairo.reflect.KairoType
 import kairo.sql.Sql
 import org.jdbi.v3.core.Handle
 import org.jdbi.v3.core.result.ResultIterable
@@ -55,11 +54,11 @@ public abstract class SqlStore(databaseName: String) {
     }?.serverErrorMessage
 
   public abstract class ForType<T : Any>(databaseName: String) : SqlStore(databaseName) {
-    private val type: Type = typeParam(ForType::class, 0, this::class)
+    private val type: KairoType<T> = KairoType.from(ForType::class, 0, this::class)
 
     @Suppress("ForbiddenMethodCall", "UNCHECKED_CAST")
     protected fun Query.mapToType(): ResultIterable<T> =
-      mapTo(type) as ResultIterable<T>
+      mapTo(type.javaType) as ResultIterable<T>
   }
 }
 
