@@ -5,7 +5,6 @@ flyway = "10.21.0" # https://github.com/flyway/flyway/releases
 gcpCloudScheduler = "2.54.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-scheduler
 gcpCloudTasks = "2.54.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-tasks
 gcpSecretManager = "2.54.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-secretmanager
-geantyref = "2.0.0" # https://mvnrepository.com/artifact/io.leangen.geantyref/geantyref
 googleApiCommon = "2.41.0" # // https://mvnrepository.com/artifact/com.google.api/api-common
 guava = "33.3.1-jre" # https://github.com/google/guava/releases
 guice = "7.0.0" # https://github.com/google/guice/releases
@@ -31,7 +30,6 @@ flywayDatabasePostgres = { module = "org.flywaydb:flyway-database-postgresql", v
 gcpCloudScheduler = { module = "com.google.cloud:google-cloud-scheduler", version.ref = "gcpCloudScheduler" }
 gcpCloudTasks = { module = "com.google.cloud:google-cloud-tasks", version.ref = "gcpCloudTasks" }
 gcpSecretManager = { module = "com.google.cloud:google-cloud-secretmanager", version.ref = "gcpSecretManager" }
-geantyref = { module = "io.leangen.geantyref:geantyref", version.ref = "geantyref" }
 googleApiCommon = { module = "com.google.api:api-common", version.ref = "googleApiCommon" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 guice = { module = "com.google.inject:guice", version.ref = "guice" }
