@@ -7,7 +7,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.response.respond
 import io.ktor.server.routing.RoutingCall
-import io.ktor.util.reflect.typeInfo
 import kairo.mdc.withMdc
 import kairo.reflect.KairoType
 import kairo.rest.auth.Auth
@@ -18,6 +17,7 @@ import kairo.rest.exceptionHandler.respondWithError
 import kairo.rest.reader.RestEndpointReader
 import kairo.rest.server.installStatusPages
 import kairo.rest.template.RestEndpointTemplate
+import kairo.rest.util.typeInfo
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -32,7 +32,11 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
   @Inject
   private lateinit var injector: Injector
 
-  public val endpointType: KairoType<E> = KairoType.from(RestHandler::class, 0, this::class)
+  public val endpointType: KairoType<E> =
+    KairoType.from(RestHandler::class, 0, this::class)
+
+  private val responseType: KairoType<Response> =
+    KairoType.from(RestHandler::class, 1, this::class)
 
   public val template: RestEndpointTemplate = RestEndpointTemplate.from(endpointType.kotlinClass)
   public val reader: RestEndpointReader<E> = RestEndpointReader.from(endpointType.kotlinClass)
@@ -101,6 +105,7 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
       respond(statusCode)
       return
     }
-    respond(statusCode, response, typeInfo<Any>())
+    val typeInfo = typeInfo(responseType.kotlinType)
+    respond(statusCode, response, typeInfo)
   }
 }
