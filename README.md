@@ -114,7 +114,7 @@ Each module falls into one of 3 categories:
   Makes Guice available,
   along with some utilities to make its use more idiomatic.
 - [kairo-do-not-log-string](./kairo-do-not-log-string):
-  `DoNotLogString` represents a string value that should not be logged in its entirety because it's very long
+  `DoNotLogString` represents a string value that should not be logged in its entirety because it's very long.
   Similar to `ProtectedString` but with a different purpose.
 - [kairo-exception](./kairo-exception):
   Base classes representing exceptions that Kairo knows how to handle.

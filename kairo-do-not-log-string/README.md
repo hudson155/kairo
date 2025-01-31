@@ -6,9 +6,8 @@ Library for the `DoNotLogString` type.
 because it's very long.
 Similar to `ProtectedString` but with a different purpose.
 
-Although `toString()` calls will not expose the underlying value,
-serialization (and deserialization) will treat this class as if it were just a `String`,
-thereby exposing the underlying value.
+Although `toString()` calls will not include entire underlying value,
+serialization (and deserialization) will treat this class as if it were just a `String`
 This is intentional.
 
 ## Usage

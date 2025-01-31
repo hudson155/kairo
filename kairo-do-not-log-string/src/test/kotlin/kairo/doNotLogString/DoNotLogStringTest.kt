@@ -23,7 +23,7 @@ internal class DoNotLogStringTest {
     DoNotLogString("1").hashCode().shouldNotBe("2".hashCode())
   }
 
-  @Suppress("LongLine")
+  @Suppress("ArgumentListWrapping", "LongLine", "MaximumLineLength")
   @Test
   fun `toString method`(): Unit = runTest {
     DoNotLogString("1").toString()
