@@ -1,4 +1,4 @@
-package kairo.hugeString
+package kairo.doNotLogString
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonValue
@@ -9,13 +9,13 @@ import kairo.hashing.md5
  * The [toString] implementation truncates the value.
  */
 @Suppress("UseDataClass")
-public class HugeString
+public class DoNotLogString
 @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 constructor(
   @JsonValue public val value: String,
 ) {
   override fun equals(other: Any?): Boolean {
-    if (other !is HugeString) return false
+    if (other !is DoNotLogString) return false
     if (value != other.value) return false
     return true
   }
@@ -30,6 +30,6 @@ constructor(
       append(value.take(40))
       if (length > 40) append("...")
     }
-    return "HugeString(hash='$hash', length=$length, truncated='$truncated')"
+    return "DoNotLogString(hash='$hash', length=$length, truncated='$truncated')"
   }
 }

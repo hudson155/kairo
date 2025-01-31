@@ -1,13 +1,13 @@
 package kairo.sql.plugin.kairo
 
 import java.sql.ResultSet
-import kairo.hugeString.HugeString
+import kairo.doNotLogString.DoNotLogString
 import org.jdbi.v3.core.mapper.ColumnMapper
 import org.jdbi.v3.core.statement.StatementContext
 
-public class HugeStringColumnMapper : ColumnMapper<HugeString> {
-  override fun map(r: ResultSet, columnNumber: Int, ctx: StatementContext): HugeString? {
+public class DoNotLogStringColumnMapper : ColumnMapper<DoNotLogString> {
+  override fun map(r: ResultSet, columnNumber: Int, ctx: StatementContext): DoNotLogString? {
     val string = r.getString(columnNumber) ?: return null
-    return HugeString(string)
+    return DoNotLogString(string)
   }
 }

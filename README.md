@@ -118,8 +118,8 @@ Each module falls into one of 3 categories:
   This is primarily used by [kairo-rest-feature](./kairo-rest-feature).
 - [kairo-hashing](./kairo-hashing):
   Kairo's hashing library currently only supports simple MD5.
-- [kairo-huge-string](./kairo-protected-string):
-  `HugeString` represents a string value that should not be logged in its entirety because it's very long
+- [kairo-do-not-log-string](./kairo-do-not-log-string):
+  `DoNotLogString` represents a string value that should not be logged in its entirety because it's very long
   Similar to `ProtectedString` but with a different purpose.
 - [kairo-mdc](./kairo-mdc):
   Adds support for mapped diagnostic context (MDC),

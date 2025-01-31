@@ -11,7 +11,7 @@ import org.jdbi.v3.core.spi.JdbiPlugin
  */
 internal class KairoPlugin : JdbiPlugin {
   override fun customizeJdbi(jdbi: Jdbi) {
-    jdbi.register(HugeStringColumnMapper(), HugeStringArgumentFactory())
+    jdbi.register(DoNotLogStringColumnMapper(), DoNotLogStringArgumentFactory())
     jdbi.register(JsonNodeColumnMapper(), JsonNodeArgumentFactory())
     jdbi.register(KairoIdColumnMapper(), KairoIdArgumentFactory())
     jdbi.register(MoneyColumnMapper(), MoneyArgumentFactory())

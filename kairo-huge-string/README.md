@@ -1,8 +1,8 @@
-# `kairo-huge-string`
+# `kairo-do-not-log-string`
 
-Library for the `HugeString` type.
+Library for the `DoNotLogString` type.
 
-`HugeString` represents a string value that should not be logged in its entirety
+`DoNotLogString` represents a string value that should not be logged in its entirety
 because it's very long.
 Similar to `ProtectedString` but with a different purpose.
 
@@ -19,24 +19,24 @@ This is intentional.
 // build.gradle.kts
 
 dependencies {
-  implementation("kairo:kairo-huge-string:$kairoVersion")
+  implementation("kairo:kairo-do-not-log-string:$kairoVersion")
 }
 ```
 
-### Step 2: Use huge strings
+### Step 2: Use do-not-log strings
 
 ```kotlin
 // src/main/kotlin/yourPackage/.../YourFile.kt
 
-val essay = HugeString("George Orwell, Why I Write (1946)")
+val essay = DoNotLogString("George Orwell, Why I Write (1946)")
 
 // String conversion.
-essay.toString() // HugeString(hash='c4ca4238a0b923820dcc509a6f75849b', length=1, truncated='1').
+essay.toString() // DoNotLogString(hash='c4ca4238a0b923820dcc509a6f75849b', length=1, truncated='1').
 
 // Serialization and deserialization.
 val mapper: JsonMapper = TODO()
 mapper.writeValueAsString(essay) // George Orwell, Why I Write (1946).
-mapper.readValue<HugeString>("George Orwell, Why I Write (1946)")
+mapper.readValue<DoNotLogString>("George Orwell, Why I Write (1946)")
 
 // Direct value access.
 essay.value
