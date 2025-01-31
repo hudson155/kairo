@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonValue
 import kairo.hashing.md5
 
 /**
- * Represents a string value that should not be logged or otherwise exposed, such as an API key.
- * The [toString] implementation redacts the value.
+ * Represents a string value that should not be logged in its entirety because it's very long.
+ * The [toString] implementation truncates the value.
  */
 @Suppress("UseDataClass")
 public class HugeString

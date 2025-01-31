@@ -2,7 +2,7 @@
 
 Library for the `HugeString` type.
 
-`HugeString` represents a string value that should not be logged or otherwise exposed
+`HugeString` represents a string value that should not be logged in its entirety
 because it's very long.
 Similar to `ProtectedString` but with a different purpose.
 
