@@ -5,6 +5,7 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KType
 import kotlin.reflect.full.allSupertypes
 import kotlin.reflect.jvm.javaType
+import kotlin.reflect.typeOf
 
 @Suppress("UseDataClass")
 public class KairoType<T : Any>(
@@ -27,3 +28,6 @@ public class KairoType<T : Any>(
     }
   }
 }
+
+public inline fun <reified T : Any> kairoType(): KairoType<T> =
+  KairoType(typeOf<T>())
