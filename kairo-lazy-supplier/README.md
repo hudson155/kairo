@@ -1,7 +1,7 @@
 # `kairo-lazy-supplier`
 
 Simple type-wrapping class that allows values to be provided and supplied lazily and asynchronously.
-Values will not be cached more than once.
+Values will not be fetched more than once.
 If you need something more advanced, consider [Caffeine](https://github.com/ben-manes/caffeine)
 with [Aedile](https://github.com/sksamuel/aedile).
 
