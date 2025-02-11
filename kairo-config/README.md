@@ -50,6 +50,7 @@ Each type is compatible with certain sources according to the table below.
 
 |                   | `Command` | `EnvironmentVariable` | `GcpSecret` | plaintext |
 |-------------------|-----------|-----------------------|-------------|-----------|
+| `Boolean`         | Insecure  | Secure                | Insecure    | Secure    |
 | `Int`             | Insecure  | Secure                | Insecure    | Secure    |
 | `ProtectedString` | Insecure  | Insecure              | Secure      | Insecure  |
 | `String`          | Insecure  | Secure                | Insecure    | Secure    |

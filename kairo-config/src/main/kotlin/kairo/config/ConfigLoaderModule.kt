@@ -11,9 +11,17 @@ internal class ConfigLoaderModule private constructor(
   private val config: ConfigLoaderConfig,
 ) : SimpleModule() {
   init {
+    configureBoolean()
     configureInt()
     configureProtectedString()
     configureString()
+  }
+
+  private fun configureBoolean() {
+    ConfigBooleanDeserializer(config).let { deserializer ->
+      addDeserializer(Boolean::class.javaPrimitiveType, deserializer)
+      addDeserializer(Boolean::class.javaObjectType, deserializer)
+    }
   }
 
   private fun configureInt() {
