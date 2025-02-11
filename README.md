@@ -121,6 +121,9 @@ Each module falls into one of 3 categories:
   This is primarily used by [kairo-rest-feature](./kairo-rest-feature).
 - [kairo-hashing](./kairo-hashing):
   Kairo's hashing library currently only supports simple MD5.
+- [kairo-lazy-supplier](./kairo-lazy-supplier):
+  Simple type-wrapping class that allows values to be provided and supplied lazily and asynchronously.
+  Values will not be cached more than once.
 - [kairo-mdc](./kairo-mdc):
   Adds support for mapped diagnostic context (MDC),
   which is the JVM's way of adding context to log lines.
