@@ -20,6 +20,6 @@ public open class BooleanDeserializer : PrimitiveDeserializer<Boolean>(Boolean::
   public companion object {
     @JvmStatic
     protected fun convert(string: String): Boolean =
-      string.toBooleanStrict()
+      string.lowercase().toBooleanStrict()
   }
 }

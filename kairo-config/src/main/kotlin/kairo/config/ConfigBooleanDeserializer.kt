@@ -32,5 +32,5 @@ internal class ConfigBooleanDeserializer(
 
   @OptIn(ProtectedString.Access::class)
   override fun convert(string: ProtectedString): Boolean =
-    string.value.toBooleanStrict()
+    string.value.lowercase().toBooleanStrict()
 }
