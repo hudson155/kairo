@@ -134,7 +134,7 @@ public class ConfigLoader(
         ConfigLoaderConfig(
           commandRunner = DefaultCommandRunner,
           environmentVariableSupplier = DefaultEnvironmentVariableSupplier,
-          gcpSecretSupplier = DefaultGcpSecretSupplier,
+          gcpSecretSupplier = DefaultGcpSecretSupplier(),
         ),
       )
 
