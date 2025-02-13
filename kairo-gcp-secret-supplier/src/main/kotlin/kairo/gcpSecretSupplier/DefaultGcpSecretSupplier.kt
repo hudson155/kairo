@@ -10,7 +10,7 @@ import kairo.protectedString.ProtectedString
 private val logger: KLogger = KotlinLogging.logger {}
 
 public class DefaultGcpSecretSupplier : GcpSecretSupplier() {
-  private val secretManagerServiceClient: SecretManagerServiceClient by lazy {
+  private val client: SecretManagerServiceClient by lazy {
     SecretManagerServiceClient.create()
   }
 
@@ -19,15 +19,13 @@ public class DefaultGcpSecretSupplier : GcpSecretSupplier() {
    */
   override fun get(id: String): ProtectedString? {
     logger.debug { "Getting GCP secret: $id." }
-    return secretManagerServiceClient.use { client ->
-      val secretVersionName = SecretVersionName.parse(id)
-      val accessResponse = try {
-        client.accessSecretVersion(secretVersionName)
-      } catch (_: NotFoundException) {
-        return@use null
-      }
-      @OptIn(ProtectedString.Access::class)
-      return@use ProtectedString(accessResponse.payload.data.toStringUtf8())
+    val secretVersionName = SecretVersionName.parse(id)
+    val accessResponse = try {
+      client.accessSecretVersion(secretVersionName)
+    } catch (_: NotFoundException) {
+      return null
     }
+    @OptIn(ProtectedString.Access::class)
+    return ProtectedString(accessResponse.payload.data.toStringUtf8())
   }
 }
