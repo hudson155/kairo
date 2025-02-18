@@ -28,6 +28,7 @@ because of its limited support for polymorphism.
 - Date/time
   - `Instant`
   - `LocalDate`
+  - `Year`
   - `YearMonth`
   - `ZoneId`
 
