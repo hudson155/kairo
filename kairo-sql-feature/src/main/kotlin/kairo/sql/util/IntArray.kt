@@ -1,7 +1,7 @@
 package kairo.sql.util
 
 public fun IntArray.expectAllSingles(
-  block: () -> Nothing = { throw IllegalArgumentException("IntArray was empty.") },
+  block: () -> Nothing = { throw IllegalArgumentException("IntArray contained a 0.") },
 ) {
   forEach { int ->
     if (int == 0) block()
