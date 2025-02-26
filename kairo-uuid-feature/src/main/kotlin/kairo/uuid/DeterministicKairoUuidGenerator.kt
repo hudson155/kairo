@@ -1,5 +1,6 @@
 package kairo.uuid
 
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.uuid.Uuid
 
 /**
@@ -9,17 +10,14 @@ import kotlin.uuid.Uuid
  * Although UUID strings are base-16, [DeterministicKairoUuidGenerator] only uses numbers.
  */
 public class DeterministicKairoUuidGenerator : KairoUuidGenerator() {
-  private var seed: Int = 0
+  private val seed: AtomicInteger = AtomicInteger(0)
 
   public fun reset() {
-    seed = 0
+    seed.set(0)
   }
 
-  override fun generate(): Uuid {
-    val result = get(seed)
-    seed++
-    return result
-  }
+  override fun generate(): Uuid =
+    get(seed.getAndIncrement())
 
   public operator fun get(id: Int): Uuid =
     generate(id)

@@ -29,10 +29,8 @@ public class DeterministicKairoIdGenerator(
     seed.set(0)
   }
 
-  override fun generate(): KairoId {
-    val result = get(seed.getAndIncrement())
-    return result
-  }
+  override fun generate(): KairoId =
+    get(seed.getAndIncrement())
 
   public operator fun get(id: Int): KairoId =
     generate(prefix, id)
