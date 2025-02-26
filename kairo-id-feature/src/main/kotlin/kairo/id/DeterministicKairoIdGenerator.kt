@@ -1,6 +1,7 @@
 package kairo.id
 
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * This is a deterministic way of generating Kairo IDs that's useful for tests.
@@ -22,15 +23,14 @@ public class DeterministicKairoIdGenerator(
     }
   }
 
-  private var seed: Int = 0
+  private val seed: AtomicInteger = AtomicInteger(0)
 
   public fun reset() {
-    seed = 0
+    seed.set(0)
   }
 
   override fun generate(): KairoId {
-    val result = get(seed)
-    seed++
+    val result = get(seed.getAndIncrement())
     return result
   }
 
