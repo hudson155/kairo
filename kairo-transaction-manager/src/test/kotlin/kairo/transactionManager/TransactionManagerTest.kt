@@ -400,4 +400,34 @@ internal class TransactionManagerTest {
       "Type0 close context",
     )
   }
+
+  @Test
+  fun `ensure transaction, no transaction context`(): Unit = runTest {
+    shouldThrow<MissingTransactionException> {
+      ensureTransaction {
+        events.add("Operation 0")
+      }
+    }
+    events.shouldBeEmpty()
+  }
+
+  @Test
+  fun `ensure transaction, transaction context`(): Unit = runTest {
+    transactionManager.transaction(key<Type0>(), key<Type1>()) {
+      ensureTransaction {
+        events.add("Operation 0")
+      }
+    }
+    events.shouldContainExactly(
+      "Type0 create context",
+      "Type1 create context",
+      "Type0 begin transaction",
+      "Type1 begin transaction",
+      "Operation 0",
+      "Type1 commit transaction",
+      "Type0 commit transaction",
+      "Type1 close context",
+      "Type0 close context",
+    )
+  }
 }
