@@ -586,7 +586,7 @@ style:
     active: true
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
-      - 'com.fasterxml.jackson.module.kotlin.jsonMapper'
+      - 'io.github.projectmapk.jackson.module.kogera.jsonMapper'
 
       - 'com.google.cloud.scheduler.v1beta*.*'
       - 'com.google.cloud.secretmanager.v1beta*.*'

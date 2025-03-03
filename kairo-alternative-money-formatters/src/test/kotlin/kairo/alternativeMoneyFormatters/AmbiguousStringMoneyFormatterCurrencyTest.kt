@@ -1,7 +1,7 @@
 package kairo.alternativeMoneyFormatters
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.convertValue
+import io.github.projectmapk.jackson.module.kogera.convertValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import java.text.ParseException

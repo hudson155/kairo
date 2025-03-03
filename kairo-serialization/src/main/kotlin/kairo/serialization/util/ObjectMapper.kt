@@ -4,7 +4,7 @@ package kairo.serialization.util
 
 import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.convertValue
+import io.github.projectmapk.jackson.module.kogera.convertValue
 
 /*
  * These methods are "special" versions of existing Jackson methods.
