@@ -9,7 +9,8 @@ googleApiCommon = "2.41.0" # // https://mvnrepository.com/artifact/com.google.ap
 guava = "33.3.1-jre" # https://github.com/google/guava/releases
 guice = "7.0.0" # https://github.com/google/guice/releases
 hikari = "6.0.0" # https://github.com/brettwooldridge/HikariCP/tags
-jackson = "2.18.2" # https://github.com/FasterXML/jackson-core/tags
+jackson = "2.18.3" # https://github.com/FasterXML/jackson-core/tags
+jacksonModuleKogera = "2.18.3-beta18" # https://github.com/ProjectMapK/jackson-module-kogera/releases # TODO: Remove when 2.19 comes out.
 javaxMoney = "1.1" # https://mvnrepository.com/artifact/javax.money/money-api
 jdbi = "3.47.0" # https://github.com/jdbi/jdbi/releases
 kotest = "5.9.1" # https://github.com/kotest/kotest/releases
@@ -38,7 +39,7 @@ jacksonCore = { module = "com.fasterxml.jackson.core:jackson-core", version.ref 
 jacksonDataformatXml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-xml", version.ref = "jackson" }
 jacksonDataformatYaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
 jacksonDatatypeJdk8 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jdk8", version.ref = "jackson" }
-jacksonModuleKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+jacksonModuleKogera = { module = "com.github.ProjectMapK:jackson-module-kogera", version.ref = "jacksonModuleKogera" }
 javaxMoney = { module = "javax.money:money-api", version.ref = "javaxMoney" }
 jdbiCore = { module = "org.jdbi:jdbi3-core", version.ref = "jdbi" }
 jdbiJackson = { module = "org.jdbi:jdbi3-jackson2", version.ref = "jdbi" }

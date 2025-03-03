@@ -1,7 +1,7 @@
 package kairo.serialization.module.ktor
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import io.ktor.http.ContentType
 import kairo.serialization.jsonMapper

@@ -5,6 +5,7 @@ package kairo.rest.exceptionHandler
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.exc.IgnoredPropertyException
+import com.fasterxml.jackson.databind.exc.InvalidNullException
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
@@ -43,6 +44,10 @@ internal class JacksonHandler : ExceptionHandler() {
     e: Exception,
   ): ExceptionResult.Exception? {
     intermediary.findCause<MissingKotlinParameterException>()?.let { cause ->
+      val (path, location) = JsonBadRequestException.metadata(cause)
+      return@fromBody ExceptionResult.Exception(MissingRequiredProperty(path, location, e))
+    }
+    intermediary.findCause<InvalidNullException>()?.let { cause ->
       val (path, location) = JsonBadRequestException.metadata(cause)
       return@fromBody ExceptionResult.Exception(MissingRequiredProperty(path, location, e))
     }

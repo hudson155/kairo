@@ -7,10 +7,11 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.cfg.JsonNodeFeature
 import com.fasterxml.jackson.databind.cfg.MapperBuilder
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
-import com.fasterxml.jackson.module.kotlin.KotlinFeature
-import com.fasterxml.jackson.module.kotlin.kotlinModule
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.projectmapk.jackson.module.kogera.KotlinFeature
+import io.github.projectmapk.jackson.module.kogera.kotlinModule
+import java.util.Optional
 import kairo.serialization.module.increaseStrictness
 import kairo.serialization.module.ktor.KtorModule
 import kairo.serialization.module.money.MoneyModule
@@ -71,7 +72,6 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
       kotlinModule {
         this.configure(KotlinFeature.SingletonSupport, true)
         this.configure(KotlinFeature.StrictNullChecks, true)
-        this.configure(KotlinFeature.KotlinPropertyNameAsImplicitName, true)
       },
     )
   }

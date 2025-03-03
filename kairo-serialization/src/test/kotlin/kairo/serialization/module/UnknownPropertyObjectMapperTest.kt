@@ -1,6 +1,6 @@
 package kairo.serialization.module
 
-import com.fasterxml.jackson.module.kotlin.readValue
+import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.property.allowUnknownProperties
