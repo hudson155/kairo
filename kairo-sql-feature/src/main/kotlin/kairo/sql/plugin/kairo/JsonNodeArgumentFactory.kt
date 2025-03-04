@@ -2,6 +2,7 @@ package kairo.sql.plugin.kairo
 
 import com.fasterxml.jackson.databind.JsonNode
 import java.sql.Types
+import kairo.serialization.util.kairoWrite
 import kairo.sql.sqlMapper
 import org.jdbi.v3.core.argument.AbstractArgumentFactory
 import org.jdbi.v3.core.argument.Argument
@@ -13,7 +14,7 @@ public class JsonNodeArgumentFactory : AbstractArgumentFactory<JsonNode>(Types.O
     Argument { position, statement, _ ->
       val pgObject = PGobject().apply {
         type = "jsonb"
-        setValue(sqlMapper.writeValueAsString(value))
+        setValue(sqlMapper.kairoWrite(value))
       }
       statement.setObject(position, pgObject)
     }

@@ -6,6 +6,7 @@ import io.kotest.matchers.shouldBe
 import io.ktor.http.ContentType
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -26,7 +27,7 @@ internal class ContentTypeDefaultObjectMapperTest {
 
   @Test
   fun `serialize, default`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(ContentType.Application.Json))
+    mapper.kairoWrite(MyClass(ContentType.Application.Json))
       .shouldBe("{\"value\":\"application/json\"}")
   }
 

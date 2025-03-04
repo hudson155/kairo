@@ -34,7 +34,7 @@ essay.toString() // DoNotLogString(hash='c4ca4238a0b923820dcc509a6f75849b', leng
 
 // Serialization and deserialization.
 val mapper: JsonMapper = TODO()
-mapper.writeValueAsString(essay) // George Orwell, Why I Write (1946).
+mapper.kairoWrite(essay) // George Orwell, Why I Write (1946).
 mapper.readValue<DoNotLogString>("George Orwell, Why I Write (1946)")
 
 // Direct value access.

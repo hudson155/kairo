@@ -1,6 +1,7 @@
 package kairo.sql.plugin.kairo
 
 import java.sql.Types
+import kairo.serialization.util.kairoWrite
 import kairo.sql.sqlMapper
 import org.javamoney.moneta.Money
 import org.jdbi.v3.core.argument.AbstractArgumentFactory
@@ -13,7 +14,7 @@ public class MoneyArgumentFactory : AbstractArgumentFactory<Money>(Types.OTHER) 
     Argument { position, statement, _ ->
       val pgObject = PGobject().apply {
         type = "jsonb"
-        setValue(sqlMapper.writeValueAsString(value))
+        setValue(sqlMapper.kairoWrite(value))
       }
       statement.setObject(position, pgObject)
     }

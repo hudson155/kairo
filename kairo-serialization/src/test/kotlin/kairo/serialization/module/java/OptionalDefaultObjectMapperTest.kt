@@ -7,6 +7,7 @@ import io.kotest.matchers.shouldBe
 import java.util.Optional
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -32,12 +33,12 @@ internal class OptionalDefaultObjectMapperTest {
 
   @Test
   fun `serialize, present`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(Optional.of(42))).shouldBe("{\"value\":42}")
+    mapper.kairoWrite(MyClass(Optional.of(42))).shouldBe("{\"value\":42}")
   }
 
   @Test
   fun `serialize, empty`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(Optional.empty())).shouldBe("{\"value\":null}")
+    mapper.kairoWrite(MyClass(Optional.empty())).shouldBe("{\"value\":null}")
   }
 
   @Test

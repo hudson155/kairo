@@ -10,6 +10,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.util.Optional
 import kairo.serialization.property.prettyPrint
+import kairo.serialization.util.kairoWrite
 import kairo.serialization.xmlMapper
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.test.runTest
@@ -136,7 +137,7 @@ internal class XmlObjectMapperTest {
 
   @Test
   fun serialize(): Unit = runTest {
-    mapper.writeValueAsString(myClass).shouldBe(string)
+    mapper.kairoWrite(myClass).shouldBe(string)
   }
 
   @Test

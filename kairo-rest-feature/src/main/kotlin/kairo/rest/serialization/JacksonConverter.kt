@@ -36,7 +36,7 @@ public class JacksonConverter(
   }
 
   /**
-   * For deserialization we just delegate to the default Jackson converter.
+   * For deserialization, we just delegate to the default Jackson converter.
    */
   override suspend fun deserialize(
     charset: Charset,

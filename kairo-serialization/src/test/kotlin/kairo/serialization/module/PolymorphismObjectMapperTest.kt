@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -55,24 +56,24 @@ internal class PolymorphismObjectMapperTest {
   fun `serialize, car`(): Unit = runTest {
     val vehicle = Vehicle.Car(model = "Ford", plate = "ABC 1234", capacity = 5)
     val string = "{\"type\":\"Car\",\"model\":\"Ford\",\"plate\":\"ABC 1234\",\"capacity\":5,\"wheels\":4}"
-    mapper.writeValueAsString(vehicle).shouldBe(string)
-    mapper.writeValueAsString(vehicle as Vehicle).shouldBe(string)
+    mapper.kairoWrite(vehicle).shouldBe(string)
+    mapper.kairoWrite(vehicle as Vehicle).shouldBe(string)
   }
 
   @Test
   fun `serialize, motorcycle`(): Unit = runTest {
     val vehicle = Vehicle.Motorcycle(plate = "MVM 12")
     val string = "{\"type\":\"Motorcycle\",\"plate\":\"MVM 12\",\"model\":null,\"wheels\":2}"
-    mapper.writeValueAsString(vehicle).shouldBe(string)
-    mapper.writeValueAsString(vehicle as Vehicle).shouldBe(string)
+    mapper.kairoWrite(vehicle).shouldBe(string)
+    mapper.kairoWrite(vehicle as Vehicle).shouldBe(string)
   }
 
   @Test
   fun `serialize, bicycle`(): Unit = runTest {
     val vehicle = Vehicle.Bicycle
     val string = "{\"type\":\"Bicycle\",\"model\":null,\"wheels\":2}"
-    mapper.writeValueAsString(vehicle).shouldBe(string)
-    mapper.writeValueAsString(vehicle as Vehicle).shouldBe(string)
+    mapper.kairoWrite(vehicle).shouldBe(string)
+    mapper.kairoWrite(vehicle as Vehicle).shouldBe(string)
   }
 
   @Test

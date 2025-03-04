@@ -5,6 +5,7 @@ import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import java.time.LocalDate
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -25,19 +26,19 @@ internal class LocalDateNullableObjectMapperTest {
 
   @Test
   fun `serialize, recent`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(LocalDate.parse("2023-11-13")))
+    mapper.kairoWrite(MyClass(LocalDate.parse("2023-11-13")))
       .shouldBe("{\"value\":\"2023-11-13\"}")
   }
 
   @Test
   fun `serialize, old`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(LocalDate.parse("0005-01-01")))
+    mapper.kairoWrite(MyClass(LocalDate.parse("0005-01-01")))
       .shouldBe("{\"value\":\"0005-01-01\"}")
   }
 
   @Test
   fun `serialize, null`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(null))
+    mapper.kairoWrite(MyClass(null))
       .shouldBe("{\"value\":null}")
   }
 

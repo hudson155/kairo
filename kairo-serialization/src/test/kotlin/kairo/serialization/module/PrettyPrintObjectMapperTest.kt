@@ -3,6 +3,7 @@ package kairo.serialization.module
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.property.prettyPrint
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -26,7 +27,7 @@ internal class PrettyPrintObjectMapperTest {
       map = mapOf("key1" to "val1", "key0" to "val0"),
     )
     val string = "{\"string\":\"s v\",\"map\":{\"key1\":\"val1\",\"key0\":\"val0\"},\"property\":42}"
-    mapper.writeValueAsString(myClass)
+    mapper.kairoWrite(myClass)
       .shouldBe(string)
   }
 
@@ -49,6 +50,6 @@ internal class PrettyPrintObjectMapperTest {
         "string": "string value"
       }
     """.trimIndent()
-    mapper.writeValueAsString(myClass).shouldBe(string)
+    mapper.kairoWrite(myClass).shouldBe(string)
   }
 }

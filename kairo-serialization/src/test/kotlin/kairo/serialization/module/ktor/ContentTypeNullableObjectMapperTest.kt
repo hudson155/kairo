@@ -5,6 +5,7 @@ import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import io.ktor.http.ContentType
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -25,13 +26,13 @@ internal class ContentTypeNullableObjectMapperTest {
 
   @Test
   fun `serialize, default`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(ContentType.Application.Json))
+    mapper.kairoWrite(MyClass(ContentType.Application.Json))
       .shouldBe("{\"value\":\"application/json\"}")
   }
 
   @Test
   fun `serialize, null`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(null))
+    mapper.kairoWrite(MyClass(null))
       .shouldBe("{\"value\":null}")
   }
 

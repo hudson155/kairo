@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -13,7 +14,7 @@ internal class ProtectedStringSerializationTest {
 
   @Test
   fun serialize(): Unit = runTest {
-    mapper.writeValueAsString(ProtectedString("1")).shouldBe("\"1\"")
+    mapper.kairoWrite(ProtectedString("1")).shouldBe("\"1\"")
   }
 
   @Test

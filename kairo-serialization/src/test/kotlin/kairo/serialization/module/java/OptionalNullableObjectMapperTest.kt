@@ -6,6 +6,7 @@ import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import java.util.Optional
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -31,17 +32,17 @@ internal class OptionalNullableObjectMapperTest {
 
   @Test
   fun `serialize, present`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(Optional.of(42))).shouldBe("{\"value\":42}")
+    mapper.kairoWrite(MyClass(Optional.of(42))).shouldBe("{\"value\":42}")
   }
 
   @Test
   fun `serialize, empty`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(Optional.empty())).shouldBe("{\"value\":null}")
+    mapper.kairoWrite(MyClass(Optional.empty())).shouldBe("{\"value\":null}")
   }
 
   @Test
   fun `serialize, null`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(null)).shouldBe("{}")
+    mapper.kairoWrite(MyClass(null)).shouldBe("{}")
   }
 
   @Test

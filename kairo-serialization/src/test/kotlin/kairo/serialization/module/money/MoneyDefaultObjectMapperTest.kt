@@ -5,6 +5,7 @@ import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.javamoney.moneta.Money
 import org.junit.jupiter.api.Test
@@ -26,19 +27,19 @@ internal class MoneyDefaultObjectMapperTest {
 
   @Test
   fun `serialize, positive`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(Money.of(12_345.67, "USD")))
+    mapper.kairoWrite(MyClass(Money.of(12_345.67, "USD")))
       .shouldBe("{\"value\":{\"amount\":\"12345.67\",\"currency\":\"USD\"}}")
   }
 
   @Test
   fun `serialize, zero`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(Money.of(0, "USD")))
+    mapper.kairoWrite(MyClass(Money.of(0, "USD")))
       .shouldBe("{\"value\":{\"amount\":\"0.00\",\"currency\":\"USD\"}}")
   }
 
   @Test
   fun `serialize, negative`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(Money.of(-12_345.67, "USD")))
+    mapper.kairoWrite(MyClass(Money.of(-12_345.67, "USD")))
       .shouldBe("{\"value\":{\"amount\":\"-12345.67\",\"currency\":\"USD\"}}")
   }
 

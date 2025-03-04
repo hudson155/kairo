@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -24,17 +25,17 @@ internal class FloatNullableObjectMapperTest {
 
   @Test
   fun `serialize, positive`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(1.23F)).shouldBe("{\"value\":1.23}")
+    mapper.kairoWrite(MyClass(1.23F)).shouldBe("{\"value\":1.23}")
   }
 
   @Test
   fun `serialize, negative`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(-1.23F)).shouldBe("{\"value\":-1.23}")
+    mapper.kairoWrite(MyClass(-1.23F)).shouldBe("{\"value\":-1.23}")
   }
 
   @Test
   fun `serialize, null`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(null)).shouldBe("{\"value\":null}")
+    mapper.kairoWrite(MyClass(null)).shouldBe("{\"value\":null}")
   }
 
   @Test
