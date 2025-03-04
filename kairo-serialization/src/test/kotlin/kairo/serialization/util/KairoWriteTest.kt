@@ -29,7 +29,8 @@ internal class KairoWriteTest {
   @Test
   fun `default approach does not work`() {
     val vehicle = Vehicle.Car(model = "Ford")
-    mapper.kairoWrite(listOf(vehicle))
+    @Suppress("ForbiddenMethodCall")
+    mapper.writeValueAsString(listOf(vehicle))
       .shouldBe("[{\"model\":\"Ford\",\"wheels\":4}]")
   }
 
