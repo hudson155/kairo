@@ -7,6 +7,7 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -24,27 +25,27 @@ internal class ZoneIdKeyObjectMapperTest {
 
   @Test
   fun `serialize, UTC offset`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(mapOf(ZoneOffset.UTC to "value")))
+    mapper.kairoWrite(MyClass(mapOf(ZoneOffset.UTC to "value")))
       .shouldBe("{\"values\":{\"UTC\":\"value\"}}")
   }
 
   @Test
   fun `serialize, UTC region`(): Unit = runTest {
     serializationShouldFail {
-      mapper.writeValueAsString(MyClass(mapOf(ZoneId.of("UTC") to "value")))
+      mapper.kairoWrite(MyClass(mapOf(ZoneId.of("UTC") to "value")))
     }
   }
 
   @Test
   fun `serialize, non-UTC`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(mapOf(ZoneId.of("America/Edmonton") to "value")))
+    mapper.kairoWrite(MyClass(mapOf(ZoneId.of("America/Edmonton") to "value")))
       .shouldBe("{\"values\":{\"America/Edmonton\":\"value\"}}")
   }
 
   @Test
   fun `serialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.writeValueAsString(MyClass(mapOf(null to "value")))
+      mapper.kairoWrite(MyClass(mapOf(null to "value")))
     }
   }
 

@@ -7,6 +7,7 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -27,26 +28,26 @@ internal class ZoneIdNullableObjectMapperTest {
 
   @Test
   fun `serialize, UTC offset`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(ZoneOffset.UTC))
+    mapper.kairoWrite(MyClass(ZoneOffset.UTC))
       .shouldBe("{\"value\":\"UTC\"}")
   }
 
   @Test
   fun `serialize, UTC region`(): Unit = runTest {
     serializationShouldFail {
-      mapper.writeValueAsString(MyClass(ZoneId.of("UTC")))
+      mapper.kairoWrite(MyClass(ZoneId.of("UTC")))
     }
   }
 
   @Test
   fun `serialize, non-UTC`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(ZoneId.of("America/Edmonton")))
+    mapper.kairoWrite(MyClass(ZoneId.of("America/Edmonton")))
       .shouldBe("{\"value\":\"America/Edmonton\"}")
   }
 
   @Test
   fun `serialize, null`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(null))
+    mapper.kairoWrite(MyClass(null))
       .shouldBe("{\"value\":null}")
   }
 

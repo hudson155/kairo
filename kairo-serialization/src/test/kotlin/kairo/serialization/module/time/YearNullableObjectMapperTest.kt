@@ -5,6 +5,7 @@ import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import java.time.Year
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -25,19 +26,19 @@ internal class YearNullableObjectMapperTest {
 
   @Test
   fun `serialize, recent`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(Year.parse("2023")))
+    mapper.kairoWrite(MyClass(Year.parse("2023")))
       .shouldBe("{\"value\":\"2023\"}")
   }
 
   @Test
   fun `serialize, old`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(Year.parse("5")))
+    mapper.kairoWrite(MyClass(Year.parse("5")))
       .shouldBe("{\"value\":\"5\"}")
   }
 
   @Test
   fun `serialize, null`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(null))
+    mapper.kairoWrite(MyClass(null))
       .shouldBe("{\"value\":null}")
   }
 

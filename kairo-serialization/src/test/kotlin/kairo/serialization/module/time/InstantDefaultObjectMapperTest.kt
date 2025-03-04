@@ -6,6 +6,7 @@ import io.kotest.matchers.shouldBe
 import java.time.Instant
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -26,19 +27,19 @@ internal class InstantDefaultObjectMapperTest {
 
   @Test
   fun `serialize, recent`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(Instant.parse("2023-11-13T19:44:32.123456789Z")))
+    mapper.kairoWrite(MyClass(Instant.parse("2023-11-13T19:44:32.123456789Z")))
       .shouldBe("{\"value\":\"2023-11-13T19:44:32.123456789Z\"}")
   }
 
   @Test
   fun `serialize, old`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(Instant.parse("0005-01-01T00:00:00.000000000Z")))
+    mapper.kairoWrite(MyClass(Instant.parse("0005-01-01T00:00:00.000000000Z")))
       .shouldBe("{\"value\":\"0005-01-01T00:00:00Z\"}")
   }
 
   @Test
   fun `serialize, without seconds`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(Instant.parse("2023-12-10T12:30:00Z")))
+    mapper.kairoWrite(MyClass(Instant.parse("2023-12-10T12:30:00Z")))
       .shouldBe("{\"value\":\"2023-12-10T12:30:00Z\"}") // Include the seconds, even if 0.
   }
 

@@ -5,6 +5,7 @@ import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoWrite
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -23,14 +24,14 @@ internal class UuidKeyObjectMapperTest {
 
   @Test
   fun `serialize, default`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(mapOf(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8") to "value")))
+    mapper.kairoWrite(MyClass(mapOf(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8") to "value")))
       .shouldBe("{\"values\":{\"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\":\"value\"}}")
   }
 
   @Test
   fun `serialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.writeValueAsString(MyClass(mapOf(null to "value")))
+      mapper.kairoWrite(MyClass(mapOf(null to "value")))
     }
   }
 

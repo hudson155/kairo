@@ -5,6 +5,7 @@ import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -25,12 +26,12 @@ internal class StringDefaultObjectMapperTest {
 
   @Test
   fun `serialize, non-empty`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass("true")).shouldBe("{\"value\":\"true\"}")
+    mapper.kairoWrite(MyClass("true")).shouldBe("{\"value\":\"true\"}")
   }
 
   @Test
   fun `serialize, empty`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass("")).shouldBe("{\"value\":\"\"}")
+    mapper.kairoWrite(MyClass("")).shouldBe("{\"value\":\"\"}")
   }
 
   @Test

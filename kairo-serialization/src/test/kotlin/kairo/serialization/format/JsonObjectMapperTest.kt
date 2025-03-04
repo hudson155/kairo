@@ -11,6 +11,7 @@ import java.time.LocalDate
 import java.util.Optional
 import kairo.serialization.jsonMapper
 import kairo.serialization.property.prettyPrint
+import kairo.serialization.util.kairoWrite
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -136,7 +137,7 @@ internal class JsonObjectMapperTest {
 
   @Test
   fun serialize(): Unit = runTest {
-    mapper.writeValueAsString(myClass).shouldBe(string)
+    mapper.kairoWrite(myClass).shouldBe(string)
   }
 
   @Test

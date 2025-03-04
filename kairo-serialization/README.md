@@ -60,7 +60,7 @@ val mapper: JsonMapper = jsonMapper()
 
 // Serialize.
 val myClass: MyClass = TODO()
-mapper.writeValueAsString(myClass)
+mapper.kairoWrite(myClass)
 
 // Deserialize.
 val myString: String = TODO()

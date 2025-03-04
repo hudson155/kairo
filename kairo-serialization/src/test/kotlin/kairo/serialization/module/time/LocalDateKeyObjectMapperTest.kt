@@ -6,6 +6,7 @@ import io.kotest.matchers.shouldBe
 import java.time.LocalDate
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -23,14 +24,14 @@ internal class LocalDateKeyObjectMapperTest {
 
   @Test
   fun `serialize, default`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(mapOf(LocalDate.parse("2023-11-13") to "value")))
+    mapper.kairoWrite(MyClass(mapOf(LocalDate.parse("2023-11-13") to "value")))
       .shouldBe("{\"values\":{\"2023-11-13\":\"value\"}}")
   }
 
   @Test
   fun `serialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.writeValueAsString(MyClass(mapOf(null to "value")))
+      mapper.kairoWrite(MyClass(mapOf(null to "value")))
     }
   }
 

@@ -6,6 +6,7 @@ import io.kotest.matchers.shouldBe
 import java.time.YearMonth
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -26,13 +27,13 @@ internal class YearMonthDefaultObjectMapperTest {
 
   @Test
   fun `serialize, recent`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(YearMonth.parse("2023-11")))
+    mapper.kairoWrite(MyClass(YearMonth.parse("2023-11")))
       .shouldBe("{\"value\":\"2023-11\"}")
   }
 
   @Test
   fun `serialize, old`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(YearMonth.parse("0005-01")))
+    mapper.kairoWrite(MyClass(YearMonth.parse("0005-01")))
       .shouldBe("{\"value\":\"0005-01\"}")
   }
 

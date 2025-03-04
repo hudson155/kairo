@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import io.github.projectmapk.jackson.module.kogera.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -24,17 +25,17 @@ internal class BooleanNullableObjectMapperTest {
 
   @Test
   fun `serialize, false`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(false)).shouldBe("{\"value\":false}")
+    mapper.kairoWrite(MyClass(false)).shouldBe("{\"value\":false}")
   }
 
   @Test
   fun `serialize, true`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(true)).shouldBe("{\"value\":true}")
+    mapper.kairoWrite(MyClass(true)).shouldBe("{\"value\":true}")
   }
 
   @Test
   fun `serialize, null`(): Unit = runTest {
-    mapper.writeValueAsString(MyClass(null)).shouldBe("{\"value\":null}")
+    mapper.kairoWrite(MyClass(null)).shouldBe("{\"value\":null}")
   }
 
   @Test

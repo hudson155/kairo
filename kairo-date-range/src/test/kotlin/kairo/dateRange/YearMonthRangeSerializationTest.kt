@@ -7,6 +7,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import java.time.YearMonth
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -21,7 +22,7 @@ internal class YearMonthRangeSerializationTest {
 
   @Test
   fun serialize(): Unit = runTest {
-    mapper.writeValueAsString(typicalRange)
+    mapper.kairoWrite(typicalRange)
       .shouldBe("{\"start\":\"2022-07\",\"endInclusive\":\"2024-03\"}")
   }
 
