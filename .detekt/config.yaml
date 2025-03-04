@@ -641,6 +641,7 @@ style:
       - 'com.fasterxml.jackson.databind.BeanProperty.getAnnotation'
       - 'com.fasterxml.jackson.databind.ObjectMapper.convertValue'
       - 'com.fasterxml.jackson.databind.ObjectMapper.readValue'
+      - 'com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString'
 
       # Use the Kotlin overload.
       - 'com.google.inject.Binder.bind'
