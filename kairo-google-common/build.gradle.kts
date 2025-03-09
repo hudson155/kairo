@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-coroutines"))
+
   api(libs.googleApiCommon)
-  implementation(libs.kotlinxCoroutinesCore)
 }
