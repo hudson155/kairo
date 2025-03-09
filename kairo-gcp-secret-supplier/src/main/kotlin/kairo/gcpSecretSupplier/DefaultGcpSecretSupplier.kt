@@ -10,9 +10,7 @@ import kairo.protectedString.ProtectedString
 private val logger: KLogger = KotlinLogging.logger {}
 
 public class DefaultGcpSecretSupplier : GcpSecretSupplier() {
-  private val client: SecretManagerServiceClient by lazy {
-    SecretManagerServiceClient.create()
-  }
+  private val client: SecretManagerServiceClient = SecretManagerServiceClient.create()
 
   /**
    * Note: This approach is blocking; it does not leverage Kotlin coroutines.
