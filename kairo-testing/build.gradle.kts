@@ -4,9 +4,9 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-coroutines"))
   api(project(":kairo-util"))
 
   api(libs.kotestRunner)
-  api(libs.kotlinxCoroutinesCore)
   api(libs.mockK)
 }
