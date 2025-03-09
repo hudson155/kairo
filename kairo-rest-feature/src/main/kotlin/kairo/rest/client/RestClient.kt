@@ -17,11 +17,11 @@ import kairo.serialization.typeReference
  * When injecting this in production code, always inject a [Provider].
  */
 @Singleton
-public class RestClient @Inject constructor(
-  private val registry: RestHandlerRegistry,
+public open class RestClient @Inject constructor(
+  protected val registry: RestHandlerRegistry,
 ) {
   @Suppress("ForbiddenMethodCall", "UNCHECKED_CAST")
-  public suspend fun <H : RestHandler<E, O>, E : RestEndpoint<I, O>, I : Any, O : Any?> request(endpoint: E): O {
+  public open suspend fun <H : RestHandler<E, O>, E : RestEndpoint<I, O>, I : Any, O : Any?> request(endpoint: E): O {
     val handler = checkNotNull(registry[endpoint::class]) {
       "REST handler registry had no entry for ${endpoint::class.qualifiedName!!}."
     } as H
