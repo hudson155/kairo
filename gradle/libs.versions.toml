@@ -1,27 +1,27 @@
 [versions]
-auth0JavaJwt = "4.4.0" # https://github.com/auth0/java-jwt/releases
+auth0JavaJwt = "4.5.0" # https://github.com/auth0/java-jwt/releases
 auth0JwksRsa = "0.22.1" # https://github.com/auth0/jwks-rsa-java/releases
-flyway = "10.21.0" # https://github.com/flyway/flyway/releases
-gcpCloudScheduler = "2.54.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-scheduler
-gcpCloudTasks = "2.54.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-tasks
-gcpSecretManager = "2.54.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-secretmanager
-googleApiCommon = "2.41.0" # // https://mvnrepository.com/artifact/com.google.api/api-common
-guava = "33.3.1-jre" # https://github.com/google/guava/releases
+flyway = "10.22.0" # https://github.com/flyway/flyway/releases
+gcpCloudScheduler = "2.59.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-scheduler
+gcpCloudTasks = "2.59.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-tasks
+gcpSecretManager = "2.59.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-secretmanager
+googleApiCommon = "2.45.0" # // https://mvnrepository.com/artifact/com.google.api/api-common
+guava = "33.4.0-jre" # https://github.com/google/guava/releases
 guice = "7.0.0" # https://github.com/google/guice/releases
-hikari = "6.0.0" # https://github.com/brettwooldridge/HikariCP/tags
+hikari = "6.2.1" # https://github.com/brettwooldridge/HikariCP/tags
 jackson = "2.18.3" # https://github.com/FasterXML/jackson-core/tags
 jacksonModuleKogera = "2.18.3-beta18" # https://github.com/ProjectMapK/jackson-module-kogera/releases # TODO: Remove when 2.19 comes out.
 javaxMoney = "1.1" # https://mvnrepository.com/artifact/javax.money/money-api
-jdbi = "3.47.0" # https://github.com/jdbi/jdbi/releases
+jdbi = "3.48.0" # https://github.com/jdbi/jdbi/releases
 kotest = "5.9.1" # https://github.com/kotest/kotest/releases
-kotlinLogging = "7.0.3" # https://github.com/oshai/kotlin-logging/releases
-kotlinxCoroutines = "1.9.0" # https://github.com/Kotlin/kotlinx.coroutines/releases
+kotlinLogging = "7.0.5" # https://github.com/oshai/kotlin-logging/releases
+kotlinxCoroutines = "1.10.1" # https://github.com/Kotlin/kotlinx.coroutines/releases
 ktor = "3.1.1" # https://ktor.io/docs/releases.html#release-details
 log4j2 = "3.0.0-beta2" # https://github.com/apache/logging-log4j2/releases
-mockK = "1.13.13" # https://github.com/mockk/mockk/releases
+mockK = "1.13.17" # https://github.com/mockk/mockk/releases
 moneta = "1.4.4" # https://mvnrepository.com/artifact/org.javamoney/moneta
-postgres = "42.7.4" # https://github.com/pgjdbc/pgjdbc/releases
-slack = "1.44.2" # https://github.com/slackapi/java-slack-sdk/releases
+postgres = "42.7.5" # https://github.com/pgjdbc/pgjdbc/releases
+slack = "1.45.3" # https://github.com/slackapi/java-slack-sdk/releases
 
 [libraries]
 auth0JavaJwt = { module = "com.auth0:java-jwt", version.ref = "auth0JavaJwt" }
