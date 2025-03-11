@@ -1,6 +1,7 @@
 package kairo.sqlMigration
 
 public data class KairoSqlMigrationConfig(
+  val additionalProperties: Map<String, String>,
   val name: String,
   val run: Boolean,
   val cleanOnValidationError: Boolean,

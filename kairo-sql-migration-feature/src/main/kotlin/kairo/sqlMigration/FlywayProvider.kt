@@ -27,6 +27,7 @@ internal class FlywayProvider(
   @Suppress("SpreadOperator") // The spread operator causes a full array copy, which is fine at startup time.
   override fun create(): Flyway =
     Flyway.configure()
+      .configuration(config.additionalProperties)
       .cleanOnValidationError(config.cleanOnValidationError)
       .cleanDisabled(DefaultEnvironmentVariableSupplier["KAIRO_CLEAN_DATABASE"] != true.toString())
       .locations(*config.locations.toTypedArray())
