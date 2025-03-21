@@ -22,10 +22,13 @@ public class JdbiProvider @Inject constructor(
   private val dataSource: HikariDataSource by lazy { injector.getNamedInstance(name) }
 
   override fun create(): Jdbi =
-    Jdbi.create(dataSource).apply {
-      installPlugin(JacksonPlugin())
-      installPlugin(KairoPlugin())
-      installPlugin(KotlinPlugin())
-      installPlugin(PostgresPlugin())
-    }
+    Jdbi.create(dataSource).applyKairoPlugins()
 }
+
+public fun Jdbi.applyKairoPlugins() =
+  apply {
+    installPlugin(JacksonPlugin())
+    installPlugin(KairoPlugin())
+    installPlugin(KotlinPlugin())
+    installPlugin(PostgresPlugin())
+  }
