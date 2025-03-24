@@ -2,7 +2,6 @@ package kairo.rest.exceptionHandler
 
 import io.kotest.matchers.shouldBe
 import io.ktor.http.HttpStatusCode
-import kairo.exception.ConflictException
 import kairo.exception.TooManyRequestsException
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
