@@ -377,6 +377,7 @@ formatting:
   UnnecessaryParenthesesBeforeTrailingLambda:
     active: true
   Wrapping:
+    active: true
     indentSize: 2
     maxLineLength: 120
 
