@@ -4,6 +4,7 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import org.junit.jupiter.api.Test
 
+@Suppress("FunctionMinLength")
 internal class SealedSubclassesRecursiveTest {
   sealed class A
 
