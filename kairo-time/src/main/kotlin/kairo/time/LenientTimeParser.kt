@@ -18,6 +18,8 @@ import java.time.temporal.ChronoField
  * Stricter time parsing should be used when possible.
  */
 public object LenientTimeParser {
+  private val iso8601: Regex = Regex("[0-9]+")
+
   private val year: DateTimeFormatter = build(SmallestRequiredUnit.Year)
 
   private val yearMonth: DateTimeFormatter = build(SmallestRequiredUnit.Year)
@@ -38,6 +40,10 @@ public object LenientTimeParser {
     LocalDate.parse(string, localDate)
 
   public fun instant(string: String): Instant {
+    iso8601.matchEntire(string)?.let { match ->
+      if (match.value.length == 10) return Instant.ofEpochSecond(match.value.toLong())
+      if (match.value.length == 13) return Instant.ofEpochMilli(match.value.toLong())
+    }
     try {
       return ZonedDateTime.parse(string, zonedDateTime).toInstant()
     } catch (zonedException: DateTimeParseException) {
