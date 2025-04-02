@@ -191,4 +191,16 @@ internal class LenientTimeParserTest {
     LenientTimeParser.instant("2023-12-31T20:51:58.084577243-07:00[America/Edmonton]")
       .shouldBe(Instant.parse("2024-01-01T03:51:58.084577243Z"))
   }
+
+  @Test
+  fun `iso-8601, seconds`() {
+    LenientTimeParser.instant("1704055918")
+      .shouldBe(Instant.parse("2023-12-31T20:51:58Z"))
+  }
+
+  @Test
+  fun `iso-8601, milliseconds`() {
+    LenientTimeParser.instant("1704055918084")
+      .shouldBe(Instant.parse("2023-12-31T20:51:58.084Z"))
+  }
 }
