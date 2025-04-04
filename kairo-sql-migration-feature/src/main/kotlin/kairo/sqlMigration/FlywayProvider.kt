@@ -28,7 +28,6 @@ internal class FlywayProvider(
   override fun create(): Flyway =
     Flyway.configure()
       .configuration(config.additionalProperties)
-      .cleanOnValidationError(config.cleanOnValidationError)
       .cleanDisabled(DefaultEnvironmentVariableSupplier["KAIRO_CLEAN_DATABASE"] != true.toString())
       .locations(*config.locations.toTypedArray())
       .defaultSchema(config.defaultSchema)

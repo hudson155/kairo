@@ -10,6 +10,7 @@ import kairo.dependencyInjection.named
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
 import org.flywaydb.core.Flyway
+import org.flywaydb.core.api.exception.FlywayValidateException
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -32,6 +33,13 @@ public open class KairoSqlMigrationFeature(
     }
     logger.info { "Running SQL migrations." }
     val flyway = injector.getNamedInstance<Flyway>(config.name)
-    flyway.migrate()
+    try {
+      flyway.migrate()
+    } catch (e: FlywayValidateException) {
+      logger.warn(e) { "Flyway validation failed." }
+      if (!config.cleanOnValidationError) throw e
+      flyway.clean()
+      flyway.migrate()
+    }
   }
 }
