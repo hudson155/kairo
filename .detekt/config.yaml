@@ -705,22 +705,21 @@ style:
       - 'com.google.inject.Injector.getExistingBinding'
       - 'com.google.inject.Injector.getInstance(java.lang.Class)'
       - 'com.google.inject.Key.get'
-      - 'com.google.inject.binder.ScopedBindingBuilder.in'
       - 'com.google.inject.binder.LinkedBindingBuilder.to'
       - 'com.google.inject.binder.LinkedBindingBuilder.toConstructor'
       - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.Key)'
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.Key)'
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.TypeLiteral)'
       - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.TypeLiteral)'
       - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(jakarta.inject.Provider)'
       - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(java.lang.Class)'
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.TypeLiteral)'
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.Key)'
+      - 'com.google.inject.binder.ScopedBindingBuilder.in'
       - 'com.google.inject.binder.ScopedBindingBuilder.in'
       - 'io.ktor.server.request.header' # Use headerSingleNullOrThrow instead.
       - 'java.lang.Runtime.getRuntime'
       - 'java.lang.System.getenv'
       - 'java.lang.Thread.currentThread'
       - 'java.time.Duration.get(java.time.temporal.TemporalUnit)'
-      - 'java.time.format.DateTimeFormatter.ofPattern(java.lang.String)' # Use the overload that takes a Locale.
       - 'java.time.Instant.now()' # Use the overload that takes a Clock.
       - 'java.time.LocalDate.now()' # Use the overload that takes a Clock.
       - 'java.time.LocalTime.now()' # Use the overload that takes a Clock.
@@ -728,6 +727,7 @@ style:
       - 'java.time.MonthDay.now()' # Use the overload that takes a Clock.
       - 'java.time.Year.now()' # Use the overload that takes a Clock.
       - 'java.time.YearMonth.now()' # Use the overload that takes a Clock.
+      - 'java.time.format.DateTimeFormatter.ofPattern(java.lang.String)' # Use the overload that takes a Locale.
       - 'java.time.format.DateTimeFormatter.ofPattern(java.lang.String)' # Use the overload that takes a Locale.
       - 'kotlin.collections.singleOrNull' # singleNullOrThrow is less surprising.
       - 'kotlin.io.print'
