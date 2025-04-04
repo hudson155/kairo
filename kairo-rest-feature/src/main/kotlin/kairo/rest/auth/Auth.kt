@@ -34,11 +34,11 @@ public class Auth(
 }
 
 /**
- * Requires that all the provided [Auth] instances are successful.
+ * Returns the first non-successful auth result, or success.
  */
 @Suppress("UnusedReceiverParameter")
-public suspend fun AuthProvider.all(block: suspend MutableList<Auth.Result>.() -> Unit): Auth.Result {
-  buildList { block() }.forEach { auth ->
+public fun AuthProvider.all(authResults: List<Auth.Result>): Auth.Result {
+  authResults.forEach { auth ->
     if (auth != Auth.Result.Success) return@all auth
   }
   return Auth.Result.Success
