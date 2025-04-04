@@ -7,7 +7,7 @@ import kairo.rest.auth.AuthProvider
 import kairo.rest.auth.public
 import kairo.rest.handler.RestHandler
 
-@Suppress("UseDataClass") // Handlers shouldn't be data classes.
+@Suppress("UseDataClass")
 internal class HealthCheckHandler @Inject constructor(
   private val healthCheckService: HealthCheckService,
 ) {

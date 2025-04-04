@@ -1,3 +1,5 @@
+@file:Suppress("ForbiddenImport")
+
 package kairo.serialization.module.time
 
 import com.fasterxml.jackson.core.JsonParser

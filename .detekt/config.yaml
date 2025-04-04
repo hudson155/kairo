@@ -195,24 +195,31 @@ exceptions:
 formatting:
   AnnotationOnSeparateLine:
     active: true
+    autoCorrect: true
     indentSize: 2
   AnnotationSpacing:
     active: true
+    autoCorrect: true
   ArgumentListWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
     maxLineLength: 120
   BlockCommentInitialStarAlignment:
     active: true
+    autoCorrect: true
   ChainWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
   ClassName:
     active: true
   CommentSpacing:
     active: true
+    autoCorrect: true
   CommentWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
   ContextReceiverMapping:
     active: true
@@ -224,39 +231,50 @@ formatting:
     active: false # Overlaps with naming>EnumNaming.
   EnumWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
   Filename:
     active: false # Overlaps with naming>MatchingDeclarationName.
   FinalNewline:
     active: true
+    autoCorrect: true
     insertFinalNewLine: true
   FunKeywordSpacing:
     active: true
+    autoCorrect: true
   FunctionName: # Overlaps with naming>FunctionNaming.
     active: false
   FunctionReturnTypeSpacing:
     active: true
+    autoCorrect: true
     maxLineLength: 120
   FunctionSignature:
     active: false
   FunctionStartOfBodySpacing:
     active: true
+    autoCorrect: true
   FunctionTypeReferenceSpacing:
     active: true
+    autoCorrect: true
   IfElseBracing:
     active: true
+    autoCorrect: true
     indentSize: 2
   IfElseWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
   ImportOrdering:
     active: true
+    autoCorrect: true
     layout: '*,^'
   Indentation:
     active: true
+    autoCorrect: true
     indentSize: 2
   KdocWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
   MaximumLineLength:
     active: true
@@ -264,8 +282,10 @@ formatting:
     ignoreBackTickedIdentifier: false
   ModifierListSpacing:
     active: true
+    autoCorrect: true
   ModifierOrdering:
     active: true
+    autoCorrect: true
   MultiLineIfElse:
     active: true
     indentSize: 2
@@ -273,111 +293,152 @@ formatting:
     active: false
   NoBlankLineBeforeRbrace:
     active: true
+    autoCorrect: true
   NoBlankLineInList:
     active: true
   NoBlankLinesInChainedMethodCalls:
     active: true
+    autoCorrect: true
   NoConsecutiveBlankLines:
     active: true
+    autoCorrect: true
   NoConsecutiveComments:
     active: true
   NoEmptyClassBody:
     active: true
+    autoCorrect: true
   NoEmptyFirstLineInClassBody:
     active: true
+    autoCorrect: true
     indentSize: 2
   NoEmptyFirstLineInMethodBlock:
     active: true
+    autoCorrect: true
   NoLineBreakAfterElse:
     active: true
+    autoCorrect: true
   NoLineBreakBeforeAssignment:
     active: true
+    autoCorrect: true
   NoMultipleSpaces:
     active: true
+    autoCorrect: true
   NoSemicolons:
     active: true
+    autoCorrect: true
   NoSingleLineBlockComment:
     active: true
+    autoCorrect: true
     indentSize: 2
   NoTrailingSpaces:
     active: true
+    autoCorrect: true
   NoUnitReturn:
     active: true
+    autoCorrect: true
   NoUnusedImports:
     active: true
+    autoCorrect: true
   NoWildcardImports:
     active: false # Overlaps with style>WildcardImport.
   NullableTypeSpacing:
     active: true
+    autoCorrect: true
   PackageName:
     active: true
   ParameterListSpacing:
     active: true
+    autoCorrect: true
   ParameterListWrapping:
     active: true
+    autoCorrect: true
     maxLineLength: 120
     indentSize: 2
   ParameterWrapping:
     active: true
+    autoCorrect: true
     maxLineLength: 120
     indentSize: 2
   PropertyName:
     active: false
   PropertyWrapping:
     active: true
+    autoCorrect: true
     maxLineLength: 120
     indentSize: 2
   SpacingAroundAngleBrackets:
     active: true
+    autoCorrect: true
   SpacingAroundColon:
     active: true
+    autoCorrect: true
   SpacingAroundComma:
     active: true
+    autoCorrect: true
   SpacingAroundCurly:
     active: true
+    autoCorrect: true
   SpacingAroundDot:
     active: true
+    autoCorrect: true
   SpacingAroundDoubleColon:
     active: true
+    autoCorrect: true
   SpacingAroundKeyword:
     active: true
+    autoCorrect: true
   SpacingAroundOperators:
     active: true
+    autoCorrect: true
   SpacingAroundParens:
     active: true
+    autoCorrect: true
   SpacingAroundRangeOperator:
     active: true
+    autoCorrect: true
   SpacingAroundUnaryOperator:
     active: true
+    autoCorrect: true
   SpacingBetweenDeclarationsWithAnnotations:
     active: true
+    autoCorrect: true
   SpacingBetweenDeclarationsWithComments:
     active: true
+    autoCorrect: true
   SpacingBetweenFunctionNameAndOpeningParenthesis:
     active: true
+    autoCorrect: true
   StringTemplate:
     active: true
+    autoCorrect: true
   StringTemplateIndent:
     active: false
   TrailingCommaOnCallSite:
     active: true
+    autoCorrect: true
     useTrailingCommaOnCallSite: true
   TrailingCommaOnDeclarationSite:
     active: true
+    autoCorrect: true
     useTrailingCommaOnDeclarationSite: true
   TryCatchFinallySpacing:
     active: true
+    autoCorrect: true
     indentSize: 2
   TypeArgumentListSpacing:
     active: true
+    autoCorrect: true
     indentSize: 2
   TypeParameterListSpacing:
     active: true
+    autoCorrect: true
     indentSize: 2
   UnnecessaryParenthesesBeforeTrailingLambda:
     active: true
+    autoCorrect: true
   Wrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
     maxLineLength: 120
 
@@ -386,7 +447,7 @@ naming:
     active: false # Prefixing booleans isn't always useful.
   ClassNaming:
     active: true
-    classPattern: '([A-Z][a-z0-9]+|KClass)+'
+    classPattern: '(I?[A-Z][a-z0-9]+|KClass)+'
   ConstructorParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
@@ -504,7 +565,6 @@ potential-bugs:
   LateinitUsage:
     active: true
     ignoreAnnotated:
-      - 'com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText'
       - 'com.google.inject.Inject'
   MapGetWithNotNullAssertionOperator:
     active: true
@@ -587,24 +647,20 @@ style:
     active: true
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
-      - 'io.github.projectmapk.jackson.module.kogera.jsonMapper'
-
+      - 'com.ctc.*'
+      - 'com.fasterxml.jackson.module.kotlin.jsonMapper'
       - 'com.google.cloud.scheduler.v1beta*.*'
       - 'com.google.cloud.secretmanager.v1beta*.*'
       - 'com.google.cloud.tasks.v2beta*.*'
-
       - 'com.google.common.base.Optional' # Use the JDK version instead.
-
       - 'com.google.inject.TypeLiteral' # Use the Kotlin overload.
-
       - 'com.sun.security.*'
-
+      - 'com.sun.tools.javac.comp.Flow'
       - 'com.typesafe.config.Optional' # Use the JDK version instead.
-
+      - 'io.github.projectmapk.jackson.module.kogera.jsonMapper'
+      - 'io.grpc.netty.*'
       - 'io.kotest.core.spec.*' # Use JUnit test annotations.
-
       - 'io.ktor.client.HttpClient' # Use kairo.client.KairoClient.
-
       - 'io.ktor.server.plugins.BadRequestException' # Use kairo.exception.BadRequestException.
       - 'io.ktor.server.plugins.CannotTransformContentToTypeException'
       - 'io.ktor.server.plugins.MissingRequestParameterException'
@@ -612,56 +668,55 @@ style:
       - 'io.ktor.server.plugins.ParameterConversionException'
       - 'io.ktor.server.plugins.PayloadTooLargeException'
       - 'io.ktor.server.plugins.UnsupportedMediaTypeException'
-
       - 'jakarta.inject.*' # Use Google's injection annotations.
       - 'jakarta.validation.constraints.*'
-
       - 'java.awt.*'
-
       - 'java.security.AuthProvider'
       - 'java.security.Permission'
-
+      - 'java.time.LocalDateTime'
+      - 'java.time.LocalTime'
+      - 'java.time.OffsetDateTime'
+      - 'java.time.OffsetTime'
+      - 'java.time.ZonedDateTime'
       - 'java.util.UUID' # Use kotlin.uuid.Uuid.
-
+      - 'java.util.concurrent.Flow'
       - 'javax.inject.*' # Use Google's injection annotations.
-
+      - 'javax.ws.rs.HttpMethod'
+      - 'jdk.tools.jlink.resources.plugins'
       - 'kotlin.time.Duration' # Use java.time.Duration.
-
+      - 'okhttp3.*'
+      - 'org.intellij.lang.annotations.Flow'
       - 'org.junit.jupiter.api.Assertions.*' # Use Kotest.
-
       - 'org.slf4j.Logger' # Use KLogger.
       - 'org.slf4j.LoggerFactory' # Use KotlinLogging.
-
+      - 'org.threeten.*'
+      - 'si.mazi.*'
       - 'sun.net.ftp.FtpDirEntry'
   ForbiddenMethodCall:
     active: true
     methods:
-
-      # Use the Kotlin overload.
       - 'com.fasterxml.jackson.core.JsonParser.readValueAs'
       - 'com.fasterxml.jackson.databind.BeanProperty.getAnnotation'
       - 'com.fasterxml.jackson.databind.ObjectMapper.convertValue'
+      - 'com.fasterxml.jackson.databind.ObjectMapper.readTree'
       - 'com.fasterxml.jackson.databind.ObjectMapper.readValue'
       - 'com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString'
-
-      # Use the Kotlin overload.
       - 'com.google.inject.Binder.bind'
       - 'com.google.inject.Injector.getExistingBinding'
       - 'com.google.inject.Injector.getInstance(java.lang.Class)'
-      - 'com.google.inject.binder.ScopedBindingBuilder.in'
+      - 'com.google.inject.Key.get'
       - 'com.google.inject.binder.LinkedBindingBuilder.to'
       - 'com.google.inject.binder.LinkedBindingBuilder.toConstructor'
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.Key)'
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.TypeLiteral)'
       - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(jakarta.inject.Provider)'
       - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(java.lang.Class)'
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.TypeLiteral)'
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.Key)'
-
+      - 'com.google.inject.binder.ScopedBindingBuilder.in'
       - 'io.ktor.server.request.header' # Use headerSingleNullOrThrow instead.
-
       - 'java.lang.Runtime.getRuntime'
       - 'java.lang.System.getenv'
       - 'java.lang.Thread.currentThread'
-      - 'java.time.format.DateTimeFormatter.ofPattern(java.lang.String)' # Use the overload that takes a Locale.
+      - 'java.time.Duration.get(java.time.temporal.TemporalUnit)'
       - 'java.time.Instant.now()' # Use the overload that takes a Clock.
       - 'java.time.LocalDate.now()' # Use the overload that takes a Clock.
       - 'java.time.LocalTime.now()' # Use the overload that takes a Clock.
@@ -669,20 +724,12 @@ style:
       - 'java.time.MonthDay.now()' # Use the overload that takes a Clock.
       - 'java.time.Year.now()' # Use the overload that takes a Clock.
       - 'java.time.YearMonth.now()' # Use the overload that takes a Clock.
-
-      # Class should never be used.
-      - 'java.time.LocalDateTime.now'
-      - 'java.time.LocalTime.now'
-      - 'java.time.OffsetDateTime.now'
-      - 'java.time.OffsetTime.now'
-      - 'java.time.ZonedDateTime.now'
-
+      - 'java.time.format.DateTimeFormatter.ofPattern(java.lang.String)' # Use the overload that takes a Locale.
       - 'kotlin.collections.singleOrNull' # singleNullOrThrow is less surprising.
       - 'kotlin.io.print'
       - 'kotlin.io.println'
-
-      # Use the Kotlin overload.
       - 'org.jdbi.v3.core.result.ResultBearing.mapTo'
+      - 'org.jdbi.v3.core.result.ResultIterable.list'
   ForbiddenSuppress:
     active: false
   ForbiddenVoid:
