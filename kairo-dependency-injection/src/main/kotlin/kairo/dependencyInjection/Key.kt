@@ -3,6 +3,7 @@ package kairo.dependencyInjection
 import com.google.inject.Key
 import com.google.inject.name.Names
 
+@Suppress("ForbiddenMethodCall")
 public inline fun <reified T : Any> key(): Key<T> =
   Key.get(type())
 

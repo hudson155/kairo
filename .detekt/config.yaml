@@ -846,8 +846,6 @@ style:
   UseDataClass:
     active: true
     allowVars: false
-    excludes:
-      - '**/kairo/*/*/*Handler.kt'
   UseEmptyCounterpart:
     active: true
   UseIfEmptyOrIfBlank:

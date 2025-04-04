@@ -1,3 +1,5 @@
+@file:Suppress("ForbiddenImport")
+
 package kairo.time
 
 import java.time.Instant

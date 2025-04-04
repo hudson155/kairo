@@ -9,6 +9,7 @@ import kairo.rest.auth.AuthProvider
 import kairo.rest.auth.public
 import kairo.rest.handler.RestHandler
 
+@Suppress("UseDataClass")
 internal class GoogleAppEngineHandler @Inject constructor(
   private val healthCheckService: HealthCheckService,
 ) {

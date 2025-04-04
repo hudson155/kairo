@@ -6,6 +6,7 @@ import kairo.rest.auth.AuthProvider
 import kairo.rest.auth.public
 import kairo.rest.handler.RestHandler
 
+@Suppress("UseDataClass")
 internal class ExceptionHandlerLibraryBookHandler @Inject constructor(
   private val libraryBookService: LibraryBookService,
 ) {
