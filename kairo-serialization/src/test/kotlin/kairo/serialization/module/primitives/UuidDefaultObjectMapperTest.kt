@@ -67,9 +67,8 @@ internal class UuidDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, missing dashes`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"3ec0a853dae34ee1abe20b9c7dee45f8\" }")
-    }
+    mapper.readValue<MyClass>("{ \"value\": \"3ec0a853dae34ee1abe20b9c7dee45f8\" }")
+      .shouldBe(MyClass(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8")))
   }
 
   @Test
