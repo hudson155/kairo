@@ -3,3 +3,6 @@ name: "Base config"
 port: 8080
 height: { min: 2, max: 9, other: 9 }
 width: { min: 3, max: 19, average: 15 }
+other:
+  key: "value"
+  "key.2": "value.2"
