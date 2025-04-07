@@ -8,7 +8,7 @@ public data class FeatureManagerConfig(
    * for state change and initialization during startup and shutdown.
    */
   public data class Lifecycle(
-    val startupDelayMs: Long,
-    val shutdownDelayMs: Long,
+    val startupDelayMs: Long = 0,
+    val shutdownDelayMs: Long = 0,
   )
 }
