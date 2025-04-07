@@ -47,7 +47,6 @@ auth:
 
 featureManager:
   lifecycle:
-    startupDelayMs: 2000 # 2 seconds.
     shutdownDelayMs: 4000 # 4 seconds.
 
 rest:
