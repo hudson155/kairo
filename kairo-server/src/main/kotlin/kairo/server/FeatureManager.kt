@@ -26,41 +26,50 @@ public class FeatureManager(
 
   internal fun start(injector: Injector) {
     runBlocking {
-      with(features.sortedBy { it.priority.ordinal }) {
-        inParallel { feature ->
-          logger.info { "Start Feature: ${feature.name}." }
-          feature.start(injector)
+      features.groupBy { it.priority }.toList().sortedBy { it.first.ordinal }
+        .forEach { (_, features) ->
+          inParallel(features) { feature ->
+            logger.info { "Start Feature: ${feature.name}." }
+            feature.start(injector)
+          }
         }
-        Thread.sleep(config.lifecycle.startupDelayMs)
-        inParallel { feature ->
-          logger.info { "AfterStart Feature: ${feature.name}." }
-          feature.afterStart(injector)
+      Thread.sleep(config.lifecycle.startupDelayMs)
+
+      features.groupBy { it.priority }.toList().sortedBy { it.first.ordinal }
+        .forEach { (_, features) ->
+          inParallel(features) { feature ->
+            logger.info { "AfterStart Feature: ${feature.name}." }
+            feature.afterStart(injector)
+          }
         }
-      }
     }
   }
 
   internal fun stop(injector: Injector?) {
     runBlocking {
-      with(features.sortedByDescending { it.priority.ordinal }) {
-        inParallel { feature ->
-          logger.info { "BeforeStop Feature: ${feature.name}." }
-          feature.beforeStop(injector)
+      features.groupBy { it.priority }.toList().sortedBy { it.first.ordinal }
+        .forEach { (_, features) ->
+          inParallel(features) { feature ->
+            logger.info { "BeforeStop Feature: ${feature.name}." }
+            feature.beforeStop(injector)
+          }
         }
-        Thread.sleep(config.lifecycle.shutdownDelayMs)
-        inParallel { feature ->
-          logger.info { "Stop Feature: ${feature.name}." }
-          feature.stop(injector)
+      Thread.sleep(config.lifecycle.shutdownDelayMs)
+      features.groupBy { it.priority }.toList().sortedBy { it.first.ordinal }
+        .forEach { (_, features) ->
+          inParallel(features) { feature ->
+            logger.info { "Stop Feature: ${feature.name}." }
+            feature.stop(injector)
+          }
         }
-      }
     }
-  }
-
-  private suspend fun List<Feature>.inParallel(block: (feature: Feature) -> Unit) {
-    val scope = CoroutineScope(Dispatchers.Default)
-    map { scope.async { block(it) } }.awaitAll()
   }
 
   override fun toString(): String =
     features.joinToString { it.name }
+}
+
+private suspend fun <T> inParallel(list: List<T>, block: (feature: T) -> Unit) {
+  val scope = CoroutineScope(Dispatchers.Default)
+  list.map { scope.async { block(it) } }.awaitAll()
 }
