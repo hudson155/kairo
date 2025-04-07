@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
 private val logger: KLogger = KotlinLogging.logger {}
@@ -33,8 +34,7 @@ public class FeatureManager(
             feature.start(injector)
           }
         }
-      Thread.sleep(config.lifecycle.startupDelayMs)
-
+      delay(config.lifecycle.startupDelayMs)
       features.groupBy { it.priority }.toList().sortedBy { it.first.ordinal }
         .forEach { (_, features) ->
           inParallel(features) { feature ->
@@ -54,7 +54,7 @@ public class FeatureManager(
             feature.beforeStop(injector)
           }
         }
-      Thread.sleep(config.lifecycle.shutdownDelayMs)
+      delay(config.lifecycle.shutdownDelayMs)
       features.groupBy { it.priority }.toList().sortedBy { it.first.ordinal }
         .forEach { (_, features) ->
           inParallel(features) { feature ->
