@@ -9,6 +9,6 @@ public data class FeatureManagerConfig(
    */
   public data class Lifecycle(
     val startupDelayMs: Long = 0,
-    val shutdownDelayMs: Long = 0,
+    val shutdownDelayMs: Long,
   )
 }

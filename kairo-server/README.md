@@ -46,7 +46,8 @@ auth:
   leewaySec: 20 # 20 seconds.
 
 featureManager:
-  lifecycle: {}
+  lifecycle:
+    shutdownDelayMs: 4000 # 4 seconds.
 
 rest:
   connector:

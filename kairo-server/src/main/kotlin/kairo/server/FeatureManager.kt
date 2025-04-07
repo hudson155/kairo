@@ -27,41 +27,39 @@ public class FeatureManager(
 
   internal fun start(injector: Injector) {
     runBlocking {
-      features.groupBy { it.priority }.toList().sortedBy { it.first.ordinal }
-        .forEach { (_, features) ->
-          inParallel(features) { feature ->
-            logger.info { "Start Feature: ${feature.name}." }
-            feature.start(injector)
-          }
+      val groups = features.groupBy { it.priority }.toList().sortedBy { it.first.ordinal }
+      groups.forEach { (_, features) ->
+        inParallel(features) { feature ->
+          logger.info { "Start Feature: ${feature.name}." }
+          feature.start(injector)
         }
+      }
       delay(config.lifecycle.startupDelayMs)
-      features.groupBy { it.priority }.toList().sortedBy { it.first.ordinal }
-        .forEach { (_, features) ->
-          inParallel(features) { feature ->
-            logger.info { "AfterStart Feature: ${feature.name}." }
-            feature.afterStart(injector)
-          }
+      groups.forEach { (_, features) ->
+        inParallel(features) { feature ->
+          logger.info { "AfterStart Feature: ${feature.name}." }
+          feature.afterStart(injector)
         }
+      }
     }
   }
 
   internal fun stop(injector: Injector?) {
     runBlocking {
-      features.groupBy { it.priority }.toList().sortedBy { it.first.ordinal }
-        .forEach { (_, features) ->
-          inParallel(features) { feature ->
-            logger.info { "BeforeStop Feature: ${feature.name}." }
-            feature.beforeStop(injector)
-          }
+      val groups = features.groupBy { it.priority }.toList().sortedByDescending { it.first.ordinal }
+      groups.forEach { (_, features) ->
+        inParallel(features) { feature ->
+          logger.info { "BeforeStop Feature: ${feature.name}." }
+          feature.beforeStop(injector)
         }
+      }
       delay(config.lifecycle.shutdownDelayMs)
-      features.groupBy { it.priority }.toList().sortedBy { it.first.ordinal }
-        .forEach { (_, features) ->
-          inParallel(features) { feature ->
-            logger.info { "Stop Feature: ${feature.name}." }
-            feature.stop(injector)
-          }
+      groups.forEach { (_, features) ->
+        inParallel(features) { feature ->
+          logger.info { "Stop Feature: ${feature.name}." }
+          feature.stop(injector)
         }
+      }
     }
   }
 
