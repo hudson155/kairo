@@ -7,7 +7,7 @@ import kairo.serialization.jsonMapper
 import kairo.serialization.property.prettyPrint
 import kairo.serialization.typeReference
 
-private val fixtureMapper: JsonMapper =
+public val fixtureMapper: JsonMapper =
   jsonMapper {
     prettyPrint = true
   }.build()
