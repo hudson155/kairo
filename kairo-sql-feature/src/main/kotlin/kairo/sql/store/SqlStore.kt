@@ -30,13 +30,17 @@ public abstract class SqlStore(databaseName: String) {
   /**
    * Use this to access [Handle] and make SQL queries.
    */
-  protected suspend fun <T> transaction(block: suspend (handle: Handle) -> T): T =
+  protected suspend fun <T> transaction(
+    onError: OnError = {},
+    block: suspend (handle: Handle) -> T,
+  ): T =
     sql.transaction inner@{ handle ->
       try {
         return@inner block(handle)
       } catch (e: UnableToExecuteStatementException) {
         val message = e.serverErrorMessage() ?: throw e
-        message.onError()
+        onError(message)
+        this.onError(message)
         throw e
       }
     }
@@ -44,7 +48,7 @@ public abstract class SqlStore(databaseName: String) {
   /**
    * Implement this to handle SQL errors. One implementation is shared across all methods.
    */
-  protected open fun ServerErrorMessage.onError(): Unit = Unit
+  protected open fun onError(message: ServerErrorMessage): Unit = Unit
 
   private fun UnableToExecuteStatementException.serverErrorMessage(): ServerErrorMessage? =
     when (val cause = cause) {
