@@ -19,7 +19,8 @@ import org.postgresql.util.ServerErrorMessage
  * This will typically be [SqlStore.ForType].
  *
  * Queries are done using [transaction].
- * Error handling is done using [onError].
+ * Error handling is done using [onError] (global to the [SqlStore])
+ * or by [transaction]'s argument.
  */
 public abstract class SqlStore(databaseName: String) {
   @Inject
