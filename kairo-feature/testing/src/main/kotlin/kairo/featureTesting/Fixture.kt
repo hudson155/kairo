@@ -18,6 +18,6 @@ public abstract class Fixture<out T : Any>(private val name: String) {
   @Suppress("ForbiddenMethodCall")
   protected operator fun get(key: Any): T {
     val resource = Resources.getResource("fixture/$name/$key.json")
-    return fixtureMapper.readerFor(type.typeReference).readValue(resource)
+    return fixtureMapper.readValue(resource, type.typeReference)
   }
 }

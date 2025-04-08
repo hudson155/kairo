@@ -25,7 +25,7 @@ public class JwtPrincipal(
   public fun <T : Any> getClaim(name: String, type: TypeReference<T>): T? {
     val claim = decodedJwt.getClaim(name)
     if (claim.isMissing || claim.isNull) return null
-    return jwtMapper.readerFor(type).readValue(claim.toString())
+    return jwtMapper.readValue(claim.toString(), type)
   }
 
   override fun equals(other: Any?): Boolean {
