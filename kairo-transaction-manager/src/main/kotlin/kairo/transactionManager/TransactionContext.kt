@@ -10,7 +10,7 @@ import kotlin.coroutines.coroutineContext
  * This allows nested transactions to avoid creating duplicate resources.
  * It also allows for proper cleanup of transaction resources.
  */
-internal class TransactionContext : AbstractCoroutineContextElement(ContextKey) {
+internal class TransactionContext : AbstractCoroutineContextElement(key) {
   private val types: MutableMap<TransactionType, Unit> = ConcurrentHashMap()
 
   operator fun contains(type: TransactionType): Boolean =
@@ -24,8 +24,11 @@ internal class TransactionContext : AbstractCoroutineContextElement(ContextKey) 
     types -= type
   }
 
-  internal companion object ContextKey : CoroutineContext.Key<TransactionContext>
+  internal companion object {
+    internal val key: CoroutineContext.Key<TransactionContext> =
+      object : CoroutineContext.Key<TransactionContext> {}
+  }
 }
 
 internal suspend fun getTransactionContext(): TransactionContext? =
-  coroutineContext[TransactionContext]
+  coroutineContext[TransactionContext.key]
