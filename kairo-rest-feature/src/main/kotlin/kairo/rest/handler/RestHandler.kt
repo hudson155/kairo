@@ -11,6 +11,7 @@ import kairo.mdc.withMdc
 import kairo.reflect.KairoType
 import kairo.rest.auth.Auth
 import kairo.rest.auth.AuthProvider
+import kairo.rest.context.AuthContext
 import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.exceptionHandler.ExceptionManager
 import kairo.rest.exceptionHandler.respondWithError
@@ -18,6 +19,7 @@ import kairo.rest.reader.RestEndpointReader
 import kairo.rest.server.installStatusPages
 import kairo.rest.template.RestEndpointTemplate
 import kairo.rest.util.typeInfo
+import kotlinx.coroutines.withContext
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -46,8 +48,11 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
     withMdc(mdc(call, endpoint)) {
       try {
         logger.debug { "Read endpoint: $endpoint." }
-        auth(call, endpoint)
-        val response = handle(endpoint)
+        val auth = Auth.from(call)
+        auth(auth, endpoint)
+        val response = withContext(AuthContext(auth)) {
+          return@withContext handle(endpoint)
+        }
         logger.debug { "Result: $response." }
         val statusCode = statusCode(response)
         logger.debug { "Status code: $statusCode." }
@@ -75,8 +80,7 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
   protected open fun mdc(endpoint: E): Map<String, Any?> =
     emptyMap()
 
-  private suspend fun auth(call: RoutingCall, endpoint: E) {
-    val auth = Auth.from(call)
+  private suspend fun auth(auth: Auth, endpoint: E) {
     val authProvider = AuthProvider(auth, injector)
     val authResult = authProvider.auth(endpoint)
     when (authResult) {
