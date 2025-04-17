@@ -7,7 +7,8 @@ import kairo.reflect.KairoType
 public class KairoTypeReference<T>(
   private val type: KairoType<*>,
 ) : TypeReference<T>() {
-  override fun getType(): Type = type.javaType
+  override fun getType(): Type =
+    type.javaType
 }
 
 public val <T : Any> KairoType<T>.typeReference: KairoTypeReference<T>

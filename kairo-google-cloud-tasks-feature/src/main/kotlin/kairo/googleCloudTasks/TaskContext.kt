@@ -6,15 +6,18 @@ import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
 
-internal class TaskContext : AbstractCoroutineContextElement(ContextKey) {
+internal class TaskContext : AbstractCoroutineContextElement(key) {
   val blocks: Queue<suspend () -> Unit> = LinkedList()
 
   fun add(block: suspend () -> Unit) {
     blocks.add(block)
   }
 
-  internal companion object ContextKey : CoroutineContext.Key<TaskContext>
+  internal companion object {
+    internal val key: CoroutineContext.Key<TaskContext> =
+      object : CoroutineContext.Key<TaskContext> {}
+  }
 }
 
 internal suspend fun getTaskContext(): TaskContext? =
-  coroutineContext[TaskContext]
+  coroutineContext[TaskContext.key]
