@@ -68,9 +68,6 @@ Each module falls into one of 3 categories:
 
 - [kairo-clock-feature](./kairo-clock-feature):
   The Clock Feature allows for configuration and injection of a Java `Clock`.
-- [kairo-google-app-engine-feature](./kairo-google-app-engine-feature):
-  Kairo's Google App Engine Feature uses the health check readiness endpoint
-  to configure a GAE warmup endpoint.
 - [kairo-google-cloud-scheduler-feature](./kairo-google-cloud-scheduler-feature):
   Kairo's Google Cloud Scheduler Feature enables CRON
   using Google Cloud Scheduler.
