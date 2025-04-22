@@ -12,7 +12,7 @@ publishing {
   publications {
     repositories {
       maven {
-        url = uri("artifactregistry://us-central1-maven.pkg.dev/kairo-13/kairo-13")
+        url = uri("artifactregistry://us-central1-maven.pkg.dev/airborne-software/maven")
       }
     }
     create<MavenPublication>("maven") {
