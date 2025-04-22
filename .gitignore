@@ -2,19 +2,21 @@
 *.bak
 *.bat
 *.dump
-*.log
+*.log*
+*.pem
 *.swp
+
+# Misc
+.DS_Store
+
+# IntelliJ
+*/**/.idea/
+!/.idea/
 
 # Gradle
 .gradle/
 build/
 out/
 
-# IntelliJ
-!/.idea/
-
 # Kotlin
 /.kotlin/
-
-# Misc
-.DS_Store

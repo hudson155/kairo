@@ -12,7 +12,7 @@ publishing {
   publications {
     repositories {
       maven {
-        url = uri("artifactregistry://us-central1-maven.pkg.dev/kairo-13/kairo-13")
+        url = uri("artifactregistry://us-central1-maven.pkg.dev/airborne-software/maven")
       }
     }
     create<MavenPublication>("maven") {
@@ -26,7 +26,7 @@ publishing {
         val match = requireNotNull(regex.matchEntire(path)) { "Invalid project name: $path." }
         return@run match.groupValues[1].replace(':', '-')
       }
-      version = "3.3.0"
+      version = "4.0.0"
       from(components["java"])
     }
   }
