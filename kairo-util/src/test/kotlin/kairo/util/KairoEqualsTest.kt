@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 internal class KairoEqualsTest {
   @Suppress("EqualsOrHashCode", "EqualsWithHashCodeExist")
-  private open class Subject(
+  internal open class Subject(
     val something: String,
     val somethingElse: String,
   ) {
@@ -21,7 +21,7 @@ internal class KairoEqualsTest {
       )
   }
 
-  private class Subclass(
+  internal class Subclass(
     something: String,
     somethingElse: String,
   ) : Subject(

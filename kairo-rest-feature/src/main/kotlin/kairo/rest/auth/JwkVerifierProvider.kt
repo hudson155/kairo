@@ -39,6 +39,6 @@ public class JwkVerifierProvider internal constructor(
   private fun createAlgorithm(jwk: Jwk): Algorithm =
     when (val algorithm = jwk.algorithm) {
       "RS256" -> Algorithm.RSA256(jwk.publicKey as RSAPublicKey, null)
-      else -> error("Unsupported algorithm $algorithm.") // Add more as necessary.
+      else -> throw IllegalArgumentException("Unsupported algorithm $algorithm.") // Add more as necessary.
     }
 }

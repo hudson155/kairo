@@ -19,7 +19,7 @@ internal class KairoTypeTest {
   internal class AbstractExampleStringListSubclass : AbstractExampleClass<List<String>>()
 
   internal class ConcreteExampleClass<T : Any> {
-    val typeParam: KairoType<T> = KairoType.from(ConcreteExampleClass::class, 0, this::class)
+    val type: KairoType<T> = KairoType.from(ConcreteExampleClass::class, 0, this::class)
   }
 
   @Test
