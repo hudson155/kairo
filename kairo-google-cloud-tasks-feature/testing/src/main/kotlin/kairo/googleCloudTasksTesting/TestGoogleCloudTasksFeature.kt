@@ -8,7 +8,7 @@ import kairo.featureTesting.TestFeature
 import kairo.googleCloudTasks.BaseKairoGoogleCloudTasksFeature
 import kairo.googleCloudTasks.GoogleCloudTasks
 
-public class TestGoogleCloudTasksFeature : BaseKairoGoogleCloudTasksFeature(), TestFeature.BeforeEach {
+public open class TestGoogleCloudTasksFeature : BaseKairoGoogleCloudTasksFeature(), TestFeature.BeforeEach {
   override fun bind(binder: Binder) {
     super.bind(binder)
     binder.bind<GoogleCloudTasks>().toInstance(FakeGoogleCloudTasks())

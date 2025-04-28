@@ -8,7 +8,7 @@ import kairo.featureTesting.TestFeature
 import kairo.googleCloudScheduler.BaseKairoGoogleCloudSchedulerFeature
 import kairo.googleCloudScheduler.GoogleCloudScheduler
 
-public class TestGoogleCloudSchedulerFeature : BaseKairoGoogleCloudSchedulerFeature(), TestFeature.BeforeEach {
+public open class TestGoogleCloudSchedulerFeature : BaseKairoGoogleCloudSchedulerFeature(), TestFeature.BeforeEach {
   override fun bind(binder: Binder) {
     super.bind(binder)
     binder.bind<GoogleCloudScheduler>().toInstance(FakeGoogleCloudScheduler())
