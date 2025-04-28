@@ -20,7 +20,7 @@ internal class ConfigLoaderTest {
     val height: Sizes,
     val width: Sizes,
     val depth: Sizes,
-    val other: Map<String, String> = emptyMap(),
+    val other: Map<String, String>,
   ) {
     internal data class Sizes(
       val min: Int,
