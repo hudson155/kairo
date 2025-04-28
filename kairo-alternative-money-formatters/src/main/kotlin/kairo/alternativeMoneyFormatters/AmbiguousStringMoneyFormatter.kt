@@ -36,9 +36,9 @@ public class AmbiguousStringMoneyFormatter(
 
   private fun formatForCurrency(currency: CurrencyUnit): NumberFormat =
     NumberFormat.getCurrencyInstance(Locale.US).apply {
-      maximumFractionDigits = Int.MAX_VALUE
-      minimumFractionDigits = currency.defaultFractionDigits
+      this.maximumFractionDigits = Int.MAX_VALUE
+      this.minimumFractionDigits = currency.defaultFractionDigits
       this.currency = Currency.getInstance(currency.currencyCode)
-      roundingMode = RoundingMode.UNNECESSARY
+      this.roundingMode = RoundingMode.UNNECESSARY
     }
 }

@@ -20,7 +20,7 @@ public abstract class RealGoogleCloudTasks(
     val task = task(endpoint)
     logger.info { "Creating task: $task." }
     val request = CreateTaskRequest.newBuilder().apply {
-      parent = buildQueueName(task.queueName).toString()
+      this.parent = buildQueueName(task.queueName).toString()
       this.task = buildTask(task.details)
     }.build()
     cloudTasksClient.createTaskCallable().futureCall(request).await()

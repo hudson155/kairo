@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.databind.node.ValueNode
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
+import com.fasterxml.jackson.module.kotlin.convertValue
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.common.io.Resources
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.github.projectmapk.jackson.module.kogera.convertValue
-import io.github.projectmapk.jackson.module.kogera.readValue
 import kairo.commandRunner.DefaultCommandRunner
 import kairo.commandRunner.NoopCommandRunner
 import kairo.environmentVariableSupplier.DefaultEnvironmentVariableSupplier
@@ -103,7 +103,7 @@ public class ConfigLoader(
   }
 
   private fun merge(extends: ObjectNode, config: ObjectNode) {
-    config.fields().forEach { (name, jsonNode) ->
+    config.properties().forEach { (name, jsonNode) ->
       when (jsonNode) {
         is ArrayNode, is ValueNode -> mergeValueNode(extends, name, jsonNode)
         is ObjectNode -> mergeObjectNode(extends, name, jsonNode)

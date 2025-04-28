@@ -657,7 +657,6 @@ style:
       - 'com.sun.security.*'
       - 'com.sun.tools.javac.comp.Flow'
       - 'com.typesafe.config.Optional' # Use the JDK version instead.
-      - 'io.github.projectmapk.jackson.module.kogera.jsonMapper'
       - 'io.grpc.netty.*'
       - 'io.kotest.core.spec.*' # Use JUnit test annotations.
       - 'io.ktor.client.HttpClient' # Use kairo.client.KairoClient.

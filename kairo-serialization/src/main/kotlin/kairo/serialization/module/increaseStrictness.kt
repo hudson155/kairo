@@ -31,11 +31,13 @@ private fun MapperBuilder<*, *>.configureMapperFeatures() {
   configure(MapperFeature.ALLOW_VOID_VALUED_PROPERTIES, true)
   configure(MapperFeature.INFER_BUILDER_TYPE_BINDINGS, false)
   configure(MapperFeature.DEFAULT_VIEW_INCLUSION, false)
-  configure(MapperFeature.USE_STD_BEAN_NAMING, false)
+  configure(MapperFeature.USE_STD_BEAN_NAMING, true)
   configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, false)
   configure(MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS, false)
   configure(MapperFeature.IGNORE_MERGE_FOR_UNMERGEABLE, false)
   configure(MapperFeature.BLOCK_UNSAFE_POLYMORPHIC_BASE_TYPES, true)
+  configure(MapperFeature.REQUIRE_HANDLERS_FOR_JAVA8_OPTIONALS, true)
+  configure(MapperFeature.REQUIRE_HANDLERS_FOR_JAVA8_TIMES, true)
 }
 
 private fun MapperBuilder<*, *>.configureSerializationFeatures() {
@@ -49,6 +51,7 @@ private fun MapperBuilder<*, *>.configureDeserializationFeatures() {
   configure(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS, true)
   configure(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY, true)
   configure(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES, true)
+  configure(DeserializationFeature.FAIL_ON_SUBTYPE_CLASS_NOT_REGISTERED, false)
   configure(DeserializationFeature.ACCEPT_FLOAT_AS_INT, false)
 }
 

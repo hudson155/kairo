@@ -19,7 +19,7 @@ public abstract class RealGoogleCloudScheduler(
   final override suspend fun create(job: Job, config: Config) {
     logger.info { "Creating job: $job (config: $config)." }
     val request = CreateJobRequest.newBuilder().apply {
-      parent = buildLocationName().toString()
+      this.parent = buildLocationName().toString()
       this.job = buildJob(job.details, config)
     }.build()
     cloudSchedulerClient.createJobCallable().futureCall(request).await()

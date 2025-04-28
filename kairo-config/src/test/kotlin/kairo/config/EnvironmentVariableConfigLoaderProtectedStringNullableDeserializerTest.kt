@@ -1,6 +1,6 @@
 package kairo.config
 
-import io.github.projectmapk.jackson.module.kogera.readValue
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import kairo.protectedString.ProtectedString
