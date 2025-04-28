@@ -20,6 +20,7 @@ internal class ConfigLoaderTest {
     val height: Sizes,
     val width: Sizes,
     val depth: Sizes,
+    val other: Map<String, String>,
   ) {
     internal data class Sizes(
       val min: Int,
@@ -52,6 +53,10 @@ internal class ConfigLoaderTest {
       height = TestConfig.Sizes(min = 2, max = 10, average = 8),
       width = TestConfig.Sizes(min = 4, max = 20, average = 16),
       depth = TestConfig.Sizes(min = 6, max = 30, average = 24),
+      other = mapOf(
+        "key" to "value",
+        "key.2" to "value.2",
+      ),
     )
 
   @Test
