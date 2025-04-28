@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test
 
 @Suppress("UnnecessaryInnerClass", "UNREACHABLE_CODE")
 internal class TransactionManagerTest {
-  private abstract inner class TestTransactionType : TransactionType(), TransactionType.WithContext {
+  internal abstract inner class TestTransactionType : TransactionType(), TransactionType.WithContext {
     override suspend fun createContext(): CoroutineContext {
       nextCreateContextShouldThrow?.let { message ->
         nextCreateContextShouldThrow = null
@@ -60,11 +60,11 @@ internal class TransactionManagerTest {
     }
   }
 
-  private inner class Type0 : TestTransactionType()
+  internal inner class Type0 : TestTransactionType()
 
-  private inner class Type1 : TestTransactionType()
+  internal inner class Type1 : TestTransactionType()
 
-  private inner class Type2 : TestTransactionType()
+  internal inner class Type2 : TestTransactionType()
 
   private val injector: Injector =
     Guice.createInjector(

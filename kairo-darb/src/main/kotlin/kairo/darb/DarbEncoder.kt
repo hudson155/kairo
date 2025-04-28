@@ -97,7 +97,7 @@ public object DarbEncoder {
       in CharRange('a', 'f') -> character.code - 'a'.code + 10
       // No other characters are supported.
       // This should never happen because [regex] validates the input.
-      else -> throw IllegalStateException("Unsupported character: $character.")
+      else -> error("Unsupported character: $character.")
     }
 
     return listOf(
