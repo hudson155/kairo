@@ -51,7 +51,7 @@ private fun MapperBuilder<*, *>.configureDeserializationFeatures() {
   configure(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS, true)
   configure(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY, true)
   configure(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES, true)
-  configure(DeserializationFeature.FAIL_ON_SUBTYPE_CLASS_NOT_REGISTERED, false)
+  configure(DeserializationFeature.FAIL_ON_SUBTYPE_CLASS_NOT_REGISTERED, true)
   configure(DeserializationFeature.ACCEPT_FLOAT_AS_INT, false)
 }
 
