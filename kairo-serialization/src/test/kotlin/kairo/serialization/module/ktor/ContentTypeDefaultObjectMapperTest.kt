@@ -26,13 +26,13 @@ internal class ContentTypeDefaultObjectMapperTest {
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
-  fun `serialize, default`(): Unit = runTest {
+  fun serialize(): Unit = runTest {
     mapper.kairoWrite(MyClass(ContentType.Application.Json))
       .shouldBe("{\"value\":\"application/json\"}")
   }
 
   @Test
-  fun `deserialize, default`(): Unit = runTest {
+  fun deserialize(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": \"application/json\" }")
       .shouldBe(MyClass(ContentType.Application.Json))
   }

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import io.ktor.http.HttpMethod
 import kairo.serialization.jsonMapper
-import kairo.serialization.serializationShouldFail
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -15,12 +14,12 @@ import org.junit.jupiter.api.Test
  * Therefore, some test cases (such as unknown properties, pretty printing) are not included
  * since they are not strictly related to HTTP methods.
  */
-internal class HttpMethodDefaultObjectMapperTest {
+internal class HttpMethodNullableObjectMapperTest {
   /**
-   * This test is specifically for non-nullable properties.
+   * This test is specifically for nullable properties.
    */
   internal data class MyClass(
-    val value: HttpMethod,
+    val value: HttpMethod?,
   )
 
   private val mapper: JsonMapper = jsonMapper().build()
@@ -32,6 +31,12 @@ internal class HttpMethodDefaultObjectMapperTest {
   }
 
   @Test
+  fun `serialize, null`(): Unit = runTest {
+    mapper.kairoWrite(MyClass(null))
+      .shouldBe("{\"value\":null}")
+  }
+
+  @Test
   fun deserialize(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": \"GET\" }")
       .shouldBe(MyClass(HttpMethod.Get))
@@ -39,22 +44,13 @@ internal class HttpMethodDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": null }")
-    }
+    mapper.readValue<MyClass>("{ \"value\": null }")
+      .shouldBe(MyClass(null))
   }
 
   @Test
   fun `deserialize, missing`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.readValue<MyClass>("{}")
-    }
-  }
-
-  @Test
-  fun `deserialize, lowercase`(): Unit = runTest {
-    serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"get\" }")
-    }
+    mapper.readValue<MyClass>("{}")
+      .shouldBe(MyClass(null))
   }
 }

@@ -23,7 +23,7 @@ internal class YearMonthKeyObjectMapperTest {
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
-  fun `serialize, default`(): Unit = runTest {
+  fun serialize(): Unit = runTest {
     mapper.kairoWrite(MyClass(mapOf(YearMonth.parse("2023-11") to "value")))
       .shouldBe("{\"values\":{\"2023-11\":\"value\"}}")
   }
@@ -36,7 +36,7 @@ internal class YearMonthKeyObjectMapperTest {
   }
 
   @Test
-  fun `deserialize, default`(): Unit = runTest {
+  fun deserialize(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"values\": { \"2023-11\": \"value\" } }")
       .shouldBe(MyClass(mapOf(YearMonth.parse("2023-11") to "value")))
   }

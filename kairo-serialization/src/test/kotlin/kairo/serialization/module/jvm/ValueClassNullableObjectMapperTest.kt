@@ -18,7 +18,7 @@ internal class ValueClassNullableObjectMapperTest {
   internal value class MyValueClass(val value: Int)
 
   /**
-   * This test is specifically for non-nullable properties.
+   * This test is specifically for nullable properties.
    */
   internal data class MyClass(
     val value: MyValueClass?,

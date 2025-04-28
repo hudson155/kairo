@@ -23,7 +23,7 @@ internal class InstantKeyObjectMapperTest {
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
-  fun `serialize, default`(): Unit = runTest {
+  fun serialize(): Unit = runTest {
     mapper.kairoWrite(MyClass(mapOf(Instant.parse("2023-11-13T19:44:32.123456789Z") to "value")))
       .shouldBe("{\"values\":{\"2023-11-13T19:44:32.123456789Z\":\"value\"}}")
   }
@@ -36,7 +36,7 @@ internal class InstantKeyObjectMapperTest {
   }
 
   @Test
-  fun `deserialize, default`(): Unit = runTest {
+  fun deserialize(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"values\": { \"2023-11-13T19:44:32.123456789Z\": \"value\" } }")
       .shouldBe(MyClass(mapOf(Instant.parse("2023-11-13T19:44:32.123456789Z") to "value")))
   }

@@ -22,7 +22,7 @@ internal class StringKeyObjectMapperTest {
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
-  fun `serialize, default`(): Unit = runTest {
+  fun serialize(): Unit = runTest {
     mapper.kairoWrite(MyClass(mapOf("key" to "value")))
       .shouldBe("{\"values\":{\"key\":\"value\"}}")
   }
@@ -35,7 +35,7 @@ internal class StringKeyObjectMapperTest {
   }
 
   @Test
-  fun `deserialize, default`(): Unit = runTest {
+  fun deserialize(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"values\": { \"key\": \"value\" } }")
       .shouldBe(MyClass(mapOf("key" to "value")))
   }
