@@ -1,4 +1,4 @@
-package kairo.serialization.module.java
+package kairo.serialization.module.jvm
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.json.JsonMapper
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.util.Optional
 import kairo.serialization.jsonMapper
+import kairo.serialization.serializationShouldFail
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -19,13 +20,13 @@ import org.junit.jupiter.api.Test
  * since null is serialized to missing and Optional.empty() is serialized to null.
  * However, this approach is in fact necessary to provide consistency between nullable and non-nullable Optionals.
  */
-internal class OptionalNullableObjectMapperTest {
+internal class OptionalDefaultObjectMapperTest {
   /**
-   * This test is specifically for nullable properties.
+   * This test is specifically for non-nullable properties.
    */
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   internal data class MyClass(
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    val value: Optional<Int>?,
+    val value: Optional<Int>,
   )
 
   private val mapper: JsonMapper = jsonMapper().build()
@@ -41,11 +42,6 @@ internal class OptionalNullableObjectMapperTest {
   }
 
   @Test
-  fun `serialize, null`(): Unit = runTest {
-    mapper.kairoWrite(MyClass(null)).shouldBe("{}")
-  }
-
-  @Test
   fun `deserialize, present`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": 42 }").shouldBe(MyClass(Optional.of(42)))
   }
@@ -57,6 +53,29 @@ internal class OptionalNullableObjectMapperTest {
 
   @Test
   fun `deserialize, missing`(): Unit = runTest {
-    mapper.readValue<MyClass>("{}").shouldBe(MyClass(null))
+    serializationShouldFail {
+      mapper.readValue<MyClass>("{}")
+    }
+  }
+
+  @Test
+  fun `deserialize, wrong type, float`(): Unit = runTest {
+    serializationShouldFail {
+      mapper.readValue<MyClass>("{ \"value\": 1.23 }")
+    }
+  }
+
+  @Test
+  fun `deserialize, wrong type, string`(): Unit = runTest {
+    serializationShouldFail {
+      mapper.readValue<MyClass>("{ \"value\": \"42\" }")
+    }
+  }
+
+  @Test
+  fun `deserialize, wrong type, boolean`(): Unit = runTest {
+    serializationShouldFail {
+      mapper.readValue<MyClass>("{ \"value\": true }")
+    }
   }
 }
