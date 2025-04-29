@@ -1,7 +1,7 @@
 package kairo.config
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import io.github.projectmapk.jackson.module.kogera.readValue
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import kairo.protectedString.ProtectedString

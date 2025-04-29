@@ -9,9 +9,6 @@ repositories {
   mavenLocal()
   mavenCentral()
   maven {
-    url = uri("https://jitpack.io")
-  }
-  maven {
     url = uri("artifactregistry://us-central1-maven.pkg.dev/airborne-software/maven")
   }
 }

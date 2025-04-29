@@ -1,7 +1,7 @@
 package kairo.serialization.module.primitives
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import io.github.projectmapk.jackson.module.kogera.readValue
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
@@ -22,7 +22,7 @@ internal class IntKeyObjectMapperTest {
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
-  fun `serialize, default`(): Unit = runTest {
+  fun serialize(): Unit = runTest {
     mapper.kairoWrite(MyClass(mapOf(42 to "value")))
       .shouldBe("{\"values\":{\"42\":\"value\"}}")
   }
@@ -35,7 +35,7 @@ internal class IntKeyObjectMapperTest {
   }
 
   @Test
-  fun `deserialize, default`(): Unit = runTest {
+  fun deserialize(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"values\": { \"42\": \"value\" } }")
       .shouldBe(MyClass(mapOf(42 to "value")))
   }

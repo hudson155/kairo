@@ -1,7 +1,7 @@
 package kairo.serialization.module.ktor
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import io.github.projectmapk.jackson.module.kogera.readValue
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import io.ktor.http.ContentType
 import kairo.serialization.jsonMapper
@@ -26,13 +26,13 @@ internal class ContentTypeDefaultObjectMapperTest {
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
-  fun `serialize, default`(): Unit = runTest {
+  fun serialize(): Unit = runTest {
     mapper.kairoWrite(MyClass(ContentType.Application.Json))
       .shouldBe("{\"value\":\"application/json\"}")
   }
 
   @Test
-  fun `deserialize, default`(): Unit = runTest {
+  fun deserialize(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": \"application/json\" }")
       .shouldBe(MyClass(ContentType.Application.Json))
   }

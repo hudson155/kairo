@@ -41,8 +41,8 @@ public abstract class JsonBadRequestException(
         return path.joinToString("") { reference ->
           buildString {
             when {
-              reference.isNamed() -> this.append(".${reference.fieldName}")
-              reference.isNumbered() -> this.append("[${reference.index}]")
+              reference.isNamed() -> append(".${reference.fieldName}")
+              reference.isNumbered() -> append("[${reference.index}]")
               else -> error("Unsupported reference: $reference.")
             }
           }

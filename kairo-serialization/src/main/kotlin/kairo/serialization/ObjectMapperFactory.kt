@@ -7,10 +7,10 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.cfg.JsonNodeFeature
 import com.fasterxml.jackson.databind.cfg.MapperBuilder
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
+import com.fasterxml.jackson.module.kotlin.KotlinFeature
+import com.fasterxml.jackson.module.kotlin.kotlinModule
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.github.projectmapk.jackson.module.kogera.KotlinFeature
-import io.github.projectmapk.jackson.module.kogera.kotlinModule
 import java.util.Optional
 import kairo.serialization.module.increaseStrictness
 import kairo.serialization.module.ktor.KtorModule
@@ -58,7 +58,7 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
   private fun configureJava(builder: B) {
     builder.addModule(
       Jdk8Module().apply {
-        this.configureReadAbsentAsNull(true)
+        configureReadAbsentAsNull(true)
       },
     )
   }
@@ -70,8 +70,9 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
   private fun configureKotlin(builder: B) {
     builder.addModule(
       kotlinModule {
-        this.configure(KotlinFeature.SingletonSupport, true)
-        this.configure(KotlinFeature.StrictNullChecks, true)
+        configure(KotlinFeature.SingletonSupport, true)
+        configure(KotlinFeature.KotlinPropertyNameAsImplicitName, true)
+        configure(KotlinFeature.NewStrictNullChecks, true)
       },
     )
   }
@@ -97,18 +98,18 @@ public abstract class ObjectMapperFactory<M : ObjectMapper, B : MapperBuilder<M,
    * See the corresponding test for more spec.
    */
   protected open fun configurePrettyPrinting(builder: B) {
-    builder.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, this.prettyPrint)
+    builder.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, prettyPrint)
     builder.configure(MapperFeature.SORT_CREATOR_PROPERTIES_FIRST, false)
 
-    builder.configure(SerializationFeature.INDENT_OUTPUT, this.prettyPrint)
-    builder.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, this.prettyPrint)
+    builder.configure(SerializationFeature.INDENT_OUTPUT, prettyPrint)
+    builder.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, prettyPrint)
 
-    builder.configure(JsonNodeFeature.WRITE_PROPERTIES_SORTED, this.prettyPrint)
+    builder.configure(JsonNodeFeature.WRITE_PROPERTIES_SORTED, prettyPrint)
   }
 
   private fun setUnknownPropertyHandling(builder: B) {
-    builder.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, !this.allowUnknownProperties)
-    builder.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, !this.allowUnknownProperties)
-    builder.configure(DeserializationFeature.FAIL_ON_UNEXPECTED_VIEW_PROPERTIES, !this.allowUnknownProperties)
+    builder.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, !allowUnknownProperties)
+    builder.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, !allowUnknownProperties)
+    builder.configure(DeserializationFeature.FAIL_ON_UNEXPECTED_VIEW_PROPERTIES, !allowUnknownProperties)
   }
 }

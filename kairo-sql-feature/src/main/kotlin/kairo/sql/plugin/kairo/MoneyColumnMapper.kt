@@ -1,6 +1,6 @@
 package kairo.sql.plugin.kairo
 
-import io.github.projectmapk.jackson.module.kogera.readValue
+import com.fasterxml.jackson.module.kotlin.readValue
 import java.sql.ResultSet
 import kairo.sql.sqlMapper
 import org.javamoney.moneta.Money

@@ -1,4 +1,4 @@
-package kairo.serialization.module.primitives
+package kairo.serialization.module.jvm
 
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -9,28 +9,26 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to double serialization/deserialization.
+ * This test is intended to test behaviour strictly related to value class serialization/deserialization.
  * Therefore, some test cases (such as unknown properties, pretty printing) are not included
- * since they are not strictly related to doubles.
+ * since they are not strictly related to value classes.
  */
-internal class DoubleNullableObjectMapperTest {
+internal class ValueClassNullableObjectMapperTest {
+  @JvmInline
+  internal value class MyValueClass(val value: Int)
+
   /**
    * This test is specifically for nullable properties.
    */
   internal data class MyClass(
-    val value: Double?,
+    val value: MyValueClass?,
   )
 
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
-  fun `serialize, positive`(): Unit = runTest {
-    mapper.kairoWrite(MyClass(1.23)).shouldBe("{\"value\":1.23}")
-  }
-
-  @Test
-  fun `serialize, negative`(): Unit = runTest {
-    mapper.kairoWrite(MyClass(-1.23)).shouldBe("{\"value\":-1.23}")
+  fun serialize(): Unit = runTest {
+    mapper.kairoWrite(MyClass(MyValueClass(42))).shouldBe("{\"value\":42}")
   }
 
   @Test
@@ -39,13 +37,8 @@ internal class DoubleNullableObjectMapperTest {
   }
 
   @Test
-  fun `deserialize, positive`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": 1.23 }").shouldBe(MyClass(1.23))
-  }
-
-  @Test
-  fun `deserialize, negative`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": -1.23 }").shouldBe(MyClass(-1.23))
+  fun deserialize(): Unit = runTest {
+    mapper.readValue<MyClass>("{ \"value\": 42 }").shouldBe(MyClass(MyValueClass(42)))
   }
 
   @Test

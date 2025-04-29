@@ -1,7 +1,7 @@
 package kairo.serialization.module.time
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import io.github.projectmapk.jackson.module.kogera.readValue
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.time.Year
 import kairo.serialization.jsonMapper
@@ -23,7 +23,7 @@ internal class YearKeyObjectMapperTest {
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
-  fun `serialize, default`(): Unit = runTest {
+  fun serialize(): Unit = runTest {
     mapper.kairoWrite(MyClass(mapOf(Year.parse("2023") to "value")))
       .shouldBe("{\"values\":{\"2023\":\"value\"}}")
   }
@@ -36,7 +36,7 @@ internal class YearKeyObjectMapperTest {
   }
 
   @Test
-  fun `deserialize, default`(): Unit = runTest {
+  fun deserialize(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"values\": { \"2023\": \"value\" } }")
       .shouldBe(MyClass(mapOf(Year.parse("2023") to "value")))
   }

@@ -3,7 +3,7 @@ package kairo.rest.auth
 import com.auth0.jwt.interfaces.DecodedJWT
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.json.JsonMapper
-import io.github.projectmapk.jackson.module.kogera.jacksonTypeRef
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import kairo.serialization.jsonMapper
 import kairo.serialization.property.allowUnknownProperties
 

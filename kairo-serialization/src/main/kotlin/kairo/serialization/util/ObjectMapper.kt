@@ -4,7 +4,7 @@ package kairo.serialization.util
 
 import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.github.projectmapk.jackson.module.kogera.convertValue
+import com.fasterxml.jackson.module.kotlin.convertValue
 import kairo.reflect.kairoType
 import kairo.serialization.typeReference
 
