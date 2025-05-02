@@ -32,6 +32,10 @@ publishing {
   }
 }
 
+if (gradle.startParameter.taskNames.any { it.startsWith("publish") }) {
+  apply(plugin = "com.google.cloud.artifactregistry.gradle-plugin")
+}
+
 gradle.taskGraph.whenReady {
   if (allTasks.any { it.name == "publishToMavenLocal" }) {
     publishing {
