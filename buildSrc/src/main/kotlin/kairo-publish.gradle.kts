@@ -1,7 +1,6 @@
 plugins {
   java
   `maven-publish`
-  id("com.google.cloud.artifactregistry.gradle-plugin")
 }
 
 java {
@@ -9,6 +8,9 @@ java {
 }
 
 publishing {
+  plugins {
+    id("com.google.cloud.artifactregistry.gradle-plugin")
+  }
   publications {
     repositories {
       maven {
