@@ -1,6 +1,7 @@
 plugins {
   java
   `maven-publish`
+  id("com.google.cloud.artifactregistry.gradle-plugin")
 }
 
 java {
@@ -29,10 +30,6 @@ publishing {
       from(components["java"])
     }
   }
-}
-
-if (gradle.startParameter.taskNames.any { it.startsWith("publish") }) {
-  apply(plugin = "com.google.cloud.artifactregistry.gradle-plugin")
 }
 
 gradle.taskGraph.whenReady {
