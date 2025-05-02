@@ -9,7 +9,7 @@ on:
       - "main"
   push:
     branches:
-      - "main"
+      - "feature/ci"
   workflow_dispatch:
 
 concurrency:
