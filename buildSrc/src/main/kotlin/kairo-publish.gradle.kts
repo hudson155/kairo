@@ -8,7 +8,6 @@ java {
 }
 
 publishing {
-  apply(plugin = "com.google.cloud.artifactregistry.gradle-plugin")
   publications {
     repositories {
       maven {
