@@ -22,6 +22,10 @@ jobs:
     steps:
       - name: "Check out"
         uses: "actions/checkout@v4"
+      - name: "GCP auth"
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
       - name: "Set up Java"
         uses: "actions/setup-java@v4"
         with:
