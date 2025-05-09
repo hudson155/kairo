@@ -6,6 +6,12 @@ import com.google.inject.Stage
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.feature.Feature
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -20,33 +26,48 @@ public class FeatureManager(
     Guice.createInjector(Stage.PRODUCTION, features)
 
   internal fun start(injector: Injector) {
-    with(features.sortedBy { it.priority.ordinal }) {
-      forEach { feature ->
-        logger.info { "Start Feature: ${feature.name}." }
-        feature.start(injector)
+    runBlocking {
+      val groups = features.groupBy { it.priority }.toList().sortedBy { it.first.ordinal }
+      groups.forEach { (_, features) ->
+        inParallel(features) { feature ->
+          logger.info { "Start Feature: ${feature.name}." }
+          feature.start(injector)
+        }
       }
-      Thread.sleep(config.lifecycle.startupDelayMs)
-      forEach { feature ->
-        logger.info { "AfterStart Feature: ${feature.name}." }
-        feature.afterStart(injector)
+      delay(config.lifecycle.startupDelayMs)
+      groups.forEach { (_, features) ->
+        inParallel(features) { feature ->
+          logger.info { "AfterStart Feature: ${feature.name}." }
+          feature.afterStart(injector)
+        }
       }
     }
   }
 
   internal fun stop(injector: Injector?) {
-    with(features.sortedByDescending { it.priority.ordinal }) {
-      forEach { feature ->
-        logger.info { "BeforeStop Feature: ${feature.name}." }
-        feature.beforeStop(injector)
+    runBlocking {
+      val groups = features.groupBy { it.priority }.toList().sortedByDescending { it.first.ordinal }
+      groups.forEach { (_, features) ->
+        inParallel(features) { feature ->
+          logger.info { "BeforeStop Feature: ${feature.name}." }
+          feature.beforeStop(injector)
+        }
       }
-      Thread.sleep(config.lifecycle.shutdownDelayMs)
-      forEach { feature ->
-        logger.info { "Stop Feature: ${feature.name}." }
-        feature.stop(injector)
+      delay(config.lifecycle.shutdownDelayMs)
+      groups.forEach { (_, features) ->
+        inParallel(features) { feature ->
+          logger.info { "Stop Feature: ${feature.name}." }
+          feature.stop(injector)
+        }
       }
     }
   }
 
   override fun toString(): String =
     features.joinToString { it.name }
+}
+
+private suspend fun <T> inParallel(list: List<T>, block: (feature: T) -> Unit) {
+  val scope = CoroutineScope(Dispatchers.Default)
+  list.map { scope.async { block(it) } }.awaitAll()
 }
