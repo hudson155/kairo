@@ -13,8 +13,9 @@ import org.jdbi.v3.core.kotlin.KotlinPlugin
 import org.jdbi.v3.postgres.PostgresPlugin
 
 @Singleton
-public class JdbiProvider @Inject constructor(
+public class JdbiProvider(
   private val name: String,
+  private val configureJdbi: (jdbi: Jdbi) -> Unit,
 ) : LazySingletonProvider<Jdbi>() {
   @Inject
   private lateinit var injector: Injector

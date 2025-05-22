@@ -11,7 +11,7 @@ import kairo.transactionManager.TransactionManager
 import org.jdbi.v3.core.Jdbi
 
 @Singleton
-public class SqlProvider @Inject constructor(
+public class SqlProvider(
   private val name: String,
 ) : LazySingletonProvider<Sql>() {
   @Inject
