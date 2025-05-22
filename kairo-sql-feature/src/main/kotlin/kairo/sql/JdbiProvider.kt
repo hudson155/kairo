@@ -23,7 +23,7 @@ public class JdbiProvider(
   private val dataSource: HikariDataSource by lazy { injector.getNamedInstance(name) }
 
   override fun create(): Jdbi =
-    Jdbi.create(dataSource).applyKairoPlugins()
+    Jdbi.create(dataSource).apply { configureJdbi(this) }
 }
 
 public fun Jdbi.applyKairoPlugins() =
