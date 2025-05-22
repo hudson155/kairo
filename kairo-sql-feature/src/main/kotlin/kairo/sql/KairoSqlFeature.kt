@@ -16,13 +16,14 @@ private val logger: KLogger = KotlinLogging.logger {}
 
 public open class KairoSqlFeature(
   private val config: KairoSqlConfig,
+  private val configureJdbi: (jdbi: Jdbi) -> Unit = { it.applyKairoPlugins() },
 ) : Feature() {
   final override val name: String = "SQL"
 
   final override val priority: FeaturePriority = FeaturePriority.Framework
 
   override fun bind(binder: Binder) {
-    binder.bindSql(config)
+    binder.bindSql(config, configureJdbi)
   }
 
   override fun start(injector: Injector) {
@@ -39,10 +40,13 @@ public open class KairoSqlFeature(
   }
 }
 
-public fun Binder.bindSql(config: KairoSqlConfig) {
+public fun Binder.bindSql(
+  config: KairoSqlConfig,
+  configureJdbi: (jdbi: Jdbi) -> Unit = { it.applyKairoPlugins() },
+) {
   bind<KairoSqlConfig>().named(config.name).toInstance(config)
   bind<HikariDataSource>().named(config.name).toProvider(HikariDataSourceProvider(config.name))
-  bind<Jdbi>().named(config.name).toProvider(JdbiProvider(config.name))
+  bind<Jdbi>().named(config.name).toProvider(JdbiProvider(config.name, configureJdbi))
   bind<Sql>().named(config.name).toProvider(SqlProvider(config.name))
   bind<SqlTransaction>().named(config.name).toProvider(SqlTransactionProvider(config.name))
 }
