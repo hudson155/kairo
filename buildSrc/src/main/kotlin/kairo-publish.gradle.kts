@@ -15,8 +15,6 @@ java {
   withSourcesJar()
 }
 
-version = "5.0.0"
-
 publishing {
   repositories {
     maven("localStaging") {
