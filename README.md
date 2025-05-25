@@ -170,10 +170,6 @@ The best way to get started is to refer to the
 ## Releasing
 
 1. Familiarize yourself with [semantic versioning](https://semver.org/).
-2. Create a new branch called `release/X.Y.Z`.
-3. Bump the version in [kairo-publish.gradle.kts](./buildSrc/src/main/kotlin/kairo-publish.gradle.kts).
-4. Commit "Release X.Y.Z".
-5. Create and merge a PR "Release X.Y.Z". No description is necessary.
-6. [Draft a new release](https://github.com/hudson155/kairo/releases/new).
+2. [Draft a new release](https://github.com/hudson155/kairo/releases/new).
    Create a new tag `vX.Y.Z`. Generate release notes.
-7. Manually run `./gradlew publish` on `main` after merging.
+3. Manually run `./gradlew --no-build-cache --no-configuration-cache clean publish jreleaserDeploy -Pversion=5.0.0`.
