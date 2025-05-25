@@ -170,6 +170,6 @@ The best way to get started is to refer to the
 ## Releasing
 
 1. Familiarize yourself with [semantic versioning](https://semver.org/).
-2. [Draft a new release](https://github.com/hudson155/kairo/releases/new).
+2. Manually run `./gradlew --no-build-cache --no-configuration-cache clean publish jreleaserDeploy -Pversion=5.0.0`.
+3. [Draft a new release](https://github.com/hudson155/kairo/releases/new).
    Create a new tag `vX.Y.Z`. Generate release notes.
-3. Manually run `./gradlew --no-build-cache --no-configuration-cache clean publish jreleaserDeploy -Pversion=5.0.0`.
