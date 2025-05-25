@@ -1,16 +1,12 @@
 plugins {
   java
   kotlin("jvm")
-  id("com.google.cloud.artifactregistry.gradle-plugin")
   id("io.gitlab.arturbosch.detekt")
 }
 
 repositories {
   mavenLocal()
   mavenCentral()
-  maven {
-    url = uri("artifactregistry://us-central1-maven.pkg.dev/airborne-software/maven")
-  }
 }
 
 java {
