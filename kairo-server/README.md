@@ -55,7 +55,7 @@ rest:
     host: "0.0.0.0"
     port: 8080
   lifecycle:
-    shutdownGracePeriodMs: 15_000 # 15 seconds.
+    shutdownGracePeriodMs: 0 # 0 seconds.
     shutdownTimeoutMs: 25_000 # 25 seconds.
   parallelism:
     connectionGroupSize: ~
