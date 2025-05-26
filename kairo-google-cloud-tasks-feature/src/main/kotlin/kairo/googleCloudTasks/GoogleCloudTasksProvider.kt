@@ -20,11 +20,6 @@ public class GoogleCloudTasksProvider @Inject constructor(
 
   private fun create(config: KairoGoogleCloudTasksConfig): GoogleCloudTasks =
     when (config) {
-      is KairoGoogleCloudTasksConfig.GoogleAppEngine ->
-        GoogleAppEngineGoogleCloudTasks(
-          cloudTasksClient = CloudTasksClient.create(),
-          tasksConfig = config,
-        )
       is KairoGoogleCloudTasksConfig.Http ->
         HttpGoogleCloudTasks(
           cloudTasksClient = CloudTasksClient.create(),

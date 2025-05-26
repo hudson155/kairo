@@ -39,7 +39,8 @@ class MyClass @Inject constructor(
 # src/main/resources/config/config.yaml
 
 googleCloudScheduler:
-  type: "GoogleAppEngine"
+  type: "Http"
+  baseUrl: "https://example.com/"
   projectId: "secret-grammar-201908"
   location: "us-central1"
   jobName: { }
