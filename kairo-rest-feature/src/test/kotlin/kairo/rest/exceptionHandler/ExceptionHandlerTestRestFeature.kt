@@ -21,9 +21,9 @@ internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
       shutdownTimeoutMs = 15_000, // 15 seconds.
     ),
     parallelism = KairoRestConfig.Parallelism(
-      connectionGroupSize = 4,
-      workerGroupSize = 8,
-      callGroupSize = 16,
+      connectionGroupSize = null,
+      workerGroupSize = 1,
+      callGroupSize = 4,
     ),
   ),
 )

@@ -58,9 +58,9 @@ rest:
     shutdownGracePeriodMs: 15_000 # 15 seconds.
     shutdownTimeoutMs: 25_000 # 25 seconds.
   parallelism:
-    connectionGroupSize: 16
-    workerGroupSize: 32
-    callGroupSize: 64
+    connectionGroupSize: ~
+    workerGroupSize: 4
+    callGroupSize: 16
 ```
 
 Finally, create the Server class itself.

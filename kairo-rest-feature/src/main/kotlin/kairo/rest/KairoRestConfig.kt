@@ -29,8 +29,8 @@ public data class KairoRestConfig(
    * See [ApplicationEngine.Configuration].
    */
   public data class Parallelism(
-    val connectionGroupSize: Int,
-    val workerGroupSize: Int,
-    val callGroupSize: Int,
+    val connectionGroupSize: Int?,
+    val workerGroupSize: Int?,
+    val callGroupSize: Int?,
   )
 }

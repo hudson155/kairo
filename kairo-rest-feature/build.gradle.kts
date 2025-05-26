@@ -17,9 +17,9 @@ dependencies {
   api(libs.ktorHttpJvm) // Exposed for clients.
   implementation(libs.ktorSerializationJackson)
   api(libs.ktorServerAuth)
-  api(libs.ktorServerCio)
   api(libs.ktorServerContentNegotiation)
   api(libs.ktorServerCore)
+  api(libs.ktorServerNetty)
   implementation(libs.ktorServerStatusPages)
 
   testImplementation(project(":kairo-rest-client"))
