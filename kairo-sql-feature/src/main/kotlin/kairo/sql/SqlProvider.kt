@@ -8,6 +8,7 @@ import kairo.dependencyInjection.getInstance
 import kairo.dependencyInjection.getNamedInstance
 import kairo.dependencyInjection.namedKey
 import kairo.transactionManager.TransactionManager
+import kotlinx.coroutines.Dispatchers
 import org.jdbi.v3.core.Jdbi
 
 @Singleton
@@ -24,6 +25,7 @@ public class SqlProvider(
   override fun create(): Sql {
     val sqlTransaction = namedKey<SqlTransaction>(config.name)
     return Sql(
+      dispatcher = Dispatchers.IO.limitedParallelism(config.maximumPoolSize),
       injector = injector,
       jdbi = jdbi,
       sqlTransaction = sqlTransaction,

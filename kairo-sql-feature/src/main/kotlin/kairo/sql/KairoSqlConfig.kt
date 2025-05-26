@@ -10,6 +10,6 @@ public data class KairoSqlConfig(
   val password: ProtectedString?,
   val properties: Map<String, String>,
   val connectionTimeoutMs: Long,
-  val minimumIdle: Int,
+  val minimumIdle: Int?,
   val maximumPoolSize: Int,
 )
