@@ -6,8 +6,8 @@ plugins {
 dependencies {
   api(project(":kairo-serialization")) // Exposed for clients.
 
-  api(libs.ktorClientCio)
   api(libs.ktorClientContentNegotiation)
   api(libs.ktorClientCore)
+  api(libs.ktorClientJava)
   api(libs.ktorSerializationJackson)
 }
