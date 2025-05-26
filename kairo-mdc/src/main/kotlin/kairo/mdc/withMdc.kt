@@ -23,6 +23,6 @@ public suspend fun <T> withMdc(mdc: Map<String, Any?>, block: suspend () -> T): 
   }
 
   return withContext(MDCContext(contextMap)) {
-    block()
+    return@withContext block()
   }
 }
