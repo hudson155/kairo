@@ -2,14 +2,6 @@
 
 A thin wrapper around [Ktor](https://ktor.io/)'s `HttpClient`.
 
-### Implementation notes
-
-CIO is Ktor's custom coroutine-based I/O HTTP client engine factory.
-This is an alternative to OkHttp; CIO uses coroutines instead of threads for handling HTTP requests.
-There may be some potential footguns with CIO when interacting with other libraries,
-especially those that use Thread-local variables.
-See [kairo-rest-feature](../kairo-rest-feature) for more information.
-
 ## Usage
 
 ### Step 1: Include the dependency
