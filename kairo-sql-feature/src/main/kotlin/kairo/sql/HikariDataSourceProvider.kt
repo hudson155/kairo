@@ -33,7 +33,7 @@ public class HikariDataSourceProvider(
           addDataSourceProperty(propertyName, value)
         }
         connectionTimeout = config.connectionTimeoutMs
-        minimumIdle = config.minimumIdle
+        minimumIdle = config.minimumIdle ?: config.maximumPoolSize
         maximumPoolSize = config.maximumPoolSize
       },
     )

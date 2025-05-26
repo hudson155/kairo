@@ -4,8 +4,9 @@ plugins {
 }
 
 dependencies {
-  api(project(":kairo-feature"))
+  implementation(project(":kairo-coroutines"))
   implementation(project(":kairo-do-not-log-string"))
+  api(project(":kairo-feature"))
   implementation(project(":kairo-id-feature"))
   implementation(project(":kairo-logging"))
   implementation(project(":kairo-money"))
