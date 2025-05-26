@@ -17,7 +17,7 @@ internal class ExceptionHandlerTestRestFeature : KairoRestFeature(
       port = exceptionHandlerTestRestPort,
     ),
     lifecycle = KairoRestConfig.Lifecycle(
-      shutdownGracePeriodMs = 0, // 0 seconds.
+      shutdownGracePeriodMs = 0,
       shutdownTimeoutMs = 25_000, // 25 seconds.
     ),
     parallelism = KairoRestConfig.Parallelism(
