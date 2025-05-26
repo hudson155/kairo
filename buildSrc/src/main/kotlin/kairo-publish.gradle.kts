@@ -16,7 +16,7 @@ publishing {
       }
     }
     create<MavenPublication>("maven") {
-      groupId = "kairo"
+      groupId = "software.airborne.kairo"
       /**
        * Derives the artifact ID from the project path.
        */
