@@ -30,7 +30,7 @@ private fun ApplicationEngine.Configuration.applyLifecycle(
 private fun ApplicationEngine.Configuration.applyParallelism(
   config: KairoRestConfig.Parallelism,
 ) {
-  connectionGroupSize = config.connectionGroupSize
-  workerGroupSize = config.workerGroupSize
-  callGroupSize = config.callGroupSize
+  config.connectionGroupSize?.let { connectionGroupSize = it }
+  config.workerGroupSize?.let { workerGroupSize = it }
+  config.callGroupSize?.let { callGroupSize = it }
 }

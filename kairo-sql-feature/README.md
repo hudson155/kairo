@@ -195,7 +195,7 @@ sql:
   properties: { }
   connectionTimeoutMs: 5000 # 5 seconds.
   minimumIdle: 16
-  maximumPoolSize: 64 # Matches rest.parallelism.callGroupSize.
+  maximumPoolSize: 64
 ```
 
 ```kotlin

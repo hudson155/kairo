@@ -2,9 +2,9 @@ package kairo.rest.server
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import io.ktor.server.cio.CIO
 import io.ktor.server.engine.applicationEnvironment
 import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 import kairo.dependencyInjection.LazySingletonProvider
 import kairo.rest.KairoRestConfig
 import kairo.rest.KtorModuleFunction
@@ -13,11 +13,6 @@ import kairo.rest.handler.RestHandler
 
 /**
  * There is a single global [KtorServer] instance in Kairo.
- *
- * [CIO] is Ktor's custom coroutine-based I/O application engine factory.
- * This is an alternative to Netty; [CIO] uses coroutines instead of threads for handling HTTP requests.
- * There are some potential footguns with [CIO] when interacting with other libraries.
- * See the Feature README for more information.
  */
 @Singleton
 internal class KtorServerProvider @Inject constructor(
@@ -28,7 +23,7 @@ internal class KtorServerProvider @Inject constructor(
 ) : LazySingletonProvider<KtorServer>() {
   override fun create(): KtorServer =
     embeddedServer(
-      factory = CIO,
+      factory = Netty,
       environment = applicationEnvironment(),
       configure = configureEmbeddedServer(config),
       module = {
