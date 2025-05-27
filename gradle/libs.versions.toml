@@ -16,8 +16,7 @@ kotest = "5.9.1" # https://github.com/kotest/kotest/releases
 kotlinLogging = "7.0.7" # https://github.com/oshai/kotlin-logging/releases
 kotlinxCoroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines/releases
 ktor = "3.1.3" # https://ktor.io/docs/releases.html#release-details
-log4j2 = "3.0.0-beta3" # https://github.com/apache/logging-log4j2/releases
-log4j2Slf4j2Impl = "2.24.1" # https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-bom/3.0.0-beta3
+log4j2 = "3.0.0-beta2" # https://github.com/apache/logging-log4j2/releases
 mockK = "1.14.2" # https://github.com/mockk/mockk/releases
 moneta = "1.4.5" # https://mvnrepository.com/artifact/org.javamoney/moneta
 postgres = "42.7.5" # https://github.com/pgjdbc/pgjdbc/releases
@@ -63,7 +62,7 @@ ktorServerStatusPages = { module = "io.ktor:ktor-server-status-pages", version.r
 log4j2ConfigYaml = { module = "org.apache.logging.log4j:log4j-config-yaml", version.ref = "log4j2" }
 log4j2Core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j2" }
 log4j2LayoutTemplateJson = { module = "org.apache.logging.log4j:log4j-layout-template-json", version.ref = "log4j2" }
-log4j2Slf4j2Impl = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j2Slf4j2Impl" }
+log4j2Slf4j2Impl = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j2" }
 mockK = { module = "io.mockk:mockk", version.ref = "mockK" }
 moneta = { module = "org.javamoney:moneta", version.ref = "moneta" }
 postgres = { module = "org.postgresql:postgresql", version.ref = "postgres" }
