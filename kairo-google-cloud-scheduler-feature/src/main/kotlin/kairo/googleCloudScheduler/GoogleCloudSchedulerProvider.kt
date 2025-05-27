@@ -17,6 +17,11 @@ public class GoogleCloudSchedulerProvider @Inject constructor(
 
   private fun create(config: KairoGoogleCloudSchedulerConfig): GoogleCloudScheduler =
     when (config) {
+      is KairoGoogleCloudSchedulerConfig.GoogleAppEngine ->
+        GoogleAppEngineGoogleCloudScheduler(
+          cloudSchedulerClient = CloudSchedulerClient.create(),
+          schedulerConfig = config,
+        )
       is KairoGoogleCloudSchedulerConfig.Http ->
         HttpGoogleCloudScheduler(
           cloudSchedulerClient = CloudSchedulerClient.create(),
