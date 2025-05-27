@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes(
+  JsonSubTypes.Type(KairoGoogleCloudTasksConfig.GoogleAppEngine::class, name = "GoogleAppEngine"),
   JsonSubTypes.Type(KairoGoogleCloudTasksConfig.Http::class, name = "Http"),
   JsonSubTypes.Type(KairoGoogleCloudTasksConfig.Local::class, name = "Local"),
   JsonSubTypes.Type(KairoGoogleCloudTasksConfig.Noop::class, name = "Noop"),
@@ -15,6 +16,16 @@ public sealed class KairoGoogleCloudTasksConfig {
     val prefix: String?,
     val suffix: String?,
   )
+
+  /**
+   * See [GoogleAppEngineGoogleCloudTasks].
+   */
+  public data class GoogleAppEngine(
+    override val projectId: String,
+    override val location: String,
+    override val queueName: QueueName,
+    val service: String,
+  ) : Real()
 
   /**
    * See [HttpGoogleCloudTasks].
