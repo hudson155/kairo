@@ -5,15 +5,19 @@ package kairo.serialization.util
 import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
+import kairo.reflect.KairoType
 import kairo.reflect.kairoType
 import kairo.serialization.typeReference
+
+public inline fun <reified T : Any> ObjectMapper.kairoWrite(value: T?): String =
+  kairoWrite(value, kairoType<T>())
 
 /**
  * Equivalent of [ObjectMapper.writeValueAsString], but doesn't suffer from type erasure.
  * https://stackoverflow.com/questions/34193177/why-does-jackson-polymorphic-serialization-not-work-in-lists
  */
-public inline fun <reified T : Any> ObjectMapper.kairoWrite(value: T?): String =
-  writerFor(kairoType<T>().typeReference).writeValueAsString(value)
+public fun <T : Any> ObjectMapper.kairoWrite(value: T?, type: KairoType<T>): String =
+  writerFor(type.typeReference).writeValueAsString(value)
 
 /*
  * These methods are "special" versions of existing Jackson methods.
