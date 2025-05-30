@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.json.JsonMapper
 import io.kotest.matchers.shouldBe
+import kairo.reflect.kairoType
 import kairo.serialization.jsonMapper
+import kairo.serialization.typeReference
 import org.junit.jupiter.api.Test
 
 internal class KairoWriteTest {
@@ -35,9 +37,30 @@ internal class KairoWriteTest {
   }
 
   @Test
-  fun `kairoWrite works`() {
+  fun `kairoWrite works, inline`() {
     val vehicle = Vehicle.Car(model = "Ford")
     mapper.kairoWrite(listOf(vehicle))
+      .shouldBe("[{\"type\":\"Car\",\"model\":\"Ford\",\"wheels\":4}]")
+  }
+
+  @Test
+  fun `kairoWrite works, kairo type`() {
+    val vehicle = Vehicle.Car(model = "Ford")
+    mapper.kairoWrite(listOf(vehicle), kairoType<List<Vehicle>>())
+      .shouldBe("[{\"type\":\"Car\",\"model\":\"Ford\",\"wheels\":4}]")
+  }
+
+  @Test
+  fun `kairoWrite works, type reference`() {
+    val vehicle = Vehicle.Car(model = "Ford")
+    mapper.kairoWrite(listOf(vehicle), kairoType<List<Vehicle>>().typeReference)
+      .shouldBe("[{\"type\":\"Car\",\"model\":\"Ford\",\"wheels\":4}]")
+  }
+
+  @Test
+  fun `kairoWrite works, java type`() {
+    val vehicle = Vehicle.Car(model = "Ford")
+    mapper.kairoWrite(listOf(vehicle), mapper.constructType(kairoType<List<Vehicle>>().typeReference))
       .shouldBe("[{\"type\":\"Car\",\"model\":\"Ford\",\"wheels\":4}]")
   }
 }

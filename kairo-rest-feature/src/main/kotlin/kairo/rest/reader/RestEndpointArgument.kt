@@ -1,6 +1,5 @@
 package kairo.rest.reader
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import kairo.rest.KtorServerMapper
@@ -47,14 +46,6 @@ internal sealed class RestEndpointArgument(
       }
     }
 
-    /**
-     * Params are always strings, but sometimes they need to be converted to non-string-like types.
-     * To achieve this, we first try using [ObjectMapper.convertValue] which should work for string-like types.
-     * We then try using [ObjectMapper.readValue] which should work for non-string-like types.
-     *
-     * This is a fairly hacky approach. Improvements are welcomed!
-     */
-    @Suppress("ForbiddenMethodCall")
     private fun convert(parameter: String): Any? {
       val type = KtorServerMapper.json.constructType(param.type.javaType)
       return KtorServerMapper.json.readValueSpecial(parameter, type)
