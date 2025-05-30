@@ -7,7 +7,7 @@ import kairo.serialization.jsonMapper
 import kairo.serialization.typeReference
 import org.junit.jupiter.api.Test
 
-internal class KairoWriteSpecial {
+internal class KairoWriteSpecialTest {
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
