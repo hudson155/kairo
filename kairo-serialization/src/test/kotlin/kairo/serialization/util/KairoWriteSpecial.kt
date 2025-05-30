@@ -7,78 +7,78 @@ import kairo.serialization.jsonMapper
 import kairo.serialization.typeReference
 import org.junit.jupiter.api.Test
 
-internal class WriteValueAsStringSpecialTest {
+internal class KairoWriteSpecial {
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
   fun `string, inline`() {
-    mapper.writeValueAsStringSpecial<String>("foo")
+    mapper.kairoWriteSpecial<String>("foo")
       .shouldBe("foo")
   }
 
   @Test
   fun `string, kairo type`() {
-    mapper.writeValueAsStringSpecial("foo", kairoType<String>())
+    mapper.kairoWriteSpecial("foo", kairoType<String>())
       .shouldBe("foo")
   }
 
   @Test
   fun `string, type reference`() {
-    mapper.writeValueAsStringSpecial("foo", kairoType<String>().typeReference)
+    mapper.kairoWriteSpecial("foo", kairoType<String>().typeReference)
       .shouldBe("foo")
   }
 
   @Test
   fun `string, java type`() {
-    mapper.writeValueAsStringSpecial("foo", mapper.constructType(kairoType<String>().typeReference))
+    mapper.kairoWriteSpecial("foo", mapper.constructType(kairoType<String>().typeReference))
       .shouldBe("foo")
   }
 
   @Test
   fun `boolean, inline`() {
-    mapper.writeValueAsStringSpecial<Boolean>(true)
+    mapper.kairoWriteSpecial<Boolean>(true)
       .shouldBe("true")
   }
 
   @Test
   fun `boolean, kairo type`() {
-    mapper.writeValueAsStringSpecial(true, kairoType<Boolean>())
+    mapper.kairoWriteSpecial(true, kairoType<Boolean>())
       .shouldBe("true")
   }
 
   @Test
   fun `boolean, type reference`() {
-    mapper.writeValueAsStringSpecial(true, kairoType<Boolean>().typeReference)
+    mapper.kairoWriteSpecial(true, kairoType<Boolean>().typeReference)
       .shouldBe("true")
   }
 
   @Test
   fun `boolean, java type`() {
-    mapper.writeValueAsStringSpecial(true, mapper.constructType(kairoType<Boolean>().typeReference))
+    mapper.kairoWriteSpecial(true, mapper.constructType(kairoType<Boolean>().typeReference))
       .shouldBe("true")
   }
 
   @Test
   fun `null, inline`() {
-    mapper.writeValueAsStringSpecial<Boolean>(null)
+    mapper.kairoWriteSpecial<Boolean>(null)
       .shouldBe("null")
   }
 
   @Test
   fun `null, kairo type`() {
-    mapper.writeValueAsStringSpecial(null, kairoType<Boolean>())
+    mapper.kairoWriteSpecial(null, kairoType<Boolean>())
       .shouldBe("null")
   }
 
   @Test
   fun `null, type reference`() {
-    mapper.writeValueAsStringSpecial(null, kairoType<Boolean>().typeReference)
+    mapper.kairoWriteSpecial(null, kairoType<Boolean>().typeReference)
       .shouldBe("null")
   }
 
   @Test
   fun `null, java type`() {
-    mapper.writeValueAsStringSpecial(null, mapper.constructType(kairoType<Boolean>().typeReference))
+    mapper.kairoWriteSpecial(null, mapper.constructType(kairoType<Boolean>().typeReference))
       .shouldBe("null")
   }
 }

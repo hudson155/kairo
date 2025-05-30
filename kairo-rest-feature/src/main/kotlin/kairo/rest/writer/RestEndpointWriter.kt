@@ -10,7 +10,7 @@ import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.endpoint.RestEndpointDetails
 import kairo.rest.template.RestEndpointPath
 import kairo.rest.template.RestEndpointTemplate
-import kairo.serialization.util.writeValueAsStringSpecial
+import kairo.serialization.util.kairoWriteSpecial
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.declaredMemberProperties
@@ -62,7 +62,7 @@ public class RestEndpointWriter<in E : RestEndpoint<*, *>>(
 
   private fun property(endpoint: E, name: String): String? {
     val property = properties.single { it.name == name }
-    return property.get(endpoint)?.let { KtorServerMapper.json.writeValueAsStringSpecial(it) }
+    return property.get(endpoint)?.let { KtorServerMapper.json.kairoWriteSpecial(it) }
   }
 
   public companion object {
