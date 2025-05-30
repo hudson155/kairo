@@ -7,6 +7,7 @@ import io.kotest.matchers.shouldBe
 import kairo.reflect.kairoType
 import kairo.serialization.jsonMapper
 import kairo.serialization.typeReference
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class KairoWriteTest {
@@ -29,7 +30,7 @@ internal class KairoWriteTest {
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
-  fun `default approach does not work`() {
+  fun `default approach does not work`(): Unit = runTest {
     val vehicle = Vehicle.Car(model = "Ford")
     @Suppress("ForbiddenMethodCall")
     mapper.writeValueAsString(listOf(vehicle))
@@ -37,28 +38,28 @@ internal class KairoWriteTest {
   }
 
   @Test
-  fun `kairoWrite works, inline`() {
+  fun `kairoWrite works, inline`(): Unit = runTest {
     val vehicle = Vehicle.Car(model = "Ford")
     mapper.kairoWrite(listOf(vehicle))
       .shouldBe("[{\"type\":\"Car\",\"model\":\"Ford\",\"wheels\":4}]")
   }
 
   @Test
-  fun `kairoWrite works, kairo type`() {
+  fun `kairoWrite works, kairo type`(): Unit = runTest {
     val vehicle = Vehicle.Car(model = "Ford")
     mapper.kairoWrite(listOf(vehicle), kairoType<List<Vehicle>>())
       .shouldBe("[{\"type\":\"Car\",\"model\":\"Ford\",\"wheels\":4}]")
   }
 
   @Test
-  fun `kairoWrite works, type reference`() {
+  fun `kairoWrite works, type reference`(): Unit = runTest {
     val vehicle = Vehicle.Car(model = "Ford")
     mapper.kairoWrite(listOf(vehicle), kairoType<List<Vehicle>>().typeReference)
       .shouldBe("[{\"type\":\"Car\",\"model\":\"Ford\",\"wheels\":4}]")
   }
 
   @Test
-  fun `kairoWrite works, java type`() {
+  fun `kairoWrite works, java type`(): Unit = runTest {
     val vehicle = Vehicle.Car(model = "Ford")
     mapper.kairoWrite(listOf(vehicle), mapper.constructType(kairoType<List<Vehicle>>().typeReference))
       .shouldBe("[{\"type\":\"Car\",\"model\":\"Ford\",\"wheels\":4}]")

@@ -2,6 +2,7 @@ package kairo.reflect
 
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 @Suppress("FunctionMinLength")
@@ -27,61 +28,61 @@ internal class SealedSubclassesRecursiveTest {
   class J : E()
 
   @Test
-  fun a() {
+  fun a(): Unit = runTest {
     A::class.sealedSubclassesRecursive.map { it.simpleName!! }
       .shouldContainExactlyInAnyOrder("C", "D", "F", "G", "I", "J")
   }
 
   @Test
-  fun b() {
+  fun b(): Unit = runTest {
     B::class.sealedSubclassesRecursive.map { it.simpleName!! }
       .shouldContainExactlyInAnyOrder("F", "G", "I", "J")
   }
 
   @Test
-  fun c() {
+  fun c(): Unit = runTest {
     C::class.sealedSubclassesRecursive.map { it.simpleName!! }
       .shouldContainExactlyInAnyOrder("C")
   }
 
   @Test
-  fun d() {
+  fun d(): Unit = runTest {
     D::class.sealedSubclassesRecursive.map { it.simpleName!! }
       .shouldContainExactlyInAnyOrder("D")
   }
 
   @Test
-  fun e() {
+  fun e(): Unit = runTest {
     E::class.sealedSubclassesRecursive.map { it.simpleName!! }
       .shouldContainExactlyInAnyOrder("I", "J")
   }
 
   @Test
-  fun f() {
+  fun f(): Unit = runTest {
     F::class.sealedSubclassesRecursive.map { it.simpleName!! }
       .shouldContainExactlyInAnyOrder("F")
   }
 
   @Test
-  fun g() {
+  fun g(): Unit = runTest {
     G::class.sealedSubclassesRecursive.map { it.simpleName!! }
       .shouldContainExactlyInAnyOrder("G")
   }
 
   @Test
-  fun h() {
+  fun h(): Unit = runTest {
     H::class.sealedSubclassesRecursive.map { it.simpleName!! }
       .shouldBeEmpty()
   }
 
   @Test
-  fun i() {
+  fun i(): Unit = runTest {
     I::class.sealedSubclassesRecursive.map { it.simpleName!! }
       .shouldContainExactlyInAnyOrder("I")
   }
 
   @Test
-  fun j() {
+  fun j(): Unit = runTest {
     J::class.sealedSubclassesRecursive.map { it.simpleName!! }
       .shouldContainExactlyInAnyOrder("J")
   }
