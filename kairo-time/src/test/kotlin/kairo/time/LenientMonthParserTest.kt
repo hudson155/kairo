@@ -3,11 +3,12 @@ package kairo.time
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import java.time.Month
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class LenientMonthParserTest {
   @Test
-  fun invalid() {
+  fun invalid(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       LenientMonthParser.parse("")
     }
@@ -20,7 +21,7 @@ internal class LenientMonthParserTest {
   }
 
   @Test
-  fun september() {
+  fun september(): Unit = runTest {
     LenientMonthParser.parse("sep").shouldBe(Month.SEPTEMBER)
     LenientMonthParser.parse("sep.").shouldBe(Month.SEPTEMBER)
     LenientMonthParser.parse("sept").shouldBe(Month.SEPTEMBER)

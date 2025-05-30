@@ -8,11 +8,12 @@ import java.time.Month
 import java.time.Year
 import java.time.YearMonth
 import java.time.format.DateTimeParseException
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class LenientTimeParserTest {
   @Test
-  fun `year, only year`() {
+  fun `year, only year`(): Unit = runTest {
     LenientTimeParser.year("2023")
       .shouldBe(Year.of(2023))
     shouldThrow<DateTimeParseException> {
@@ -21,7 +22,7 @@ internal class LenientTimeParserTest {
   }
 
   @Test
-  fun `year, additional`() {
+  fun `year, additional`(): Unit = runTest {
     LenientTimeParser.year("2023-12")
       .shouldBe(Year.of(2023))
     LenientTimeParser.year("2023-12-31")
@@ -41,7 +42,7 @@ internal class LenientTimeParserTest {
   }
 
   @Test
-  fun `year, time zones`() {
+  fun `year, time zones`(): Unit = runTest {
     LenientTimeParser.year("2023-12-31T20:51:58.084577243")
       .shouldBe(Year.of(2023))
     LenientTimeParser.year("2023-12-31T20:51:58.084577243Z")
@@ -55,13 +56,13 @@ internal class LenientTimeParserTest {
   }
 
   @Test
-  fun `yearMonth, insufficient`() {
+  fun `yearMonth, insufficient`(): Unit = runTest {
     LenientTimeParser.yearMonth("2023")
       .shouldBe(YearMonth.of(2023, Month.JANUARY))
   }
 
   @Test
-  fun `yearMonth, only yearMonth`() {
+  fun `yearMonth, only yearMonth`(): Unit = runTest {
     LenientTimeParser.yearMonth("2023-12")
       .shouldBe(YearMonth.of(2023, Month.DECEMBER))
     shouldThrow<DateTimeParseException> {
@@ -70,7 +71,7 @@ internal class LenientTimeParserTest {
   }
 
   @Test
-  fun `yearMonth, additional`() {
+  fun `yearMonth, additional`(): Unit = runTest {
     LenientTimeParser.yearMonth("2023-12-31")
       .shouldBe(YearMonth.of(2023, Month.DECEMBER))
     LenientTimeParser.yearMonth("2023-12-31T")
@@ -88,7 +89,7 @@ internal class LenientTimeParserTest {
   }
 
   @Test
-  fun `yearMonth, time zones`() {
+  fun `yearMonth, time zones`(): Unit = runTest {
     LenientTimeParser.yearMonth("2023-12-31T20:51:58.084577243")
       .shouldBe(YearMonth.of(2023, Month.DECEMBER))
     LenientTimeParser.yearMonth("2023-12-31T20:51:58.084577243Z")
@@ -102,7 +103,7 @@ internal class LenientTimeParserTest {
   }
 
   @Test
-  fun `localDate, insufficient`() {
+  fun `localDate, insufficient`(): Unit = runTest {
     LenientTimeParser.localDate("2023")
       .shouldBe(LocalDate.of(2023, Month.JANUARY, 1))
     LenientTimeParser.localDate("2023-12")
@@ -110,14 +111,14 @@ internal class LenientTimeParserTest {
   }
 
   @Test
-  fun `localDate, only localDate`() {
+  fun `localDate, only localDate`(): Unit = runTest {
     LenientTimeParser.localDate("2023-12-31")
       .shouldBe(LocalDate.of(2023, Month.DECEMBER, 31))
     LenientTimeParser.localDate("2023-12-31T")
   }
 
   @Test
-  fun `localDate, additional`() {
+  fun `localDate, additional`(): Unit = runTest {
     LenientTimeParser.localDate("2023-12-31T20")
       .shouldBe(LocalDate.of(2023, Month.DECEMBER, 31))
     LenientTimeParser.localDate("2023-12-31T20:51")
@@ -131,7 +132,7 @@ internal class LenientTimeParserTest {
   }
 
   @Test
-  fun `localDate, time zones`() {
+  fun `localDate, time zones`(): Unit = runTest {
     LenientTimeParser.localDate("2023-12-31T20:51:58.084577243")
       .shouldBe(LocalDate.of(2023, Month.DECEMBER, 31))
     LenientTimeParser.localDate("2023-12-31T20:51:58.084577243Z")
@@ -145,7 +146,7 @@ internal class LenientTimeParserTest {
   }
 
   @Test
-  fun `instant, insufficient`() {
+  fun `instant, insufficient`(): Unit = runTest {
     shouldThrow<DateTimeParseException> {
       LenientTimeParser.instant("2023")
     }
@@ -161,7 +162,7 @@ internal class LenientTimeParserTest {
   }
 
   @Test
-  fun `instant, only instant`() {
+  fun `instant, only instant`(): Unit = runTest {
     LenientTimeParser.instant("2023-12-31")
       .shouldBe(Instant.parse("2023-12-31T00:00:00Z"))
     LenientTimeParser.instant("2023-12-31T")
@@ -179,7 +180,7 @@ internal class LenientTimeParserTest {
   }
 
   @Test
-  fun `instant, time zones`() {
+  fun `instant, time zones`(): Unit = runTest {
     LenientTimeParser.instant("2023-12-31T20:51:58.084577243")
       .shouldBe(Instant.parse("2023-12-31T20:51:58.084577243Z"))
     LenientTimeParser.instant("2023-12-31T20:51:58.084577243Z")
@@ -193,13 +194,13 @@ internal class LenientTimeParserTest {
   }
 
   @Test
-  fun `iso-8601, seconds`() {
+  fun `iso-8601, seconds`(): Unit = runTest {
     LenientTimeParser.instant("1704055918")
       .shouldBe(Instant.parse("2023-12-31T20:51:58Z"))
   }
 
   @Test
-  fun `iso-8601, milliseconds`() {
+  fun `iso-8601, milliseconds`(): Unit = runTest {
     LenientTimeParser.instant("1704055918084")
       .shouldBe(Instant.parse("2023-12-31T20:51:58.084Z"))
   }
