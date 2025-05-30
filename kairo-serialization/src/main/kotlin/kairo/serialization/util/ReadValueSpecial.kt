@@ -9,10 +9,10 @@ import kairo.reflect.KairoType
 import kairo.reflect.kairoType
 import kairo.serialization.typeReference
 
-public inline fun <reified T : Any> ObjectMapper.readValueSpecial(value: String): Any? =
+public inline fun <reified T : Any> ObjectMapper.readValueSpecial(value: String): T? =
   readValueSpecial(value, kairoType<T>())
 
-public fun <T : Any> ObjectMapper.readValueSpecial(value: String, type: KairoType<T>): Any? =
+public fun <T : Any> ObjectMapper.readValueSpecial(value: String, type: KairoType<T>): T? =
   readValueSpecial(value, type.typeReference)
 
 /*
@@ -20,7 +20,7 @@ public fun <T : Any> ObjectMapper.readValueSpecial(value: String, type: KairoTyp
  * that passes through strings untouched.
  * This is a fairly hacky approach. Improvements are welcomed!
  */
-public fun <T : Any> ObjectMapper.readValueSpecial(value: String, typeReference: TypeReference<T>): Any? {
+public fun <T : Any> ObjectMapper.readValueSpecial(value: String, typeReference: TypeReference<T>): T? {
   try {
     return convertValue(value, typeReference)
   } catch (e: IllegalArgumentException) {
