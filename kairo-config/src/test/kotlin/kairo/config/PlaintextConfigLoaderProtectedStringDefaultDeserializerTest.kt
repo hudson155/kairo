@@ -32,7 +32,7 @@ internal class PlaintextConfigLoaderProtectedStringDefaultDeserializerTest : Con
     }
   """.trimIndent()
 
-  private val nullString = """
+  private val nullString: String = """
     {
       "message": null
     }
