@@ -1,5 +1,6 @@
 package kairo.rest.exceptionHandler
 
+import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -41,7 +42,7 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
 
   override val server: Server = Server(libraryBookService)
 
-  private val clientMapper: String =
+  private val clientMapper: JsonMapper =
     jsonMapper {
       allowUnknownProperties = true
       prettyPrint = true
