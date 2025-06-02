@@ -41,7 +41,7 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
 
   override val server: Server = Server(libraryBookService)
 
-  private val clientMapper =
+  private val clientMapper: String =
     jsonMapper {
       allowUnknownProperties = true
       prettyPrint = true

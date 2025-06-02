@@ -24,13 +24,13 @@ internal class PlaintextConfigLoaderBooleanDefaultDeserializerTest : ConfigLoade
     }
   """.trimIndent()
 
-  private val nullString = """
+  private val nullString: String = """
     {
       "message": null
     }
   """.trimIndent()
 
-  private val incorrectTypeString = """
+  private val incorrectTypeString: String = """
     {
       "message": "Hello, World!"
     }
