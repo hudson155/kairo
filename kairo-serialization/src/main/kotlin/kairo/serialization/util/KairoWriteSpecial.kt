@@ -24,11 +24,12 @@ public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T?, type: KairoType<T
 public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T?, typeReference: TypeReference<T>): String {
   try {
     return convertValue(value)
-  } catch (e: Exception) {
+  } catch (outerException: Exception) {
     try {
       return kairoWrite(value, typeReference)
-    } catch (_: Exception) {
-      throw e
+    } catch (innerException: Exception) {
+      outerException.addSuppressed(innerException)
+      throw outerException
     }
   }
 }
@@ -36,11 +37,12 @@ public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T?, typeReference: Ty
 public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T?, type: JavaType): String {
   try {
     return convertValue(value)
-  } catch (e: Exception) {
+  } catch (outerException: Exception) {
     try {
       return kairoWrite(value, type)
-    } catch (_: Exception) {
-      throw e
+    } catch (innerException: Exception) {
+      outerException.addSuppressed(innerException)
+      throw outerException
     }
   }
 }
