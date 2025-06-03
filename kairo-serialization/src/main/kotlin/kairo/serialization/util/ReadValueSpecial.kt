@@ -22,24 +22,26 @@ public fun <T : Any> ObjectMapper.readValueSpecial(value: String, type: KairoTyp
  */
 public fun <T : Any> ObjectMapper.readValueSpecial(value: String, typeReference: TypeReference<T>): T? {
   try {
-    return convertValue(value, typeReference)
-  } catch (e: IllegalArgumentException) {
+    return readValue(value, typeReference)
+  } catch (outerException: Exception) {
     try {
-      return readValue(value, typeReference)
-    } catch (_: Exception) {
-      throw e
+      return convertValue(value, typeReference)
+    } catch (innerException: Exception) {
+      innerException.addSuppressed(outerException)
+      throw innerException
     }
   }
 }
 
 public fun ObjectMapper.readValueSpecial(value: String, type: JavaType): Any? {
   try {
-    return convertValue(value, type)
-  } catch (e: IllegalArgumentException) {
+    return readValue(value, type)
+  } catch (outerException: Exception) {
     try {
-      return readValue(value, type)
-    } catch (_: Exception) {
-      throw e
+      return convertValue(value, type)
+    } catch (innerException: Exception) {
+      innerException.addSuppressed(outerException)
+      throw innerException
     }
   }
 }
