@@ -73,7 +73,7 @@ internal class ReadValueSpecialTest {
   @Test
   fun `string, inline, null`(): Unit = runTest {
     mapper.readValueSpecial<String>("null")
-      .shouldBe("null")
+      .shouldBeNull()
   }
 
   @Test
@@ -85,7 +85,7 @@ internal class ReadValueSpecialTest {
   @Test
   fun `string, kairo type, null`(): Unit = runTest {
     mapper.readValueSpecial("null", kairoType<String>())
-      .shouldBe("null")
+      .shouldBeNull()
   }
 
   @Test
@@ -97,7 +97,7 @@ internal class ReadValueSpecialTest {
   @Test
   fun `string, type reference, null`(): Unit = runTest {
     mapper.readValueSpecial("null", kairoType<String>().typeReference)
-      .shouldBe("null")
+      .shouldBeNull()
   }
 
   @Test
@@ -109,7 +109,7 @@ internal class ReadValueSpecialTest {
   @Test
   fun `string, java type, null`(): Unit = runTest {
     mapper.readValueSpecial("null", mapper.constructType(kairoType<String>().typeReference))
-      .shouldBe("null")
+      .shouldBeNull()
   }
 
   @Test

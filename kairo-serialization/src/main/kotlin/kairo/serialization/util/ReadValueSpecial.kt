@@ -22,10 +22,10 @@ public fun <T : Any> ObjectMapper.readValueSpecial(value: String, type: KairoTyp
  */
 public fun <T : Any> ObjectMapper.readValueSpecial(value: String, typeReference: TypeReference<T>): T? {
   try {
-    return convertValue(value, typeReference)
-  } catch (e: IllegalArgumentException) {
+    return readValue(value, typeReference)
+  } catch (e: Exception) {
     try {
-      return readValue(value, typeReference)
+      return convertValue(value, typeReference)
     } catch (_: Exception) {
       throw e
     }
@@ -34,10 +34,10 @@ public fun <T : Any> ObjectMapper.readValueSpecial(value: String, typeReference:
 
 public fun ObjectMapper.readValueSpecial(value: String, type: JavaType): Any? {
   try {
-    return convertValue(value, type)
-  } catch (e: IllegalArgumentException) {
+    return readValue(value, type)
+  } catch (e: Exception) {
     try {
-      return readValue(value, type)
+      return convertValue(value, type)
     } catch (_: Exception) {
       throw e
     }
