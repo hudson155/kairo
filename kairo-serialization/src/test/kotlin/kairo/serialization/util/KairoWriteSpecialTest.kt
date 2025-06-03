@@ -12,7 +12,7 @@ internal class KairoWriteSpecialTest {
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
-  fun `string, inline, non-null`(): Unit = runTest {
+  fun `string, inline`(): Unit = runTest {
     mapper.kairoWriteSpecial<String>("foo")
       .shouldBe("foo")
   }
