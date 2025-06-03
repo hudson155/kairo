@@ -9,7 +9,35 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class KairoWriteSpecialTest {
+  internal data class MyClass(
+    val foo: String,
+  )
+
   private val mapper: JsonMapper = jsonMapper().build()
+
+  @Test
+  fun `data class, inline`(): Unit = runTest {
+    mapper.kairoWriteSpecial<MyClass>(MyClass("bar"))
+      .shouldBe("{\"foo\":\"bar\"}")
+  }
+
+  @Test
+  fun `data class, kairo type`(): Unit = runTest {
+    mapper.kairoWriteSpecial(MyClass("bar"), kairoType<MyClass>())
+      .shouldBe("{\"foo\":\"bar\"}")
+  }
+
+  @Test
+  fun `data class, type reference`(): Unit = runTest {
+    mapper.kairoWriteSpecial(MyClass("bar"), kairoType<MyClass>().typeReference)
+      .shouldBe("{\"foo\":\"bar\"}")
+  }
+
+  @Test
+  fun `data class, java type`(): Unit = runTest {
+    mapper.kairoWriteSpecial(MyClass("bar"), mapper.constructType(kairoType<MyClass>().typeReference))
+      .shouldBe("{\"foo\":\"bar\"}")
+  }
 
   @Test
   fun `string, inline`(): Unit = runTest {
@@ -57,29 +85,5 @@ internal class KairoWriteSpecialTest {
   fun `boolean, java type`(): Unit = runTest {
     mapper.kairoWriteSpecial(true, mapper.constructType(kairoType<Boolean>().typeReference))
       .shouldBe("true")
-  }
-
-  @Test
-  fun `null, inline`(): Unit = runTest {
-    mapper.kairoWriteSpecial<Boolean>(null)
-      .shouldBe("null")
-  }
-
-  @Test
-  fun `null, kairo type`(): Unit = runTest {
-    mapper.kairoWriteSpecial(null, kairoType<Boolean>())
-      .shouldBe("null")
-  }
-
-  @Test
-  fun `null, type reference`(): Unit = runTest {
-    mapper.kairoWriteSpecial(null, kairoType<Boolean>().typeReference)
-      .shouldBe("null")
-  }
-
-  @Test
-  fun `null, java type`(): Unit = runTest {
-    mapper.kairoWriteSpecial(null, mapper.constructType(kairoType<Boolean>().typeReference))
-      .shouldBe("null")
   }
 }
