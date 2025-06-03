@@ -12,7 +12,7 @@ internal class KairoWriteSpecialTest {
   private val mapper: JsonMapper = jsonMapper().build()
 
   @Test
-  fun `string, inline`(): Unit = runTest {
+  fun `string, inline, non-null`(): Unit = runTest {
     mapper.kairoWriteSpecial<String>("foo")
       .shouldBe("foo")
   }
@@ -57,29 +57,5 @@ internal class KairoWriteSpecialTest {
   fun `boolean, java type`(): Unit = runTest {
     mapper.kairoWriteSpecial(true, mapper.constructType(kairoType<Boolean>().typeReference))
       .shouldBe("true")
-  }
-
-  @Test
-  fun `null, inline`(): Unit = runTest {
-    mapper.kairoWriteSpecial<Boolean>(null)
-      .shouldBe("null")
-  }
-
-  @Test
-  fun `null, kairo type`(): Unit = runTest {
-    mapper.kairoWriteSpecial(null, kairoType<Boolean>())
-      .shouldBe("null")
-  }
-
-  @Test
-  fun `null, type reference`(): Unit = runTest {
-    mapper.kairoWriteSpecial(null, kairoType<Boolean>().typeReference)
-      .shouldBe("null")
-  }
-
-  @Test
-  fun `null, java type`(): Unit = runTest {
-    mapper.kairoWriteSpecial(null, mapper.constructType(kairoType<Boolean>().typeReference))
-      .shouldBe("null")
   }
 }

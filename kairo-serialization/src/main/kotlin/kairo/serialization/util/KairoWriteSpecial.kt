@@ -10,10 +10,10 @@ import kairo.reflect.KairoType
 import kairo.reflect.kairoType
 import kairo.serialization.typeReference
 
-public inline fun <reified T : Any> ObjectMapper.kairoWriteSpecial(value: T?): String =
+public inline fun <reified T : Any> ObjectMapper.kairoWriteSpecial(value: T): String =
   kairoWriteSpecial(value, kairoType<T>())
 
-public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T?, type: KairoType<T>): String =
+public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T, type: KairoType<T>): String =
   kairoWriteSpecial(value, type.typeReference)
 
 /*
@@ -21,10 +21,7 @@ public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T?, type: KairoType<T
  * that passes through strings untouched.
  * This is a fairly hacky approach. Improvements are welcomed!
  */
-public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T?, typeReference: TypeReference<T>): String {
-  if (value == null) {
-    return kairoWrite(null)
-  }
+public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T, typeReference: TypeReference<T>): String {
   try {
     return convertValue(value)
   } catch (e: IllegalArgumentException) {
@@ -36,10 +33,7 @@ public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T?, typeReference: Ty
   }
 }
 
-public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T?, type: JavaType): String {
-  if (value == null) {
-    return kairoWrite(null)
-  }
+public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T, type: JavaType): String {
   try {
     return convertValue(value)
   } catch (e: IllegalArgumentException) {
