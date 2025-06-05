@@ -1,7 +1,5 @@
 package kairo.googleCloudTasks
 
-import io.github.oshai.kotlinlogging.KLogger
-import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.endpoint.RestEndpointDetails
 import kairo.rest.writer.RestEndpointWriter
