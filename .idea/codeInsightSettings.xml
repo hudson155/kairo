@@ -12,7 +12,6 @@
       <name>com.sun.security.*</name>
       <name>com.sun.tools.javac.comp.Flow</name>
       <name>com.typesafe.config.Optional</name>
-      <name>io.github.projectmapk.jackson.module.kogera.jsonMapper</name>
       <name>io.grpc.netty.*</name>
       <name>io.kotest.core.spec.*</name>
       <name>io.ktor.client.HttpClient</name>

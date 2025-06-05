@@ -24,7 +24,7 @@ internal fun Application.installStatusPages(exceptionManager: ExceptionManager) 
 
     @OptIn(InternalAPI::class)
     unhandled { call ->
-      call.attributes.getOrNull<HttpStatusCode>(RoutingFailureStatusCode)?.let<HttpStatusCode, Unit> { statusCode ->
+      call.attributes.getOrNull(RoutingFailureStatusCode)?.let { statusCode ->
         when (statusCode) {
           in setOf(HttpStatusCode.BadRequest, HttpStatusCode.NotFound, HttpStatusCode.MethodNotAllowed) -> {
             call.respondWithError(exceptionManager.handle(EndpointNotFound()))

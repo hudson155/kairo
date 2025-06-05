@@ -10,6 +10,7 @@ package kotlin.collections
  * This is less surprising than [singleOrNull]
  * because it doesn't return null when there are multiple items in the collection.
  */
+@Suppress("ReplaceSizeZeroCheckWithIsEmpty")
 public fun <T> Iterable<T>.singleNullOrThrow(): T? {
   if (this is List) {
     if (size == 0) return null

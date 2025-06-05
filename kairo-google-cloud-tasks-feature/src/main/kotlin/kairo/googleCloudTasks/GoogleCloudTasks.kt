@@ -7,8 +7,6 @@ import kairo.rest.endpoint.RestEndpointDetails
 import kairo.rest.writer.RestEndpointWriter
 import kotlin.reflect.full.findAnnotation
 
-private val logger: KLogger = KotlinLogging.logger {}
-
 /**
  * Primarily, [RealGoogleCloudTasks].
  */

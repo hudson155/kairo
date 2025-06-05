@@ -5,7 +5,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class KairoImplicitToStringTest {
-  @Suppress("EqualsOrHashCode")
+  @Suppress("EqualsOrHashCode", "unused")
   internal open class Subject(
     val something: String,
     val somethingElse: String,

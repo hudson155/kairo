@@ -25,7 +25,7 @@ public class AmbiguousStringMoneyFormatter(
   override fun parse(value: Any): Money {
     value as String
     val format = formatForCurrency(currency)
-    return Money.of(format.parse(value.toString()), currency)
+    return Money.of(format.parse(value), currency)
   }
 
   override fun format(money: Money): String {
