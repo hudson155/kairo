@@ -6,6 +6,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 
+@Suppress("TestInProductSource")
 public abstract class KairoServerTest {
   public abstract val server: TestServer
 

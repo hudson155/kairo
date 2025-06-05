@@ -8,6 +8,6 @@ import org.jdbi.v3.jackson2.Jackson2Plugin
 internal class JacksonPlugin : Jackson2Plugin() {
   override fun customizeHandle(handle: Handle): Handle =
     super.customizeHandle(handle).apply {
-      getConfig(Jackson2Config::class.java).setMapper(sqlMapper)
+      getConfig(Jackson2Config::class.java).mapper = sqlMapper
     }
 }

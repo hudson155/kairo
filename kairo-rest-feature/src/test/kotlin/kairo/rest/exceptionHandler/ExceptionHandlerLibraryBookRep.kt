@@ -10,12 +10,14 @@ internal data class ExceptionHandlerLibraryBookRep(
   val isSeries: Boolean,
   val type: Type,
 ) {
+  @Suppress("unused")
   internal enum class Type { Audio, Print }
 
   internal data class Creator(
     val authors: List<Author>,
     val type: Type,
   ) {
+    @Suppress("unused")
     @JsonIgnore
     val firstAuthor: Author? = authors.firstOrNull()
   }
