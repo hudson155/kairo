@@ -90,8 +90,8 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
         parameters["title"] = "The Name of the Wind"
         parameters["isSeries"] = true.toString()
       }
-      accept(ContentType.Application.Json)
       contentType(ContentType.Application.Json)
+      accept(ContentType.Application.Json)
       setBody(
         mapOf(
           "authors" to listOf(

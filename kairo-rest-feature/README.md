@@ -58,7 +58,7 @@ They are intended to be grouped together using Kotlin singleton objects.
 Implementations must be Kotlin data classes or data objects.
 
 It's perfectly acceptable for two endpoints to have the same method and path,
-as long as they differ by query params, `Accept` header, or `Content-Type` header.
+as long as they differ by query params, `Content-Type` header, or `Accept` header.
 Routing takes all of these into account.
 
 ```kotlin

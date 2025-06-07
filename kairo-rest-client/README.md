@@ -40,8 +40,8 @@ val client = createKairoClient {
 client.request {
   method = HttpMethod.Post
   url("/library-books")
-  accept(ContentType.Application.Json)
   contentType(ContentType.Application.Json)
+  accept(ContentType.Application.Json)
   setBody(
     """
       {
