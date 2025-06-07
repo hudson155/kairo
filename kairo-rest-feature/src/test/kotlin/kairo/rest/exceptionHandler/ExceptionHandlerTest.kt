@@ -16,9 +16,9 @@ import io.ktor.http.contentType
 import io.ktor.http.path
 import io.mockk.every
 import io.mockk.mockk
+import kairo.featureTesting.KairoServerTest
 import kairo.rest.client.KairoClient
 import kairo.rest.client.createKairoClient
-import kairo.featureTesting.KairoServerTest
 import kairo.rest.serialization.JacksonConverter
 import kairo.serialization.jsonMapper
 import kairo.serialization.property.allowUnknownProperties
