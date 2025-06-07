@@ -659,7 +659,7 @@ style:
       - 'com.typesafe.config.Optional' # Use the JDK version instead.
       - 'io.grpc.netty.*'
       - 'io.kotest.core.spec.*' # Use JUnit test annotations.
-      - 'io.ktor.client.HttpClient' # Use kairo.client.KairoClient.
+      - 'io.ktor.client.HttpClient' # Use kairo.rest.client.KairoClient.
       - 'io.ktor.server.plugins.BadRequestException' # Use kairo.exception.BadRequestException.
       - 'io.ktor.server.plugins.CannotTransformContentToTypeException'
       - 'io.ktor.server.plugins.MissingRequestParameterException'
