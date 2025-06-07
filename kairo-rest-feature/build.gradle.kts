@@ -10,7 +10,7 @@ dependencies {
   implementation(project(":kairo-mdc"))
   implementation(project(":kairo-protected-string"))
   implementation(project(":kairo-reflect"))
-  api(project(":kairo-rest-serialization"))
+  implementation(project(":kairo-rest-serialization"))
   api(project(":kairo-serialization")) // Exposed for clients.
 
   api(libs.auth0JavaJwt)
