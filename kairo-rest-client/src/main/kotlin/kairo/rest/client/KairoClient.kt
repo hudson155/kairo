@@ -1,6 +1,6 @@
 @file:Suppress("ForbiddenImport")
 
-package kairo.client
+package kairo.rest.client
 
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
