@@ -10,12 +10,12 @@ dependencies {
   implementation(project(":kairo-mdc"))
   implementation(project(":kairo-protected-string"))
   implementation(project(":kairo-reflect"))
+  implementation(project(":kairo-rest-serialization"))
   api(project(":kairo-serialization")) // Exposed for clients.
 
   api(libs.auth0JavaJwt)
   api(libs.auth0JwksRsa)
   api(libs.ktorHttpJvm) // Exposed for clients.
-  implementation(libs.ktorSerializationJackson)
   api(libs.ktorServerAuth)
   api(libs.ktorServerContentNegotiation)
   api(libs.ktorServerCore)

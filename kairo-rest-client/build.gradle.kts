@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+  api(project(":kairo-rest-serialization"))
   api(project(":kairo-serialization")) // Exposed for clients.
 
   api(libs.ktorClientContentNegotiation)
