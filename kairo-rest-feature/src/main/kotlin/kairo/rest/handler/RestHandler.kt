@@ -51,7 +51,7 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
         val auth = Auth.from(call)
         auth(auth, endpoint)
         val response = withContext(AuthContext(auth)) {
-          return@withContext handle(endpoint)
+          handle(endpoint)
         }
         logger.debug { "Result: $response." }
         val statusCode = statusCode(response)

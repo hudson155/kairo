@@ -20,7 +20,7 @@ internal abstract class ConfigLoaderDeserializerTest {
 
   protected fun allowInsecureConfigSources(boolean: Boolean) {
     every { environmentVariableSupplier["KAIRO_ALLOW_INSECURE_CONFIG_SOURCES", any()] } answers {
-      return@answers if (boolean) true.toString() else secondArg()
+      if (boolean) true.toString() else secondArg()
     }
   }
 
