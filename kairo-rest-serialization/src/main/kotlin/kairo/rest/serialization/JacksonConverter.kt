@@ -19,7 +19,7 @@ import java.nio.charset.Charset
 public class JacksonConverter(
   private val mapper: JsonMapper,
 ) : ContentConverter {
-  private val delegate: JacksonConverter = JacksonConverter(mapper, streamRequestBody = false)
+  private val delegate: ContentConverter = JacksonConverter(mapper, streamRequestBody = false)
 
   override suspend fun serialize(
     contentType: ContentType,
