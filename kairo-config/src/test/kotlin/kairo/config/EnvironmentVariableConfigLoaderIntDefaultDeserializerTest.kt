@@ -102,7 +102,7 @@ internal class EnvironmentVariableConfigLoaderIntDefaultDeserializerTest : Confi
 
   private fun environmentVariable(value: String?) {
     every { environmentVariableSupplier["MESSAGE", any()] } answers {
-      return@answers value ?: secondArg()
+      value ?: secondArg()
     }
   }
 }

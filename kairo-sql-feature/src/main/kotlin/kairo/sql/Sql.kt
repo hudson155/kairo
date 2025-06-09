@@ -23,7 +23,7 @@ public class Sql(
 ) {
   public suspend fun <T> transaction(block: suspend (handle: Handle) -> T): T =
     withContext(dispatcher) {
-      return@withContext transactionManager.transaction(listOf(injector.getInstance(sqlTransaction))) {
+      transactionManager.transaction(listOf(injector.getInstance(sqlTransaction))) {
         val context = checkNotNull(getSqlContext())
         return@transaction block(context.handle)
       }
@@ -31,8 +31,8 @@ public class Sql(
 
   public suspend fun <T> sql(block: suspend (handle: Handle) -> T): T =
     withContext(dispatcher) {
-      return@withContext jdbi.open().use { handle ->
-        return@use block(handle)
+      jdbi.open().use { handle ->
+        block(handle)
       }
     }
 }

@@ -37,7 +37,7 @@ public abstract class SqlStore(databaseName: String) {
   ): T =
     sql.transaction inner@{ handle ->
       try {
-        return@inner block(handle)
+        block(handle)
       } catch (e: UnableToExecuteStatementException) {
         val message = e.serverErrorMessage() ?: throw e
         onError(message)
