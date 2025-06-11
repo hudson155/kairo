@@ -192,9 +192,7 @@ exceptions:
 
 formatting:
   AnnotationOnSeparateLine:
-    active: true
-    autoCorrect: true
-    indentSize: 2
+    active: false
   AnnotationSpacing:
     active: true
     autoCorrect: true
