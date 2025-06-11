@@ -5,7 +5,8 @@ plugins {
 
 dependencies {
   implementation(project(":kairo-coroutines"))
-  api(project(":kairo-logging"))
+  implementation(project(":kairo-logging"))
 
+  testImplementation(project(":kairo-logging:testing"))
   testImplementation(project(":kairo-testing"))
 }
