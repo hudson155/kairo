@@ -7,7 +7,7 @@ dependencies {
   implementation(project(":kairo-coroutines"))
   implementation(project(":kairo-do-not-log-string"))
   api(project(":kairo-feature"))
-  implementation(project(":kairo-id-feature"))
+  implementation(project(":kairo-id"))
   implementation(project(":kairo-logging"))
   implementation(project(":kairo-money"))
   implementation(project(":kairo-protected-string"))

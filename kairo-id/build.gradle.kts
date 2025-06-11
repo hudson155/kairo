@@ -4,8 +4,6 @@ plugins {
 }
 
 dependencies {
-  api(project(":kairo-feature"))
-  api(project(":kairo-id"))
   implementation(project(":kairo-serialization"))
 
   testImplementation(project(":kairo-testing"))

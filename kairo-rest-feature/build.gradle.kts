@@ -24,7 +24,7 @@ dependencies {
 
   testImplementation(project(":kairo-rest-client"))
   testImplementation(project(":kairo-feature:testing"))
-  testImplementation(project(":kairo-id-feature"))
+  testImplementation(project(":kairo-id"))
   testImplementation(project(":kairo-logging:testing"))
   testImplementation(project(":kairo-rest-feature:testing"))
   testImplementation(project(":kairo-testing"))
