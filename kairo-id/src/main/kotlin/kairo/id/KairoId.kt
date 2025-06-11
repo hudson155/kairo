@@ -3,14 +3,6 @@ package kairo.id
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonValue
 
-public val kairoIdLength: IntRange = 8..32
-
-private val prefixRegex: Regex = Regex("[a-z]+(?:_[a-z]+)*")
-
-private val idRegex: Regex = Regex("[A-Za-z0-9]{${kairoIdLength.first},${kairoIdLength.last}}")
-
-private val fullRegex: Regex = Regex("($prefixRegex)_($idRegex)")
-
 /**
  * Kairo IDs are an optional way to uniquely identify entities.
  * Think of them as an alternative to `UUID`s or serial IDs.
@@ -49,10 +41,16 @@ public class KairoId(
     listOf(prefix, id).joinToString("_")
 
   public companion object {
+    public val length: IntRange = 8..32
+
+    private val prefixRegex: Regex = Regex("[a-z]+(?:_[a-z]+)*")
+    private val idRegex: Regex = Regex("[A-Za-z0-9]{${length.first},${length.last}}")
+    public val regex: Regex = Regex("($prefixRegex)_($idRegex)")
+
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     @JvmStatic
     public fun fromString(string: String): KairoId {
-      val match = requireNotNull(fullRegex.matchEntire(string)) { "Invalid Kairo ID: $string." }
+      val match = requireNotNull(regex.matchEntire(string)) { "Invalid Kairo ID: $string." }
       return KairoId(match.groupValues[1], match.groupValues[2])
     }
   }

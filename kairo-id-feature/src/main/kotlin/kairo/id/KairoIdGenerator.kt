@@ -9,8 +9,8 @@ public abstract class KairoIdGenerator(
   }
 
   init {
-    require(length in kairoIdLength) {
-      "Kairo ID lengths must be between ${kairoIdLength.first} and ${kairoIdLength.last} (inclusive)."
+    require(length in KairoId.length) {
+      "Kairo ID lengths must be between ${KairoId.length.first} and ${KairoId.length.last} (inclusive)."
     }
   }
 
