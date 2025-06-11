@@ -62,4 +62,5 @@ tasks.test {
 detekt {
   config.from(files("$rootDir/.detekt/config.yaml"))
   parallel = true
+  autoCorrect = true
 }
