@@ -96,9 +96,7 @@ complexity:
   MethodOverloading:
     active: false
   NamedArguments:
-    active: true
-    threshold: 3
-    ignoreArgumentsMatchingNames: false
+    active: false # Good practice, but leave this up to the developer.
   NestedBlockDepth:
     active: true
     threshold: 4
