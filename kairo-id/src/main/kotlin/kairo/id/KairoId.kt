@@ -3,7 +3,7 @@ package kairo.id
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonValue
 
-internal val kairoIdLength: IntRange = 8..32
+public val kairoIdLength: IntRange = 8..32
 
 private val prefixRegex: Regex = Regex("[a-z]+(?:_[a-z]+)*")
 
