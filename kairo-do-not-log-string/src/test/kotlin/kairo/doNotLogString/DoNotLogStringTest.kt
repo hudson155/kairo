@@ -23,12 +23,23 @@ internal class DoNotLogStringTest {
     DoNotLogString("1").hashCode().shouldNotBe("2".hashCode())
   }
 
-  @Suppress("ArgumentListWrapping", "LongLine", "MaximumLineLength")
   @Test
   fun `toString method`(): Unit = runTest {
     DoNotLogString("1").toString()
-      .shouldBe("DoNotLogString(hash='c4ca4238a0b923820dcc509a6f75849b', length=1, truncated='1')")
+      .shouldBe(
+        "DoNotLogString(" +
+          "hash='c4ca4238a0b923820dcc509a6f75849b'" +
+          ", length=1" +
+          ", truncated='1'" +
+          ")",
+      )
     DoNotLogString(List(30) { it }.joinToString("")).toString()
-      .shouldBe("DoNotLogString(hash='8d6ecd5c35a0b4c3c8b018fb6d867156', length=50, truncated='0123456789101112131415161718192021222324...')")
+      .shouldBe(
+        "DoNotLogString(" +
+          "hash='8d6ecd5c35a0b4c3c8b018fb6d867156'" +
+          ", length=50" +
+          ", truncated='0123456789101112131415161718192021222324...'" +
+          ")",
+      )
   }
 }
