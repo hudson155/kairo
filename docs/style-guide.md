@@ -4,7 +4,8 @@ Other than the rules defined here, please follow the
 [Google Style Guide](https://developers.google.com/style).
 
 - **Product terminology:**
-  Treat Kairo _Features_ and _Servers_ as proper nouns (the first letter should be capitalized).
+  - Treat Kairo _Features_ and _Servers_ as proper nouns (the first letter should be capitalized).
+  - Also use proper nouns for Kotlin _Flows_.
 
 - **Sentence case:**
   Use American English style for general capitalization.
