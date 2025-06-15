@@ -58,6 +58,7 @@ ktorServerContentNegotiation = { module = "io.ktor:ktor-server-content-negotiati
 ktorServerCore = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
 ktorServerCors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 ktorServerNetty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktorServerSse = { module = "io.ktor:ktor-server-sse", version.ref = "ktor" }
 ktorServerStatusPages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor" }
 log4j2ConfigYaml = { module = "org.apache.logging.log4j:log4j-config-yaml", version.ref = "log4j2" }
 log4j2Core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j2" }
