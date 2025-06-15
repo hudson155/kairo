@@ -3,6 +3,7 @@ package kairo.sql
 import kairo.transactionManager.TransactionManager
 import kairo.transactionManager.TransactionType
 import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.coroutineContext
 import org.jdbi.v3.core.Jdbi
 
 /**
@@ -15,17 +16,17 @@ public class SqlTransaction(
     SqlContext(jdbi.open())
 
   override suspend fun begin() {
-    val context = checkNotNull(getSqlContext())
+    val context = checkNotNull(coroutineContext[SqlContext])
     context.handle.begin()
   }
 
   override suspend fun commit() {
-    val context = checkNotNull(getSqlContext())
+    val context = checkNotNull(coroutineContext[SqlContext])
     context.handle.commit()
   }
 
   override suspend fun rollback() {
-    val context = checkNotNull(getSqlContext())
+    val context = checkNotNull(coroutineContext[SqlContext])
     context.handle.rollback()
   }
 

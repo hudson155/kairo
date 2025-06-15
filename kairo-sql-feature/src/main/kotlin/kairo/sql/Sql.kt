@@ -24,7 +24,7 @@ public class Sql(
   public suspend fun <T> transaction(block: suspend (handle: Handle) -> T): T =
     withContext(dispatcher) {
       transactionManager.transaction(listOf(injector.getInstance(sqlTransaction))) {
-        val context = checkNotNull(getSqlContext())
+        val context = checkNotNull(coroutineContext[SqlContext])
         return@transaction block(context.handle)
       }
     }
