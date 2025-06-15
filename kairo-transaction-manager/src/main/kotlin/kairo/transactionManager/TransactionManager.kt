@@ -3,6 +3,7 @@ package kairo.transactionManager
 import com.google.inject.Inject
 import com.google.inject.Injector
 import com.google.inject.Key
+import kotlin.coroutines.coroutineContext
 
 /**
  * A transaction is a wrapper for some code that should be either committed or rolled back
@@ -52,7 +53,7 @@ public class TransactionManager @Inject constructor(
   ): T {
     require(types.isNotEmpty()) { "Please specify at least 1 transaction type." }
     require(types.distinct() == types) { "Duplicate transaction types specified." }
-    val context = getTransactionContext()
+    val context = coroutineContext[TransactionContext]
     val transaction =
       Transaction(types.filter { context == null || it !in context })
     return transaction.transaction(block)
