@@ -24,7 +24,7 @@ internal class Transaction(
     try {
       val context = createContext()
       return withContext(context) {
-        val transactionContext = checkNotNull(coroutineContext[TransactionContext]) {}
+        val transactionContext = checkNotNull(coroutineContext[TransactionContext])
         try {
           beginAll(transactionContext)
           val result = runBlock(block)
