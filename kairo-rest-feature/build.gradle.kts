@@ -20,7 +20,6 @@ dependencies {
   api(libs.ktorServerContentNegotiation)
   api(libs.ktorServerCore)
   api(libs.ktorServerNetty)
-  implementation(libs.ktorServerSse)
   implementation(libs.ktorServerStatusPages)
 
   testImplementation(project(":kairo-rest-client"))
