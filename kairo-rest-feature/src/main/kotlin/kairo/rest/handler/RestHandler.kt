@@ -16,6 +16,7 @@ import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.exceptionHandler.ExceptionManager
 import kairo.rest.exceptionHandler.respondWithError
 import kairo.rest.reader.RestEndpointReader
+import kairo.rest.response.CustomResponse
 import kairo.rest.server.installStatusPages
 import kairo.rest.template.RestEndpointTemplate
 import kairo.rest.util.typeInfo
@@ -107,6 +108,10 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
   private suspend fun RoutingCall.respond(statusCode: HttpStatusCode, response: Response) {
     if (response is Unit) {
       respond(statusCode)
+      return
+    }
+    if (response is CustomResponse) {
+      with(response) { respond() }
       return
     }
     val typeInfo = typeInfo(responseType.kotlinType)
