@@ -6,7 +6,6 @@ import java.util.Stack
 import kairo.logging.ifDebugEnabled
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.withContext
 
 private val logger: KLogger = KotlinLogging.logger {}
@@ -24,7 +23,7 @@ internal class Transaction(
     try {
       val context = createContext()
       return withContext(context) {
-        val transactionContext = checkNotNull(coroutineContext[TransactionContext])
+        val transactionContext = checkNotNull(getTransactionContext())
         try {
           beginAll(transactionContext)
           val result = runBlock(block)
@@ -59,7 +58,7 @@ internal class Transaction(
     /**
      * Create a new [TransactionContext] if one doesn't exist yet.
      */
-    if (coroutineContext[TransactionContext] == null) {
+    if (getTransactionContext() == null) {
       combinedContext += TransactionContext()
     }
 

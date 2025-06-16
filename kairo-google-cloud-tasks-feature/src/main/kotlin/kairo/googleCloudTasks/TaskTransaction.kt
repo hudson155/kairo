@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import kairo.transactionManager.TransactionManager
 import kairo.transactionManager.TransactionType
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
 
 /**
  * When creating tasks within a transaction, they will not be published until the commit phase.
@@ -25,7 +24,7 @@ public class TaskTransaction @Inject constructor() : TransactionType(), Transact
   override suspend fun begin(): Unit = Unit
 
   override suspend fun commit() {
-    val context = checkNotNull(coroutineContext[TaskContext])
+    val context = checkNotNull(getTaskContext())
     val blocks = context.blocks
     while (blocks.isNotEmpty()) {
       blocks.remove().invoke()
@@ -33,7 +32,7 @@ public class TaskTransaction @Inject constructor() : TransactionType(), Transact
   }
 
   override suspend fun rollback() {
-    val context = checkNotNull(coroutineContext[TaskContext])
+    val context = checkNotNull(getTaskContext())
     context.blocks.clear()
   }
 
