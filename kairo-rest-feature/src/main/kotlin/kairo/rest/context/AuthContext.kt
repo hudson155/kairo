@@ -7,12 +7,9 @@ import kotlin.coroutines.coroutineContext
 
 public class AuthContext(
   public val auth: Auth,
-) : AbstractCoroutineContextElement(key) {
-  public companion object {
-    internal val key: CoroutineContext.Key<AuthContext> =
-      object : CoroutineContext.Key<AuthContext> {}
-  }
+) : AbstractCoroutineContextElement(AuthContext) {
+  public companion object : CoroutineContext.Key<AuthContext>
 }
 
 public suspend fun getAuthContext(): AuthContext? =
-  coroutineContext[AuthContext.key]
+  coroutineContext[AuthContext]
