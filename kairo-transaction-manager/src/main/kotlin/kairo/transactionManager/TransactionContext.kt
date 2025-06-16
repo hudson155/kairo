@@ -3,6 +3,7 @@ package kairo.transactionManager
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.coroutineContext
 
 /**
  * When inside a transaction, [TransactionContext] keeps track of what transaction types are active.
@@ -25,3 +26,6 @@ internal class TransactionContext : AbstractCoroutineContextElement(TransactionC
 
   internal companion object : CoroutineContext.Key<TransactionContext>
 }
+
+internal suspend fun getTransactionContext(): TransactionContext? =
+  coroutineContext[TransactionContext]
