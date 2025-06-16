@@ -1,4 +1,4 @@
-package kairo.rest.sse
+package kairo.rest.response
 
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
@@ -10,7 +10,6 @@ import io.ktor.server.sse.ServerSSESession
 import kairo.reflect.KairoType
 import kairo.reflect.kairoType
 import kairo.rest.KtorServerMapper
-import kairo.rest.response.CustomResponse
 import kairo.serialization.util.kairoWriteSpecial
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
