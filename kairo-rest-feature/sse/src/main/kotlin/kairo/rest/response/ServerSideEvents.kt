@@ -19,6 +19,7 @@ public class ServerSideEvents<O : Any>(
   private val flow: Flow<O>,
   private val type: KairoType<O>,
 ) : CustomResponse() {
+  @Suppress("SuspendFunWithCoroutineScopeReceiver")
   public override suspend fun RoutingCall.respond() {
     response.header(HttpHeaders.ContentType, ContentType.Text.EventStream.toString())
     response.header(HttpHeaders.CacheControl, "no-store")

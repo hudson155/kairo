@@ -27,7 +27,8 @@ public class JacksonConverter(
     typeInfo: TypeInfo,
     value: Any?,
   ): OutgoingContent {
-    val text = serialize(mapper, typeInfo, value)
+    val type = mapper.constructType(typeInfo.reifiedType)
+    val text = mapper.writerFor(type).writeValueAsString(value)
     return TextContent(
       text = text,
       contentType = contentType.withCharsetIfNeeded(charset),
@@ -43,11 +44,4 @@ public class JacksonConverter(
     content: ByteReadChannel,
   ): Any? =
     delegate.deserialize(charset, typeInfo, content)
-
-  public companion object {
-    public fun serialize(mapper: JsonMapper, typeInfo: TypeInfo, value: Any?): String {
-      val type = mapper.constructType(typeInfo.reifiedType)
-      return mapper.writerFor(type).writeValueAsString(value)
-    }
-  }
 }
