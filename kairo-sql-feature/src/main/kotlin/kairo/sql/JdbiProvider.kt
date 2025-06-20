@@ -8,6 +8,7 @@ import kairo.dependencyInjection.LazySingletonProvider
 import kairo.dependencyInjection.getNamedInstance
 import kairo.sql.plugin.jackson.JacksonPlugin
 import kairo.sql.plugin.kairo.KairoPlugin
+import kairo.sql.plugin.vector.VectorPlugin
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.KotlinPlugin
 import org.jdbi.v3.postgres.PostgresPlugin
@@ -32,4 +33,5 @@ public fun Jdbi.applyKairoPlugins() =
     installPlugin(KairoPlugin())
     installPlugin(KotlinPlugin())
     installPlugin(PostgresPlugin())
+    installPlugin(VectorPlugin())
   }
