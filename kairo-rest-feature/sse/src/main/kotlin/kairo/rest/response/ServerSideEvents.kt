@@ -12,8 +12,6 @@ import kairo.reflect.kairoType
 import kairo.rest.KtorServerMapper
 import kairo.serialization.util.kairoWriteSpecial
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.flow
 
 public class ServerSideEvents<O : Any>(
   private val flow: Flow<O>,
@@ -34,7 +32,5 @@ public class ServerSideEvents<O : Any>(
   }
 }
 
-public inline fun <reified O : Any> serverSideEvents(
-  noinline block: suspend FlowCollector<O>.() -> Unit,
-): ServerSideEvents<O> =
-  ServerSideEvents(flow(block), kairoType())
+public inline fun <reified O : Any> serverSideEvents(flow: Flow<O>): ServerSideEvents<O> =
+  ServerSideEvents(flow, kairoType())
