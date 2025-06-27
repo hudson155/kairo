@@ -1,3 +1,5 @@
+@file:Suppress("ForbiddenImport")
+
 package kairo.rest.exceptionHandler
 
 import io.ktor.http.BadContentTypeFormatException
