@@ -1,6 +1,9 @@
+@file:Suppress("ForbiddenImport")
+
 package kairo.rest.exceptionHandler
 
 import io.ktor.http.BadContentTypeFormatException
+import io.ktor.server.plugins.BadRequestException
 import kairo.rest.exception.BadRequest
 import kairo.rest.exception.MalformedContentType
 
@@ -16,7 +19,7 @@ internal class KtorHandler : ExceptionHandler() {
       is BadContentTypeFormatException -> {
         return ExceptionResult.Exception(MalformedContentType(e))
       }
-      is io.ktor.server.plugins.BadRequestException -> {
+      is BadRequestException -> {
         return ExceptionResult.Exception(BadRequest(e))
       }
       else -> {

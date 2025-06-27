@@ -10,11 +10,9 @@ import java.time.temporal.ChronoUnit
 
 @JsonIncludeProperties("start", "endInclusive")
 public data class LocalDateRange private constructor(
-  @JsonProperty("start")
-  @field:JsonProperty("start")
+  @all:JsonProperty("start")
   override val start: LocalDate,
-  @JsonProperty("endInclusive")
-  @field:JsonProperty("endInclusive")
+  @all:JsonProperty("endInclusive")
   override val endInclusive: LocalDate,
 ) : ClosedRange<LocalDate>, OpenEndRange<LocalDate> {
   override val endExclusive: LocalDate = endInclusive.plusDays(1)

@@ -4,7 +4,7 @@ import java.util.LinkedList
 import java.util.Queue
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
+import kotlinx.coroutines.currentCoroutineContext
 
 internal class TaskContext : AbstractCoroutineContextElement(TaskContext) {
   val blocks: Queue<suspend () -> Unit> = LinkedList()
@@ -17,4 +17,4 @@ internal class TaskContext : AbstractCoroutineContextElement(TaskContext) {
 }
 
 internal suspend fun getTaskContext(): TaskContext? =
-  coroutineContext[TaskContext]
+  currentCoroutineContext()[TaskContext]

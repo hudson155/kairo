@@ -3,7 +3,7 @@ package kairo.rest.context
 import kairo.rest.auth.Auth
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
+import kotlinx.coroutines.currentCoroutineContext
 
 public class AuthContext(
   public val auth: Auth,
@@ -12,4 +12,4 @@ public class AuthContext(
 }
 
 public suspend fun getAuthContext(): AuthContext? =
-  coroutineContext[AuthContext]
+  currentCoroutineContext()[AuthContext]

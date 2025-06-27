@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
  * Therefore, some test cases (such as unknown properties, pretty printing) are not included
  * since they are not strictly related to booleans.
  *
- * Jackson has some default behaviours with is-prefixed properties, where it serializes [isValue] to "value"
+ * Jackson has some default behaviours with is-prefixed properties, where it serializes [MyClass.isValue] to "value"
  * (dropping the "is" prefix and handling case corrections).
  * The main purpose of this test is to ensure that behaviour is disabled.
  */

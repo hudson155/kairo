@@ -17,12 +17,7 @@ public class SlackClientProvider @Inject constructor(
 
   private fun create(config: KairoSlackConfig): SlackClient =
     when (config) {
-      is KairoSlackConfig.Noop ->
-        NoopSlackClient()
-      is KairoSlackConfig.Real ->
-        RealSlackClient(
-          config = config,
-          slack = Slack.getInstance(),
-        )
+      is KairoSlackConfig.Noop -> NoopSlackClient()
+      is KairoSlackConfig.Real -> RealSlackClient(config, Slack.getInstance())
     }
 }
