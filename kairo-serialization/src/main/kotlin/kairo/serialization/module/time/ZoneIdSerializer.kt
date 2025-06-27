@@ -1,3 +1,5 @@
+@file:Suppress("IDENTITY_SENSITIVE_OPERATIONS_WITH_VALUE_TYPE")
+
 package kairo.serialization.module.time
 
 import com.fasterxml.jackson.core.JsonGenerator
