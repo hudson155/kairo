@@ -54,7 +54,7 @@ Each module falls into one of 3 categories:
   as well as various sources.
 - [kairo-serialization](./kairo-serialization):
   Uses [Jackson](https://github.com/FasterXML/jackson).
-  to handle JSON, YAML, and even XML serialization.
+  to handle JSON and YAML serialization.
 - [kairo-testing](./kairo-testing):
   A convenient testing library which includes some helpful test dependencies.
 - [kairo-util](./kairo-util):
