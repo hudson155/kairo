@@ -26,7 +26,7 @@ internal fun Application.installStatusPages(exceptionManager: ExceptionManager) 
     unhandled { call ->
       call.attributes.getOrNull(RoutingFailureStatusCode)?.let { statusCode ->
         when (statusCode) {
-          in setOf(HttpStatusCode.BadRequest, HttpStatusCode.NotFound, HttpStatusCode.MethodNotAllowed) -> {
+          HttpStatusCode.BadRequest, HttpStatusCode.NotFound, HttpStatusCode.MethodNotAllowed -> {
             call.respondWithError(exceptionManager.handle(EndpointNotFound()))
             return@unhandled
           }

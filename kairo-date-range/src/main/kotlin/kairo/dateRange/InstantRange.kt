@@ -10,11 +10,9 @@ import java.time.ZoneOffset
 
 @JsonIncludeProperties("start", "endExclusive")
 public data class InstantRange private constructor(
-  @JsonProperty("start")
-  @field:JsonProperty("start")
+  @all:JsonProperty("start")
   override val start: Instant,
-  @JsonProperty("endExclusive")
-  @field:JsonProperty("endExclusive")
+  @all:JsonProperty("endExclusive")
   override val endExclusive: Instant,
 ) : OpenEndRange<Instant> {
   init {

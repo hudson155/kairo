@@ -23,8 +23,8 @@ internal class OptionalNullableObjectMapperTest {
   /**
    * This test is specifically for nullable properties.
    */
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   internal data class MyClass(
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     val value: Optional<Int>?,
   )
 

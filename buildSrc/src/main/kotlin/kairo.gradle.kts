@@ -26,7 +26,9 @@ kotlin {
   explicitApi()
   compilerOptions {
     allWarningsAsErrors = true
+    freeCompilerArgs.add("-Xannotation-target-all")
     freeCompilerArgs.add("-Xconsistent-data-class-copy-visibility")
+    freeCompilerArgs.add("-Xnested-type-aliases")
     freeCompilerArgs.add("-opt-in=kotlin.uuid.ExperimentalUuidApi")
   }
 }

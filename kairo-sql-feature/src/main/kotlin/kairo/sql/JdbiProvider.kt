@@ -27,7 +27,7 @@ public class JdbiProvider(
     Jdbi.create(dataSource).apply { configureJdbi(this) }
 }
 
-public fun Jdbi.applyKairoPlugins() =
+public fun Jdbi.applyKairoPlugins(): Jdbi =
   apply {
     installPlugin(JacksonPlugin())
     installPlugin(KairoPlugin())

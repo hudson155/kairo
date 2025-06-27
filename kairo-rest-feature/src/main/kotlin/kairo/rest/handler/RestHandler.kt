@@ -83,8 +83,7 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any>
 
   private suspend fun auth(auth: Auth, endpoint: E) {
     val authProvider = AuthProvider(auth, injector)
-    val authResult = authProvider.auth(endpoint)
-    when (authResult) {
+    when (val authResult = authProvider.auth(endpoint)) {
       is Auth.Result.Success -> Unit
       is Auth.Result.Exception -> throw authResult.e
     }

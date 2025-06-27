@@ -10,11 +10,9 @@ import java.time.temporal.ChronoUnit
 
 @JsonIncludeProperties("start", "endInclusive")
 public data class YearMonthRange private constructor(
-  @JsonProperty("start")
-  @field:JsonProperty("start")
+  @all:JsonProperty("start")
   override val start: YearMonth,
-  @JsonProperty("endInclusive")
-  @field:JsonProperty("endInclusive")
+  @all:JsonProperty("endInclusive")
   override val endInclusive: YearMonth,
 ) : ClosedRange<YearMonth>, OpenEndRange<YearMonth> {
   override val endExclusive: YearMonth = endInclusive.plusMonths(1)

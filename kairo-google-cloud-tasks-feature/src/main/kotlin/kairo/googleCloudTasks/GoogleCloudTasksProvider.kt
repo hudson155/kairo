@@ -21,22 +21,14 @@ public class GoogleCloudTasksProvider @Inject constructor(
   private fun create(config: KairoGoogleCloudTasksConfig): GoogleCloudTasks =
     when (config) {
       is KairoGoogleCloudTasksConfig.GoogleAppEngine ->
-        GoogleAppEngineGoogleCloudTasks(
-          cloudTasksClient = CloudTasksClient.create(),
-          tasksConfig = config,
-        )
+        GoogleAppEngineGoogleCloudTasks(CloudTasksClient.create(), config)
       is KairoGoogleCloudTasksConfig.Http ->
-        HttpGoogleCloudTasks(
-          cloudTasksClient = CloudTasksClient.create(),
-          tasksConfig = config,
-        )
+        HttpGoogleCloudTasks(CloudTasksClient.create(), config)
       is KairoGoogleCloudTasksConfig.Local ->
         LocalGoogleCloudTasks(restClient)
       is KairoGoogleCloudTasksConfig.Noop ->
         NoopGoogleCloudTasks()
       is KairoGoogleCloudTasksConfig.TransactionAware ->
-        TransactionAwareGoogleCloudTasks(
-          delegate = create(config.delegate),
-        )
+        TransactionAwareGoogleCloudTasks(create(config.delegate))
     }
 }

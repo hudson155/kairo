@@ -2,7 +2,7 @@ package kairo.sql
 
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
+import kotlinx.coroutines.currentCoroutineContext
 import org.jdbi.v3.core.Handle
 
 public class SqlContext(
@@ -12,4 +12,4 @@ public class SqlContext(
 }
 
 internal suspend fun getSqlContext(): SqlContext? =
-  coroutineContext[SqlContext]
+  currentCoroutineContext()[SqlContext]

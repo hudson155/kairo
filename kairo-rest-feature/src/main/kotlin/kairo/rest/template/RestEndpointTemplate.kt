@@ -102,21 +102,21 @@ public data class RestEndpointTemplate(
      */
     private fun HttpMethod.validate(endpointKClass: KClass<out RestEndpoint<*, *>>) {
       when (this) {
-        HttpMethod.Get, HttpMethod.Head, HttpMethod.Options -> {
+        Get, Head, Options -> {
           require(!endpointKClass.hasBody) {
             "REST endpoint ${endpointKClass.qualifiedName!!}" +
               " has method $value but specifies a body."
           }
         }
 
-        HttpMethod.Patch -> {
+        Patch -> {
           require(endpointKClass.hasBody) {
             "REST endpoint ${endpointKClass.qualifiedName!!}" +
               " has method $value but does not specify a body."
           }
         }
 
-        HttpMethod.Delete, HttpMethod.Post, HttpMethod.Put -> {}
+        Delete, Post, Put -> {}
 
         else -> {
           throw IllegalArgumentException(
