@@ -20,10 +20,6 @@ Kairo is an application framework built for Kotlin.
 
 See the [style guide](./docs/style-guide.md) for more.
 
-### Chores
-
-See [chores](./docs/chores.md).
-
 ## Modules
 
 Kairo is split up into several separate modules.
