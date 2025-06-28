@@ -396,11 +396,9 @@ formatting:
     active: true
     autoCorrect: true
   SpacingBetweenDeclarationsWithAnnotations:
-    active: true
-    autoCorrect: true
+    active: false
   SpacingBetweenDeclarationsWithComments:
-    active: true
-    autoCorrect: true
+    active: false
   SpacingBetweenFunctionNameAndOpeningParenthesis:
     active: true
     autoCorrect: true
