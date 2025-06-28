@@ -8,6 +8,7 @@ import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 /**
@@ -91,6 +92,7 @@ internal class PolymorphismObjectMapperTest {
     mapper.readValue<Vehicle>(string).shouldBe(vehicle)
   }
 
+  @Disabled("There is an open bug for this: https://github.com/FasterXML/jackson-module-kotlin/issues/824")
   @Test
   fun `deserialize, bicycle`(): Unit = runTest {
     val vehicle = Vehicle.Bicycle
