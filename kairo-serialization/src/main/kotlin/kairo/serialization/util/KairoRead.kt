@@ -19,7 +19,7 @@ public fun <T : Any> ObjectMapper.kairoRead(string: String, type: KairoType<T>):
 public fun <T : Any> ObjectMapper.kairoRead(string: String, typeReference: TypeReference<T>): T =
   readValue(string, typeReference)
 
-public fun <T : Any> ObjectMapper.kairoRead(string: String, type: JavaType): T =
+public fun <T> ObjectMapper.kairoRead(string: String, type: JavaType): T =
   readValue(string, type)
 
 public inline fun <reified T : Any> ObjectMapper.kairoRead(url: URL): T =
@@ -31,5 +31,5 @@ public fun <T : Any> ObjectMapper.kairoRead(url: URL, type: KairoType<T>): T =
 public fun <T : Any> ObjectMapper.kairoRead(url: URL, typeReference: TypeReference<T>): T =
   readValue(url, typeReference)
 
-public fun <T : Any> ObjectMapper.kairoRead(url: URL, type: JavaType): T =
+public fun <T> ObjectMapper.kairoRead(url: URL, type: JavaType): T =
   readValue(url, type)
