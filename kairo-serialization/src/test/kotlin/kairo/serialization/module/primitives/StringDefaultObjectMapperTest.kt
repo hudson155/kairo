@@ -1,10 +1,10 @@
 package kairo.serialization.module.primitives
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -36,46 +36,46 @@ internal class StringDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, non-empty`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"true\" }").shouldBe(MyClass("true"))
+    mapper.kairoRead<MyClass>("{ \"value\": \"true\" }").shouldBe(MyClass("true"))
   }
 
   @Test
   fun `deserialize, empty`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"\" }").shouldBe(MyClass(""))
+    mapper.kairoRead<MyClass>("{ \"value\": \"\" }").shouldBe(MyClass(""))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": null }")
+      mapper.kairoRead<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{}")
+      mapper.kairoRead<MyClass>("{}")
     }
   }
 
   @Test
   fun `deserialize, wrong type, int`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": 1 }")
+      mapper.kairoRead<MyClass>("{ \"value\": 1 }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, float`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": 0.0 }")
+      mapper.kairoRead<MyClass>("{ \"value\": 0.0 }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, boolean`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": true }")
+      mapper.kairoRead<MyClass>("{ \"value\": true }")
     }
   }
 }

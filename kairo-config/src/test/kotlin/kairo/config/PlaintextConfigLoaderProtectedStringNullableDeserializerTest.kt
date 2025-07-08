@@ -1,10 +1,10 @@
 package kairo.config
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import kairo.protectedString.ProtectedString
+import kairo.serialization.util.kairoRead
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -43,7 +43,7 @@ internal class PlaintextConfigLoaderProtectedStringNullableDeserializerTest : Co
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(nonNullString)
+      mapper.kairoRead<MyClass>(nonNullString)
     }
   }
 
@@ -51,34 +51,34 @@ internal class PlaintextConfigLoaderProtectedStringNullableDeserializerTest : Co
   fun `non-null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass(ProtectedString("Hello, World!")))
+    mapper.kairoRead<MyClass>(nonNullString).shouldBe(MyClass(ProtectedString("Hello, World!")))
   }
 
   @Test
   fun `empty (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(emptyString).shouldBe(MyClass(ProtectedString("")))
+    mapper.kairoRead<MyClass>(emptyString).shouldBe(MyClass(ProtectedString("")))
   }
 
   @Test
   fun `empty (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(emptyString).shouldBe(MyClass(ProtectedString("")))
+    mapper.kairoRead<MyClass>(emptyString).shouldBe(MyClass(ProtectedString("")))
   }
 
   @Test
   fun `null (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(nullString).shouldBe(MyClass(null))
+    mapper.kairoRead<MyClass>(nullString).shouldBe(MyClass(null))
   }
 
   @Test
   fun `null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(nullString).shouldBe(MyClass(null))
+    mapper.kairoRead<MyClass>(nullString).shouldBe(MyClass(null))
   }
 }

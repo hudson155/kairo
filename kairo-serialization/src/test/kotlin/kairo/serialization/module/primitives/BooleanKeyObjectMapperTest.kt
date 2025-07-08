@@ -1,10 +1,10 @@
 package kairo.serialization.module.primitives
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -42,20 +42,20 @@ internal class BooleanKeyObjectMapperTest {
 
   @Test
   fun `deserialize, false`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"values\": { \"false\": \"value\" } }")
+    mapper.kairoRead<MyClass>("{ \"values\": { \"false\": \"value\" } }")
       .shouldBe(MyClass(mapOf(false to "value")))
   }
 
   @Test
   fun `deserialize, true`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"values\": { \"true\": \"value\" } }")
+    mapper.kairoRead<MyClass>("{ \"values\": { \"true\": \"value\" } }")
       .shouldBe(MyClass(mapOf(true to "value")))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"values\": { null: \"value\" } }")
+      mapper.kairoRead<MyClass>("{ \"values\": { null: \"value\" } }")
     }
   }
 }

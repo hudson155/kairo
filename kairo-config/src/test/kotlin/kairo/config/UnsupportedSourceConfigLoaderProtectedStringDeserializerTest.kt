@@ -1,9 +1,9 @@
 package kairo.config
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import kairo.protectedString.ProtectedString
+import kairo.serialization.util.kairoRead
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -25,7 +25,7 @@ internal class UnsupportedSourceConfigLoaderProtectedStringDeserializerTest : Co
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(string)
+      mapper.kairoRead<MyClass>(string)
     }
   }
 
@@ -34,7 +34,7 @@ internal class UnsupportedSourceConfigLoaderProtectedStringDeserializerTest : Co
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(string)
+      mapper.kairoRead<MyClass>(string)
     }
   }
 }

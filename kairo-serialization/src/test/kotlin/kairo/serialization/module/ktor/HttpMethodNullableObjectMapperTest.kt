@@ -1,10 +1,10 @@
 package kairo.serialization.module.ktor
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import io.ktor.http.HttpMethod
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -38,19 +38,19 @@ internal class HttpMethodNullableObjectMapperTest {
 
   @Test
   fun deserialize(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"GET\" }")
+    mapper.kairoRead<MyClass>("{ \"value\": \"GET\" }")
       .shouldBe(MyClass(HttpMethod.Get))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": null }")
+    mapper.kairoRead<MyClass>("{ \"value\": null }")
       .shouldBe(MyClass(null))
   }
 
   @Test
   fun `deserialize, missing`(): Unit = runTest {
-    mapper.readValue<MyClass>("{}")
+    mapper.kairoRead<MyClass>("{}")
       .shouldBe(MyClass(null))
   }
 }

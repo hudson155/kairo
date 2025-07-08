@@ -1,9 +1,9 @@
 package kairo.serialization.module.money
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.javamoney.moneta.Money
@@ -58,29 +58,29 @@ internal class DefaultMoneyFormatterTest {
 
   @Test
   fun `deserialize, positive`(): Unit = runTest {
-    mapper.readValue<Money>("{\"amount\":\"12345.67\",\"currency\":\"USD\"}").shouldBe(positiveUsd)
-    mapper.readValue<Money>("{\"amount\":\"12345\",\"currency\":\"JPY\"}").shouldBe(positiveJpy)
-    mapper.readValue<Money>("{\"amount\":\"12345.678\",\"currency\":\"TND\"}").shouldBe(positiveTnd)
+    mapper.kairoRead<Money>("{\"amount\":\"12345.67\",\"currency\":\"USD\"}").shouldBe(positiveUsd)
+    mapper.kairoRead<Money>("{\"amount\":\"12345\",\"currency\":\"JPY\"}").shouldBe(positiveJpy)
+    mapper.kairoRead<Money>("{\"amount\":\"12345.678\",\"currency\":\"TND\"}").shouldBe(positiveTnd)
   }
 
   @Test
   fun `deserialize, negative`(): Unit = runTest {
-    mapper.readValue<Money>("{\"amount\":\"-12345.67\",\"currency\":\"USD\"}").shouldBe(negativeUsd)
-    mapper.readValue<Money>("{\"amount\":\"-12345\",\"currency\":\"JPY\"}").shouldBe(negativeJpy)
-    mapper.readValue<Money>("{\"amount\":\"-12345.678\",\"currency\":\"TND\"}").shouldBe(negativeTnd)
+    mapper.kairoRead<Money>("{\"amount\":\"-12345.67\",\"currency\":\"USD\"}").shouldBe(negativeUsd)
+    mapper.kairoRead<Money>("{\"amount\":\"-12345\",\"currency\":\"JPY\"}").shouldBe(negativeJpy)
+    mapper.kairoRead<Money>("{\"amount\":\"-12345.678\",\"currency\":\"TND\"}").shouldBe(negativeTnd)
   }
 
   @Test
   fun `deserialize, no decimals`(): Unit = runTest {
-    mapper.readValue<Money>("{\"amount\":\"12345.00\",\"currency\":\"USD\"}").shouldBe(noDecimalsUsd)
-    mapper.readValue<Money>("{\"amount\":\"12345\",\"currency\":\"JPY\"}").shouldBe(noDecimalsJpy)
-    mapper.readValue<Money>("{\"amount\":\"12345.000\",\"currency\":\"TND\"}").shouldBe(noDecimalsTnd)
+    mapper.kairoRead<Money>("{\"amount\":\"12345.00\",\"currency\":\"USD\"}").shouldBe(noDecimalsUsd)
+    mapper.kairoRead<Money>("{\"amount\":\"12345\",\"currency\":\"JPY\"}").shouldBe(noDecimalsJpy)
+    mapper.kairoRead<Money>("{\"amount\":\"12345.000\",\"currency\":\"TND\"}").shouldBe(noDecimalsTnd)
   }
 
   @Test
   fun `deserialize, extra decimals`(): Unit = runTest {
-    mapper.readValue<Money>("{\"amount\":\"12345.675\",\"currency\":\"USD\"}").shouldBe(extraDecimalsUsd)
-    mapper.readValue<Money>("{\"amount\":\"12345.5\",\"currency\":\"JPY\"}").shouldBe(extraDecimalsJpy)
-    mapper.readValue<Money>("{\"amount\":\"12345.6785\",\"currency\":\"TND\"}").shouldBe(extraDecimalsTnd)
+    mapper.kairoRead<Money>("{\"amount\":\"12345.675\",\"currency\":\"USD\"}").shouldBe(extraDecimalsUsd)
+    mapper.kairoRead<Money>("{\"amount\":\"12345.5\",\"currency\":\"JPY\"}").shouldBe(extraDecimalsJpy)
+    mapper.kairoRead<Money>("{\"amount\":\"12345.6785\",\"currency\":\"TND\"}").shouldBe(extraDecimalsTnd)
   }
 }

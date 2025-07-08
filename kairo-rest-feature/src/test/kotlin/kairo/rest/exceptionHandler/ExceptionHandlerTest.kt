@@ -1,7 +1,6 @@
 package kairo.rest.exceptionHandler
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.HttpRequestBuilder
@@ -23,6 +22,7 @@ import kairo.rest.serialization.JacksonConverter
 import kairo.serialization.jsonMapper
 import kairo.serialization.property.allowUnknownProperties
 import kairo.serialization.property.prettyPrint
+import kairo.serialization.util.kairoRead
 import kairo.serverTesting.TestServer
 
 /**
@@ -104,7 +104,7 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
       first = response.status,
       second = response.bodyAsText().let { string ->
         if (string.isEmpty()) return@let null
-        return@let clientMapper.readValue(string)
+        return@let clientMapper.kairoRead(string)
       },
     )
   }

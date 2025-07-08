@@ -1,9 +1,9 @@
 package kairo.config
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import kairo.serialization.util.kairoRead
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -40,14 +40,14 @@ internal class PlaintextConfigLoaderIntDefaultDeserializerTest : ConfigLoaderDes
   fun `non-null (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass(8080))
+    mapper.kairoRead<MyClass>(nonNullString).shouldBe(MyClass(8080))
   }
 
   @Test
   fun `non-null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass(8080))
+    mapper.kairoRead<MyClass>(nonNullString).shouldBe(MyClass(8080))
   }
 
   @Test
@@ -55,7 +55,7 @@ internal class PlaintextConfigLoaderIntDefaultDeserializerTest : ConfigLoaderDes
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(nullString)
+      mapper.kairoRead<MyClass>(nullString)
     }
   }
 
@@ -64,7 +64,7 @@ internal class PlaintextConfigLoaderIntDefaultDeserializerTest : ConfigLoaderDes
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(nullString)
+      mapper.kairoRead<MyClass>(nullString)
     }
   }
 
@@ -73,7 +73,7 @@ internal class PlaintextConfigLoaderIntDefaultDeserializerTest : ConfigLoaderDes
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(incorrectTypeString)
+      mapper.kairoRead<MyClass>(incorrectTypeString)
     }
   }
 }

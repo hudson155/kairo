@@ -1,9 +1,9 @@
 package kairo.serialization.module.primitives
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -40,21 +40,21 @@ internal class BooleanNullableObjectMapperTest {
 
   @Test
   fun `deserialize, false`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": false }").shouldBe(MyClass(false))
+    mapper.kairoRead<MyClass>("{ \"value\": false }").shouldBe(MyClass(false))
   }
 
   @Test
   fun `deserialize, true`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": true }").shouldBe(MyClass(true))
+    mapper.kairoRead<MyClass>("{ \"value\": true }").shouldBe(MyClass(true))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": null }").shouldBe(MyClass(null))
+    mapper.kairoRead<MyClass>("{ \"value\": null }").shouldBe(MyClass(null))
   }
 
   @Test
   fun `deserialize, missing`(): Unit = runTest {
-    mapper.readValue<MyClass>("{}").shouldBe(MyClass(null))
+    mapper.kairoRead<MyClass>("{}").shouldBe(MyClass(null))
   }
 }

@@ -1,9 +1,9 @@
 package kairo.serialization.module.primitives
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -40,21 +40,21 @@ internal class LongNullableObjectMapperTest {
 
   @Test
   fun `deserialize, positive`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": 42 }").shouldBe(MyClass(42L))
+    mapper.kairoRead<MyClass>("{ \"value\": 42 }").shouldBe(MyClass(42L))
   }
 
   @Test
   fun `deserialize, negative`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": -42 }").shouldBe(MyClass(-42L))
+    mapper.kairoRead<MyClass>("{ \"value\": -42 }").shouldBe(MyClass(-42L))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": null }").shouldBe(MyClass(null))
+    mapper.kairoRead<MyClass>("{ \"value\": null }").shouldBe(MyClass(null))
   }
 
   @Test
   fun `deserialize, missing`(): Unit = runTest {
-    mapper.readValue<MyClass>("{}").shouldBe(MyClass(null))
+    mapper.kairoRead<MyClass>("{}").shouldBe(MyClass(null))
   }
 }

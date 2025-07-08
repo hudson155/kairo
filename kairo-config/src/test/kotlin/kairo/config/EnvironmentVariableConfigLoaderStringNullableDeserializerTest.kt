@@ -1,8 +1,8 @@
 package kairo.config
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import io.mockk.every
+import kairo.serialization.util.kairoRead
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -41,7 +41,7 @@ internal class EnvironmentVariableConfigLoaderStringNullableDeserializerTest : C
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     environmentVariable("Hello, World!")
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass("Hello, World!"))
+    mapper.kairoRead<MyClass>(stringWithDefault).shouldBe(MyClass("Hello, World!"))
   }
 
   @Test
@@ -49,7 +49,7 @@ internal class EnvironmentVariableConfigLoaderStringNullableDeserializerTest : C
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     environmentVariable("Hello, World!")
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass("Hello, World!"))
+    mapper.kairoRead<MyClass>(stringWithDefault).shouldBe(MyClass("Hello, World!"))
   }
 
   @Test
@@ -57,7 +57,7 @@ internal class EnvironmentVariableConfigLoaderStringNullableDeserializerTest : C
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     environmentVariable(null)
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass("Default value."))
+    mapper.kairoRead<MyClass>(stringWithDefault).shouldBe(MyClass("Default value."))
   }
 
   @Test
@@ -65,7 +65,7 @@ internal class EnvironmentVariableConfigLoaderStringNullableDeserializerTest : C
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     environmentVariable(null)
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass("Default value."))
+    mapper.kairoRead<MyClass>(stringWithDefault).shouldBe(MyClass("Default value."))
   }
 
   @Test
@@ -73,7 +73,7 @@ internal class EnvironmentVariableConfigLoaderStringNullableDeserializerTest : C
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     environmentVariable(null)
-    mapper.readValue<MyClass>(stringWithoutDefault).shouldBe(MyClass(null))
+    mapper.kairoRead<MyClass>(stringWithoutDefault).shouldBe(MyClass(null))
   }
 
   @Test
@@ -81,7 +81,7 @@ internal class EnvironmentVariableConfigLoaderStringNullableDeserializerTest : C
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     environmentVariable(null)
-    mapper.readValue<MyClass>(stringWithoutDefault).shouldBe(MyClass(null))
+    mapper.kairoRead<MyClass>(stringWithoutDefault).shouldBe(MyClass(null))
   }
 
   private fun environmentVariable(value: String?) {

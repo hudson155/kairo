@@ -2,11 +2,11 @@ package kairo.serialization.module.jvm
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.util.Optional
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -43,39 +43,39 @@ internal class OptionalDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, present`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": 42 }").shouldBe(MyClass(Optional.of(42)))
+    mapper.kairoRead<MyClass>("{ \"value\": 42 }").shouldBe(MyClass(Optional.of(42)))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": null }").shouldBe(MyClass(Optional.empty()))
+    mapper.kairoRead<MyClass>("{ \"value\": null }").shouldBe(MyClass(Optional.empty()))
   }
 
   @Test
   fun `deserialize, missing`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{}")
+      mapper.kairoRead<MyClass>("{}")
     }
   }
 
   @Test
   fun `deserialize, wrong type, float`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": 1.23 }")
+      mapper.kairoRead<MyClass>("{ \"value\": 1.23 }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, string`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"42\" }")
+      mapper.kairoRead<MyClass>("{ \"value\": \"42\" }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, boolean`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": true }")
+      mapper.kairoRead<MyClass>("{ \"value\": true }")
     }
   }
 }

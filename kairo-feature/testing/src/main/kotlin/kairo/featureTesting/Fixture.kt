@@ -6,6 +6,7 @@ import kairo.reflect.KairoType
 import kairo.serialization.jsonMapper
 import kairo.serialization.property.prettyPrint
 import kairo.serialization.typeReference
+import kairo.serialization.util.kairoRead
 
 public val fixtureMapper: JsonMapper =
   jsonMapper {
@@ -18,6 +19,6 @@ public abstract class Fixture<out T : Any>(private val name: String) {
   @Suppress("ForbiddenMethodCall")
   protected operator fun get(key: Any): T {
     val resource = Resources.getResource("fixture/$name/$key.json")
-    return fixtureMapper.readValue(resource, type.typeReference)
+    return fixtureMapper.kairoRead(resource, type.typeReference)
   }
 }

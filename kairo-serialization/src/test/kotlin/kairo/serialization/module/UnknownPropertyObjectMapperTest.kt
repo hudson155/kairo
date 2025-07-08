@@ -1,10 +1,10 @@
 package kairo.serialization.module
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.property.allowUnknownProperties
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoRead
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -21,7 +21,7 @@ internal class UnknownPropertyObjectMapperTest {
   fun `unknown properties disallowed (default)`(): Unit = runTest {
     val mapper = jsonMapper().build()
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"foo\": \"bar\", \"baz\": \"qux\" }")
+      mapper.kairoRead<MyClass>("{ \"foo\": \"bar\", \"baz\": \"qux\" }")
     }
   }
 
@@ -30,6 +30,6 @@ internal class UnknownPropertyObjectMapperTest {
     val mapper = jsonMapper {
       allowUnknownProperties = true
     }.build()
-    mapper.readValue<MyClass>("{ \"foo\": \"bar\", \"baz\": \"qux\" }").shouldBe(MyClass("bar"))
+    mapper.kairoRead<MyClass>("{ \"foo\": \"bar\", \"baz\": \"qux\" }").shouldBe(MyClass("bar"))
   }
 }

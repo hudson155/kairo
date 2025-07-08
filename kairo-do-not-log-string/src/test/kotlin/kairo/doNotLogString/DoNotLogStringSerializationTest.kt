@@ -1,9 +1,9 @@
 package kairo.doNotLogString
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -18,6 +18,6 @@ internal class DoNotLogStringSerializationTest {
 
   @Test
   fun deserialize(): Unit = runTest {
-    mapper.readValue<DoNotLogString>("\"1\"").shouldBe(DoNotLogString("1"))
+    mapper.kairoRead<DoNotLogString>("\"1\"").shouldBe(DoNotLogString("1"))
   }
 }

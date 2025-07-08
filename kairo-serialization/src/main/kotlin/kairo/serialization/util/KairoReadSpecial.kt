@@ -9,18 +9,18 @@ import kairo.reflect.KairoType
 import kairo.reflect.kairoType
 import kairo.serialization.typeReference
 
-public inline fun <reified T : Any> ObjectMapper.readValueSpecial(value: String): T? =
-  readValueSpecial(value, kairoType<T>())
-
-public fun <T : Any> ObjectMapper.readValueSpecial(value: String, type: KairoType<T>): T? =
-  readValueSpecial(value, type.typeReference)
+public inline fun <reified T : Any> ObjectMapper.kairoReadSpecial(string: String): T? =
+  kairoReadSpecial(string, kairoType<T>())
 
 /*
  * A "special" version of [ObjectMapper.readValue]
  * that passes through strings untouched.
  * This is a fairly hacky approach. Improvements are welcomed!
  */
-public fun <T : Any> ObjectMapper.readValueSpecial(value: String, typeReference: TypeReference<T>): T? {
+public fun <T : Any> ObjectMapper.kairoReadSpecial(value: String, type: KairoType<T>): T? =
+  kairoReadSpecial(value, type.typeReference)
+
+public fun <T : Any> ObjectMapper.kairoReadSpecial(value: String, typeReference: TypeReference<T>): T? {
   try {
     return readValue(value, typeReference)
   } catch (outerException: Exception) {
@@ -33,9 +33,9 @@ public fun <T : Any> ObjectMapper.readValueSpecial(value: String, typeReference:
   }
 }
 
-public fun ObjectMapper.readValueSpecial(value: String, type: JavaType): Any? {
+public fun ObjectMapper.kairoReadSpecial(value: String, type: JavaType): Any? {
   try {
-    return readValue(value, type)
+    return kairoRead(value, type)
   } catch (outerException: Exception) {
     try {
       return convertValue(value, type)

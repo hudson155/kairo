@@ -1,10 +1,10 @@
 package kairo.config
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.mockk.every
+import kairo.serialization.util.kairoRead
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -43,7 +43,7 @@ internal class EnvironmentVariableConfigLoaderStringDefaultDeserializerTest : Co
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     environmentVariable("Hello, World!")
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass("Hello, World!"))
+    mapper.kairoRead<MyClass>(stringWithDefault).shouldBe(MyClass("Hello, World!"))
   }
 
   @Test
@@ -51,7 +51,7 @@ internal class EnvironmentVariableConfigLoaderStringDefaultDeserializerTest : Co
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     environmentVariable("Hello, World!")
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass("Hello, World!"))
+    mapper.kairoRead<MyClass>(stringWithDefault).shouldBe(MyClass("Hello, World!"))
   }
 
   @Test
@@ -59,7 +59,7 @@ internal class EnvironmentVariableConfigLoaderStringDefaultDeserializerTest : Co
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     environmentVariable(null)
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass("Default value."))
+    mapper.kairoRead<MyClass>(stringWithDefault).shouldBe(MyClass("Default value."))
   }
 
   @Test
@@ -67,7 +67,7 @@ internal class EnvironmentVariableConfigLoaderStringDefaultDeserializerTest : Co
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     environmentVariable(null)
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass("Default value."))
+    mapper.kairoRead<MyClass>(stringWithDefault).shouldBe(MyClass("Default value."))
   }
 
   @Test
@@ -76,7 +76,7 @@ internal class EnvironmentVariableConfigLoaderStringDefaultDeserializerTest : Co
     val mapper = createMapper()
     environmentVariable(null)
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(stringWithoutDefault)
+      mapper.kairoRead<MyClass>(stringWithoutDefault)
     }
   }
 
@@ -86,7 +86,7 @@ internal class EnvironmentVariableConfigLoaderStringDefaultDeserializerTest : Co
     val mapper = createMapper()
     environmentVariable(null)
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(stringWithoutDefault)
+      mapper.kairoRead<MyClass>(stringWithoutDefault)
     }
   }
 

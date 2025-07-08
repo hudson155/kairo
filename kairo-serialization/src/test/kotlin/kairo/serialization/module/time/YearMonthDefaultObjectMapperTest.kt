@@ -1,11 +1,11 @@
 package kairo.serialization.module.time
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.time.YearMonth
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -39,69 +39,69 @@ internal class YearMonthDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, recent`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"2023-11\" }")
+    mapper.kairoRead<MyClass>("{ \"value\": \"2023-11\" }")
       .shouldBe(MyClass(YearMonth.parse("2023-11")))
   }
 
   @Test
   fun `deserialize, old`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"0005-01\" }")
+    mapper.kairoRead<MyClass>("{ \"value\": \"0005-01\" }")
       .shouldBe(MyClass(YearMonth.parse("0005-01")))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": null }")
+      mapper.kairoRead<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{}")
+      mapper.kairoRead<MyClass>("{}")
     }
   }
 
   @Test
   fun `deserialize, has day`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"2023-11-13\" }")
+      mapper.kairoRead<MyClass>("{ \"value\": \"2023-11-13\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from year`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"1-02\" }")
+      mapper.kairoRead<MyClass>("{ \"value\": \"1-02\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from month`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"2023-2\" }")
+      mapper.kairoRead<MyClass>("{ \"value\": \"2023-2\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (low month)`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"2023-00\" }")
+      mapper.kairoRead<MyClass>("{ \"value\": \"2023-00\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (high month)`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"2023-13\" }")
+      mapper.kairoRead<MyClass>("{ \"value\": \"2023-13\" }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, number`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": 202311 }")
+      mapper.kairoRead<MyClass>("{ \"value\": 202311 }")
     }
   }
 }

@@ -1,10 +1,10 @@
 package kairo.config
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.mockk.every
 import kairo.protectedString.ProtectedString
+import kairo.serialization.util.kairoRead
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -35,7 +35,7 @@ internal class GcpSecretConfigLoaderBooleanDefaultDeserializerTest : ConfigLoade
     val mapper = createMapper()
     gcpSecret(ProtectedString("true"))
     shouldBeInsecure("Config loader source GcpSecret is considered insecure.") {
-      mapper.readValue<MyClass>(string)
+      mapper.kairoRead<MyClass>(string)
     }
   }
 
@@ -44,7 +44,7 @@ internal class GcpSecretConfigLoaderBooleanDefaultDeserializerTest : ConfigLoade
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     gcpSecret(ProtectedString("true"))
-    mapper.readValue<MyClass>(string)
+    mapper.kairoRead<MyClass>(string)
   }
 
   @Test
@@ -53,7 +53,7 @@ internal class GcpSecretConfigLoaderBooleanDefaultDeserializerTest : ConfigLoade
     val mapper = createMapper()
     gcpSecret(null)
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(string)
+      mapper.kairoRead<MyClass>(string)
     }
   }
 
@@ -63,7 +63,7 @@ internal class GcpSecretConfigLoaderBooleanDefaultDeserializerTest : ConfigLoade
     val mapper = createMapper()
     gcpSecret(null)
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(string)
+      mapper.kairoRead<MyClass>(string)
     }
   }
 
@@ -73,7 +73,7 @@ internal class GcpSecretConfigLoaderBooleanDefaultDeserializerTest : ConfigLoade
     val mapper = createMapper()
     gcpSecret(ProtectedString("Hello, World!"))
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(string)
+      mapper.kairoRead<MyClass>(string)
     }
   }
 
