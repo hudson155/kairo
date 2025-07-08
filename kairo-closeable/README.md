@@ -2,23 +2,37 @@
 
 `KairoCloseable` is similar to Java's `Closeable`, but it supports coroutines.
 
-## Usage
+## Installation
 
-### Step 1: Include the dependency
+`software.airborne.kairo:kairo-closeable:5.12.3`
+
+<details>
+
+<summary>Gradle</summary>
 
 ```kotlin
-// build.gradle.kts
+plugins {
+  id("com.google.cloud.artifactregistry.gradle-plugin")
+}
+
+repositories {
+  maven {
+    url = uri("artifactregistry://us-central1-maven.pkg.dev/airborne-software/maven")
+  }
+}
 
 dependencies {
-  implementation("kairo:kairo-closeable:$kairoVersion")
+  implementation("software.airborne.kairo:kairo-closeable:5.12.3")
 }
 ```
 
-### Step 2: Implement and use a `KairoCloseable`
+</details>
+
+## Usage
+
+`KairoCloseable` does not support suspending closures.
 
 ```kotlin
-// src/main/kotlin/yourPackage/.../YourFile.kt
-
 class MyCloseable : KairoCloseable {
   override fun close() {
     // ...
@@ -30,11 +44,9 @@ MyCloseable().use { myCloseable ->
 }
 ```
 
-### Step 3: Implement and use a `KairoCloseable.Suspend`
+`KairoCloseable.Suspend` does support suspending closures.
 
 ```kotlin
-// src/main/kotlin/yourPackage/.../YourFile.kt
-
 class MyCloseable : KairoCloseable.Suspend {
   override suspend fun close() {
     // ...
