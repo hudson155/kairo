@@ -94,7 +94,7 @@ public object LenientTimeParser {
     listOf(
       Parser.Match(Regex("[0-9]{13}")) { Instant.ofEpochMilli(it.value.toLong()).atZone(ZoneOffset.UTC) },
       Parser.Match(Regex("[0-9]{10}")) { Instant.ofEpochSecond(it.value.toLong()).atZone(ZoneOffset.UTC) },
-      Parser.Formatter(customIsoFormatter)
+      Parser.Formatter(customIsoFormatter),
     )
 
   public fun year(string: String): Year {
