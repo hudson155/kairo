@@ -1,10 +1,10 @@
 package kairo.config
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import kairo.protectedString.ProtectedString
+import kairo.serialization.util.kairoRead
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -43,7 +43,7 @@ internal class CommandConfigLoaderProtectedStringDefaultDeserializerTest : Confi
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     shouldBeInsecure("Config loader source Command is considered insecure.") {
-      mapper.readValue<MyClass>(nonNullString)
+      mapper.kairoRead<MyClass>(nonNullString)
     }
   }
 
@@ -51,7 +51,7 @@ internal class CommandConfigLoaderProtectedStringDefaultDeserializerTest : Confi
   fun `non-null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass(ProtectedString("Hello, World!")))
+    mapper.kairoRead<MyClass>(nonNullString).shouldBe(MyClass(ProtectedString("Hello, World!")))
   }
 
   @Test
@@ -59,7 +59,7 @@ internal class CommandConfigLoaderProtectedStringDefaultDeserializerTest : Confi
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     shouldBeInsecure("Config loader source Command is considered insecure.") {
-      mapper.readValue<MyClass>(nullString)
+      mapper.kairoRead<MyClass>(nullString)
     }
   }
 
@@ -68,7 +68,7 @@ internal class CommandConfigLoaderProtectedStringDefaultDeserializerTest : Confi
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(nullString)
+      mapper.kairoRead<MyClass>(nullString)
     }
   }
 }

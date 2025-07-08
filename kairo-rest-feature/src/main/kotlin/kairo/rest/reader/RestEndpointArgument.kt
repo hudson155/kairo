@@ -4,7 +4,7 @@ import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import kairo.rest.KtorServerMapper
 import kairo.rest.util.typeInfo
-import kairo.serialization.util.readValueSpecial
+import kairo.serialization.util.kairoReadSpecial
 import kotlin.reflect.KParameter
 import kotlin.reflect.jvm.javaType
 
@@ -48,7 +48,7 @@ internal sealed class RestEndpointArgument(
 
     private fun convert(parameter: String): Any? {
       val type = KtorServerMapper.json.constructType(param.type.javaType)
-      return KtorServerMapper.json.readValueSpecial(parameter, type)
+      return KtorServerMapper.json.kairoReadSpecial(parameter, type)
     }
   }
 }

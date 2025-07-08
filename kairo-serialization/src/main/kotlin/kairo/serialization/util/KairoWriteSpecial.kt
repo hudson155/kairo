@@ -13,14 +13,14 @@ import kairo.serialization.typeReference
 public inline fun <reified T : Any> ObjectMapper.kairoWriteSpecial(value: T?): String =
   kairoWriteSpecial(value, kairoType<T>())
 
-public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T?, type: KairoType<T>): String =
-  kairoWriteSpecial(value, type.typeReference)
-
 /*
  * A "special" version of [ObjectMapper.writeValueAsString] or [ObjectMapper.kairoWrite]
  * that passes through strings untouched.
  * This is a fairly hacky approach. Improvements are welcomed!
  */
+public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T?, type: KairoType<T>): String =
+  kairoWriteSpecial(value, type.typeReference)
+
 public fun <T : Any> ObjectMapper.kairoWriteSpecial(value: T?, typeReference: TypeReference<T>): String {
   try {
     return convertValue(value)

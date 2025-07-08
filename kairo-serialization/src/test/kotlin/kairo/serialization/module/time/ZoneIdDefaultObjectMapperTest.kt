@@ -1,12 +1,12 @@
 package kairo.serialization.module.time
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.time.ZoneId
 import java.time.ZoneOffset
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -47,47 +47,47 @@ internal class ZoneIdDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, UTC offset`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"Z\" }")
+    mapper.kairoRead<MyClass>("{ \"value\": \"Z\" }")
       .shouldBe(MyClass(ZoneOffset.UTC))
   }
 
   @Test
   fun `deserialize, UTC region`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"UTC\" }")
+    mapper.kairoRead<MyClass>("{ \"value\": \"UTC\" }")
       .shouldBe(MyClass(ZoneOffset.UTC))
   }
 
   @Test
   fun `deserialize, non-UTC`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"America/Edmonton\" }")
+    mapper.kairoRead<MyClass>("{ \"value\": \"America/Edmonton\" }")
       .shouldBe(MyClass(ZoneId.of("America/Edmonton")))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": null }")
+      mapper.kairoRead<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{}")
+      mapper.kairoRead<MyClass>("{}")
     }
   }
 
   @Test
   fun `deserialize, nonexistent`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"America/Calgary\" }")
+      mapper.kairoRead<MyClass>("{ \"value\": \"America/Calgary\" }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, number`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": 0 }")
+      mapper.kairoRead<MyClass>("{ \"value\": 0 }")
     }
   }
 }

@@ -1,11 +1,11 @@
 package kairo.serialization.module.time
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.time.LocalDate
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -37,14 +37,14 @@ internal class LocalDateKeyObjectMapperTest {
 
   @Test
   fun deserialize(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"values\": { \"2023-11-13\": \"value\" } }")
+    mapper.kairoRead<MyClass>("{ \"values\": { \"2023-11-13\": \"value\" } }")
       .shouldBe(MyClass(mapOf(LocalDate.parse("2023-11-13") to "value")))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"values\": { null: \"value\" } }")
+      mapper.kairoRead<MyClass>("{ \"values\": { null: \"value\" } }")
     }
   }
 }

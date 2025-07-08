@@ -1,11 +1,11 @@
 package kairo.config
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import kairo.protectedString.ProtectedString
+import kairo.serialization.util.kairoRead
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -36,7 +36,7 @@ internal class GcpSecretConfigLoaderIntNullableDeserializerTest : ConfigLoaderDe
     val mapper = createMapper()
     gcpSecret(ProtectedString("8080"))
     shouldBeInsecure("Config loader source GcpSecret is considered insecure.") {
-      mapper.readValue<MyClass>(string).shouldBe(MyClass(8080))
+      mapper.kairoRead<MyClass>(string).shouldBe(MyClass(8080))
     }
   }
 
@@ -45,7 +45,7 @@ internal class GcpSecretConfigLoaderIntNullableDeserializerTest : ConfigLoaderDe
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     gcpSecret(ProtectedString("8080"))
-    mapper.readValue<MyClass>(string).shouldBe(MyClass(8080))
+    mapper.kairoRead<MyClass>(string).shouldBe(MyClass(8080))
   }
 
   @Test
@@ -54,7 +54,7 @@ internal class GcpSecretConfigLoaderIntNullableDeserializerTest : ConfigLoaderDe
     val mapper = createMapper()
     gcpSecret(null)
     shouldBeInsecure("Config loader source GcpSecret is considered insecure.") {
-      mapper.readValue<MyClass>(string)
+      mapper.kairoRead<MyClass>(string)
     }
   }
 
@@ -63,7 +63,7 @@ internal class GcpSecretConfigLoaderIntNullableDeserializerTest : ConfigLoaderDe
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     gcpSecret(null)
-    mapper.readValue<MyClass>(string).shouldBe(MyClass(null))
+    mapper.kairoRead<MyClass>(string).shouldBe(MyClass(null))
   }
 
   @Test
@@ -72,7 +72,7 @@ internal class GcpSecretConfigLoaderIntNullableDeserializerTest : ConfigLoaderDe
     val mapper = createMapper()
     gcpSecret(ProtectedString("Hello, World!"))
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(string)
+      mapper.kairoRead<MyClass>(string)
     }
   }
 

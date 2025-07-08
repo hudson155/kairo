@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.time.Instant
 import java.time.LocalDate
 import java.util.Optional
 import kairo.serialization.jsonMapper
 import kairo.serialization.property.prettyPrint
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.test.runTest
@@ -142,6 +142,6 @@ internal class JsonObjectMapperTest {
 
   @Test
   fun deserialize(): Unit = runTest {
-    mapper.readValue<MyClass>(string).shouldBe(myClass)
+    mapper.kairoRead<MyClass>(string).shouldBe(myClass)
   }
 }

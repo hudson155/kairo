@@ -1,10 +1,10 @@
 package kairo.serialization.module.primitives
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.test.runTest
@@ -33,69 +33,69 @@ internal class UuidDefaultObjectMapperTest {
 
   @Test
   fun deserialize(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\" }")
+    mapper.kairoRead<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\" }")
       .shouldBe(MyClass(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8")))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": null }")
+      mapper.kairoRead<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{}")
+      mapper.kairoRead<MyClass>("{}")
     }
   }
 
   @Test
   fun `deserialize, too short`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f\" }")
+      mapper.kairoRead<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f\" }")
     }
   }
 
   @Test
   fun `deserialize, too long`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f88\" }")
+      mapper.kairoRead<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f88\" }")
     }
   }
 
   @Test
   fun `deserialize, missing dashes`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"3ec0a853dae34ee1abe20b9c7dee45f8\" }")
+    mapper.kairoRead<MyClass>("{ \"value\": \"3ec0a853dae34ee1abe20b9c7dee45f8\" }")
       .shouldBe(MyClass(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8")))
   }
 
   @Test
   fun `deserialize, invalid character`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45fg\" }")
+      mapper.kairoRead<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45fg\" }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, int`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": 42 }")
+      mapper.kairoRead<MyClass>("{ \"value\": 42 }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, float`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": 1.23 }")
+      mapper.kairoRead<MyClass>("{ \"value\": 1.23 }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, boolean`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": true }")
+      mapper.kairoRead<MyClass>("{ \"value\": true }")
     }
   }
 }

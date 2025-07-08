@@ -1,9 +1,9 @@
 package kairo.config
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import kairo.protectedString.ProtectedString
+import kairo.serialization.util.kairoRead
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -44,7 +44,7 @@ internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserialize
     val mapper = createMapper()
     environmentVariable("Hello, World!")
     shouldBeInsecure("Config loader source EnvironmentVariable is considered insecure.") {
-      mapper.readValue<MyClass>(stringWithDefault)
+      mapper.kairoRead<MyClass>(stringWithDefault)
     }
   }
 
@@ -53,7 +53,7 @@ internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserialize
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     environmentVariable("Hello, World!")
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass(ProtectedString("Hello, World!")))
+    mapper.kairoRead<MyClass>(stringWithDefault).shouldBe(MyClass(ProtectedString("Hello, World!")))
   }
 
   @Test
@@ -62,7 +62,7 @@ internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserialize
     val mapper = createMapper()
     environmentVariable(null)
     shouldBeInsecure("Config loader source EnvironmentVariable is considered insecure.") {
-      mapper.readValue<MyClass>(stringWithDefault)
+      mapper.kairoRead<MyClass>(stringWithDefault)
     }
   }
 
@@ -71,7 +71,7 @@ internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserialize
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     environmentVariable(null)
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass(ProtectedString("Default value.")))
+    mapper.kairoRead<MyClass>(stringWithDefault).shouldBe(MyClass(ProtectedString("Default value.")))
   }
 
   @Test
@@ -80,7 +80,7 @@ internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserialize
     val mapper = createMapper()
     environmentVariable(null)
     shouldBeInsecure("Config loader source EnvironmentVariable is considered insecure.") {
-      mapper.readValue<MyClass>(stringWithoutDefault)
+      mapper.kairoRead<MyClass>(stringWithoutDefault)
     }
   }
 
@@ -89,7 +89,7 @@ internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserialize
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     environmentVariable(null)
-    mapper.readValue<MyClass>(stringWithoutDefault).shouldBe(MyClass(null))
+    mapper.kairoRead<MyClass>(stringWithoutDefault).shouldBe(MyClass(null))
   }
 
   private fun environmentVariable(value: String?) {

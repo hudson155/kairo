@@ -2,11 +2,11 @@ package kairo.dateRange
 
 import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import java.time.LocalDate
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -28,11 +28,11 @@ internal class LocalDateRangeSerializationTest {
 
   @Test
   fun deserialize(): Unit = runTest {
-    mapper.readValue<LocalDateRange>("{\"start\":\"2023-11-13\",\"endInclusive\":\"2024-01-04\"}")
+    mapper.kairoRead<LocalDateRange>("{\"start\":\"2023-11-13\",\"endInclusive\":\"2024-01-04\"}")
       .shouldBe(typicalRange)
 
     shouldThrow<JsonMappingException> {
-      mapper.readValue<LocalDateRange>("{\"start\":\"2023-11-13\",\"endInclusive\":\"2023-11-11\"}")
+      mapper.kairoRead<LocalDateRange>("{\"start\":\"2023-11-13\",\"endInclusive\":\"2023-11-11\"}")
     }
   }
 }

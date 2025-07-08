@@ -1,10 +1,10 @@
 package kairo.serialization.module.primitives
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.test.runTest
@@ -37,14 +37,14 @@ internal class UuidKeyObjectMapperTest {
 
   @Test
   fun deserialize(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"values\": { \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\": \"value\" } }")
+    mapper.kairoRead<MyClass>("{ \"values\": { \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\": \"value\" } }")
       .shouldBe(MyClass(mapOf(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8") to "value")))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"values\": { null: \"value\" } }")
+      mapper.kairoRead<MyClass>("{ \"values\": { null: \"value\" } }")
     }
   }
 }

@@ -1,12 +1,12 @@
 package kairo.serialization.module.time
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.time.ZoneId
 import java.time.ZoneOffset
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -51,26 +51,26 @@ internal class ZoneIdKeyObjectMapperTest {
 
   @Test
   fun `deserialize, UTC offset`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"values\": { \"Z\": \"value\" } }")
+    mapper.kairoRead<MyClass>("{ \"values\": { \"Z\": \"value\" } }")
       .shouldBe(MyClass(mapOf(ZoneOffset.UTC to "value")))
   }
 
   @Test
   fun `deserialize, UTC region`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"values\": { \"UTC\": \"value\" } }")
+    mapper.kairoRead<MyClass>("{ \"values\": { \"UTC\": \"value\" } }")
       .shouldBe(MyClass(mapOf(ZoneOffset.UTC to "value")))
   }
 
   @Test
   fun `deserialize, non-UTC`(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"values\": { \"America/Edmonton\": \"value\" } }")
+    mapper.kairoRead<MyClass>("{ \"values\": { \"America/Edmonton\": \"value\" } }")
       .shouldBe(MyClass(mapOf(ZoneId.of("America/Edmonton") to "value")))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"values\": { null: \"value\" } }")
+      mapper.kairoRead<MyClass>("{ \"values\": { null: \"value\" } }")
     }
   }
 }

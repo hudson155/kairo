@@ -64,5 +64,5 @@ mapper.kairoWrite(myClass)
 
 // Deserialize.
 val myString: String = TODO()
-mapper.readValue<MyClass>(myString) // Be sure to import readValue.
+mapper.kairoRead<MyClass>(myString) // Be sure to import readValue.
 ```

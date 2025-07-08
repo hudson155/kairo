@@ -1,9 +1,9 @@
 package kairo.config
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import kairo.serialization.util.kairoRead
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -46,14 +46,14 @@ internal class PlaintextConfigLoaderStringDefaultDeserializerTest : ConfigLoader
   fun `non-null (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass("Hello, World!"))
+    mapper.kairoRead<MyClass>(nonNullString).shouldBe(MyClass("Hello, World!"))
   }
 
   @Test
   fun `non-null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass("Hello, World!"))
+    mapper.kairoRead<MyClass>(nonNullString).shouldBe(MyClass("Hello, World!"))
   }
 
   @Test
@@ -61,7 +61,7 @@ internal class PlaintextConfigLoaderStringDefaultDeserializerTest : ConfigLoader
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(nullString)
+      mapper.kairoRead<MyClass>(nullString)
     }
   }
 
@@ -69,14 +69,14 @@ internal class PlaintextConfigLoaderStringDefaultDeserializerTest : ConfigLoader
   fun `empty (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(emptyString).shouldBe(MyClass(""))
+    mapper.kairoRead<MyClass>(emptyString).shouldBe(MyClass(""))
   }
 
   @Test
   fun `empty (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(emptyString).shouldBe(MyClass(""))
+    mapper.kairoRead<MyClass>(emptyString).shouldBe(MyClass(""))
   }
 
   @Test
@@ -84,7 +84,7 @@ internal class PlaintextConfigLoaderStringDefaultDeserializerTest : ConfigLoader
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(nullString)
+      mapper.kairoRead<MyClass>(nullString)
     }
   }
 
@@ -93,7 +93,7 @@ internal class PlaintextConfigLoaderStringDefaultDeserializerTest : ConfigLoader
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(incorrectTypeString)
+      mapper.kairoRead<MyClass>(incorrectTypeString)
     }
   }
 }

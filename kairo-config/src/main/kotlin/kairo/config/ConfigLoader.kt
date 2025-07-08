@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.databind.node.ValueNode
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.common.io.Resources
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -15,6 +14,7 @@ import kairo.commandRunner.NoopCommandRunner
 import kairo.environmentVariableSupplier.DefaultEnvironmentVariableSupplier
 import kairo.gcpSecretSupplier.DefaultGcpSecretSupplier
 import kairo.gcpSecretSupplier.NoopGcpSecretSupplier
+import kairo.serialization.util.kairoRead
 import kairo.serialization.yamlMapper
 import kotlin.reflect.KClass
 
@@ -99,7 +99,7 @@ public class ConfigLoader(
    */
   private fun simpleLoadAsJson(configName: String): ObjectNode {
     val stream = Resources.getResource("config/$configName.yaml")
-    return mapper.readValue<ObjectNode>(stream)
+    return mapper.kairoRead<ObjectNode>(stream)
   }
 
   private fun merge(extends: ObjectNode, config: ObjectNode) {

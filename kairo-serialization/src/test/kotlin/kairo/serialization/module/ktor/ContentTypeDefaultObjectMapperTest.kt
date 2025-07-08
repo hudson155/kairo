@@ -1,11 +1,11 @@
 package kairo.serialization.module.ktor
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import io.ktor.http.ContentType
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -33,35 +33,35 @@ internal class ContentTypeDefaultObjectMapperTest {
 
   @Test
   fun deserialize(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"value\": \"application/json\" }")
+    mapper.kairoRead<MyClass>("{ \"value\": \"application/json\" }")
       .shouldBe(MyClass(ContentType.Application.Json))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": null }")
+      mapper.kairoRead<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{}")
+      mapper.kairoRead<MyClass>("{}")
     }
   }
 
   @Test
   fun `deserialize, no slash`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"applicationjson\" }")
+      mapper.kairoRead<MyClass>("{ \"value\": \"applicationjson\" }")
     }
   }
 
   @Test
   fun `deserialize, two slashes`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\": \"application/json/json\" }")
+      mapper.kairoRead<MyClass>("{ \"value\": \"application/json/json\" }")
     }
   }
 }

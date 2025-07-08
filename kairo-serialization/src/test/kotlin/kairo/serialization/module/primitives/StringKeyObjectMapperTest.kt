@@ -1,10 +1,10 @@
 package kairo.serialization.module.primitives
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
 import kairo.serialization.serializationShouldFail
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -36,14 +36,14 @@ internal class StringKeyObjectMapperTest {
 
   @Test
   fun deserialize(): Unit = runTest {
-    mapper.readValue<MyClass>("{ \"values\": { \"key\": \"value\" } }")
+    mapper.kairoRead<MyClass>("{ \"values\": { \"key\": \"value\" } }")
       .shouldBe(MyClass(mapOf("key" to "value")))
   }
 
   @Test
   fun `deserialize, null`(): Unit = runTest {
     serializationShouldFail {
-      mapper.readValue<MyClass>("{ \"values\": { null: \"value\" } }")
+      mapper.kairoRead<MyClass>("{ \"values\": { null: \"value\" } }")
     }
   }
 }

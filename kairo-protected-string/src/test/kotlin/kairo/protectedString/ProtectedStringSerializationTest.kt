@@ -1,9 +1,9 @@
 package kairo.protectedString
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -19,6 +19,6 @@ internal class ProtectedStringSerializationTest {
 
   @Test
   fun deserialize(): Unit = runTest {
-    mapper.readValue<ProtectedString>("\"1\"").shouldBe(ProtectedString("1"))
+    mapper.kairoRead<ProtectedString>("\"1\"").shouldBe(ProtectedString("1"))
   }
 }

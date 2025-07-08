@@ -3,9 +3,9 @@ package kairo.serialization.module
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.jsonMapper
+import kairo.serialization.util.kairoRead
 import kairo.serialization.util.kairoWrite
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Disabled
@@ -80,16 +80,16 @@ internal class PolymorphismObjectMapperTest {
   fun `deserialize, car`(): Unit = runTest {
     val string = "{\"type\": \"Car\", \"capacity\": 5, \"plate\": \"ABC 1234\", \"model\": \"Ford\", \"wheels\": 2}"
     val vehicle = Vehicle.Car(model = "Ford", plate = "ABC 1234", capacity = 5)
-    mapper.readValue<Vehicle.Car>(string).shouldBe(vehicle)
-    mapper.readValue<Vehicle>(string).shouldBe(vehicle)
+    mapper.kairoRead<Vehicle.Car>(string).shouldBe(vehicle)
+    mapper.kairoRead<Vehicle>(string).shouldBe(vehicle)
   }
 
   @Test
   fun `deserialize, motorcycle`(): Unit = runTest {
     val string = "{\"type\": \"Motorcycle\", \"plate\": \"MVM 12\", \"model\": null, \"wheels\": 2}"
     val vehicle = Vehicle.Motorcycle(plate = "MVM 12")
-    mapper.readValue<Vehicle.Motorcycle>(string).shouldBe(vehicle)
-    mapper.readValue<Vehicle>(string).shouldBe(vehicle)
+    mapper.kairoRead<Vehicle.Motorcycle>(string).shouldBe(vehicle)
+    mapper.kairoRead<Vehicle>(string).shouldBe(vehicle)
   }
 
   @Disabled("There is an open bug for this: https://github.com/FasterXML/jackson-module-kotlin/issues/824")
@@ -97,7 +97,7 @@ internal class PolymorphismObjectMapperTest {
   fun `deserialize, bicycle`(): Unit = runTest {
     val vehicle = Vehicle.Bicycle
     val string = "{\"type\": \"Bicycle\", \"model\": null, \"wheels\": 2}"
-    mapper.readValue<Vehicle.Bicycle>(string).shouldBe(vehicle)
-    mapper.readValue<Vehicle>(string).shouldBe(vehicle)
+    mapper.kairoRead<Vehicle.Bicycle>(string).shouldBe(vehicle)
+    mapper.kairoRead<Vehicle>(string).shouldBe(vehicle)
   }
 }
