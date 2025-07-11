@@ -44,6 +44,14 @@ public fun AuthProvider.all(authResults: List<Auth.Result>): Auth.Result {
   return Auth.Result.Success
 }
 
+@Suppress("UnusedReceiverParameter")
+public fun AuthProvider.all(vararg authResults: Auth.Result): Auth.Result =
+  all(authResults.toList())
+
+@Suppress("UnusedReceiverParameter")
+public fun AuthProvider.all(block: MutableList<Auth.Result>.() -> Unit): Auth.Result =
+  all(buildList(block))
+
 /**
  * Allows all requests, including unauthenticated requests without an auth principal at all.
  */
