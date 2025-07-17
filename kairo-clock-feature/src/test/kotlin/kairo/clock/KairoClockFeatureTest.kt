@@ -53,6 +53,7 @@ internal class KairoClockFeatureTest {
   /**
    * Inspired by [io.kotest.matchers.date.shouldBeCloseTo].
    */
+  @Suppress("ForbiddenMethodCall")
   private fun Instant.shouldBeCloseToNow(tolerance: Duration) {
     shouldBeCloseTo(Instant.now(), tolerance)
   }
