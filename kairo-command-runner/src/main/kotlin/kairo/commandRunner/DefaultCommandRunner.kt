@@ -11,7 +11,7 @@ public object DefaultCommandRunner : CommandRunner() {
     logger.debug { "Running command: $command." }
     @Suppress("ForbiddenMethodCall")
     val runtime = Runtime.getRuntime()
-    val result = runtime.exec(arrayOf("sh", "-c", command))
+    val result = runtime.exec(arrayOf("bash", "-c", command))
     return result.inputReader().readLines().singleNullOrThrow()
   }
 }
