@@ -56,7 +56,7 @@ internal abstract class ConfigDeserializer<T : Any>(
     val command = source.command
     logger.debug { "Config value is from command: $command." }
     @OptIn(CommandRunner.Insecure::class)
-    return config.commandRunner.run(command)?.let { ProtectedString(it) }
+    return config.commandRunner.run(command).singleNullOrThrow()?.let { ProtectedString(it) }
   }
 
   private fun fromEnvironmentVariable(source: ConfigLoaderSource.EnvironmentVariable): ProtectedString? {

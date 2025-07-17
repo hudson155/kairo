@@ -1,7 +1,8 @@
 package kairo.commandRunner
 
-import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.sequences.shouldBeEmpty
+import io.kotest.matchers.sequences.shouldContainExactly
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -11,18 +12,20 @@ internal class DefaultCommandRunnerTest {
 
   @Test
   fun `0 lines`(): Unit = runTest {
-    commandRunner.run(";").shouldBe(null)
+    commandRunner.run(";")
+      .shouldBeEmpty()
   }
 
   @Test
   fun `1 line`(): Unit = runTest {
-    commandRunner.run("echo \"Hello, World!\"").shouldBe("Hello, World!")
+    commandRunner.run("echo \"Hello, World!\"")
+      .shouldContainExactly("Hello, World!")
   }
 
   @Test
   fun `2 lines`(): Unit = runTest {
-    shouldThrow<IllegalArgumentException> {
-      commandRunner.run("echo -e \"First\\nSecond\"")
-    }
+    commandRunner.run("echo -e \"First\\nSecond\"")
+      .toList()
+      .shouldContainExactly("First", "Second")
   }
 }

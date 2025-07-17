@@ -14,5 +14,5 @@ public abstract class CommandRunner {
   public annotation class Insecure
 
   @Insecure
-  public abstract fun run(command: String): String?
+  public abstract fun run(command: String): Sequence<String>
 }
