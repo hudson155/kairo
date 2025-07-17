@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class KairoSqeuenceTest {
   @Test
   fun `singleNullOrThrow (no predicate)`(): Unit = runTest {
-    sequenceOf<Int>().singleNullOrThrow().shouldBeNull()
+    emptySequence<Int>().singleNullOrThrow().shouldBeNull()
     listOf(1).singleNullOrThrow().shouldBe(1)
     shouldThrow<IllegalArgumentException> { listOf(1, 2).singleNullOrThrow() }
   }
