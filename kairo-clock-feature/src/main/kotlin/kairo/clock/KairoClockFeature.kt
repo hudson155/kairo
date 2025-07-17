@@ -6,6 +6,9 @@ import kairo.dependencyInjection.bind
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
 
+/**
+ * The Clock Feature allows for configuration and injection of a Java clock.
+ */
 public open class KairoClockFeature(
   private val config: KairoClockConfig,
 ) : Feature() {
@@ -18,8 +21,5 @@ public open class KairoClockFeature(
   }
 
   private fun createClock(config: KairoClockConfig): Clock =
-    when (config) {
-      is KairoClockConfig.Fixed -> Clock.fixed(config.instant, config.timeZone)
-      is KairoClockConfig.System -> Clock.system(config.timeZone)
-    }
+    ClockFactory.create(config)
 }
