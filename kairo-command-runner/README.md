@@ -6,23 +6,36 @@ but uses an abstract class for testability.
 
 This is not considered secure, and should not be used in production unless additional measures are in place.
 
-## Usage
+## Installation
 
-### Step 1: Include the dependency
+`software.airborne.kairo:kairo-command-runner:5.14.0`
+
+<details>
+
+<summary>Gradle</summary>
 
 ```kotlin
-// build.gradle.kts
+plugins {
+  id("com.google.cloud.artifactregistry.gradle-plugin")
+}
+
+repositories {
+  maven {
+    url = uri("artifactregistry://us-central1-maven.pkg.dev/airborne-software/maven")
+  }
+}
 
 dependencies {
-  api("kairo:kairo-command-runner:$kairoVersion")
+  implementation("software.airborne.kairokairo-command-runner:5.14.0")
 }
 ```
 
-### Step 2: Run a command
+</details>
+
+## Usage
 
 ```kotlin
-// src/main/kotlin/yourPackage/.../YourFile.kt
-
 val commandRunner: CommandRunner = DefaultCommandRunner
+@OptIn(CommandRunner.Insecure::class)
 commandRunner.run("echo \"Hello, World!\"") // Hello, World!
 ```
