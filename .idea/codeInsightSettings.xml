@@ -37,7 +37,8 @@
       <name>javax.inject.*</name>
       <name>javax.ws.rs.HttpMethod</name>
       <name>jdk.tools.jlink.resources.plugins</name>
-      <name>kotlin.time.Duration</name>
+      <name>kotlin.test.*</name>
+      <name>kotlin.time.*</name>
       <name>okhttp3.*</name>
       <name>org.intellij.lang.annotations.Flow</name>
       <name>org.junit.jupiter.api.Assertions.*</name>
