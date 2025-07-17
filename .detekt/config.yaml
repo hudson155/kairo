@@ -676,7 +676,8 @@ style:
       - 'javax.inject.*' # Use Google's injection annotations.
       - 'javax.ws.rs.HttpMethod'
       - 'jdk.tools.jlink.resources.plugins'
-      - 'kotlin.time.Duration' # Use java.time.Duration.
+      - 'kotlin.test.*'
+      - 'kotlin.time.*'
       - 'okhttp3.*'
       - 'org.intellij.lang.annotations.Flow'
       - 'org.junit.jupiter.api.Assertions.*' # Use Kotest.
