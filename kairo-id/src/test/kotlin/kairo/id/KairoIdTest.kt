@@ -1,6 +1,8 @@
 package kairo.id
 
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.throwable.shouldHaveMessage
@@ -44,6 +46,36 @@ internal class KairoIdTest {
   fun `toString method`(): Unit = runTest {
     KairoId("library_book", "2eDS1sMt").toString()
       .shouldBe("library_book_2eDS1sMt")
+  }
+
+  @Test
+  fun `isValid method, valid (typical)`(): Unit = runTest {
+    KairoId.isValid("library_book_2eDS1sMt").shouldBeTrue()
+  }
+
+  @Test
+  fun `isValid method, valid (atypical)`(): Unit = runTest {
+    KairoId.isValid("library_bookbook").shouldBeTrue()
+  }
+
+  @Test
+  fun `isValid method, invalid (extra ID)`(): Unit = runTest {
+    KairoId.isValid("library_book_2eDS1sMt_2eDS1sMt").shouldBeFalse()
+  }
+
+  @Test
+  fun `isValid method, invalid (kebab case)`(): Unit = runTest {
+    KairoId.isValid("library-book-2eDS1sMt").shouldBeFalse()
+  }
+
+  @Test
+  fun `isValid method, invalid (capital letter)`(): Unit = runTest {
+    KairoId.isValid("Library_book_2eDS1sMt").shouldBeFalse()
+  }
+
+  @Test
+  fun `isValid method, invalid (invalid character)`(): Unit = runTest {
+    KairoId.isValid("library_böok_2eDS1sMt").shouldBeFalse()
   }
 
   @Test

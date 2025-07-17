@@ -47,6 +47,8 @@ public class KairoId(
     private val idRegex: Regex = Regex("[A-Za-z0-9]{${length.first},${length.last}}")
     public val regex: Regex = Regex("($prefixRegex)_($idRegex)")
 
+    public fun isValid(string: String): Boolean = regex.matches(string)
+
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     @JvmStatic
     public fun fromString(string: String): KairoId {
