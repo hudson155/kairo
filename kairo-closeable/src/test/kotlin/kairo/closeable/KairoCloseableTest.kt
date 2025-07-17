@@ -47,7 +47,7 @@ internal class KairoCloseableTest {
     isClosed.shouldBeFalse()
     shouldThrow<IllegalStateException> {
       closeable.use {
-        throw IllegalStateException()
+        error("Something went wrong.")
       }
     }
     isClosed.shouldBeTrue()
