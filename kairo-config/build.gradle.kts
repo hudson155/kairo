@@ -10,6 +10,7 @@ dependencies {
   implementation(project(":kairo-logging"))
   api(project(":kairo-protected-string")) // Exposed for clients.
   api(project(":kairo-serialization")) // Exposed for clients.
+  implementation(project(":kairo-util"))
 
   implementation(libs.guava) // For [Resources.getResource].
 
