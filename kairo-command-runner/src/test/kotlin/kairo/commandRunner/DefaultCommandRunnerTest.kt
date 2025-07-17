@@ -1,6 +1,5 @@
 package kairo.commandRunner
 
-import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.sequences.shouldBeEmpty
 import io.kotest.matchers.sequences.shouldContainExactly
 import kotlinx.coroutines.test.runTest
@@ -25,7 +24,6 @@ internal class DefaultCommandRunnerTest {
   @Test
   fun `2 lines`(): Unit = runTest {
     commandRunner.run("echo -e \"First\\nSecond\"")
-      .toList()
       .shouldContainExactly("First", "Second")
   }
 }
