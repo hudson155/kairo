@@ -53,8 +53,7 @@ public class TransactionManager @Inject constructor(
     require(types.isNotEmpty()) { "Please specify at least 1 transaction type." }
     require(types.distinct() == types) { "Duplicate transaction types specified." }
     val context = getTransactionContext()
-    val transaction =
-      Transaction(types.filter { context == null || it !in context })
+    val transaction = Transaction(types.filter { context == null || it !in context })
     return transaction.transaction(block)
   }
 }

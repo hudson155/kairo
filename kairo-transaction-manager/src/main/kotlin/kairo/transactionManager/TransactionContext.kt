@@ -10,21 +10,21 @@ import kotlinx.coroutines.currentCoroutineContext
  * This allows nested transactions to avoid creating duplicate resources.
  * It also allows for proper cleanup of transaction resources.
  */
-internal class TransactionContext : AbstractCoroutineContextElement(TransactionContext) {
+public class TransactionContext : AbstractCoroutineContextElement(TransactionContext) {
   private val types: MutableMap<TransactionType, Unit> = ConcurrentHashMap()
 
-  operator fun contains(type: TransactionType): Boolean =
+  internal operator fun contains(type: TransactionType): Boolean =
     type in types
 
-  operator fun plusAssign(type: TransactionType) {
+  internal operator fun plusAssign(type: TransactionType) {
     types += type to Unit
   }
 
-  operator fun minusAssign(type: TransactionType) {
+  internal operator fun minusAssign(type: TransactionType) {
     types -= type
   }
 
-  internal companion object : CoroutineContext.Key<TransactionContext>
+  public companion object : CoroutineContext.Key<TransactionContext>
 }
 
 internal suspend fun getTransactionContext(): TransactionContext? =
