@@ -8,7 +8,7 @@ This is not considered secure, and should not be used in production unless addit
 
 ## Installation
 
-`software.airborne.kairo:kairo-command-runner:5.14.0`
+`software.airborne.kairo:kairo-command-runner:5.15.0`
 
 <details>
 
@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-  implementation("software.airborne.kairokairo-command-runner:5.14.0")
+  implementation("software.airborne.kairokairo-command-runner:5.15.0")
 }
 ```
 
