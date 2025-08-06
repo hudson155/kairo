@@ -6,7 +6,7 @@ but for tests it may be a fixed clock instead.
 
 ## Installation
 
-`software.airborne.kairo:kairo-clock-feature:5.15.0`
+`software.airborne.kairo:kairo-clock-feature:5.15.1`
 
 <details>
 
@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-clock-feature:5.15.0")
+  implementation("software.airborne.kairo:kairo-clock-feature:5.15.1")
 }
 ```
 
