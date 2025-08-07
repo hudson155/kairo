@@ -2,10 +2,10 @@
 auth0JavaJwt = "4.5.0" # https://github.com/auth0/java-jwt/releases
 auth0JwksRsa = "0.22.2" # https://github.com/auth0/jwks-rsa-java/releases
 flyway = "11.9.2" # https://github.com/flyway/flyway/releases
-gcpCloudScheduler = "2.66.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-scheduler
-gcpCloudTasks = "2.66.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-tasks
-gcpSecretManager = "2.66.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-secretmanager
-googleApiCommon = "2.51.0" # // https://mvnrepository.com/artifact/com.google.api/api-common
+gcpCloudScheduler = "2.70.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-scheduler
+gcpCloudTasks = "2.70.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-tasks
+gcpSecretManager = "2.70.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-secretmanager
+googleApiCommon = "2.52.0" # // https://mvnrepository.com/artifact/com.google.api/api-common
 guava = "33.4.8-jre" # https://github.com/google/guava/releases
 guice = "7.0.0" # https://github.com/google/guice/releases
 hikari = "6.3.0" # https://github.com/brettwooldridge/HikariCP/tags
