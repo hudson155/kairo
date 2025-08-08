@@ -38,7 +38,6 @@ internal class JacksonHandler : ExceptionHandler() {
     return ExceptionResult.Unhandled
   }
 
-  @Suppress("UnnecessaryLet")
   private fun fromBody(
     intermediary: RestEndpointBodyException,
     e: Exception,
@@ -74,7 +73,6 @@ internal class JacksonHandler : ExceptionHandler() {
     return null
   }
 
-  @Suppress("UnnecessaryLet")
   private fun fromParam(
     intermediary: RestEndpointParamException,
     e: Exception,

@@ -11,7 +11,6 @@ import kairo.rest.exception.MalformedContentType
  * Converts Ktor-native exceptions into API-friendly exceptions.
  */
 internal class KtorHandler : ExceptionHandler() {
-  @Suppress("UnnecessaryLet")
   override fun handle(e: Throwable): ExceptionResult {
     if (e !is Exception) return ExceptionResult.Unhandled
 
