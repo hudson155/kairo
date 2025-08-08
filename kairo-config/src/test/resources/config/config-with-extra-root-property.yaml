@@ -1,7 +1,0 @@
-extraRootProperty: "This breaks the config."
-message: "Hello, World!"
-name: "My config"
-port: 8080
-height: { min: 2, max: 10, average: 8 }
-width: { min: 4, max: 20, average: 16 }
-depth: { min: 6, max: 30, average: 24 }
