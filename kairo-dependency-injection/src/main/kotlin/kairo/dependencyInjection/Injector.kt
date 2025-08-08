@@ -1,4 +1,4 @@
-@file:Suppress("ForbiddenMethodCall", "UnnecessaryLet")
+@file:Suppress("ForbiddenMethodCall")
 
 package kairo.dependencyInjection
 

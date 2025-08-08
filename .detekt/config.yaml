@@ -824,7 +824,7 @@ style:
   UnnecessaryInnerClass:
     active: true
   UnnecessaryLet:
-    active: true
+    active: false
   UnnecessaryParentheses:
     active: true
     allowForUnclearPrecedence: false
