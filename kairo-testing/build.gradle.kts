@@ -8,5 +8,6 @@ dependencies {
   api(project(":kairo-util"))
 
   api(libs.kotestRunner)
+  api(libs.kotlinxCoroutinesTest)
   api(libs.mockK)
 }
