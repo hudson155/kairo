@@ -8,6 +8,10 @@ java {
   withSourcesJar()
 }
 
+private val artifactIdRegex: Regex = Regex(":(kairo-[a-z]+(-[a-z]+)*(:[a-z]+(-[a-z]+)*)?)")
+
+private val unspecifiedVersion: String = "unspecified"
+
 publishing {
   publications {
     repositories {
@@ -21,12 +25,10 @@ publishing {
        * Derives the artifact ID from the project path.
        */
       artifactId = run {
-        val regex = Regex(":([a-z]+(-[a-z]+)*(:[a-z]+(-[a-z]+)*)?)")
         val path = project.path
-        val match = requireNotNull(regex.matchEntire(path)) { "Invalid project name: $path." }
+        val match = requireNotNull(artifactIdRegex.matchEntire(path)) { "Invalid project name: $path." }
         return@run match.groupValues[1].replace(':', '-')
       }
-      version = "5.15.1"
       from(components["java"])
       pom {
         licenses {
@@ -41,12 +43,24 @@ publishing {
   }
 }
 
-gradle.taskGraph.whenReady {
-  if (allTasks.any { it.name == "publishToMavenLocal" }) {
-    publishing {
-      publications.getByName<MavenPublication>("maven") {
-        version += "-SNAPSHOT"
+private fun configurePublication(name: String, block: MavenPublication.() -> Unit) {
+  gradle.taskGraph.whenReady {
+    if (allTasks.any { it.name == name }) {
+      publishing {
+        publications.getByName<MavenPublication>("maven") {
+          block()
+        }
       }
     }
+  }
+}
+
+configurePublication("publish") {
+  require(version != unspecifiedVersion) { "Must specify a version." }
+}
+
+configurePublication("publishToMavenLocal") {
+  if (version == unspecifiedVersion) {
+    version = "LOCAL-SNAPSHOT"
   }
 }

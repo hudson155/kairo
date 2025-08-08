@@ -4,7 +4,7 @@
 
 ## Installation
 
-`software.airborne.kairo:kairo-closeable:5.15.1`
+`software.airborne.kairo:kairo-closeable:$kairoVersion`
 
 <details>
 
@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-closeable:5.15.1")
+  implementation("software.airborne.kairo:kairo-closeable:$kairoVersion")
 }
 ```
 
