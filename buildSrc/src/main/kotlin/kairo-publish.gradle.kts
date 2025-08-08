@@ -10,6 +10,8 @@ java {
 
 private val artifactIdRegex: Regex = Regex(":(kairo-[a-z]+(-[a-z]+)*(:[a-z]+(-[a-z]+)*)?)")
 
+private val unspecifiedVersion: String = "unspecified"
+
 publishing {
   publications {
     repositories {
@@ -54,9 +56,11 @@ private fun configurePublication(name: String, block: MavenPublication.() -> Uni
 }
 
 configurePublication("publish") {
-  require(version != "unspecified") { "Must specify a version." }
+  require(version != unspecifiedVersion) { "Must specify a version." }
 }
 
 configurePublication("publishToMavenLocal") {
-  version = "LOCAL-SNAPSHOT"
+  if (version == unspecifiedVersion) {
+    version = "LOCAL-SNAPSHOT"
+  }
 }
