@@ -165,7 +165,7 @@ exceptions:
   InstanceOfCheckForException:
     active: true
   NotImplementedDeclaration:
-    active: true
+    active: false
   ObjectExtendsThrowable:
     active: true
   PrintStackTrace:

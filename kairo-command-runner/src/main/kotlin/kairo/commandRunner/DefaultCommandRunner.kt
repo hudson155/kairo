@@ -12,6 +12,7 @@ public object DefaultCommandRunner : CommandRunner() {
     @Suppress("ForbiddenMethodCall")
     val runtime = Runtime.getRuntime()
     val result = runtime.exec(arrayOf("bash", "-c", command))
+    // The result is not logged because it may be sensitive.
     return result.inputReader().lineSequence()
   }
 }
