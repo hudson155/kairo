@@ -10,6 +10,7 @@ import java.util.Queue
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
+@Suppress("ArrayPrimitive")
 internal class SingleNullOrThrowTest {
   @Test
   fun `no predicate, 0 elements, array`() {
