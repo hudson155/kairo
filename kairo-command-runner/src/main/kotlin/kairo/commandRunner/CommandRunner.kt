@@ -17,7 +17,8 @@ public abstract class CommandRunner {
 
   /**
    * Runs the command and returns the result.
-   * The result is a sequence of lines, for performance.
+   * Call [BufferedReader.readLines] to get the full result,
+   * or use [BufferedReader.useLines] to safely read a sequence of lines if the output is very large.
    */
   @Insecure
   public abstract fun run(command: String): BufferedReader
