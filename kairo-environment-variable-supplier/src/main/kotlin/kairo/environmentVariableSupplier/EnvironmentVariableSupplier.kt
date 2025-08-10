@@ -6,5 +6,5 @@ package kairo.environmentVariableSupplier
  * This abstract class is for testability.
  */
 public abstract class EnvironmentVariableSupplier {
-  public abstract operator fun get(name: String, default: String? = null): String?
+  public abstract operator fun get(name: String): String?
 }

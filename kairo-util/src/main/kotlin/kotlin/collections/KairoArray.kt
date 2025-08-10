@@ -7,7 +7,7 @@ package kotlin.collections
  * Returns the single element, or null if the collection is empty.
  * If the collection has more than one element, throws [IllegalArgumentException].
  *
- * This is less surprising than [singleOrNull]
+ * This is less surprising than [Array.singleOrNull]
  * because it doesn't return null when there are multiple items in the collection.
  */
 public fun <T> Array<T>.singleNullOrThrow(): T? {
@@ -21,7 +21,7 @@ public fun <T> Array<T>.singleNullOrThrow(): T? {
  * Returns the single element matching the given [predicate], or null if no elements match.
  * If more than one element matches, throws [IllegalArgumentException].
  *
- * This is less surprising than [singleOrNull]
+ * This is less surprising than [Array.singleOrNull]
  * because it doesn't return null when there are multiple items in the collection.
  */
 public inline fun <T> Array<T>.singleNullOrThrow(predicate: (T) -> Boolean): T? {

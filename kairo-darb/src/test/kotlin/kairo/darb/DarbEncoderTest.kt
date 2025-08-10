@@ -23,6 +23,16 @@ internal class DarbEncoderTest {
       DarbEncoder.encode(listOf(true, false, false, false, false)).shouldBe("5.80")
       DarbEncoder.encode(listOf(true, true, false, false, true)).shouldBe("5.C8")
       DarbEncoder.encode(listOf(true, true, true, true, true)).shouldBe("5.F8")
+      DarbEncoder.encode(
+        listOf(
+          false, false, true, false,
+          true, true, false, false,
+          true, false, true, true,
+          false, false, false, false,
+          true, false, false, false,
+          true, true, true,
+        ),
+      ).shouldBe("23.2CB08E")
     }
   }
 
@@ -43,6 +53,26 @@ internal class DarbEncoderTest {
       DarbEncoder.decode("5.C8").shouldBe(listOf(true, true, false, false, true))
       DarbEncoder.decode("5.F8").shouldBe(listOf(true, true, true, true, true))
       DarbEncoder.decode("5.f8").shouldBe(listOf(true, true, true, true, true))
+      DarbEncoder.decode("23.2CB08E").shouldBe(
+        listOf(
+          false, false, true, false,
+          true, true, false, false,
+          true, false, true, true,
+          false, false, false, false,
+          true, false, false, false,
+          true, true, true,
+        ),
+      )
+      DarbEncoder.decode("23.2cb08e").shouldBe(
+        listOf(
+          false, false, true, false,
+          true, true, false, false,
+          true, false, true, true,
+          false, false, false, false,
+          true, false, false, false,
+          true, true, true,
+        ),
+      )
     }
   }
 
