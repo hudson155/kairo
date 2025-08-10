@@ -1,71 +1,17 @@
 [versions]
-auth0JavaJwt = "4.5.0" # https://github.com/auth0/java-jwt/releases
-auth0JwksRsa = "0.22.2" # https://github.com/auth0/jwks-rsa-java/releases
-flyway = "11.11.0" # https://github.com/flyway/flyway/releases
-gcpCloudScheduler = "2.70.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-scheduler
-gcpCloudTasks = "2.70.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-tasks
-gcpSecretManager = "2.70.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-secretmanager
-googleApiCommon = "2.52.0" # https://mvnrepository.com/artifact/com.google.api/api-common
-guava = "33.4.8-jre" # https://github.com/google/guava/releases
-guice = "7.0.0" # https://github.com/google/guice/releases
-hikari = "7.0.1" # https://github.com/brettwooldridge/HikariCP/tags
-jackson = "2.19.2" # https://github.com/FasterXML/jackson-core/tags
-javaxMoney = "1.1" # https://mvnrepository.com/artifact/javax.money/money-api
-jdbi = "3.49.5" # https://github.com/jdbi/jdbi/releases
 kotest = "6.0.0.M8" # https://github.com/kotest/kotest/releases
 kotlinLogging = "7.0.12" # https://github.com/oshai/kotlin-logging/releases
 kotlinxCoroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines/releases
-ktor = "3.2.3" # https://ktor.io/docs/releases.html#release-details
 log4j2 = "3.0.0-beta2" # https://github.com/apache/logging-log4j2/releases
 mockK = "1.14.5" # https://github.com/mockk/mockk/releases
-moneta = "1.4.5" # https://mvnrepository.com/artifact/org.javamoney/moneta
-postgres = "42.7.7" # https://github.com/pgjdbc/pgjdbc/releases
-slack = "1.45.3" # https://github.com/slackapi/java-slack-sdk/releases
 
 [libraries]
-auth0JavaJwt = { module = "com.auth0:java-jwt", version.ref = "auth0JavaJwt" }
-auth0JwksRsa = { module = "com.auth0:jwks-rsa", version.ref = "auth0JwksRsa" }
-flywayCore = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
-flywayDatabasePostgres = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
-gcpCloudScheduler = { module = "com.google.cloud:google-cloud-scheduler", version.ref = "gcpCloudScheduler" }
-gcpCloudTasks = { module = "com.google.cloud:google-cloud-tasks", version.ref = "gcpCloudTasks" }
-gcpSecretManager = { module = "com.google.cloud:google-cloud-secretmanager", version.ref = "gcpSecretManager" }
-googleApiCommon = { module = "com.google.api:api-common", version.ref = "googleApiCommon" }
-guava = { module = "com.google.guava:guava", version.ref = "guava" }
-guice = { module = "com.google.inject:guice", version.ref = "guice" }
-hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
-jacksonCore = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
-jacksonDataformatYaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
-jacksonDatatypeJdk8 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jdk8", version.ref = "jackson" }
-jacksonModuleKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
-javaxMoney = { module = "javax.money:money-api", version.ref = "javaxMoney" }
-jdbiCore = { module = "org.jdbi:jdbi3-core", version.ref = "jdbi" }
-jdbiJackson = { module = "org.jdbi:jdbi3-jackson2", version.ref = "jdbi" }
-jdbiKotlin = { module = "org.jdbi:jdbi3-kotlin", version.ref = "jdbi" }
-jdbiPostgres = { module = "org.jdbi:jdbi3-postgres", version.ref = "jdbi" }
 kotestRunner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlinLoggingJvm = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "kotlinLogging" }
 kotlinxCoroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
-kotlinxCoroutinesSlf4j = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j", version.ref = "kotlinxCoroutines" }
 kotlinxCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
-ktorHttpJvm = { module = "io.ktor:ktor-http-jvm", version.ref = "ktor" }
-ktorClientContentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
-ktorClientCore = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-ktorClientJava = { module = "io.ktor:ktor-client-java", version.ref = "ktor" }
-ktorSerializationJackson = { module = "io.ktor:ktor-serialization-jackson", version.ref = "ktor" }
-ktorServerAuth = { module = "io.ktor:ktor-server-auth", version.ref = "ktor" }
-ktorServerContentNegotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
-ktorServerCore = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
-ktorServerCors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
-ktorServerNetty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
-ktorServerSse = { module = "io.ktor:ktor-server-sse", version.ref = "ktor" }
-ktorServerStatusPages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor" }
 log4j2ConfigYaml = { module = "org.apache.logging.log4j:log4j-config-yaml", version.ref = "log4j2" }
 log4j2Core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j2" }
 log4j2LayoutTemplateJson = { module = "org.apache.logging.log4j:log4j-layout-template-json", version.ref = "log4j2" }
 log4j2Slf4j2Impl = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j2" }
 mockK = { module = "io.mockk:mockk", version.ref = "mockK" }
-moneta = { module = "org.javamoney:moneta", version.ref = "moneta" }
-postgres = { module = "org.postgresql:postgresql", version.ref = "postgres" }
-slackClient = { module = "com.slack.api:slack-api-client", version.ref = "slack" }
-slackClientKotlin = { module = "com.slack.api:slack-api-client-kotlin-extension", version.ref = "slack" }
