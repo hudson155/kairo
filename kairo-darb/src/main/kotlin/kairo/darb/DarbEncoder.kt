@@ -6,19 +6,22 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 private val logger: KLogger = KotlinLogging.logger {}
 
 /**
- * Encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
+ * Encodes a boolean list into a Dense-ish Albeit Readable Binary (DARB) string.
+ * It's a medium-density way to encode boolean lists while maintaining some level of readability.
+ *
  * A DARB string contains 2 components, a prefix and a body, separated by a dot.
+ * An example DARB string is "23.2CB08E".
+ * This string represents the boolean list "0010 1100 1011 0000 1000 111".
+ * The prefix is "23" and the body is "2CB08E".
  *
- * An example DARB string is "5.C8".
- * This string represents the boolean list [true, true, false, false, true].
- * The prefix is "5" and the body is "C8".
- *
- * The prefix indicates the length of the data.
- * Within the body, each character represents 4 booleans
- * (except the last character, which can represent fewer than 4 but not 0 booleans).
- * In the example above, the first character "C" maps to 1100 in binary, which represents [true, true, false, false].
- * The second character "8" maps to 1000 in binary, which represents [true, false, false, false].
- * However, since there are only 5 booleans in the list (indicated by the prefix), we ignore the trailing booleans.
+ * The prefix indicates the length of the boolean list. In this case, there are 23 booleans.
+ * Within the body, each character represents up to 4 booleans.
+ * The first character ("2") maps to "0010".
+ * The second character ("C") maps to "1100".
+ * The third character ("B") maps to "1011".
+ * The fourth character ("0") maps to "0000".
+ * The fifth character ("8") maps to "1000".
+ * But because the length of this string is only `23`, we ignore the last boolean.
  *
  * Also decodes; the inverse operation.
  * See the corresponding test for more spec.

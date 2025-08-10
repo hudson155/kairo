@@ -7,6 +7,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 
 /**
  * Encodes a list of booleans into a string where each boolean from the list is represented by a 0 or a 1.
+ *
  * Also decodes; the inverse operation.
  * See the corresponding test for more spec.
  */

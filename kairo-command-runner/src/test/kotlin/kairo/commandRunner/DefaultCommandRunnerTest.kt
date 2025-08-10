@@ -1,7 +1,7 @@
 package kairo.commandRunner
 
-import io.kotest.matchers.sequences.shouldBeEmpty
-import io.kotest.matchers.sequences.shouldContainExactly
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldContainExactly
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -12,7 +12,7 @@ internal class DefaultCommandRunnerTest {
   @Test
   fun `0 lines`() {
     runTest {
-      commandRunner.run(";")
+      commandRunner.run(";").readLines()
         .shouldBeEmpty()
     }
   }
@@ -20,7 +20,7 @@ internal class DefaultCommandRunnerTest {
   @Test
   fun `1 line`() {
     runTest {
-      commandRunner.run("echo \"Hello, World!\"")
+      commandRunner.run("echo \"Hello, World!\"").readLines()
         .shouldContainExactly("Hello, World!")
     }
   }
@@ -28,7 +28,7 @@ internal class DefaultCommandRunnerTest {
   @Test
   fun `2 lines`() {
     runTest {
-      commandRunner.run("echo -e \"First\\nSecond\"")
+      commandRunner.run("echo -e \"First\\nSecond\"").readLines()
         .shouldContainExactly("First", "Second")
     }
   }
