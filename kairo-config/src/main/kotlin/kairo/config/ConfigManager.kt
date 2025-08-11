@@ -5,5 +5,5 @@ import com.typesafe.config.ConfigFactory
 
 public class ConfigManager {
   public fun load(name: String): Config =
-    ConfigFactory.parseResources(name)
+    ConfigFactory.parseResources(name).resolve()
 }
