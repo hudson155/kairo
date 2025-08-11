@@ -2,6 +2,7 @@ package kairo.config
 
 import com.typesafe.config.ConfigFactory
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.Serializable
 import org.junit.jupiter.api.Test
 
@@ -30,24 +31,25 @@ internal class ConfigLoaderTest {
   private val configManager: ConfigManager = ConfigManager()
 
   @Test
-  fun test() {
-    val config = ConfigFactory.parseResources("config/testing.conf").resolve()
-    configManager.deserialize<Config>(config).shouldBe(
-      Config(
-        name = "My config",
-        message = "Hello, World!",
-        description = "First line\nSecond line\nThird line",
-        port = 8080,
-        default = 42,
-        height = Config.Sizes(min = 2, max = 10, average = null),
-        width = Config.Sizes(min = 4, max = 20, average = 16),
-        depth = Config.Sizes(min = 6, max = 30, average = null),
-        booleans = listOf(true, false, true),
-        other = mapOf(
-          "key" to "value",
-          "key.2" to "value.2",
+  fun test() =
+    runTest {
+      val config = ConfigFactory.parseResources("config/testing.conf").resolve()
+      configManager.deserialize<Config>(config).shouldBe(
+        Config(
+          name = "My config",
+          message = "Hello, World!",
+          description = "First line\nSecond line\nThird line",
+          port = 8080,
+          default = 42,
+          height = Config.Sizes(min = 2, max = 10, average = null),
+          width = Config.Sizes(min = 4, max = 20, average = 16),
+          depth = Config.Sizes(min = 6, max = 30, average = null),
+          booleans = listOf(true, false, true),
+          other = mapOf(
+            "key" to "value",
+            "key.2" to "value.2",
+          ),
         ),
-      ),
-    )
-  }
+      )
+    }
 }

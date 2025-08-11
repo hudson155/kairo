@@ -7,16 +7,15 @@ import org.junit.jupiter.api.Test
 
 internal class FakeEnvironmentVariableSupplierTest {
   @Test
-  fun `no map entry`() {
+  fun `no map entry`() =
     runTest {
       val environmentVariableSupplier = FakeEnvironmentVariableSupplier()
       environmentVariableSupplier["KAIRO_ENVIRONMENT_VARIABLE_SUPPLIER_TEST_VARIABLE_0"]
         .shouldBeNull()
     }
-  }
 
   @Test
-  fun `map entry from constructor`() {
+  fun `map entry from constructor`() =
     runTest {
       val environmentVariableSupplier = FakeEnvironmentVariableSupplier(
         mapOf(
@@ -26,15 +25,13 @@ internal class FakeEnvironmentVariableSupplierTest {
       environmentVariableSupplier["KAIRO_ENVIRONMENT_VARIABLE_SUPPLIER_TEST_VARIABLE_0"]
         .shouldBe("test_value")
     }
-  }
 
   @Test
-  fun `map entry from setter`() {
+  fun `map entry from setter`() =
     runTest {
       val environmentVariableSupplier = FakeEnvironmentVariableSupplier()
       environmentVariableSupplier["KAIRO_ENVIRONMENT_VARIABLE_SUPPLIER_TEST_VARIABLE_0"] = "test_value"
       environmentVariableSupplier["KAIRO_ENVIRONMENT_VARIABLE_SUPPLIER_TEST_VARIABLE_0"]
         .shouldBe("test_value")
     }
-  }
 }

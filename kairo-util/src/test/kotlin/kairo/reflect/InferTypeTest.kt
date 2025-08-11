@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class InferTypeTest {
@@ -25,47 +26,53 @@ internal class InferTypeTest {
   }
 
   @Test
-  fun `abstract int subclass`() {
-    with(AbstractExampleIntSubclass()) {
-      kClass.shouldBe(Int::class)
-      type.shouldBe(typeOf<Int>())
+  fun `abstract int subclass`() =
+    runTest {
+      with(AbstractExampleIntSubclass()) {
+        kClass.shouldBe(Int::class)
+        type.shouldBe(typeOf<Int>())
+      }
     }
-  }
 
   @Test
-  fun `abstract string subclass`() {
-    with(AbstractExampleStringSubclass()) {
-      kClass.shouldBe(String::class)
-      type.shouldBe(typeOf<String>())
+  fun `abstract string subclass`() =
+    runTest {
+      with(AbstractExampleStringSubclass()) {
+        kClass.shouldBe(String::class)
+        type.shouldBe(typeOf<String>())
+      }
     }
-  }
 
   @Test
-  fun `abstract string list subclass`() {
-    with(AbstractExampleStringListSubclass()) {
-      kClass.shouldBe(List::class)
-      type.shouldBe(typeOf<List<String>>())
+  fun `abstract string list subclass`() =
+    runTest {
+      with(AbstractExampleStringListSubclass()) {
+        kClass.shouldBe(List::class)
+        type.shouldBe(typeOf<List<String>>())
+      }
     }
-  }
 
   @Test
-  fun `concrete int class`() {
-    shouldThrow<NoSuchElementException> {
-      ConcreteExampleClass<Int>()
+  fun `concrete int class`() =
+    runTest {
+      shouldThrow<NoSuchElementException> {
+        ConcreteExampleClass<Int>()
+      }
     }
-  }
 
   @Test
-  fun `concrete string class`() {
-    shouldThrow<NoSuchElementException> {
-      ConcreteExampleClass<String>()
+  fun `concrete string class`() =
+    runTest {
+      shouldThrow<NoSuchElementException> {
+        ConcreteExampleClass<String>()
+      }
     }
-  }
 
   @Test
-  fun `concrete string list class`() {
-    shouldThrow<NoSuchElementException> {
-      ConcreteExampleClass<List<String>>()
+  fun `concrete string list class`() =
+    runTest {
+      shouldThrow<NoSuchElementException> {
+        ConcreteExampleClass<List<String>>()
+      }
     }
-  }
 }

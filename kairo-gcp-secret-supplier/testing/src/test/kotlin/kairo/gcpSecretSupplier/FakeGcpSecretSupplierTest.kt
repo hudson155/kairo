@@ -9,16 +9,15 @@ import org.junit.jupiter.api.Test
 @OptIn(ProtectedString.Access::class)
 internal class FakeGcpSecretSupplierTest {
   @Test
-  fun `no map entry`() {
+  fun `no map entry`() =
     runTest {
       val gcpSecretSupplier = FakeGcpSecretSupplier()
       gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"]
         .shouldBeNull()
     }
-  }
 
   @Test
-  fun `map entry from constructor`() {
+  fun `map entry from constructor`() =
     runTest {
       val gcpSecretSupplier = FakeGcpSecretSupplier(
         mapOf(
@@ -28,15 +27,13 @@ internal class FakeGcpSecretSupplierTest {
       gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"]
         .shouldBe(ProtectedString("test_value"))
     }
-  }
 
   @Test
-  fun `map entry from setter`() {
+  fun `map entry from setter`() =
     runTest {
       val gcpSecretSupplier = FakeGcpSecretSupplier()
       gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"] = ProtectedString("test_value")
       gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"]
         .shouldBe(ProtectedString("test_value"))
     }
-  }
 }
