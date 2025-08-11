@@ -7,7 +7,8 @@ gcpSecretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
 
 # Guava
 # https://github.com/google/guava/releases
-guava = { module = "com.google.guava:guava-bom", version = "33.4.8-jre" }
+guavaBom = { module = "com.google.guava:guava-bom", version = "33.4.8-jre" }
+guava = { module = "com.google.guava:guava" }
 
 # Kotest
 # https://github.com/kotest/kotest/releases
