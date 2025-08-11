@@ -4,9 +4,5 @@ import com.typesafe.config.Config
 import kotlinx.serialization.hocon.Hocon
 import kotlinx.serialization.serializer
 
-public class Config(
-  config: Config,
-) : Config by config {
-  public inline fun <reified T : Any> deserialize(): T =
-    Hocon.decodeFromConfig(serializer<T>(), this)
-}
+public inline fun <reified T : Any> Config.deserialize(): T =
+  Hocon.decodeFromConfig(serializer<T>(), this)
