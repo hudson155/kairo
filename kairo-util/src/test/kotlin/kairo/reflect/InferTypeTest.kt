@@ -46,26 +46,26 @@ internal class InferTypeTest {
       kClass.shouldBe(List::class)
       type.shouldBe(typeOf<List<String>>())
     }
+  }
 
-    @Test
-    fun `concrete int class`() {
-      shouldThrow<NoSuchElementException> {
-        ConcreteExampleClass<Int>()
-      }
+  @Test
+  fun `concrete int class`() {
+    shouldThrow<NoSuchElementException> {
+      ConcreteExampleClass<Int>()
     }
+  }
 
-    @Test
-    fun `concrete string class`() {
-      shouldThrow<NoSuchElementException> {
-        ConcreteExampleClass<String>()
-      }
+  @Test
+  fun `concrete string class`() {
+    shouldThrow<NoSuchElementException> {
+      ConcreteExampleClass<String>()
     }
+  }
 
-    @Test
-    fun `concrete string list class`() {
-      shouldThrow<NoSuchElementException> {
-        ConcreteExampleClass<List<String>>()
-      }
+  @Test
+  fun `concrete string list class`() {
+    shouldThrow<NoSuchElementException> {
+      ConcreteExampleClass<List<String>>()
     }
   }
 }
