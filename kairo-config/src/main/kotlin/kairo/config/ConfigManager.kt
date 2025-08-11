@@ -1,6 +1,8 @@
 package kairo.config
 
 import com.typesafe.config.Config
+import io.github.oshai.kotlinlogging.KLogger
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.config.ConfigPropertySource.ConfigProperty
 import kotlin.reflect.KClass
 import kotlinx.serialization.DeserializationStrategy
@@ -9,6 +11,8 @@ import kotlinx.serialization.modules.PolymorphicModuleBuilder
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.serializer
+
+private val logger: KLogger = KotlinLogging.logger {}
 
 public class ConfigManager(sources: List<ConfigPropertySource<*>> = defaultSources) {
   private val hocon: Hocon =
@@ -23,6 +27,10 @@ public class ConfigManager(sources: List<ConfigPropertySource<*>> = defaultSourc
   private val sources: Map<KClass<out ConfigProperty>, ConfigPropertySource<*>> =
     sources.associateBy { it.kClass }
 
+  init {
+    logger.info { "Initialized ConfigManager with sources: $sources." }
+  }
+
   public inline fun <reified T : Any> deserialize(config: Config): T =
     deserialize(serializer<T>(), config)
 
@@ -31,6 +39,7 @@ public class ConfigManager(sources: List<ConfigPropertySource<*>> = defaultSourc
 
   @Suppress("UNCHECKED_CAST")
   public suspend fun <T : ConfigProperty> resolveProperty(configProperty: T): String? {
+    logger.debug { "Resolving property: $configProperty." }
     val configPropertySource = checkNotNull(sources[configProperty::class])
     return (configPropertySource as ConfigPropertySource<T>).resolve(configProperty)
   }
