@@ -34,7 +34,7 @@ internal class ConfigLoaderTest {
   fun test(): Unit =
     runTest {
       val config = ConfigFactory.parseResources("config/testing.conf").resolve()
-      configManager.deserialize<Config>(config).shouldBe(
+      configManager.deserializer.deserialize<Config>(config).shouldBe(
         Config(
           name = "My config",
           message = "Hello, World!",
