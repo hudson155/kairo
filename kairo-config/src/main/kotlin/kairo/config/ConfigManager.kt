@@ -43,10 +43,10 @@ public class ConfigManager(sources: List<ConfigPropertySource<*>> = defaultSourc
     hocon.decodeFromConfig(deserializer, config)
 
   @Suppress("UNCHECKED_CAST")
-  public suspend fun <T : ConfigProperty> resolveProperty(configProperty: T): String? {
+  public suspend fun <P : ConfigProperty> resolveProperty(configProperty: P): String? {
     logger.debug { "Resolving property: $configProperty." }
     val configPropertySource = checkNotNull(sources[configProperty::class])
-    return (configPropertySource as ConfigPropertySource<T>).resolve(configProperty)
+    return (configPropertySource as ConfigPropertySource<P>).resolve(configProperty)
   }
 
   public companion object {
@@ -58,8 +58,8 @@ public class ConfigManager(sources: List<ConfigPropertySource<*>> = defaultSourc
   }
 }
 
-private fun <T : ConfigProperty> PolymorphicModuleBuilder<ConfigProperty>.subclass(
-  source: ConfigPropertySource<T>,
+private fun <P : ConfigProperty> PolymorphicModuleBuilder<ConfigProperty>.subclass(
+  source: ConfigPropertySource<P>,
 ) {
   subclass(source.kClass, source.serializer)
 }
