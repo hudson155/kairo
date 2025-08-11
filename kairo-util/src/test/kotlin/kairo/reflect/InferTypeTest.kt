@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test
 
 internal class InferTypeTest {
   internal abstract class AbstractExampleClass<T : Any> {
-    val kClass: KClass<T> = inferKClass(AbstractExampleClass::class, 0, this::class)
-    val kType: KType = inferKType(AbstractExampleClass::class, 0, this::class)
+    val kClass: KClass<T> = inferClass(AbstractExampleClass::class, 0, this::class)
+    val type: KType = inferType(AbstractExampleClass::class, 0, this::class)
   }
 
   internal class AbstractExampleIntSubclass : AbstractExampleClass<Int>()
@@ -21,8 +21,8 @@ internal class InferTypeTest {
   internal class AbstractExampleStringListSubclass : AbstractExampleClass<List<String>>()
 
   internal class ConcreteExampleClass<T : Any> {
-    val kClass: KClass<T> = inferKClass(ConcreteExampleClass::class, 0, this::class)
-    val kType: KType = inferKType(ConcreteExampleClass::class, 0, this::class)
+    val kClass: KClass<T> = inferClass(ConcreteExampleClass::class, 0, this::class)
+    val type: KType = inferType(ConcreteExampleClass::class, 0, this::class)
   }
 
   @Test
@@ -30,7 +30,7 @@ internal class InferTypeTest {
     runTest {
       with(AbstractExampleIntSubclass()) {
         kClass.shouldBe(Int::class)
-        kType.shouldBe(typeOf<Int>())
+        type.shouldBe(typeOf<Int>())
       }
     }
   }
@@ -40,7 +40,7 @@ internal class InferTypeTest {
     runTest {
       with(AbstractExampleStringSubclass()) {
         kClass.shouldBe(String::class)
-        kType.shouldBe(typeOf<String>())
+        type.shouldBe(typeOf<String>())
       }
     }
   }
@@ -50,7 +50,7 @@ internal class InferTypeTest {
     runTest {
       with(AbstractExampleStringListSubclass()) {
         kClass.shouldBe(List::class)
-        kType.shouldBe(typeOf<List<String>>())
+        type.shouldBe(typeOf<List<String>>())
       }
     }
 
