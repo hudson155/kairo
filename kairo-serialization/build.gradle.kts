@@ -4,5 +4,7 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":bom"))
+
   api(libs.kotlinxSerializationJson)
 }
