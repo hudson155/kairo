@@ -10,8 +10,15 @@ kotlin {
   }
 }
 
+tasks.test {
+  environment("KAIRO_CONFIG_SOURCE_TEST", "Hello, World!")
+}
+
 dependencies {
   implementation(project(":bom"))
+
+  implementation(project(":kairo-environment-variable-supplier"))
+  implementation(project(":kairo-util"))
 
   implementation(libs.hocon)
   implementation(libs.kotlinxSerializationHocon)
