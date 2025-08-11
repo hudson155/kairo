@@ -10,10 +10,6 @@ kotlin {
   }
 }
 
-tasks.test {
-  environment("KAIRO_CONFIG_TEST_ENVIRONMENT_VARIABLE_REQUIRED", "VALUE_FROM_ENV")
-}
-
 dependencies {
   implementation(project(":bom"))
 
