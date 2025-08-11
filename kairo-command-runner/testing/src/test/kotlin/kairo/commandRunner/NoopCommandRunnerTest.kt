@@ -8,23 +8,9 @@ internal class NoopCommandRunnerTest {
   private val commandRunner: CommandRunner = NoopCommandRunner()
 
   @Test
-  fun `0 lines`() {
-    shouldThrow<NotImplementedError> {
-      commandRunner.run(";")
-    }
-  }
-
-  @Test
-  fun `1 line`() {
+  fun test() {
     shouldThrow<NotImplementedError> {
       commandRunner.run("echo \"Hello, World!\"")
-    }
-  }
-
-  @Test
-  fun `2 lines`() {
-    shouldThrow<NotImplementedError> {
-      commandRunner.run("echo -e \"First\\nSecond\"")
     }
   }
 }
