@@ -6,7 +6,7 @@ import java.io.BufferedReader
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-public object DefaultCommandRunner : CommandRunner() {
+public class DefaultCommandRunner : CommandRunner() {
   @Suppress("ForbiddenMethodCall")
   private val runtime: Runtime = Runtime.getRuntime()
 

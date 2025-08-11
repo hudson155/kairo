@@ -1,5 +1,14 @@
 [libraries]
 
+# GCP
+# https://github.com/googleapis/java-cloud-bom/releases
+gcpBom = { module = "com.google.cloud:libraries-bom", version = "26.65.0" }
+gcpSecretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
+
+# Guava
+# https://github.com/google/guava/releases
+guava = { module = "com.google.guava:guava-bom", version = "33.4.8-jre" }
+
 # Kotest
 # https://github.com/kotest/kotest/releases
 kotest = { module = "io.kotest:kotest-runner-junit5", version = "6.0.0.M14" }
@@ -12,6 +21,7 @@ kotlinLoggingJvm = { module = "io.github.oshai:kotlin-logging-jvm", version = "7
 # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlinxCoroutinesBom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version = "1.10.2" }
 kotlinxCoroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+kotlinxCoroutinesGuava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava" }
 kotlinxCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 
 # Kotlinx Serialization
