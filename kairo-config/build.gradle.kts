@@ -13,8 +13,6 @@ kotlin {
 dependencies {
   implementation(project(":bom"))
 
-  api(project(":kairo-serialization"))
-
   implementation(libs.hocon)
   implementation(libs.kotlinxSerializationHocon)
 
