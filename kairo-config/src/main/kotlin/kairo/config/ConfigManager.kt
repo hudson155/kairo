@@ -3,6 +3,7 @@ package kairo.config
 import com.typesafe.config.Config
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kairo.config.ConfigManager.Companion.defaultSources
 import kairo.config.ConfigPropertySource.ConfigProperty
 import kotlin.reflect.KClass
 import kotlinx.serialization.DeserializationStrategy
@@ -14,6 +15,10 @@ import kotlinx.serialization.serializer
 
 private val logger: KLogger = KotlinLogging.logger {}
 
+/**
+ * The config manager allows you to resolve config properties from multiple sources.
+ * There are a few built-in sources (see [defaultSources]). Feel free to implement your own too.
+ */
 public class ConfigManager(sources: List<ConfigPropertySource<*>> = defaultSources) {
   private val hocon: Hocon =
     Hocon {
