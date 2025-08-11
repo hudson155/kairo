@@ -11,6 +11,5 @@ dependencies {
 
   implementation(libs.gcpSecretManager)
   implementation(libs.guava)
-  implementation(libs.kotlinxCoroutinesCore)
   implementation(libs.kotlinxCoroutinesGuava)
 }
