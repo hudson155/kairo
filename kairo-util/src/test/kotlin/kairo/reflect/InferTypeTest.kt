@@ -5,7 +5,6 @@ import io.kotest.matchers.shouldBe
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
-import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class InferTypeTest {
@@ -27,57 +26,45 @@ internal class InferTypeTest {
 
   @Test
   fun `abstract int subclass`() {
-    runTest {
-      with(AbstractExampleIntSubclass()) {
-        kClass.shouldBe(Int::class)
-        type.shouldBe(typeOf<Int>())
-      }
+    with(AbstractExampleIntSubclass()) {
+      kClass.shouldBe(Int::class)
+      type.shouldBe(typeOf<Int>())
     }
   }
 
   @Test
   fun `abstract string subclass`() {
-    runTest {
-      with(AbstractExampleStringSubclass()) {
-        kClass.shouldBe(String::class)
-        type.shouldBe(typeOf<String>())
-      }
+    with(AbstractExampleStringSubclass()) {
+      kClass.shouldBe(String::class)
+      type.shouldBe(typeOf<String>())
     }
   }
 
   @Test
   fun `abstract string list subclass`() {
-    runTest {
-      with(AbstractExampleStringListSubclass()) {
-        kClass.shouldBe(List::class)
-        type.shouldBe(typeOf<List<String>>())
-      }
+    with(AbstractExampleStringListSubclass()) {
+      kClass.shouldBe(List::class)
+      type.shouldBe(typeOf<List<String>>())
     }
 
     @Test
     fun `concrete int class`() {
-      runTest {
-        shouldThrow<NoSuchElementException> {
-          ConcreteExampleClass<Int>()
-        }
+      shouldThrow<NoSuchElementException> {
+        ConcreteExampleClass<Int>()
       }
     }
 
     @Test
     fun `concrete string class`() {
-      runTest {
-        shouldThrow<NoSuchElementException> {
-          ConcreteExampleClass<String>()
-        }
+      shouldThrow<NoSuchElementException> {
+        ConcreteExampleClass<String>()
       }
     }
 
     @Test
     fun `concrete string list class`() {
-      runTest {
-        shouldThrow<NoSuchElementException> {
-          ConcreteExampleClass<List<String>>()
-        }
+      shouldThrow<NoSuchElementException> {
+        ConcreteExampleClass<List<String>>()
       }
     }
   }

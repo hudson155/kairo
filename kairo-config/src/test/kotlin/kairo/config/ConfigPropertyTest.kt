@@ -11,15 +11,15 @@ internal class ConfigPropertyTest {
 
   @Test
   fun `environment variable`() {
+    val config = run {
+      @Language("HOCON")
+      val config = """
+        type = "EnvironmentVariable"
+        name = "KAIRO_CONFIG_SOURCE_TEST"
+      """.trimIndent()
+      return@run ConfigFactory.parseString(config).resolve()
+    }
     runTest {
-      val config = run {
-        @Language("HOCON")
-        val config = """
-          type = "EnvironmentVariable"
-          name = "KAIRO_CONFIG_SOURCE_TEST"
-        """.trimIndent()
-        return@run ConfigFactory.parseString(config).resolve()
-      }
       configManager.resolveProperty(configManager.deserialize<ConfigPropertySource.ConfigProperty>(config))
         .shouldBe("Hello, World!")
     }
@@ -27,15 +27,15 @@ internal class ConfigPropertyTest {
 
   @Test
   fun plaintext() {
+    val config = run {
+      @Language("HOCON")
+      val config = """
+        type = "Plaintext"
+        value = "Hello, World!"
+      """.trimIndent()
+      return@run ConfigFactory.parseString(config).resolve()
+    }
     runTest {
-      val config = run {
-        @Language("HOCON")
-        val config = """
-          type = "Plaintext"
-          value = "Hello, World!"
-        """.trimIndent()
-        return@run ConfigFactory.parseString(config).resolve()
-      }
       configManager.resolveProperty(configManager.deserialize<ConfigPropertySource.ConfigProperty>(config))
         .shouldBe("Hello, World!")
     }
