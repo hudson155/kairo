@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 
 internal class BooleanListEncoderTest {
   @Test
-  fun encode() =
+  fun encode(): Unit =
     runTest {
       BooleanListEncoder.encode(emptyList()).shouldBeEmpty()
       BooleanListEncoder.encode(listOf(false)).shouldBe("0")
@@ -26,7 +26,7 @@ internal class BooleanListEncoderTest {
     }
 
   @Test
-  fun decode() =
+  fun decode(): Unit =
     runTest {
       BooleanListEncoder.decode("").shouldBeEmpty()
       BooleanListEncoder.decode("0").shouldBe(listOf(false))

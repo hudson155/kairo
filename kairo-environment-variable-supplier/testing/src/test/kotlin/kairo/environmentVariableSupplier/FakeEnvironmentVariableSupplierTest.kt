@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 internal class FakeEnvironmentVariableSupplierTest {
   @Test
-  fun `no map entry`() =
+  fun `no map entry`(): Unit =
     runTest {
       val environmentVariableSupplier = FakeEnvironmentVariableSupplier()
       environmentVariableSupplier["KAIRO_ENVIRONMENT_VARIABLE_SUPPLIER_TEST_VARIABLE_0"]
@@ -15,7 +15,7 @@ internal class FakeEnvironmentVariableSupplierTest {
     }
 
   @Test
-  fun `map entry from constructor`() =
+  fun `map entry from constructor`(): Unit =
     runTest {
       val environmentVariableSupplier = FakeEnvironmentVariableSupplier(
         mapOf(
@@ -27,7 +27,7 @@ internal class FakeEnvironmentVariableSupplierTest {
     }
 
   @Test
-  fun `map entry from setter`() =
+  fun `map entry from setter`(): Unit =
     runTest {
       val environmentVariableSupplier = FakeEnvironmentVariableSupplier()
       environmentVariableSupplier["KAIRO_ENVIRONMENT_VARIABLE_SUPPLIER_TEST_VARIABLE_0"] = "test_value"

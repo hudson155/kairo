@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 @OptIn(ProtectedString.Access::class)
 internal class FakeGcpSecretSupplierTest {
   @Test
-  fun `no map entry`() =
+  fun `no map entry`(): Unit =
     runTest {
       val gcpSecretSupplier = FakeGcpSecretSupplier()
       gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"]
@@ -17,7 +17,7 @@ internal class FakeGcpSecretSupplierTest {
     }
 
   @Test
-  fun `map entry from constructor`() =
+  fun `map entry from constructor`(): Unit =
     runTest {
       val gcpSecretSupplier = FakeGcpSecretSupplier(
         mapOf(
@@ -29,7 +29,7 @@ internal class FakeGcpSecretSupplierTest {
     }
 
   @Test
-  fun `map entry from setter`() =
+  fun `map entry from setter`(): Unit =
     runTest {
       val gcpSecretSupplier = FakeGcpSecretSupplier()
       gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"] = ProtectedString("test_value")

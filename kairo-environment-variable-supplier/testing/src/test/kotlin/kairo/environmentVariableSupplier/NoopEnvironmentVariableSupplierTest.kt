@@ -8,7 +8,7 @@ internal class NoopEnvironmentVariableSupplierTest {
   private val environmentVariableSupplier: EnvironmentVariableSupplier = NoopEnvironmentVariableSupplier()
 
   @Test
-  fun test() =
+  fun test(): Unit =
     runTest {
       shouldThrow<NotImplementedError> {
         environmentVariableSupplier["KAIRO_ENVIRONMENT_VARIABLE_SUPPLIER_TEST_VARIABLE_0"]

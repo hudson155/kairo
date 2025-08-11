@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test
 @OptIn(ProtectedString.Access::class)
 internal class ProtectedStringTest {
   @Test
-  fun value() =
+  fun value(): Unit =
     runTest {
       ProtectedString("1").value
         .shouldBe("1")
     }
 
   @Test
-  fun `equals method`() =
+  fun `equals method`(): Unit =
     runTest {
       ProtectedString("1")
         .shouldBe(ProtectedString("1"))
@@ -24,7 +24,7 @@ internal class ProtectedStringTest {
     }
 
   @Test
-  fun `hashCode method`() =
+  fun `hashCode method`(): Unit =
     runTest {
       ProtectedString("1").hashCode()
         .shouldBe("1".hashCode())
@@ -33,7 +33,7 @@ internal class ProtectedStringTest {
     }
 
   @Test
-  fun `toString method`() =
+  fun `toString method`(): Unit =
     runTest {
       ProtectedString("1").toString()
         .shouldBe("ProtectedString(value='REDACTED')")

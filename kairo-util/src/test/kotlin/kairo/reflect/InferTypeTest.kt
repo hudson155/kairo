@@ -26,7 +26,7 @@ internal class InferTypeTest {
   }
 
   @Test
-  fun `abstract int subclass`() =
+  fun `abstract int subclass`(): Unit =
     runTest {
       with(AbstractExampleIntSubclass()) {
         kClass.shouldBe(Int::class)
@@ -35,7 +35,7 @@ internal class InferTypeTest {
     }
 
   @Test
-  fun `abstract string subclass`() =
+  fun `abstract string subclass`(): Unit =
     runTest {
       with(AbstractExampleStringSubclass()) {
         kClass.shouldBe(String::class)
@@ -44,7 +44,7 @@ internal class InferTypeTest {
     }
 
   @Test
-  fun `abstract string list subclass`() =
+  fun `abstract string list subclass`(): Unit =
     runTest {
       with(AbstractExampleStringListSubclass()) {
         kClass.shouldBe(List::class)
@@ -53,7 +53,7 @@ internal class InferTypeTest {
     }
 
   @Test
-  fun `concrete int class`() =
+  fun `concrete int class`(): Unit =
     runTest {
       shouldThrow<NoSuchElementException> {
         ConcreteExampleClass<Int>()
@@ -61,7 +61,7 @@ internal class InferTypeTest {
     }
 
   @Test
-  fun `concrete string class`() =
+  fun `concrete string class`(): Unit =
     runTest {
       shouldThrow<NoSuchElementException> {
         ConcreteExampleClass<String>()
@@ -69,7 +69,7 @@ internal class InferTypeTest {
     }
 
   @Test
-  fun `concrete string list class`() =
+  fun `concrete string list class`(): Unit =
     runTest {
       shouldThrow<NoSuchElementException> {
         ConcreteExampleClass<List<String>>()

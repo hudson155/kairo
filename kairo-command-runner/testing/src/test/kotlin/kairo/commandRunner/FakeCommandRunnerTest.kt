@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 @OptIn(CommandRunner.Insecure::class)
 internal class FakeCommandRunnerTest {
   @Test
-  fun `no map entry`() =
+  fun `no map entry`(): Unit =
     runTest {
       val commandRunner = FakeCommandRunner()
       shouldThrow<NullPointerException> {
@@ -18,7 +18,7 @@ internal class FakeCommandRunnerTest {
     }
 
   @Test
-  fun `map entry from constructor`() =
+  fun `map entry from constructor`(): Unit =
     runTest {
       val commandRunner = FakeCommandRunner(
         mapOf(
@@ -30,7 +30,7 @@ internal class FakeCommandRunnerTest {
     }
 
   @Test
-  fun `map entry from setter`() =
+  fun `map entry from setter`(): Unit =
     runTest {
       val commandRunner = FakeCommandRunner()
       commandRunner["echo \"Hello, World!\""] = "Hello, World!"

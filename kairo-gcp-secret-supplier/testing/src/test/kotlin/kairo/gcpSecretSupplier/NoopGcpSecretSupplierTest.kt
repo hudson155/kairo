@@ -8,7 +8,7 @@ internal class NoopGcpSecretSupplierTest {
   private val gcpSecretSupplier: GcpSecretSupplier = NoopGcpSecretSupplier()
 
   @Test
-  fun test() =
+  fun test(): Unit =
     runTest {
       shouldThrow<NotImplementedError> {
         gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"]

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 @Suppress("ArrayPrimitive")
 internal class SingleNullOrThrowTest {
   @Test
-  fun `no predicate, 0 elements, array`() =
+  fun `no predicate, 0 elements, array`(): Unit =
     runTest {
       val array: Array<Int> = emptyArray<Int>()
       array.singleNullOrThrow()
@@ -21,7 +21,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `no predicate, 0 elements, list`() =
+  fun `no predicate, 0 elements, list`(): Unit =
     runTest {
       val list: List<Int> = emptyList()
       list.singleNullOrThrow()
@@ -29,7 +29,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `no predicate, 0 elements, queue`() =
+  fun `no predicate, 0 elements, queue`(): Unit =
     runTest {
       val queue: Queue<Int> = ArrayDeque(emptyList())
       queue.singleNullOrThrow()
@@ -37,7 +37,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `no predicate, 1 element, array`() =
+  fun `no predicate, 1 element, array`(): Unit =
     runTest {
       val array: Array<Int> = arrayOf(9)
       array.singleNullOrThrow()
@@ -45,7 +45,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `no predicate, 1 element, list`() =
+  fun `no predicate, 1 element, list`(): Unit =
     runTest {
       val list: List<Int> = listOf(9)
       list.singleNullOrThrow()
@@ -53,7 +53,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `no predicate, 1 element, queue`() =
+  fun `no predicate, 1 element, queue`(): Unit =
     runTest {
       val queue: Queue<Int> = ArrayDeque(listOf(9))
       queue.singleNullOrThrow()
@@ -61,7 +61,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `no predicate, 2 elements, array`() =
+  fun `no predicate, 2 elements, array`(): Unit =
     runTest {
       val array: Array<Int> = arrayOf(4, 8)
       shouldThrow<IllegalArgumentException> {
@@ -70,7 +70,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `no predicate, 2 elements, list`() =
+  fun `no predicate, 2 elements, list`(): Unit =
     runTest {
       val list: List<Int> = listOf(4, 8)
       shouldThrow<IllegalArgumentException> {
@@ -79,7 +79,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `no predicate, 2 elements, queue`() =
+  fun `no predicate, 2 elements, queue`(): Unit =
     runTest {
       val queue: Queue<Int> = ArrayDeque(listOf(4, 8))
       shouldThrow<IllegalArgumentException> {
@@ -88,7 +88,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `with predicate, 0 matches, array`() =
+  fun `with predicate, 0 matches, array`(): Unit =
     runTest {
       val array: Array<Int> = arrayOf(3, 4, 5)
       array.singleNullOrThrow { it > 5 }
@@ -96,7 +96,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `with predicate, 0 matches, list`() =
+  fun `with predicate, 0 matches, list`(): Unit =
     runTest {
       val list: List<Int> = listOf(3, 4, 5)
       list.singleNullOrThrow { it > 5 }
@@ -104,7 +104,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `with predicate, 0 matches, queue`() =
+  fun `with predicate, 0 matches, queue`(): Unit =
     runTest {
       val queue: Queue<Int> = ArrayDeque(listOf(3, 4, 5))
       queue.singleNullOrThrow { it > 5 }
@@ -112,7 +112,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `with predicate, 1 match, array`() =
+  fun `with predicate, 1 match, array`(): Unit =
     runTest {
       val array: Array<Int> = arrayOf(3, 4, 5)
       array.singleNullOrThrow { it > 4 }
@@ -120,7 +120,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `with predicate, 1 match, list`() =
+  fun `with predicate, 1 match, list`(): Unit =
     runTest {
       val list: List<Int> = listOf(3, 4, 5)
       list.singleNullOrThrow { it > 4 }
@@ -128,7 +128,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `with predicate, 1 match, queue`() =
+  fun `with predicate, 1 match, queue`(): Unit =
     runTest {
       val queue: Queue<Int> = ArrayDeque(listOf(3, 4, 5))
       queue.singleNullOrThrow { it > 4 }
@@ -136,7 +136,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `with predicate, 2 matches, array`() =
+  fun `with predicate, 2 matches, array`(): Unit =
     runTest {
       val array: Array<Int> = arrayOf(3, 4, 5)
       shouldThrow<IllegalArgumentException> {
@@ -145,7 +145,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `with predicate, 2 matches, list`() =
+  fun `with predicate, 2 matches, list`(): Unit =
     runTest {
       val list: List<Int> = listOf(3, 4, 5)
       shouldThrow<IllegalArgumentException> {
@@ -154,7 +154,7 @@ internal class SingleNullOrThrowTest {
     }
 
   @Test
-  fun `with predicate, 2 matches, queue`() =
+  fun `with predicate, 2 matches, queue`(): Unit =
     runTest {
       val queue: Queue<Int> = ArrayDeque(listOf(3, 4, 5))
       shouldThrow<IllegalArgumentException> {

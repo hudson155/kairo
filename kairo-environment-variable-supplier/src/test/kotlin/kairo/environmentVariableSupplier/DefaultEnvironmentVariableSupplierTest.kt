@@ -9,14 +9,14 @@ internal class DefaultEnvironmentVariableSupplierTest {
   private val environmentVariableSupplier: EnvironmentVariableSupplier = DefaultEnvironmentVariableSupplier()
 
   @Test
-  fun exists() =
+  fun exists(): Unit =
     runTest {
       environmentVariableSupplier["KAIRO_ENVIRONMENT_VARIABLE_SUPPLIER_TEST_VARIABLE_0"]
         .shouldBe("test_value")
     }
 
   @Test
-  fun `does not exist`() =
+  fun `does not exist`(): Unit =
     runTest {
       environmentVariableSupplier["KAIRO_ENVIRONMENT_VARIABLE_SUPPLIER_TEST_VARIABLE_1"]
         .shouldBeNull()

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 
 internal class DarbEncoderTest {
   @Test
-  fun encode() =
+  fun encode(): Unit =
     runTest {
       DarbEncoder.encode(emptyList()).shouldBe("0.")
       DarbEncoder.encode(listOf(false)).shouldBe("1.0")
@@ -36,7 +36,7 @@ internal class DarbEncoderTest {
     }
 
   @Test
-  fun `decode, happy path`() =
+  fun `decode, happy path`(): Unit =
     runTest {
       DarbEncoder.decode("0.").shouldBeEmpty()
       DarbEncoder.decode("1.0").shouldBe(listOf(false))
@@ -75,7 +75,7 @@ internal class DarbEncoderTest {
     }
 
   @Test
-  fun `decode, error cases`() =
+  fun `decode, error cases`(): Unit =
     runTest {
       shouldThrow<IllegalArgumentException> { DarbEncoder.decode("") }
         .shouldHaveMessage("DARB must have 2 components.")

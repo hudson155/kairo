@@ -9,7 +9,7 @@ internal class NoopCommandRunnerTest {
   private val commandRunner: CommandRunner = NoopCommandRunner()
 
   @Test
-  fun test() =
+  fun test(): Unit =
     runTest {
       shouldThrow<NotImplementedError> {
         commandRunner.run("echo \"Hello, World!\"")

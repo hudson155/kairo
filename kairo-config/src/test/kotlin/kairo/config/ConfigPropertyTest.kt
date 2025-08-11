@@ -10,7 +10,7 @@ internal class ConfigPropertyTest {
   private val configManager: ConfigManager = ConfigManager()
 
   @Test
-  fun `environment variable`() =
+  fun `environment variable`(): Unit =
     runTest {
       val config = run {
         @Language("HOCON")
@@ -25,7 +25,7 @@ internal class ConfigPropertyTest {
     }
 
   @Test
-  fun plaintext() =
+  fun plaintext(): Unit =
     runTest {
       val config = run {
         @Language("HOCON")
