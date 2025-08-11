@@ -20,7 +20,8 @@ internal class ConfigPropertyTest {
         """.trimIndent()
         return@run ConfigFactory.parseString(config).resolve()
       }
-      configManager.resolveProperty(configManager.deserialize<ConfigPropertySource.ConfigProperty>(config))
+      configManager.deserializer.deserialize<ConfigPropertySource.ConfigProperty>(config)
+        .let { configManager.propertyResolver.resolve(it) }
         .shouldBe("Hello, World!")
     }
 
@@ -35,7 +36,8 @@ internal class ConfigPropertyTest {
         """.trimIndent()
         return@run ConfigFactory.parseString(config).resolve()
       }
-      configManager.resolveProperty(configManager.deserialize<ConfigPropertySource.ConfigProperty>(config))
+      configManager.deserializer.deserialize<ConfigPropertySource.ConfigProperty>(config)
+        .let { configManager.propertyResolver.resolve(it) }
         .shouldBe("Hello, World!")
     }
 }
