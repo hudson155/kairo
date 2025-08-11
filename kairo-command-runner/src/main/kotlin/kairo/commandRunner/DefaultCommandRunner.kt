@@ -14,7 +14,6 @@ public class DefaultCommandRunner : CommandRunner() {
   override fun run(command: String): BufferedReader {
     logger.debug { "Running command: $command." }
     val result = runtime.exec(arrayOf("bash", "-c", command))
-    // The result is not logged because it may be sensitive.
     return result.inputReader()
   }
 }

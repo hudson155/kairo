@@ -14,23 +14,20 @@ private val logger: KLogger = KotlinLogging.logger {}
 public class DefaultGcpSecretSupplier : GcpSecretSupplier() {
   private val client: SecretManagerServiceClient = SecretManagerServiceClient.create()
 
-  /**
-   * Note: This approach is blocking; it does not leverage Kotlin coroutines.
-   */
   override suspend fun get(id: String): ProtectedString? {
     logger.debug { "Getting GCP secret: $id." }
-    val accessRequest = AccessSecretVersionRequest.newBuilder().apply {
-      name = id
+    val request = AccessSecretVersionRequest.newBuilder().apply {
+      this.name = id
     }.build()
-    val accessResponse = try {
+    val response = try {
       client.accessSecretVersionCallable()
-        .futureCall(accessRequest)
+        .futureCall(request)
         .let { ApiFutureToListenableFuture(it) }
         .await()
     } catch (_: NotFoundException) {
       return null
     }
     @OptIn(ProtectedString.Access::class)
-    return ProtectedString(accessResponse.payload.data.toStringUtf8())
+    return ProtectedString(response.payload.data.toStringUtf8())
   }
 }
