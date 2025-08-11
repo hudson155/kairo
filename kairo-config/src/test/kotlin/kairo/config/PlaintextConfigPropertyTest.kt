@@ -6,27 +6,15 @@ import kotlinx.coroutines.test.runTest
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
 
-internal class ConfigPropertyTest {
-  private val configManager: ConfigManager = ConfigManager()
+internal class PlaintextConfigPropertyTest {
+  private val configManager: ConfigManager = ConfigManager(
+    sources = listOf(
+      PlaintextConfigPropertySource(),
+    ),
+  )
 
   @Test
-  fun `environment variable`(): Unit =
-    runTest {
-      val config = run {
-        @Language("HOCON")
-        val config = """
-          type = "EnvironmentVariable"
-          name = "KAIRO_CONFIG_SOURCE_TEST"
-        """.trimIndent()
-        return@run ConfigFactory.parseString(config).resolve()
-      }
-      configManager.deserializer.deserialize<ConfigPropertySource.ConfigProperty>(config)
-        .let { configManager.propertyResolver.resolve(it) }
-        .shouldBe("Hello, World!")
-    }
-
-  @Test
-  fun plaintext(): Unit =
+  fun test(): Unit =
     runTest {
       val config = run {
         @Language("HOCON")
