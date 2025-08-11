@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 @OptIn(CommandRunner.Insecure::class)
 internal class NoopCommandRunnerTest {
-  private val commandRunner: CommandRunner = NoopCommandRunner
+  private val commandRunner: CommandRunner = NoopCommandRunner()
 
   @Test
   fun `0 lines`() {
