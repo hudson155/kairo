@@ -12,7 +12,6 @@ internal class FakeCommandRunnerTest {
   fun `no map entry`() {
     runTest {
       val commandRunner = FakeCommandRunner()
-
       shouldThrow<NullPointerException> {
         commandRunner.run("echo \"Hello, World!\"")
       }.shouldHaveMessage("No map entry for command: echo \"Hello, World!\".")
@@ -27,7 +26,6 @@ internal class FakeCommandRunnerTest {
           "echo \"Hello, World!\"" to "Hello, World!",
         ),
       )
-
       commandRunner.run("echo \"Hello, World!\"").readText()
         .shouldBe("Hello, World!")
     }
@@ -38,7 +36,6 @@ internal class FakeCommandRunnerTest {
     runTest {
       val commandRunner = FakeCommandRunner()
       commandRunner["echo \"Hello, World!\""] = "Hello, World!"
-
       commandRunner.run("echo \"Hello, World!\"").readText()
         .shouldBe("Hello, World!")
     }
