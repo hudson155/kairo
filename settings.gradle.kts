@@ -3,6 +3,7 @@ rootProject.name = "kairo"
 include(":bom")
 
 include(":kairo-command-runner")
+include(":kairo-command-runner:testing")
 include(":kairo-config")
 include(":kairo-darb")
 include(":kairo-environment-variable-supplier")
