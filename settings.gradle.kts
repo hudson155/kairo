@@ -1,8 +1,8 @@
 rootProject.name = "kairo"
 
+include(":bom")
+
 include(":kairo-command-runner")
-include(":kairo-coroutines")
-include(":kairo-coroutines:testing")
 include(":kairo-darb")
 include(":kairo-environment-variable-supplier")
 include(":kairo-logging")

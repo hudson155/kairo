@@ -10,5 +10,7 @@ kotlin {
 }
 
 dependencies {
+  implementation(project(":bom"))
+
   testImplementation(project(":kairo-testing"))
 }

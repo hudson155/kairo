@@ -5,6 +5,8 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":bom"))
+
   implementation(project(":kairo-serialization"))
 
   testImplementation(project(":kairo-testing"))
