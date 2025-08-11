@@ -10,6 +10,10 @@ gcpSecretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
 guavaBom = { module = "com.google.guava:guava-bom", version = "33.4.8-jre" }
 guava = { module = "com.google.guava:guava" }
 
+# Hocon
+# https://github.com/lightbend/config/releases
+hocon = { module = "com.typesafe:config", version = "1.4.4" }
+
 # Kotest
 # https://github.com/kotest/kotest/releases
 kotest = { module = "io.kotest:kotest-runner-junit5", version = "6.0.0.M14" }
@@ -29,6 +33,7 @@ kotlinxCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-tes
 # https://github.com/Kotlin/kotlinx.serialization/releases
 kotlinxSerializationBom = { module = "org.jetbrains.kotlinx:kotlinx-serialization-bom", version = "1.9.0" }
 kotlinxSerializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
+kotlinxSerializationHocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
 
 # Log4j
 # https://github.com/apache/logging-log4j2/releases
