@@ -32,6 +32,7 @@ kotlinxCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-tes
 # Kotlinx Serialization
 # https://github.com/Kotlin/kotlinx.serialization/releases
 kotlinxSerializationBom = { module = "org.jetbrains.kotlinx:kotlinx-serialization-bom", version = "1.9.0" }
+kotlinxSerializationCore = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
 kotlinxSerializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 kotlinxSerializationHocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
 
