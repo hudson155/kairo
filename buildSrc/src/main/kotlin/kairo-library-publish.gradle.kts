@@ -14,6 +14,7 @@ publishing {
       artifactRegistry()
     }
     create<MavenPublication>("maven") {
+      groupId = groupId()
       artifactId = artifactId(project.path, Regex(":(?<artifactId>kairo-[a-z]+(-[a-z]+)*(:[a-z]+(-[a-z]+)*)?)"))
       from(components["java"])
       applyLicense()

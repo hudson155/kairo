@@ -11,6 +11,9 @@ internal fun RepositoryHandler.artifactRegistry() {
   }
 }
 
+internal fun groupId(): String =
+  "software.airborne.kairo"
+
 internal fun artifactId(path: String, regex: Regex): String {
   val match = requireNotNull(regex.matchEntire(path)) { "Invalid project name: $path." }
   return checkNotNull(match.groups["artifactId"]).value.replace(':', '-')

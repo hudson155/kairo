@@ -10,6 +10,7 @@ publishing {
       artifactRegistry()
     }
     create<MavenPublication>("bom") {
+      groupId = groupId()
       artifactId = artifactId(project.path, Regex(":(?<artifactId>bom)"))
       from(components["javaPlatform"])
       applyLicense()
