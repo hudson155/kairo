@@ -1,6 +1,7 @@
 import java.net.URI
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 
 internal val javaVersion: JavaLanguageVersion = JavaLanguageVersion.of(21)
@@ -14,10 +15,8 @@ internal fun RepositoryHandler.artifactRegistry() {
 internal fun groupId(): String =
   "software.airborne.kairo"
 
-internal fun artifactId(path: String, regex: Regex): String {
-  val match = requireNotNull(regex.matchEntire(path)) { "Invalid project name: $path." }
-  return checkNotNull(match.groups["artifactId"]).value.replace(':', '-')
-}
+internal fun artifactId(path: String): String =
+  path.trimStart(':').replace(':', '-')
 
 internal fun MavenPublication.applyLicense() {
   pom {
@@ -28,5 +27,11 @@ internal fun MavenPublication.applyLicense() {
         distribution.set("repo")
       }
     }
+  }
+}
+
+internal fun PublishToMavenRepository.requireVersion(version: Any) {
+  doFirst {
+    require(version is String && version != "unspecified") { "Version is not specified" }
   }
 }

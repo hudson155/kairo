@@ -2,7 +2,6 @@ plugins {
   id("kairo")
   `java-library`
   kotlin("jvm")
-  id("com.google.cloud.artifactregistry.gradle-plugin")
   id("io.gitlab.arturbosch.detekt")
 }
 
