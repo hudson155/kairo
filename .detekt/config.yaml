@@ -641,100 +641,30 @@ style:
     active: true
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
-      - 'com.ctc.*'
-      - 'com.fasterxml.jackson.module.kotlin.jsonMapper'
-      - 'com.google.cloud.scheduler.v1beta*.*'
-      - 'com.google.cloud.secretmanager.v1beta*.*'
-      - 'com.google.cloud.tasks.v2beta*.*'
-      - 'com.google.common.base.Optional' # Use the JDK version instead.
-      - 'com.google.inject.TypeLiteral' # Use the Kotlin overload.
+      - 'com.google.cloud.secretmanager.v1beta1.*'
+      - 'com.google.cloud.secretmanager.v1beta2.*'
       - 'com.sun.security.*'
-      - 'com.sun.tools.javac.comp.Flow'
-      - 'com.typesafe.config.Optional' # Use the JDK version instead.
-      - 'io.grpc.netty.*'
-      - 'io.kotest.core.spec.*' # Use JUnit test annotations.
-      - 'io.ktor.client.HttpClient' # Use kairo.rest.client.KairoClient.
-      - 'io.ktor.server.plugins.BadRequestException' # Use kairo.exception.BadRequestException.
-      - 'io.ktor.server.plugins.CannotTransformContentToTypeException'
-      - 'io.ktor.server.plugins.MissingRequestParameterException'
-      - 'io.ktor.server.plugins.NotFoundException' # Use kairo.exception.NotFoundException.
-      - 'io.ktor.server.plugins.ParameterConversionException'
-      - 'io.ktor.server.plugins.PayloadTooLargeException'
-      - 'io.ktor.server.plugins.UnsupportedMediaTypeException'
-      - 'jakarta.inject.*' # Use Google's injection annotations.
-      - 'jakarta.validation.constraints.*'
+      - 'com.sun.tools.javac.*'
+      - 'io.kotest.core.spec.*'
       - 'java.awt.*'
-      - 'java.security.AuthProvider'
-      - 'java.security.Permission'
-      - 'java.time.LocalDateTime'
-      - 'java.time.LocalTime'
-      - 'java.time.OffsetDateTime'
-      - 'java.time.OffsetTime'
-      - 'java.time.ZonedDateTime'
-      - 'java.util.UUID' # Use kotlin.uuid.Uuid.
-      - 'java.util.concurrent.Flow'
-      - 'javax.inject.*' # Use Google's injection annotations.
-      - 'javax.ws.rs.HttpMethod'
-      - 'jdk.tools.jlink.resources.plugins'
-      - 'kotlin.test.*'
-      - 'kotlin.time.*'
-      - 'okhttp3.*'
-      - 'org.intellij.lang.annotations.Flow'
-      - 'org.junit.jupiter.api.Assertions.*' # Use Kotest.
-      - 'org.slf4j.Logger' # Use KLogger.
-      - 'org.slf4j.LoggerFactory' # Use KotlinLogging.
-      - 'org.threeten.*'
-      - 'si.mazi.*'
-      - 'sun.net.ftp.FtpDirEntry'
+      - 'java.beans.*'
+      - 'java.io.ObjectInputFilter.Config'
+      - 'java.util.Base64.*'
+      - 'javax.xml'
+      - 'jdk.internal.*'
+      - 'sun.awt.*'
+      - 'sun.net.*'
+      - 'sun.nio.*'
+      - 'sun.security.*'
   ForbiddenMethodCall:
     active: true
     methods:
-      - 'com.fasterxml.jackson.core.JsonParser.readValueAs'
-      - 'com.fasterxml.jackson.databind.BeanProperty.getAnnotation'
-      - 'com.fasterxml.jackson.databind.ObjectMapper.convertValue'
-      - 'com.fasterxml.jackson.databind.ObjectMapper.readTree'
-      - 'com.fasterxml.jackson.databind.ObjectMapper.readValue'
-      - 'com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString'
-      - 'com.fasterxml.jackson.module.kotlin.jacksonMapperBuilder'
-      - 'com.fasterxml.jackson.module.kotlin.jacksonObjectMapper'
-      - 'com.fasterxml.jackson.module.kotlin.jacksonTypeRef'
-      - 'com.fasterxml.jackson.module.kotlin.jsonMapper'
-      - 'com.fasterxml.jackson.module.kotlin.readValue'
-      - 'com.fasterxml.jackson.module.kotlin.readValueTyped'
-      - 'com.fasterxml.jackson.module.kotlin.readValues'
-      - 'com.fasterxml.jackson.module.kotlin.readValuesTyped'
-      - 'com.fasterxml.jackson.module.kotlin.registerKotlinModule'
-      - 'com.fasterxml.jackson.module.kotlin.treeToValue'
-      - 'com.google.inject.Binder.bind'
-      - 'com.google.inject.Injector.getExistingBinding'
-      - 'com.google.inject.Injector.getInstance(java.lang.Class)'
-      - 'com.google.inject.Key.get'
-      - 'com.google.inject.binder.LinkedBindingBuilder.to'
-      - 'com.google.inject.binder.LinkedBindingBuilder.toConstructor'
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.Key)'
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.TypeLiteral)'
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(jakarta.inject.Provider)'
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(java.lang.Class)'
-      - 'com.google.inject.binder.ScopedBindingBuilder.in'
-      - 'io.ktor.server.request.header' # Use headerSingleNullOrThrow instead.
       - 'java.lang.Runtime.getRuntime'
       - 'java.lang.System.currentTimeMillis'
       - 'java.lang.System.getenv'
       - 'java.lang.Thread.currentThread'
-      - 'java.time.Duration.get(java.time.temporal.TemporalUnit)'
-      - 'java.time.Instant.now()' # Use the overload that takes a Clock.
-      - 'java.time.LocalDate.now()' # Use the overload that takes a Clock.
-      - 'java.time.LocalTime.now()' # Use the overload that takes a Clock.
-      - 'java.time.Month.now()' # Use the overload that takes a Clock.
-      - 'java.time.MonthDay.now()' # Use the overload that takes a Clock.
-      - 'java.time.Year.now()' # Use the overload that takes a Clock.
-      - 'java.time.YearMonth.now()' # Use the overload that takes a Clock.
-      - 'java.time.format.DateTimeFormatter.ofPattern(java.lang.String)' # Use the overload that takes a Locale.
-      - 'kotlin.collections.singleOrNull' # singleNullOrThrow is less surprising.
       - 'kotlin.io.print'
       - 'kotlin.io.println'
-      - 'org.jdbi.v3.core.result.ResultBearing.mapTo'
-      - 'org.jdbi.v3.core.result.ResultIterable.list'
   ForbiddenSuppress:
     active: false
   ForbiddenVoid:

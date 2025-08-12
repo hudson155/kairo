@@ -2,51 +2,21 @@
 <project version="4">
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
-      <name>com.ctc.*</name>
-      <name>com.fasterxml.jackson.module.kotlin.jsonMapper</name>
-      <name>com.google.cloud.scheduler.v1beta*.*</name>
-      <name>com.google.cloud.secretmanager.v1beta*.*</name>
-      <name>com.google.cloud.tasks.v2beta*.*</name>
-      <name>com.google.common.base.Optional</name>
-      <name>com.google.inject.TypeLiteral</name>
+      <name>com.google.cloud.secretmanager.v1beta1.*</name>
+      <name>com.google.cloud.secretmanager.v1beta2.*</name>
       <name>com.sun.security.*</name>
-      <name>com.sun.tools.javac.comp.Flow</name>
-      <name>com.typesafe.config.Optional</name>
-      <name>io.grpc.netty.*</name>
+      <name>com.sun.tools.javac.*</name>
       <name>io.kotest.core.spec.*</name>
-      <name>io.ktor.client.HttpClient</name>
-      <name>io.ktor.server.plugins.BadRequestException</name>
-      <name>io.ktor.server.plugins.CannotTransformContentToTypeException</name>
-      <name>io.ktor.server.plugins.MissingRequestParameterException</name>
-      <name>io.ktor.server.plugins.NotFoundException</name>
-      <name>io.ktor.server.plugins.ParameterConversionException</name>
-      <name>io.ktor.server.plugins.PayloadTooLargeException</name>
-      <name>io.ktor.server.plugins.UnsupportedMediaTypeException</name>
-      <name>jakarta.inject.*</name>
-      <name>jakarta.validation.constraints.*</name>
       <name>java.awt.*</name>
-      <name>java.security.AuthProvider</name>
-      <name>java.security.Permission</name>
-      <name>java.time.LocalDateTime</name>
-      <name>java.time.LocalTime</name>
-      <name>java.time.OffsetDateTime</name>
-      <name>java.time.OffsetTime</name>
-      <name>java.time.ZonedDateTime</name>
-      <name>java.util.UUID</name>
-      <name>java.util.concurrent.Flow</name>
-      <name>javax.inject.*</name>
-      <name>javax.ws.rs.HttpMethod</name>
-      <name>jdk.tools.jlink.resources.plugins</name>
-      <name>kotlin.test.*</name>
-      <name>kotlin.time.*</name>
-      <name>okhttp3.*</name>
-      <name>org.intellij.lang.annotations.Flow</name>
-      <name>org.junit.jupiter.api.Assertions.*</name>
-      <name>org.slf4j.Logger</name>
-      <name>org.slf4j.LoggerFactory</name>
-      <name>org.threeten.*</name>
-      <name>si.mazi.*</name>
-      <name>sun.net.ftp.FtpDirEntry</name>
+      <name>java.beans.*</name>
+      <name>java.io.ObjectInputFilter.Config</name>
+      <name>java.util.Base64.*</name>
+      <name>javax.xml</name>
+      <name>jdk.internal.*</name>
+      <name>sun.awt.*</name>
+      <name>sun.net.*</name>
+      <name>sun.nio.*</name>
+      <name>sun.security.*</name>
     </excluded-names>
   </component>
 </project>

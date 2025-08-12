@@ -13,10 +13,9 @@ dependencies {
   constraints {
     rootProject.subprojects.forEach { subproject ->
       if (subproject.name == project.name) return@forEach
-      if (!subproject.plugins.hasPlugin("maven-publish")) return@forEach
       evaluationDependsOn(subproject.path)
-      subproject.publishing.publications {
-        this as MavenPublication
+      if (!subproject.plugins.hasPlugin("maven-publish")) return@forEach
+      subproject.publishing.publications.withType<MavenPublication> {
         api(mapOf("group" to groupId, "name" to artifactId, "version" to version))
       }
     }
