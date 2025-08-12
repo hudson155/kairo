@@ -1,10 +1,6 @@
 plugins {
-  `java-platform`
-  publishing
-}
-
-javaPlatform {
-  allowDependencies()
+  id("kairo-platform")
+  id("kairo-platform-publish")
 }
 
 dependencies {
