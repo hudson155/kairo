@@ -1,6 +1,6 @@
 package kairo.config
 
-import kairo.config.GcpSecretConfigPropertySource.ConfigProperty
+import kairo.config.GcpSecretConfigPropertySource.Property
 import kairo.gcpSecretSupplier.DefaultGcpSecretSupplier
 import kairo.gcpSecretSupplier.GcpSecretSupplier
 import kairo.protectedString.ProtectedString
@@ -10,16 +10,16 @@ import kotlinx.serialization.Serializable
 
 public class GcpSecretConfigPropertySource(
   private val gcpSecretSupplier: GcpSecretSupplier = DefaultGcpSecretSupplier(),
-) : ConfigPropertySource<ConfigProperty>() {
+) : ConfigPropertySource<Property>() {
   @Serializable
   @SerialName("GcpSecret")
-  public data class ConfigProperty(
+  public data class Property(
     val id: String,
-  ) : ConfigPropertySource.ConfigProperty()
+  ) : ConfigProperty()
 
-  override val serializer: KSerializer<ConfigProperty> = ConfigProperty.serializer()
+  override val serializer: KSerializer<Property> = Property.serializer()
 
   @OptIn(ProtectedString.Access::class)
-  override suspend fun resolve(property: ConfigProperty): String? =
+  override suspend fun resolve(property: Property): String? =
     gcpSecretSupplier[property.id]?.value
 }

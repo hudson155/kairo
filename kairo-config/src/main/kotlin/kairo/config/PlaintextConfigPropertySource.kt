@@ -1,19 +1,19 @@
 package kairo.config
 
-import kairo.config.PlaintextConfigPropertySource.ConfigProperty
+import kairo.config.PlaintextConfigPropertySource.Property
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-public class PlaintextConfigPropertySource : ConfigPropertySource<ConfigProperty>() {
+public class PlaintextConfigPropertySource : ConfigPropertySource<Property>() {
   @Serializable
   @SerialName("Plaintext")
-  public data class ConfigProperty(
+  public data class Property(
     val value: String,
-  ) : ConfigPropertySource.ConfigProperty()
+  ) : ConfigProperty()
 
-  override val serializer: KSerializer<ConfigProperty> = ConfigProperty.serializer()
+  override val serializer: KSerializer<Property> = Property.serializer()
 
-  override suspend fun resolve(property: ConfigProperty): String =
+  override suspend fun resolve(property: Property): String =
     property.value
 }

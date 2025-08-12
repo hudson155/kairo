@@ -33,8 +33,8 @@ internal class GcpSecretConfigPropertyTest {
         """.trimIndent()
         return@run ConfigFactory.parseString(config).resolve()
       }
-      configManager.deserializer.deserialize<ConfigPropertySource.ConfigProperty>(config)
-        .let { configManager.propertyResolver.resolve(it) }
+      configManager.deserialize<ConfigProperty>(config)
+        .let { configManager.resolve(it) }
         .shouldBe("test_value")
     }
 
@@ -49,8 +49,8 @@ internal class GcpSecretConfigPropertyTest {
         """.trimIndent()
         return@run ConfigFactory.parseString(config).resolve()
       }
-      configManager.deserializer.deserialize<ConfigPropertySource.ConfigProperty>(config)
-        .let { configManager.propertyResolver.resolve(it) }
+      configManager.deserialize<ConfigProperty>(config)
+        .let { configManager.resolve(it) }
         .shouldBeNull()
     }
 }
