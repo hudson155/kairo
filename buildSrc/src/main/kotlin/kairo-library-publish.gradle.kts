@@ -16,7 +16,7 @@ publishing {
       groupId = groupId()
       artifactId = artifactId(project.path)
       from(components["java"])
-      applyLicense()
+      license()
     }
   }
 }

@@ -12,7 +12,7 @@ publishing {
       groupId = groupId()
       artifactId = artifactId(project.path)
       from(components["javaPlatform"])
-      applyLicense()
+      license()
     }
   }
 }
