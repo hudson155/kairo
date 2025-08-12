@@ -21,21 +21,20 @@ internal class EnvironmentVariableConfigPropertyTest {
     )
 
   @Test
-  fun present(): Unit {
-    val config = run {
-      @Language("HOCON")
-      val config = """
-        type = "EnvironmentVariable"
-        name = "ENV_A"
-      """.trimIndent()
-      return@run ConfigFactory.parseString(config).resolve()
-    }
+  fun present(): Unit =
     runTest {
+      val config = run {
+        @Language("HOCON")
+        val config = """
+          type = "EnvironmentVariable"
+          name = "ENV_A"
+        """.trimIndent()
+        return@run ConfigFactory.parseString(config).resolve()
+      }
       configManager.deserializer.deserialize<ConfigPropertySource.ConfigProperty>(config)
         .let { configManager.propertyResolver.resolve(it) }
         .shouldBe("Hello, World!")
     }
-  }
 
   @Test
   fun missing(): Unit =

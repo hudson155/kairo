@@ -23,21 +23,20 @@ internal class GcpSecretConfigPropertyTest {
     )
 
   @Test
-  fun present(): Unit {
-    val config = run {
-      @Language("HOCON")
-      val config = """
-        type = "GcpSecret"
-        id = "projects/012345678900/secrets/example/versions/1"
-      """.trimIndent()
-      return@run ConfigFactory.parseString(config).resolve()
-    }
+  fun present(): Unit =
     runTest {
+      val config = run {
+        @Language("HOCON")
+        val config = """
+          type = "GcpSecret"
+          id = "projects/012345678900/secrets/example/versions/1"
+        """.trimIndent()
+        return@run ConfigFactory.parseString(config).resolve()
+      }
       configManager.deserializer.deserialize<ConfigPropertySource.ConfigProperty>(config)
         .let { configManager.propertyResolver.resolve(it) }
         .shouldBe("test_value")
     }
-  }
 
   @Test
   fun missing(): Unit =
