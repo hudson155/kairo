@@ -1,6 +1,6 @@
 package kairo.config
 
-import kairo.config.EnvironmentVariableConfigPropertySource.ConfigProperty
+import kairo.config.EnvironmentVariableConfigPropertySource.Property
 import kairo.environmentVariableSupplier.DefaultEnvironmentVariableSupplier
 import kairo.environmentVariableSupplier.EnvironmentVariableSupplier
 import kotlinx.serialization.KSerializer
@@ -9,16 +9,16 @@ import kotlinx.serialization.Serializable
 
 public class EnvironmentVariableConfigPropertySource(
   private val environmentVariableSupplier: EnvironmentVariableSupplier = DefaultEnvironmentVariableSupplier(),
-) : ConfigPropertySource<ConfigProperty>() {
+) : ConfigPropertySource<Property>() {
   @Serializable
   @SerialName("EnvironmentVariable")
-  public data class ConfigProperty(
+  public data class Property(
     val name: String,
     val default: String? = null,
-  ) : ConfigPropertySource.ConfigProperty()
+  ) : ConfigProperty()
 
-  override val serializer: KSerializer<ConfigProperty> = ConfigProperty.serializer()
+  override val serializer: KSerializer<Property> = Property.serializer()
 
-  override suspend fun resolve(property: ConfigProperty): String? =
+  override suspend fun resolve(property: Property): String? =
     environmentVariableSupplier[property.name] ?: property.default
 }

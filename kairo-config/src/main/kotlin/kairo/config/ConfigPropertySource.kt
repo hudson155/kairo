@@ -1,22 +1,14 @@
 package kairo.config
 
-import kairo.config.ConfigPropertySource.ConfigProperty
 import kairo.reflect.inferClass
 import kotlin.reflect.KClass
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
 
 /**
  * Each config property source provides a different strategy for how to resolve the config property.
  * There are a few built-in ones (see [ConfigManager.defaultSources]). Feel free to implement your own too.
  */
 public abstract class ConfigPropertySource<P : ConfigProperty> {
-  /**
-   * This must be a data class that defines the shape of the config property.
-   */
-  @Serializable
-  public abstract class ConfigProperty
-
   public val kClass: KClass<P> = inferClass(ConfigPropertySource::class, 0, this::class)
 
   /**
