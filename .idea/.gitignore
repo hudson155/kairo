@@ -12,7 +12,9 @@
 
 !/codeInsightSettings.xml
 !/compiler.xml
+!/detekt.xml
 !/kotlinc.xml
+!/ktlint-plugin.xml
 !/misc.xml
 !/sqldialects.xml
 !/vcs.xml
