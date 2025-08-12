@@ -1,10 +1,10 @@
 plugins {
-  id("kairo")
-  id("kairo-publish")
+  id("kairo-library")
+  id("kairo-library-publish")
 }
 
 dependencies {
-  implementation(project(":bom"))
+  api(platform(project(":bom")))
 
   api(project(":kairo-environment-variable-supplier"))
 

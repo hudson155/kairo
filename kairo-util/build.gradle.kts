@@ -1,6 +1,6 @@
 plugins {
-  id("kairo")
-  id("kairo-publish")
+  id("kairo-library")
+  id("kairo-library-publish")
 }
 
 kotlin {
@@ -12,7 +12,7 @@ kotlin {
 dependencies {
   implementation(kotlin("reflect"))
 
-  implementation(project(":bom"))
+  api(platform(project(":bom")))
 
   testImplementation(project(":kairo-testing"))
 }
