@@ -649,6 +649,7 @@ style:
       - 'java.awt.*'
       - 'java.beans.*'
       - 'java.io.ObjectInputFilter.Config'
+      - 'java.nio.channels.*'
       - 'java.util.Base64.*'
       - 'java.util.concurrent.CancellationException'
       - 'java.xml.*'
@@ -658,6 +659,7 @@ style:
       - 'sun.awt.*'
       - 'sun.net.*'
       - 'sun.nio.*'
+      - 'sun.rmi.*'
       - 'sun.security.*'
   ForbiddenMethodCall:
     active: true
