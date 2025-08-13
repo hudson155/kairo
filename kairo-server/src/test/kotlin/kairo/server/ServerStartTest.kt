@@ -3,7 +3,6 @@ package kairo.server
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import kairo.feature.Feature
@@ -90,14 +89,13 @@ internal class ServerStartTest {
         server.start()
       }.shouldHaveMessage("Exception from Test (1)")
       server.state.shouldBe(ServerState.Default)
-      events.value.should { events ->
-        events[0].shouldBe("start Test (0)")
-        events.subList(1, 3).shouldContainExactlyInAnyOrder(
-          "stop Test (0)",
-          "stop Test (1)",
-        )
-        events.shouldHaveSize(3)
-      }
+      val eventList = events.value
+      eventList[0].shouldBe("start Test (0)")
+      eventList.subList(1, 3).shouldContainExactlyInAnyOrder(
+        "stop Test (0)",
+        "stop Test (1)",
+      )
+      eventList.shouldHaveSize(3)
     }
 
   @Test
