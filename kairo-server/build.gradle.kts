@@ -11,7 +11,9 @@ dependencies {
 
   implementation(libs.kotlinxCoroutinesCore)
 
-  testImplementation(project(":kairo-cyclic-barrier"))
   testImplementation(project(":kairo-logging:testing"))
   testImplementation(project(":kairo-testing"))
+
+  testImplementation(libs.arrowCore)
+  testImplementation(libs.arrowCoroutines)
 }
