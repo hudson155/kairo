@@ -38,10 +38,16 @@ public class Server(
         try {
           onStart()
           state = ServerState.Running
-        } catch (e: Throwable) {
-          logger.warn { "Server failed to start (server=$this)." }
-          state = ServerState.Default
-          throw e
+        } catch (startException: Throwable) {
+          logger.warn(startException) { "Server failed to start (server=$this)." }
+          try {
+            onStop()
+          } catch (stopException: Throwable) {
+            startException.addSuppressed(stopException)
+          } finally {
+            state = ServerState.Default
+          }
+          throw startException
         }
       }
     }
@@ -56,6 +62,9 @@ public class Server(
         state = ServerState.Stopping
         try {
           onStop()
+        } catch (e: Throwable) {
+          logger.warn(e) { "Server failed to stop (server=$this)." }
+          throw e
         } finally {
           state = ServerState.Default
         }
@@ -77,7 +86,7 @@ public class Server(
             try {
               feature.on(LifecycleEvent.Start)
             } catch (e: Throwable) {
-              logger.error(e) { "Feature failed to start (server=${this@Server}, feature=$feature)." }
+              logger.warn(e) { "Feature failed to start (server=${this@Server}, feature=$feature)." }
               throw e
             }
           }
