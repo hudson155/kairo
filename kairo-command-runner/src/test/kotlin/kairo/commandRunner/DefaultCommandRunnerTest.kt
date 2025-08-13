@@ -2,6 +2,7 @@ package kairo.commandRunner
 
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -11,21 +12,21 @@ internal class DefaultCommandRunnerTest {
 
   @Test
   fun `0 lines`(): Unit =
-    runTest {
+    runTest(timeout = 5.seconds) {
       commandRunner.run(";").readLines()
         .shouldBeEmpty()
     }
 
   @Test
   fun `1 line`(): Unit =
-    runTest {
+    runTest(timeout = 5.seconds) {
       commandRunner.run("echo \"Hello, World!\"").readLines()
         .shouldContainExactly("Hello, World!")
     }
 
   @Test
   fun `2 lines`(): Unit =
-    runTest {
+    runTest(timeout = 5.seconds) {
       commandRunner.run("echo -e \"First\\nSecond\"").readLines()
         .shouldContainExactly("First", "Second")
     }
