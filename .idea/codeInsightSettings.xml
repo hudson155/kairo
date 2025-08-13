@@ -10,6 +10,7 @@
       <name>java.awt.*</name>
       <name>java.beans.*</name>
       <name>java.io.ObjectInputFilter.Config</name>
+      <name>java.nio.channels.*</name>
       <name>java.util.Base64.*</name>
       <name>java.util.concurrent.CancellationException</name>
       <name>java.xml.*</name>
@@ -19,6 +20,7 @@
       <name>sun.awt.*</name>
       <name>sun.net.*</name>
       <name>sun.nio.*</name>
+      <name>sun.rmi.*</name>
       <name>sun.security.*</name>
     </excluded-names>
   </component>
