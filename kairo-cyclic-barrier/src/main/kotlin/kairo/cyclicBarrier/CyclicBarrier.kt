@@ -21,9 +21,7 @@ public class CyclicBarrier(
    */
   private val barrierCommand: (suspend () -> Unit)? = null,
 ) {
-  public class Exception internal constructor(
-    cause: Throwable,
-  ) : CancellationException() {
+  public class Exception internal constructor(cause: Throwable) : CancellationException() {
     init {
       initCause(cause)
     }
@@ -71,18 +69,18 @@ public class CyclicBarrier(
   private suspend fun breakBarrier() {
     val gate = this.gate
     nextGeneration()
-    if (this.barrierCommand == null) {
+    if (barrierCommand == null) {
       gate.complete(Unit)
       return
     }
     try {
-      this.barrierCommand()
+      barrierCommand()
       gate.complete(Unit)
     } catch (e: Throwable) {
-      Exception.from(e).let { e ->
-        gate.completeExceptionally(e)
-        throw e
-      }
+      @Suppress("NoNameShadowing")
+      val e = Exception.from(e)
+      gate.completeExceptionally(e)
+      throw e
     }
   }
 

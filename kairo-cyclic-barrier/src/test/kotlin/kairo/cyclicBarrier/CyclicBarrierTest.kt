@@ -189,7 +189,9 @@ internal class CyclicBarrierTest {
         )
         eventList = eventList.drop(4)
         repeat(4) {
-          eventList = eventList.indexOfFirst { it == "after await" }.let { eventList.take(it) + eventList.drop(it + 1) }
+          eventList = eventList
+            .indexOfFirst { event -> event == "after await" }
+            .let { i -> eventList.take(i) + eventList.drop(i + 1) }
         }
       }
       eventList.shouldBeEmpty()
@@ -243,7 +245,10 @@ internal class CyclicBarrierTest {
         )
         eventList = eventList.drop(5)
         repeat(4) {
-          eventList = eventList.indexOfFirst { it == "after await" }.let { eventList.take(it) + eventList.drop(it + 1) }
+          eventList =
+            eventList
+              .indexOfFirst { event -> event == "after await" }
+              .let { i -> eventList.take(i) + eventList.drop(i + 1) }
         }
       }
       eventList.shouldBeEmpty()
