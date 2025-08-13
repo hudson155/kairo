@@ -20,4 +20,7 @@ public abstract class Feature {
    */
   public open suspend fun on(event: LifecycleEvent): Unit =
     Unit
+
+  override fun toString(): String =
+    "Feature(name='$name')"
 }

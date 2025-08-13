@@ -9,6 +9,8 @@ dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
 
+  implementation(libs.kotlinxCoroutinesCore)
+
   testImplementation(project(":kairo-cyclic-barrier"))
   testImplementation(project(":kairo-logging:testing"))
   testImplementation(project(":kairo-testing"))
