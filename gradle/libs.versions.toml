@@ -3,7 +3,6 @@
 # Arrow
 # https://github.com/arrow-kt/arrow/releases
 arrowBom = { module = "io.arrow-kt:arrow-stack", version = "2.1.2" }
-arrowCore = { module = "io.arrow-kt:arrow-core" }
 arrowCoroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
 
 # GCP

@@ -14,6 +14,5 @@ dependencies {
   testImplementation(project(":kairo-logging:testing"))
   testImplementation(project(":kairo-testing"))
 
-  testImplementation(libs.arrowCore)
   testImplementation(libs.arrowCoroutines)
 }
