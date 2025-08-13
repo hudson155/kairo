@@ -13,6 +13,7 @@
       <name>java.nio.channels.*</name>
       <name>java.util.Base64.*</name>
       <name>java.util.concurrent.CancellationException</name>
+      <name>java.util.concurrent.CyclicBarrier</name>
       <name>java.xml.*</name>
       <name>jdk.internal.*</name>
       <name>kotlin.coroutines.cancellation.*</name>

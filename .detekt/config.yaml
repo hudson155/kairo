@@ -652,6 +652,7 @@ style:
       - 'java.nio.channels.*'
       - 'java.util.Base64.*'
       - 'java.util.concurrent.CancellationException'
+      - 'java.util.concurrent.CyclicBarrier'
       - 'java.xml.*'
       - 'jdk.internal.*'
       - 'kotlin.coroutines.cancellation.*'

@@ -1,7 +1,7 @@
 package kairo.server
 
+import arrow.fx.coroutines.CyclicBarrier
 import io.kotest.matchers.collections.shouldContainExactly
-import kairo.cyclicBarrier.CyclicBarrier
 import kairo.feature.Feature
 import kairo.feature.LifecycleEvent
 import kotlinx.coroutines.flow.MutableStateFlow

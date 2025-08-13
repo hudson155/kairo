@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+  api(platform(libs.arrowBom))
   api(platform(libs.gcpBom))
   api(platform(libs.guavaBom))
   api(platform(libs.kotlinxCoroutinesBom))
