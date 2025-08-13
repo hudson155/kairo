@@ -21,17 +21,6 @@ public class CyclicBarrier(
    */
   private val barrierCommand: (suspend () -> Unit)? = null,
 ) {
-  public class Exception internal constructor(cause: Throwable) : CancellationException() {
-    init {
-      initCause(cause)
-    }
-
-    public companion object {
-      internal fun from(e: Throwable): Throwable =
-        e as? CancellationException ?: Exception(e)
-    }
-  }
-
   @Suppress("UseDataClass")
   private class Generation(var broken: Boolean)
 
@@ -45,59 +34,61 @@ public class CyclicBarrier(
   }
 
   public suspend fun await() {
-    val generation: Generation
-    val gate: CompletableDeferred<Unit>
+    val (generation, gate, complete) = init()
+    if (complete) {
+      onComplete(gate)
+    }
+    await(generation, gate)
+  }
 
+  private suspend fun init(): Triple<Generation, CompletableDeferred<Unit>, Boolean> {
+    var generation: Generation
+    val gate: CompletableDeferred<Unit>
+    var complete = false
     lock.withLock {
       this.waiting++
+      generation = this.generation
+      gate = this.gate
       if (this.waiting == this.parties) {
-        breakBarrier()
-        return
-      } else {
-        generation = this.generation
-        gate = this.gate
+        nextGeneration()
+        complete = true
       }
     }
+    return Triple(generation, gate, complete)
+  }
 
+  private suspend fun onComplete(gate: CompletableDeferred<Unit>) {
     try {
-      gate.await()
+      barrierCommand?.invoke()
+      gate.complete(Unit)
+    } catch (e: CancellationException) {
+      gate.completeExceptionally(e)
+      throw e
     } catch (e: Throwable) {
-      handleException(e, generation)
+      gate.completeExceptionally(CyclicBarrierException(e))
     }
   }
 
-  private suspend fun breakBarrier() {
-    val gate = this.gate
-    nextGeneration()
-    if (barrierCommand == null) {
-      gate.complete(Unit)
-      return
-    }
+  private suspend fun await(generation: Generation, gate: CompletableDeferred<Unit>) {
     try {
-      barrierCommand()
-      gate.complete(Unit)
-    } catch (e: Throwable) {
-      @Suppress("NoNameShadowing")
-      val e = Exception.from(e)
-      gate.completeExceptionally(e)
+      gate.await()
+    } catch (e: CancellationException) {
+      var complete = false
+      lock.withLock {
+        if (!generation.broken) {
+          nextGeneration()
+          complete = true
+        }
+      }
+      if (complete) {
+        gate.completeExceptionally(e)
+      }
       throw e
     }
   }
 
-  private suspend fun handleException(e: Throwable, generation: Generation): Nothing {
-    var gate: CompletableDeferred<Unit>? = null
-    lock.withLock {
-      if (this.generation === generation && !this.generation.broken) {
-        this.generation.broken = true
-        gate = this.gate
-        nextGeneration()
-      }
-    }
-    gate?.completeExceptionally(Exception.from(e))
-    throw e
-  }
-
   private fun nextGeneration() {
+    this.generation.broken = true
     this.generation = Generation(broken = false)
     this.waiting = 0
     this.gate = CompletableDeferred()
