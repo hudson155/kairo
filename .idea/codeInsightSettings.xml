@@ -11,8 +11,11 @@
       <name>java.beans.*</name>
       <name>java.io.ObjectInputFilter.Config</name>
       <name>java.util.Base64.*</name>
-      <name>javax.xml</name>
+      <name>java.util.concurrent.CancellationException</name>
+      <name>java.xml.*</name>
       <name>jdk.internal.*</name>
+      <name>kotlin.coroutines.cancellation.*</name>
+      <name>kotlinx.coroutines.time.*</name>
       <name>sun.awt.*</name>
       <name>sun.net.*</name>
       <name>sun.nio.*</name>
