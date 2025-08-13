@@ -21,7 +21,11 @@ public class CyclicBarrier(
    */
   private val barrierCommand: (suspend () -> Unit)? = null,
 ) {
+  @Suppress("UseDataClass")
+  private class Generation(var broken: Boolean)
+
   private val lock: Mutex = Mutex()
+  private var generation: Generation = Generation(broken = false)
   private var waiting: Int = 0
   private var gate: CompletableDeferred<Unit> = CompletableDeferred()
 
@@ -30,15 +34,29 @@ public class CyclicBarrier(
   }
 
   public suspend fun await() {
+    val generation: Generation
     val gate: CompletableDeferred<Unit>
+
     lock.withLock {
       this.waiting++
+      generation = this.generation
       gate = this.gate
       if (this.waiting == this.parties) {
         breakBarrier()
       }
     }
-    gate.await()
+
+    try {
+      gate.await()
+    } catch (e: CancellationException) {
+      lock.withLock {
+        if (!generation.broken) {
+          nextGeneration()
+          gate.completeExceptionally(e)
+        }
+      }
+      throw e
+    }
   }
 
   private suspend fun breakBarrier() {
@@ -48,13 +66,16 @@ public class CyclicBarrier(
       barrierCommand?.invoke()
       gate.complete(Unit)
     } catch (e: CancellationException) {
+      gate.completeExceptionally(e)
       throw e
     } catch (e: Throwable) {
-      gate.completeExceptionally(CyclicBarrierException(e))
+      gate.completeExceptionally(CyclicBarrierException(cause = e))
     }
   }
 
   private fun nextGeneration() {
+    this.generation.broken = true
+    this.generation = Generation(broken = false)
     this.waiting = 0
     this.gate = CompletableDeferred()
   }

@@ -6,14 +6,17 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.throwable.shouldHaveCauseInstanceOf
+import io.kotest.matchers.throwable.shouldHaveMessage
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withTimeout
 import org.junit.jupiter.api.Test
@@ -34,9 +37,11 @@ internal class CyclicBarrierTest {
   fun `happy path (1 party)`(): Unit =
     runTest {
       val barrier = CyclicBarrier(1)
-      repeat(2) {
-        shouldNotThrowAny {
-          barrier.await()
+      supervisorScope {
+        repeat(2) {
+          shouldNotThrowAny {
+            barrier.await()
+          }
         }
       }
     }
@@ -45,10 +50,12 @@ internal class CyclicBarrierTest {
   fun `happy path (2 parties)`(): Unit =
     runTest {
       val barrier = CyclicBarrier(2)
-      repeat(2) {
-        backgroundScope.launch {
-          shouldNotThrowAny {
-            barrier.await()
+      supervisorScope {
+        repeat(2) {
+          launch {
+            shouldNotThrowAny {
+              barrier.await()
+            }
           }
         }
       }
@@ -58,9 +65,11 @@ internal class CyclicBarrierTest {
   fun `await timeout`(): Unit =
     runTest {
       val barrier = CyclicBarrier(2)
-      backgroundScope.launch {
-        shouldTimeout(1.seconds) {
-          barrier.await()
+      supervisorScope {
+        launch {
+          shouldTimeout(1.seconds) {
+            barrier.await()
+          }
         }
       }
     }
@@ -69,12 +78,14 @@ internal class CyclicBarrierTest {
   fun `10,000 parties`(): Unit =
     runTest {
       val barrier = CyclicBarrier(10_000)
-      withTimeout(1.seconds) {
-        List(10_000) {
-          backgroundScope.launch {
-            barrier.await()
-          }
-        }.joinAll()
+      supervisorScope {
+        withTimeout(1.seconds) {
+          List(10_000) {
+            launch {
+              barrier.await()
+            }
+          }.joinAll()
+        }
       }
     }
 
@@ -82,12 +93,14 @@ internal class CyclicBarrierTest {
   fun `10,000 cycles`(): Unit =
     runTest {
       val barrier = CyclicBarrier(2)
-      withTimeout(1.seconds) {
-        List(20_000) {
-          backgroundScope.launch {
-            barrier.await()
-          }
-        }.joinAll()
+      supervisorScope {
+        withTimeout(1.seconds) {
+          List(20_000) {
+            launch {
+              barrier.await()
+            }
+          }.joinAll()
+        }
       }
     }
 
@@ -95,22 +108,24 @@ internal class CyclicBarrierTest {
   fun cancellation(): Unit =
     runTest {
       val barrier = CyclicBarrier(3)
-      backgroundScope.launch {
-        shouldThrow<CancellationException> {
-          barrier.await()
-        }
-      }
-      val second = backgroundScope.launch {
-        shouldThrow<CancellationException> {
-          barrier.await()
-        }
-      }
-      delay(10.milliseconds)
-      second.cancel()
-      repeat(3) {
-        backgroundScope.launch {
-          shouldNotThrowAny {
+      supervisorScope {
+        launch {
+          shouldThrow<CancellationException> {
             barrier.await()
+          }.shouldHaveMessage("manually cancelled")
+        }
+        val second = launch {
+          shouldThrow<CancellationException> {
+            barrier.await()
+          }.shouldHaveMessage("manually cancelled")
+        }
+        delay(10.milliseconds)
+        second.cancel("manually cancelled")
+        repeat(3) {
+          launch {
+            shouldNotThrowAny {
+              barrier.await()
+            }
           }
         }
       }
@@ -122,20 +137,22 @@ internal class CyclicBarrierTest {
       val cancel = generateSequence(true) { false }.iterator()
       val barrier = CyclicBarrier(3) {
         if (cancel.next()) {
-          throw CancellationException()
+          throw CancellationException("manually cancelled")
         }
       }
-      repeat(3) {
-        backgroundScope.launch {
-          shouldThrow<CancellationException> {
-            barrier.await()
+      supervisorScope {
+        repeat(3) {
+          launch {
+            shouldThrow<CancellationException> {
+              barrier.await()
+            }.shouldHaveMessage("manually cancelled")
           }
         }
-      }
-      repeat(3) {
-        backgroundScope.launch {
-          shouldNotThrowAny {
-            barrier.await()
+        repeat(3) {
+          launch {
+            shouldNotThrowAny {
+              barrier.await()
+            }
           }
         }
       }
@@ -151,17 +168,19 @@ internal class CyclicBarrierTest {
           throw RuntimeException()
         }
       }
-      repeat(3) {
-        backgroundScope.launch {
-          shouldThrow<CyclicBarrierException> {
-            barrier.await()
-          }.shouldHaveCauseInstanceOf<RuntimeException>()
+      supervisorScope {
+        repeat(3) {
+          launch {
+            shouldThrow<CyclicBarrierException> {
+              barrier.await()
+            }.shouldHaveCauseInstanceOf<RuntimeException>()
+          }
         }
-      }
-      repeat(3) {
-        backgroundScope.launch {
-          shouldNotThrowAny {
-            barrier.await()
+        repeat(3) {
+          launch {
+            shouldNotThrowAny {
+              barrier.await()
+            }
           }
         }
       }
@@ -172,13 +191,15 @@ internal class CyclicBarrierTest {
     runTest {
       val events = MutableStateFlow(emptyList<String>())
       val barrier = CyclicBarrier(4)
-      List(4) {
-        backgroundScope.launch {
-          events.update { it + "before await" }
-          barrier.await()
-          events.update { it + "after await" }
-        }
-      }.joinAll()
+      supervisorScope {
+        List(4) {
+          launch {
+            events.update { it + "before await" }
+            barrier.await()
+            events.update { it + "after await" }
+          }
+        }.joinAll()
+      }
       events.value.shouldContainExactly(
         "before await",
         "before await",
@@ -196,13 +217,15 @@ internal class CyclicBarrierTest {
     runTest {
       val events = MutableStateFlow(emptyList<String>())
       val barrier = CyclicBarrier(4)
-      List(80) {
-        backgroundScope.launch {
-          events.update { it + "before await" }
-          barrier.await()
-          events.update { it + "after await" }
-        }
-      }.joinAll()
+      supervisorScope {
+        List(80) {
+          launch {
+            events.update { it + "before await" }
+            barrier.await()
+            events.update { it + "after await" }
+          }
+        }.joinAll()
+      }
       var eventList = events.value
       repeat(20) {
         eventList.take(4).shouldContainExactly(
@@ -226,13 +249,15 @@ internal class CyclicBarrierTest {
     runTest {
       val events = MutableStateFlow(emptyList<String>())
       val barrier = CyclicBarrier(4) { events.update { it + "barrier command" } }
-      List(4) {
-        backgroundScope.launch {
-          events.update { it + "before await" }
-          barrier.await()
-          events.update { it + "after await" }
-        }
-      }.joinAll()
+      supervisorScope {
+        List(4) {
+          backgroundScope.launch {
+            events.update { it + "before await" }
+            barrier.await()
+            events.update { it + "after await" }
+          }
+        }.joinAll()
+      }
       events.value.shouldContainExactly(
         "before await",
         "before await",
@@ -251,13 +276,15 @@ internal class CyclicBarrierTest {
     runTest {
       val events = MutableStateFlow(emptyList<String>())
       val barrier = CyclicBarrier(4) { events.update { it + "barrier command" } }
-      List(80) {
-        backgroundScope.launch {
-          events.update { it + "before await" }
-          barrier.await()
-          events.update { it + "after await" }
-        }
-      }.joinAll()
+      supervisorScope {
+        List(80) {
+          backgroundScope.launch {
+            events.update { it + "before await" }
+            barrier.await()
+            events.update { it + "after await" }
+          }
+        }.joinAll()
+      }
       var eventList = events.value
       repeat(20) {
         eventList.take(5).shouldContainExactly(
