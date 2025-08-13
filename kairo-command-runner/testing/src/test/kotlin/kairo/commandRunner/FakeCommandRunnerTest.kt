@@ -14,7 +14,7 @@ internal class FakeCommandRunnerTest {
       val commandRunner = FakeCommandRunner()
       shouldThrow<NullPointerException> {
         commandRunner.run("echo \"Hello, World!\"")
-      }.shouldHaveMessage("No map entry (command='echo \"Hello, World!\"').")
+      }.shouldHaveMessage("No map entry (command=echo \"Hello, World!\").")
     }
 
   @Test
