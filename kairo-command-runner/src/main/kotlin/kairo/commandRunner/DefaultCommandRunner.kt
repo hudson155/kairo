@@ -12,7 +12,7 @@ public class DefaultCommandRunner : CommandRunner() {
 
   @Insecure
   override fun run(command: String): BufferedReader {
-    logger.debug { "Running command: $command." }
+    logger.debug { "Running command (command=$command)." }
     val result = runtime.exec(arrayOf("bash", "-c", command))
     return result.inputReader()
   }

@@ -39,7 +39,7 @@ public class ConfigManager(sources: List<ConfigPropertySource<*>> = defaultSourc
 
   @Suppress("UNCHECKED_CAST")
   public suspend fun <P : ConfigProperty> resolve(property: P): String? {
-    logger.debug { "Resolving property: $property." }
+    logger.debug { "Resolving property (property=$property)." }
     val source = checkNotNull(sources[property::class])
     return (source as ConfigPropertySource<P>).resolve(property)
   }
