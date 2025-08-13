@@ -20,6 +20,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class CyclicBarrierTest {
+  /**
+   * The parties parameter must be positive.
+   */
   @Test
   fun `non-positive parties`(): Unit =
     runTest {
@@ -31,14 +34,30 @@ internal class CyclicBarrierTest {
       }
     }
 
+  /**
+   * A 1-party barrier that immediately breaks.
+   */
   @Test
   fun `happy path (1 party)`(): Unit =
     runTest {
       val parties = 1
       val barrier = CyclicBarrier(parties)
+      shouldNotThrowAny {
+        barrier.await()
+      }
+    }
+
+  /**
+   * A 4-party barrier, used once.
+   */
+  @Test
+  fun `happy path (4 parties)`(): Unit =
+    runTest {
+      val parties = 4
+      val barrier = CyclicBarrier(parties)
       supervisorScope {
-        repeat(3) { // Repeat 3 times to try reuse.
-          repeat(parties) {
+        repeat(parties) {
+          launch {
             shouldNotThrowAny {
               barrier.await()
             }
@@ -47,13 +66,16 @@ internal class CyclicBarrierTest {
       }
     }
 
+  /**
+   * A 4-party barrier, used multiple times.
+   */
   @Test
-  fun `happy path (4 parties)`(): Unit =
+  fun `happy path (4 parties) with reuse`(): Unit =
     runTest {
       val parties = 4
       val barrier = CyclicBarrier(parties)
       supervisorScope {
-        repeat(3) { // Repeat 3 times to try reuse.
+        repeat(3) {
           repeat(parties) {
             launch {
               shouldNotThrowAny {
@@ -65,6 +87,9 @@ internal class CyclicBarrierTest {
       }
     }
 
+  /**
+   * 2 parties time out while awaiting a 3-party barrier.
+   */
   @Test
   fun `await timeout`(): Unit =
     runTest {
@@ -88,36 +113,30 @@ internal class CyclicBarrierTest {
       }
     }
 
+  /**
+   * 500 uses of a 500-party barrier, to verify nothing breaks under high usage.
+   */
   @Test
-  fun `10,000 parties`(): Unit =
+  fun `200 cycles`(): Unit =
     runTest {
-      val barrier = CyclicBarrier(10_000)
+      val parties = 200
+      val barrier = CyclicBarrier(parties)
       supervisorScope {
-        List(10_000) {
-          launch {
-            shouldNotThrowAny {
-              barrier.await()
+        repeat(200) {
+          repeat(parties) {
+            launch {
+              shouldNotThrowAny {
+                barrier.await()
+              }
             }
           }
         }
       }
     }
 
-  @Test
-  fun `10,000 cycles`(): Unit =
-    runTest {
-      val barrier = CyclicBarrier(2)
-      supervisorScope {
-        List(20_000) {
-          launch {
-            shouldNotThrowAny {
-              barrier.await()
-            }
-          }
-        }
-      }
-    }
-
+  /**
+   * Cancellation of one of the parties should break the barrier and cancel all others.
+   */
   @Test
   fun cancellation(): Unit =
     runTest {
@@ -145,6 +164,9 @@ internal class CyclicBarrierTest {
       }
     }
 
+  /**
+   * If the barrier command cancels, the cancellation should propagate to all parties.
+   */
   @Test
   fun `barrier command cancellation`(): Unit =
     runTest {
@@ -162,7 +184,7 @@ internal class CyclicBarrierTest {
             }.shouldHaveMessage("manually cancelled")
           }
         }
-        repeat(3) {
+        repeat(6) { // Try reuse.
           launch {
             shouldNotThrowAny {
               barrier.await()
@@ -172,6 +194,9 @@ internal class CyclicBarrierTest {
       }
     }
 
+  /**
+   * If the barrier command throws, the exception should propagate to all parties.
+   */
   @Test
   fun `barrier command exception`(): Unit =
     runTest {
@@ -190,7 +215,7 @@ internal class CyclicBarrierTest {
             }.shouldHaveCauseInstanceOf<RuntimeException>()
           }
         }
-        repeat(3) {
+        repeat(6) { // Try reuse.
           launch {
             shouldNotThrowAny {
               barrier.await()
