@@ -14,7 +14,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 internal object BooleanListEncoder {
   fun encode(booleanList: List<Boolean>): String {
     val result = booleanList.joinToString("") { if (it) "1" else "0" }
-    logger.debug { "Encoded boolean list $booleanList to string $result." }
+    logger.debug { "Encoded boolean list to string (booleanList=$booleanList, result=$result)." }
     return result
   }
 
@@ -26,7 +26,7 @@ internal object BooleanListEncoder {
         else -> throw IllegalArgumentException("Boolean list strings must only consist of 0s and 1s.")
       }
     }
-    logger.debug { "Decoded string $string to boolean list $result." }
+    logger.debug { "Decoded string to boolean list (string=$string, result=$result)." }
     return result
   }
 }

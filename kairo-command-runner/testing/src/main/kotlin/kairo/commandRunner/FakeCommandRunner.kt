@@ -10,7 +10,7 @@ public class FakeCommandRunner(
 
   @Insecure
   override fun run(command: String): BufferedReader {
-    val result = map[command] ?: throw NullPointerException("No map entry (command='$command').")
+    val result = map[command] ?: throw NullPointerException("No map entry (command=$command).")
     return BufferedReader(StringReader(result))
   }
 

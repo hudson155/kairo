@@ -15,7 +15,7 @@ public class DefaultGcpSecretSupplier : GcpSecretSupplier() {
   private val client: SecretManagerServiceClient = SecretManagerServiceClient.create()
 
   override suspend fun get(id: String): ProtectedString? {
-    logger.debug { "Getting GCP secret: $id." }
+    logger.debug { "Getting GCP secret (id=$id)." }
     val request = AccessSecretVersionRequest.newBuilder().apply {
       this.name = id
     }.build()

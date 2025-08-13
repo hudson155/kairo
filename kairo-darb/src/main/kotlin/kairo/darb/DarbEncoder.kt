@@ -41,7 +41,7 @@ public object DarbEncoder {
     // DARB prefixes the hex characters with the length of the data.
     val prefix = booleanList.size
     val result = "$prefix.$body"
-    logger.debug { "Encoded boolean list $booleanList to DARB $result." }
+    logger.debug { "Encoded boolean list to DARB (booleanList=$booleanList, result=$result)." }
     return result
   }
 
@@ -69,7 +69,7 @@ public object DarbEncoder {
     // Take the size into account to return a list of the correct length.
     // This will omit between 0 and 3 booleans from the end.
     val result = booleanList.subList(0, size)
-    logger.debug { "Decoded DARB $darb to boolean list $result." }
+    logger.debug { "Decoded DARB to boolean list (darb=$darb, result=$result)." }
     return result
   }
 
@@ -100,7 +100,7 @@ public object DarbEncoder {
       in CharRange('a', 'f') -> character.code - 'a'.code + 10
       // No other characters are supported.
       // This should never happen because [regex] validates the input.
-      else -> error("Unsupported DARB character: $character.")
+      else -> error("Unsupported DARB character (character=$character).")
     }
 
     return listOf(
