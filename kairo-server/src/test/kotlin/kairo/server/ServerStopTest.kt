@@ -152,14 +152,13 @@ internal class ServerStopTest {
         server.stop()
       }
       server.state.shouldBe(ServerState.Default)
-      events.value.should { events ->
-        events.subList(0, 2).shouldContainExactlyInAnyOrder(
-          "start Test (0)",
-          "start Test (1)",
-        )
-        events[2].shouldBe("stop Test (0)")
-        events[3].shouldBe("stop Test (1)")
-        events.shouldHaveSize(4)
-      }
+      val eventList = events.value
+      eventList.subList(0, 2).shouldContainExactlyInAnyOrder(
+        "start Test (0)",
+        "start Test (1)",
+      )
+      eventList[2].shouldBe("stop Test (0)")
+      eventList[3].shouldBe("stop Test (1)")
+      eventList.shouldHaveSize(4)
     }
 }

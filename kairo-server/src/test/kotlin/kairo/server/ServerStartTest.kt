@@ -149,14 +149,13 @@ internal class ServerStartTest {
         server.start()
       }.shouldHaveMessage("Exception from Test (1)")
       server.state.shouldBe(ServerState.Default)
-      events.value.should { events ->
-        events[0].shouldBe("start Test (0)")
-        events[1].shouldBe("start Test (1)")
-        events.subList(2, 4).shouldContainExactlyInAnyOrder(
-          "stop Test (0)",
-          "stop Test (1)",
-        )
-        events.shouldHaveSize(4)
-      }
+      val eventList = events.value
+      eventList[0].shouldBe("start Test (0)")
+      eventList[1].shouldBe("start Test (1)")
+      eventList.subList(2, 4).shouldContainExactlyInAnyOrder(
+        "stop Test (0)",
+        "stop Test (1)",
+      )
+      eventList.shouldHaveSize(4)
     }
 }
