@@ -31,7 +31,18 @@ internal class CyclicBarrierTest {
     }
 
   @Test
-  fun `simple happy path`(): Unit =
+  fun `happy path (1 party)`(): Unit =
+    runTest {
+      val barrier = CyclicBarrier(1)
+      repeat(2) {
+        shouldNotThrowAny {
+          barrier.await()
+        }
+      }
+    }
+
+  @Test
+  fun `happy path (2 parties)`(): Unit =
     runTest {
       val barrier = CyclicBarrier(2)
       repeat(2) {
@@ -60,6 +71,19 @@ internal class CyclicBarrierTest {
       val barrier = CyclicBarrier(10_000)
       withTimeout(1.seconds) {
         List(10_000) {
+          launch {
+            barrier.await()
+          }
+        }.joinAll()
+      }
+    }
+
+  @Test
+  fun `10,000 cycles`(): Unit =
+    runTest {
+      val barrier = CyclicBarrier(2)
+      withTimeout(1.seconds) {
+        List(20_000) {
           launch {
             barrier.await()
           }
