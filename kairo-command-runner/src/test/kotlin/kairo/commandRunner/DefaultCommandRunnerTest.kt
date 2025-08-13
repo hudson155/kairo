@@ -12,21 +12,21 @@ internal class DefaultCommandRunnerTest {
 
   @Test
   fun `0 lines`(): Unit =
-    runTest(timeout = 5.seconds) {
+    runTest {
       commandRunner.run(";").readLines()
         .shouldBeEmpty()
     }
 
   @Test
   fun `1 line`(): Unit =
-    runTest(timeout = 5.seconds) {
+    runTest {
       commandRunner.run("echo \"Hello, World!\"").readLines()
         .shouldContainExactly("Hello, World!")
     }
 
   @Test
   fun `2 lines`(): Unit =
-    runTest(timeout = 5.seconds) {
+    runTest {
       commandRunner.run("echo -e \"First\\nSecond\"").readLines()
         .shouldContainExactly("First", "Second")
     }

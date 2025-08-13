@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test
 internal class CyclicBarrierTest {
   @Test
   fun `non-positive parties`(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       shouldThrow<IllegalArgumentException> {
         CyclicBarrier(0)
       }
@@ -33,7 +33,7 @@ internal class CyclicBarrierTest {
 
   @Test
   fun `happy path (1 party)`(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       val parties = 1
       val barrier = CyclicBarrier(parties)
       supervisorScope {
@@ -49,7 +49,7 @@ internal class CyclicBarrierTest {
 
   @Test
   fun `happy path (4 parties)`(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       val parties = 4
       val barrier = CyclicBarrier(parties)
       supervisorScope {
@@ -67,7 +67,7 @@ internal class CyclicBarrierTest {
 
   @Test
   fun `await timeout`(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       val barrier = CyclicBarrier(2)
       supervisorScope {
         repeat(3) { // Repeat 3 times to try reuse.
@@ -90,7 +90,7 @@ internal class CyclicBarrierTest {
 
   @Test
   fun `10,000 parties`(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       val barrier = CyclicBarrier(10_000)
       supervisorScope {
         List(10_000) {
@@ -105,7 +105,7 @@ internal class CyclicBarrierTest {
 
   @Test
   fun `10,000 cycles`(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       val barrier = CyclicBarrier(2)
       supervisorScope {
         List(20_000) {
@@ -120,7 +120,7 @@ internal class CyclicBarrierTest {
 
   @Test
   fun cancellation(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       val barrier = CyclicBarrier(3)
       supervisorScope {
         launch {
@@ -147,7 +147,7 @@ internal class CyclicBarrierTest {
 
   @Test
   fun `barrier command cancellation`(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       val cancel = generateSequence(true) { false }.iterator()
       val barrier = CyclicBarrier(3) {
         if (cancel.next()) {
@@ -174,7 +174,7 @@ internal class CyclicBarrierTest {
 
   @Test
   fun `barrier command exception`(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       val cancel = generateSequence(true) { false }.iterator()
       val barrier = CyclicBarrier(3) {
         if (cancel.next()) {
@@ -202,7 +202,7 @@ internal class CyclicBarrierTest {
 
   @Test
   fun `event trace, single iteration`(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       val events = MutableStateFlow(emptyList<String>())
       val barrier = CyclicBarrier(4)
       supervisorScope {
@@ -228,7 +228,7 @@ internal class CyclicBarrierTest {
 
   @Test
   fun `event trace, multiple iterations`(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       val events = MutableStateFlow(emptyList<String>())
       val barrier = CyclicBarrier(4)
       supervisorScope {
@@ -260,7 +260,7 @@ internal class CyclicBarrierTest {
 
   @Test
   fun `event trace with barrier command, single iteration`(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       val events = MutableStateFlow(emptyList<String>())
       val barrier = CyclicBarrier(4) { events.update { it + "barrier command" } }
       supervisorScope {
@@ -287,7 +287,7 @@ internal class CyclicBarrierTest {
 
   @Test
   fun `event trace with barrier command, multiple iterations`(): Unit =
-    runTest(timeout = 10.seconds) {
+    runTest {
       val events = MutableStateFlow(emptyList<String>())
       val barrier = CyclicBarrier(4) { events.update { it + "barrier command" } }
       supervisorScope {
