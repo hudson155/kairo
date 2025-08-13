@@ -14,7 +14,7 @@ public abstract class Feature {
   public abstract val name: String
 
   /**
-   * Called a lifecycle event is fired.
+   * Called when a lifecycle event is fired.
    * This method is called concurrently with other Features,
    * so IT MUST BE THREAD-SAFE.
    */
