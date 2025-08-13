@@ -301,19 +301,20 @@ internal class CyclicBarrierTest {
       }
       var eventList = events.value
       repeat(20) {
-        eventList.take(5).shouldContainExactly(
+        eventList.take(4).shouldContainExactly(
           "before await",
           "before await",
           "before await",
           "before await",
-          "barrier command",
         )
-        eventList = eventList.drop(5)
+        eventList = eventList.drop(4)
+        eventList = eventList
+          .indexOfFirst { event -> event == "barrier command" }
+          .let { i -> eventList.take(i) + eventList.drop(i + 1) }
         repeat(4) {
-          eventList =
-            eventList
-              .indexOfFirst { event -> event == "after await" }
-              .let { i -> eventList.take(i) + eventList.drop(i + 1) }
+          eventList = eventList
+            .indexOfFirst { event -> event == "after await" }
+            .let { i -> eventList.take(i) + eventList.drop(i + 1) }
         }
       }
       eventList.shouldBeEmpty()
