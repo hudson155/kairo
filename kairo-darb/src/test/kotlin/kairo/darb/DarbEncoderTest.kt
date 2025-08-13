@@ -2,6 +2,7 @@ package kairo.darb
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import kotlinx.coroutines.test.runTest
@@ -39,19 +40,19 @@ internal class DarbEncoderTest {
   fun `decode, happy path`(): Unit =
     runTest {
       DarbEncoder.decode("0.").shouldBeEmpty()
-      DarbEncoder.decode("1.0").shouldBe(listOf(false))
-      DarbEncoder.decode("1.8").shouldBe(listOf(true))
-      DarbEncoder.decode("4.0").shouldBe(listOf(false, false, false, false))
-      DarbEncoder.decode("4.1").shouldBe(listOf(false, false, false, true))
-      DarbEncoder.decode("4.8").shouldBe(listOf(true, false, false, false))
-      DarbEncoder.decode("4.F").shouldBe(listOf(true, true, true, true))
-      DarbEncoder.decode("4.f").shouldBe(listOf(true, true, true, true))
-      DarbEncoder.decode("5.00").shouldBe(listOf(false, false, false, false, false))
-      DarbEncoder.decode("5.08").shouldBe(listOf(false, false, false, false, true))
-      DarbEncoder.decode("5.80").shouldBe(listOf(true, false, false, false, false))
-      DarbEncoder.decode("5.C8").shouldBe(listOf(true, true, false, false, true))
-      DarbEncoder.decode("5.F8").shouldBe(listOf(true, true, true, true, true))
-      DarbEncoder.decode("5.f8").shouldBe(listOf(true, true, true, true, true))
+      DarbEncoder.decode("1.0").shouldContainExactly(false)
+      DarbEncoder.decode("1.8").shouldContainExactly(true)
+      DarbEncoder.decode("4.0").shouldContainExactly(false, false, false, false)
+      DarbEncoder.decode("4.1").shouldContainExactly(false, false, false, true)
+      DarbEncoder.decode("4.8").shouldContainExactly(true, false, false, false)
+      DarbEncoder.decode("4.F").shouldContainExactly(true, true, true, true)
+      DarbEncoder.decode("4.f").shouldContainExactly(true, true, true, true)
+      DarbEncoder.decode("5.00").shouldContainExactly(false, false, false, false, false)
+      DarbEncoder.decode("5.08").shouldContainExactly(false, false, false, false, true)
+      DarbEncoder.decode("5.80").shouldContainExactly(true, false, false, false, false)
+      DarbEncoder.decode("5.C8").shouldContainExactly(true, true, false, false, true)
+      DarbEncoder.decode("5.F8").shouldContainExactly(true, true, true, true, true)
+      DarbEncoder.decode("5.f8").shouldContainExactly(true, true, true, true, true)
       DarbEncoder.decode("23.2CB08E").shouldBe(
         listOf(
           false, false, true, false,
