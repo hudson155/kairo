@@ -34,10 +34,17 @@ public class CyclicBarrier(
   }
 
   public suspend fun await() {
-    val generation: Generation
+    val (generation, gate, complete) = init()
+    if (complete) {
+      onComplete(gate)
+    }
+    await(generation, gate)
+  }
+
+  private suspend fun init(): Triple<Generation, CompletableDeferred<Unit>, Boolean> {
+    var generation: Generation
     val gate: CompletableDeferred<Unit>
     var complete = false
-
     lock.withLock {
       this.waiting++
       generation = this.generation
@@ -47,27 +54,34 @@ public class CyclicBarrier(
         complete = true
       }
     }
+    return Triple(generation, gate, complete)
+  }
 
-    if (complete) {
-      try {
-        barrierCommand?.invoke()
-        gate.complete(Unit)
-      } catch (e: CancellationException) {
-        gate.completeExceptionally(e)
-        throw e
-      } catch (e: Throwable) {
-        gate.completeExceptionally(CyclicBarrierException(cause = e))
-      }
+  private suspend fun onComplete(gate: CompletableDeferred<Unit>) {
+    try {
+      barrierCommand?.invoke()
+      gate.complete(Unit)
+    } catch (e: CancellationException) {
+      gate.completeExceptionally(e)
+      throw e
+    } catch (e: Throwable) {
+      gate.completeExceptionally(CyclicBarrierException(e))
     }
+  }
 
+  private suspend fun await(generation: Generation, gate: CompletableDeferred<Unit>) {
     try {
       gate.await()
     } catch (e: CancellationException) {
+      var complete = false
       lock.withLock {
         if (!generation.broken) {
           nextGeneration()
-          gate.completeExceptionally(e)
+          complete = true
         }
+      }
+      if (complete) {
+        gate.completeExceptionally(e)
       }
       throw e
     }
