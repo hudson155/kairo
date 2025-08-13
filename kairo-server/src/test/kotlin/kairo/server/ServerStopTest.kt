@@ -92,12 +92,12 @@ internal class ServerStopTest {
       }
       server.state.shouldBe(ServerState.Default)
       events.value.should { events ->
-        events[0].shouldBe("start Test (0)")
-        events[1].shouldBe("start Test (1)")
-        events.subList(2, 4).shouldContainExactlyInAnyOrder(
-          "stop Test (0)",
-          "stop Test (1)",
+        events.subList(0, 2).shouldContainExactlyInAnyOrder(
+          "start Test (0)",
+          "start Test (1)",
         )
+        events[2].shouldBe("stop Test (0)")
+        events[3].shouldBe("stop Test (1)")
         events.shouldHaveSize(4)
       }
     }
@@ -153,12 +153,12 @@ internal class ServerStopTest {
       }
       server.state.shouldBe(ServerState.Default)
       events.value.should { events ->
-        events[0].shouldBe("start Test (0)")
-        events[1].shouldBe("start Test (1)")
-        events.subList(2, 4).shouldContainExactlyInAnyOrder(
-          "stop Test (0)",
-          "stop Test (1)",
+        events.subList(0, 2).shouldContainExactlyInAnyOrder(
+          "start Test (0)",
+          "start Test (1)",
         )
+        events[2].shouldBe("stop Test (0)")
+        events[3].shouldBe("stop Test (1)")
         events.shouldHaveSize(4)
       }
     }
