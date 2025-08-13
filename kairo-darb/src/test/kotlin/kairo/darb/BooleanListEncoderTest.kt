@@ -5,13 +5,14 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class BooleanListEncoderTest {
   @Test
   fun encode(): Unit =
-    runTest {
+    runTest(timeout = 5.seconds) {
       BooleanListEncoder.encode(emptyList()).shouldBeEmpty()
       BooleanListEncoder.encode(listOf(false)).shouldBe("0")
       BooleanListEncoder.encode(listOf(true)).shouldBe("1")
@@ -27,7 +28,7 @@ internal class BooleanListEncoderTest {
 
   @Test
   fun decode(): Unit =
-    runTest {
+    runTest(timeout = 5.seconds) {
       BooleanListEncoder.decode("").shouldBeEmpty()
       BooleanListEncoder.decode("0").shouldBe(listOf(false))
       BooleanListEncoder.decode("1").shouldBe(listOf(true))

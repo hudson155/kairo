@@ -5,13 +5,14 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class DarbEncoderTest {
   @Test
   fun encode(): Unit =
-    runTest {
+    runTest(timeout = 5.seconds) {
       DarbEncoder.encode(emptyList()).shouldBe("0.")
       DarbEncoder.encode(listOf(false)).shouldBe("1.0")
       DarbEncoder.encode(listOf(true)).shouldBe("1.8")
@@ -38,7 +39,7 @@ internal class DarbEncoderTest {
 
   @Test
   fun `decode, happy path`(): Unit =
-    runTest {
+    runTest(timeout = 5.seconds) {
       DarbEncoder.decode("0.").shouldBeEmpty()
       DarbEncoder.decode("1.0").shouldContainExactly(false)
       DarbEncoder.decode("1.8").shouldContainExactly(true)
