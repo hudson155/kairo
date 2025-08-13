@@ -1,9 +1,11 @@
 package kairo.cyclicBarrier
 
 import io.kotest.assertions.async.shouldTimeout
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.throwable.shouldHaveCauseInstanceOf
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CancellationException
@@ -13,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.withTimeout
 import org.junit.jupiter.api.Test
 
 internal class CyclicBarrierTest {
@@ -28,59 +31,12 @@ internal class CyclicBarrierTest {
     }
 
   @Test
-  fun `1 party, simple happy path`(): Unit =
-    runTest {
-      val barrier = CyclicBarrier(1)
-      launch {
-        barrier.await()
-      }
-    }
-
-  @Test
-  fun `2 parties, 1 await timeout`(): Unit =
-    runTest {
-      val barrier = CyclicBarrier(2)
-      launch {
-        shouldTimeout(1.seconds) {
-          barrier.await()
-        }
-      }
-    }
-
-  @Test
-  fun `2 parties, 3 awaits timeout`(): Unit =
+  fun `simple happy path`(): Unit =
     runTest {
       val barrier = CyclicBarrier(2)
       repeat(2) {
         launch {
-          barrier.await()
-        }
-      }
-      launch {
-        shouldTimeout(1.seconds) {
-          barrier.await()
-        }
-      }
-    }
-
-  @Test
-  fun `1000 parties, simple happy path`(): Unit =
-    runTest {
-      val barrier = CyclicBarrier(1000)
-      repeat(1000) {
-        launch {
-          barrier.await()
-        }
-      }
-    }
-
-  @Test
-  fun `1000 parties, 999 awaits timeout`(): Unit =
-    runTest {
-      val barrier = CyclicBarrier(1000)
-      repeat(999) {
-        launch {
-          shouldTimeout(1.seconds) {
+          shouldNotThrowAny {
             barrier.await()
           }
         }
@@ -88,14 +44,9 @@ internal class CyclicBarrierTest {
     }
 
   @Test
-  fun `1000 parties, 1001 awaits timeout`(): Unit =
+  fun `await timeout`(): Unit =
     runTest {
-      val barrier = CyclicBarrier(1000)
-      repeat(1000) {
-        launch {
-          barrier.await()
-        }
-      }
+      val barrier = CyclicBarrier(2)
       launch {
         shouldTimeout(1.seconds) {
           barrier.await()
@@ -104,42 +55,90 @@ internal class CyclicBarrierTest {
     }
 
   @Test
-  fun `4 parties, cancellation`(): Unit =
+  fun `10,000 parties`(): Unit =
     runTest {
-      val barrier = CyclicBarrier(4)
-      repeat(2) {
+      val barrier = CyclicBarrier(10_000)
+      withTimeout(1.seconds) {
+        List(10_000) {
+          launch {
+            barrier.await()
+          }
+        }.joinAll()
+      }
+    }
+
+  @Test
+  fun cancellation(): Unit =
+    runTest {
+      val barrier = CyclicBarrier(3)
+      launch {
+        shouldThrow<CancellationException> {
+          barrier.await()
+        }
+      }
+      val second = launch {
+        shouldThrow<CancellationException> {
+          barrier.await()
+        }
+      }
+      delay(10.milliseconds)
+      second.cancel()
+      repeat(3) {
+        launch {
+          shouldNotThrowAny {
+            barrier.await()
+          }
+        }
+      }
+    }
+
+  @Test
+  fun `barrier cancellation`(): Unit =
+    runTest {
+      val cancel = generateSequence(true) { false }.iterator()
+      val barrier = CyclicBarrier(3) {
+        if (cancel.next()) {
+          throw CancellationException()
+        }
+      }
+      repeat(3) {
         launch {
           shouldThrow<CancellationException> {
             barrier.await()
           }
         }
       }
-      val third = launch {
-        shouldThrow<CancellationException> {
-          barrier.await()
+      repeat(3) {
+        launch {
+          shouldNotThrowAny {
+            barrier.await()
+          }
         }
       }
-      delay(10.milliseconds)
-      third.cancel()
     }
 
   @Test
-  fun `4 parties, reuse after cancellation`(): Unit =
+  fun `barrier exception`(): Unit =
     runTest {
-      val barrier = CyclicBarrier(4)
-      repeat(2) {
-        launch {
-          barrier.await()
+      val cancel = generateSequence(true) { false }.iterator()
+      val barrier = CyclicBarrier(3) {
+        if (cancel.next()) {
+          @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
+          throw RuntimeException()
         }
       }
-      val third = launch {
-        barrier.await()
-      }
-      delay(10.milliseconds)
-      third.cancel()
-      repeat(4) {
+      repeat(3) {
         launch {
-          barrier.await()
+          shouldThrow<CyclicBarrier.Exception> {
+            barrier.await()
+          }.shouldHaveCauseInstanceOf<RuntimeException>()
+        }
+      }
+      repeat(3) {
+        launch {
+          shouldNotThrowAny {
+            barrier.await()
+          }
         }
       }
     }

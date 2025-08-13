@@ -1,5 +1,6 @@
 package kairo.cyclicBarrier
 
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -20,6 +21,19 @@ public class CyclicBarrier(
    */
   private val barrierCommand: (suspend () -> Unit)? = null,
 ) {
+  public class Exception internal constructor(
+    cause: Throwable,
+  ) : CancellationException() {
+    init {
+      initCause(cause)
+    }
+
+    public companion object {
+      internal fun from(e: Throwable): Throwable =
+        e as? CancellationException ?: Exception(e)
+    }
+  }
+
   @Suppress("UseDataClass")
   private class Generation(var broken: Boolean)
 
@@ -65,8 +79,10 @@ public class CyclicBarrier(
       this.barrierCommand()
       gate.complete(Unit)
     } catch (e: Throwable) {
-      gate.completeExceptionally(e)
-      throw e
+      Exception.from(e).let { e ->
+        gate.completeExceptionally(e)
+        throw e
+      }
     }
   }
 
@@ -79,7 +95,7 @@ public class CyclicBarrier(
         nextGeneration()
       }
     }
-    gate?.completeExceptionally(e)
+    gate?.completeExceptionally(Exception.from(e))
     throw e
   }
 
