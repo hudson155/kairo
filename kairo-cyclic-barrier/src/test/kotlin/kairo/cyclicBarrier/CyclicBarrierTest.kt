@@ -113,7 +113,7 @@ internal class CyclicBarrierTest {
     }
 
   /**
-   * 500 uses of a 500-party barrier, to verify nothing breaks under high usage.
+   * 200 usages of a 200-party barrier, to verify nothing breaks under high usage.
    */
   @Test
   fun `200 cycles`(): Unit =
