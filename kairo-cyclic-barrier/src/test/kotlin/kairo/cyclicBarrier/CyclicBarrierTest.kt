@@ -40,8 +40,7 @@ internal class CyclicBarrierTest {
   @Test
   fun `happy path (1 party)`(): Unit =
     runTest {
-      val parties = 1
-      val barrier = CyclicBarrier(parties)
+      val barrier = CyclicBarrier(1)
       shouldNotThrowAny {
         barrier.await()
       }
