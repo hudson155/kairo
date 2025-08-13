@@ -21,11 +21,7 @@ public class CyclicBarrier(
    */
   private val barrierCommand: (suspend () -> Unit)? = null,
 ) {
-  @Suppress("UseDataClass")
-  private class Generation(var broken: Boolean)
-
   private val lock: Mutex = Mutex()
-  private var generation: Generation = Generation(broken = false)
   private var waiting: Int = 0
   private var gate: CompletableDeferred<Unit> = CompletableDeferred()
 
@@ -59,7 +55,6 @@ public class CyclicBarrier(
   }
 
   private fun nextGeneration() {
-    this.generation = Generation(broken = false)
     this.waiting = 0
     this.gate = CompletableDeferred()
   }
