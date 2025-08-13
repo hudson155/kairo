@@ -14,10 +14,16 @@ import org.junit.jupiter.api.Test
  * ensuring that everything happens in the right order.
  */
 internal class ServerConcurrencyTest {
-  internal data class Event(
-    val event: LifecycleEvent,
-    val phase: String,
-  )
+  internal sealed class Event {
+    data class Basic(
+      val description: String,
+    ) : Event()
+
+    data class Lifecycle(
+      val event: LifecycleEvent,
+      val description: String,
+    ) : Event()
+  }
 
   @Test
   fun test(): Unit =
@@ -29,9 +35,9 @@ internal class ServerConcurrencyTest {
         object : Feature() {
           override val name: String = "Test ($i)"
           override suspend fun on(event: LifecycleEvent) {
-            events.update { it + Event(event, "first") }
+            events.update { it + Event.Lifecycle(event, "first") }
             barrier.await()
-            events.update { it + Event(event, "second") }
+            events.update { it + Event.Lifecycle(event, "second") }
             barrier.await()
           }
         }
@@ -40,15 +46,21 @@ internal class ServerConcurrencyTest {
         name = "Test",
         features = features,
       )
+      events.update { it + Event.Basic("server created") }
       server.start()
+      events.update { it + Event.Basic("server started") }
       server.stop()
+      events.update { it + Event.Basic("server stopped") }
       val eventList = events.value
       eventList.shouldContainExactly(
         buildList {
-          addAll(List(concurrency) { Event(LifecycleEvent.Start, "first") })
-          addAll(List(concurrency) { Event(LifecycleEvent.Start, "second") })
-          addAll(List(concurrency) { Event(LifecycleEvent.Stop, "first") })
-          addAll(List(concurrency) { Event(LifecycleEvent.Stop, "second") })
+          add(Event.Basic("server created"))
+          addAll(List(concurrency) { Event.Lifecycle(LifecycleEvent.Start, "first") })
+          addAll(List(concurrency) { Event.Lifecycle(LifecycleEvent.Start, "second") })
+          add(Event.Basic("server started"))
+          addAll(List(concurrency) { Event.Lifecycle(LifecycleEvent.Stop, "first") })
+          addAll(List(concurrency) { Event.Lifecycle(LifecycleEvent.Stop, "second") })
+          add(Event.Basic("server stopped"))
         },
       )
     }
