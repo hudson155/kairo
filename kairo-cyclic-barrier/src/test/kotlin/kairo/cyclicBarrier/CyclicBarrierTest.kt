@@ -46,7 +46,7 @@ internal class CyclicBarrierTest {
     runTest {
       val barrier = CyclicBarrier(2)
       repeat(2) {
-        launch {
+        backgroundScope.launch {
           shouldNotThrowAny {
             barrier.await()
           }
@@ -58,7 +58,7 @@ internal class CyclicBarrierTest {
   fun `await timeout`(): Unit =
     runTest {
       val barrier = CyclicBarrier(2)
-      launch {
+      backgroundScope.launch {
         shouldTimeout(1.seconds) {
           barrier.await()
         }
@@ -71,7 +71,7 @@ internal class CyclicBarrierTest {
       val barrier = CyclicBarrier(10_000)
       withTimeout(1.seconds) {
         List(10_000) {
-          launch {
+          backgroundScope.launch {
             barrier.await()
           }
         }.joinAll()
@@ -84,7 +84,7 @@ internal class CyclicBarrierTest {
       val barrier = CyclicBarrier(2)
       withTimeout(1.seconds) {
         List(20_000) {
-          launch {
+          backgroundScope.launch {
             barrier.await()
           }
         }.joinAll()
@@ -95,12 +95,12 @@ internal class CyclicBarrierTest {
   fun cancellation(): Unit =
     runTest {
       val barrier = CyclicBarrier(3)
-      launch {
+      backgroundScope.launch {
         shouldThrow<CancellationException> {
           barrier.await()
         }
       }
-      val second = launch {
+      val second = backgroundScope.launch {
         shouldThrow<CancellationException> {
           barrier.await()
         }
@@ -108,7 +108,7 @@ internal class CyclicBarrierTest {
       delay(10.milliseconds)
       second.cancel()
       repeat(3) {
-        launch {
+        backgroundScope.launch {
           shouldNotThrowAny {
             barrier.await()
           }
@@ -126,14 +126,14 @@ internal class CyclicBarrierTest {
         }
       }
       repeat(3) {
-        launch {
+        backgroundScope.launch {
           shouldThrow<CancellationException> {
             barrier.await()
           }
         }
       }
       repeat(3) {
-        launch {
+        backgroundScope.launch {
           shouldNotThrowAny {
             barrier.await()
           }
@@ -152,14 +152,14 @@ internal class CyclicBarrierTest {
         }
       }
       repeat(3) {
-        launch {
-          shouldThrow<CyclicBarrier.Exception> {
+        backgroundScope.launch {
+          shouldThrow<CyclicBarrierException> {
             barrier.await()
           }.shouldHaveCauseInstanceOf<RuntimeException>()
         }
       }
       repeat(3) {
-        launch {
+        backgroundScope.launch {
           shouldNotThrowAny {
             barrier.await()
           }
@@ -173,7 +173,7 @@ internal class CyclicBarrierTest {
       val events = MutableStateFlow(emptyList<String>())
       val barrier = CyclicBarrier(4)
       List(4) {
-        launch {
+        backgroundScope.launch {
           events.update { it + "before await" }
           barrier.await()
           events.update { it + "after await" }
@@ -197,7 +197,7 @@ internal class CyclicBarrierTest {
       val events = MutableStateFlow(emptyList<String>())
       val barrier = CyclicBarrier(4)
       List(80) {
-        launch {
+        backgroundScope.launch {
           events.update { it + "before await" }
           barrier.await()
           events.update { it + "after await" }
@@ -227,7 +227,7 @@ internal class CyclicBarrierTest {
       val events = MutableStateFlow(emptyList<String>())
       val barrier = CyclicBarrier(4) { events.update { it + "barrier command" } }
       List(4) {
-        launch {
+        backgroundScope.launch {
           events.update { it + "before await" }
           barrier.await()
           events.update { it + "after await" }
@@ -252,7 +252,7 @@ internal class CyclicBarrierTest {
       val events = MutableStateFlow(emptyList<String>())
       val barrier = CyclicBarrier(4) { events.update { it + "barrier command" } }
       List(80) {
-        launch {
+        backgroundScope.launch {
           events.update { it + "before await" }
           barrier.await()
           events.update { it + "after await" }
