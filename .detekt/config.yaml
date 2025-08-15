@@ -792,8 +792,7 @@ style:
   UseIfEmptyOrIfBlank:
     active: true
   UseIfInsteadOfWhen:
-    active: true
-    ignoreWhenContainingVariableDeclaration: false
+    active: false
   UseIsNullOrEmpty:
     active: true
   UseLet:
