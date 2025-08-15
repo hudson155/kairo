@@ -17,6 +17,7 @@ See [the getting started section](..) for how to use this BOM.
 The following external libraries are included in this BOM:
 
 - `io.arrow-kt:arrow-stack`
+- `io.insert-koin:koin-bom`
 - `io.ktor:ktor-bom`
 - `com.google.cloud:libraries-bom`
 - `com.google.guava:guava-bom`
@@ -58,6 +59,7 @@ dependencies {
   implementation("software.airborne.kairo:kairo-util")
   runtimeOnly("org.apache.logging.log4j:log4j-core")
   runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")
+  // TODO: Add Koin.
 
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
   testImplementation("software.airborne.kairo:kairo-testing")
