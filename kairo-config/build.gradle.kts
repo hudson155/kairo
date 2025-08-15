@@ -18,7 +18,7 @@ dependencies {
   implementation(project(":kairo-util"))
 
   implementation(libs.hocon)
-  implementation(libs.kotlinxSerializationHocon)
+  implementation(libs.serialization.hocon)
 
   testImplementation(project(":kairo-command-runner:testing"))
   testImplementation(project(":kairo-environment-variable-supplier:testing"))

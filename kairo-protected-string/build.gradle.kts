@@ -5,9 +5,9 @@ plugins {
 }
 
 dependencies {
-  implementation(libs.kotlinxSerializationCore)
+  implementation(libs.serialization.core)
 
   testImplementation(project(":kairo-testing"))
 
-  implementation(libs.kotlinxSerializationJson)
+  implementation(libs.serialization.json)
 }

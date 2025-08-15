@@ -4,6 +4,6 @@ plugins {
 }
 
 dependencies {
-  api(libs.arrowCoroutines)
-  api(libs.kotlinxCoroutinesCore)
+  api(libs.arrow.coroutines)
+  api(libs.coroutines.core)
 }
