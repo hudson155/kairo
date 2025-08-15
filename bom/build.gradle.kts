@@ -4,20 +4,40 @@ plugins {
 }
 
 dependencies {
-  api(platform(libs.arrowBom))
-  api(platform(libs.gcpBom))
-  api(platform(libs.guavaBom))
-  api(platform(libs.kotlinxCoroutinesBom))
-  api(platform(libs.kotlinxSerializationBom))
-  api(platform(libs.log4jBom))
+  // arrow
+  // https://github.com/arrow-kt/arrow/releases
+  api(platform("io.arrow-kt:arrow-stack:2.1.2"))
 
+  // coroutines
+  // https://github.com/Kotlin/kotlinx.coroutines/releases
+  api(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2"))
+
+  // gcp
+  // https://github.com/googleapis/java-cloud-bom/releases
+  api(platform("com.google.cloud:libraries-bom:26.65.0"))
+
+  // guava
+  // https://github.com/google/guava/releases
+  api(platform("com.google.guava:guava-bom:33.4.8-jre"))
+
+  // serialization
+  // https://github.com/Kotlin/kotlinx.serialization/releases
+  api(platform("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.9.0"))
+
+  // log4j
+  // https://github.com/apache/logging-log4j2/releases
+  api(platform("org.apache.logging.log4j:log4j-bom:3.0.0-beta3"))
+
+  /**
+   * Automatically include all other modules.
+   */
   constraints {
     rootProject.subprojects.forEach { subproject ->
       if (subproject.name == project.name) return@forEach
       evaluationDependsOn(subproject.path)
       if (!subproject.plugins.hasPlugin("maven-publish")) return@forEach
       subproject.publishing.publications.withType<MavenPublication> {
-        api(mapOf("group" to groupId, "name" to artifactId, "version" to version))
+        api("$groupId:$artifactId:$version")
       }
     }
   }

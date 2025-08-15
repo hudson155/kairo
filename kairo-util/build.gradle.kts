@@ -12,7 +12,5 @@ kotlin {
 dependencies {
   implementation(kotlin("reflect"))
 
-  api(platform(project(":bom")))
-
   testImplementation(project(":kairo-testing"))
 }

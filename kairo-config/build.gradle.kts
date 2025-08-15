@@ -11,8 +11,6 @@ kotlin {
 }
 
 dependencies {
-  api(platform(project(":bom")))
-
   implementation(project(":kairo-command-runner"))
   implementation(project(":kairo-environment-variable-supplier"))
   implementation(project(":kairo-gcp-secret-supplier"))

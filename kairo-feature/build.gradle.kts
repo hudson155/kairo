@@ -4,7 +4,5 @@ plugins {
 }
 
 dependencies {
-  api(platform(project(":bom")))
-
   api(project(":kairo-config"))
 }

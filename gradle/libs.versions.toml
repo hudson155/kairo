@@ -2,17 +2,14 @@
 
 # Arrow
 # https://github.com/arrow-kt/arrow/releases
-arrowBom = { module = "io.arrow-kt:arrow-stack", version = "2.1.2" }
 arrowCoroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
 
 # GCP
 # https://github.com/googleapis/java-cloud-bom/releases
-gcpBom = { module = "com.google.cloud:libraries-bom", version = "26.65.0" }
 gcpSecretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
 
 # Guava
 # https://github.com/google/guava/releases
-guavaBom = { module = "com.google.guava:guava-bom", version = "33.4.8-jre" }
 guava = { module = "com.google.guava:guava" }
 
 # Hocon
@@ -29,21 +26,18 @@ kotlinLoggingJvm = { module = "io.github.oshai:kotlin-logging-jvm", version = "7
 
 # Kotlinx Coroutines
 # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlinxCoroutinesBom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version = "1.10.2" }
 kotlinxCoroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 kotlinxCoroutinesGuava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava" }
 kotlinxCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 
 # Kotlinx Serialization
 # https://github.com/Kotlin/kotlinx.serialization/releases
-kotlinxSerializationBom = { module = "org.jetbrains.kotlinx:kotlinx-serialization-bom", version = "1.9.0" }
 kotlinxSerializationCore = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
 kotlinxSerializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 kotlinxSerializationHocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
 
 # Log4j
 # https://github.com/apache/logging-log4j2/releases
-log4jBom = { module = "org.apache.logging.log4j:log4j-bom", version = "3.0.0-beta3" }
 log4jConfigYaml = { module = "org.apache.logging.log4j:log4j-config-yaml" }
 log4jCore = { module = "org.apache.logging.log4j:log4j-core" }
 log4jLayoutTemplateJson = { module = "org.apache.logging.log4j:log4j-layout-template-json" }
