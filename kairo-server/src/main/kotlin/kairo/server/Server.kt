@@ -3,9 +3,7 @@ package kairo.server
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.feature.Feature
-import kairo.feature.LifecycleEvent
 import kotlin.time.measureTime
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.joinAll
@@ -73,10 +71,6 @@ public class Server(
     logger.info { "Server stopped (server=$this, time=$time)." }
   }
 
-  /**
-   * Distributes [LifecycleEvent.Start] to all Features.
-   * This happens concurrently, within a [CoroutineScope].
-   */
   private suspend fun onStart() {
     coroutineScope {
       val jobs = features.map { feature ->
@@ -84,7 +78,7 @@ public class Server(
           logger.info { "Starting Feature (server=${this@Server}, feature=$feature)." }
           val time = measureTime {
             try {
-              feature.on(LifecycleEvent.Start)
+              feature.start(features)
             } catch (e: Throwable) {
               logger.warn(e) { "Feature failed to start (server=${this@Server}, feature=$feature)." }
               throw e
@@ -97,10 +91,6 @@ public class Server(
     }
   }
 
-  /**
-   * Distributes [LifecycleEvent.Stop] to all Features.
-   * This happens concurrently, within a [CoroutineScope].
-   */
   private suspend fun onStop() {
     supervisorScope {
       val jobs = features.map { feature ->
@@ -108,7 +98,7 @@ public class Server(
           logger.info { "Stopping Feature (server=${this@Server}, feature=$feature)." }
           val time = measureTime {
             try {
-              feature.on(LifecycleEvent.Stop)
+              feature.stop()
             } catch (e: Throwable) {
               logger.error(e) { "Feature failed to stop (server=${this@Server}, feature=$feature)." }
             }
