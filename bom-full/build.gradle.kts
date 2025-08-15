@@ -22,6 +22,10 @@ dependencies {
   // https://github.com/google/guava/releases
   api(platform("com.google.guava:guava-bom:33.4.8-jre"))
 
+  // ktor
+  // https://github.com/ktorio/ktor/releases
+  api(platform("io.ktor:ktor-bom:3.2.3"))
+
   // serialization
   // https://github.com/Kotlin/kotlinx.serialization/releases
   api(platform("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.9.0"))
