@@ -29,6 +29,7 @@ kotlin {
 
 dependencies {
   api(platform(project(":bom")))
+  testRuntimeOnly("org.slf4j:slf4j-simple")
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${detekt.toolVersion}")
 }
 
@@ -49,6 +50,10 @@ tasks.named("check").configure {
 }
 
 tasks.test {
+  jvmArgs(
+    "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug",
+    "-Dorg.slf4j.simpleLogger.logFile=System.out",
+  )
   testLogging {
     events("passed", "skipped", "failed")
   }
