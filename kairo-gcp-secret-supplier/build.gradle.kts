@@ -7,7 +7,7 @@ dependencies {
   implementation(project(":kairo-logging"))
   api(project(":kairo-protected-string"))
 
-  implementation(libs.gcpSecretManager)
+  implementation(libs.coroutines.guava)
+  implementation(libs.gcp.secretManager)
   implementation(libs.guava)
-  implementation(libs.kotlinxCoroutinesGuava)
 }

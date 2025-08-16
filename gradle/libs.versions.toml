@@ -1,48 +1,35 @@
+[versions]
+
+hocon = "1.4.4" # https://github.com/lightbend/config/releases
+kotest = "6.0.0.M14" # https://github.com/kotest/kotest/releases
+logging = "7.0.12" # https://github.com/oshai/kotlin-logging/releases
+mockk = "1.14.5" # https://github.com/mockk/mockk/releases
+
 [libraries]
 
-# Arrow
-# https://github.com/arrow-kt/arrow/releases
-arrowCoroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
+arrow-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
 
-# GCP
-# https://github.com/googleapis/java-cloud-bom/releases
-gcpSecretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 
-# Guava
-# https://github.com/google/guava/releases
+gcp-secretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
+
 guava = { module = "com.google.guava:guava" }
 
-# Hocon
-# https://github.com/lightbend/config/releases
-hocon = { module = "com.typesafe:config", version = "1.4.4" }
+hocon = { module = "com.typesafe:config", version.ref = "hocon" }
 
-# Kotest
-# https://github.com/kotest/kotest/releases
-kotest = { module = "io.kotest:kotest-runner-junit5", version = "6.0.0.M14" }
+kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
-# Kotlin Logging
-# https://github.com/oshai/kotlin-logging/releases
-kotlinLoggingJvm = { module = "io.github.oshai:kotlin-logging-jvm", version = "7.0.12" }
+log4j-configYaml = { module = "org.apache.logging.log4j:log4j-config-yaml" }
+log4j-core = { module = "org.apache.logging.log4j:log4j-core" }
+log4j-layoutTemplateJson = { module = "org.apache.logging.log4j:log4j-layout-template-json" }
+log4j-slf4j = { module = "org.apache.logging.log4j:log4j-slf4j2-impl" }
 
-# Kotlinx Coroutines
-# https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlinxCoroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
-kotlinxCoroutinesGuava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava" }
-kotlinxCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
+logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "logging" }
 
-# Kotlinx Serialization
-# https://github.com/Kotlin/kotlinx.serialization/releases
-kotlinxSerializationCore = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
-kotlinxSerializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
-kotlinxSerializationHocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
-# Log4j
-# https://github.com/apache/logging-log4j2/releases
-log4jConfigYaml = { module = "org.apache.logging.log4j:log4j-config-yaml" }
-log4jCore = { module = "org.apache.logging.log4j:log4j-core" }
-log4jLayoutTemplateJson = { module = "org.apache.logging.log4j:log4j-layout-template-json" }
-log4jSlf4j2Impl = { module = "org.apache.logging.log4j:log4j-slf4j2-impl" }
-
-# MockK
-# https://github.com/mockk/mockk/releases
-mockK = { module = "io.mockk:mockk", version = "1.14.5" }
+serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
+serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
+serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
