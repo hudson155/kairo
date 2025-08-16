@@ -13,7 +13,7 @@ coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 
-gcp-secretmanager = { module = "com.google.cloud:google-cloud-secretmanager" }
+gcp-secretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
 
 guava = { module = "com.google.guava:guava" }
 
@@ -21,9 +21,9 @@ hocon = { module = "com.typesafe:config", version.ref = "hocon" }
 
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
-log4j-configyaml = { module = "org.apache.logging.log4j:log4j-config-yaml" }
+log4j-configYaml = { module = "org.apache.logging.log4j:log4j-config-yaml" }
 log4j-core = { module = "org.apache.logging.log4j:log4j-core" }
-log4j-layouttemplatejson = { module = "org.apache.logging.log4j:log4j-layout-template-json" }
+log4j-layoutTemplateJson = { module = "org.apache.logging.log4j:log4j-layout-template-json" }
 log4j-slf4j = { module = "org.apache.logging.log4j:log4j-slf4j2-impl" }
 
 logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "logging" }
@@ -33,5 +33,3 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
 serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
-
-slf4j-api = { module = "org.slf4j:slf4j-api" }

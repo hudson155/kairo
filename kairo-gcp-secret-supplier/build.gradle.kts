@@ -8,6 +8,6 @@ dependencies {
   api(project(":kairo-protected-string"))
 
   implementation(libs.coroutines.guava)
-  implementation(libs.gcp.secretmanager)
+  implementation(libs.gcp.secretManager)
   implementation(libs.guava)
 }
