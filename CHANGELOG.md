@@ -56,11 +56,6 @@ in favor of external libraries that do the job far better.
 
 ### Further changes
 
-- **Integration with [Arrow](https://arrow-kt.io/)**.
-  Arrow provides many solid stdlib-esque utilities (such as non-empty lists)
-  and concurrency primitives.
-  TODO: Mention where and which we use.
-
 - **Configs now use [lightbend/config](https://github.com/lightbend/config)'s HOCON.**
   Kairo 5 had a homegrown config library built upon YAML,
   including some bespoke config inheritance functionality.
