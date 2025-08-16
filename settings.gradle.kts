@@ -1,9 +1,9 @@
 rootProject.name = "kairo"
 
 include(":bom")
+include(":bom-full")
 
 include(":kairo-config")
-include(":kairo-coroutines")
 include(":kairo-darb")
 include(":kairo-feature")
 include(":kairo-gcp-secret-supplier")

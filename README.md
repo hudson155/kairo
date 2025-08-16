@@ -50,8 +50,8 @@ dependencies {
 }
 ```
 
-However, we recommend using Kairo's BOM to keep your Kairo dependencies aligned.
-TODO: Add a link to somewhere that describes the BOM.
+However, we recommend using [Kairo's BOM](./bom)
+to keep your Kairo dependencies aligned.
 
 ```kotlin
 // build.gradle.kts
@@ -67,7 +67,7 @@ dependencies {
 Great choice! You're in for a treat.
 
 If you're building your entire application with Kairo,
-we highly recommend using Kairo's _full_ BOM,
+we highly recommend using [Kairo's _full_ BOM](./bom-full),
 which not only keeps your Kairo dependencies aligned
 but also aligns several external library versions.
 
@@ -90,7 +90,6 @@ or in any other Kotlin project.
 
 - [kairo-config](./kairo-config):
   Robust and flexible HOCON-based configuration.
-- [kairo-coroutines](./kairo-coroutines).
 - [kairo-darb](./kairo-darb):
   DARB is a human-readable boolean list encoding
   whose primary use case is to cut down on JWT token size.
