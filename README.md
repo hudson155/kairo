@@ -88,6 +88,9 @@ TODO: Link to the sample repo.
 These libraries can be used within Kairo applications
 or in any other Kotlin project.
 
+- [kairo-config](./kairo-config):
+  Robust and flexible HOCON-based configuration.
+- [kairo-coroutines](./kairo-coroutines).
 - [kairo-darb](./kairo-darb):
   DARB is a human-readable boolean list encoding
   whose primary use case is to cut down on JWT token size.
@@ -100,5 +103,4 @@ or in any other Kotlin project.
   `toString()` auto-redacts.
 - [kairo-testing](./kairo-testing):
   Kotlin-esque JUnit-style testing, with coroutine and mocking support.
-- [kairo-util](./kairo-util):
-  A home for various shared utilities.
+- [kairo-util](./kairo-util).
