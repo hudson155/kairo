@@ -19,9 +19,10 @@ kotlin {
   compilerOptions {
     allWarningsAsErrors = true
     freeCompilerArgs.add("-Xannotation-default-target=param-property")
-    freeCompilerArgs.add("-Xannotation-target-all")
     freeCompilerArgs.add("-Xconsistent-data-class-copy-visibility")
     freeCompilerArgs.add("-Xcontext-parameters")
+    freeCompilerArgs.add("-Xjsr305=strict")
+    freeCompilerArgs.add("-Xlambdas=indy")
     freeCompilerArgs.add("-Xnested-type-aliases")
     freeCompilerArgs.add("-opt-in=kotlin.concurrent.atomics.ExperimentalAtomicApi")
     freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
