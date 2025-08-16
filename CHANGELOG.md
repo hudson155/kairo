@@ -34,7 +34,6 @@ in favor of external libraries that do the job far better.
   we recommend using the full bom (`software.airborne.kairo:bom-full`),
   which not only keeps your Kairo dependencies aligned
   but also aligns several external library versions.
-  TODO: Create these & add BOM READMEs. Possibly add further docs in this repo too.
 
 - **Bias toward Kotlin libraries instead of Java ones.**
   Kairo was started in 2019.

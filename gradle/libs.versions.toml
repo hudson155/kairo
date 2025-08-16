@@ -7,9 +7,6 @@ mockk = "1.14.5" # https://github.com/mockk/mockk/releases
 
 [libraries]
 
-arrow-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
-
-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 
@@ -26,7 +23,6 @@ logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "loggin
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
-serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
 serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 
 slf4j-api = { module = "org.slf4j:slf4j-api" }
