@@ -4,8 +4,6 @@ plugins {
 }
 
 dependencies {
-  api(platform(project(":bom")))
-
   implementation(project(":kairo-logging"))
   api(project(":kairo-protected-string"))
 

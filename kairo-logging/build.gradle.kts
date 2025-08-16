@@ -4,8 +4,6 @@ plugins {
 }
 
 dependencies {
-  api(platform(project(":bom")))
-
   api(libs.kotlinLoggingJvm)
   implementation(libs.log4jConfigYaml)
   implementation(libs.log4jCore)

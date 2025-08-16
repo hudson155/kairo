@@ -28,6 +28,7 @@ kotlin {
 }
 
 dependencies {
+  api(platform(project(":bom")))
   detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${detekt.toolVersion}")
 }
 

@@ -4,8 +4,6 @@ plugins {
 }
 
 dependencies {
-  api(platform(project(":bom")))
-
   implementation(project(":kairo-logging"))
 
   testImplementation(project(":kairo-logging:testing"))

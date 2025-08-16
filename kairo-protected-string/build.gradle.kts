@@ -5,8 +5,6 @@ plugins {
 }
 
 dependencies {
-  api(platform(project(":bom")))
-
   implementation(libs.kotlinxSerializationCore)
 
   testImplementation(project(":kairo-testing"))
