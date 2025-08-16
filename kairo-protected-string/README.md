@@ -1,7 +1,5 @@
 # Protected Strings
 
-## Overview
-
 Protected strings are designed to represent string values
 that should not be logged or otherwise exposed, such as API keys.
 
