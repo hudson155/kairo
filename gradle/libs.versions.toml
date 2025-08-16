@@ -31,5 +31,5 @@ logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "loggin
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
+serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }

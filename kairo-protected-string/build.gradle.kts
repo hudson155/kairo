@@ -9,5 +9,5 @@ dependencies {
 
   testImplementation(project(":kairo-testing"))
 
-  implementation(libs.serialization.json)
+  testImplementation(libs.serialization.json)
 }
