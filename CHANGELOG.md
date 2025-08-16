@@ -18,7 +18,7 @@ and every library can now truly claim to be independent and extensible.
 
 Several libraries have been simplified
 and many others have been eliminated entirely,
-in favor of external libraries that did the job far better.
+in favor of external libraries that do the job far better.
 
 ### Kairo 6.0 highlights
 
@@ -36,7 +36,7 @@ in favor of external libraries that did the job far better.
   but also aligns several external library versions.
   TODO: Create these & add BOM READMEs. Possibly add further docs in this repo too.
 
-- **Bias towards Kotlin libraries instead of Java ones.**
+- **Bias toward Kotlin libraries instead of Java ones.**
   Kairo was started in 2019.
   At that time, Java was still the dominant language in the JVM ecosystem.
   Kotlin libraries for everything from primitives like dates/times and UUIDs
@@ -50,7 +50,7 @@ in favor of external libraries that did the job far better.
   TODO: Offer examples? UUIDs, dates/times, Koin, etc.
 
 - **Serialization now uses `kotlinx.serialization` instead of Jackson.**
-  Although Jackson is very comprehensive, production-ready serialization library,
+  Although Jackson is a very comprehensive, production-ready serialization library,
   it's rather old and has a lot of baggage from earlier JVM days.
   Kotlin's own `kotlinx.serialization` is much more modern and has far fewer "gotchas".
   We think you'll find using it a pleasure.
