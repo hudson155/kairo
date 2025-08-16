@@ -87,7 +87,7 @@ in favor of external libraries that do the job far better.
 
 - **GCP secrets are now fetched on coroutines.**
   GCP Secret Manager has notoriously poor read performance,
-  so secrets are now pulled on coroutines instead of on threads.
+  so secrets are now pulled on coroutines instead of blocking threads.
   Since Features also start concurrently now,
   secrets will also be fetched in parallel.
   This should help significantly improve server startup time.
