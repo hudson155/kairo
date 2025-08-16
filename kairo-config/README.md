@@ -7,13 +7,10 @@ is a robust and flexible configuration library.
 
 ```hocon
 include "common.conf" # Include another config file.
-
 app {
   port = 8080
 }
-
 sentryDsn = ${?SENTRY_DSN} # Optional environment variable.
-
 databasePassword = ${DATABASE_PASSWORD} # Required environment variable.
 ```
 

@@ -14,6 +14,7 @@ There are already great HTTP compression libraries for that._
 
 ```kotlin
 val darb = "23.2CB08E"
+
 val booleanList = listOf(
   false, false, true, false,
   true, true, false, false,
@@ -69,7 +70,6 @@ DarbEncoder.encode(
     true, true, true,
   ),
 )
-
 // => 23.2CB08E
 ```
 
@@ -77,7 +77,6 @@ To decode a DARB string, use `DarbDecoder.decode()`.
 
 ```kotlin
 DarbDecoder.decode("23.2CB08E")
-
 // => listOf(false, false, true, false, ...)
 ```
 
