@@ -8,6 +8,5 @@ dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
 
-  testImplementation(project(":kairo-logging:testing"))
   testImplementation(project(":kairo-testing"))
 }

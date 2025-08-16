@@ -23,6 +23,5 @@ dependencies {
   testImplementation(project(":kairo-command-runner:testing"))
   testImplementation(project(":kairo-environment-variable-supplier:testing"))
   testImplementation(project(":kairo-gcp-secret-supplier:testing"))
-  testImplementation(project(":kairo-logging:testing"))
   testImplementation(project(":kairo-testing"))
 }
