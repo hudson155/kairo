@@ -1,13 +1,13 @@
-# Kairo BOM
+# Kairo Regular BOM
 
 Kairo has 2 BOMs (Bill of Materials).
 
 **This (`software.airborne.kairo:bom`) is the regular BOM**,
-intended for when you're using one (or just a few) Kairo libraries.
+intended for when you're **using one (or just a few) Kairo libraries**.
 It will keep your Kairo dependencies aligned.
 
-If you're building a Kairo application,
-you should use [the full BOM](../bom-full) instead.
+_If you're building a Kairo application,
+you should use [the full BOM](../bom-full) instead._
 
 See [the getting started section](..) for how to use this BOM.
 
