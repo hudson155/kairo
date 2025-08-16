@@ -11,7 +11,6 @@ kotlin {
 }
 
 dependencies {
-  implementation(project(":kairo-environment-variable-supplier"))
   implementation(project(":kairo-gcp-secret-supplier"))
   implementation(project(":kairo-logging"))
   implementation(project(":kairo-util"))
@@ -19,7 +18,6 @@ dependencies {
   implementation(libs.hocon)
   implementation(libs.serialization.hocon)
 
-  testImplementation(project(":kairo-environment-variable-supplier:testing"))
   testImplementation(project(":kairo-gcp-secret-supplier:testing"))
   testImplementation(project(":kairo-testing"))
 }

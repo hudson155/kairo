@@ -47,7 +47,6 @@ public class ConfigManager(sources: List<ConfigPropertySource<*>> = defaultSourc
   public companion object {
     private val defaultSources: List<ConfigPropertySource<*>> =
       listOf(
-        EnvironmentVariableConfigPropertySource(),
         GcpSecretConfigPropertySource(),
         PlaintextConfigPropertySource(),
       )
