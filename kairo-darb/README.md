@@ -1,3 +1,5 @@
+# DARB
+
 ## Overview
 
 DARB stands for "dense-ish albeit readable binary".
