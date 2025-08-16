@@ -35,6 +35,8 @@ repositories {
 
 ### Using a single library
 
+Kairo's [standalone libraries](#standalone-libraries) can be used independently within your existing project.
+
 To use a single Kairo library, you could just add it to your `dependencies` block as you normally would.
 
 ```kotlin
@@ -59,6 +61,8 @@ dependencies {
 
 ### Building a Kairo application
 
+Great choice! You're in for a treat.
+
 If you're building your entire application with Kairo,
 we highly recommend using Kairo's _full_ BOM,
 which not only keeps your Kairo dependencies aligned
@@ -81,19 +85,19 @@ TODO: Link to the sample repo.
 These libraries can be used within Kairo applications
 or in any other Kotlin project.
 
-- [DARB](./DARB):
+- [kairo-darb](./kairo-darb):
   DARB is a human-readable boolean list encoding
   whose primary use case is to cut down on JWT token size.
-- [GCP secret supplier](./GCP-secret-supplier):
+- [kairo-gcp-secret-supplier](./kairo-gcp-secret-supplier):
   Access GCP secrets from your Kotlin code (using coroutines).
-- [Logging](./Logging):
+- [kairo-logging](./kairo-logging):
   Kotlin-idiomatic logging using [Ohad Shai's Kotlin logging interface](https://github.com/oshai/kotlin-logging).
-- [Protected strings](./Protected-strings):
+- [kairo-protected-string](./kairo-protected-string):
   Handle strings that shouldn't be logged or carelessly exposed.
   `toString()` auto-redacts.
-- [Testing](./Testing):
+- [kairo-testing](./kairo-testing):
   Kotlin-esque JUnit-style testing, with coroutine and mocking support.
-- [Util](./Util):
+- [kairo-util](./kairo-util):
   A home for various shared utilities.
 
 ## Releases
