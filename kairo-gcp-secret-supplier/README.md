@@ -1,7 +1,5 @@
 # GCP Secret Supplier
 
-## Overview
-
 This library provides access to
 [Google Cloud Platform (GCP) secrets](https://cloud.google.com/security/products/secret-manager).
 It's a thin wrapper around Google's own Java SDK,

@@ -1,3 +1,54 @@
 # Kairo Utilities
 
-TODO: README coming soon...
+This is a home for various simple utilities.
+Utilities modules like this can easily become junk drawers;
+we make an effort to keep this module small and focused.
+
+## Installation
+
+Get started by installing `kairo-util`.
+
+```kotlin
+// build.gradle.kts
+
+dependencies {
+  implementation("software.airborne.kairo:kairo-util:6.0.0")
+}
+```
+
+## Usage
+
+### `inferKClass()` / `inferKType()`
+
+Allows you to access the concrete `KClass<T>` or `KType` of a generic type parameter at runtime.
+Preserves full generic info (`List<String>`, not just `List<*>`).
+
+```kotlin
+abstract class MyClass<T : Any> {
+  val kClass: KClass<T> = inferClass(MyClass::class, 0, this::class)
+  val type: KType = inferType(MyClass::class, 0, this::class)
+}
+```
+
+### `singleNullOrThrow()`
+
+Kotlin's `single()` and `singleOrNull()` functions are excellent utilities,
+but `singleOrNull()` can be surprising because it returns `null` when there are multiple items.
+
+`singleNullOrThrow()` returns the single element, or null if the collection is empty.
+If the collection has more than one element, throws `IllegalArgumentException`.
+
+This works with `Array`, `Iterable`, and `Sequence` receivers.
+Feel free to [open an issue](https://github.com/hudson155/kairo/issues/new)
+if you need other receiver types.
+
+```kotlin
+emptyList<Int>().singleNullOrThrow()
+// => null
+
+listOf(1).singleNullOrThrow()
+// => 1
+
+listOf(1, 2).singleNullOrThrow()
+// => IllegalArgumentException
+```

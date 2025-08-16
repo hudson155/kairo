@@ -1,7 +1,5 @@
 # DARB
 
-## Overview
-
 DARB stands for "dense-ish albeit readable binary".
 It's a medium-density way to encode boolean lists
 while maintaining human-readability.
