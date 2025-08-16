@@ -2,8 +2,11 @@
 
 This is a simple passthrough library that provides access to:
 
-- `org.jetbrains.kotlinx:kotlinx-coroutines-core`
-- `io.arrow-kt:arrow-fx-coroutines`
+- Kotlin's standard coroutines library
+  (`org.jetbrains.kotlinx:kotlinx-coroutines-core`)
+
+- [Arrow Coroutines](https://arrow-kt.io/learn/coroutines/)
+  (`io.arrow-kt:arrow-fx-coroutines`)
 
 ## Installation
 
