@@ -7,13 +7,13 @@ plugins {
 
 java {
   toolchain {
-    languageVersion = kairoJavaVersion
+    languageVersion = javaVersion
   }
 }
 
 kotlin {
   jvmToolchain {
-    languageVersion = kairoJavaVersion
+    languageVersion = javaVersion
   }
   explicitApi()
   compilerOptions {

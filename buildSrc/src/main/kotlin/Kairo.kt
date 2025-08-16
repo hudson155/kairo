@@ -4,7 +4,7 @@ import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 
-internal val kairoJavaVersion: JavaLanguageVersion = JavaLanguageVersion.of(21)
+internal val javaVersion: JavaLanguageVersion = JavaLanguageVersion.of(21)
 
 internal fun RepositoryHandler.artifactRegistry() {
   maven {
