@@ -2,8 +2,6 @@ rootProject.name = "kairo"
 
 include(":bom")
 
-include(":kairo-command-runner")
-include(":kairo-command-runner:testing")
 include(":kairo-config")
 include(":kairo-coroutines")
 include(":kairo-darb")
