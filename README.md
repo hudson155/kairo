@@ -17,7 +17,8 @@ TODO: Link to the sample repo.
 _This section assumes you're using Gradle._
 
 Kairo is hosted on Google Artifact Registry,
-so you'll first need to add the Google Artifact Registry plugin and connect to Airborne Software repository.
+so you'll first need to add the Google Artifact Registry plugin
+and connect to Airborne Software repository.
 
 ```kotlin
 // build.gradle.kts
@@ -33,11 +34,13 @@ repositories {
 }
 ```
 
-### Using a single library
+### Using one (or just a few) Kairo libraries
 
-Kairo's [standalone libraries](#standalone-libraries) can be used independently within your existing project.
+Kairo's [standalone libraries](#standalone-libraries)
+can be used independently within your existing project.
 
-To use a single Kairo library, you could just add it to your `dependencies` block as you normally would.
+To use a single Kairo library,
+you could just add it to your `dependencies` block as you normally would.
 
 ```kotlin
 // build.gradle.kts
@@ -99,10 +102,3 @@ or in any other Kotlin project.
   Kotlin-esque JUnit-style testing, with coroutine and mocking support.
 - [kairo-util](./kairo-util):
   A home for various shared utilities.
-
-## Releases
-
-_Only non-bugfix release versions since Kairo 6.0 are included here._
-
-- [Kairo 6.0](./Release-6.0):
-  TODO: Add release date and notes/description.
