@@ -6,9 +6,6 @@ import arrow.fx.coroutines.resourceScope
 import kairo.server.Server
 import kotlinx.coroutines.awaitCancellation
 
-/**
- * An optional way to run your [Server] instance.
- */
 public class Kairo internal constructor(
   resourceScope: ResourceScope,
 ) : ResourceScope by resourceScope {
@@ -31,6 +28,9 @@ public class Kairo internal constructor(
   }
 }
 
+/**
+ * An optional way to run your [Server] instance.
+ */
 public fun kairo(block: suspend Kairo.() -> Unit) {
   SuspendApp {
     resourceScope {
