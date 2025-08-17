@@ -1,4 +1,4 @@
-package kairo.server.runner
+package kairo.application
 
 import arrow.continuations.SuspendApp
 import arrow.fx.coroutines.ResourceScope
