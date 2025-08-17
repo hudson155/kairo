@@ -3,6 +3,7 @@ rootProject.name = "kairo"
 include(":bom")
 include(":bom-full")
 
+include(":kairo-application")
 include(":kairo-config")
 include(":kairo-darb")
 include(":kairo-feature")

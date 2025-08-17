@@ -25,7 +25,7 @@ Other than the rules defined here, please follow the
 
 - **Plurality:**
   For naming, singular forms should be preferred over plural forms where possible.
-  This includes for folder, package, and feature names.
+  This includes for folder, package, and Feature names.
   REST paths should be plural, due to convention.
 
 - **Abbreviations:**

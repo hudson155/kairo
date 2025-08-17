@@ -3,9 +3,7 @@ package kairo.server
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.feature.Feature
-import kairo.feature.LifecycleEvent
 import kotlin.time.measureTime
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.joinAll
@@ -17,7 +15,8 @@ import kotlinx.coroutines.sync.withLock
 private val logger: KLogger = KotlinLogging.logger {}
 
 /**
- * A Kairo Server combines [Feature]s with arbitrary functionality, running them all together.
+ * A Kairo Server combines [Feature]s with arbitrary functionality,
+ * running them all together.
  */
 public class Server(
   private val name: String,
@@ -25,10 +24,15 @@ public class Server(
 ) {
   private val lock: Mutex = Mutex()
 
-  @Volatile
+  @Volatile // Allows reads without taking the lock.
   public var state: ServerState = ServerState.Default
     private set
 
+  /**
+   * Attempts to start the Server.
+   * If this method returns, the Server started successfully.
+   * If this method throws, the Server failed to start.
+   */
   public suspend fun start() {
     logger.info { "Starting Server (server=$this)." }
     val time = measureTime {
@@ -39,6 +43,7 @@ public class Server(
           onStart()
           state = ServerState.Running
         } catch (startException: Throwable) {
+          // Attempt to stop Features.
           logger.warn(startException) { "Server failed to start (server=$this)." }
           try {
             onStop()
@@ -54,6 +59,10 @@ public class Server(
     logger.info { "Server started (server=$this, time=$time)." }
   }
 
+  /**
+   * Stops the Server.
+   * This method never throws.
+   */
   public suspend fun stop() {
     logger.info { "Stopping Server (server=$this)." }
     val time = measureTime {
@@ -74,8 +83,8 @@ public class Server(
   }
 
   /**
-   * Distributes [LifecycleEvent.Start] to all Features.
-   * This happens concurrently, within a [CoroutineScope].
+   * Starts all Features IN PARALLEL.
+   * If any Feature fails to start, all [Feature.start] calls are canceled and this method throws.
    */
   private suspend fun onStart() {
     coroutineScope {
@@ -84,7 +93,7 @@ public class Server(
           logger.info { "Starting Feature (server=${this@Server}, feature=$feature)." }
           val time = measureTime {
             try {
-              feature.on(LifecycleEvent.Start)
+              feature.start(features)
             } catch (e: Throwable) {
               logger.warn(e) { "Feature failed to start (server=${this@Server}, feature=$feature)." }
               throw e
@@ -98,8 +107,8 @@ public class Server(
   }
 
   /**
-   * Distributes [LifecycleEvent.Stop] to all Features.
-   * This happens concurrently, within a [CoroutineScope].
+   * Stops all Features IN PARALLEL.
+   * If any Feature fails to stop, remaining [Feature.stop] calls are allowed to complete. This method does not throw.
    */
   private suspend fun onStop() {
     supervisorScope {
@@ -108,7 +117,7 @@ public class Server(
           logger.info { "Stopping Feature (server=${this@Server}, feature=$feature)." }
           val time = measureTime {
             try {
-              feature.on(LifecycleEvent.Stop)
+              feature.stop()
             } catch (e: Throwable) {
               logger.error(e) { "Feature failed to stop (server=${this@Server}, feature=$feature)." }
             }

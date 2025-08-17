@@ -7,7 +7,9 @@ mockk = "1.14.5" # https://github.com/mockk/mockk/releases
 
 [libraries]
 
+arrow-core = { module = "io.arrow-kt:arrow-core" }
 arrow-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
+arrow-suspend = { module = "io.arrow-kt:suspendapp" }
 
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava" }

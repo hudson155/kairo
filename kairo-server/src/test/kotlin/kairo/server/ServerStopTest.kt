@@ -5,7 +5,6 @@ import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import kairo.feature.Feature
-import kairo.feature.LifecycleEvent
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
@@ -47,36 +46,32 @@ internal class ServerStopTest {
       val features = listOf(
         object : Feature() {
           override val name: String = "Test (0)"
-          override suspend fun on(event: LifecycleEvent) {
-            when (event) {
-              LifecycleEvent.Start -> {
-                events.update { it + "start Test (0)" }
-              }
-              LifecycleEvent.Stop -> {
-                events.update { it + "stop Test (0)" }
-                try {
-                  @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
-                  throw RuntimeException("Exception from Test (1)")
-                } finally {
-                  signal.complete(Unit)
-                }
-              }
+
+          override suspend fun start(features: List<Feature>) {
+            events.update { it + "start Test (0)" }
+          }
+
+          override suspend fun stop() {
+            events.update { it + "stop Test (0)" }
+            try {
+              @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
+              throw RuntimeException("Exception from Test (1)")
+            } finally {
+              signal.complete(Unit)
             }
           }
         },
         object : Feature() {
           override val name: String = "Test (1)"
-          override suspend fun on(event: LifecycleEvent) {
-            when (event) {
-              LifecycleEvent.Start -> {
-                events.update { it + "start Test (1)" }
-              }
-              LifecycleEvent.Stop -> {
-                signal.await()
-                delay(1.seconds)
-                events.update { it + "stop Test (1)" }
-              }
-            }
+
+          override suspend fun start(features: List<Feature>) {
+            events.update { it + "start Test (1)" }
+          }
+
+          override suspend fun stop() {
+            signal.await()
+            delay(1.seconds)
+            events.update { it + "stop Test (1)" }
           }
         },
       )
@@ -111,32 +106,28 @@ internal class ServerStopTest {
       val features = listOf(
         object : Feature() {
           override val name: String = "Test (0)"
-          override suspend fun on(event: LifecycleEvent) {
-            when (event) {
-              LifecycleEvent.Start -> {
-                events.update { it + "start Test (0)" }
-              }
-              LifecycleEvent.Stop -> {
-                events.update { it + "stop Test (0)" }
-                signal.complete(Unit)
-              }
-            }
+
+          override suspend fun start(features: List<Feature>) {
+            events.update { it + "start Test (0)" }
+          }
+
+          override suspend fun stop() {
+            events.update { it + "stop Test (0)" }
+            signal.complete(Unit)
           }
         },
         object : Feature() {
           override val name: String = "Test (1)"
-          override suspend fun on(event: LifecycleEvent) {
-            when (event) {
-              LifecycleEvent.Start -> {
-                events.update { it + "start Test (1)" }
-              }
-              LifecycleEvent.Stop -> {
-                signal.await()
-                events.update { it + "stop Test (1)" }
-                @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
-                throw RuntimeException("Exception from Test (1)")
-              }
-            }
+
+          override suspend fun start(features: List<Feature>) {
+            events.update { it + "start Test (1)" }
+          }
+
+          override suspend fun stop() {
+            signal.await()
+            events.update { it + "stop Test (1)" }
+            @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
+            throw RuntimeException("Exception from Test (1)")
           }
         },
       )
