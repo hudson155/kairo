@@ -2,11 +2,12 @@ package kairo.healthCheck.feature
 
 import io.ktor.resources.Resource
 
+// TODO: Add tests for this resource.
 @Resource("/health")
-internal data object HealthResource {
+public data object HealthResource {
   @Resource("liveness")
-  internal data class Liveness(val parent: HealthResource = HealthResource)
+  public data class Liveness(val parent: HealthResource = HealthResource)
 
   @Resource("readiness")
-  internal data class Readiness(val parent: HealthResource = HealthResource)
+  public data class Readiness(val parent: HealthResource = HealthResource)
 }
