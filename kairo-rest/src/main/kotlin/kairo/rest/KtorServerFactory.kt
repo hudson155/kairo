@@ -15,6 +15,7 @@ import kairo.feature.Feature
 
 private val logger: KLogger = KotlinLogging.logger {}
 
+// TODO: This is not too configurable, and it should be.
 internal object KtorServerFactory {
   fun create(
     config: RestFeatureConfig,
@@ -24,6 +25,7 @@ internal object KtorServerFactory {
       factory = Netty,
       environment = applicationEnvironment(),
       configure = {
+        // TODO: Configure this.
         connector {
           host = config.connector.host
           port = config.connector.port
@@ -32,9 +34,8 @@ internal object KtorServerFactory {
         shutdownTimeout = config.lifecycle.shutdownTimeout.inWholeMilliseconds
       },
       module = {
-        install(CallLogging) {
-
-        }
+        // TODO: Configure this.
+        install(CallLogging)
         install(ContentNegotiation) {
           json()
         }
