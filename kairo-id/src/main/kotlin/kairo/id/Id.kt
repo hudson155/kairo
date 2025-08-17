@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * Think of a Kairo ID as an alternative to a UUID or serial ID, but with a few fun perks.
  *
  * An example Kairo ID is "user_ccU4Rn4DKVjCMqt3d0oAw3".
- * The "semantic" part means that a human can easily understand this is a user's ID
+ * The "semantic" part means that a human can easily understand this is a user ID
  * rather than the ID for a different entity.
  * This is mostly useful for developers, but it can also make URL slugs look nicer for users.
  *
@@ -18,6 +18,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 @JvmInline
 public value class Id private constructor(
+  /**
+   * Use [toString] to access this.
+   */
   internal val string: String,
 ) {
   init {

@@ -4,7 +4,7 @@ Kairo has a class you can optionally use to represent _semantic identifiers_ for
 Think of a Kairo ID as an alternative to a `UUID` or serial ID, but with a few fun perks.
 
 An example Kairo ID is `user_ccU4Rn4DKVjCMqt3d0oAw3`.
-The "semantic" part means that a human can easily understand this is a user's ID
+The "semantic" part means that a human can easily understand this is a _user_ ID
 rather than the ID for a different entity.
 This is mostly useful for developers, but it can also make URL slugs look nicer for users.
 
