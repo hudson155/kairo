@@ -8,6 +8,7 @@ import io.ktor.server.engine.applicationEnvironment
 import io.ktor.server.engine.connector
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.routing.routing
 import kairo.feature.Feature
@@ -31,6 +32,9 @@ internal object KtorServerFactory {
         shutdownTimeout = config.lifecycle.shutdownTimeout.inWholeMilliseconds
       },
       module = {
+        install(CallLogging) {
+
+        }
         install(ContentNegotiation) {
           json()
         }
