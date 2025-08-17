@@ -5,4 +5,5 @@ plugins {
 
 dependencies {
   api(libs.hocon)
+  api(libs.serialization.hocon)
 }

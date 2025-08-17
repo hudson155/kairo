@@ -10,7 +10,7 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.server.routing.routing
+import io.ktor.server.resources.Resources
 import kairo.feature.Feature
 
 private val logger: KLogger = KotlinLogging.logger {}
@@ -39,12 +39,11 @@ internal object KtorServerFactory {
         install(ContentNegotiation) {
           json()
         }
-        routing {
-          features.forEach { feature ->
-            if (feature !is RestFeature.HasRouting) return@forEach
-            logger.info { "Registering routes (featureName=${feature.name})." }
-            with(feature) { routing() }
-          }
+        install(Resources)
+        features.forEach { feature ->
+          if (feature !is RestFeature.HasRouting) return@forEach
+          logger.info { "Registering routes (featureName=${feature.name})." }
+          with(feature) { routing() }
         }
       },
     )
