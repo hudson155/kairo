@@ -7,9 +7,9 @@ dependencies {
   implementation(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
 
-  implementation(libs.ktorserialization.json)
-  implementation(libs.ktorserver.calllogging)
-  implementation(libs.ktorserver.contentnegotiation)
-  api(libs.ktorserver.core)
-  implementation(libs.ktorserver.netty)
+  implementation(libs.ktorSerialization.json)
+  implementation(libs.ktorServer.callLogging)
+  implementation(libs.ktorServer.contentNegotiation)
+  api(libs.ktorServer.core)
+  implementation(libs.ktorServer.netty)
 }
