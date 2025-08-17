@@ -4,12 +4,13 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-feature"))
+  api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
 
+  api(libs.ktorHttp)
   implementation(libs.ktorSerialization.json)
   implementation(libs.ktorServer.callLogging)
   implementation(libs.ktorServer.contentNegotiation)
-  api(libs.ktorServer.core)
+  implementation(libs.ktorServer.core)
   implementation(libs.ktorServer.netty)
 }
