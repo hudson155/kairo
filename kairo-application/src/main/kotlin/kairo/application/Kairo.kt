@@ -8,12 +8,19 @@ import kotlinx.coroutines.awaitCancellation
 
 /**
  * An optional way to run your [Server] instance.
- * Automatically starts and waits for JVM termination.
  */
 public class Kairo internal constructor(
   resourceScope: ResourceScope,
 ) : ResourceScope by resourceScope {
+  /**
+   * Starts the Server and waits for JVM termination.
+   */
   public suspend fun Server.startAndWait(
+    /**
+     * Called when the JVM terminates.
+     * Should call [Server.stop].
+     * Can do other things too.
+     */
     release: suspend () -> Unit,
   ) {
     install(
