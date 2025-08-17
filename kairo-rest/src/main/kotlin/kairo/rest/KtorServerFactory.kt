@@ -35,12 +35,11 @@ internal object KtorServerFactory {
           json()
         }
         routing {
-          features
-            .filterIsInstance<RestFeature.HasRouting>()
-            .forEach { feature ->
-              logger.info { "" }
-              with(feature) { routing() }
-            }
+          features.forEach { feature ->
+            if (feature !is RestFeature.HasRouting) return@forEach
+            logger.info { "Registering routes (featureName=${feature.name})." }
+            with(feature) { routing() }
+          }
         }
       },
     )

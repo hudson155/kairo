@@ -17,7 +17,7 @@ public data class RestFeatureConfig(
 
   @Serializable
   public data class Lifecycle(
-    val shutdownGracePeriod: Duration = 15.seconds,
-    val shutdownTimeout: Duration = 25.seconds,
+    val shutdownGracePeriod: Duration = Duration.ZERO,
+    val shutdownTimeout: Duration = 20.seconds,
   )
 }
