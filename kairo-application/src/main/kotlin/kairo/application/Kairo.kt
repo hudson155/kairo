@@ -7,8 +7,8 @@ import kairo.server.Server
 import kotlinx.coroutines.awaitCancellation
 
 public class Kairo internal constructor(
-  resourceScope: ResourceScope,
-) : ResourceScope by resourceScope {
+  private val resourceScope: ResourceScope,
+) {
   /**
    * Starts the Server and waits for JVM termination.
    */
@@ -20,7 +20,7 @@ public class Kairo internal constructor(
      */
     release: suspend () -> Unit,
   ) {
-    install(
+    resourceScope.install(
       acquire = { start() },
       release = { _, _ -> release() },
     )
