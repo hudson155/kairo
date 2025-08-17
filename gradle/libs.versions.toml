@@ -23,6 +23,15 @@ hocon = { module = "com.typesafe:config", version.ref = "hocon" }
 
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
+ktorHttp = { module = "io.ktor:ktor-http" }
+
+ktorSerialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
+
+ktorServer-callLogging = { module = "io.ktor:ktor-server-call-logging" }
+ktorServer-contentNegotiation = { module = "io.ktor:ktor-server-content-negotiation" }
+ktorServer-core = { module = "io.ktor:ktor-server-core" }
+ktorServer-netty = { module = "io.ktor:ktor-server-netty" }
+
 logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "logging" }
 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }

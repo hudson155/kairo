@@ -651,6 +651,7 @@ style:
       - 'java.beans.*'
       - 'java.io.ObjectInputFilter.Config'
       - 'java.nio.channels.*'
+      - 'java.time.*'
       - 'java.util.Base64.*'
       - 'java.util.UUID'
       - 'java.util.concurrent.CancellationException'

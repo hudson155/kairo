@@ -17,6 +17,7 @@ See [the getting started section](..) for how to use this BOM.
 The following external libraries are included in this BOM:
 
 - `io.arrow-kt:arrow-stack`
+- `io.ktor:ktor-bom`
 - `com.google.cloud:libraries-bom`
 - `com.google.guava:guava-bom`
 - `org.apache.logging.log4j:log4j-bom`
@@ -48,11 +49,12 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-core")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
+  implementation("software.airborne.kairo:kairo-application")
   implementation("software.airborne.kairo:kairo-config")
   implementation("software.airborne.kairo:kairo-darb")
   implementation("software.airborne.kairo:kairo-gcp-secret-supplier")
   implementation("software.airborne.kairo:kairo-logging")
-  implementation("software.airborne.kairo:kairo-server")
+  implementation("software.airborne.kairo:kairo-rest")
   implementation("software.airborne.kairo:kairo-util")
   runtimeOnly("org.apache.logging.log4j:log4j-core")
   runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")

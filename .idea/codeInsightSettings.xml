@@ -12,6 +12,7 @@
       <name>java.beans.*</name>
       <name>java.io.ObjectInputFilter.Config</name>
       <name>java.nio.channels.*</name>
+      <name>java.time.*</name>
       <name>java.util.Base64.*</name>
       <name>java.util.UUID</name>
       <name>java.util.concurrent.CancellationException</name>
