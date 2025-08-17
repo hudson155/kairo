@@ -102,4 +102,5 @@ or in any other Kotlin project.
   `toString()` auto-redacts.
 - [kairo-testing](./kairo-testing):
   Kotlin-esque JUnit-style testing, with coroutine and mocking support.
-- [kairo-util](./kairo-util).
+- [kairo-util](./kairo-util):
+  A home for various simple utilities.
