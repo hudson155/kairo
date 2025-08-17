@@ -24,7 +24,7 @@ public class Server(
 ) {
   private val lock: Mutex = Mutex()
 
-  @Volatile
+  @Volatile // Allows reads without taking the lock.
   public var state: ServerState = ServerState.Default
     private set
 
@@ -43,6 +43,7 @@ public class Server(
           onStart()
           state = ServerState.Running
         } catch (startException: Throwable) {
+          // Attempt to stop Features.
           logger.warn(startException) { "Server failed to start (server=$this)." }
           try {
             onStop()
