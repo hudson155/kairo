@@ -5,6 +5,9 @@ import io.ktor.server.netty.NettyApplicationEngine
 import io.ktor.server.routing.Routing
 import kairo.feature.Feature
 
+/**
+ * The REST Feature runs a Ktor server for the lifecycle of a Kairo application.
+ */
 public class RestFeature(
   private val config: RestFeatureConfig,
 ) : Feature() {
@@ -25,6 +28,9 @@ public class RestFeature(
     }
   }
 
+  /**
+   * Use this interface on any Features that wish to bind routes to the Ktor server.
+   */
   public interface HasRouting {
     public fun Routing.routing()
   }
