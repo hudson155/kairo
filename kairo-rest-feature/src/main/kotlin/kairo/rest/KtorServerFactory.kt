@@ -1,4 +1,4 @@
-package kairo.rest.feature
+package kairo.rest
 
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging

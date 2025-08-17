@@ -1,4 +1,4 @@
-package kairo.rest.feature
+package kairo.rest
 
 import io.ktor.server.engine.EmbeddedServer
 import io.ktor.server.netty.NettyApplicationEngine

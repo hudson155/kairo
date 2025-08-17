@@ -1,4 +1,4 @@
-package kairo.rest.feature
+package kairo.rest
 
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
