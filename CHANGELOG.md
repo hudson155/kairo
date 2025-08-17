@@ -90,7 +90,7 @@ in favor of external libraries that do the job far better.
   so secrets are now pulled on coroutines instead of blocking threads.
   Since Features also start concurrently now,
   secrets will also be fetched in parallel.
-  This should help significantly improve server startup time.
+  This should help significantly improve application startup time.
 
 - **New recommendations to configure log levels for some Kairo libraries.**
   Some Kairo libraries can have rather noisy logs.

@@ -1,7 +1,7 @@
 package kairo.feature
 
 /**
- * Features are the core building block of a Kairo Server.
+ * Features are the core building block of Kairo Servers.
  * A Feature defines an encapsulated set of functionality,
  * such as support for a specific database or managed service,
  * or a domain-specific set of functionality.
