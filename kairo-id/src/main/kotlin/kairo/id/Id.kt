@@ -3,14 +3,17 @@ package kairo.id
 import kotlinx.serialization.Serializable
 
 /**
- * Kairo IDs are an optional way to uniquely identify entities.
- * Think of them as an alternative to UUIDs or serial IDs.
- * Kairo IDs consist of a "prefix" portion and a "value" portion.
- * The "prefix" portion is context-specific,
- * and the "value" portion is a base-62 string.
+ * Kairo has a class you can optionally use to represent semantic identifiers for different entities.
+ * Think of a Kairo ID as an alternative to a UUID or serial ID, but with a few fun perks.
  *
- * An example Kairo ID is "user_2eDS1sMt".
- * Notice that a human can immediately understand that this is a
+ * An example Kairo ID is "user_ccU4Rn4DKVjCMqt3d0oAw3".
+ * The "semantic" part means that a human can easily understand this is a user's ID
+ * rather than the ID for a different entity.
+ * This is mostly useful for developers, but it can also make URL slugs look nicer for users.
+ *
+ * Kairo IDs consist of a "prefix" portion and a "value" portion.
+ * In the example above, "user_ccU4Rn4DKVjCMqt3d0oAw3" has a prefix of "user"
+ * and a value of `ccU4Rn4DKVjCMqt3d0oAw3`.
  */
 @Serializable
 @JvmInline
