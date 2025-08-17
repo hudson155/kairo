@@ -7,7 +7,6 @@ mockk = "1.14.5" # https://github.com/mockk/mockk/releases
 
 [libraries]
 
-arrow-core = { module = "io.arrow-kt:arrow-core" }
 arrow-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
 arrow-suspend = { module = "io.arrow-kt:suspendapp" }
 
@@ -23,20 +22,20 @@ hocon = { module = "com.typesafe:config", version.ref = "hocon" }
 
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
-ktorHttp = { module = "io.ktor:ktor-http" }
-
 ktorSerialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 
 ktorServer-callLogging = { module = "io.ktor:ktor-server-call-logging" }
 ktorServer-contentNegotiation = { module = "io.ktor:ktor-server-content-negotiation" }
 ktorServer-core = { module = "io.ktor:ktor-server-core" }
 ktorServer-netty = { module = "io.ktor:ktor-server-netty" }
+ktorServer-resources = { module = "io.ktor:ktor-server-resources" }
 
 logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "logging" }
 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
+serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
 serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 
 slf4j-api = { module = "org.slf4j:slf4j-api" }

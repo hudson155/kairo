@@ -66,6 +66,12 @@ in favor of external libraries that do the job far better.
   For apps previously running on Google App Engine,
   consider using Google Cloud Run instead.
 
+- **Switch from CIO to Netty.**
+  Netty's performance far exceeds CIOs in most situations,
+  including with coroutines.
+  Netty is also a far more popular library than CIO.
+  _This change was actually made back in Kairo 5.0._
+
 - **Downgrade from Log4j 3 to Log4j 2.**
   Log4j 3 is in beta, and is not widely used.
 
@@ -101,6 +107,8 @@ in favor of external libraries that do the job far better.
 - Removal of `kairoEquals`, `kairoHashCode` and `kairoToString`.
 
 - Upgrade from Kotest 5 to Kotest 6.
+
+- Simplified local log format (does not affect GCP logs).
 
 - Minor changes to `toString()` result of `ProtectedString`.
 
