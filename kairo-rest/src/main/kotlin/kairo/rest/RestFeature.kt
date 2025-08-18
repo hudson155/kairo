@@ -1,8 +1,6 @@
 package kairo.rest
 
 import io.ktor.server.application.Application
-import io.ktor.server.engine.EmbeddedServer
-import io.ktor.server.netty.NettyApplicationEngine
 import kairo.feature.Feature
 
 /**
@@ -10,13 +8,22 @@ import kairo.feature.Feature
  */
 public class RestFeature(
   private val config: RestFeatureConfig,
+  /**
+   * Optionally, you can configure the Ktor server directly.
+   * Prefer using provided configuration options through [RestFeatureConfig] when possible.
+   */
+  private val ktorConfiguration: KtorServerConfig.() -> Unit = {},
 ) : Feature() {
   override val name: String = "REST"
 
-  private var ktorServer: EmbeddedServer<NettyApplicationEngine, NettyApplicationEngine.Configuration>? = null
+  private var ktorServer: KtorServer? = null
 
   override suspend fun start(features: List<Feature>) {
-    val ktorServer = KtorServerFactory.create(config, features)
+    val ktorServer = KtorServerFactory.create(
+      config = config,
+      features = features,
+      ktorConfiguration = ktorConfiguration,
+    )
     this.ktorServer = ktorServer
     ktorServer.start()
   }
