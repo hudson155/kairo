@@ -7,6 +7,8 @@ mockk = "1.14.5" # https://github.com/mockk/mockk/releases
 
 [libraries]
 
+arrow-core = { module = "io.arrow-kt:arrow-core" }
+arrow-coreSerialization = { module = "io.arrow-kt:arrow-core-serialization" }
 arrow-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
 arrow-suspend = { module = "io.arrow-kt:suspendapp" }
 
@@ -29,6 +31,7 @@ ktorServer-callLogging = { module = "io.ktor:ktor-server-call-logging" }
 ktorServer-compression = { module = "io.ktor:ktor-server-compression" }
 ktorServer-contentNegotiation = { module = "io.ktor:ktor-server-content-negotiation" }
 ktorServer-core = { module = "io.ktor:ktor-server-core" }
+ktorServer-cors = { module = "io.ktor:ktor-server-cors" }
 ktorServer-netty = { module = "io.ktor:ktor-server-netty" }
 ktorServer-resources = { module = "io.ktor:ktor-server-resources" }
 
