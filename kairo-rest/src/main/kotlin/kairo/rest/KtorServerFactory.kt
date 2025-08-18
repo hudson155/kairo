@@ -2,6 +2,7 @@ package kairo.rest
 
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.ktor.http.HttpMethod
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.install
 import io.ktor.server.engine.applicationEnvironment
@@ -12,6 +13,7 @@ import io.ktor.server.plugins.autohead.AutoHeadResponse
 import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.compression.Compression
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.resources.Resources
 import kairo.feature.Feature
 
@@ -19,6 +21,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 
 // TODO: This is not too configurable, and it should be.
 internal object KtorServerFactory {
+  @Suppress("LongMethod")
   fun create(
     config: RestFeatureConfig,
     features: List<Feature>,
@@ -48,12 +51,27 @@ internal object KtorServerFactory {
       },
       module = {
         // TODO: Configure this.
+        // TODO: Mention plugins in changelog.
         install(AutoHeadResponse)
         install(CallLogging)
         install(ContentNegotiation) {
           json()
         }
         install(Compression)
+        config.cors?.let { cors ->
+          install(CORS) {
+            cors.hosts.forEach { host ->
+              allowHost(
+                host = host.host,
+                schemes = host.schemes,
+                subDomains = host.subdomains,
+              )
+            }
+            cors.headers.forEach { header -> allowHeader(header) }
+            cors.methods.forEach { method -> allowMethod(HttpMethod.parse(method)) }
+            allowCredentials = cors.allowCredentials
+          }
+        }
         install(Resources)
         features.forEach { feature ->
           if (feature !is RestFeature.HasRouting) return@forEach
