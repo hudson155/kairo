@@ -34,6 +34,8 @@ when using this BOM.
 
 ```kotlin
 plugins {
+  kotlin("plugin.serialization")
+  id("com.google.devtools.ksp")
   id("com.google.cloud.artifactregistry.gradle-plugin")
 }
 
