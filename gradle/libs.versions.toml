@@ -33,6 +33,7 @@ ktorServer-contentNegotiation = { module = "io.ktor:ktor-server-content-negotiat
 ktorServer-core = { module = "io.ktor:ktor-server-core" }
 ktorServer-cors = { module = "io.ktor:ktor-server-cors" }
 ktorServer-defaultHeaders = { module = "io.ktor:ktor-server-default-headers" }
+ktorServer-doubleReceive = { module = "io.ktor:ktor-server-double-receive" }
 ktorServer-netty = { module = "io.ktor:ktor-server-netty" }
 ktorServer-resources = { module = "io.ktor:ktor-server-resources" }
 
