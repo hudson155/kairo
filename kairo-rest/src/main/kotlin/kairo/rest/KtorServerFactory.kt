@@ -17,6 +17,7 @@ import io.ktor.server.plugins.compression.Compression
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
+import io.ktor.server.plugins.doublereceive.DoubleReceive
 import io.ktor.server.resources.Resources
 import kairo.feature.Feature
 
@@ -81,6 +82,7 @@ internal object KtorServerFactory {
     installCompression(config.compression)
     installCors(config.cors)
     installDefaultHeaders(config.defaultHeaders)
+    installDoubleReceive(config.doubleReceive)
     installResources(config.resources)
   }
 
@@ -127,6 +129,13 @@ internal object KtorServerFactory {
     install(DefaultHeaders) {
       config.serverName?.let { header(HttpHeaders.Server, it) }
       config.headers.forEach { header(it.key, it.value) }
+    }
+  }
+
+  private fun Application.installDoubleReceive(config: RestFeatureConfig.Plugins.DoubleReceive?) {
+    config ?: return
+    install(DoubleReceive) {
+      cacheRawRequest = config.cacheRawRequest
     }
   }
 

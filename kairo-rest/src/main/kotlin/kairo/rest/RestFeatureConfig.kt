@@ -55,6 +55,7 @@ public data class RestFeatureConfig(
     val compression: Compression? = Compression,
     val cors: Cors? = null,
     val defaultHeaders: DefaultHeaders?,
+    val doubleReceive: DoubleReceive? = null,
     val resources: Resources? = Resources,
   ) {
     @Serializable
@@ -88,6 +89,11 @@ public data class RestFeatureConfig(
     public data class DefaultHeaders(
       val serverName: String?,
       val headers: Map<String, String> = emptyMap(),
+    )
+
+    @Serializable
+    public data class DoubleReceive(
+      val cacheRawRequest: Boolean,
     )
 
     @Serializable
