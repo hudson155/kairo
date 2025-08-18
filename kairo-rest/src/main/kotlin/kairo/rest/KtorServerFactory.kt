@@ -13,7 +13,6 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.autohead.AutoHeadResponse
 import io.ktor.server.plugins.calllogging.CallLogging
-import io.ktor.server.plugins.compression.Compression
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
@@ -80,7 +79,6 @@ internal object KtorServerFactory {
     installAutoHeadResponse(config.autoHeadResponse)
     installCallLogging(config.callLogging)
     installContentNegotiation(config.contentNegotiation)
-    installCompression(config.compression)
     installCors(config.cors)
     installDefaultHeaders(config.defaultHeaders)
     installDoubleReceive(config.doubleReceive)
@@ -103,11 +101,6 @@ internal object KtorServerFactory {
     install(ContentNegotiation) {
       json()
     }
-  }
-
-  private fun Application.installCompression(config: RestFeatureConfig.Plugins.Compression?) {
-    config ?: return
-    install(Compression)
   }
 
   private fun Application.installCors(config: RestFeatureConfig.Plugins.Cors?) {

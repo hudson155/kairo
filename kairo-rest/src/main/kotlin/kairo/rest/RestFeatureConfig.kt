@@ -52,7 +52,6 @@ public data class RestFeatureConfig(
     val autoHeadResponse: AutoHeadResponse? = AutoHeadResponse,
     val callLogging: CallLogging? = CallLogging,
     val contentNegotiation: ContentNegotiation? = ContentNegotiation,
-    val compression: Compression? = Compression,
     val cors: Cors? = null,
     val defaultHeaders: DefaultHeaders?,
     val doubleReceive: DoubleReceive? = null,
@@ -67,9 +66,6 @@ public data class RestFeatureConfig(
 
     @Serializable
     public data object ContentNegotiation
-
-    @Serializable
-    public data object Compression
 
     @Serializable
     public data class Cors(
