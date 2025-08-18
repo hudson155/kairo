@@ -32,6 +32,7 @@ ktorServer-compression = { module = "io.ktor:ktor-server-compression" }
 ktorServer-contentNegotiation = { module = "io.ktor:ktor-server-content-negotiation" }
 ktorServer-core = { module = "io.ktor:ktor-server-core" }
 ktorServer-cors = { module = "io.ktor:ktor-server-cors" }
+ktorServer-defaultHeaders = { module = "io.ktor:ktor-server-default-headers" }
 ktorServer-netty = { module = "io.ktor:ktor-server-netty" }
 ktorServer-resources = { module = "io.ktor:ktor-server-resources" }
 

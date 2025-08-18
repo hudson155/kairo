@@ -2,6 +2,7 @@ package kairo.rest
 
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
@@ -15,6 +16,7 @@ import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.compression.Compression
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
+import io.ktor.server.plugins.defaultheaders.DefaultHeaders
 import io.ktor.server.resources.Resources
 import kairo.feature.Feature
 
@@ -78,6 +80,7 @@ internal object KtorServerFactory {
     installContentNegotiation(config.contentNegotiation)
     installCompression(config.compression)
     installCors(config.cors)
+    installDefaultHeaders(config.defaultHeaders)
     installResources(config.resources)
   }
 
@@ -116,6 +119,14 @@ internal object KtorServerFactory {
       config.headers.forEach { header -> allowHeader(header) }
       config.methods.forEach { method -> allowMethod(HttpMethod.parse(method)) }
       allowCredentials = config.allowCredentials
+    }
+  }
+
+  private fun Application.installDefaultHeaders(config: RestFeatureConfig.Plugins.DefaultHeaders?) {
+    config ?: return
+    install(DefaultHeaders) {
+      config.serverName?.let { header(HttpHeaders.Server, it) }
+      config.headers.forEach { header(it.key, it.value) }
     }
   }
 
