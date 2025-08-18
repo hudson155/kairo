@@ -8,7 +8,6 @@ import io.ktor.server.engine.applicationEnvironment
 import io.ktor.server.engine.connector
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import io.ktor.server.netty.NettyApplicationEngine
 import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.resources.Resources
@@ -21,7 +20,7 @@ internal object KtorServerFactory {
   fun create(
     config: RestFeatureConfig,
     features: List<Feature>,
-    ktorConfiguration: NettyApplicationEngine.Configuration.() -> Unit = {},
+    ktorConfiguration: KtorServerConfig.() -> Unit,
   ): KtorServer =
     embeddedServer(
       factory = Netty,
