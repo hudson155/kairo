@@ -18,6 +18,7 @@ The following external libraries are included in this BOM:
 
 - `io.arrow-kt:arrow-stack`
 - `io.insert-koin:koin-bom`
+- `io.insert-koin:koin-annotations-bom`
 - `io.ktor:ktor-bom`
 - `com.google.cloud:libraries-bom`
 - `com.google.guava:guava-bom`
