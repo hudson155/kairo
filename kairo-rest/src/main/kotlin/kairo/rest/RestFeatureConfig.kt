@@ -50,7 +50,7 @@ public data class RestFeatureConfig(
   @Serializable
   public data class Plugins(
     val autoHeadResponse: AutoHeadResponse? = AutoHeadResponse,
-    val callLogging: CallLogging? = CallLogging,
+    val callLogging: CallLogging? = CallLogging(),
     val contentNegotiation: ContentNegotiation? = ContentNegotiation,
     val cors: Cors? = null,
     val defaultHeaders: DefaultHeaders?,
@@ -62,7 +62,9 @@ public data class RestFeatureConfig(
     public data object AutoHeadResponse
 
     @Serializable
-    public data object CallLogging
+    public data class CallLogging(
+      val useColors: Boolean = false,
+    )
 
     @Serializable
     public data object ContentNegotiation
