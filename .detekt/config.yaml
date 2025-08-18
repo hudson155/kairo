@@ -664,6 +664,7 @@ style:
       - 'kotlinx.coroutines.time.*'
       - 'org.koin.core.annotation.Singleton'
       - 'org.koin.core.context.GlobalContext.*'
+      - 'org.koin.java.*'
       - 'org.koin.mp.*'
       - 'sun.awt.*'
       - 'sun.net.*'
