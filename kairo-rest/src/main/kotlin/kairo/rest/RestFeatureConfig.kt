@@ -18,7 +18,7 @@ public data class RestFeatureConfig(
   val timeouts: Timeouts = Timeouts(),
   val lifecycle: Lifecycle = Lifecycle(),
   val connector: Connector,
-  val plugins: Plugins = Plugins(),
+  val plugins: Plugins,
 ) {
   @Serializable
   public data class Parallelism(
@@ -54,6 +54,7 @@ public data class RestFeatureConfig(
     val contentNegotiation: ContentNegotiation? = ContentNegotiation,
     val compression: Compression? = Compression,
     val cors: Cors? = null,
+    val defaultHeaders: DefaultHeaders?,
     val resources: Resources? = Resources,
   ) {
     @Serializable
@@ -82,6 +83,12 @@ public data class RestFeatureConfig(
         val subdomains: List<String> = emptyList(),
       )
     }
+
+    @Serializable
+    public data class DefaultHeaders(
+      val serverName: String?,
+      val headers: Map<String, String> = emptyMap(),
+    )
 
     @Serializable
     public data object Resources

@@ -17,6 +17,7 @@ dependencies {
   implementation(libs.ktorServer.contentNegotiation)
   api(libs.ktorServer.core)
   implementation(libs.ktorServer.cors)
+  implementation(libs.ktorServer.defaultHeaders)
   implementation(libs.ktorServer.netty)
   api(libs.ktorServer.resources)
   implementation(libs.serialization.core)
