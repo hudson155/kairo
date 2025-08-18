@@ -10,6 +10,7 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.autohead.AutoHeadResponse
 import io.ktor.server.plugins.calllogging.CallLogging
+import io.ktor.server.plugins.compression.Compression
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.resources.Resources
 import kairo.feature.Feature
@@ -52,6 +53,7 @@ internal object KtorServerFactory {
         install(ContentNegotiation) {
           json()
         }
+        install(Compression)
         install(Resources)
         features.forEach { feature ->
           if (feature !is RestFeature.HasRouting) return@forEach
