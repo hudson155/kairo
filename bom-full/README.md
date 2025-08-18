@@ -44,10 +44,15 @@ repositories {
 }
 
 dependencies {
-  implementation(enforcedPlatform("software.airborne.kairo:bom:6.0.0"))
+  val kairoVersion = "6.0.0"
+  implementation(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
+  ksp(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
 
   implementation("io.arrow-kt:arrow-core")
   implementation("io.arrow-kt:arrow-fx-coroutines")
+  implementation("io.insert-koin:koin-annotations")
+  implementation("io.insert-koin:koin-core")
+  ksp("io.insert-koin:koin-ksp-compiler")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-core")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
@@ -60,7 +65,6 @@ dependencies {
   implementation("software.airborne.kairo:kairo-util")
   runtimeOnly("org.apache.logging.log4j:log4j-core")
   runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")
-  // TODO: Add Koin.
 
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
   testImplementation("software.airborne.kairo:kairo-testing")
