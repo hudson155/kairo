@@ -4,10 +4,6 @@
 
 ### Checklist
 
-#### Dependencies
-
-- [ ] Dependencies
-
 #### Documentation
 
 - [ ] KDoc
@@ -15,8 +11,10 @@
 - [ ] Root README
 - [ ] Changelog
 
-#### Sample repo
+#### Externalities
 
+- [ ] Dependencies
+- [ ] Issues
 - [ ] Sample repo
 
 #### Tests
