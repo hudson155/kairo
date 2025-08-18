@@ -11,6 +11,7 @@ dependencies {
   implementation(libs.ktorSerialization.json)
   implementation(libs.ktorServer.autoHeadResponse)
   implementation(libs.ktorServer.callLogging)
+  implementation(libs.ktorServer.compression)
   implementation(libs.ktorServer.contentNegotiation)
   api(libs.ktorServer.core)
   implementation(libs.ktorServer.netty)
