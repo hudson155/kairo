@@ -4,6 +4,7 @@ import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpMethod
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.engine.applicationEnvironment
 import io.ktor.server.engine.connector
@@ -19,9 +20,7 @@ import kairo.feature.Feature
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-// TODO: This is not too configurable, and it should be.
 internal object KtorServerFactory {
-  @Suppress("LongMethod")
   fun create(
     config: RestFeatureConfig,
     features: List<Feature>,
@@ -31,53 +30,105 @@ internal object KtorServerFactory {
       factory = Netty,
       environment = applicationEnvironment(),
       configure = {
-        runningLimit = config.parallelism.runningLimit
-        shareWorkGroup = config.parallelism.shareWorkGroup
-        config.parallelism.connectionGroupSize?.let { connectionGroupSize = it }
-        config.parallelism.workerGroupSize?.let { workerGroupSize = it }
-        config.parallelism.callGroupSize?.let { callGroupSize = it }
-        requestReadTimeoutSeconds = config.timeouts.requestRead.inWholeSeconds.toInt()
-        responseWriteTimeoutSeconds = config.timeouts.responseWrite.inWholeSeconds.toInt()
-        maxInitialLineLength = 8 * 1024
-        maxHeaderSize = 16 * 1024
-        maxChunkSize = 8 * 1024
-        shutdownGracePeriod = config.lifecycle.shutdownGracePeriod.inWholeMilliseconds
-        shutdownTimeout = config.lifecycle.shutdownTimeout.inWholeMilliseconds
-        connector {
-          host = config.connector.host
-          port = config.connector.port
-        }
-        ktorConfiguration()
+        configure(
+          parallelism = config.parallelism,
+          timeouts = config.timeouts,
+          lifecycle = config.lifecycle,
+          connector = config.connector,
+          ktorConfiguration = ktorConfiguration,
+        )
       },
       module = {
-        // TODO: Configure this.
-        // TODO: Mention plugins in changelog.
-        install(AutoHeadResponse)
-        install(CallLogging)
-        install(ContentNegotiation) {
-          json()
-        }
-        install(Compression)
-        config.cors?.let { cors ->
-          install(CORS) {
-            cors.hosts.forEach { host ->
-              allowHost(
-                host = host.host,
-                schemes = host.schemes,
-                subDomains = host.subdomains,
-              )
-            }
-            cors.headers.forEach { header -> allowHeader(header) }
-            cors.methods.forEach { method -> allowMethod(HttpMethod.parse(method)) }
-            allowCredentials = cors.allowCredentials
-          }
-        }
-        install(Resources)
-        features.forEach { feature ->
-          if (feature !is RestFeature.HasRouting) return@forEach
-          logger.info { "Registering routes (featureName=${feature.name})." }
-          with(feature) { routing() }
-        }
+        plugins(config.plugins)
+        routing(features)
       },
     )
+
+  @Suppress("LongParameterList")
+  private fun KtorServerConfig.configure(
+    parallelism: RestFeatureConfig.Parallelism,
+    timeouts: RestFeatureConfig.Timeouts,
+    lifecycle: RestFeatureConfig.Lifecycle,
+    connector: RestFeatureConfig.Connector,
+    ktorConfiguration: KtorServerConfig.() -> Unit,
+  ) {
+    runningLimit = parallelism.runningLimit
+    shareWorkGroup = parallelism.shareWorkGroup
+    parallelism.connectionGroupSize?.let { connectionGroupSize = it }
+    parallelism.workerGroupSize?.let { workerGroupSize = it }
+    parallelism.callGroupSize?.let { callGroupSize = it }
+    requestReadTimeoutSeconds = timeouts.requestRead.inWholeSeconds.toInt()
+    responseWriteTimeoutSeconds = timeouts.responseWrite.inWholeSeconds.toInt()
+    maxInitialLineLength = 8 * 1024
+    maxHeaderSize = 16 * 1024
+    maxChunkSize = 8 * 1024
+    shutdownGracePeriod = lifecycle.shutdownGracePeriod.inWholeMilliseconds
+    shutdownTimeout = lifecycle.shutdownTimeout.inWholeMilliseconds
+    connector {
+      host = connector.host
+      port = connector.port
+    }
+    ktorConfiguration()
+  }
+
+  private fun Application.plugins(config: RestFeatureConfig.Plugins) {
+    // TODO: Mention plugins in changelog.
+    installAutoHeadResponse(config.autoHeadResponse)
+    installCallLogging(config.callLogging)
+    installContentNegotiation(config.contentNegotiation)
+    installCompression(config.compression)
+    installCors(config.cors)
+    installResources(config.resources)
+  }
+
+  private fun Application.installAutoHeadResponse(config: RestFeatureConfig.Plugins.AutoHeadResponse?) {
+    config ?: return
+    install(AutoHeadResponse)
+  }
+
+  private fun Application.installCallLogging(config: RestFeatureConfig.Plugins.CallLogging?) {
+    config ?: return
+    install(CallLogging)
+  }
+
+  private fun Application.installContentNegotiation(config: RestFeatureConfig.Plugins.ContentNegotiation?) {
+    config ?: return
+    install(ContentNegotiation) {
+      json()
+    }
+  }
+
+  private fun Application.installCompression(config: RestFeatureConfig.Plugins.Compression?) {
+    config ?: return
+    install(Compression)
+  }
+
+  private fun Application.installCors(config: RestFeatureConfig.Plugins.Cors?) {
+    config ?: return
+    install(CORS) {
+      config.hosts.forEach { host ->
+        allowHost(
+          host = host.host,
+          schemes = host.schemes,
+          subDomains = host.subdomains,
+        )
+      }
+      config.headers.forEach { header -> allowHeader(header) }
+      config.methods.forEach { method -> allowMethod(HttpMethod.parse(method)) }
+      allowCredentials = config.allowCredentials
+    }
+  }
+
+  private fun Application.installResources(config: RestFeatureConfig.Plugins.Resources?) {
+    config ?: return
+    install(Resources)
+  }
+
+  private fun Application.routing(features: List<Feature>) {
+    features.forEach { feature ->
+      if (feature !is RestFeature.HasRouting) return@forEach
+      logger.info { "Registering routes (featureName=${feature.name})." }
+      with(feature) { routing() }
+    }
+  }
 }

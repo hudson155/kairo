@@ -18,7 +18,7 @@ public data class RestFeatureConfig(
   val timeouts: Timeouts = Timeouts(),
   val lifecycle: Lifecycle = Lifecycle(),
   val connector: Connector,
-  val cors: Cors? = null,
+  val plugins: Plugins = Plugins(),
 ) {
   @Serializable
   public data class Parallelism(
@@ -48,17 +48,42 @@ public data class RestFeatureConfig(
   )
 
   @Serializable
-  public data class Cors(
-    val hosts: NonEmptyList<Host>,
-    val headers: List<String> = emptyList(),
-    val methods: List<String> = HttpMethod.DefaultMethods.map { it.value },
-    val allowCredentials: Boolean = false,
+  public data class Plugins(
+    val autoHeadResponse: AutoHeadResponse? = AutoHeadResponse,
+    val callLogging: CallLogging? = CallLogging,
+    val contentNegotiation: ContentNegotiation? = ContentNegotiation,
+    val compression: Compression? = Compression,
+    val cors: Cors? = null,
+    val resources: Resources? = Resources,
   ) {
     @Serializable
-    public data class Host(
-      val host: String,
-      val schemes: NonEmptyList<String>,
-      val subdomains: List<String> = emptyList(),
-    )
+    public data object AutoHeadResponse
+
+    @Serializable
+    public data object CallLogging
+
+    @Serializable
+    public data object ContentNegotiation
+
+    @Serializable
+    public data object Compression
+
+    @Serializable
+    public data class Cors(
+      val hosts: NonEmptyList<Host>,
+      val headers: List<String> = emptyList(),
+      val methods: List<String> = HttpMethod.DefaultMethods.map { it.value },
+      val allowCredentials: Boolean = false,
+    ) {
+      @Serializable
+      public data class Host(
+        val host: String,
+        val schemes: NonEmptyList<String>,
+        val subdomains: List<String> = emptyList(),
+      )
+    }
+
+    @Serializable
+    public data object Resources
   }
 }
