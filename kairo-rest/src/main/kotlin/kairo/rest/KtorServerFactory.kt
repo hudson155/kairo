@@ -18,6 +18,7 @@ import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
 import io.ktor.server.plugins.doublereceive.DoubleReceive
+import io.ktor.server.plugins.forwardedheaders.ForwardedHeaders
 import io.ktor.server.resources.Resources
 import kairo.feature.Feature
 
@@ -83,6 +84,7 @@ internal object KtorServerFactory {
     installCors(config.cors)
     installDefaultHeaders(config.defaultHeaders)
     installDoubleReceive(config.doubleReceive)
+    installForwardedHeaders(config.forwardedHeader)
     installResources(config.resources)
   }
 
@@ -137,6 +139,11 @@ internal object KtorServerFactory {
     install(DoubleReceive) {
       cacheRawRequest = config.cacheRawRequest
     }
+  }
+
+  private fun Application.installForwardedHeaders(config: RestFeatureConfig.Plugins.ForwardedHeaders?) {
+    config ?: return
+    install(ForwardedHeaders)
   }
 
   private fun Application.installResources(config: RestFeatureConfig.Plugins.Resources?) {

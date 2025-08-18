@@ -56,6 +56,7 @@ public data class RestFeatureConfig(
     val cors: Cors? = null,
     val defaultHeaders: DefaultHeaders?,
     val doubleReceive: DoubleReceive? = null,
+    val forwardedHeader: ForwardedHeaders? = ForwardedHeaders,
     val resources: Resources? = Resources,
   ) {
     @Serializable
@@ -95,6 +96,9 @@ public data class RestFeatureConfig(
     public data class DoubleReceive(
       val cacheRawRequest: Boolean,
     )
+
+    @Serializable
+    public data object ForwardedHeaders
 
     @Serializable
     public data object Resources
