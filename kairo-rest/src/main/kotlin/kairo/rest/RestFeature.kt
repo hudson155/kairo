@@ -8,11 +8,8 @@ import kairo.feature.Feature
  */
 public class RestFeature(
   private val config: RestFeatureConfig,
-  /**
-   * Optionally, you can configure the Ktor server directly.
-   * Prefer using provided configuration options through [RestFeatureConfig] when possible.
-   */
   private val ktorConfiguration: KtorServerConfig.() -> Unit = {},
+  private val ktorModule: Application.() -> Unit = {},
 ) : Feature() {
   override val name: String = "REST"
 
@@ -23,6 +20,7 @@ public class RestFeature(
       config = config,
       features = features,
       ktorConfiguration = ktorConfiguration,
+      ktorModule = ktorModule,
     )
     this.ktorServer = ktorServer
     ktorServer.start()
