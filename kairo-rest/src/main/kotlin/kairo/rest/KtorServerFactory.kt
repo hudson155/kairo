@@ -24,10 +24,12 @@ import kairo.feature.Feature
 private val logger: KLogger = KotlinLogging.logger {}
 
 internal object KtorServerFactory {
+  @Suppress("LongParameterList")
   fun create(
     config: RestFeatureConfig,
     features: List<Feature>,
     ktorConfiguration: KtorServerConfig.() -> Unit,
+    ktorModule: Application.() -> Unit,
   ): KtorServer =
     embeddedServer(
       factory = Netty,
@@ -38,12 +40,13 @@ internal object KtorServerFactory {
           timeouts = config.timeouts,
           lifecycle = config.lifecycle,
           connector = config.connector,
-          ktorConfiguration = ktorConfiguration,
         )
+        ktorConfiguration()
       },
       module = {
         plugins(config.plugins)
         routing(features)
+        ktorModule()
       },
     )
 
@@ -53,7 +56,6 @@ internal object KtorServerFactory {
     timeouts: RestFeatureConfig.Timeouts,
     lifecycle: RestFeatureConfig.Lifecycle,
     connector: RestFeatureConfig.Connector,
-    ktorConfiguration: KtorServerConfig.() -> Unit,
   ) {
     runningLimit = parallelism.runningLimit
     shareWorkGroup = parallelism.shareWorkGroup
@@ -71,7 +73,6 @@ internal object KtorServerFactory {
       host = connector.host
       port = connector.port
     }
-    ktorConfiguration()
   }
 
   private fun Application.plugins(config: RestFeatureConfig.Plugins) {
