@@ -8,6 +8,7 @@ import io.ktor.server.engine.applicationEnvironment
 import io.ktor.server.engine.connector
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import io.ktor.server.plugins.autohead.AutoHeadResponse
 import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.resources.Resources
@@ -46,6 +47,7 @@ internal object KtorServerFactory {
       },
       module = {
         // TODO: Configure this.
+        install(AutoHeadResponse)
         install(CallLogging)
         install(ContentNegotiation) {
           json()
