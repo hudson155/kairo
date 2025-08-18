@@ -4,5 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(libs.koin)
+  api(project(":kairo-feature"))
+
+  api(libs.koin.core)
 }

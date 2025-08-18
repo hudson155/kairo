@@ -23,6 +23,9 @@
       <name>jdk.internal.*</name>
       <name>kotlin.coroutines.cancellation.*</name>
       <name>kotlinx.coroutines.time.*</name>
+      <name>org.koin.core.annotation.Singleton</name>
+      <name>org.koin.core.context.GlobalContext.*</name>
+      <name>org.koin.mp.*</name>
       <name>sun.awt.*</name>
       <name>sun.net.*</name>
       <name>sun.nio.*</name>

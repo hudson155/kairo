@@ -22,7 +22,7 @@ guava = { module = "com.google.guava:guava" }
 
 hocon = { module = "com.typesafe:config", version.ref = "hocon" }
 
-koin = { module = "io.insert-koin:koin-core" }
+koin-core = { module = "io.insert-koin:koin-core" }
 
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
