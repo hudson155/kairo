@@ -94,7 +94,9 @@ internal object KtorServerFactory {
 
   private fun Application.installCallLogging(config: RestFeatureConfig.Plugins.CallLogging?) {
     config ?: return
-    install(CallLogging)
+    install(CallLogging) {
+      if (!config.useColors) disableDefaultColors()
+    }
   }
 
   private fun Application.installContentNegotiation(config: RestFeatureConfig.Plugins.ContentNegotiation?) {
