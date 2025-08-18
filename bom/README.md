@@ -28,7 +28,8 @@ repositories {
 }
 
 dependencies {
-  implementation(enforcedPlatform("software.airborne.kairo:bom:6.0.0"))
+  val kairoVersion = "6.0.0"
+  implementation(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
 
   implementation("software.airborne.kairo:kairo-darb")
   implementation("software.airborne.kairo:kairo-protected-string")

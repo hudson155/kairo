@@ -17,6 +17,8 @@ See [the getting started section](..) for how to use this BOM.
 The following external libraries are included in this BOM:
 
 - `io.arrow-kt:arrow-stack`
+- `io.insert-koin:koin-bom`
+- `io.insert-koin:koin-annotations-bom`
 - `io.ktor:ktor-bom`
 - `com.google.cloud:libraries-bom`
 - `com.google.guava:guava-bom`
@@ -32,6 +34,8 @@ when using this BOM.
 
 ```kotlin
 plugins {
+  kotlin("plugin.serialization")
+  id("com.google.devtools.ksp")
   id("com.google.cloud.artifactregistry.gradle-plugin")
 }
 
@@ -42,10 +46,15 @@ repositories {
 }
 
 dependencies {
-  implementation(enforcedPlatform("software.airborne.kairo:bom:6.0.0"))
+  val kairoVersion = "6.0.0"
+  implementation(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
+  ksp(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
 
   implementation("io.arrow-kt:arrow-core")
   implementation("io.arrow-kt:arrow-fx-coroutines")
+  implementation("io.insert-koin:koin-annotations")
+  implementation("io.insert-koin:koin-core")
+  ksp("io.insert-koin:koin-ksp-compiler")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-core")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")

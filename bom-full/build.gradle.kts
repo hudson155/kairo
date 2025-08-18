@@ -22,6 +22,14 @@ dependencies {
   // https://github.com/google/guava/releases
   api(platform("com.google.guava:guava-bom:33.4.8-jre"))
 
+  // koin
+  // https://github.com/InsertKoinIO/koin/releases
+  api(platform("io.insert-koin:koin-bom:4.1.0"))
+
+  // koin-annotations
+  // https://github.com/InsertKoinIO/koin-annotations/releases
+  api(platform("io.insert-koin:koin-annotations-bom:2.1.0"))
+
   // ktor
   // https://github.com/ktorio/ktor/releases
   api(platform("io.ktor:ktor-bom:3.2.3"))
