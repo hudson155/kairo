@@ -17,6 +17,7 @@
       <name>java.util.UUID</name>
       <name>java.util.concurrent.CancellationException</name>
       <name>java.util.concurrent.CyclicBarrier</name>
+      <name>java.util.concurrent.atomic.*</name>
       <name>java.util.logging.LogManager</name>
       <name>java.xml.*</name>
       <name>javax.xml.*</name>
