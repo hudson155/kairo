@@ -8,6 +8,7 @@ import io.ktor.server.resources.get
 import io.ktor.server.response.respond
 import io.ktor.server.routing.routing
 import kairo.rest.RestFeature
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -29,9 +30,16 @@ internal class HealthCheckHandler(
         val checks = coroutineScope {
           healthChecks.map { (name, healthCheck) ->
             async(Dispatchers.IO) {
-              runCatching { healthCheck.check() }
-                .onFailure { logger.warn(it) { "Health check failed (name=$name)." } }
-                .let { Pair(name, it.isSuccess) }
+              val success = try {
+                healthCheck.check()
+                true
+              } catch (e: CancellationException) {
+                throw e
+              } catch (e: Exception) {
+                logger.warn(e) { "Health check failed (name=$name)." }
+                false
+              }
+              return@async Pair(name, success)
             }
           }.awaitAll().toMap()
         }
