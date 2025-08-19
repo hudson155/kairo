@@ -95,6 +95,8 @@ or in any other Kotlin project.
   whose primary use case is to cut down on JWT token size.
 - [kairo-gcp-secret-supplier](./kairo-gcp-secret-supplier):
   Access GCP secrets from your Kotlin code (using coroutines).
+- [kairo-id](./kairo-id):
+  Human-readable semantic identifiers with variable entropy.
 - [kairo-logging](./kairo-logging):
   Kotlin-idiomatic logging using [Ohad Shai's Kotlin logging interface](https://github.com/oshai/kotlin-logging).
 - [kairo-protected-string](./kairo-protected-string):
