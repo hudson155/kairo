@@ -31,7 +31,15 @@ public value class Id private constructor(
     string
 
   public companion object {
-    public val regex: Regex = Regex("(?<prefix>[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*)_(?<value>[A-Za-z0-9]+)")
+    internal val regex: Regex = regex()
+
+    public fun regex(prefix: Regex = Regex("[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*")): Regex {
+      val value = Regex("[A-Za-z0-9]+")
+      return Regex("(?<prefix>$prefix)_(?<value>$value)")
+    }
+
+    public fun of(prefix: String, value: String): Id =
+      Id("${prefix}_$value")
 
     public fun parse(string: String): Id =
       Id(string)

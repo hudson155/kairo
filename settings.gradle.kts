@@ -11,7 +11,7 @@ include(":kairo-feature")
 include(":kairo-gcp-secret-supplier")
 include(":kairo-gcp-secret-supplier:testing")
 include(":kairo-health-check")
-include(":kairo-id")
+include(":kairo-id") // TODO: Create a Feature. Add suffix to other Features.
 include(":kairo-logging")
 include(":kairo-protected-string")
 include(":kairo-rest")
