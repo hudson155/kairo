@@ -4,7 +4,6 @@ import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.feature.Feature
 import kotlin.time.measureTime
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
@@ -89,7 +88,7 @@ public class Server(
   private suspend fun onStart() {
     coroutineScope {
       val jobs = features.map { feature ->
-        launch(Dispatchers.IO) {
+        launch {
           logger.info { "Starting Feature (server=${this@Server}, feature=$feature)." }
           val time = measureTime {
             try {
@@ -113,7 +112,7 @@ public class Server(
   private suspend fun onStop() {
     supervisorScope {
       val jobs = features.map { feature ->
-        launch(Dispatchers.IO) {
+        launch {
           logger.info { "Stopping Feature (server=${this@Server}, feature=$feature)." }
           val time = measureTime {
             try {

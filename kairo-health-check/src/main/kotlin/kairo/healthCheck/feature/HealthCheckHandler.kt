@@ -10,7 +10,6 @@ import io.ktor.server.routing.routing
 import kairo.rest.RestFeature
 import kotlin.time.Duration
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -34,7 +33,7 @@ internal class HealthCheckHandler(
         // Run the health checks in parallel.
         val checks = coroutineScope {
           healthChecks.map { (name, healthCheck) ->
-            async(Dispatchers.IO) {
+            async {
               val success = try {
                 withTimeout(timeout) {
                   healthCheck.check()
