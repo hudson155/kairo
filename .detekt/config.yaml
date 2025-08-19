@@ -656,6 +656,7 @@ style:
       - 'java.util.UUID'
       - 'java.util.concurrent.CancellationException'
       - 'java.util.concurrent.CyclicBarrier'
+      - 'java.util.concurrent.atomic.*'
       - 'java.util.logging.LogManager'
       - 'java.xml.*'
       - 'javax.xml.*'
