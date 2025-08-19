@@ -14,6 +14,8 @@ package kairo.id
  * and a payload of `ccU4Rn4DKVjCMqt3d0oAw3`.
  */
 public interface Id {
+  public val value: String
+
   public companion object {
     public fun regex(prefix: Regex): Regex =
       Regex("(?<prefix>(?=[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*)$prefix)_(?<payload>[A-Za-z0-9]+)")
