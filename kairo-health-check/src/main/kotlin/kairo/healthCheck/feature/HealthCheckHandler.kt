@@ -15,9 +15,8 @@ import kotlinx.coroutines.coroutineScope
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-// TODO: The response types are not good.
 internal class HealthCheckHandler(
-  private val healthChecks: Map<String, HealthCheck>,
+  private val healthChecks: Map<String, HealthCheck>, // TODO: Add default (server is running) health check.
 ) : RestFeature.HasRouting {
   override fun Application.routing() {
     routing {
