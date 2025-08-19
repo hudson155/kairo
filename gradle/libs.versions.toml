@@ -7,8 +7,6 @@ mockk = "1.14.5" # https://github.com/mockk/mockk/releases
 
 [libraries]
 
-arrow-core = { module = "io.arrow-kt:arrow-core" }
-arrow-coreSerialization = { module = "io.arrow-kt:arrow-core-serialization" }
 arrow-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
 arrow-suspend = { module = "io.arrow-kt:suspendapp" }
 
