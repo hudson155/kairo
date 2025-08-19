@@ -8,17 +8,22 @@ import io.ktor.server.resources.get
 import io.ktor.server.response.respond
 import io.ktor.server.routing.routing
 import kairo.rest.RestFeature
+import kotlin.time.Duration
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withTimeout
 
 private val logger: KLogger = KotlinLogging.logger {}
 
 internal class HealthCheckHandler(
   private val healthChecks: Map<String, HealthCheck>, // TODO: Add default (server is running) health check.
+  private val timeout: Duration,
 ) : RestFeature.HasRouting {
+  @Suppress("CognitiveComplexMethod")
   override fun Application.routing() {
     routing {
       get<HealthCheckApi.Liveness> {
@@ -31,8 +36,13 @@ internal class HealthCheckHandler(
           healthChecks.map { (name, healthCheck) ->
             async(Dispatchers.IO) {
               val success = try {
-                healthCheck.check()
+                withTimeout(timeout) {
+                  healthCheck.check()
+                }
                 true
+              } catch (e: TimeoutCancellationException) {
+                logger.warn(e) { "Health check timed out (name=$name)." }
+                false
               } catch (e: CancellationException) {
                 throw e
               } catch (e: Exception) {
