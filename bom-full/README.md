@@ -50,8 +50,6 @@ dependencies {
   implementation(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
   ksp(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
 
-  implementation("io.arrow-kt:arrow-core")
-  implementation("io.arrow-kt:arrow-fx-coroutines")
   implementation("io.insert-koin:koin-annotations")
   implementation("io.insert-koin:koin-core")
   ksp("io.insert-koin:koin-ksp-compiler")

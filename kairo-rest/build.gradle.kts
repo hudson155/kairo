@@ -8,8 +8,6 @@ dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
 
-  api(libs.arrow.core)
-  implementation(libs.arrow.coreSerialization)
   implementation(libs.ktorSerialization.json)
   implementation(libs.ktorServer.autoHeadResponse)
   implementation(libs.ktorServer.callLogging)

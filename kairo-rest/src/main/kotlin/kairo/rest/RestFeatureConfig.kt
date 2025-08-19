@@ -1,16 +1,9 @@
-@file:UseSerializers(
-  NonEmptyListSerializer::class,
-)
-
 package kairo.rest
 
-import arrow.core.NonEmptyList
-import arrow.core.serialization.NonEmptyListSerializer
 import io.ktor.http.HttpMethod
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.UseSerializers
 
 @Serializable
 public data class RestFeatureConfig(
@@ -71,7 +64,7 @@ public data class RestFeatureConfig(
 
     @Serializable
     public data class Cors(
-      val hosts: NonEmptyList<Host>,
+      val hosts: List<Host>,
       val headers: List<String> = emptyList(),
       val methods: List<String> = HttpMethod.DefaultMethods.map { it.value },
       val allowCredentials: Boolean = false,
@@ -79,7 +72,7 @@ public data class RestFeatureConfig(
       @Serializable
       public data class Host(
         val host: String,
-        val schemes: NonEmptyList<String>,
+        val schemes: List<String>,
         val subdomains: List<String> = emptyList(),
       )
     }
