@@ -82,6 +82,9 @@ in favor of external libraries that do the job far better.
   Netty is also a far more popular library than CIO.
   _This change was actually made back in Kairo 5.0._
 
+- **Colored call logging when running locally.**
+  Colored call logging helps easily understand logs and identify failures locally.
+
 - **Downgrade from Log4j 3 to Log4j 2.**
   Log4j 3 is in beta, and is not widely used.
 
