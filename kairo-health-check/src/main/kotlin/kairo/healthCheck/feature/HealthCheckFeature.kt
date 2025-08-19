@@ -3,6 +3,7 @@ package kairo.healthCheck.feature
 import io.ktor.server.application.Application
 import kairo.feature.Feature
 import kairo.rest.RestFeature
+import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -13,12 +14,32 @@ import kotlin.time.Duration.Companion.seconds
  * The health checks are run in parallel.
  */
 public class HealthCheckFeature(
-  healthChecks: Map<String, HealthCheck>,
+  healthChecks: Map<String, HealthCheck> = emptyMap(),
+  includeDefaultHealthCheck: Boolean = true,
   timeout: Duration = 2.seconds,
 ) : Feature(), RestFeature.HasRouting {
   override val name: String = "Health Check"
 
-  private val healthCheckHandler: HealthCheckHandler = HealthCheckHandler(healthChecks, timeout)
+  private val serverIsRunning: AtomicBoolean = AtomicBoolean(false)
+
+  private val healthCheckHandler: HealthCheckHandler =
+    HealthCheckHandler(
+      healthChecks = buildMap {
+        putAll(healthChecks)
+        if (includeDefaultHealthCheck) {
+          put("server", HealthCheck { check(serverIsRunning.load()) { "Server is not running." } })
+        }
+      },
+      timeout = timeout,
+    )
+
+  override fun afterStart() {
+    serverIsRunning.store(true)
+  }
+
+  override fun beforeStop() {
+    serverIsRunning.store(false)
+  }
 
   override fun Application.routing() {
     with(healthCheckHandler) { routing() }
