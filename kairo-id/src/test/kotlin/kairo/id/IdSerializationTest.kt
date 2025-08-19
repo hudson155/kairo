@@ -10,17 +10,17 @@ internal class IdSerializationTest {
   @Test
   fun serialize(): Unit =
     runTest {
-      Json.encodeToString(Id.parse("user_2eDS1sMt"))
+      Json.encodeToString(UserId("user_2eDS1sMt"))
         .shouldBe("\"user_2eDS1sMt\"")
     }
 
   @Test
   fun deserialize(): Unit =
     runTest {
-      Json.decodeFromString<Id>("\"user_2eDS1sMt\"")
-        .shouldBe(Id.parse("user_2eDS1sMt"))
+      Json.decodeFromString<UserId>("\"user_2eDS1sMt\"")
+        .shouldBe(UserId("user_2eDS1sMt"))
       shouldThrow<IllegalArgumentException> {
-        Json.decodeFromString<Id>("\"user-2eDS1sMt\"")
+        Json.decodeFromString<UserId>("\"user-2eDS1sMt\"")
       }
     }
 }

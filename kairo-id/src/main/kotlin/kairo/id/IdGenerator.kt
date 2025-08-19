@@ -16,10 +16,10 @@ public abstract class IdGenerator<T : Any>(
   }
 
   public fun generate(): T {
-    val value = strategy.generate(length)
-    val id = Id.of(prefix, value)
+    val payload = strategy.generate(length)
+    val id = "${prefix}_$payload"
     return wrap(id)
   }
 
-  protected abstract fun wrap(id: Id): T
+  protected abstract fun wrap(value: String): T
 }

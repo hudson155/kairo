@@ -8,16 +8,16 @@ The "semantic" part means that a human can easily understand this is a _user_ ID
 rather than the ID for a different entity.
 This is mostly useful for developers, but it can also make URL slugs look nicer for users.
 
-Kairo IDs consist of a "prefix" portion and a "value" portion.
+Kairo IDs consist of a "prefix" portion and a "payload" portion.
 In the example above, `user_ccU4Rn4DKVjCMqt3d0oAw3` has a prefix of `user`
-and a value of `ccU4Rn4DKVjCMqt3d0oAw3`.
+and a payload of `ccU4Rn4DKVjCMqt3d0oAw3`.
 
 - The **prefix** indicates what the entity is for.
   The value is totally up to you, but needs to be snake case.
-- The **value** is a base-62 string.
+- The **payload** is a base-62 string.
   The length is up to you, but 22 is a good default.
 
-The entropy of Kairo IDs depends on the length of the value portion.
+The entropy of Kairo IDs depends on the length of the payload portion.
 
 | ID type                 | Entropy                 |
 |-------------------------|-------------------------|
@@ -47,5 +47,7 @@ dependencies {
 ```
 
 ## Usage
+
+TODO: Document ID generation.
 
 TODO: Write usage guide.
