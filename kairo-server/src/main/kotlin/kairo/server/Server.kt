@@ -103,6 +103,9 @@ public class Server(
       }
       jobs.joinAll()
     }
+    features.forEach { feature ->
+      feature.afterStart()
+    }
   }
 
   /**
@@ -110,6 +113,13 @@ public class Server(
    * If any Feature fails to stop, remaining [Feature.stop] calls are allowed to complete. This method does not throw.
    */
   private suspend fun onStop() {
+    features.forEach { feature ->
+      try {
+        feature.beforeStop()
+      } catch (e: Throwable) {
+        logger.warn(e) { "Feature failed beforeStop (server=${this@Server}, feature=$feature)." }
+      }
+    }
     supervisorScope {
       val jobs = features.map { feature ->
         launch {
