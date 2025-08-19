@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @JvmInline
 internal value class UserId(override val value: String) : Id {
   init {
-    require(regex.matches(value)) { "Malformed user ID." }
+    require(regex.matches(value)) { "Malformed user ID (value=$value)." }
   }
 
   internal companion object {
