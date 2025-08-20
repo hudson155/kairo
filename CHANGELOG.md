@@ -64,6 +64,13 @@ in favor of external libraries that do the job far better.
     and you don't need to use it either if you don't want to.
     Dependency injection is now a standalone Feature.
 
+- Kairo IDs like `user_ccU4Rn4DKVjCMqt3d0oAw3` now offer several distinct advantages.
+  - **Semantic prefixes** (the "user" portion) for human-readability.
+  - **Compile-time safety without runtime overhead.**
+    Specifically, it's no longer possible to pass the wrong ID type,
+    such as passing a business ID to a function that expects a user ID.
+    This is checked at compile time, without runtime overhead.
+
 ### Further changes
 
 - **Configs now use [lightbend/config](https://github.com/lightbend/config)'s HOCON.**
