@@ -8,7 +8,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 /**
- * The Health Check Feature binds 2 routes for health checks.
+ * The Health Check Feature adds 2 routes for health checks.
  * The liveness check always immediately responds with 200 OK.
  * The readiness check responds with 200 OK only after the provided [HealthCheck]s pass.
  * The health checks are run in parallel.

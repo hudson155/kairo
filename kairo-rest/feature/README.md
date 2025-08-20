@@ -1,4 +1,4 @@
-# Kairo REST Feature
+# REST Feature
 
 TODO: README coming soon...
 
