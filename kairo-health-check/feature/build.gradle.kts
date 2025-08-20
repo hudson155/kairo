@@ -7,7 +7,7 @@ plugins {
 dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
-  implementation(project(":kairo-rest"))
+  implementation(project(":kairo-rest:feature"))
 
   implementation(libs.serialization.core)
 }
