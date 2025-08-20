@@ -9,10 +9,9 @@ import kotlin.random.Random
 public class RandomIdGenerationStrategy(
   private val length: Int?,
 ) : IdGenerationStrategy() {
-  override fun generate(length: Int?): String {
-    val length = requireNotNull(length ?: this.length) { "Must specify length." }
-    return buildString {
-      repeat(length) {
+  override fun generate(length: Int?): String =
+    buildString {
+      repeat(requireNotNull(length ?: this@RandomIdGenerationStrategy.length) { "Must specify length." }) {
         val char = when (val seed = Random.nextInt(62)) {
           in 0..9 -> Char(48 + seed) // 0-9
           in 10..35 -> Char(65 - 10 + seed) // A-Z
@@ -22,5 +21,4 @@ public class RandomIdGenerationStrategy(
         append(char)
       }
     }
-  }
 }

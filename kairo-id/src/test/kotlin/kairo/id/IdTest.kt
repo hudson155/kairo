@@ -41,18 +41,18 @@ internal class IdTest {
   fun `validate (invalid)`(): Unit =
     runTest {
       shouldThrow<IllegalArgumentException> { UserId("user") }
-        .shouldHaveMessage("Malformed user ID.")
+        .shouldHaveMessage("Malformed user ID (value=user).")
       shouldThrow<IllegalArgumentException> { UserId("user_2_2eDS1sMt") }
-        .shouldHaveMessage("Malformed user ID.")
+        .shouldHaveMessage("Malformed user ID (value=user_2_2eDS1sMt).")
       shouldThrow<IllegalArgumentException> { UserId("user__2eDS1sMt") }
-        .shouldHaveMessage("Malformed user ID.")
+        .shouldHaveMessage("Malformed user ID (value=user__2eDS1sMt).")
       shouldThrow<IllegalArgumentException> { UserId("user-2eDS1sMt") }
-        .shouldHaveMessage("Malformed user ID.")
+        .shouldHaveMessage("Malformed user ID (value=user-2eDS1sMt).")
       shouldThrow<IllegalArgumentException> { UserId("User_2eDS1sMt") }
-        .shouldHaveMessage("Malformed user ID.")
+        .shouldHaveMessage("Malformed user ID (value=User_2eDS1sMt).")
       shouldThrow<IllegalArgumentException> { UserId("usër_2eDS1sMt") }
-        .shouldHaveMessage("Malformed user ID.")
+        .shouldHaveMessage("Malformed user ID (value=usër_2eDS1sMt).")
       shouldThrow<IllegalArgumentException> { UserId("user_2eDS1!sMt") }
-        .shouldHaveMessage("Malformed user ID.")
+        .shouldHaveMessage("Malformed user ID (value=user_2eDS1!sMt).")
     }
 }

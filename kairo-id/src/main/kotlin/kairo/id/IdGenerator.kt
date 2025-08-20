@@ -10,7 +10,7 @@ public abstract class IdGenerator<T : Any>(
 ) {
   init {
     require(length == null || length in 8..32) {
-      "Invalid ID length (prefix=$prefix, length=$length)." +
+      "Invalid ID length (prefix=$prefix, length=${length ?: "null"})." +
         " Must be between 8 and 32 (inclusive)."
     }
   }
