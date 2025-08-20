@@ -18,8 +18,8 @@ public abstract class IdGenerator<T : Any>(
   public fun generate(): T {
     val payload = strategy.generate(length)
     val id = "${prefix}_$payload"
-    return wrap(id)
+    return generate(id)
   }
 
-  protected abstract fun wrap(value: String): T
+  protected abstract fun generate(value: String): T
 }
