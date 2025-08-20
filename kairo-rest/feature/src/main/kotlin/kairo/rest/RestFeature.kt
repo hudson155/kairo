@@ -34,7 +34,7 @@ public class RestFeature(
   }
 
   /**
-   * Use this interface on any Features that wish to bind routes to the Ktor server.
+   * Use this interface on any Features that wish to add Koin bindings.
    */
   public interface HasRouting {
     public fun Application.routing()

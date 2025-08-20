@@ -1,6 +1,7 @@
 package kairo.dependencyInjection
 
 import kairo.feature.Feature
+import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.KoinAppDeclaration
@@ -15,10 +16,24 @@ public class DependencyInjectionFeature(
   override val name: String = "Dependency Injection"
 
   override suspend fun start(features: List<Feature>) {
-    startKoin(block)
+    startKoin {
+      features.forEach { feature ->
+        if (feature !is HasBindings) return@forEach
+        with(feature) { binding() }
+      }
+      modules()
+      block()
+    }
   }
 
   override suspend fun stop() {
     stopKoin()
+  }
+
+  /**
+   * Use this interface on any Features that wish to bind routes to the Ktor server.
+   */
+  public interface HasBindings {
+    public fun KoinApplication.binding()
   }
 }

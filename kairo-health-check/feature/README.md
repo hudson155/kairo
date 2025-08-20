@@ -1,3 +1,3 @@
-# Kairo Health Check Feature
+# Health Check Feature
 
 TODO: README coming soon...
