@@ -107,3 +107,10 @@ or in any other Kotlin project.
   Kotlin-esque JUnit-style testing, with coroutine and mocking support.
 - [kairo-util](./kairo-util):
   A home for various simple utilities.
+
+### Application libraries
+
+These libraries are intended for use when building a full application with Kairo.
+
+- [kairo-id-feature](./kairo-id/feature):
+  Binds Kairo ID generation for use within a Kairo application.

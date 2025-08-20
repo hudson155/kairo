@@ -5,6 +5,9 @@ import kairo.feature.Feature
 import org.koin.core.KoinApplication
 import org.koin.dsl.module
 
+/**
+ * Binds Kairo ID generation for use within a Kairo application.
+ */
 public class IdFeature(
   private val config: IdFeatureConfig = IdFeatureConfig(),
 ) : Feature(), DependencyInjectionFeature.HasBindings {

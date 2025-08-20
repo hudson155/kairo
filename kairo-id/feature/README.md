@@ -10,7 +10,7 @@ Think of a Kairo ID as an alternative to a `UUID` or serial ID, but with a few a
 An example Kairo ID is `user_ccU4Rn4DKVjCMqt3d0oAw3`.
 
 See [the ID library](..) for more information about Kairo IDs.
-This library binds Kairo ID generation for use within a Kairo application.
+This Feature binds Kairo ID generation for use within a Kairo application.
 
 ## Installation
 
@@ -29,21 +29,7 @@ dependencies {
 The most simple usage is just to add the Feature on its own.
 
 ```kotlin
-fun main() {
-  kairo {
-    val features = listOf(
-      IdFeature(config.id), // <-- Add this.
-      // ...
-    )
-    val server = Server(
-      name = "My Server",
-      features = features,
-    )
-    server.startAndWait(
-      release = { server.stop() },
-    )
-  }
-}
+IdFeature()
 ```
 
 That's enough! Now you're ready to generate some IDs!

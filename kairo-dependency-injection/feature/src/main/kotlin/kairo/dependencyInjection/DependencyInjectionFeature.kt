@@ -21,7 +21,6 @@ public class DependencyInjectionFeature(
         if (feature !is HasBindings) return@forEach
         with(feature) { binding() }
       }
-      modules()
       block()
     }
   }
@@ -31,7 +30,7 @@ public class DependencyInjectionFeature(
   }
 
   /**
-   * Use this interface on any Features that wish to bind routes to the Ktor server.
+   * Use this interface on any Features that wish to bind Koin dependencies for injection.
    */
   public interface HasBindings {
     public fun KoinApplication.binding()
