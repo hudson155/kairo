@@ -19,6 +19,10 @@ include(":kairo-protected-string")
 include(":kairo-reflect")
 include(":kairo-rest")
 include(":kairo-rest:feature")
+include(":kairo-rest-feature") // TODO: Don't commit this. This is Kairo 5.
+include(":kairo-rest-feature:cors") // TODO: Don't commit this. This is Kairo 5.
+include(":kairo-rest-feature:sse") // TODO: Don't commit this. This is Kairo 5.
+include(":kairo-rest-feature:testing") // TODO: Don't commit this. This is Kairo 5.
 include(":kairo-server")
 include(":kairo-testing")
 include(":kairo-util")
