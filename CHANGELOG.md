@@ -89,6 +89,11 @@ in favor of external libraries that do the job far better.
 - **Colored call logging when running locally.**
   Colored call logging helps easily understand logs and identify failures locally.
 
+- **Removal of autmoatic string trimming.**
+  Strings used to be trimmed (leading & trailing whitespace removed)
+  automatically upon deserialization.
+  This functionality has been removed.
+
 - **Downgrade from Log4j 3 to Log4j 2.**
   Log4j 3 is in beta, and is not widely used.
 
