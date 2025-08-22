@@ -50,7 +50,7 @@ public data class RestEndpointTemplate(
 
   public companion object {
     public fun from(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
-      logger.debug { "Building REST endpoint (endpoint=$endpoint)." }
+      logger.debug { "Building REST endpoint template (endpoint=$endpoint)." }
       val template = with(RestEndpointTemplateErrorBuilder) {
         with(RestEndpointTemplateParams.from(endpoint)) {
           build(endpoint)
