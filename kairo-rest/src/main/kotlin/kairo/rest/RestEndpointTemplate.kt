@@ -22,9 +22,31 @@ public data class RestEndpointTemplate(
   val contentType: ContentType?,
   val accept: ContentType?,
 ) {
-  // TODO: Implement a proper toString method.
-  // override fun toString(): String =
-  //   "RestEndpointTemplate(${PrettyRestEndpointPrinter.write(this)})"
+  override fun toString(): String {
+    val value = buildList {
+      add("[${contentType.toString()} -> ${accept.toString()}]")
+      add(method.value)
+      add(
+        path.components.joinToString("/", prefix = "/") { component ->
+          when (component) {
+            is RestEndpointTemplatePath.Component.Constant -> component.value
+            is RestEndpointTemplatePath.Component.Param -> ":${component.value}"
+          }
+        },
+      )
+      if (query.params.isNotEmpty()) {
+        add(
+          query.params.joinToString { (value, required) ->
+            buildString {
+              append(value)
+              if (!required) append('?')
+            }
+          },
+        )
+      }
+    }.joinToString(" ")
+    return "RestEndpointTemplate(value='$value')"
+  }
 
   public companion object {
     public fun from(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
@@ -163,3 +185,11 @@ public data class RestEndpointTemplate(
     }
   }
 }
+
+internal fun RestEndpointTemplate.toKtorPath(): String =
+  path.components.joinToString("/", prefix = "/") { component ->
+    when (component) {
+      is RestEndpointTemplatePath.Component.Constant -> component.value
+      is RestEndpointTemplatePath.Component.Param -> "{${component.value}}"
+    }
+  }
