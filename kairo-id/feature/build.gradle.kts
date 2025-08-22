@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-dependency-injection:feature"))
+  implementation(project(":kairo-dependency-injection"))
   api(project(":kairo-feature"))
   api(project(":kairo-id"))
 
