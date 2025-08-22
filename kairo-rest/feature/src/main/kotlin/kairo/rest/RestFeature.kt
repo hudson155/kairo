@@ -1,7 +1,9 @@
 package kairo.rest
 
 import io.ktor.server.application.Application
+import io.ktor.server.application.ServerReady
 import kairo.feature.Feature
+import kotlinx.coroutines.CompletableDeferred
 
 /**
  * The REST Feature runs a Ktor server for the lifecycle of a Kairo application.
@@ -23,7 +25,12 @@ public class RestFeature(
       ktorModule = ktorModule,
     )
     this.ktorServer = ktorServer
+    val ready = CompletableDeferred<Unit>()
+    ktorServer.monitor.subscribe(ServerReady) {
+      ready.complete(Unit)
+    }
     ktorServer.start()
+    ready.await()
   }
 
   override suspend fun stop() {

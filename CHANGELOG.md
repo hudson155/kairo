@@ -89,6 +89,9 @@ in favor of external libraries that do the job far better.
   Netty is also a far more popular library than CIO.
   _This change was actually made back in Kairo 5.0._
 
+- In rare instances, the health readiness check used to succeed before Ktor was ready to take requests.
+  **Health checks now fail until Ktor is ready.**
+
 - **Colored call logging when running locally.**
   Colored call logging helps easily understand logs and identify failures locally.
 
