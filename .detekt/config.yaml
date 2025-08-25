@@ -641,6 +641,7 @@ style:
     active: true
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
+      - 'com.apple.eawt.*'
       - 'com.google.cloud.secretmanager.v1beta1.*'
       - 'com.google.cloud.secretmanager.v1beta2.*'
       - 'com.sun.jdi.*'
