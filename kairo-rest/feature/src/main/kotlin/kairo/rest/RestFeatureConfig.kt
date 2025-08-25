@@ -49,6 +49,7 @@ public data class RestFeatureConfig(
     val defaultHeaders: DefaultHeaders?,
     val doubleReceive: DoubleReceive? = null,
     val forwardedHeader: ForwardedHeaders? = ForwardedHeaders,
+    val resources: Resources? = Resources,
   ) {
     @Serializable
     public data object AutoHeadResponse
@@ -89,5 +90,8 @@ public data class RestFeatureConfig(
 
     @Serializable
     public data object ForwardedHeaders
+
+    @Serializable
+    public data object Resources
   }
 }
