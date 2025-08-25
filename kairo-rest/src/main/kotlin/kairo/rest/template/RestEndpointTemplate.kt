@@ -10,6 +10,8 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KParameter
 import kotlin.reflect.full.findAnnotations
 import kotlin.reflect.full.hasAnnotation
+import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.full.valueParameters
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -39,17 +41,14 @@ public data class RestEndpointTemplate(
 
     public fun from(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
       logger.debug { "Building REST endpoint template (endpoint=$endpoint)." }
-      val params = RestEndpointTemplateParams.create(endpoint)
-      val template = build(endpoint, params)
+      val template = build(endpoint)
       logger.debug { "Built REST endpoint template (endpoint=$endpoint, template=$template)." }
       return template
     }
 
-    private fun build(
-      endpoint: KClass<out RestEndpoint<*, *>>,
-      params: List<KParameter>,
-    ): RestEndpointTemplate {
+    private fun build(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
       require(endpoint.isData) { "${error.endpoint(endpoint)} must be a data class or data object." }
+      val params = deriveParams(endpoint)
       validateParams(endpoint, params)
       return RestEndpointTemplate(
         method = parseMethod(endpoint),
@@ -58,6 +57,12 @@ public data class RestEndpointTemplate(
         contentType = parseContentType(endpoint),
         accept = parseAccept(endpoint),
       )
+    }
+
+    private fun deriveParams(endpoint: KClass<out RestEndpoint<*, *>>): List<KParameter> {
+      if (endpoint.objectInstance != null) return emptyList()
+      val constructor = checkNotNull(endpoint.primaryConstructor) { "Data classes always have primary constructors." }
+      return constructor.valueParameters
     }
 
     /**
