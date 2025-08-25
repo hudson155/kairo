@@ -20,6 +20,7 @@ dependencies {
 ### `kairoType`
 
 Includes context from `Class<T>`, `KClass<T>`, Java's `Type`, and Kotlin's `KType`.
+Preserves full generic info (`List<String>`, not just `List<*>`).
 
 ```kotlin
 val type = kairoType<MyClass<String>>()
@@ -27,7 +28,7 @@ val type = kairoType<MyClass<String>>()
 
 ### `KairoType.from()`
 
-Allows you to access the concrete `KClass<T>` or `KType` of a generic type parameter at runtime.
+Infers `KairoType<T>` of a generic class type parameter at runtime.
 Preserves full generic info (`List<String>`, not just `List<*>`).
 
 ```kotlin
