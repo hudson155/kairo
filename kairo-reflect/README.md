@@ -23,7 +23,11 @@ Includes context from `Class<T>`, `KClass<T>`, Java's `Type`, and Kotlin's `KTyp
 Preserves full generic info (`List<String>`, not just `List<*>`).
 
 ```kotlin
-val type = kairoType<MyClass<String>>()
+val type: KairoType<T> = kairoType<MyClass<String>>()
+val javaClass: Class<T> = type.javaClass
+val kotlinClass: KClass<T> = type.kotlinClass
+val javaType: Type = type.javaType
+val kotlinType: KType = type.kotlinType
 ```
 
 ### `KairoType.from()`
