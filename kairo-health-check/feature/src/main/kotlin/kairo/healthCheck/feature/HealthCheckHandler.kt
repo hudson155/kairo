@@ -3,7 +3,6 @@ package kairo.healthCheck.feature
 import io.ktor.server.application.Application
 import io.ktor.server.routing.routing
 import kairo.rest.HasRouting
-import kairo.rest.RestFeature
 import kairo.rest.route
 import kotlin.time.Duration
 
