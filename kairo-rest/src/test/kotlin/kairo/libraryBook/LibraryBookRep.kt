@@ -1,4 +1,4 @@
-package kairo.rest
+package kairo.libraryBook
 
 import kotlin.time.Instant
 import kotlinx.serialization.Serializable

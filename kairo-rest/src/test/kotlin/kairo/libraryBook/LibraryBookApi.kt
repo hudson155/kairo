@@ -1,6 +1,7 @@
-package kairo.rest
+package kairo.libraryBook
 
 import kairo.id.Id
+import kairo.rest.RestEndpoint
 
 /**
  * This API is used by many tests within the REST Feature.

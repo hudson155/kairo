@@ -148,7 +148,7 @@ public data class RestEndpointTemplate(
         return ContentType.parse(annotation.value)
       } catch (e: BadContentTypeFormatException) {
         val eMessage = buildString {
-          append("${error.endpoint(endpoint)} content type is invalid.")
+          append("${error.endpoint(endpoint)} ${error.contentTypeAnnotation} is invalid.")
           e.message?.let { append(" $it.") }
         }
         throw IllegalArgumentException(eMessage, e)
@@ -167,7 +167,7 @@ public data class RestEndpointTemplate(
         return ContentType.parse(annotation.value)
       } catch (e: BadContentTypeFormatException) {
         val eMessage = buildString {
-          append("${error.endpoint(endpoint)} accept type is invalid.")
+          append("${error.endpoint(endpoint)} ${error.acceptAnnotation} is invalid.")
           e.message?.let { append(" $it.") }
         }
         throw IllegalArgumentException(eMessage, e)

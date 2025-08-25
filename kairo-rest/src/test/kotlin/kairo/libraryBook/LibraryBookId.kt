@@ -1,4 +1,4 @@
-package kairo.rest
+package kairo.libraryBook
 
 import kairo.id.Id
 import kotlinx.serialization.Serializable

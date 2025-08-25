@@ -3,11 +3,11 @@ package kairo.rest.template
 import io.kotest.matchers.shouldBe
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
-import kairo.rest.LibraryBookApi
+import kairo.libraryBook.LibraryBookApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-internal class TypicalRestEndpointTemplateTest {
+internal class RestEndpointTemplateTest {
   @Test
   fun get(): Unit =
     runTest {
