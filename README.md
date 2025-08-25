@@ -103,6 +103,9 @@ or in any other Kotlin project.
 - [kairo-protected-string](./kairo-protected-string):
   Handle strings that shouldn't be logged or carelessly exposed.
   `toString()` auto-redacts.
+- [kairo-reflect](./kairo-reflect):
+  Proxies Kotlin's reflection library,
+  with the addition of the runtime-rich `KairoType<T>` class.
 - [kairo-testing](./kairo-testing):
   Kotlin-esque JUnit-style testing, with coroutine and mocking support.
 - [kairo-util](./kairo-util):
