@@ -12,19 +12,19 @@ internal object LibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal data class Get(
     @PathParam val libraryBookId: Id,
-  ) : RestEndpoint<Nothing, LibraryBookRep>()
+  ) : RestEndpoint<Unit, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("application/json")
-  internal data object ListAll : RestEndpoint<Nothing, List<LibraryBookRep>>()
+  internal data object ListAll : RestEndpoint<Unit, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("application/json")
   internal data class SearchByIsbn(
     @QueryParam val isbn: String,
-  ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
+  ) : RestEndpoint<Unit, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books")
@@ -32,7 +32,7 @@ internal object LibraryBookApi {
   internal data class SearchByText(
     @QueryParam val title: String?,
     @QueryParam val author: String?,
-  ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
+  ) : RestEndpoint<Unit, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("POST")
   @RestEndpoint.Path("/library-books")
@@ -56,5 +56,5 @@ internal object LibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal data class Delete(
     @PathParam val libraryBookId: Id,
-  ) : RestEndpoint<Nothing, LibraryBookRep>()
+  ) : RestEndpoint<Unit, LibraryBookRep>()
 }
