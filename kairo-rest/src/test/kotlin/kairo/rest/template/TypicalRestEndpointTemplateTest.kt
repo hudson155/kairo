@@ -14,7 +14,7 @@ internal class TypicalRestEndpointTemplateTest {
   @Test
   fun get(): Unit =
     runTest {
-      RestEndpointTemplate.create(LibraryBookApi.Get::class)
+      RestEndpointTemplate.from(LibraryBookApi.Get::class)
         .shouldBe(
           RestEndpointTemplate(
             method = HttpMethod.Get,
@@ -32,7 +32,7 @@ internal class TypicalRestEndpointTemplateTest {
   @Test
   fun listAll(): Unit =
     runTest {
-      RestEndpointTemplate.create(LibraryBookApi.ListAll::class)
+      RestEndpointTemplate.from(LibraryBookApi.ListAll::class)
         .shouldBe(
           RestEndpointTemplate(
             method = HttpMethod.Get,
@@ -49,7 +49,7 @@ internal class TypicalRestEndpointTemplateTest {
   @Test
   fun searchByIsbn(): Unit =
     runTest {
-      RestEndpointTemplate.create(LibraryBookApi.SearchByIsbn::class)
+      RestEndpointTemplate.from(LibraryBookApi.SearchByIsbn::class)
         .shouldBe(
           RestEndpointTemplate(
             method = HttpMethod.Get,
@@ -68,7 +68,7 @@ internal class TypicalRestEndpointTemplateTest {
   @Test
   fun searchByText(): Unit =
     runTest {
-      RestEndpointTemplate.create(LibraryBookApi.SearchByText::class)
+      RestEndpointTemplate.from(LibraryBookApi.SearchByText::class)
         .shouldBe(
           RestEndpointTemplate(
             method = HttpMethod.Get,
@@ -88,7 +88,7 @@ internal class TypicalRestEndpointTemplateTest {
   @Test
   fun create(): Unit =
     runTest {
-      RestEndpointTemplate.create(LibraryBookApi.Create::class)
+      RestEndpointTemplate.from(LibraryBookApi.Create::class)
         .shouldBe(
           RestEndpointTemplate(
             method = HttpMethod.Post,
@@ -105,7 +105,7 @@ internal class TypicalRestEndpointTemplateTest {
   @Test
   fun update(): Unit =
     runTest {
-      RestEndpointTemplate.create(LibraryBookApi.Update::class)
+      RestEndpointTemplate.from(LibraryBookApi.Update::class)
         .shouldBe(
           RestEndpointTemplate(
             method = HttpMethod.Patch,
@@ -123,7 +123,7 @@ internal class TypicalRestEndpointTemplateTest {
   @Test
   fun delete(): Unit =
     runTest {
-      RestEndpointTemplate.create(LibraryBookApi.Delete::class)
+      RestEndpointTemplate.from(LibraryBookApi.Delete::class)
         .shouldBe(
           RestEndpointTemplate(
             method = HttpMethod.Delete,

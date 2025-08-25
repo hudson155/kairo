@@ -10,7 +10,7 @@ public data class RestEndpointTemplateQuery(
   internal constructor(vararg params: Param) : this(params.toList())
 
   override fun toString(): String =
-    params.joinToString { (value, required) ->
+    params.joinToString(prefix = "(", postfix = ")") { (value, required) ->
       buildString {
         append(value)
         if (!required) append('?')
