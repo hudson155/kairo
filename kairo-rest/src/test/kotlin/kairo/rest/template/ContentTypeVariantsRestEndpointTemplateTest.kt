@@ -11,6 +11,23 @@ import org.junit.jupiter.api.Test
 
 internal class ContentTypeVariantsRestEndpointTemplateTest {
   @Test
+  fun csv(): Unit =
+    runTest {
+      RestEndpointTemplate.from(ContentTypeVariantsLibraryBookApi.Csv::class)
+        .shouldBe(
+          RestEndpointTemplate(
+            method = HttpMethod.Post,
+            path = RestEndpointTemplatePath(
+              RestEndpointTemplatePath.Component.Constant("library-books"),
+            ),
+            query = RestEndpointTemplateQuery(),
+            contentType = ContentType.Text.CSV,
+            accept = ContentType.Application.Json,
+          ),
+        )
+    }
+
+  @Test
   fun presentOnGet(): Unit =
     runTest {
       RestEndpointTemplate.from(ContentTypeVariantsLibraryBookApi.PresentOnGet::class)

@@ -3,6 +3,14 @@ package kairo.libraryBook
 import kairo.rest.RestEndpoint
 
 internal object AcceptVariantsLibraryBookApi {
+  @RestEndpoint.Method("POST")
+  @RestEndpoint.Path("/library-books")
+  @RestEndpoint.ContentType("application/json")
+  @RestEndpoint.Accept("text/csv")
+  internal data class Csv(
+    override val body: LibraryBookRep.Creator,
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   internal data class NotPresentOnGet(
