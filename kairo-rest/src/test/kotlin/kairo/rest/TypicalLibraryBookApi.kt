@@ -1,5 +1,7 @@
 package kairo.rest
 
+import kairo.id.Id
+
 /**
  * This API is used by many tests within the REST Feature.
  * Verify all usages if making changes.
@@ -9,7 +11,7 @@ internal object TypicalLibraryBookApi {
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class Get(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
@@ -46,7 +48,7 @@ internal object TypicalLibraryBookApi {
   @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
   internal data class Update(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
     override val body: LibraryBookRep.Update,
   ) : RestEndpoint<LibraryBookRep.Update, LibraryBookRep>()
 
@@ -54,6 +56,6 @@ internal object TypicalLibraryBookApi {
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class Delete(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 }
