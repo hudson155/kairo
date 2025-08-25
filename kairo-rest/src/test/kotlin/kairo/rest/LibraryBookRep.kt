@@ -1,6 +1,5 @@
 package kairo.rest
 
-import java.util.Optional
 import kairo.id.Id
 
 internal data class LibraryBookRep(
@@ -17,7 +16,7 @@ internal data class LibraryBookRep(
 
   // TODO: Support partial updates.
   internal data class Update(
-    val title: String? = null,
-    val author: Optional<String>? = null,
+    val title: String?,
+    val author: String?,
   )
 }
