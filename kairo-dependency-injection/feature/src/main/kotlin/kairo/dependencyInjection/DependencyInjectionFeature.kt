@@ -1,7 +1,6 @@
 package kairo.dependencyInjection
 
 import kairo.feature.Feature
-import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.KoinAppDeclaration
@@ -27,12 +26,5 @@ public class DependencyInjectionFeature(
 
   override suspend fun stop() {
     stopKoin()
-  }
-
-  /**
-   * Use this interface on any Features that wish to bind Koin dependencies for injection.
-   */
-  public interface HasBindings {
-    public fun KoinApplication.binding()
   }
 }

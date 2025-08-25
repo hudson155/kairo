@@ -1,6 +1,6 @@
 package kairo.id
 
-import kairo.dependencyInjection.DependencyInjectionFeature
+import kairo.dependencyInjection.HasBindings
 import kairo.feature.Feature
 import org.koin.core.KoinApplication
 import org.koin.dsl.module
@@ -10,7 +10,7 @@ import org.koin.dsl.module
  */
 public class IdFeature(
   private val config: IdFeatureConfig = IdFeatureConfig(),
-) : Feature(), DependencyInjectionFeature.HasBindings {
+) : Feature(), HasBindings {
   override val name: String = "ID"
 
   override fun KoinApplication.binding() {
