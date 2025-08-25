@@ -1,7 +1,7 @@
 package kairo.rest.template
 
-import kairo.rest.KairoRouting
 import kairo.rest.RestEndpoint
+import kotlin.reflect.KClass
 
 internal object RestEndpointTemplateErrorBuilder {
   val methodAnnotation: String =
@@ -16,7 +16,6 @@ internal object RestEndpointTemplateErrorBuilder {
   val acceptAnnotation: String =
     "@${RestEndpoint::class.simpleName}.${RestEndpoint.Accept::class.simpleName}"
 
-  context(routing: KairoRouting<*>)
-  fun endpoint(): String =
-    "REST endpoint ${routing.endpoint.kotlinClass.qualifiedName}"
+  fun endpoint(endpoint: KClass<out RestEndpoint<*, *>>): String =
+    "REST endpoint ${endpoint.qualifiedName}"
 }

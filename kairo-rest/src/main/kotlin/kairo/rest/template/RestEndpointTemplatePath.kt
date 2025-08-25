@@ -1,7 +1,5 @@
 package kairo.rest.template
 
-import kairo.rest.KairoRouting
-
 /**
  * Part of [RestEndpointTemplate] that represents the path, including path params.
  * See the KDoc there.
@@ -9,6 +7,16 @@ import kairo.rest.KairoRouting
 public data class RestEndpointTemplatePath(
   val components: List<Component>,
 ) {
+  internal constructor(vararg components: Component) : this(components.toList())
+
+  override fun toString(): String =
+    components.joinToString("/", prefix = "/") { component ->
+      when (component) {
+        is Component.Constant -> component.value
+        is Component.Param -> ":${component.value}"
+      }
+    }
+
   public sealed class Component {
     public data class Constant(val value: String) : Component()
 
@@ -25,11 +33,8 @@ public data class RestEndpointTemplatePath(
   }
 
   public companion object {
-    context(error: RestEndpointTemplateErrorBuilder, routing: KairoRouting<*>)
     internal fun from(string: String): RestEndpointTemplatePath {
-      require(string.startsWith('/')) {
-        "${error.endpoint()} must start with a slash."
-      }
+      require(string.startsWith('/')) { "Paths must start with a slash" }
       return RestEndpointTemplatePath(string.drop(1).split('/').map { Component.from(it) })
     }
   }

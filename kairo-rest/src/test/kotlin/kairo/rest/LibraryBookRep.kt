@@ -1,11 +1,10 @@
 package kairo.rest
 
-import com.fasterxml.jackson.annotation.JsonInclude
 import java.util.Optional
-import kairo.id.KairoId
+import kairo.id.Id
 
 internal data class LibraryBookRep(
-  val id: KairoId,
+  val id: Id,
   val title: String,
   val author: String?,
   val isbn: String,
@@ -16,7 +15,7 @@ internal data class LibraryBookRep(
     val isbn: String,
   )
 
-  @JsonInclude(value = JsonInclude.Include.NON_NULL)
+  // TODO: Support partial updates.
   internal data class Update(
     val title: String? = null,
     val author: Optional<String>? = null,

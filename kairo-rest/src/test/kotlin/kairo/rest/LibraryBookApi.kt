@@ -6,7 +6,7 @@ import kairo.id.Id
  * This API is used by many tests within the REST Feature.
  * Verify all usages if making changes.
  */
-internal object TypicalLibraryBookApi {
+internal object LibraryBookApi {
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
@@ -24,7 +24,6 @@ internal object TypicalLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal data class SearchByIsbn(
     @QueryParam val isbn: String,
-    @QueryParam val strict: Boolean?,
   ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("GET")

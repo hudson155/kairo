@@ -53,25 +53,21 @@ internal class DarbEncoderTest {
       DarbEncoder.decode("5.C8").shouldContainExactly(true, true, false, false, true)
       DarbEncoder.decode("5.F8").shouldContainExactly(true, true, true, true, true)
       DarbEncoder.decode("5.f8").shouldContainExactly(true, true, true, true, true)
-      DarbEncoder.decode("23.2CB08E").shouldBe(
-        listOf(
-          false, false, true, false,
-          true, true, false, false,
-          true, false, true, true,
-          false, false, false, false,
-          true, false, false, false,
-          true, true, true,
-        ),
+      DarbEncoder.decode("23.2CB08E").shouldContainExactly(
+        false, false, true, false,
+        true, true, false, false,
+        true, false, true, true,
+        false, false, false, false,
+        true, false, false, false,
+        true, true, true,
       )
-      DarbEncoder.decode("23.2cb08e").shouldBe(
-        listOf(
-          false, false, true, false,
-          true, true, false, false,
-          true, false, true, true,
-          false, false, false, false,
-          true, false, false, false,
-          true, true, true,
-        ),
+      DarbEncoder.decode("23.2cb08e").shouldContainExactly(
+        false, false, true, false,
+        true, true, false, false,
+        true, false, true, true,
+        false, false, false, false,
+        true, false, false, false,
+        true, true, true,
       )
     }
 
