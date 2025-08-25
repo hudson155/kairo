@@ -10,6 +10,8 @@ kotlin {
 }
 
 dependencies {
+  implementation(project(":kairo-reflect"))
+
   api(libs.ktorServer.core)
   implementation(libs.serialization.core)
 }
