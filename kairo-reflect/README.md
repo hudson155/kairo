@@ -33,6 +33,6 @@ Preserves full generic info (`List<String>`, not just `List<*>`).
 
 ```kotlin
 abstract class MyClass<T : Any> {
-  val type: KairoType<T> = inferType(MyClass::class, 0, this::class)
+  val type: KairoType<T> = KairoType.from(MyClass::class, 0, this::class)
 }
 ```
