@@ -7,9 +7,6 @@ import kairo.rest.LibraryBookApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-/**
- * This test uses [LibraryBookApi] to test typical (happy path) cases.
- */
 internal class TypicalRestEndpointTemplateTest {
   @Test
   fun get(): Unit =
