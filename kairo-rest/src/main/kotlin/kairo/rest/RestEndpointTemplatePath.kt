@@ -23,7 +23,12 @@ public data class RestEndpointTemplatePath(
   }
 
   public companion object {
-    public fun from(string: String): RestEndpointTemplatePath =
-      RestEndpointTemplatePath(string.split('/').map { Component.from(it) })
+    context(error: RestEndpointTemplateErrorBuilder, routing: KairoRouting<*>)
+    internal fun from(string: String): RestEndpointTemplatePath {
+      require(string.startsWith('/')) {
+        "${error.endpoint()} must start with a slash."
+      }
+      return RestEndpointTemplatePath(string.drop(1).split('/').map { Component.from(it) })
+    }
   }
 }

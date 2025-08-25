@@ -5,7 +5,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.BadContentTypeFormatException
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
-import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotations
 import kotlin.reflect.full.hasAnnotation
 
@@ -13,7 +12,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 
 /**
  * A REST endpoint template instance represents a specific subclass of [RestEndpoint].
- * In fact, it can be created from a [RestEndpoint] class reference using [RestEndpointTemplate.from].
+ * In fact, it can be created from a [RestEndpoint] class reference using [RestEndpointTemplate.create].
  */
 public data class RestEndpointTemplate(
   val method: HttpMethod,
@@ -49,29 +48,30 @@ public data class RestEndpointTemplate(
   }
 
   public companion object {
-    public fun from(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
-      logger.debug { "Building REST endpoint template (endpoint=$endpoint)." }
+    context(routing: KairoRouting<*>)
+    public fun create(): RestEndpointTemplate {
+      logger.debug { "Building REST endpoint template (endpoint=${routing.endpoint.kotlinClass})." }
       val template = with(RestEndpointTemplateErrorBuilder) {
-        with(RestEndpointTemplateParams.from(endpoint)) {
-          build(endpoint)
+        with(RestEndpointTemplateParams.create()) {
+          build()
         }
       }
-      logger.debug { "Built REST endpoint template (endpoint=$endpoint, template=$template)." }
+      logger.debug { "Built REST endpoint template (endpoint=${routing.endpoint.kotlinClass}, template=$template)." }
       return template
     }
 
-    context(error: RestEndpointTemplateErrorBuilder, params: RestEndpointTemplateParams)
-    private fun build(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
-      require(endpoint.isData) {
-        "${error.restEndpoint(endpoint)} must be a data class or data object."
-      }
-      validateParams(endpoint)
+    context(error: RestEndpointTemplateErrorBuilder, params: RestEndpointTemplateParams, routing: KairoRouting<*>)
+    private fun build(): RestEndpointTemplate {
+      val endpoint = routing.endpoint.kotlinClass
+      require(endpoint.isData) { "${error.endpoint()} must be a data class or data object." }
+      validateParams()
+      val definition = definition()
       return RestEndpointTemplate(
-        method = parseMethod(endpoint),
-        path = parsePath(endpoint),
-        query = parseQuery(endpoint),
-        contentType = parseContentType(endpoint),
-        accept = parseAccept(endpoint),
+        method = method(definition),
+        path = path(definition),
+        query = query(),
+        contentType = contentType(definition),
+        accept = accept(definition),
       )
     }
 
@@ -80,61 +80,53 @@ public data class RestEndpointTemplate(
      * Param specifics and how their annotations relate to class-level annotations such as [RestEndpoint.Path]
      * are validated within the appropriate parse methods in this class.
      */
-    context(error: RestEndpointTemplateErrorBuilder, params: RestEndpointTemplateParams)
-    private fun validateParams(endpoint: KClass<out RestEndpoint<*, *>>) {
+    context(error: RestEndpointTemplateErrorBuilder, params: RestEndpointTemplateParams, routing: KairoRouting<*>)
+    private fun validateParams() {
       params.forEach { param ->
         val isPath = param.hasAnnotation<RestEndpoint.PathParam>()
         val isQuery = param.hasAnnotation<RestEndpoint.QueryParam>()
         if (param.name == RestEndpoint<*, *>::body.name) {
           require(!isPath && !isQuery) {
-            "${error.restEndpoint(endpoint)} body cannot be param."
+            "${error.endpoint()} body cannot be param."
           }
           return@validateParams
         }
         require(!(isPath && isQuery)) {
-          "${error.restEndpoint(endpoint)} param cannot be both path and query (param=${param.name})."
+          "${error.endpoint()} param cannot be both path and query (param=${param.name})."
         }
         require(isPath || isQuery) {
-          "${error.restEndpoint(endpoint)} param must be path or query (param=${param.name})."
+          "${error.endpoint()} param must be path or query (param=${param.name})."
         }
       }
     }
 
-    context(error: RestEndpointTemplateErrorBuilder)
-    private fun parseMethod(endpoint: KClass<out RestEndpoint<*, *>>): HttpMethod {
-      val annotations = endpoint.findAnnotations<RestEndpoint.Method>()
+    context(error: RestEndpointTemplateErrorBuilder, routing: KairoRouting<*>)
+    private fun definition(): RestEndpoint.Definition {
+      val endpoint = routing.endpoint.kotlinClass
+      val annotations = endpoint.findAnnotations<RestEndpoint.Definition>()
       require(annotations.isNotEmpty()) {
-        "${error.restEndpoint(endpoint)} must define ${error.methodAnnotation}."
+        "${error.endpoint()} must define ${error.definition}."
       }
       val annotation = annotations.singleOrNull()
       requireNotNull(annotation) {
-        "${error.restEndpoint(endpoint)} cannot define multiple of ${error.methodAnnotation}."
+        "${error.endpoint()} cannot define multiple of ${error.definition}."
       }
-      return HttpMethod.parse(annotation.value.uppercase())
+      return annotation
     }
 
-    context(error: RestEndpointTemplateErrorBuilder)
-    private fun parsePath(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplatePath {
-      val annotations = endpoint.findAnnotations<RestEndpoint.Path>()
-      require(annotations.isNotEmpty()) {
-        "${error.restEndpoint(endpoint)} must define ${error.pathAnnotation}."
-      }
-      val annotation = annotations.singleOrNull()
-      requireNotNull(annotation) {
-        "${error.restEndpoint(endpoint)} cannot define multiple of ${error.pathAnnotation}."
-      }
-      require(annotation.value.startsWith('/')) {
-        "${error.restEndpoint(endpoint)} must start with a slash."
-      }
-      return RestEndpointTemplatePath.from(annotation.value)
-    }
+    private fun method(definition: RestEndpoint.Definition): HttpMethod =
+      HttpMethod.parse(definition.method.uppercase())
 
-    context(error: RestEndpointTemplateErrorBuilder, params: RestEndpointTemplateParams)
-    private fun parseQuery(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplateQuery {
+    context(error: RestEndpointTemplateErrorBuilder, routing: KairoRouting<*>)
+    private fun path(definition: RestEndpoint.Definition): RestEndpointTemplatePath =
+      RestEndpointTemplatePath.from(definition.path)
+
+    context(error: RestEndpointTemplateErrorBuilder, params: RestEndpointTemplateParams, routing: KairoRouting<*>)
+    private fun query(): RestEndpointTemplateQuery {
       val params = params.filter { it.hasAnnotation<RestEndpoint.QueryParam>() }
       params.forEach { param ->
         require(!param.isOptional) {
-          "${error.restEndpoint(endpoint)} query param must not be optional (param=${param.name})."
+          "${error.endpoint()} query param must not be optional (param=${param.name})."
         }
       }
       return RestEndpointTemplateQuery(
@@ -144,40 +136,28 @@ public data class RestEndpointTemplate(
       )
     }
 
-    context(error: RestEndpointTemplateErrorBuilder)
-    private fun parseContentType(endpoint: KClass<out RestEndpoint<*, *>>): ContentType? {
-      val annotations = endpoint.findAnnotations<RestEndpoint.ContentType>()
-      if (annotations.isEmpty()) return null
-      val annotation = annotations.singleOrNull()
-      requireNotNull(annotation) {
-        "Endpoint ${endpoint.qualifiedName} cannot define multiple of" +
-          " @${RestEndpoint::class.simpleName}.${RestEndpoint.ContentType::class.simpleName}."
-      }
+    context(error: RestEndpointTemplateErrorBuilder, routing: KairoRouting<*>)
+    private fun contentType(definition: RestEndpoint.Definition): ContentType? {
+      if (definition.contentType.isEmpty()) return null
       try {
-        return ContentType.parse(annotation.value)
+        return ContentType.parse(definition.contentType)
       } catch (e: BadContentTypeFormatException) {
         val eMessage = buildString {
-          append("${error.restEndpoint(endpoint)} content type is invalid.")
+          append("${error.endpoint()} content type is invalid.")
           e.message?.let { append(" $it.") }
         }
         throw IllegalArgumentException(eMessage, e)
       }
     }
 
-    context(error: RestEndpointTemplateErrorBuilder)
-    private fun parseAccept(endpoint: KClass<out RestEndpoint<*, *>>): ContentType? {
-      val annotations = endpoint.findAnnotations<RestEndpoint.Accept>()
-      if (annotations.isEmpty()) return null
-      val annotation = annotations.singleOrNull()
-      requireNotNull(annotation) {
-        "Endpoint ${endpoint.qualifiedName} cannot define multiple of" +
-          " @${RestEndpoint::class.simpleName}.${RestEndpoint.Accept::class.simpleName}."
-      }
+    context(error: RestEndpointTemplateErrorBuilder, routing: KairoRouting<*>)
+    private fun accept(definition: RestEndpoint.Definition): ContentType? {
+      if (definition.accept.isEmpty()) return null
       try {
-        return ContentType.parse(annotation.value)
+        return ContentType.parse(definition.accept)
       } catch (e: BadContentTypeFormatException) {
         val eMessage = buildString {
-          append("${error.restEndpoint(endpoint)} accept type is invalid.")
+          append("${error.endpoint()} accept type is invalid.")
           e.message?.let { append(" $it.") }
         }
         throw IllegalArgumentException(eMessage, e)
