@@ -1,22 +1,27 @@
 package kairo.rest
 
-import kairo.id.Id
+import kotlin.time.Instant
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal data class LibraryBookRep(
-  val id: Id,
-  val title: String,
-  val author: String?,
+  val id: LibraryBookId,
+  val createdAt: Instant,
+  val title: String?,
+  val authors: List<String>,
   val isbn: String,
 ) {
+  @Serializable
   internal data class Creator(
-    val title: String,
-    val author: String?,
+    val title: String?,
+    val authors: List<String>,
     val isbn: String,
   )
 
+  @Serializable
   // TODO: Support partial updates.
   internal data class Update(
     val title: String?,
-    val author: String?,
+    val authors: List<String>,
   )
 }
