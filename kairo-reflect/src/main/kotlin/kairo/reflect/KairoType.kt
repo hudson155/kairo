@@ -7,6 +7,10 @@ import kotlin.reflect.full.allSupertypes
 import kotlin.reflect.jvm.javaType
 import kotlin.reflect.typeOf
 
+/**
+ * Includes context from [Class], [KClass], [Type], and [KType].
+ * Preserves full generic info.
+ */
 @Suppress("UseDataClass")
 public class KairoType<T : Any>(
   public val kotlinType: KType,
