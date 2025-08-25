@@ -4,8 +4,6 @@ plugins {
 }
 
 dependencies {
-  api(project(":kairo-util"))
-
   api(libs.coroutines.test)
   api(libs.kotest)
   api(libs.mockk)
