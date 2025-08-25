@@ -1,17 +1,14 @@
 package kairo.healthCheck.feature
 
-import io.ktor.resources.Resource
+import kairo.rest.RestEndpoint
 
 // TODO: Add tests for this resource.
-@Resource("/health")
-public data object HealthCheckApi {
-  @Resource("liveness")
-  public data class Liveness(
-    val parent: HealthCheckApi = HealthCheckApi,
-  )
+public object HealthCheckApi {
+  @RestEndpoint.Method("GET")
+  @RestEndpoint.Path("/health/liveness")
+  public data object Liveness : RestEndpoint<Unit, Unit>()
 
-  @Resource("readiness")
-  public data class Readiness(
-    val parent: HealthCheckApi = HealthCheckApi,
-  )
+  @RestEndpoint.Method("GET")
+  @RestEndpoint.Path("/health/readiness")
+  public data object Readiness : RestEndpoint<Unit, HealthCheckRep>()
 }

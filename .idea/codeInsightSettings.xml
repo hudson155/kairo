@@ -2,6 +2,7 @@
 <project version="4">
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
+      <name>com.apple.eawt.*</name>
       <name>com.google.cloud.secretmanager.v1beta1.*</name>
       <name>com.google.cloud.secretmanager.v1beta2.*</name>
       <name>com.sun.jdi.*</name>
@@ -28,6 +29,7 @@
       <name>org.koin.core.context.GlobalContext.*</name>
       <name>org.koin.java.*</name>
       <name>org.koin.mp.*</name>
+      <name>org.w3c.dom.*</name>
       <name>sun.awt.*</name>
       <name>sun.net.*</name>
       <name>sun.nio.*</name>

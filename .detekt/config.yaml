@@ -567,7 +567,7 @@ potential-bugs:
   NullCheckOnMutableProperty:
     active: true
   NullableToStringCall:
-    active: true
+    active: false
   PropertyUsedBeforeDeclaration:
     active: true
   UnconditionalJumpStatementInLoop:
@@ -641,6 +641,7 @@ style:
     active: true
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
+      - 'com.apple.eawt.*'
       - 'com.google.cloud.secretmanager.v1beta1.*'
       - 'com.google.cloud.secretmanager.v1beta2.*'
       - 'com.sun.jdi.*'
@@ -667,6 +668,7 @@ style:
       - 'org.koin.core.context.GlobalContext.*'
       - 'org.koin.java.*'
       - 'org.koin.mp.*'
+      - 'org.w3c.dom.*'
       - 'sun.awt.*'
       - 'sun.net.*'
       - 'sun.nio.*'

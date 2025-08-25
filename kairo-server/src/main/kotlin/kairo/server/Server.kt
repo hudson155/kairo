@@ -139,5 +139,5 @@ public class Server(
   }
 
   override fun toString(): String =
-    "Server(name='$name', state=$state)"
+    "Server(name='$name', state='$state')"
 }
