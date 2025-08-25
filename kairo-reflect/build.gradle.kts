@@ -3,12 +3,8 @@ plugins {
   id("kairo-library-publish")
 }
 
-kotlin {
-  compilerOptions {
-    freeCompilerArgs.add("-Xallow-kotlin-package")
-  }
-}
-
 dependencies {
+  api(kotlin("reflect"))
+
   testImplementation(project(":kairo-testing"))
 }

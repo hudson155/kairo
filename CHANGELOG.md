@@ -98,9 +98,6 @@ in favor of external libraries that do the job far better.
 - **Downgrade from Log4j 3 to Log4j 2.**
   Log4j 3 is in beta, and is not widely used.
 
-- **Removal of `KairoType`.**
-  Use Kotlin-native or Java-native solutions instead.
-
 - **`kairo-command-runner` has been removed.**
   Its primary use case was to provide a way to connect to GCP SQL instances
   that used [IAM Authentication](https://cloud.google.com/sql/docs/postgres/iam-authentication).
