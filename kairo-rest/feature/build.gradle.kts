@@ -7,6 +7,7 @@ plugins {
 dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
+  api(project(":kairo-rest"))
 
   implementation(libs.ktorSerialization.json)
   implementation(libs.ktorServer.autoHeadResponse)
