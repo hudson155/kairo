@@ -7,8 +7,8 @@ import kotlinx.serialization.MetaSerializable
  * Implementations must be Kotlin data classes or data objects.
  * See this Feature's README or tests for some examples.
  *
- * [I] (think: input) represents the type of the request body. If none, use [Nothing].
- * [O] (think: output) represents the type of the response body. If none, use [Nothing].
+ * [I] (think: input) represents the type of the request body. If none, use [Unit].
+ * [O] (think: output) represents the type of the response body. If none, use [Unit].
  */
 public abstract class RestEndpoint<I : Any, O : Any> {
   @Target(AnnotationTarget.CLASS)
