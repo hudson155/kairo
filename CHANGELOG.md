@@ -58,6 +58,9 @@ in favor of external libraries that do the job far better.
   Koin is a Kotlin-native dependency injection framework
   that uses compiler plugins instead of runtime reflection.
 
+- **New routing syntax.**
+  TODO: Explain this further.
+
 - Kairo IDs like `user_ccU4Rn4DKVjCMqt3d0oAw3` now offer several distinct advantages.
   - **Semantic prefixes** (the "user" portion) for human-readability.
   - **Compile-time safety without runtime overhead.**
@@ -85,6 +88,8 @@ in favor of external libraries that do the job far better.
 
 - In rare instances, the health readiness check used to succeed before Ktor was ready to take requests.
   **Health checks now fail until Ktor is ready.**
+
+- The `@RestEndpoint.ContentType` and `@RestEndpoint.Accept` annotations are now optional.
 
 - **Colored call logging when running locally.**
   Colored call logging helps easily understand logs and identify failures locally.
