@@ -18,18 +18,6 @@ dependencies {
 
 ## Usage
 
-### `inferKClass()` / `inferKType()`
-
-Allows you to access the concrete `KClass<T>` or `KType` of a generic type parameter at runtime.
-Preserves full generic info (`List<String>`, not just `List<*>`).
-
-```kotlin
-abstract class MyClass<T : Any> {
-  val kClass: KClass<T> = inferClass(MyClass::class, 0, this::class)
-  val type: KType = inferType(MyClass::class, 0, this::class)
-}
-```
-
 ### `singleNullOrThrow()`
 
 Kotlin's `single()` and `singleOrNull()` functions are excellent utilities,
