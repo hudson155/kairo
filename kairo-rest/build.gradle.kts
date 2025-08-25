@@ -10,5 +10,6 @@ kotlin {
 }
 
 dependencies {
+  api(libs.ktorServer.core)
   implementation(libs.serialization.core)
 }

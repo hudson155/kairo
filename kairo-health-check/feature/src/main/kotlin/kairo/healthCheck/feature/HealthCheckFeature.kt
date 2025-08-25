@@ -2,7 +2,7 @@ package kairo.healthCheck.feature
 
 import io.ktor.server.application.Application
 import kairo.feature.Feature
-import kairo.rest.RestFeature
+import kairo.rest.HasRouting
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -17,7 +17,7 @@ public class HealthCheckFeature(
   healthChecks: Map<String, HealthCheck> = emptyMap(),
   includeDefaultHealthCheck: Boolean = true,
   timeout: Duration = 2.seconds,
-) : Feature(), RestFeature.HasRouting {
+) : Feature(), HasRouting {
   override val name: String = "Health Check"
 
   private val serverIsRunning: AtomicBoolean = AtomicBoolean(false)

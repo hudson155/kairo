@@ -2,6 +2,7 @@ package kairo.healthCheck.feature
 
 import io.ktor.server.application.Application
 import io.ktor.server.routing.routing
+import kairo.rest.HasRouting
 import kairo.rest.RestFeature
 import kairo.rest.route
 import kotlin.time.Duration
@@ -9,7 +10,7 @@ import kotlin.time.Duration
 internal class HealthCheckHandler(
   healthChecks: Map<String, HealthCheck>,
   timeout: Duration,
-) : RestFeature.HasRouting {
+) : HasRouting {
   private val healthCheckService: HealthCheckService = HealthCheckService(healthChecks, timeout)
 
   override fun Application.routing() {
