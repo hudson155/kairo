@@ -667,6 +667,7 @@ style:
       - 'org.koin.core.context.GlobalContext.*'
       - 'org.koin.java.*'
       - 'org.koin.mp.*'
+      - 'org.w3c.dom.*'
       - 'sun.awt.*'
       - 'sun.net.*'
       - 'sun.nio.*'
