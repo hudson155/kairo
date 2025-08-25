@@ -6,6 +6,9 @@ import kotlin.reflect.KClass
 public class RestEndpointHandler<I : Any, O : Any, E : RestEndpoint<I, O>> {
   internal var handle: (suspend (endpoint: E) -> O)? = null
 
+  /**
+   * TODO: Docs.
+   */
   public fun handle(handle: suspend (endpoint: E) -> O) {
     // TODO: Verify handle is set exactly once.
     this.handle = handle

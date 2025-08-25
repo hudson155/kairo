@@ -33,7 +33,10 @@ public abstract class RestEndpoint<I : Any, O : Any> {
   @Target(AnnotationTarget.CLASS)
   public annotation class Accept(val value: String)
 
-  public open val body: suspend () -> I = { throw NotImplementedError() }
+  public open val body: I
+    get() {
+      throw NotImplementedError()
+    }
 }
 
 // TODO: Log when endpoints are registered.
