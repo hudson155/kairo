@@ -65,13 +65,12 @@ public data class RestEndpointTemplate(
       val endpoint = routing.endpoint.kotlinClass
       require(endpoint.isData) { "${error.endpoint()} must be a data class or data object." }
       validateParams()
-      val definition = definition()
       return RestEndpointTemplate(
-        method = method(definition),
-        path = path(definition),
-        query = query(),
-        contentType = contentType(definition),
-        accept = accept(definition),
+        method = parseMethod(),
+        path = parsePath(),
+        query = parseQuery(),
+        contentType = parseContentType(),
+        accept = parseAccept(),
       )
     }
 
@@ -101,28 +100,38 @@ public data class RestEndpointTemplate(
     }
 
     context(error: RestEndpointTemplateErrorBuilder, routing: KairoRouting<*>)
-    private fun definition(): RestEndpoint.Definition {
+    private fun parseMethod(): HttpMethod {
       val endpoint = routing.endpoint.kotlinClass
-      val annotations = endpoint.findAnnotations<RestEndpoint.Definition>()
+      val annotations = endpoint.findAnnotations<RestEndpoint.Method>()
       require(annotations.isNotEmpty()) {
-        "${error.endpoint()} must define ${error.definition}."
+        "${error.endpoint()} must define ${error.methodAnnotation}."
       }
       val annotation = annotations.singleOrNull()
       requireNotNull(annotation) {
-        "${error.endpoint()} cannot define multiple of ${error.definition}."
+        "${error.endpoint()} cannot define multiple of ${error.methodAnnotation}."
       }
-      return annotation
+      return HttpMethod.parse(annotation.value.uppercase())
     }
 
-    private fun method(definition: RestEndpoint.Definition): HttpMethod =
-      HttpMethod.parse(definition.method.uppercase())
-
     context(error: RestEndpointTemplateErrorBuilder, routing: KairoRouting<*>)
-    private fun path(definition: RestEndpoint.Definition): RestEndpointTemplatePath =
-      RestEndpointTemplatePath.from(definition.path)
+    private fun parsePath(): RestEndpointTemplatePath {
+      val endpoint = routing.endpoint.kotlinClass
+      val annotations = endpoint.findAnnotations<RestEndpoint.Path>()
+      require(annotations.isNotEmpty()) {
+        "${error.endpoint()} must define ${error.pathAnnotation}."
+      }
+      val annotation = annotations.singleOrNull()
+      requireNotNull(annotation) {
+        "${error.endpoint()} cannot define multiple of ${error.pathAnnotation}."
+      }
+      require(annotation.value.startsWith('/')) {
+        "${error.endpoint()} must start with a slash."
+      }
+      return RestEndpointTemplatePath.from(annotation.value)
+    }
 
     context(error: RestEndpointTemplateErrorBuilder, params: RestEndpointTemplateParams, routing: KairoRouting<*>)
-    private fun query(): RestEndpointTemplateQuery {
+    private fun parseQuery(): RestEndpointTemplateQuery {
       val params = params.filter { it.hasAnnotation<RestEndpoint.QueryParam>() }
       params.forEach { param ->
         require(!param.isOptional) {
@@ -137,10 +146,17 @@ public data class RestEndpointTemplate(
     }
 
     context(error: RestEndpointTemplateErrorBuilder, routing: KairoRouting<*>)
-    private fun contentType(definition: RestEndpoint.Definition): ContentType? {
-      if (definition.contentType.isEmpty()) return null
+    private fun parseContentType(): ContentType? {
+      val endpoint = routing.endpoint.kotlinClass
+      val annotations = endpoint.findAnnotations<RestEndpoint.ContentType>()
+      if (annotations.isEmpty()) return null
+      val annotation = annotations.singleOrNull()
+      requireNotNull(annotation) {
+        "Endpoint ${endpoint.qualifiedName} cannot define multiple of" +
+          " @${RestEndpoint::class.simpleName}.${RestEndpoint.ContentType::class.simpleName}."
+      }
       try {
-        return ContentType.parse(definition.contentType)
+        return ContentType.parse(annotation.value)
       } catch (e: BadContentTypeFormatException) {
         val eMessage = buildString {
           append("${error.endpoint()} content type is invalid.")
@@ -151,10 +167,17 @@ public data class RestEndpointTemplate(
     }
 
     context(error: RestEndpointTemplateErrorBuilder, routing: KairoRouting<*>)
-    private fun accept(definition: RestEndpoint.Definition): ContentType? {
-      if (definition.accept.isEmpty()) return null
+    private fun parseAccept(): ContentType? {
+      val endpoint = routing.endpoint.kotlinClass
+      val annotations = endpoint.findAnnotations<RestEndpoint.Accept>()
+      if (annotations.isEmpty()) return null
+      val annotation = annotations.singleOrNull()
+      requireNotNull(annotation) {
+        "Endpoint ${endpoint.qualifiedName} cannot define multiple of" +
+          " @${RestEndpoint::class.simpleName}.${RestEndpoint.Accept::class.simpleName}."
+      }
       try {
-        return ContentType.parse(definition.accept)
+        return ContentType.parse(annotation.value)
       } catch (e: BadContentTypeFormatException) {
         val eMessage = buildString {
           append("${error.endpoint()} accept type is invalid.")

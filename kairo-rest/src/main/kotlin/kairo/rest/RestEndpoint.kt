@@ -11,24 +11,27 @@ import kotlinx.serialization.MetaSerializable
  * [O] (think: output) represents the type of the response body. If none, use [Unit].
  */
 public abstract class RestEndpoint<I : Any, O : Any> {
-  @Suppress("LongParameterList")
+  @Target(AnnotationTarget.CLASS)
+  public annotation class Method(val value: String)
+
+  /**
+   * Format: "/library-books/:libraryBookId".
+   */
   @Target(AnnotationTarget.CLASS)
   @MetaSerializable
-  public annotation class Definition(
-    val method: String,
-    /**
-     * Format: "/library-books/:libraryBookId".
-     */
-    val path: String,
-    val contentType: String = "",
-    val accept: String = "",
-  )
+  public annotation class Path(val value: String)
 
   @Target(AnnotationTarget.VALUE_PARAMETER)
   public annotation class PathParam
 
   @Target(AnnotationTarget.VALUE_PARAMETER)
   public annotation class QueryParam
+
+  @Target(AnnotationTarget.CLASS)
+  public annotation class ContentType(val value: String)
+
+  @Target(AnnotationTarget.CLASS)
+  public annotation class Accept(val value: String)
 
   public open val body: suspend () -> I = { throw NotImplementedError() }
 }

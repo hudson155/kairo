@@ -39,6 +39,7 @@ public class DataClassRestEndpointReader<I : Any, out E : RestEndpoint<I, *>>(
     return constructor.callBy(arguments)
   }
 
+  @Suppress("UNCHECKED_CAST")
   private fun arguments(call: ApplicationCall): Map<KParameter, Any?> =
     constructor.valueParameters.associateWith { param ->
       if (param.name == RestEndpoint<*, *>::body.name) {

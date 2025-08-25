@@ -35,6 +35,7 @@ ktorServer-defaultHeaders = { module = "io.ktor:ktor-server-default-headers" }
 ktorServer-doubleReceive = { module = "io.ktor:ktor-server-double-receive" }
 ktorServer-forwardedHeader = { module = "io.ktor:ktor-server-forwarded-header" }
 ktorServer-netty = { module = "io.ktor:ktor-server-netty" }
+ktorServer-resources = { module = "io.ktor:ktor-server-resources" }
 
 logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "logging" }
 
