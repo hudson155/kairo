@@ -28,7 +28,7 @@
       <name>org.koin.core.context.GlobalContext.*</name>
       <name>org.koin.java.*</name>
       <name>org.koin.mp.*</name>
-      <name>org.w3c.dom</name>
+      <name>org.w3c.dom.*</name>
       <name>sun.awt.*</name>
       <name>sun.net.*</name>
       <name>sun.nio.*</name>
