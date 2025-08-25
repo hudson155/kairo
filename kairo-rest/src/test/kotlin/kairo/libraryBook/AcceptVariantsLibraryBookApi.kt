@@ -19,27 +19,27 @@ internal object AcceptVariantsLibraryBookApi {
   /**
    * This is actually valid; an empty string means "Any" content type.
    */
-  @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library-books/:libraryBookId")
+  @RestEndpoint.Method("POST")
+  @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("")
   internal data class Empty(
-    @PathParam val libraryBookId: LibraryBookId,
-  ) : RestEndpoint<Unit, LibraryBookRep>()
+    override val body: LibraryBookRep.Creator,
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
   /**
    * Means "Any" content type.
    */
-  @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library-books/:libraryBookId")
+  @RestEndpoint.Method("POST")
+  @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("*/*")
   internal data class Star(
-    @PathParam val libraryBookId: LibraryBookId,
-  ) : RestEndpoint<Unit, LibraryBookRep>()
+    override val body: LibraryBookRep.Creator,
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
-  @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library-books/:libraryBookId")
+  @RestEndpoint.Method("POST")
+  @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("application")
   internal data class Malformed(
-    @PathParam val libraryBookId: LibraryBookId,
-  ) : RestEndpoint<Unit, LibraryBookRep>()
+    override val body: LibraryBookRep.Creator,
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 }

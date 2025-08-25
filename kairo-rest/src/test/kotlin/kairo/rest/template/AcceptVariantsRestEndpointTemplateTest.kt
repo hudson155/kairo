@@ -54,10 +54,9 @@ internal class AcceptVariantsRestEndpointTemplateTest {
       RestEndpointTemplate.from(AcceptVariantsLibraryBookApi.Empty::class)
         .shouldBe(
           RestEndpointTemplate(
-            method = HttpMethod.Get,
+            method = HttpMethod.Post,
             path = RestEndpointTemplatePath(
               RestEndpointTemplatePath.Component.Constant("library-books"),
-              RestEndpointTemplatePath.Component.Param("libraryBookId"),
             ),
             query = RestEndpointTemplateQuery(),
             contentType = null,
@@ -75,10 +74,9 @@ internal class AcceptVariantsRestEndpointTemplateTest {
       RestEndpointTemplate.from(AcceptVariantsLibraryBookApi.Star::class)
         .shouldBe(
           RestEndpointTemplate(
-            method = HttpMethod.Get,
+            method = HttpMethod.Post,
             path = RestEndpointTemplatePath(
               RestEndpointTemplatePath.Component.Constant("library-books"),
-              RestEndpointTemplatePath.Component.Param("libraryBookId"),
             ),
             query = RestEndpointTemplateQuery(),
             contentType = null,
