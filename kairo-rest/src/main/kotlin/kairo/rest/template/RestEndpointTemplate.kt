@@ -27,7 +27,7 @@ public data class RestEndpointTemplate(
   override fun toString(): String {
     val value = buildList {
       add("[$contentType -> $accept]")
-      add(method.value)
+      add(method.toString())
       add(path.toString())
       if (query.params.isNotEmpty()) add(query.toString())
     }.joinToString(" ")
