@@ -1,8 +1,8 @@
 package kairo.rest.template
 
-import kairo.id.KairoId
+import kairo.id.Id
 import kairo.rest.LibraryBookRep
-import kairo.rest.endpoint.RestEndpoint
+import kairo.rest.RestEndpoint
 
 /**
  * This API is for [BrokenAcceptRestEndpointTemplateTest]
@@ -13,7 +13,7 @@ internal object BrokenAcceptLibraryBookApi {
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   internal data class AcceptNotPresentOnGet(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("POST")
@@ -30,7 +30,7 @@ internal object BrokenAcceptLibraryBookApi {
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("")
   internal data class EmptyAccept(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   /**
@@ -40,13 +40,13 @@ internal object BrokenAcceptLibraryBookApi {
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("*/*")
   internal data class StarAccept(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application")
   internal data class MalformedAccept(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 }

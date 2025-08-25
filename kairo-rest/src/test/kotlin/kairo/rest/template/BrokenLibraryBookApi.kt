@@ -1,6 +1,6 @@
 package kairo.rest.template
 
-import kairo.id.KairoId
+import kairo.id.Id
 import kairo.rest.LibraryBookRep
 import kairo.rest.endpoint.RestEndpoint
 
@@ -13,7 +13,7 @@ internal object BrokenLibraryBookApi {
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal class NotDataClass(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")

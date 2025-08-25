@@ -1,6 +1,6 @@
 package kairo.rest.template
 
-import kairo.id.KairoId
+import kairo.id.Id
 import kairo.rest.LibraryBookRep
 import kairo.rest.endpoint.RestEndpoint
 
@@ -14,7 +14,7 @@ internal object BrokenTypeLibraryBookApi {
   @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
   internal data class GetWithBodyNotProvided(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
@@ -22,7 +22,7 @@ internal object BrokenTypeLibraryBookApi {
   @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
   internal data class GetWithBodyProvided(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
     override val body: LibraryBookRep.Creator,
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
@@ -30,14 +30,14 @@ internal object BrokenTypeLibraryBookApi {
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class PatchWithoutBodyNotProvided(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("PATCH")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class PatchWithoutBodyProvided(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
     override val body: Nothing,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 }

@@ -10,8 +10,12 @@ kotlin {
 }
 
 dependencies {
+  implementation(project(":kairo-logging"))
   implementation(project(":kairo-reflect"))
 
   api(libs.ktorServer.core)
   implementation(libs.serialization.core)
+
+  testImplementation(project(":kairo-id"))
+  testImplementation(project(":kairo-testing"))
 }

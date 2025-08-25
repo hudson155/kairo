@@ -1,6 +1,6 @@
 package kairo.rest.template
 
-import kairo.id.KairoId
+import kairo.id.Id
 import kairo.rest.LibraryBookRep
 import kairo.rest.endpoint.RestEndpoint
 
@@ -15,7 +15,7 @@ internal object BrokenContentTypeLibraryBookApi {
   @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
   internal data class ContentTypePresentOnGet(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("POST")

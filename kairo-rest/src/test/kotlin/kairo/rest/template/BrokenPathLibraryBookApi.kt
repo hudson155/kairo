@@ -1,6 +1,6 @@
 package kairo.rest.template
 
-import kairo.id.KairoId
+import kairo.id.Id
 import kairo.rest.LibraryBookRep
 import kairo.rest.endpoint.RestEndpoint
 
@@ -28,35 +28,35 @@ internal object BrokenPathLibraryBookApi {
   @RestEndpoint.Path("/libraryBooks/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class MalformedConstantPathComponent(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:library-book-id")
   @RestEndpoint.Accept("application/json")
   internal data class MalformedParamPathComponent(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class NullablePathParam(
-    @PathParam val libraryBookId: KairoId?,
+    @PathParam val libraryBookId: Id?,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class OptionalPathParam(
-    @PathParam val libraryBookId: KairoId = KairoId("library_book", "2eDS1sMt"),
+    @PathParam val libraryBookId: Id = Id("library_book", "2eDS1sMt"),
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class DuplicatePathParamInPath(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
@@ -68,6 +68,6 @@ internal object BrokenPathLibraryBookApi {
   @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("application/json")
   internal data class PathParamInConstructorButNotInPath(
-    @PathParam val libraryBookId: KairoId,
+    @PathParam val libraryBookId: Id,
   ) : RestEndpoint<Nothing, LibraryBookRep>()
 }
