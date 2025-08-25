@@ -57,12 +57,6 @@ in favor of external libraries that do the job far better.
 - **Dependency injection now uses [Koin](https://insert-koin.io/) instead of Guice.**
   Koin is a Kotlin-native dependency injection framework
   that uses compiler plugins instead of runtime reflection.
-  - Kairo applications are also **no longer required to use dependency injection.**
-    Kairo 5 applications were required to use Guice,
-    since Kairo itself used and expected it internally.
-    Kairo 6 does not use dependency injection internally anymore,
-    and you don't need to use it either if you don't want to.
-    Dependency injection is now a standalone Feature.
 
 - Kairo IDs like `user_ccU4Rn4DKVjCMqt3d0oAw3` now offer several distinct advantages.
   - **Semantic prefixes** (the "user" portion) for human-readability.
