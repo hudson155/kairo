@@ -1,4 +1,7 @@
-package kairo.rest
+package kairo.rest.template
+
+import kairo.rest.KairoRouting
+import kairo.rest.RestEndpoint
 
 internal object RestEndpointTemplateErrorBuilder {
   val methodAnnotation: String =

@@ -1,5 +1,6 @@
-package kairo.rest
+package kairo.rest.template
 
+import kairo.rest.KairoRouting
 import kotlin.reflect.KParameter
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.full.valueParameters

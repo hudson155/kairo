@@ -1,4 +1,6 @@
-package kairo.rest
+package kairo.rest.template
+
+import kairo.rest.KairoRouting
 
 /**
  * Part of [RestEndpointTemplate] that represents the path, including path params.

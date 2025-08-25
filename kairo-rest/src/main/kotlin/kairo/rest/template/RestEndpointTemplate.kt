@@ -1,18 +1,20 @@
-package kairo.rest
+package kairo.rest.template
 
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.BadContentTypeFormatException
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
+import kairo.rest.KairoRouting
+import kairo.rest.RestEndpoint
 import kotlin.reflect.full.findAnnotations
 import kotlin.reflect.full.hasAnnotation
 
 private val logger: KLogger = KotlinLogging.logger {}
 
 /**
- * A REST endpoint template instance represents a specific subclass of [RestEndpoint].
- * In fact, it can be created from a [RestEndpoint] class reference using [RestEndpointTemplate.create].
+ * A REST endpoint template instance represents a specific subclass of [kairo.rest.RestEndpoint].
+ * In fact, it can be created from a [kairo.rest.RestEndpoint] class reference using [RestEndpointTemplate.create].
  */
 public data class RestEndpointTemplate(
   val method: HttpMethod,
@@ -76,7 +78,7 @@ public data class RestEndpointTemplate(
 
     /**
      * This method only ensures that params have the right annotations.
-     * Param specifics and how their annotations relate to class-level annotations such as [RestEndpoint.Path]
+     * Param specifics and how their annotations relate to class-level annotations such as [kairo.rest.RestEndpoint.Path]
      * are validated within the appropriate parse methods in this class.
      */
     context(error: RestEndpointTemplateErrorBuilder, params: RestEndpointTemplateParams, routing: KairoRouting<*>)

@@ -1,4 +1,4 @@
-package kairo.rest
+package kairo.rest.template
 
 /**
  * Part of [RestEndpointTemplate] that represents query params.
