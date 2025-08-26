@@ -52,7 +52,7 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Routing.route(
   endpoint: KClass<E>,
   block: RestEndpointHandler<O, E>.() -> Unit,
 ) {
-  val inputType = KairoType.from<I>(RestEndpoint::class, 0, endpoint)
+  val outputType = KairoType.from<O>(RestEndpoint::class, 1, endpoint)
   val template = RestEndpointTemplate.from(endpoint)
   val route = buildRoute(template)
   val reader = RestEndpointReader.from(endpoint)
@@ -63,7 +63,7 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Routing.route(
     handler.statusCode?.let { statusCode ->
       statusCode(response)?.let { call.response.status(it) }
     }
-    call.respond(response, inputType.toKtor())
+    call.respond(response, outputType.toKtor())
   }
 }
 
