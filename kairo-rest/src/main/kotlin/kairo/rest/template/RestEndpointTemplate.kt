@@ -62,19 +62,20 @@ public data class RestEndpointTemplate(
             .let { it.valueParameters }
         }
       params.forEach { param ->
+        val paramName = checkNotNull(param.name)
         val isPath = param.hasAnnotation<RestEndpoint.PathParam>()
         val isQuery = param.hasAnnotation<RestEndpoint.QueryParam>()
-        if (param.name == RestEndpoint<*, *>::body.name) {
+        if (paramName == RestEndpoint<*, *>::body.name) {
           require(!isPath && !isQuery) {
             "${error.endpoint(endpoint)}: Body cannot be param."
           }
           return@forEach
         }
         require(!(isPath && isQuery)) {
-          "${error.endpoint(endpoint)}: Param cannot be both path and query (param=${param.name})."
+          "${error.endpoint(endpoint)}: Param cannot be both path and query (param=$paramName)."
         }
         require(isPath || isQuery) {
-          "${error.endpoint(endpoint)}: Param must be path or query (param=${param.name})."
+          "${error.endpoint(endpoint)}: Param must be path or query (param=$paramName)."
         }
       }
       return params

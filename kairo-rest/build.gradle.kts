@@ -16,6 +16,7 @@ dependencies {
 
   api(libs.ktorServer.core)
   implementation(libs.serialization.core)
+  implementation(libs.serialization.json)
 
   testImplementation(project(":kairo-id"))
   testImplementation(project(":kairo-testing"))
