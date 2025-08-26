@@ -16,6 +16,7 @@ import kotlin.reflect.full.valueParameters
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.serializer
 
@@ -51,6 +52,8 @@ public class DataClassRestEndpointReader<I : Any, out E : RestEndpoint<I, *>>(
       return@associateWith when (serializer.descriptor.kind) {
         is StructureKind.CLASS ->
           Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
+        is StructureKind.LIST ->
+          Json.decodeFromJsonElement(serializer, JsonArray(values?.map { JsonPrimitive(it) }.orEmpty()))
         is PrimitiveKind ->
           Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
         else -> error("Unsupported kind: ${serializer.descriptor.kind}.")

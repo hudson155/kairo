@@ -70,6 +70,8 @@ in favor of external libraries that do the job far better.
 
 ### Further changes
 
+- Added support for **list query params.**
+
 - **Configs now use [lightbend/config](https://github.com/lightbend/config)'s HOCON.**
   Kairo 5 had a homegrown config library built upon YAML,
   including some bespoke config inheritance functionality.
