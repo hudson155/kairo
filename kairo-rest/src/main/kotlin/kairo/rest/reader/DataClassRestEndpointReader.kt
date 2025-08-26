@@ -47,6 +47,7 @@ public class DataClassRestEndpointReader<I : Any, out E : RestEndpoint<I, *>>(
       }
       val serializer = Json.serializersModule.serializer(param.type)
       val values = call.parameters.getAll(paramName)
+      @Suppress("ElseCaseInsteadOfExhaustiveWhen")
       return@associateWith when (serializer.descriptor.kind) {
         is StructureKind.CLASS ->
           Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
