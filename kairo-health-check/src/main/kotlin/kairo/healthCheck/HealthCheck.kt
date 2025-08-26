@@ -1,4 +1,4 @@
-package kairo.healthCheck.feature
+package kairo.healthCheck
 
 /**
  * Each health check is executed as part of the health check readiness endpoint.

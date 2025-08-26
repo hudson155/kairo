@@ -1,4 +1,4 @@
-package kairo.healthCheck.feature
+package kairo.healthCheck
 
 import kairo.rest.Rest
 import kairo.rest.RestEndpoint
