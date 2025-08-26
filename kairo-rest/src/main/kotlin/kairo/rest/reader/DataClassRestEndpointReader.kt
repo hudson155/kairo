@@ -5,14 +5,16 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import io.ktor.server.routing.RoutingCall
-import io.ktor.util.reflect.TypeInfo
+import kairo.reflect.KairoType
 import kairo.rest.RestEndpoint
+import kairo.rest.toKtor
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.full.valueParameters
 import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.serializer
@@ -38,15 +40,17 @@ public class DataClassRestEndpointReader<I : Any, out E : RestEndpoint<I, *>>(
   }
 
   @Suppress("UNCHECKED_CAST")
-  private fun arguments(call: ApplicationCall): Map<KParameter, Any?> =
+  private suspend fun arguments(call: ApplicationCall): Map<KParameter, Any?> =
     constructor.valueParameters.associateWith { param ->
-      if (param.name == RestEndpoint<*, *>::body.name) {
-        return@associateWith suspend { call.receive<I>(TypeInfo(param.type.classifier as KClass<I>, param.type)) }
+      val paramName = checkNotNull(param.name)
+      if (paramName == RestEndpoint<*, *>::body.name) {
+        return@associateWith call.receive<I>(KairoType<I>(param.type).toKtor())
       }
       val thisSerializer = Json.serializersModule.serializer(param.type)
-      val values = call.parameters.getAll(param.name!!)!!
+      val values = call.parameters.getAll(paramName)
       return@associateWith when (thisSerializer.descriptor.kind) {
-        is PrimitiveKind -> Json.decodeFromJsonElement(thisSerializer, JsonPrimitive(values.single()))
+        is StructureKind.CLASS -> Json.decodeFromJsonElement(thisSerializer, JsonPrimitive(values?.single()))
+        is PrimitiveKind -> Json.decodeFromJsonElement(thisSerializer, JsonPrimitive(values?.single()))
         else -> error("Unsupported kind: ${thisSerializer.descriptor.kind}.")
       }
     }
