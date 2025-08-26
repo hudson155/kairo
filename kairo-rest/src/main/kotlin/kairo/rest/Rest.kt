@@ -2,6 +2,9 @@ package kairo.rest
 
 import kotlinx.serialization.MetaSerializable
 
+/**
+ * Annotations for [RestEndpoint] instances.
+ */
 @Target(AnnotationTarget.CLASS)
 @MetaSerializable
 public annotation class Rest(
