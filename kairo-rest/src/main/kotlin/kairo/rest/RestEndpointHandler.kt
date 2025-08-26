@@ -26,11 +26,18 @@ public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal const
   internal var handle: (suspend (endpoint: E) -> O)? = null
   internal var statusCode: (suspend (endpoint: O) -> HttpStatusCode?)? = null
 
+  /**
+   * Specifies the handler for the endpoint.
+   */
   public fun handle(handle: suspend (endpoint: E) -> O) {
     require(this.handle == null) { "${error.endpoint(endpoint)}: Handler already defined." }
     this.handle = handle
   }
 
+  /**
+   * Specifies the HTTP status code to use for the response.
+   * If this is not provided or returns null, Ktor's default will apply.
+   */
   public fun statusCode(statusCode: suspend (response: O) -> HttpStatusCode?) {
     require(this.statusCode == null) { "${error.endpoint(endpoint)}: Status code already defined." }
     this.statusCode = statusCode
