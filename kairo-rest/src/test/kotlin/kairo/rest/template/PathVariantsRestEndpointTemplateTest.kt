@@ -28,7 +28,7 @@ internal class PathVariantsRestEndpointTemplateTest {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.Empty::class)
       }.shouldHaveMessage(
         "REST endpoint ${PathVariantsLibraryBookApi.Empty::class.qualifiedName}:" +
-          " @RestEndpoint.Path is invalid. Path must start with a slash.",
+          " @RestEndpoint.Path is invalid. Must start with a slash.",
       )
     }
 
@@ -54,7 +54,7 @@ internal class PathVariantsRestEndpointTemplateTest {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.MissingLeadingSlash::class)
       }.shouldHaveMessage(
         "REST endpoint ${PathVariantsLibraryBookApi.MissingLeadingSlash::class.qualifiedName}:" +
-          " @RestEndpoint.Path is invalid. Path must start with a slash.",
+          " @RestEndpoint.Path is invalid. Must start with a slash.",
       )
     }
 
@@ -98,7 +98,7 @@ internal class PathVariantsRestEndpointTemplateTest {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.ParamNotInConstructor::class)
       }.shouldHaveMessage(
         "REST endpoint ${PathVariantsLibraryBookApi.ParamNotInConstructor::class.qualifiedName}:" +
-          " @RestEndpoint.Path is invalid. Missing @RestEndpoint.PathParam (param=libraryBookId).",
+          " Missing @RestEndpoint.PathParam (param=libraryBookId).",
       )
     }
 
@@ -109,7 +109,7 @@ internal class PathVariantsRestEndpointTemplateTest {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.ParamNotInPath::class)
       }.shouldHaveMessage(
         "REST endpoint ${PathVariantsLibraryBookApi.ParamNotInPath::class.qualifiedName}:" +
-          " @RestEndpoint.Path is invalid. Missing @RestEndpoint.PathParam (param=libraryBookId).",
+          " Unused @RestEndpoint.PathParam (param=libraryBookId).",
       )
     }
 }

@@ -69,7 +69,7 @@ internal class BrokenRestEndpointTemplateTest {
         RestEndpointTemplate.from(BrokenLibraryBookApi.PathParamMarkedAsQueryParam::class)
       }.shouldHaveMessage(
         "REST endpoint ${BrokenLibraryBookApi::class.qualifiedName}.PathParamMarkedAsQueryParam:" +
-          " @RestEndpoint.Path is invalid. Missing @RestEndpoint.PathParam (param=libraryBookId).",
+          " Missing @RestEndpoint.PathParam (param=libraryBookId).",
       )
     }
 
@@ -80,7 +80,7 @@ internal class BrokenRestEndpointTemplateTest {
         RestEndpointTemplate.from(BrokenLibraryBookApi.QueryParamMarkedAsPathParam::class)
       }.shouldHaveMessage(
         "REST endpoint ${BrokenLibraryBookApi::class.qualifiedName}.QueryParamMarkedAsPathParam:" +
-          " @RestEndpoint.Path is invalid. Missing @RestEndpoint.PathParam (param=isbn).",
+          " Unused @RestEndpoint.PathParam (param=isbn).",
       )
     }
 
