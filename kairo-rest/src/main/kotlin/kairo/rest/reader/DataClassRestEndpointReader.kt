@@ -12,7 +12,6 @@ import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.full.valueParameters
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonPrimitive
@@ -28,7 +27,6 @@ private val logger: KLogger = KotlinLogging.logger {}
  */
 public class DataClassRestEndpointReader<I : Any, out E : RestEndpoint<I, *>>(
   endpoint: KClass<E>,
-  private val serializer: KSerializer<E>,
 ) : RestEndpointReader<I, E>() {
   private val constructor: KFunction<E> = checkNotNull(endpoint.primaryConstructor)
 
