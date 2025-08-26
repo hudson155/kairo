@@ -47,12 +47,13 @@ repositories {
 
 dependencies {
   val kairoVersion = "6.0.0"
-  implementation(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
   ksp(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
+  implementation(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
+
+  ksp("io.insert-koin:koin-ksp-compiler")
 
   implementation("io.insert-koin:koin-annotations")
   implementation("io.insert-koin:koin-core")
-  ksp("io.insert-koin:koin-ksp-compiler")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-core")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
@@ -62,13 +63,15 @@ dependencies {
   implementation("software.airborne.kairo:kairo-dependency-injection-feature")
   implementation("software.airborne.kairo:kairo-gcp-secret-supplier")
   implementation("software.airborne.kairo:kairo-health-check-feature")
+  implementation("software.airborne.kairo:kairo-id-feature")
   implementation("software.airborne.kairo:kairo-logging")
+  implementation("software.airborne.kairo:kairo-protected-string")
+  implementation("software.airborne.kairo:kairo-reflect")
   implementation("software.airborne.kairo:kairo-rest-feature")
   implementation("software.airborne.kairo:kairo-util")
   runtimeOnly("org.apache.logging.log4j:log4j-core")
   runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")
 
-  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
   testImplementation("software.airborne.kairo:kairo-testing")
 }
 ```

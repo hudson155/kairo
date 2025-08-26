@@ -9,6 +9,7 @@
       <name>com.sun.security.*</name>
       <name>com.sun.tools.javac.*</name>
       <name>io.kotest.core.spec.*</name>
+      <name>io.kotest.core.test.TestScope</name>
       <name>java.awt.*</name>
       <name>java.beans.*</name>
       <name>java.io.ObjectInputFilter.Config</name>
@@ -26,7 +27,9 @@
       <name>jdk.jfr.*</name>
       <name>kotlin.coroutines.cancellation.*</name>
       <name>kotlinx.coroutines.time.*</name>
+      <name>org.apache.logging.log4j.core.jmx.*</name>
       <name>org.koin.core.annotation.Singleton</name>
+      <name>org.koin.core.component.*</name>
       <name>org.koin.core.context.GlobalContext.*</name>
       <name>org.koin.java.*</name>
       <name>org.koin.mp.*</name>
