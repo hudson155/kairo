@@ -1,5 +1,6 @@
 package kairo.rest.template
 
+import kairo.rest.Rest
 import kairo.rest.RestEndpoint
 import kairo.rest.template.RestEndpointTemplatePath.Component
 import kotlin.reflect.KClass
@@ -17,12 +18,12 @@ internal object RestEndpointTemplatePathParser {
     val pathParams = params.filter { it.hasAnnotation<RestEndpoint.PathParam>() }
     val annotation = getAnnotation(endpoint)
     wrapErrorMessage(endpoint) {
-      require(annotation.value.startsWith('/')) { "${error.pathAnnotation} is invalid. Must start with a slash" }
+      require(annotation.path.startsWith('/')) { "${error.restAnnotation} path is invalid. Must start with a slash" }
       val path =
-        if (annotation.value.length == 1) {
+        if (annotation.path.length == 1) {
           RestEndpointTemplatePath(emptyList())
         } else {
-          RestEndpointTemplatePath(annotation.value.drop(1).split('/').map { Component.from(it) })
+          RestEndpointTemplatePath(annotation.path.drop(1).split('/').map { Component.from(it) })
         }
       validatePath(pathParams, path)
       validatePathParams(pathParams, path)
@@ -30,14 +31,14 @@ internal object RestEndpointTemplatePathParser {
     }
   }
 
-  private fun getAnnotation(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpoint.Path {
-    val annotations = endpoint.findAnnotations<RestEndpoint.Path>()
+  private fun getAnnotation(endpoint: KClass<out RestEndpoint<*, *>>): Rest {
+    val annotations = endpoint.findAnnotations<Rest>()
     require(annotations.isNotEmpty()) {
-      "${error.endpoint(endpoint)}: Must define ${error.pathAnnotation}."
+      "${error.endpoint(endpoint)}: Must define ${error.restAnnotation}."
     }
     val annotation = annotations.singleOrNull()
     requireNotNull(annotation) {
-      "${error.endpoint(endpoint)}: Cannot define multiple of ${error.pathAnnotation}."
+      "${error.endpoint(endpoint)}: Cannot define multiple of ${error.restAnnotation}."
     }
     return annotation
   }
@@ -61,7 +62,7 @@ internal object RestEndpointTemplatePathParser {
     path.components.forEachIndexed { i, component ->
       if (component !is Component.Param) return@forEachIndexed
       require(path.components.take(i).none { it is Component.Param && it.value == component.value }) {
-        "${error.pathAnnotation} is invalid. Duplicate param (param=${component.value})"
+        "${error.restAnnotation} path is invalid. Duplicate param (param=${component.value})"
       }
       require(pathParams.any { it.name == component.value }) {
         "Missing ${error.pathParamAnnotation} (param=${component.value})"

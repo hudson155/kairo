@@ -1,25 +1,23 @@
 package kairo.libraryBook
 
+import kairo.rest.Rest
 import kairo.rest.RestEndpoint
 
 internal object AcceptVariantsLibraryBookApi {
-  @RestEndpoint.Method("POST")
-  @RestEndpoint.Path("/library-books")
-  @RestEndpoint.ContentType("application/json")
-  @RestEndpoint.Accept("text/csv")
+  @Rest("POST", "/library-books")
+  @Rest.ContentType("application/json")
+  @Rest.Accept("text/csv")
   internal data class Csv(
     override val body: LibraryBookRep.Creator,
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
-  @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library-books/:libraryBookId")
+  @Rest("GET", "/library-books/:libraryBookId")
   internal data class NotPresentOnGet(
     @PathParam val libraryBookId: LibraryBookId,
   ) : RestEndpoint<Unit, LibraryBookRep>()
 
-  @RestEndpoint.Method("POST")
-  @RestEndpoint.Path("/library-books")
-  @RestEndpoint.ContentType("application/json")
+  @Rest("POST", "/library-books")
+  @Rest.ContentType("application/json")
   internal data class NotPresentOnPost(
     override val body: LibraryBookRep.Creator,
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
@@ -27,9 +25,8 @@ internal object AcceptVariantsLibraryBookApi {
   /**
    * This is actually valid; an empty string means "Any" content type.
    */
-  @RestEndpoint.Method("POST")
-  @RestEndpoint.Path("/library-books")
-  @RestEndpoint.Accept("")
+  @Rest("POST", "/library-books")
+  @Rest.Accept("")
   internal data class Empty(
     override val body: LibraryBookRep.Creator,
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
@@ -37,16 +34,14 @@ internal object AcceptVariantsLibraryBookApi {
   /**
    * Means "Any" content type.
    */
-  @RestEndpoint.Method("POST")
-  @RestEndpoint.Path("/library-books")
-  @RestEndpoint.Accept("*/*")
+  @Rest("POST", "/library-books")
+  @Rest.Accept("*/*")
   internal data class Star(
     override val body: LibraryBookRep.Creator,
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
-  @RestEndpoint.Method("POST")
-  @RestEndpoint.Path("/library-books")
-  @RestEndpoint.Accept("application")
+  @Rest("POST", "/library-books")
+  @Rest.Accept("application")
   internal data class Malformed(
     override val body: LibraryBookRep.Creator,
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()

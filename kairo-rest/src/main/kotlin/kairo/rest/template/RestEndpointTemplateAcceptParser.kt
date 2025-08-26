@@ -2,6 +2,7 @@ package kairo.rest.template
 
 import io.ktor.http.BadContentTypeFormatException
 import io.ktor.http.ContentType
+import kairo.rest.Rest
 import kairo.rest.RestEndpoint
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotations
@@ -16,13 +17,12 @@ internal object RestEndpointTemplateAcceptParser {
     }
   }
 
-  private fun getAnnotation(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpoint.Accept? {
-    val annotations = endpoint.findAnnotations<RestEndpoint.Accept>()
+  private fun getAnnotation(endpoint: KClass<out RestEndpoint<*, *>>): Rest.Accept? {
+    val annotations = endpoint.findAnnotations<Rest.Accept>()
     if (annotations.isEmpty()) return null
     val annotation = annotations.singleOrNull()
     requireNotNull(annotation) {
-      "Endpoint ${endpoint.qualifiedName} cannot define multiple of" +
-        " @${RestEndpoint::class.simpleName}.${RestEndpoint.Accept::class.simpleName}."
+      "Endpoint ${endpoint.qualifiedName} cannot define multiple of ${error.restAnnotation}."
     }
     return annotation
   }
