@@ -18,9 +18,17 @@ public data class RestEndpointTemplatePath(
     }
 
   public sealed class Component {
-    public data class Constant(val value: String) : Component()
+    public data class Constant(val value: String) : Component() {
+      init {
+        require(value.isNotEmpty()) { "Constant path components cannot be empty" }
+      }
+    }
 
-    public data class Param(val value: String) : Component()
+    public data class Param(val value: String) : Component() {
+      init {
+        require(value.isNotEmpty()) { "Path parameters cannot be empty" }
+      }
+    }
 
     public companion object {
       public fun from(string: String): Component =
@@ -34,7 +42,8 @@ public data class RestEndpointTemplatePath(
 
   public companion object {
     internal fun from(string: String): RestEndpointTemplatePath {
-      require(string.startsWith('/')) { "Paths must start with a slash" }
+      require(string.startsWith('/')) { "Path must start with a slash" }
+      if (string.length == 1) return RestEndpointTemplatePath(emptyList())
       return RestEndpointTemplatePath(string.drop(1).split('/').map { Component.from(it) })
     }
   }

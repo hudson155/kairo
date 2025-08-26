@@ -13,8 +13,8 @@ internal class BrokenRestEndpointTemplateTest {
       shouldThrow<IllegalArgumentException> {
         RestEndpointTemplate.from(BrokenLibraryBookApi.NotDataClass::class)
       }.shouldHaveMessage(
-        "REST endpoint ${BrokenLibraryBookApi::class.qualifiedName}.NotDataClass" +
-          " must be a data class or data object.",
+        "REST endpoint ${BrokenLibraryBookApi::class.qualifiedName}.NotDataClass:" +
+          " Must be a data class or data object.",
       )
     }
 
@@ -24,8 +24,8 @@ internal class BrokenRestEndpointTemplateTest {
       shouldThrow<IllegalArgumentException> {
         RestEndpointTemplate.from(BrokenLibraryBookApi.NotDataObject::class)
       }.shouldHaveMessage(
-        "REST endpoint ${BrokenLibraryBookApi::class.qualifiedName}.NotDataObject" +
-          " must be a data class or data object.",
+        "REST endpoint ${BrokenLibraryBookApi::class.qualifiedName}.NotDataObject:" +
+          " Must be a data class or data object.",
       )
     }
 }

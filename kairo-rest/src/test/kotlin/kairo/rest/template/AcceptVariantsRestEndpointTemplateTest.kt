@@ -108,7 +108,7 @@ internal class AcceptVariantsRestEndpointTemplateTest {
       shouldThrow<IllegalArgumentException> {
         RestEndpointTemplate.from(AcceptVariantsLibraryBookApi.Malformed::class)
       }.shouldHaveMessage(
-        "REST endpoint ${AcceptVariantsLibraryBookApi::class.qualifiedName}.Malformed" +
+        "REST endpoint ${AcceptVariantsLibraryBookApi::class.qualifiedName}.Malformed:" +
           " @RestEndpoint.Accept is invalid. Bad Content-Type format: application.",
       )
     }

@@ -10,6 +10,12 @@ internal object RestEndpointTemplateErrorBuilder {
   val pathAnnotation: String =
     "@${RestEndpoint::class.simpleName}.${RestEndpoint.Path::class.simpleName}"
 
+  val pathParamAnnotation: String =
+    "@${RestEndpoint::class.simpleName}.${RestEndpoint.PathParam::class.simpleName}"
+
+  val queryParamAnnotation: String =
+    "@${RestEndpoint::class.simpleName}.${RestEndpoint.QueryParam::class.simpleName}"
+
   val contentTypeAnnotation: String =
     "@${RestEndpoint::class.simpleName}.${RestEndpoint.ContentType::class.simpleName}"
 
