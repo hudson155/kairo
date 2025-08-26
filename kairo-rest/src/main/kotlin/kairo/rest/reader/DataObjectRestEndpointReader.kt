@@ -12,9 +12,9 @@ private val logger: KLogger = KotlinLogging.logger {}
  * Some [RestEndpoint]s are singleton objects (they will be data objects).
  * This makes our job easy, since we just return the singleton!
  */
-public class DataObjectRestEndpointReader<I : Any, out E : RestEndpoint<I, *>>(
+internal class DataObjectRestEndpointReader<E : RestEndpoint<*, *>>(
   endpoint: KClass<E>,
-) : RestEndpointReader<I, E>() {
+) : RestEndpointReader<E>() {
   private val objectInstance: E = checkNotNull(endpoint.objectInstance)
 
   override suspend fun read(call: RoutingCall): E {
