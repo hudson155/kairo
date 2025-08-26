@@ -33,11 +33,11 @@ public class HealthCheckFeature(
       timeout = timeout,
     )
 
-  override fun afterStart() {
+  override fun afterStart(features: List<Feature>) {
     serverIsRunning.store(true)
   }
 
-  override fun beforeStop() {
+  override fun beforeStop(features: List<Feature>) {
     serverIsRunning.store(false)
   }
 

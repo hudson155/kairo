@@ -57,7 +57,7 @@ internal class ServerStartTest {
             }
           }
 
-          override suspend fun stop() {
+          override suspend fun stop(features: List<Feature>) {
             events.update { it + "stop Test (0)" }
           }
         },
@@ -70,7 +70,7 @@ internal class ServerStartTest {
             events.update { it + "start Test (1)" }
           }
 
-          override suspend fun stop() {
+          override suspend fun stop(features: List<Feature>) {
             events.update { it + "stop Test (1)" }
           }
         },
@@ -110,7 +110,7 @@ internal class ServerStartTest {
             signal.complete(Unit)
           }
 
-          override suspend fun stop() {
+          override suspend fun stop(features: List<Feature>) {
             events.update { it + "stop Test (0)" }
           }
         },
@@ -124,7 +124,7 @@ internal class ServerStartTest {
             throw RuntimeException("Exception from Test (1)")
           }
 
-          override suspend fun stop() {
+          override suspend fun stop(features: List<Feature>) {
             events.update { it + "stop Test (1)" }
           }
         },
