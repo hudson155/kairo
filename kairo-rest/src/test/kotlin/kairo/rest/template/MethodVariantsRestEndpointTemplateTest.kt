@@ -35,7 +35,7 @@ internal class MethodVariantsRestEndpointTemplateTest {
         RestEndpointTemplate.from(MethodVariantsLibraryBookApi.Missing::class)
       }.shouldHaveMessage(
         "REST endpoint ${MethodVariantsLibraryBookApi.Missing::class.qualifiedName}:" +
-          " Must define @RestEndpoint.Method.",
+          " Must define @Rest.",
       )
     }
 

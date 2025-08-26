@@ -17,7 +17,7 @@ internal class PathVariantsRestEndpointTemplateTest {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.Missing::class)
       }.shouldHaveMessage(
         "REST endpoint ${PathVariantsLibraryBookApi.Missing::class.qualifiedName}:" +
-          " Must define @RestEndpoint.Path.",
+          " Must define @Rest.",
       )
     }
 
@@ -28,7 +28,7 @@ internal class PathVariantsRestEndpointTemplateTest {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.Empty::class)
       }.shouldHaveMessage(
         "REST endpoint ${PathVariantsLibraryBookApi.Empty::class.qualifiedName}:" +
-          " @RestEndpoint.Path is invalid. Must start with a slash.",
+          " @Rest path is invalid. Must start with a slash.",
       )
     }
 
@@ -54,7 +54,7 @@ internal class PathVariantsRestEndpointTemplateTest {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.MissingLeadingSlash::class)
       }.shouldHaveMessage(
         "REST endpoint ${PathVariantsLibraryBookApi.MissingLeadingSlash::class.qualifiedName}:" +
-          " @RestEndpoint.Path is invalid. Must start with a slash.",
+          " @Rest path is invalid. Must start with a slash.",
       )
     }
 
@@ -87,7 +87,7 @@ internal class PathVariantsRestEndpointTemplateTest {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.DuplicateParam::class)
       }.shouldHaveMessage(
         "REST endpoint ${PathVariantsLibraryBookApi.DuplicateParam::class.qualifiedName}:" +
-          " @RestEndpoint.Path is invalid. Duplicate param (param=libraryBookId).",
+          " @Rest path is invalid. Duplicate param (param=libraryBookId).",
       )
     }
 

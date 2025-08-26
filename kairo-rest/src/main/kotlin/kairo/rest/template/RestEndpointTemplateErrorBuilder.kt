@@ -1,14 +1,12 @@
 package kairo.rest.template
 
+import kairo.rest.Rest
 import kairo.rest.RestEndpoint
 import kotlin.reflect.KClass
 
 internal object RestEndpointTemplateErrorBuilder {
-  val methodAnnotation: String =
-    "@${RestEndpoint::class.simpleName}.${RestEndpoint.Method::class.simpleName}"
-
-  val pathAnnotation: String =
-    "@${RestEndpoint::class.simpleName}.${RestEndpoint.Path::class.simpleName}"
+  val restAnnotation: String =
+    "@${Rest::class.simpleName}"
 
   val pathParamAnnotation: String =
     "@${RestEndpoint::class.simpleName}.${RestEndpoint.PathParam::class.simpleName}"
@@ -17,10 +15,10 @@ internal object RestEndpointTemplateErrorBuilder {
     "@${RestEndpoint::class.simpleName}.${RestEndpoint.QueryParam::class.simpleName}"
 
   val contentTypeAnnotation: String =
-    "@${RestEndpoint::class.simpleName}.${RestEndpoint.ContentType::class.simpleName}"
+    "@${Rest::class.simpleName}.${Rest.ContentType::class.simpleName}"
 
   val acceptAnnotation: String =
-    "@${RestEndpoint::class.simpleName}.${RestEndpoint.Accept::class.simpleName}"
+    "@${Rest::class.simpleName}.${Rest.Accept::class.simpleName}"
 
   fun endpoint(endpoint: KClass<out RestEndpoint<*, *>>): String =
     "REST endpoint ${endpoint.qualifiedName}"
