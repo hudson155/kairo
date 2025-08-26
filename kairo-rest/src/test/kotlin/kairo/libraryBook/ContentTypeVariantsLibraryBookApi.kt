@@ -56,6 +56,3 @@ internal object ContentTypeVariantsLibraryBookApi {
     override val body: LibraryBookRep.Creator,
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 }
-
-// TODO: Tests for broken param
-// TODO: Tests for broken type

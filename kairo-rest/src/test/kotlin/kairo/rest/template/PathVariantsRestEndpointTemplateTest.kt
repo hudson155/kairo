@@ -65,7 +65,7 @@ internal class PathVariantsRestEndpointTemplateTest {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.NullableParam::class)
       }.shouldHaveMessage(
         "REST endpoint ${PathVariantsLibraryBookApi.NullableParam::class.qualifiedName}:" +
-          " @RestEndpoint.QueryParam must not be nullable (param=libraryBookId).",
+          " @RestEndpoint.PathParam must not be nullable (param=libraryBookId).",
       )
     }
 
@@ -76,7 +76,7 @@ internal class PathVariantsRestEndpointTemplateTest {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.OptionalParam::class)
       }.shouldHaveMessage(
         "REST endpoint ${PathVariantsLibraryBookApi.OptionalParam::class.qualifiedName}:" +
-          " @RestEndpoint.QueryParam must not be optional (param=libraryBookId).",
+          " @RestEndpoint.PathParam must not be optional (param=libraryBookId).",
       )
     }
 

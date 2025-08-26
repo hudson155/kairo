@@ -113,10 +113,10 @@ public data class RestEndpointTemplate(
       val pathParams = params.filter { it.hasAnnotation<RestEndpoint.PathParam>() }
       pathParams.forEach { param ->
         require(!param.type.isMarkedNullable) {
-          "${error.endpoint(endpoint)}: ${error.queryParamAnnotation} must not be nullable (param=${param.name})."
+          "${error.endpoint(endpoint)}: ${error.pathParamAnnotation} must not be nullable (param=${param.name})."
         }
         require(!param.isOptional) {
-          "${error.endpoint(endpoint)}: ${error.queryParamAnnotation} must not be optional (param=${param.name})."
+          "${error.endpoint(endpoint)}: ${error.pathParamAnnotation} must not be optional (param=${param.name})."
         }
       }
       val annotations = endpoint.findAnnotations<RestEndpoint.Path>()
