@@ -37,6 +37,16 @@ internal class RestEndpointTemplateToStringTest {
     }
 
   @Test
+  fun searchByGenre(): Unit =
+    runTest {
+      RestEndpointTemplate.from(LibraryBookApi.SearchByGenre::class).toString()
+        .shouldBe(
+          "RestEndpointTemplate(value='[null -> application/json]" +
+            " GET /library-books (genre)')",
+        )
+    }
+
+  @Test
   fun searchByIsbn(): Unit =
     runTest {
       RestEndpointTemplate.from(LibraryBookApi.SearchByIsbn::class).toString()

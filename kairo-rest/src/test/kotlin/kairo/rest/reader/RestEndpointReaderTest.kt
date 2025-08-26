@@ -106,6 +106,49 @@ internal class RestEndpointReaderTest {
     }
 
   @Test
+  fun `searchByGenre, missing genre`(): Unit =
+    runTest {
+      val reader = RestEndpointReader.from(LibraryBookApi.SearchByGenre::class)
+      val call = mockk<RoutingCall> {
+        every { parameters } returns Parameters.Empty
+      }
+      shouldThrow<SerializationException> {
+        reader.read(call)
+      }
+    }
+
+  @Test
+  fun `searchByGenre, malformed genre`(): Unit =
+    runTest {
+      val reader = RestEndpointReader.from(LibraryBookApi.SearchByGenre::class)
+      val call = mockk<RoutingCall> {
+        every { parameters } returns Parameters.build {
+          append("genre", "Christianity")
+        }
+      }
+      shouldThrow<SerializationException> {
+        reader.read(call)
+      }
+    }
+
+  @Test
+  fun `searchByGenre, happy path`(): Unit =
+    runTest {
+      val reader = RestEndpointReader.from(LibraryBookApi.SearchByGenre::class)
+      val call = mockk<RoutingCall> {
+        every { parameters } returns Parameters.build {
+          append("genre", "Religion")
+        }
+      }
+      reader.read(call)
+        .shouldBe(
+          LibraryBookApi.SearchByGenre(
+            genre = LibraryBookRep.Genre.Religion,
+          ),
+        )
+    }
+
+  @Test
   fun `searchByIsbn, missing isbn`(): Unit =
     runTest {
       val reader = RestEndpointReader.from(LibraryBookApi.SearchByIsbn::class)
@@ -182,6 +225,7 @@ internal class RestEndpointReaderTest {
           title = "Mere Christianity",
           authors = listOf("C. S. Lewis"),
           isbn = "978-0060652920",
+          genre = LibraryBookRep.Genre.Religion,
         )
       }
       reader.read(call)
@@ -191,6 +235,7 @@ internal class RestEndpointReaderTest {
               title = "Mere Christianity",
               authors = listOf("C. S. Lewis"),
               isbn = "978-0060652920",
+              genre = LibraryBookRep.Genre.Religion,
             ),
           ),
         )
@@ -207,6 +252,7 @@ internal class RestEndpointReaderTest {
         } returns LibraryBookRep.Update(
           title = "The Meaning of Marriage: Facing the Complexities of Commitment with the Wisdom of God",
           authors = listOf("Timothy Keller", "Kathy Keller"),
+          genre = LibraryBookRep.Genre.Religion,
         )
       }
       shouldThrow<SerializationException> {
@@ -227,6 +273,7 @@ internal class RestEndpointReaderTest {
         } returns LibraryBookRep.Update(
           title = "The Meaning of Marriage: Facing the Complexities of Commitment with the Wisdom of God",
           authors = listOf("Timothy Keller", "Kathy Keller"),
+          genre = LibraryBookRep.Genre.Religion,
         )
       }
       shouldThrow<IllegalArgumentException> {
@@ -265,6 +312,7 @@ internal class RestEndpointReaderTest {
         } returns LibraryBookRep.Update(
           title = "The Meaning of Marriage: Facing the Complexities of Commitment with the Wisdom of God",
           authors = listOf("Timothy Keller", "Kathy Keller"),
+          genre = LibraryBookRep.Genre.Religion,
         )
       }
       reader.read(call)
@@ -274,6 +322,7 @@ internal class RestEndpointReaderTest {
             body = LibraryBookRep.Update(
               title = "The Meaning of Marriage: Facing the Complexities of Commitment with the Wisdom of God",
               authors = listOf("Timothy Keller", "Kathy Keller"),
+              genre = LibraryBookRep.Genre.Religion,
             ),
           ),
         )
