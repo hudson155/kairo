@@ -662,6 +662,7 @@ style:
       - 'java.xml.*'
       - 'javax.xml.*'
       - 'jdk.internal.*'
+      - 'jdk.jfr.*'
       - 'kotlin.coroutines.cancellation.*'
       - 'kotlinx.coroutines.time.*'
       - 'org.koin.core.annotation.Singleton'

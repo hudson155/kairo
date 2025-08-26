@@ -23,6 +23,7 @@
       <name>java.xml.*</name>
       <name>javax.xml.*</name>
       <name>jdk.internal.*</name>
+      <name>jdk.jfr.*</name>
       <name>kotlin.coroutines.cancellation.*</name>
       <name>kotlinx.coroutines.time.*</name>
       <name>org.koin.core.annotation.Singleton</name>

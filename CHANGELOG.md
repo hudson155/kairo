@@ -91,6 +91,8 @@ in favor of external libraries that do the job far better.
 
 - The `@RestEndpoint.ContentType` and `@RestEndpoint.Accept` annotations are now optional.
 
+- Better error messages when `RestEndpoint`s are malformed.
+
 - **Colored call logging when running locally.**
   Colored call logging helps easily understand logs and identify failures locally.
 
