@@ -29,6 +29,7 @@ public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal const
   /**
    * Specifies the handler for the endpoint.
    */
+  @RestDsl
   public fun handle(handle: suspend (endpoint: E) -> O) {
     require(this.handle == null) { "${error.endpoint(endpoint)}: Handler already defined." }
     this.handle = handle
@@ -38,6 +39,7 @@ public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal const
    * Specifies the HTTP status code to use for the response.
    * If this is not provided or returns null, Ktor's default will apply.
    */
+  @RestDsl
   public fun statusCode(statusCode: suspend (response: O) -> HttpStatusCode?) {
     require(this.statusCode == null) { "${error.endpoint(endpoint)}: Status code already defined." }
     this.statusCode = statusCode
@@ -48,6 +50,7 @@ public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal const
  * Routes a [RestEndpoint] with Ktor.
  * The [block] must specify a handler for the endpoint ([RestEndpointHandler.handle]).
  */
+@RestDsl
 public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Routing.route(
   endpoint: KClass<E>,
   block: RestEndpointHandler<O, E>.() -> Unit,
