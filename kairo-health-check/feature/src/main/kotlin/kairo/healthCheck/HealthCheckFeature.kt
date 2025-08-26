@@ -1,4 +1,4 @@
-package kairo.healthCheck.feature
+package kairo.healthCheck
 
 import io.ktor.server.application.Application
 import kairo.feature.Feature
