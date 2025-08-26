@@ -75,14 +75,15 @@ internal object RestEndpointTemplatePathParser {
     path: RestEndpointTemplatePath,
   ) {
     pathParams.forEach { param ->
+      val paramName = checkNotNull(param.name)
       require(!param.type.isMarkedNullable) {
-        "${error.pathParamAnnotation} must not be nullable (param=${param.name})"
+        "${error.pathParamAnnotation} must not be nullable (param=$paramName)"
       }
       require(!param.isOptional) {
-        "${error.pathParamAnnotation} must not be optional (param=${param.name})"
+        "${error.pathParamAnnotation} must not be optional (param=$paramName)"
       }
-      require(path.components.any { it is Component.Param && it.value == param.name }) {
-        "Unused ${error.pathParamAnnotation} (param=${param.name})"
+      require(path.components.any { it is Component.Param && it.value == paramName }) {
+        "Unused ${error.pathParamAnnotation} (param=$paramName)"
       }
     }
   }
