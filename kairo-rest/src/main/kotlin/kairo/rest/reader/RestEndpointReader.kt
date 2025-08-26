@@ -14,13 +14,13 @@ private val logger: KLogger = KotlinLogging.logger {}
  * Doing this dynamically at runtime involves some nontrivial JVM reflection magic,
  * but it's a huge win for reducing boilerplate.
  */
-public abstract class RestEndpointReader<I : Any, out E : RestEndpoint<I, *>> {
-  public abstract suspend fun read(call: RoutingCall): E
+internal abstract class RestEndpointReader<I : Any, out E : RestEndpoint<I, *>> {
+  abstract suspend fun read(call: RoutingCall): E
 
-  public companion object {
+  internal companion object {
     private val error: RestEndpointTemplateErrorBuilder = RestEndpointTemplateErrorBuilder
 
-    public fun <I : Any, E : RestEndpoint<I, *>> from(endpoint: KClass<E>): RestEndpointReader<I, E> {
+    fun <I : Any, E : RestEndpoint<I, *>> from(endpoint: KClass<E>): RestEndpointReader<I, E> {
       logger.debug { "Building REST endpoint reader (endpoint=$endpoint)." }
       require(endpoint.isData) { "${error.endpoint(endpoint)}: Must be a data class or data object." }
       val reader =

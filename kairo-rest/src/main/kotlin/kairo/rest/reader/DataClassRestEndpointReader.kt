@@ -29,7 +29,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * in order to determine how to get the arguments from the [RoutingCall]
  * to call the primary constructor of the data class.
  */
-public class DataClassRestEndpointReader<I : Any, out E : RestEndpoint<I, *>>(
+internal class DataClassRestEndpointReader<I : Any, out E : RestEndpoint<I, *>>(
   endpoint: KClass<E>,
 ) : RestEndpointReader<I, E>() {
   private val constructor: KFunction<E> = checkNotNull(endpoint.primaryConstructor)

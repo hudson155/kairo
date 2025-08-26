@@ -4,7 +4,7 @@ package kairo.rest.template
  * Part of [RestEndpointTemplate] that represents query params.
  * See the KDoc there.
  */
-public data class RestEndpointTemplateQuery(
+internal data class RestEndpointTemplateQuery(
   val params: List<Param>,
 ) {
   internal constructor(vararg params: Param) : this(params.toList())
@@ -17,7 +17,7 @@ public data class RestEndpointTemplateQuery(
       }
     }
 
-  public data class Param(
+  internal data class Param(
     val value: String,
     val required: Boolean,
   )
