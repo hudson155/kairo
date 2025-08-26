@@ -27,6 +27,25 @@ internal class RestEndpointTemplateTest {
     }
 
   @Test
+  fun listByIds(): Unit =
+    runTest {
+      RestEndpointTemplate.from(LibraryBookApi.ListByIds::class)
+        .shouldBe(
+          RestEndpointTemplate(
+            method = HttpMethod.Get,
+            path = RestEndpointTemplatePath(
+              RestEndpointTemplatePath.Component.Constant("library-books"),
+            ),
+            query = RestEndpointTemplateQuery(
+              RestEndpointTemplateQuery.Param("libraryBookIds", required = true),
+            ),
+            contentType = null,
+            accept = ContentType.Application.Json,
+          ),
+        )
+    }
+
+  @Test
   fun listAll(): Unit =
     runTest {
       RestEndpointTemplate.from(LibraryBookApi.ListAll::class)

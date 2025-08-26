@@ -17,6 +17,16 @@ internal class RestEndpointTemplateToStringTest {
     }
 
   @Test
+  fun listByIds(): Unit =
+    runTest {
+      RestEndpointTemplate.from(LibraryBookApi.ListByIds::class).toString()
+        .shouldBe(
+          "RestEndpointTemplate(value='[null -> application/json]" +
+            " GET /library-books (libraryBookIds)')",
+        )
+    }
+
+  @Test
   fun listAll(): Unit =
     runTest {
       RestEndpointTemplate.from(LibraryBookApi.ListAll::class).toString()

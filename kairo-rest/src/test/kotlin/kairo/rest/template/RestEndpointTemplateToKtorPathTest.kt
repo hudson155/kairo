@@ -14,6 +14,13 @@ internal class RestEndpointTemplateToKtorPathTest {
     }
 
   @Test
+  fun listByIds(): Unit =
+    runTest {
+      RestEndpointTemplate.from(LibraryBookApi.ListByIds::class).toKtorPath()
+        .shouldBe("/library-books")
+    }
+
+  @Test
   fun listAll(): Unit =
     runTest {
       RestEndpointTemplate.from(LibraryBookApi.ListAll::class).toKtorPath()

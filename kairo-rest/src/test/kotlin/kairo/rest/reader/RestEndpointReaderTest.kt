@@ -60,6 +60,41 @@ internal class RestEndpointReaderTest {
     }
 
   @Test
+  fun `listByIds (non-empty)`(): Unit =
+    runTest {
+      val reader = RestEndpointReader.from(LibraryBookApi.ListByIds::class)
+      val call = mockk<RoutingCall> {
+        every { parameters } returns Parameters.Empty
+      }
+      reader.read(call)
+        .shouldBe(
+          LibraryBookApi.ListByIds(
+            libraryBookIds = emptyList(),
+          ),
+        )
+    }
+
+  @Test
+  fun `listByIds (empty)`(): Unit =
+    runTest {
+      val reader = RestEndpointReader.from(LibraryBookApi.ListByIds::class)
+      val call = mockk<RoutingCall> {
+        every { parameters } returns Parameters.build {
+          appendAll("libraryBookIds", listOf("library_book_2eDS1sMt", "library_book_X64k1rU2"))
+        }
+      }
+      reader.read(call)
+        .shouldBe(
+          LibraryBookApi.ListByIds(
+            libraryBookIds = listOf(
+              LibraryBookId("library_book_2eDS1sMt"),
+              LibraryBookId("library_book_X64k1rU2"),
+            ),
+          ),
+        )
+    }
+
+  @Test
   fun `listAll, happy path`(): Unit =
     runTest {
       val reader = RestEndpointReader.from(LibraryBookApi.ListAll::class)
