@@ -20,11 +20,11 @@ import kotlin.reflect.KClass
 
 private val error: RestEndpointTemplateErrorBuilder = RestEndpointTemplateErrorBuilder
 
-public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>>(
+public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal constructor(
   private val endpoint: KClass<E>,
 ) {
-  public var handle: (suspend (endpoint: E) -> O)? = null
-  public var statusCode: (suspend (endpoint: O) -> HttpStatusCode?)? = null
+  internal var handle: (suspend (endpoint: E) -> O)? = null
+  internal var statusCode: (suspend (endpoint: O) -> HttpStatusCode?)? = null
 
   public fun handle(handle: suspend (endpoint: E) -> O) {
     require(this.handle == null) { "${error.endpoint(endpoint)}: Handler already defined." }
@@ -37,6 +37,10 @@ public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>>(
   }
 }
 
+/**
+ * Routes a [RestEndpoint] with Ktor.
+ * The [block] must specify a handler for the endpoint ([RestEndpointHandler.handle]).
+ */
 public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Routing.route(
   endpoint: KClass<E>,
   block: RestEndpointHandler<O, E>.() -> Unit,
