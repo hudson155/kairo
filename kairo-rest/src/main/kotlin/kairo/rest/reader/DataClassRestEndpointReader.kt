@@ -39,19 +39,18 @@ public class DataClassRestEndpointReader<I : Any, out E : RestEndpoint<I, *>>(
     return constructor.callBy(arguments)
   }
 
-  @Suppress("UNCHECKED_CAST")
   private suspend fun arguments(call: ApplicationCall): Map<KParameter, Any?> =
     constructor.valueParameters.associateWith { param ->
       val paramName = checkNotNull(param.name)
       if (paramName == RestEndpoint<*, *>::body.name) {
         return@associateWith call.receive<I>(KairoType<I>(param.type).toKtor())
       }
-      val thisSerializer = Json.serializersModule.serializer(param.type)
+      val serializer = Json.serializersModule.serializer(param.type)
       val values = call.parameters.getAll(paramName)
-      return@associateWith when (thisSerializer.descriptor.kind) {
-        is StructureKind.CLASS -> Json.decodeFromJsonElement(thisSerializer, JsonPrimitive(values?.single()))
-        is PrimitiveKind -> Json.decodeFromJsonElement(thisSerializer, JsonPrimitive(values?.single()))
-        else -> error("Unsupported kind: ${thisSerializer.descriptor.kind}.")
+      return@associateWith when (serializer.descriptor.kind) {
+        is StructureKind.CLASS -> Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
+        is PrimitiveKind -> Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
+        else -> error("Unsupported kind: ${serializer.descriptor.kind}.")
       }
     }
 }
