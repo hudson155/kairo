@@ -63,6 +63,25 @@ internal class RestEndpointTemplateTest {
     }
 
   @Test
+  fun searchByGenre(): Unit =
+    runTest {
+      RestEndpointTemplate.from(LibraryBookApi.SearchByGenre::class)
+        .shouldBe(
+          RestEndpointTemplate(
+            method = HttpMethod.Get,
+            path = RestEndpointTemplatePath(
+              RestEndpointTemplatePath.Component.Constant("library-books"),
+            ),
+            query = RestEndpointTemplateQuery(
+              RestEndpointTemplateQuery.Param("genre", required = true),
+            ),
+            contentType = null,
+            accept = ContentType.Application.Json,
+          ),
+        )
+    }
+
+  @Test
   fun searchByIsbn(): Unit =
     runTest {
       RestEndpointTemplate.from(LibraryBookApi.SearchByIsbn::class)

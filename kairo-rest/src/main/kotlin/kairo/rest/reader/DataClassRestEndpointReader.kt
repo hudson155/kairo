@@ -14,6 +14,7 @@ import kotlin.reflect.KParameter
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.full.valueParameters
 import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.SerialKind
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -51,6 +52,8 @@ public class DataClassRestEndpointReader<I : Any, out E : RestEndpoint<I, *>>(
       @Suppress("ElseCaseInsteadOfExhaustiveWhen")
       return@associateWith when (serializer.descriptor.kind) {
         is StructureKind.CLASS ->
+          Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
+        is SerialKind.ENUM ->
           Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
         is StructureKind.LIST ->
           Json.decodeFromJsonElement(serializer, JsonArray(values?.map { JsonPrimitive(it) }.orEmpty()))

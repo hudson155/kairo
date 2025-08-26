@@ -10,12 +10,23 @@ internal data class LibraryBookRep(
   val title: String?,
   val authors: List<String>,
   val isbn: String,
+  val genre: Genre,
 ) {
+  internal enum class Genre {
+    Fantasy,
+    History,
+    Religion,
+    Romance,
+    Science,
+    ScienceFiction,
+  }
+
   @Serializable
   internal data class Creator(
     val title: String?,
     val authors: List<String>,
     val isbn: String,
+    val genre: Genre,
   )
 
   @Serializable
@@ -23,5 +34,6 @@ internal data class LibraryBookRep(
   internal data class Update(
     val title: String?,
     val authors: List<String>,
+    val genre: Genre,
   )
 }

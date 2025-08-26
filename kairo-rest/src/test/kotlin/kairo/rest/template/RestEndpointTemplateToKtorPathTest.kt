@@ -28,6 +28,13 @@ internal class RestEndpointTemplateToKtorPathTest {
     }
 
   @Test
+  fun searchByGenre(): Unit =
+    runTest {
+      RestEndpointTemplate.from(LibraryBookApi.SearchByGenre::class).toKtorPath()
+        .shouldBe("/library-books")
+    }
+
+  @Test
   fun searchByIsbn(): Unit =
     runTest {
       RestEndpointTemplate.from(LibraryBookApi.SearchByIsbn::class).toKtorPath()
