@@ -1,4 +1,4 @@
-package kairo.healthCheck.feature
+package kairo.healthCheck
 
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
