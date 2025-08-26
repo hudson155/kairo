@@ -16,6 +16,8 @@ import kairo.rest.template.RestEndpointTemplateErrorBuilder
 import kairo.rest.template.toKtorPath
 import kotlin.reflect.KClass
 
+// TODO: Write tests for the DSL in this file.
+
 private val error: RestEndpointTemplateErrorBuilder = RestEndpointTemplateErrorBuilder
 
 public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>>(
