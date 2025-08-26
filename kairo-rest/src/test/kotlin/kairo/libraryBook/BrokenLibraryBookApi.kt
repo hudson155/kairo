@@ -18,7 +18,7 @@ internal object BrokenLibraryBookApi {
   @Rest.Accept("application/json")
   internal data class NonParamConstructorParameter(
     val shouldNotBeHere: String,
-  ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
+  ) : RestEndpoint<Unit, List<LibraryBookRep>>()
 
   @Rest("POST", "/library-books/:body")
   @Rest.ContentType("application/json")
@@ -38,36 +38,36 @@ internal object BrokenLibraryBookApi {
   @Rest.Accept("application/json")
   internal data class PathParamMarkedAsQueryParam(
     @QueryParam val libraryBookId: LibraryBookId,
-  ) : RestEndpoint<Nothing, LibraryBookRep>()
+  ) : RestEndpoint<Unit, LibraryBookRep>()
 
   @Rest("GET", "/library-books")
   @Rest.Accept("application/json")
   internal data class QueryParamMarkedAsPathParam(
     @PathParam val isbn: String,
-  ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
+  ) : RestEndpoint<Unit, List<LibraryBookRep>>()
 
   @Rest("GET", "/library-books/:libraryBookId")
   @Rest.Accept("application/json")
   internal data class ParamIsPathAndQuery(
     @PathParam @QueryParam val libraryBookId: LibraryBookId,
-  ) : RestEndpoint<Nothing, LibraryBookRep>()
+  ) : RestEndpoint<Unit, LibraryBookRep>()
 
   @Rest("GET", "/library-books/:libraryBookId")
   @Rest.Accept("application/json")
   internal data class NullablePathParam(
     @PathParam val libraryBookId: LibraryBookId?,
-  ) : RestEndpoint<Nothing, LibraryBookRep>()
+  ) : RestEndpoint<Unit, LibraryBookRep>()
 
   @Rest("GET", "/library-books/:libraryBookId")
   @Rest.Accept("application/json")
   internal data class OptionalPathParam(
     @PathParam val libraryBookId: LibraryBookId = LibraryBookId("library_book_2eDS1sMt"),
-  ) : RestEndpoint<Nothing, LibraryBookRep>()
+  ) : RestEndpoint<Unit, LibraryBookRep>()
 
   @Rest("GET", "/library-books")
   @Rest.Accept("application/json")
   internal data class OptionalQueryParam(
     @QueryParam val title: String? = null,
     @QueryParam val author: String? = null,
-  ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
+  ) : RestEndpoint<Unit, List<LibraryBookRep>>()
 }
