@@ -1,5 +1,6 @@
 package kairo.healthCheck.feature
 
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.routing.routing
 import kairo.rest.HasRouting
@@ -20,6 +21,7 @@ internal class HealthCheckHandler(
 
       route(HealthCheckApi.Readiness::class) {
         handle { healthCheckService.readiness() }
+        statusCode { if (!it.success) HttpStatusCode.InternalServerError else null }
       }
     }
   }
