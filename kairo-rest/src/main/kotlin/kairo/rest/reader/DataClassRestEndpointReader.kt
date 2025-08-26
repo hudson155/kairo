@@ -48,8 +48,10 @@ public class DataClassRestEndpointReader<I : Any, out E : RestEndpoint<I, *>>(
       val serializer = Json.serializersModule.serializer(param.type)
       val values = call.parameters.getAll(paramName)
       return@associateWith when (serializer.descriptor.kind) {
-        is StructureKind.CLASS -> Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
-        is PrimitiveKind -> Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
+        is StructureKind.CLASS ->
+          Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
+        is PrimitiveKind ->
+          Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
         else -> error("Unsupported kind: ${serializer.descriptor.kind}.")
       }
     }

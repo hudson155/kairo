@@ -22,9 +22,7 @@ public abstract class RestEndpointReader<I : Any, out E : RestEndpoint<I, *>> {
 
     public fun <I : Any, E : RestEndpoint<I, *>> from(endpoint: KClass<E>): RestEndpointReader<I, E> {
       logger.debug { "Building REST endpoint reader (endpoint=$endpoint)." }
-      require(endpoint.isData) {
-        "${error.endpoint(endpoint)} must be a data class or data object."
-      }
+      require(endpoint.isData) { "${error.endpoint(endpoint)}: Must be a data class or data object." }
       val reader =
         if (endpoint.objectInstance != null) {
           DataObjectRestEndpointReader(endpoint)
