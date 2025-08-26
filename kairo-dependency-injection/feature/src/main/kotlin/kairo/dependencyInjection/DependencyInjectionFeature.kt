@@ -1,30 +1,22 @@
 package kairo.dependencyInjection
 
 import kairo.feature.Feature
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.dsl.KoinAppDeclaration
+import org.koin.core.KoinApplication
+import org.koin.dsl.module
 
 /**
  * The Dependency Injection Feature enables Koin for dependency injection,
- * running the Koin application for the lifecycle of the Server.
+ * allowing other Features to bind Koin dependencies by implementing [KoinModule].
  */
 public class DependencyInjectionFeature(
-  private val block: KoinAppDeclaration,
+  private val application: KoinApplication,
 ) : Feature() {
   override val name: String = "Dependency Injection"
 
-  override suspend fun start(features: List<Feature>) {
-    startKoin {
-      features.forEach { feature ->
-        if (feature !is HasBindings) return@forEach
-        with(feature) { binding() }
-      }
-      block()
+  override fun beforeStart(features: List<Feature>) {
+    features.forEach { feature ->
+      if (feature !is KoinModule) return@forEach
+      application.modules(module { with(feature) { koin() } })
     }
-  }
-
-  override suspend fun stop() {
-    stopKoin()
   }
 }

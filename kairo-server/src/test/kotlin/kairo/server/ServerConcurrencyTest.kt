@@ -30,7 +30,7 @@ internal class ServerConcurrencyTest {
             barrier.await()
           }
 
-          override suspend fun stop() {
+          override suspend fun stop(features: List<Feature>) {
             events.update { it + "stop first" }
             barrier.await()
             events.update { it + "stop second" }

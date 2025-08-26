@@ -51,7 +51,7 @@ internal class ServerStopTest {
             events.update { it + "start Test (0)" }
           }
 
-          override suspend fun stop() {
+          override suspend fun stop(features: List<Feature>) {
             events.update { it + "stop Test (0)" }
             try {
               @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
@@ -68,7 +68,7 @@ internal class ServerStopTest {
             events.update { it + "start Test (1)" }
           }
 
-          override suspend fun stop() {
+          override suspend fun stop(features: List<Feature>) {
             signal.await()
             delay(1.seconds)
             events.update { it + "stop Test (1)" }
@@ -111,7 +111,7 @@ internal class ServerStopTest {
             events.update { it + "start Test (0)" }
           }
 
-          override suspend fun stop() {
+          override suspend fun stop(features: List<Feature>) {
             events.update { it + "stop Test (0)" }
             signal.complete(Unit)
           }
@@ -123,7 +123,7 @@ internal class ServerStopTest {
             events.update { it + "start Test (1)" }
           }
 
-          override suspend fun stop() {
+          override suspend fun stop(features: List<Feature>) {
             signal.await()
             events.update { it + "stop Test (1)" }
             @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")

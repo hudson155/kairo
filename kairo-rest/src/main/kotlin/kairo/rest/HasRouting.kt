@@ -3,7 +3,7 @@ package kairo.rest
 import io.ktor.server.application.Application
 
 /**
- * Use this interface on any Features that wish to add Koin bindings.
+ * Use this interface on any Features that wish to add Ktor routes.
  */
 public interface HasRouting {
   public fun Application.routing()

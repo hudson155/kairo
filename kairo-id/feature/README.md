@@ -35,7 +35,7 @@ IdFeature()
 That's enough! Now you're ready to generate some IDs!
 
 ```kotlin
-@Single(createdAtStart = true)
+@Single
 class UserIdGenerator(
   strategy: IdGenerationStrategy,
 ) : IdGenerator<UserId>(strategy, prefix = "user") {

@@ -33,7 +33,7 @@ public class RestFeature(
     ready.await()
   }
 
-  override suspend fun stop() {
+  override suspend fun stop(features: List<Feature>) {
     this.ktorServer?.let { ktorServer ->
       ktorServer.stop()
       this.ktorServer = null

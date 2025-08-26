@@ -86,6 +86,9 @@ public class Server(
    * If any Feature fails to start, all [Feature.start] calls are canceled and this method throws.
    */
   private suspend fun onStart() {
+    features.forEach { feature ->
+      feature.beforeStart(features)
+    }
     coroutineScope {
       val jobs = features.map { feature ->
         launch {
@@ -104,7 +107,7 @@ public class Server(
       jobs.joinAll()
     }
     features.forEach { feature ->
-      feature.afterStart()
+      feature.afterStart(features)
     }
   }
 
@@ -115,7 +118,7 @@ public class Server(
   private suspend fun onStop() {
     features.forEach { feature ->
       try {
-        feature.beforeStop()
+        feature.beforeStop(features)
       } catch (e: Throwable) {
         logger.warn(e) { "Feature failed beforeStop (server=${this@Server}, feature=$feature)." }
       }
@@ -126,7 +129,7 @@ public class Server(
           logger.info { "Stopping Feature (server=${this@Server}, feature=$feature)." }
           val time = measureTime {
             try {
-              feature.stop()
+              feature.stop(features)
             } catch (e: Throwable) {
               logger.error(e) { "Feature failed to stop (server=${this@Server}, feature=$feature)." }
             }
@@ -135,6 +138,13 @@ public class Server(
         }
       }
       jobs.joinAll()
+    }
+    features.forEach { feature ->
+      try {
+        feature.afterStop(features)
+      } catch (e: Throwable) {
+        logger.warn(e) { "Feature failed afterStop (server=${this@Server}, feature=$feature)." }
+      }
     }
   }
 

@@ -5,6 +5,14 @@ package kairo.feature
  */
 public interface LifecycleEventListener {
   /**
+   * Informs Features that start is about to be called.
+   * Should only do trivial work (not suspend).
+   * Most Features shouldn't need this.
+   */
+  public fun beforeStart(features: List<Feature>): Unit =
+    Unit
+
+  /**
    * Does the work of starting each Feature.
    *
    * This method is called concurrently with other Features,
@@ -18,7 +26,7 @@ public interface LifecycleEventListener {
    * Should only do trivial work (not suspend).
    * Most Features shouldn't need this.
    */
-  public fun afterStart(): Unit =
+  public fun afterStart(features: List<Feature>): Unit =
     Unit
 
   /**
@@ -26,7 +34,7 @@ public interface LifecycleEventListener {
    * Should only do trivial work (not suspend).
    * Most Features shouldn't need this.
    */
-  public fun beforeStop(): Unit =
+  public fun beforeStop(features: List<Feature>): Unit =
     Unit
 
   /**
@@ -35,6 +43,14 @@ public interface LifecycleEventListener {
    * This method is called concurrently with other Features,
    * so IT MUST BE THREAD/COROUTINE-SAFE.
    */
-  public suspend fun stop(): Unit =
+  public suspend fun stop(features: List<Feature>): Unit =
+    Unit
+
+  /**
+   * Informs Features that stop is complete.
+   * Should only do trivial work (not suspend).
+   * Most Features shouldn't need this.
+   */
+  public fun afterStop(features: List<Feature>): Unit =
     Unit
 }
