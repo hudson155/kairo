@@ -11,7 +11,7 @@ Designed to work seamlessly together but flexible enough to slot into any projec
 Kairo's libraries let you move faster, write cleaner code,
 and focus on the parts of your app that actually matter.
 
-**Nots sure where to start?**
+**Not sure where to start?**
 The [kairo-sample](https://github.com/hudson155/kairo-sample) app
 showcases most of Kairo's functionality.
 
