@@ -112,6 +112,8 @@ TODO: Mention how to do this now instead.
 
 #### Config
 
+TODO: Coming soon!
+
 - **Configs now use [lightbend/config](https://github.com/lightbend/config)'s HOCON.**
   Kairo 5 had a homegrown config library built upon YAML,
   including some bespoke config inheritance functionality.
@@ -133,6 +135,8 @@ No changes.
 TODO: Coming soon!
 
 #### Dependency Injection
+
+TODO: Coming soon!
 
 - **Dependency injection now uses [Koin](https://insert-koin.io/) instead of Guice.**
   Koin is a Kotlin-native dependency injection framework
@@ -208,11 +212,15 @@ TODO: Coming soon!
     such as passing a business ID to a function that expects a user ID.
     This is checked at compile time, without runtime overhead.
 
+- The valid entropy range has been expanded.
+
 #### Lazy Supplier
 
 This library has been removed.
 
 #### Logging
+
+TODO: Coming soon!
 
 - **Downgrade from Log4j 3 to Log4j 2.**
   Log4j 3 is in beta, and is not widely used.
