@@ -23,6 +23,7 @@ The following external libraries are included in this BOM:
 - `com.google.cloud:libraries-bom`
 - `com.google.guava:guava-bom`
 - `org.apache.logging.log4j:log4j-bom`
+- `org.jetbrains.exposed:exposed-bom`
 - `org.jetbrains.kotlinx:kotlinx-coroutines-bom`
 - `org.jetbrains.kotlinx:kotlinx-serialization-bom`
 - `org.slf4j:slf4j-bom`
@@ -68,6 +69,7 @@ dependencies {
   implementation("software.airborne.kairo:kairo-protected-string")
   implementation("software.airborne.kairo:kairo-reflect")
   implementation("software.airborne.kairo:kairo-rest-feature")
+  implementation("software.airborne.kairo:kairo-sql-feature")
   implementation("software.airborne.kairo:kairo-util")
   runtimeOnly("org.apache.logging.log4j:log4j-core")
   runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")

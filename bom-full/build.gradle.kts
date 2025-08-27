@@ -14,6 +14,10 @@ dependencies {
   // https://github.com/Kotlin/kotlinx.coroutines/releases
   api(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2"))
 
+  // exposed
+  // https://github.com/JetBrains/Exposed/releases
+  api(platform("org.jetbrains.exposed:exposed-bom:1.0.0-beta-5"))
+
   // gcp
   // https://github.com/googleapis/java-cloud-bom/releases
   api(platform("com.google.cloud:libraries-bom:26.65.0"))
