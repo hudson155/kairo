@@ -63,7 +63,7 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
   - No need to spin up Ktor anymore — test the service layer directly.
   - Tests also run in parallel now!
 
-### Further changes
+### Full Kairo 6.0 changelog
 
 #### Application
 
