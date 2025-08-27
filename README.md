@@ -1,6 +1,7 @@
 # Kairo
 
-Kairo is your **one-stop toolkit** for efficiently building modern Kotlin applications.
+**Kairo is your one-stop toolkit for production-ready Kotlin backends.**
+
 Packed with a curated collection of proven, production-ready libraries,
 it saves you the pain of hunting down, testing, and wiring together dependencies yourself.
 Each library has been handcrafted for reliability, performance, and developer experience,
@@ -10,7 +11,9 @@ Designed to work seamlessly together but flexible enough to slot into any projec
 Kairo's libraries let you move faster, write cleaner code,
 and focus on the parts of your app that actually matter.
 
-TODO: Link to the sample repo.
+**Nots sure where to start?**
+The [kairo-sample](https://github.com/hudson155/kairo-sample) app
+showcases most of Kairo's functionality.
 
 ## Getting started
 
@@ -79,7 +82,9 @@ dependencies {
 }
 ```
 
-TODO: Link to the sample repo.
+**Check out the [kairo-sample](https://github.com/hudson155/kairo-sample) app**
+to get an understanding of application structure.
+You could even consider forking it to use as a template for your own app.
 
 ## Libraries
 
