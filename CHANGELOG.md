@@ -208,7 +208,7 @@ TODO: Coming soon!
 
 - **Type-safe SQL using [Exposed](https://www.jetbrains.com/exposed/)'s DSL (replaces JDBI).**
   - No more manual SQL strings,
-    but retaining similar semantic alignment for predictability and easier debuging.
+    but retaining similar semantic alignment for predictability and easier debugging.
   - R2DBC driver for async I/O (replaces JDBC).
 
 #### Testing
