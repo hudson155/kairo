@@ -5,4 +5,10 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-dependency-injection"))
+  api(project(":kairo-feature"))
+  api(project(":kairo-protected-string"))
+  api(project(":kairo-sql"))
+
+  implementation(libs.serialization.core)
 }
