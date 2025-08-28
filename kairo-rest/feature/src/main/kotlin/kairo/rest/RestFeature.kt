@@ -29,13 +29,13 @@ public class RestFeature(
     ktorServer.monitor.subscribe(ServerReady) {
       ready.complete(Unit)
     }
-    ktorServer.start()
+    ktorServer.startSuspend()
     ready.await()
   }
 
   override suspend fun stop(features: List<Feature>) {
     this.ktorServer?.let { ktorServer ->
-      ktorServer.stop()
+      ktorServer.stopSuspend()
       this.ktorServer = null
     }
   }
