@@ -5,6 +5,7 @@ include(":bom-full")
 
 include(":kairo-application")
 include(":kairo-config")
+include(":kairo-coroutines")
 include(":kairo-darb")
 include(":kairo-dependency-injection")
 include(":kairo-dependency-injection:feature")

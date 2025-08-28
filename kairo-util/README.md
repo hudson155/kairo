@@ -26,7 +26,8 @@ but `singleOrNull()` can be surprising because it returns `null` when there are 
 `singleNullOrThrow()` returns the single element, or null if the collection is empty.
 If the collection has more than one element, throws `IllegalArgumentException`.
 
-This works with `Array`, `Iterable`, and `Sequence` receivers.
+This works with `Array`, `Iterable`, and `Sequence` receivers,
+as well as `Flow` through [kairo-coroutines](../kairo-coroutines).
 Feel free to [open an issue](https://github.com/hudson155/kairo/issues/new)
 if you need other receiver types.
 
