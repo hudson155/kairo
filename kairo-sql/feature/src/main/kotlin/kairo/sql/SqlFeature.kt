@@ -12,7 +12,6 @@ import kairo.feature.Feature
 import kairo.protectedString.ProtectedString
 import kotlin.time.toJavaDuration
 import kotlinx.coroutines.reactive.awaitSingle
-import org.jetbrains.exposed.v1.core.Schema
 import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabase
 import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabaseConfig
 import org.jetbrains.exposed.v1.r2dbc.transactions.suspendTransaction
@@ -73,18 +72,22 @@ private fun createConnectionPool(
 ): ConnectionPool =
   ConnectionPool(
     ConnectionPoolConfiguration.builder().apply {
-      acquireRetry(config.acquireAttempts - 1)
-      backgroundEvictionInterval(config.backgroundEvictionInterval.toJavaDuration())
-      initialSize(config.initialSize)
-      minIdle(config.minIdle)
-      maxSize(config.maxSize)
-      maxAcquireTime(config.maxAcquireTime.toJavaDuration())
-      maxCreateConnectionTime(config.maxCreateConnectionTime.toJavaDuration())
-      maxIdleTime(config.maxIdleTime.toJavaDuration())
-      maxLifeTime(config.maxLifeTime.toJavaDuration())
-      maxValidationTime(config.maxValidationTime.toJavaDuration())
       connectionFactory(database)
+
+      initialSize(config.size.initial)
+      minIdle(config.size.min)
+      maxSize(config.size.max)
+
+      maxCreateConnectionTime(config.management.createConnectionTimeout.toJavaDuration())
+      maxAcquireTime(config.management.acquireTimeout.toJavaDuration())
+      acquireRetry(config.management.acquireAttempts - 1)
+      maxLifeTime(config.management.maxLifetime.toJavaDuration())
+      maxIdleTime(config.management.maxIdleTime.toJavaDuration())
+      backgroundEvictionInterval(config.management.backgroundEvictionInterval.toJavaDuration())
+
       validationDepth(ValidationDepth.REMOTE)
+      maxValidationTime(config.validation.timeout.toJavaDuration())
+
       block()
     }.build(),
   )
@@ -97,10 +100,9 @@ private fun createDatabase(
   R2dbcDatabase.connect(
     connectionFactory = connectionPool,
     databaseConfig = R2dbcDatabaseConfig {
-      config.schema?.let { defaultSchema = Schema(it) }
-      config.defaultIsolationLevel?.let { defaultR2dbcIsolationLevel = IsolationLevel.valueOf(it) }
       defaultReadOnly = config.readOnly
-      defaultMaxAttempts = config.maxRetries
+      config.defaultIsolationLevel?.let { defaultR2dbcIsolationLevel = IsolationLevel.valueOf(it) }
+      defaultMaxAttempts = config.maxAttempts
       block()
     },
   )

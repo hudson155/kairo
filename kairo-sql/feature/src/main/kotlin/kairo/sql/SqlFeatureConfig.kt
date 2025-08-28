@@ -26,23 +26,37 @@ public data class SqlFeatureConfig(
 
   @Serializable
   public data class ConnectionPool(
-    val acquireAttempts: Int = 3,
-    val backgroundEvictionInterval: Duration = 2.minutes,
-    val initialSize: Int = 10,
-    val minIdle: Int = 5,
-    val maxSize: Int = 25,
-    val maxAcquireTime: Duration = 1500.milliseconds,
-    val maxCreateConnectionTime: Duration = 5000.milliseconds,
-    val maxIdleTime: Duration = 5.minutes,
-    val maxLifeTime: Duration = 1.hours,
-    val maxValidationTime: Duration = 250.milliseconds,
-  )
+    val size: Size = Size(),
+    val management: Management = Management(),
+    val validation: Validation = Validation(),
+  ) {
+    @Serializable
+    public data class Size(
+      val initial: Int = 10,
+      val min: Int = 5,
+      val max: Int = 25,
+    )
+
+    @Serializable
+    public data class Management(
+      val createConnectionTimeout: Duration = 5000.milliseconds,
+      val acquireTimeout: Duration = 1500.milliseconds,
+      val acquireAttempts: Int = 3,
+      val maxLifetime: Duration = 1.hours,
+      val maxIdleTime: Duration = 5.minutes,
+      val backgroundEvictionInterval: Duration = 2.minutes,
+    )
+
+    @Serializable
+    public data class Validation(
+      val timeout: Duration = 250.milliseconds,
+    )
+  }
 
   @Serializable
   public data class Database(
-    val schema: String? = null,
-    val defaultIsolationLevel: String? = null, // If null, uses driver's default.
     val readOnly: Boolean = false,
-    val maxRetries: Int = 3,
+    val defaultIsolationLevel: String? = null, // If null, uses driver's default.
+    val maxAttempts: Int = 3,
   )
 }
