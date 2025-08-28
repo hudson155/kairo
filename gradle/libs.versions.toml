@@ -4,6 +4,7 @@ hocon = "1.4.4" # https://github.com/lightbend/config/releases
 kotest = "6.0.0" # https://github.com/kotest/kotest/releases
 logging = "7.0.12" # https://github.com/oshai/kotlin-logging/releases
 mockk = "1.14.5" # https://github.com/mockk/mockk/releases
+r2dbc-pool = "1.0.2.RELEASE" # https://github.com/r2dbc/r2dbc-pool/releases
 
 [libraries]
 
@@ -13,6 +14,13 @@ arrow-suspend = { module = "io.arrow-kt:suspendapp" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
+
+exposed-core = { module = "org.jetbrains.exposed:exposed-core" }
+exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt" }
+exposed-json = { module = "org.jetbrains.exposed:exposed-json" }
+exposed-kotlinDatetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime" }
+exposed-money = { module = "org.jetbrains.exposed:exposed-money" }
+exposed-r2dbc = { module = "org.jetbrains.exposed:exposed-r2dbc" }
 
 gcp-secretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
 
@@ -39,6 +47,8 @@ ktorServer-netty = { module = "io.ktor:ktor-server-netty" }
 logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "logging" }
 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+
+r2dbc-pool = { module = "io.r2dbc:r2dbc-pool", version.ref = "r2dbc-pool" }
 
 serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
 serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
