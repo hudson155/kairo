@@ -117,7 +117,7 @@ id.generation.type = "Deterministic"
 
 ### Loading the config
 
-Back to your Kotlin code — load the config and decode it into your config class.
+Back to your Kotlin code — load the config and deserialize it into your config class.
 
 ```kotlin
 val config: Config =
