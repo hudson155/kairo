@@ -143,11 +143,10 @@ TODO: Coming soon!
 
 #### Logging
 
-TODO: Coming soon!
-
-- **Stable Log4j 2** instead of beta Log4j 3.
-
-- Simplified local log format (does not affect GCP logs).
+- **No longer tightly coupled to Log4j2.**
+  Choose your own SJF4J logging backend!
+  - Recommended: **Stable Log4j 2** instead of beta Log4j 3.
+  - Simplified recommended local log format (does not affect GCP logs).
 
 - **Guidance to reduce noisy logs in production.**
 
