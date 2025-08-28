@@ -17,9 +17,9 @@ public data class RestFeatureConfig(
   public data class Parallelism(
     val runningLimit: Int = 50,
     val shareWorkGroup: Boolean = false,
-    val connectionGroupSize: Int? = 1,
-    val workerGroupSize: Int? = 1,
-    val callGroupSize: Int? = 10,
+    val connectionGroupSize: Int? = 1, // If null, uses Netty's default.
+    val workerGroupSize: Int? = 1, // If null, uses Netty's default.
+    val callGroupSize: Int? = 10, // If null, uses Netty's default.
   )
 
   @Serializable
