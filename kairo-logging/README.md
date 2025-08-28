@@ -24,44 +24,6 @@ You'll also need to add an SLF4J backend to your runtime classpath.
 We recommend Log4j2, which you can configure using XML.
 But you can use anything (really)!
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="warn">
-  <Appenders>
-    <Routing name="Console">
-      <Routes pattern="$${env:LOG_FORMAT:-Simple}">
-        <Route key="Simple">
-          <Console name="Simple" target="SYSTEM_OUT">
-            <PatternLayout>
-              <Pattern>%d{HH:mm:ss} %-5p %m%n</Pattern>
-            </PatternLayout>
-          </Console>
-        </Route>
-        <Route key="Detailed">
-          <Console name="Detailed" target="SYSTEM_OUT">
-            <PatternLayout>
-              <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c - %m %mdc%n</Pattern>
-            </PatternLayout>
-          </Console>
-        </Route>
-        <Route key="GcpJson">
-          <Console name="GcpJson" target="SYSTEM_OUT">
-            <JsonTemplateLayout eventTemplateUri="classpath:GcpLayout.json"/>
-          </Console>
-        </Route>
-      </Routes>
-    </Routing>
-  </Appenders>
-  <Loggers>
-    <Root level="${env:LOG_LEVEL:-info}">
-      <AppenderRef ref="Console"/>
-    </Root>
-    <Logger name="kairo.darb" level="info"/>
-    <Logger name="kairo.gcpSecretSupplier" level="info"/>
-  </Loggers>
-</Configuration>
-```
-
 ## Usage
 
 Define and use your logger using the idiomatic API.
@@ -74,4 +36,49 @@ fun main() {
   logger.warn { "Disk space is running low (currentDiskSpace=$currentDiskSpace)." }
   logger.error(e) { "Could not send notification." }
 }
+```
+
+### Example: `slf4j-simple`
+
+`slf4j-simple` lets you turn on logs with zero configuration.
+
+```kotlin
+// build.gradle.kts
+
+dependencies {
+  testRuntimeOnly("org.slf4j:slf4j-simple")
+  implementation("software.airborne.kairo:kairo-logging")
+}
+```
+
+### Example: Log4j2
+
+```kotlin
+// build.gradle.kts
+
+dependencies {
+  testRuntimeOnly("org.apache.logging.log4j:log4j-core")
+  testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")
+  implementation("software.airborne.kairo:kairo-logging")
+}
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout>
+        <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c - %m %mdc%n</Pattern>
+      </PatternLayout>
+    </Console>
+  </Appenders>
+  <Loggers>
+    <Root level="${env:LOG_LEVEL:-info}">
+      <AppenderRef ref="Console"/>
+    </Root>
+    <Logger name="kairo.darb" level="info"/>
+    <Logger name="kairo.gcpSecretSupplier" level="info"/>
+  </Loggers>
+</Configuration>
 ```
