@@ -1,6 +1,6 @@
 # Kairo Logging
 
-Logging should be **consistent, lightweight, and idiomatic**.
+Logging should be **lightweight, idiomatic, and configurable**.
 `kairo-logging` standardizes on SLF4J,
 exposing [Ohad Shai's Kotlin logging interface](https://github.com/oshai/kotlin-logging)
 for a clean, Kotlin-first API.
