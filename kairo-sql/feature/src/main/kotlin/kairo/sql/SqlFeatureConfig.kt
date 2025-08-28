@@ -39,7 +39,7 @@ public data class SqlFeatureConfig(
   @Serializable
   public data class Database(
     val schema: String? = null,
-    val defaultIsolationLevel: String? = null,
+    val defaultIsolationLevel: String? = null, // If null, uses driver's default.
     val readOnly: Boolean = false,
     val maxRetries: Int = 3,
   )
