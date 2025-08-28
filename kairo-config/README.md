@@ -64,9 +64,9 @@ rest {
   plugins.defaultHeaders.serverName = "Kairo Sample"
 }
 sql.connectionFactory {
-  url = ${SQL_URL} # Env var
-  username = ${SQL_USERNAME} # Env var
-  password = ${SQL_PASSWORD} # Env var
+  url = ${POSTGRES_URL} # Env var
+  username = ${POSTGRES_USERNAME} # Env var
+  password = ${POSTGRES_PASSWORD} # Env var
   ssl = false
 }
 ```
@@ -75,7 +75,7 @@ sql.connectionFactory {
 
 Your production config will extend the base config.
 In this case, there's nothing to override.
-Just make sure the SQL-related environment variables are set at runtime.
+Just make sure the Postgres-related environment variables are set at runtime.
 
 ```hocon
 # production.conf
@@ -91,12 +91,14 @@ but override a few settings.
 
 ```hocon
 # development.conf
+include "common.conf"
 rest {
   parallelism { runningLimit = 10, callGroupSize = 2 }
+  plugins.callLogging.useColors = true
 }
 sql {
   connectionFactory {
-    url = "jdbc:postgresql://localhost:5432/kairo_sample"
+    url = "r2dbc:postgresql://localhost:5432/kairo_sample"
     username = "kairo"
     password = "kairo"
   }
@@ -111,6 +113,7 @@ since the overrides we applied to the development config also make sense for tes
 
 ```hocon
 # testing.conf
+include "development.conf"
 sql.connectionFactory.url = "jdbc:postgresql://localhost:5432/kairo_sample_test"
 id.generation.type = "Deterministic"
 ```
