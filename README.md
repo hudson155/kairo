@@ -112,7 +112,6 @@ or in any other Kotlin project.
   SLF4J-standardized logging (choose your own logging backend),
   exposing [Ohad Shai's Kotlin logging interface](https://github.com/oshai/kotlin-logging)
   for a clean, Kotlin-first API.
-  Kotlin-idiomatic logging using [Ohad Shai's Kotlin logging interface](https://github.com/oshai/kotlin-logging).
 - [kairo-protected-string](./kairo-protected-string):
   Handle strings that shouldn't be logged or carelessly exposed.
   `toString()` auto-redacts.
