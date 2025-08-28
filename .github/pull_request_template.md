@@ -9,6 +9,7 @@
 - [ ] KDoc
 - [ ] Feature README
 - [ ] Root README
+- [ ] BOMs
 - [ ] Changelog
 
 #### Externalities
