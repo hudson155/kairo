@@ -2,7 +2,7 @@
 
 DARB stands for "dense-ish albeit readable binary".
 
-It's a compact way to encode boolean lists into short strings,
+It's a compact way to encode boolean lists into short strings
 while still keeping them human-readable.
 The primary use case is **shrinking long permission lists inside JWTs**,
 but DARB can be used anywhere you need a balance of efficiency and human-readability.
@@ -10,7 +10,7 @@ but DARB can be used anywhere you need a balance of efficiency and human-readabi
 ### Why DARB?
 
 - **JWT-friendly:** Dramatically reduces the size of tokens with long boolean/permission lists.
-- **Readable at a glance:** Unlike raw binary or base64,
+- **Readable at a glance:** Unlike raw binary or base 64,
   you can still tell the list length and understand its contents without tooling.
 - **Space savings:** Up to 75% smaller than a naive string representation.
 

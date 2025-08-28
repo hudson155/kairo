@@ -101,8 +101,8 @@ or in any other Kotlin project.
   using [Arrow's coroutines library](https://arrow-kt.io/learn/coroutines/)
   and some convenient helper functions.
 - [kairo-darb](./kairo-darb):
-  DARB is a human-readable boolean list encoding
-  whose primary use case is to cut down on JWT token size.
+  Compact boolean list encoding for JWT permission lists,
+  maintaining human-readability.
 - [kairo-gcp-secret-supplier](./kairo-gcp-secret-supplier):
   Access GCP secrets from your Kotlin code (using coroutines).
 - [kairo-id](./kairo-id):
