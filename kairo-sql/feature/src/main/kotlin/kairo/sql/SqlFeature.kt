@@ -6,6 +6,7 @@ import io.r2dbc.spi.ConnectionFactories
 import io.r2dbc.spi.ConnectionFactory
 import io.r2dbc.spi.ConnectionFactoryOptions
 import io.r2dbc.spi.IsolationLevel
+import io.r2dbc.spi.ValidationDepth
 import kairo.dependencyInjection.KoinModule
 import kairo.feature.Feature
 import kairo.protectedString.ProtectedString
@@ -57,7 +58,7 @@ private fun createConnectionFactory(
   val options = ConnectionFactoryOptions.parse(config.url).mutate().apply {
     option(ConnectionFactoryOptions.USER, config.username)
     option(ConnectionFactoryOptions.PASSWORD, config.password.value)
-    option(ConnectionFactoryOptions.SSL, config.ssl)
+    config.ssl?.let { option(ConnectionFactoryOptions.SSL, it) }
     option(ConnectionFactoryOptions.CONNECT_TIMEOUT, config.connectTimeout.toJavaDuration())
     option(ConnectionFactoryOptions.STATEMENT_TIMEOUT, config.statementTimeout.toJavaDuration())
     block()
@@ -75,12 +76,15 @@ private fun createConnectionPool(
       acquireRetry(config.acquireAttempts - 1)
       backgroundEvictionInterval(config.backgroundEvictionInterval.toJavaDuration())
       initialSize(config.initialSize)
+      minIdle(config.minIdle)
+      maxSize(config.maxSize)
       maxAcquireTime(config.maxAcquireTime.toJavaDuration())
       maxCreateConnectionTime(config.maxCreateConnectionTime.toJavaDuration())
       maxIdleTime(config.maxIdleTime.toJavaDuration())
+      maxLifeTime(config.maxLifeTime.toJavaDuration())
       maxValidationTime(config.maxValidationTime.toJavaDuration())
       connectionFactory(database)
-      validationQuery("select 1;")
+      validationDepth(ValidationDepth.REMOTE)
       block()
     }.build(),
   )

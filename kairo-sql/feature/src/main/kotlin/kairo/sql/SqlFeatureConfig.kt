@@ -2,6 +2,7 @@ package kairo.sql
 
 import kairo.protectedString.ProtectedString
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
@@ -18,8 +19,8 @@ public data class SqlFeatureConfig(
     val url: String,
     val username: String,
     val password: ProtectedString,
-    val ssl: Boolean = true,
-    val connectTimeout: Duration = 2500.milliseconds,
+    val ssl: Boolean? = null, // If null, uses driver's default.
+    val connectTimeout: Duration = 4000.milliseconds,
     val statementTimeout: Duration = 10.seconds,
   )
 
@@ -31,8 +32,9 @@ public data class SqlFeatureConfig(
     val minIdle: Int = 5,
     val maxSize: Int = 25,
     val maxAcquireTime: Duration = 1500.milliseconds,
-    val maxCreateConnectionTime: Duration = 3500.milliseconds,
+    val maxCreateConnectionTime: Duration = 5000.milliseconds,
     val maxIdleTime: Duration = 5.minutes,
+    val maxLifeTime: Duration = 1.hours,
     val maxValidationTime: Duration = 250.milliseconds,
   )
 
