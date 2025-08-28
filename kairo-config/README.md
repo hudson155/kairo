@@ -7,8 +7,8 @@ giving every Kairo project a familiar, robust foundation for managing configs.
 ### HOCON
 
 - **Rich features**
-  - Built-in config inheritance and overrides for easier multi-env (dev/staging/prod).
-  - Native support for environment variable substitution.
+  - Built-in config inheritance and overrides for easy multi-env (dev/staging/prod).
+  - Native environment variable substitution.
 
 - **Developer ergonomics:** Comments, human-readable syntax, less boilerplate.
 
@@ -23,7 +23,7 @@ sentryDsn = ${?SENTRY_DSN} # Optional env var.
 databasePassword = ${DATABASE_PASSWORD} # Required env var.
 ```
 
-<small>This is a contrived example. See [below](#usage) for realistic examples.</small>
+_This is a contrived example. See [below](#usage) for realistic examples._
 
 ## Installation
 

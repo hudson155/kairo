@@ -51,8 +51,8 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
   - R2DBC driver for async I/O (replaces JDBC).
 
 - **Switch to [HOCON](https://github.com/lightbend/config) for industry-standard configs.**
-  - Built-in config inheritance and overrides for easier multi-env (dev/staging/prod).
-  - Native support for environment variable substitution.
+  - Built-in config inheritance and overrides for easy multi-env (dev/staging/prod).
+  - Native environment variable substitution.
 
 - **Safer IDs with zero runtime cost.**
   Kairo IDs like `user_ccU4Rn4DKVjCMqt3d0oAw3` now have compile-time safety,
@@ -78,8 +78,8 @@ TODO: Coming soon!
 TODO: Coming soon!
 
 - **Switch to [HOCON](https://github.com/lightbend/config) for industry-standard configs.**
-  - Built-in config inheritance and overrides for easier multi-env (dev/staging/prod).
-  - Native support for environment variable substitution.
+  - Built-in config inheritance and overrides for easy multi-env (dev/staging/prod).
+  - Native environment variable substitution.
 
 #### DARB
 
