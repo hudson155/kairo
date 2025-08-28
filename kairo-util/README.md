@@ -12,7 +12,7 @@ Get started by installing `kairo-util`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-util:6.0.0")
+  implementation("software.airborne.kairo:kairo-util")
 }
 ```
 

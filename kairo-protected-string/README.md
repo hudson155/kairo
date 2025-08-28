@@ -24,7 +24,7 @@ Get started by installing `kairo-protected-string`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-protected-string:6.0.0")
+  implementation("software.airborne.kairo:kairo-protected-string")
 }
 ```
 

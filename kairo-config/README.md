@@ -110,8 +110,8 @@ since the overrides we applied to the development config also make sense for tes
 ```hocon
 # testing.conf
 include "development.conf"
-sql.connectionFactory.url = "jdbc:postgresql://localhost:5432/kairo_sample_test"
 id.generation.type = "Deterministic"
+sql.connectionFactory.url = "r2dbc:postgresql://localhost:5432/kairo_sample_test"
 ```
 
 ### Loading the config

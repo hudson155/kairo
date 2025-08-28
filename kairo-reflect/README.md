@@ -11,7 +11,7 @@ Get started by installing `kairo-reflect`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-reflect:6.0.0")
+  implementation("software.airborne.kairo:kairo-reflect")
 }
 ```
 

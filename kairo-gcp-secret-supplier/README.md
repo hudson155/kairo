@@ -17,8 +17,8 @@ Get started by installing `kairo-gcp-secret-manager`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-gcp-secret-manager:6.0.0")
-  testImplementation("software.airborne.kairo:kairo-gcp-secret-manager-testing:6.0.0")
+  implementation("software.airborne.kairo:kairo-gcp-secret-manager")
+  testImplementation("software.airborne.kairo:kairo-gcp-secret-manager-testing")
 }
 ```
 
