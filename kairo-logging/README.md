@@ -1,3 +1,0 @@
-# Kairo Logging
-
-TODO: README coming soon...
