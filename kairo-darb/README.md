@@ -17,7 +17,7 @@ but DARB can be used anywhere you need a balance of efficiency and human-readabi
 _Note: Don't use this library for HTTP response body compression.
 There are already great HTTP compression libraries for that._
 
-### By example...
+### Example
 
 ```kotlin
 val darb = "23.2CB08E"
