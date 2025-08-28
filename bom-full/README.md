@@ -53,7 +53,7 @@ dependencies {
 
   ksp("io.insert-koin:koin-ksp-compiler")
 
-  // Pull in whichever Kairo or external dependencies you need.
+  // Pull in whichever Kairo and external dependencies you need.
   implementation("com.google.guava:guava")
   implementation("io.insert-koin:koin-annotations")
   implementation("io.insert-koin:koin-core")
