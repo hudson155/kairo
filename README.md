@@ -94,7 +94,8 @@ These libraries can be used within Kairo applications
 or in any other Kotlin project.
 
 - [kairo-config](./kairo-config):
-  Robust and flexible HOCON-based configuration.
+  HOCON-based configuration library
+  with multi-env (dev/staging/prod) support and environment variable substitution.
 - [kairo-darb](./kairo-darb):
   DARB is a human-readable boolean list encoding
   whose primary use case is to cut down on JWT token size.

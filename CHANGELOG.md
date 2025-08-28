@@ -51,8 +51,9 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
   - R2DBC driver for async I/O (replaces JDBC).
 
 - **Switch to [HOCON](https://github.com/lightbend/config) for industry-standard configs.**
-  - Built-in config inheritance and overrides for easier multi-env (dev/staging/prod).
-  - Native support for environment variable substitution.
+  - Great developer ergonomics.
+  - Built-in config inheritance and overrides for easy multi-env (dev/staging/prod).
+  - Native environment variable substitution.
 
 - **Safer IDs with zero runtime cost.**
   Kairo IDs like `user_ccU4Rn4DKVjCMqt3d0oAw3` now have compile-time safety,
@@ -78,8 +79,8 @@ TODO: Coming soon!
 TODO: Coming soon!
 
 - **Switch to [HOCON](https://github.com/lightbend/config) for industry-standard configs.**
-  - Built-in config inheritance and overrides for easier multi-env (dev/staging/prod).
-  - Native support for environment variable substitution.
+  - Built-in config inheritance and overrides for easy multi-env (dev/staging/prod).
+  - Native environment variable substitution.
 
 #### DARB
 
@@ -233,19 +234,19 @@ TODO: Coming soon!
 
 #### Removed libraries
 
-- **Alternative Money Formatters.**
+- **Alternative Money Formatters**
 - **Closeable** (use built-in closeables instead).
-- **Command Runner.**
+- **Command Runner**
   Connecting to GCP SQL instances that use [IAM Authentication](https://cloud.google.com/sql/docs/postgres/iam-authentication)
   is now supported through TODO: How is this supported?
 - **Coroutines** (use Kotlin coroutines directly).
-- **Do Not Log String.**
+- **Do Not Log String**
 - **Environment Variable Supplier.**
   [HOCON](https://github.com/lightbend/config) configs support native environment variable substitution.
-- **Exception.**
-- **Google Common.**
-- **Hashing.**
-- **Lazy Supplier.**
-- **Slack.**
-- **Time.**
-- **Transaction Manager.**
+- **Exception**
+- **Google Common**
+- **Hashing**
+- **Lazy Supplier**
+- **Slack**
+- **Time**
+- **Transaction Manager**

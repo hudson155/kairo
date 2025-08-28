@@ -36,7 +36,7 @@ The entropy of Kairo IDs depends on the length of the payload portion.
 | Kairo ID, length 22     | 131.0 bits (equivalent) |
 | Kairo ID, length 32     | 190.5 bits (equivalent) |
 
-<small>Entropy calculation: `length * log2(62)`.</small>
+_Entropy calculation: `length * log2(62)`._
 
 #### Length guidance
 
