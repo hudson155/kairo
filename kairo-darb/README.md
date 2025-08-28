@@ -1,14 +1,23 @@
 # DARB
 
 DARB stands for "dense-ish albeit readable binary".
-It's a medium-density way to encode boolean lists
-while maintaining human-readability.
-The main intention here is to cut down on JWT token size
-(especially when including long permission lists in the JWT),
-but it could be used for other purposes as well.
+
+It's a compact way to encode boolean lists into short strings,
+while still keeping them human-readable.
+The primary use case is **shrinking long permission lists inside JWTs**,
+but DARB can be used anywhere you need a balance of efficiency and human-readability.
+
+### Why DARB?
+
+- **JWT-friendly:** Dramatically reduces the size of tokens with long boolean/permission lists.
+- **Readable at a glance:** Unlike raw binary or base64,
+  you can still tell the list length and understand its contents without tooling.
+- **Space savings:** Up to 75% smaller than a naive string representation.
 
 _Note: Don't use this library for HTTP response body compression.
 There are already great HTTP compression libraries for that._
+
+### By example...
 
 ```kotlin
 val darb = "23.2CB08E"
@@ -23,23 +32,19 @@ val booleanList = listOf(
 )
 ```
 
-A DARB string contains 2 components, a prefix and a body, separated by a dot.
-In the example above, the DARB string `23.2CB08E` has a prefix of `23` and a body of `2CB08E`.
+- The **prefix** (`23` in the example above) is the length of the list.
+- The **body** (`2CB08E` in the example above),
+  where each character represents up to 4 booleans.
+  - `2` becomes`[false, false, true, false]`
+  - `C` becomes`[true, true, false, false]`
+  - `B` becomes `[true, false, true, true]`
+  - `0` becomes `[false, false, false, false]`
+  - `8` becomes `[true, false, false, false]`
+  - `E` becomes `[true, true, true, false]`
+    (last boolean ignored, since prefix is `23`).
 
-- The **prefix** indicates the length of the boolean list.
-  In this case, there are 23 booleans.
-  It's therefore very easy for humans to understand the length of a decoded DARB string by glancing at the encoded version.
-- Within the **body**, each character represents up to 4 booleans.
-  - The first character (`2`) maps to `[false, false, true, false]`.
-  - The second character (`C`) maps to `[true, true, false, false]`.
-  - The third character (`B`) maps to `[true, false, true, true]`.
-  - The fourth character (`0`) maps to `[false, false, false, false]`.
-  - The fifth character (`8`) maps to `[true, false, false, false]`.
-  - The sixth character (`E`) maps to `[true, true, true, false]`.
-    But because the length of this string is only `23`, we ignore the last boolean.
-
-Compared to representation in a binary string, DARB uses 62.5% less space in this example.
-For longer strings, this approaches 75%.
+For this example, DARB uses **62.5% less space** than a plain binary string.
+For larger lists, the savings approach **75%**.
 
 ## Installation
 
