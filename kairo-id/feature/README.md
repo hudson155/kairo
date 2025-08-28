@@ -20,7 +20,7 @@ Get started by installing `kairo-id-feature`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-id-feature:6.0.0")
+  implementation("software.airborne.kairo:kairo-id-feature")
 }
 ```
 
