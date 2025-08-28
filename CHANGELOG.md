@@ -233,19 +233,19 @@ TODO: Coming soon!
 
 #### Removed libraries
 
-- **Alternative Money Formatters.**
+- **Alternative Money Formatters**
 - **Closeable** (use built-in closeables instead).
-- **Command Runner.**
+- **Command Runner**
   Connecting to GCP SQL instances that use [IAM Authentication](https://cloud.google.com/sql/docs/postgres/iam-authentication)
   is now supported through TODO: How is this supported?
 - **Coroutines** (use Kotlin coroutines directly).
-- **Do Not Log String.**
+- **Do Not Log String**
 - **Environment Variable Supplier.**
   [HOCON](https://github.com/lightbend/config) configs support native environment variable substitution.
-- **Exception.**
-- **Google Common.**
-- **Hashing.**
-- **Lazy Supplier.**
-- **Slack.**
-- **Time.**
-- **Transaction Manager.**
+- **Exception**
+- **Google Common**
+- **Hashing**
+- **Lazy Supplier**
+- **Slack**
+- **Time**
+- **Transaction Manager**
