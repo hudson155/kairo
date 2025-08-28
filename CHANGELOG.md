@@ -51,7 +51,7 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
   - R2DBC driver for async I/O (replaces JDBC).
 
 - **Switch to [HOCON](https://github.com/lightbend/config) for industry-standard configs.**
-  - Great developer ergonomics.
+  - Great developer ergonomics (comments, human-readable syntax, less boilerplate).
   - Built-in config inheritance and overrides for easy multi-env (dev/staging/prod).
   - Native environment variable substitution.
 
@@ -76,9 +76,8 @@ TODO: Coming soon!
 
 #### Config
 
-TODO: Coming soon!
-
 - **Switch to [HOCON](https://github.com/lightbend/config) for industry-standard configs.**
+  - Great developer ergonomics (comments, human-readable syntax, less boilerplate).
   - Built-in config inheritance and overrides for easy multi-env (dev/staging/prod).
   - Native environment variable substitution.
 
@@ -242,7 +241,7 @@ TODO: Coming soon!
 - **Coroutines** (use Kotlin coroutines directly).
 - **Do Not Log String**
 - **Environment Variable Supplier.**
-  [HOCON](https://github.com/lightbend/config) configs support native environment variable substitution.
+  HOCON configs support native environment variable substitution.
 - **Exception**
 - **Google Common**
 - **Hashing**

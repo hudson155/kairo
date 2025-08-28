@@ -12,7 +12,7 @@ giving every Kairo project a familiar, robust foundation for managing configs.
 
 - **Developer ergonomics:** Comments, human-readable syntax, less boilerplate.
 
-- **No new API:** Kairo uses [lightbend/config](https://github.com/lightbend/config) directly — zero additional abstractions to learn.
+- **No new API:** Kairo uses lightbend/config directly — zero additional abstractions to learn.
 
 ```hocon
 include "common.conf" # Include another config file.
@@ -28,6 +28,7 @@ _This is a contrived example. See [below](#usage) for realistic examples._
 ## Installation
 
 Get started by installing `kairo-config`.
+You don't need to install lightbend/config separately — it's included by default.
 
 ```kotlin
 // build.gradle.kts
