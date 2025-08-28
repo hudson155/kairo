@@ -84,4 +84,16 @@ internal class SequenceSingleNullOrThrowTest {
           .singleNullOrThrow { it > 3 }
       }
     }
+
+  @Test
+  fun `iteration should not progress past 2nd element`(): Unit =
+    runTest {
+      var i = 0
+      shouldThrow<IllegalArgumentException> {
+        sequence {
+          while (true) yield(++i)
+        }.singleNullOrThrow()
+      }
+      i.shouldBe(2)
+    }
 }
