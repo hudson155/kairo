@@ -4,9 +4,8 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-coroutines"))
-  api(project(":kairo-feature"))
-  implementation(project(":kairo-logging"))
+  api(libs.arrow.coroutines)
+  api(libs.coroutines.core)
 
   testImplementation(project(":kairo-testing"))
 }

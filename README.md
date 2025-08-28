@@ -96,6 +96,10 @@ or in any other Kotlin project.
 - [kairo-config](./kairo-config):
   HOCON-based configuration library
   with multi-env (dev/staging/prod) support and environment variable substitution.
+- [kairo-coroutines](./kairo-coroutines):
+  Extends Kotlin coroutines
+  using [Arrow's coroutines library](https://arrow-kt.io/learn/coroutines/)
+  and some convenient helper functions.
 - [kairo-darb](./kairo-darb):
   DARB is a human-readable boolean list encoding
   whose primary use case is to cut down on JWT token size.

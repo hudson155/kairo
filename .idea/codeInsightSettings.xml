@@ -19,7 +19,9 @@
       <name>java.util.Base64.*</name>
       <name>java.util.UUID</name>
       <name>java.util.concurrent.CancellationException</name>
+      <name>java.util.concurrent.CountDownLatch</name>
       <name>java.util.concurrent.CyclicBarrier</name>
+      <name>java.util.concurrent.Flow</name>
       <name>java.util.concurrent.atomic.*</name>
       <name>java.util.logging.LogManager</name>
       <name>java.xml.*</name>
@@ -30,6 +32,7 @@
       <name>kotlin.coroutines.cancellation.*</name>
       <name>kotlinx.coroutines.time.*</name>
       <name>org.apache.logging.log4j.core.jmx.*</name>
+      <name>org.intellij.lang.annotations.Flow</name>
       <name>org.jdbi.v3.core.Sql</name>
       <name>org.koin.core.annotation.Singleton</name>
       <name>org.koin.core.component.*</name>

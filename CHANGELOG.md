@@ -81,6 +81,10 @@ TODO: Coming soon!
   - Built-in config inheritance and overrides for easy multi-env (dev/staging/prod).
   - Native environment variable substitution.
 
+#### Coroutines
+
+- `singleNullOrThrow()` now works with Kotlin `Flow`.
+
 #### DARB
 
 No changes.
@@ -238,7 +242,6 @@ TODO: Coming soon!
 - **Command Runner**
   Connecting to GCP SQL instances that use [IAM Authentication](https://cloud.google.com/sql/docs/postgres/iam-authentication)
   is now supported through TODO: How is this supported?
-- **Coroutines** (use Kotlin coroutines directly).
 - **Do Not Log String**
 - **Environment Variable Supplier.**
   HOCON configs support native environment variable substitution.

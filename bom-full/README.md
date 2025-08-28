@@ -55,11 +55,11 @@ dependencies {
 
   implementation("io.insert-koin:koin-annotations")
   implementation("io.insert-koin:koin-core")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-core")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
   implementation("software.airborne.kairo:kairo-application")
   implementation("software.airborne.kairo:kairo-config")
+  implementation("software.airborne.kairo:kairo-coroutines")
   implementation("software.airborne.kairo:kairo-darb")
   implementation("software.airborne.kairo:kairo-dependency-injection-feature")
   implementation("software.airborne.kairo:kairo-gcp-secret-supplier")
