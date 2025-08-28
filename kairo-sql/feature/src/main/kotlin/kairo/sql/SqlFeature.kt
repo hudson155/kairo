@@ -17,6 +17,9 @@ import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabaseConfig
 import org.jetbrains.exposed.v1.r2dbc.transactions.suspendTransaction
 import org.koin.core.module.Module
 
+/**
+ * The SQL Feature uses Exposed to provide access to a SQL database.
+ */
 @Suppress("LongParameterList")
 public class SqlFeature(
   config: SqlFeatureConfig,
