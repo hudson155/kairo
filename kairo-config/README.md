@@ -33,7 +33,7 @@ Get started by installing `kairo-config`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-config:6.0.0")
+  implementation("software.airborne.kairo:kairo-config")
 }
 ```
 
@@ -97,11 +97,7 @@ rest {
   plugins.callLogging.useColors = true
 }
 sql {
-  connectionFactory {
-    url = "r2dbc:postgresql://localhost:5432/kairo_sample"
-    username = "kairo"
-    password = "kairo"
-  }
+  connectionFactory.url = "r2dbc:postgresql://localhost:5432/kairo_sample"
   connectionPool.size { initial = 2, min = 1, max = 5 }
 }
 ```
