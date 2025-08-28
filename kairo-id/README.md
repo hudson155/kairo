@@ -13,10 +13,12 @@ See [kairo-id-feature](./feature) to easily add Kairo ID generation Kairo applic
 - **Compile-time safety:** No more accidentally swapping IDs of different entity types.
 - **Zero runtime overhead:** Powered by Kotlin value classes (inlined to strings).
 
-> An example Kairo ID is `user_ccU4Rn4DKVjCMqt3d0oAw3`.
->
-> - **Prefix:** `user` (human-readable entity type).
->- **Payload:** `ccU4Rn4DKVjCMqt3d0oAw3` (base-62 encoded randomness).
+#### Example
+
+An example Kairo ID is `user_ccU4Rn4DKVjCMqt3d0oAw3`.
+
+- **Prefix:** `user` (human-readable entity type).
+- **Payload:** `ccU4Rn4DKVjCMqt3d0oAw3` (base-62 encoded randomness).
 
 ### Entropy and length guidance
 
