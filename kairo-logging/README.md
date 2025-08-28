@@ -40,7 +40,8 @@ fun main() {
 
 ### Example: `slf4j-simple`
 
-`slf4j-simple` lets you turn on logs with zero configuration.
+Using `slf4j-simple` as the backend lets you turn on logs with zero configuration.
+This is great for simple projects.
 
 ```kotlin
 // build.gradle.kts
@@ -53,6 +54,9 @@ dependencies {
 
 ### Example: Log4j2
 
+For production applications, we recommend Log4j2.
+You could also use Logback.
+
 ```kotlin
 // build.gradle.kts
 
@@ -64,6 +68,8 @@ dependencies {
 ```
 
 ```xml
+<!-- log4j2.xml -->
+
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn">
   <Appenders>
