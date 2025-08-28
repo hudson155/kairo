@@ -1,17 +1,17 @@
 # Kairo Regular BOM
 
-Kairo has 2 BOMs (Bill of Materials).
+BOMs (Bill of Materials)
+**keep dependency versions aligned and keep build files clean**.
 
-**This (`software.airborne.kairo:bom`) is the regular BOM**,
-intended for when you're **using one (or just a few) Kairo libraries**.
-It will keep your Kairo dependencies aligned.
+Kairo has 2 BOMs (Bill of Materials):
 
-_If you're building a Kairo application,
-you should use [the full BOM](../bom-full) instead._
+- **This (`software.airborne.kairo:bom`) is the regular BOM**,
+  intended for when you're **using one (or just a few) Kairo libraries**.
+  It will keep your Kairo dependencies aligned.
+- _If you're building a Kairo application,
+  you should use [the full BOM](../bom-full) instead._
 
-See [the getting started section](..) for how to use this BOM.
-
-## Example
+## Usage
 
 Here's an example of what your `build.gradle.kts` file might look like
 when using this BOM.
@@ -31,6 +31,7 @@ dependencies {
   val kairoVersion = "6.0.0"
   implementation(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
 
+  // Pull in whichever Kairo dependencies you need.
   implementation("software.airborne.kairo:kairo-coroutines")
   implementation("software.airborne.kairo:kairo-darb")
   implementation("software.airborne.kairo:kairo-protected-string")

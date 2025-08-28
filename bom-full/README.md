@@ -1,16 +1,16 @@
 # Kairo Full BOM
 
-Kairo has 2 BOMs (Bill of Materials).
+BOMs (Bill of Materials)
+**keep dependency versions aligned and keep build files clean**.
 
-**This (`software.airborne.kairo:bom`) is the full BOM**,
-intended for when you're **building a Kairo application**.
-It will not only keep your Kairo dependencies aligned,
-but also align several external library versions.
+Kairo has 2 BOMs (Bill of Materials):
 
-_If you're just using one (or a few) Kairo libraries,
-you should use [the regular BOM](../bom) instead._
-
-See [the getting started section](..) for how to use this BOM.
+- **This (`software.airborne.kairo:bom`) is the full BOM**,
+  intended for when you're **building a Kairo application**.
+  It will not only keep your Kairo dependencies aligned,
+  but also align several external library versions.
+- _If you're just using one (or a few) Kairo libraries,
+  you should use [the regular BOM](../bom) instead._
 
 ## External libraries
 
@@ -28,7 +28,7 @@ The following external libraries are included in this BOM:
 - `org.jetbrains.kotlinx:kotlinx-serialization-bom`
 - `org.slf4j:slf4j-bom`
 
-## Example
+## Usage
 
 Here's an example of what your `build.gradle.kts` file might look like
 when using this BOM.
@@ -53,8 +53,12 @@ dependencies {
 
   ksp("io.insert-koin:koin-ksp-compiler")
 
+  // Pull in whichever Kairo and external dependencies you need.
+  implementation("com.google.guava:guava")
   implementation("io.insert-koin:koin-annotations")
   implementation("io.insert-koin:koin-core")
+  runtimeOnly("org.apache.logging.log4j:log4j-core")
+  runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-core")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
   implementation("software.airborne.kairo:kairo-application")
@@ -71,8 +75,6 @@ dependencies {
   implementation("software.airborne.kairo:kairo-rest-feature")
   implementation("software.airborne.kairo:kairo-sql-feature")
   implementation("software.airborne.kairo:kairo-util")
-  runtimeOnly("org.apache.logging.log4j:log4j-core")
-  runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")
 
   testImplementation("software.airborne.kairo:kairo-testing")
 }
