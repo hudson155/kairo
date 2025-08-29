@@ -122,7 +122,7 @@ These libraries **can be used anywhere**
 - [kairo-testing](./kairo-testing):
   Kotlin-esque JUnit-style testing, with coroutine and mocking support.
 - [kairo-util](./kairo-util):
-  A home for various simple utilities.
+  A home for simple utilities.
 
 ### Application libraries
 
