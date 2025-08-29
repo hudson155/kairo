@@ -3,9 +3,8 @@ package kairo.gcpSecretSupplier
 import kairo.protectedString.ProtectedString
 
 /**
- * Supplies GCP secrets.
- * The default implementation ([DefaultGcpSecretSupplier]) delegates to the GCP Secret Manager SDK.
- * This abstract class is for testability.
+ * Lightweight and coroutine-friendly Google Secret Manager wrapper for Kotlin.
+ * Use [DefaultGcpSecretSupplier] in production.
  */
 public abstract class GcpSecretSupplier {
   public abstract suspend operator fun get(id: String): ProtectedString?

@@ -104,7 +104,8 @@ These libraries **can be used anywhere**
   Compact boolean list encoding for JWT permission lists,
   maintaining human-readability.
 - [kairo-gcp-secret-supplier](./kairo-gcp-secret-supplier):
-  Access GCP secrets from your Kotlin code (using coroutines).
+  Lightweight and coroutine-friendly
+  Google Secret Manager wrapper.
 - [kairo-id](./kairo-id):
   Human-readable semantic identifiers with variable entropy.
   Compile-time safety without runtime overhead.
