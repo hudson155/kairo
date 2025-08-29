@@ -1,6 +1,6 @@
 # Kairo Configs
 
-Application configuration should be **simple, consistent, and powerful**.
+Application configuration should be **simple, consistent, and powerful**.\
 `kairo-config` standardizes on [lightbend/config](https://github.com/lightbend/config)'s HOCON implementation,
 giving every Kairo project a familiar, robust foundation for managing configs.
 
@@ -27,7 +27,7 @@ _This is a contrived example. See [below](#usage) for realistic examples._
 
 ## Installation
 
-Get started by installing `kairo-config`.
+Get started by installing `kairo-config`.\
 You don't need to install lightbend/config separately — it's included by default.
 
 ```kotlin
@@ -56,7 +56,6 @@ data class Config(
 ### Base/common config
 
 You'll probably have a base/common config with settings shared across environments.
-You can leave some out, or override them in other configs.
 
 ```hocon
 # common.conf

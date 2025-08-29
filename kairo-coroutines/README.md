@@ -8,8 +8,9 @@
 
 ## Installation
 
-Get started by installing `kairo-coroutines`.
-You don't need to install `kotlinx.coroutines` or Arrow's coroutines library separately — they're included by default.
+Get started by installing `kairo-coroutines`.\
+You don't need to install `kotlinx.coroutines` or Arrow's coroutines library separately —
+they're included by default.
 
 ```kotlin
 // build.gradle.kts

@@ -20,7 +20,7 @@ An example Kairo ID is `user_ccU4Rn4DKVjCMqt3d0oAw3`.
 
 ## Installation
 
-Get started by installing `kairo-id-feature`.
+Get started by installing `kairo-id-feature`.\
 You don't need to install `kairo-id` separately — it's included.
 
 ```kotlin

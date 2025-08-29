@@ -90,8 +90,8 @@ You could even consider forking it to use as a template for your own app.
 
 ### Standalone libraries
 
-These libraries can be used within Kairo applications
-or in any other Kotlin project.
+These libraries **can be used anywhere**
+(within Kairo applications _or in any other Kotlin project_).
 
 - [kairo-config](./kairo-config):
   HOCON-based configuration library
@@ -125,7 +125,7 @@ or in any other Kotlin project.
 
 ### Application libraries
 
-These libraries are intended for use when building a full application with Kairo.
+These libraries help when **building your full application with Kairo**.
 
 - [kairo-id-feature](./kairo-id/feature):
   Binds Kairo ID generation for use within a Kairo application.
