@@ -1,13 +1,28 @@
 # Protected Strings
 
-Protected strings are designed to represent string values
-that should not be logged or otherwise exposed, such as API keys.
+Secrets should never show up in logs or stack traces.\
+`kairo-protected-string` provides a **lightweight wrapper around sensitive strings**
+that improves safety without complicating your code.
 
-- The `toString` implementation redacts the value.
-- Accessing `value` is allowed only by opting into `ProtectedString.Access`.
-- Serialization _will_ expose the underlying value.
+- **Safe by default:**
+  Calling `toString()` yields `REDACTED` instead of the value.
+- **Serialization-compatible:**
+  Serialization _will_ expose the underlying value.
+- **Explicit access:**
+  To access the raw value you must opt in using
+  `@OptIn(ProtectedString.Access::class)`.
+- **Minimal friction:**
+  Pass protected strings around normally;
+  only creation and access require opting in.
 
-Note that this is a simplistic implementation; **it does not clean up memory after itself**.
+Kairo's protected strings strike a balance between
+**developer ergonomics** and **operational safety**.
+
+_Note that this is not cryptographic memory protection.
+Protected strings **do not clean up memory after themselves**.
+Use them to prevent accidental leaks, not to secure against memory inspection._
+
+### Example
 
 ```kotlin
 val apiKey = ProtectedString("your_api_key")
@@ -30,18 +45,13 @@ dependencies {
 
 ## Usage
 
-Opting into `ProtectedString.Access` is necessary
-to create instances of `ProtectedString` or to access their underlying values.
-However, this annotation should only be used where protected strings are **initially created**
-or where their **underlying values are accessed**.
-It isn't necessary (and in fact should be avoided)
-to use this annotation to pass protected strings around within your code.
+You must explicitly opt in to create protected strings or access their values.
 
 ```kotlin
 @OptIn(ProtectedString.Access::class)
 ```
 
-Once you've opted in, simply call the constructor or access the `value` property.
+Once you've opted in, usage is simple.
 
 ```kotlin
 val apiKey = ProtectedString("your_api_key")

@@ -113,7 +113,7 @@ These libraries **can be used anywhere**
   exposing [Ohad Shai's Kotlin logging interface](https://github.com/oshai/kotlin-logging)
   for a clean, Kotlin-first API.
 - [kairo-protected-string](./kairo-protected-string):
-  Handle strings that shouldn't be logged or carelessly exposed.
+  Handle sensitive strings that shouldn't be logged.
   `toString()` auto-redacts.
 - [kairo-reflect](./kairo-reflect):
   Proxies Kotlin's reflection library,
