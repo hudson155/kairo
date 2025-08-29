@@ -1,9 +1,9 @@
 # GCP Secret Supplier
 
-This library provides access to
-[Google Cloud Platform (GCP) secrets](https://cloud.google.com/security/products/secret-manager).
-It's a thin wrapper around Google's own Java SDK,
-primarily with the intention of making it usable in a Kotlin coroutine environment.
+`kairo-gcp-secret-supplier` is a lightweight wrapper around
+[Google Secret Manager](https://cloud.google.com/security/products/secret-manager),
+making access through Kotlin **idiomatic and coroutine-friendly**.
+No more blocking calls on event loops!
 
 ```kotlin
 gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"]
@@ -11,7 +11,8 @@ gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"]
 
 ## Installation
 
-Get started by installing `kairo-gcp-secret-manager`.
+Get started by installing `kairo-gcp-secret-manager`.\
+You can also install `kairo-gcp-secret-manager-testing` for testing.
 
 ```kotlin
 // build.gradle.kts
@@ -24,28 +25,21 @@ dependencies {
 
 ## Usage
 
-First, create an instance of `GcpSecretSupplier`.
-
 ```kotlin
 val gcpSecretSupplier: GcpSecretSupplier = DefaultGcpSecretSupplier()
-```
-
-Now use it simply by using the get operator.
-
-```kotlin
 val value = gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"]
 ```
 
-The result is either the value of the GCP secret, or `null` if the GCP secret does not exist.
+The result is either the value of the GCP secret,
+or `null` if the GCP secret does not exist.
 
 ## Testing
 
-There are a few `GcpSecretSupplier` implementations that might come in handy for testing.
+Use alternative implementations to simplify testing.
 
-- `NoopGcpSecretSupplier` will throw `NotImplementedError` if you try to access a GCP secret.
-- `FakeGcpSecretSupplier` allows you to set GCP secret values manually.
-
-You can also implement your own custom `GcpSecretSupplier`.
+- `NoopGcpSecretSupplier`: Always throws `NotImplementedError`.
+- `FakeGcpSecretSupplier`: Allows you to set GCP secret values manually.
+- Custom implementations: Implement `GcpSecretSupplier`.
 
 ## Logging config
 
