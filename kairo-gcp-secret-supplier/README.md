@@ -11,15 +11,15 @@ gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"]
 
 ## Installation
 
-Install `kairo-gcp-secret-manager`.\
-You can also install `kairo-gcp-secret-manager-testing` for testing.
+Install `kairo-gcp-secret-supplier`.\
+You can also install `kairo-gcp-secret-supplier-testing` for testing.
 
 ```kotlin
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-gcp-secret-manager")
-  testImplementation("software.airborne.kairo:kairo-gcp-secret-manager-testing")
+  implementation("software.airborne.kairo:kairo-gcp-secret-supplier")
+  testImplementation("software.airborne.kairo:kairo-gcp-secret-supplier-testing")
 }
 ```
 
