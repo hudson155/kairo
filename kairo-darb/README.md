@@ -40,7 +40,7 @@ val booleanList = listOf(
   - `B` becomes `[true, false, true, true]`
   - `0` becomes `[false, false, false, false]`
   - `8` becomes `[true, false, false, false]`
-  - `E` becomes `[true, true, true, false]`
+  - `E` becomes `[true, true, true]`
     (last boolean ignored, since prefix is `23`).
 
 For this example, DARB uses **62.5% less space** than a plain binary string.\

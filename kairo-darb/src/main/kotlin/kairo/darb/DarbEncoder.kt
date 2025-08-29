@@ -6,25 +6,14 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 private val logger: KLogger = KotlinLogging.logger {}
 
 /**
- * Encodes a boolean list into a Dense-ish Albeit Readable Binary (DARB) string.
- * It's a medium-density way to encode boolean lists while maintaining some level of readability.
+ * DARB stands for "dense-ish albeit readable binary".
+ * It's a compact way to encode boolean lists into short strings
+ * while still keeping them human-readable.
  *
- * A DARB string contains 2 components, a prefix and a body, separated by a dot.
  * An example DARB string is "23.2CB08E".
- * This string represents the boolean list "0010 1100 1011 0000 1000 111".
- * The prefix is "23" and the body is "2CB08E".
- *
- * The prefix indicates the length of the boolean list. In this case, there are 23 booleans.
- * Within the body, each character represents up to 4 booleans.
- * The first character ("2") maps to "0010".
- * The second character ("C") maps to "1100".
- * The third character ("B") maps to "1011".
- * The fourth character ("0") maps to "0000".
- * The fifth character ("8") maps to "1000".
- * But because the length of this string is only `23`, we ignore the last boolean.
- *
- * Also decodes; the inverse operation.
- * See the corresponding test for more spec.
+ * The prefix ("23" in the example above) is the length of the list.
+ * 2 = "0010", C = "1100", B = "1011", 0 = "0000", 8 = "1000", "E" = "111"
+ * (last boolean ignored, since prefix is `23`).
  */
 public object DarbEncoder {
   private const val chunkSize: Int = 4 // Warning, changing this alone will break the code.
