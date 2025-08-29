@@ -71,7 +71,7 @@ IdFeature(
 )
 ```
 
-Or use [Kairo configs](../../kairo-config)'s HOCON.
+Or use [Kairo config](../../kairo-config)'s HOCON.
 
 ```hocon
 id.generation {
@@ -92,7 +92,7 @@ IdFeature(
 )
 ```
 
-Or use [Kairo configs](../../kairo-config)'s HOCON.
+Or use [Kairo config](../../kairo-config)'s HOCON.
 
 ```hocon
 id.generation {
