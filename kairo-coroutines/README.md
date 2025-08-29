@@ -1,6 +1,6 @@
 # Kairo Coroutines
 
-`kairo-coroutines` doesn't replace Kotlin's coroutine library, it adds extends it.
+`kairo-coroutines` extends Kotlin's coroutine library.
 
 - Provides **[Arrow's coroutines library](https://arrow-kt.io/learn/coroutines/)**,
   which includes coroutine-safe concurrency primitives like `CountDownLatch` and `CyclicBarrier`.
@@ -9,7 +9,7 @@
 ## Installation
 
 Get started by installing `kairo-coroutines`.\
-You don't need to install `kotlinx.coroutines` or Arrow's coroutines library separately —
+You don't need to install Kotlin or Arrow's coroutines library separately —
 they're included by default.
 
 ```kotlin

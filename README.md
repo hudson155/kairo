@@ -116,8 +116,8 @@ These libraries **can be used anywhere**
   Handle sensitive strings that shouldn't be logged.
   `toString()` auto-redacts.
 - [kairo-reflect](./kairo-reflect):
-  Proxies Kotlin's reflection library,
-  with the addition of the runtime-rich `KairoType<T>` class.
+  Extends Kotlin reflection,
+  unifying fragmented JVM/Kotlin into the safer and richer `KairoType<T>`.
 - [kairo-testing](./kairo-testing):
   Kotlin-esque JUnit-style testing, with coroutine and mocking support.
 - [kairo-util](./kairo-util):
