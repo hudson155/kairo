@@ -1,6 +1,6 @@
 # Kairo Logging
 
-Logging should be **lightweight, idiomatic, and configurable**.
+Logging should be **lightweight, idiomatic, and configurable**.\
 `kairo-logging` standardizes on SLF4J,
 exposing [Ohad Shai's Kotlin logging interface](https://github.com/oshai/kotlin-logging)
 for a clean, Kotlin-first API.
@@ -20,7 +20,7 @@ dependencies {
 }
 ```
 
-You'll also need to add an SLF4J backend to your runtime classpath.
+You'll also need to add an SLF4J backend to your runtime classpath.\
 We recommend Log4j2, which you can configure using XML.
 But you can use anything (really)!
 
@@ -55,7 +55,7 @@ dependencies {
 ### Example: Log4j2
 
 For production applications, we recommend Log4j2.
-You could also use Logback.
+Or you could use Logback.
 
 ```kotlin
 // build.gradle.kts
