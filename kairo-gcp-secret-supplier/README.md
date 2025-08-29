@@ -25,6 +25,8 @@ dependencies {
 
 ## Usage
 
+Use `DefaultGcpSecretSupplier` in production.
+
 ```kotlin
 val gcpSecretSupplier: GcpSecretSupplier = DefaultGcpSecretSupplier()
 val value = gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"]
