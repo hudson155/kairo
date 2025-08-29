@@ -2,9 +2,6 @@ package kairo.gcpSecretSupplier
 
 import kairo.protectedString.ProtectedString
 
-/**
- * Allows you to set GCP secret values manually.
- */
 public class FakeGcpSecretSupplier(
   map: Map<String, ProtectedString> = emptyMap(),
 ) : GcpSecretSupplier() {
