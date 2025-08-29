@@ -1,12 +1,13 @@
 # Kairo Utilities
 
-This is a home for various simple utilities.
+A home for simple utilities.
+
 Utilities modules like this can easily become junk drawers;
-we make an effort to keep this module small and focused.
+we make an effort to keep `kairo-util` small and focused.
 
 ## Installation
 
-Get started by installing `kairo-util`.
+Install `kairo-util`.
 
 ```kotlin
 // build.gradle.kts
