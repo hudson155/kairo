@@ -10,7 +10,7 @@ without changing your code.
 
 ## Installation
 
-Get started by installing `kairo-logging`.
+Install `kairo-logging`.
 
 ```kotlin
 // build.gradle.kts

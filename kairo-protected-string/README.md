@@ -33,7 +33,7 @@ println(apiKey)
 
 ## Installation
 
-Get started by installing `kairo-protected-string`.
+Install `kairo-protected-string`.
 
 ```kotlin
 // build.gradle.kts
