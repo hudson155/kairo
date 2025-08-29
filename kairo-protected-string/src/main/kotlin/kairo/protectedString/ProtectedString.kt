@@ -3,12 +3,9 @@ package kairo.protectedString
 import kotlinx.serialization.Serializable
 
 /**
- * Represents a string value that should not be logged or otherwise exposed, such as an API key.
- * The [toString] implementation redacts the value.
- * Accessing [value] is allowed by opting into [ProtectedString.Access], but please use it with care.
- * Note that this is a simplistic implementation; it does not clean up memory after itself.
- *
- * Note: Serialization will expose the underlying value.
+ * Secrets should never show up in logs or stack traces.
+ * Protected strings are a lightweight wrapper around sensitive strings
+ * that improves safety without complicating your code.
  */
 @Suppress("UseDataClass")
 @OptIn(ProtectedString.Access::class)
@@ -17,6 +14,9 @@ public class ProtectedString @Access constructor(
   @Access
   public val value: String,
 ) {
+  /**
+   * You must opt in to create protected strings or access their values.
+   */
   @RequiresOptIn
   @Target(AnnotationTarget.CONSTRUCTOR, AnnotationTarget.PROPERTY)
   public annotation class Access
@@ -30,6 +30,9 @@ public class ProtectedString @Access constructor(
   override fun hashCode(): Int =
     value.hashCode()
 
+  /**
+   * Safe by default: [toString] redacts the value.
+   */
   override fun toString(): String =
     "ProtectedString(value='REDACTED')"
 }

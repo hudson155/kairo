@@ -1,27 +1,6 @@
 # Kairo ID Feature
 
-Kairo IDs are **safe, meaningful, and efficient**.
-`kairo-id` is an alternative to raw UUIDs or serial IDs,
-improving **developer experience** and **operational clarity**.
-
-### Why Kairo IDs?
-
-- **Semantic prefixes:** IDs tell you what they represent (`user_123`, `business_123`).
-- **Strong entropy:** As much or more randomness than UUIDs, tunable by payload length.
-- **Compile-time safety:** No more accidentally swapping IDs of different entity types.
-- **Zero runtime overhead:** Powered by Kotlin value classes (inlined to strings).
-
-#### Example
-
-An example Kairo ID is `user_ccU4Rn4DKVjCMqt3d0oAw3`.
-
-- **Prefix:** `user` (human-readable entity type).
-- **Payload:** `ccU4Rn4DKVjCMqt3d0oAw3` (base-62 encoded randomness).
-
-## Installation
-
-Get started by installing `kairo-id-feature`.\
-You don't need to install `kairo-id` separately — it's included.
+Binds [Kairo ID generation](..) for use within a Kairo application.
 
 ```kotlin
 // build.gradle.kts

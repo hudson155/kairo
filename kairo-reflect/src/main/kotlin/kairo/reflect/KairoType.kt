@@ -8,8 +8,8 @@ import kotlin.reflect.jvm.javaType
 import kotlin.reflect.typeOf
 
 /**
- * Includes context from [Class], [KClass], [Type], and [KType].
- * Preserves full generic info.
+ * Unifies [Class], [KClass], [Type], and [KType] into a safer and richer wrapper
+ * Preserves full generic fidelity.
  */
 @Suppress("UseDataClass")
 public class KairoType<T : Any>(
