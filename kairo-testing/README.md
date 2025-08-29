@@ -31,13 +31,13 @@ Install `kairo-testing`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-testing")
+  testImplementation("software.airborne.kairo:kairo-testing")
 }
 ```
 
 ## Usage
 
-First, configure testing.
+First, configure testing in your Gradle build file.
 
 ```kotlin
 // build.gradle.kts
@@ -82,39 +82,6 @@ class YourTest {
 }
 ```
 
-### Complex tests
+### Integration tests
 
-More complex tests can use the `setup`, `precondition`, `test` and `postcondition` indicators.
-These indicators are completely optional, providing no functionality.
-Their purpose is strictly to make test more readable.
-
-```kotlin
-class YourTest {
-  @Test
-  fun test(): Unit =
-    runTest {
-      setup("Your setup") {
-        // ...
-      }
-
-      precondition("Your precondition") {
-        // ...
-      }
-
-      test("Your test") {
-        shouldThrow<IllegalArgumentException> {
-          doSomething("0")
-        }
-        doSomething("1").shouldBe("wonderful result!")
-      }
-
-      postcondition("Your postcondition") {
-        // ...
-      }
-    }
-}
-```
-
-### Mocking
-
-For Mocking, see [MockK](https://mockk.io/)'s documentation.
+TODO: Document integration tests.
