@@ -71,16 +71,32 @@ IdFeature(
 )
 ```
 
-Or if you're using [Kairo configs](../../kairo-config),
-your HOCON will look like this.
+Or use [Kairo configs](../../kairo-config)'s HOCON.
 
 ```hocon
-id {
-  generation {
-    type = "Random"
-    length = 22
-  }
+id.generation {
+  type = "Random"
+  length = 22
 }
 ```
 
-TODO: Add testing instructions.
+### Testing
+
+For testing, use the deterministic ID generation strategy
+
+```kotlin
+IdFeature(
+  config = IdFeatureConfig(
+    generation = IdFeatureConfig.Generation.Deterministic(length = 22),
+  ),
+)
+```
+
+Or use [Kairo configs](../../kairo-config)'s HOCON.
+
+```hocon
+id.generation {
+  type = "Deterministic"
+  length = 22
+}
+```

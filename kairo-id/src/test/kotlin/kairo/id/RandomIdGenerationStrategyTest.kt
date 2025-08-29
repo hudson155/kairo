@@ -14,7 +14,7 @@ internal class RandomIdGenerationStrategyTest {
   fun one(): Unit =
     runTest {
       val userId = userIdGenerator.generate()
-      userId.toString().shouldNotBe("user_0000000000000000000000")
+      userId.toString().shouldNotBe("UserId(value=user_0000000000000000000000)")
       userId.toString().shouldMatch(Regex("UserId[(]value=user_[a-zA-Z0-9]{22}[)]"))
     }
 
