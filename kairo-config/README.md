@@ -27,7 +27,7 @@ _This is a contrived example. See [below](#usage) for realistic examples._
 
 ## Installation
 
-Get started by installing `kairo-config`.\
+Install `kairo-config`.\
 You don't need to install lightbend/config separately — it's included by default.
 
 ```kotlin

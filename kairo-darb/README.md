@@ -48,7 +48,7 @@ For larger lists, the savings approach **75%**.
 
 ## Installation
 
-Get started by installing `kairo-darb`.
+Install `kairo-darb`.
 
 ```kotlin
 // build.gradle.kts

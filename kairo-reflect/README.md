@@ -23,7 +23,7 @@ more **reliable and maintainable**.
 
 ## Installation
 
-Get started by installing `kairo-reflect`.\
+Install `kairo-reflect`.\
 You don't need to install Kotlin's reflection library separately —
 it's included by default.
 

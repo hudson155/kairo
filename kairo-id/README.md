@@ -48,7 +48,7 @@ Use Kairo IDs when human clarity and safety outweigh those tradeoffs._
 
 ## Installation
 
-Get started by installing `kairo-id`.
+Install `kairo-id`.
 
 ```kotlin
 // build.gradle.kts

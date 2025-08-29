@@ -8,7 +8,7 @@
 
 ## Installation
 
-Get started by installing `kairo-coroutines`.\
+Install `kairo-coroutines`.\
 You don't need to install Kotlin or Arrow's coroutines library separately —
 they're included by default.
 
