@@ -1,20 +1,27 @@
 # Kairo ID Feature
 
-Kairo IDs are an optional way of managing unique identifiers.
-Think of a Kairo ID as an alternative to a `UUID` or serial ID, but with a few advantages.
+Kairo IDs are **safe, meaningful, and efficient**.
+`kairo-id` is an alternative to raw UUIDs or serial IDs,
+improving **developer experience** and **operational clarity**.
 
-- Semantic prefixes for human-readability.
-- Variable entropy, including as much or more than UUIDs.
-- Compile-time safety without runtime overhead.
+### Why Kairo IDs?
+
+- **Semantic prefixes:** IDs tell you what they represent (`user_123`, `business_123`).
+- **Strong entropy:** As much or more randomness than UUIDs, tunable by payload length.
+- **Compile-time safety:** No more accidentally swapping IDs of different entity types.
+- **Zero runtime overhead:** Powered by Kotlin value classes (inlined to strings).
+
+#### Example
 
 An example Kairo ID is `user_ccU4Rn4DKVjCMqt3d0oAw3`.
 
-See [the ID library](..) for more information about Kairo IDs.
-This Feature binds Kairo ID generation for use within a Kairo application.
+- **Prefix:** `user` (human-readable entity type).
+- **Payload:** `ccU4Rn4DKVjCMqt3d0oAw3` (base-62 encoded randomness).
 
 ## Installation
 
 Get started by installing `kairo-id-feature`.
+You don't need to install `kairo-id` separately — it's included.
 
 ```kotlin
 // build.gradle.kts
@@ -26,10 +33,14 @@ dependencies {
 
 ## Usage
 
-The most simple usage is just to add the Feature on its own.
+Add the Feature to your Server.
 
 ```kotlin
-IdFeature()
+Server(
+  features = listOf(
+    IdFeature(),
+  ),
+)
 ```
 
 That's enough! Now you're ready to generate some IDs!
@@ -46,9 +57,9 @@ class UserIdGenerator(
 
 ### Configuring the ID generator
 
-By default, ID payloads will be 15 characters.
+By default, ID payloads are **15 characters**.
 You might want to tweak this
-after reviewing [the entropy and length guide](../README.md#entropy-and-length-guidance).
+after reviewing [the entropy and length guidance](../README.md#entropy-and-length-guidance).
 
 To change the length, pass in your desired length.
 
@@ -60,7 +71,7 @@ IdFeature(
 )
 ```
 
-If you're using [Kairo configs](../../kairo-config),
+Or if you're using [Kairo configs](../../kairo-config),
 your HOCON will look like this.
 
 ```hocon

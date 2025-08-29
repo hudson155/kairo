@@ -1,25 +1,25 @@
 # Kairo IDs
 
-Kairo IDs are an optional way of managing unique identifiers.
-Think of a Kairo ID as an alternative to a `UUID` or serial ID, but with a few advantages.
+Kairo IDs are **safe, meaningful, and efficient**.
+`kairo-id` is an alternative to raw UUIDs or serial IDs,
+improving **developer experience** and **operational clarity**.
 
-- Semantic prefixes for human-readability.
-- Variable entropy, including as much or more than UUIDs.
-- Compile-time safety without runtime overhead.
+See [kairo-id-feature](./feature)
+to easily add Kairo ID generation to your Kairo application.
+
+### Why Kairo IDs?
+
+- **Semantic prefixes:** IDs tell you what they represent (`user_123`, `business_123`).
+- **Strong entropy:** As much or more randomness than UUIDs, tunable by payload length.
+- **Compile-time safety:** No more accidentally swapping IDs of different entity types.
+- **Zero runtime overhead:** Powered by Kotlin value classes (inlined to strings).
+
+#### Example
 
 An example Kairo ID is `user_ccU4Rn4DKVjCMqt3d0oAw3`.
-The "semantic" part means that a human can easily understand that this is a _user_ ID
-rather than the ID for a different entity.
-This is mostly useful for developers, but it can also make URL slugs look nicer and stuff.
 
-Kairo IDs consist of a "prefix" portion and a "payload" portion.
-In the example above, `user_ccU4Rn4DKVjCMqt3d0oAw3` has a prefix of `user`
-and a payload of `ccU4Rn4DKVjCMqt3d0oAw3`.
-
-- The **prefix** indicates what the entity is for.
-  Its value is totally up to you, but needs to be snake case.
-- The **payload** is a base-62 string.
-  Its length is up to you; **22 is a good default**.
+- **Prefix:** `user` (human-readable entity type).
+- **Payload:** `ccU4Rn4DKVjCMqt3d0oAw3` (base-62 encoded randomness).
 
 ### Entropy and length guidance
 
@@ -38,18 +38,13 @@ The entropy of Kairo IDs depends on the length of the payload portion.
 
 _Entropy calculation: `length * log2(62)`._
 
-#### Length guidance
+- **22:** Slightly higher entropy than UUIDs.
+- **15:** Good balance of entropy and readability.
+- **5-8:** Only if a small keyspace is acceptable.
 
-- 22 is a good default, since it has similar (slightly higher) entropy to UUIDs.
-- If you want to prioritize readability and don't need UUID-level entropy,
-  consider a length of 15.
-- Only use smaller lengths like 5 or 8 if you're confident that a small keyspace is acceptable.
-
-_Note: Kairo IDs aren't a free lunch.
-There are plenty of performance tradeoffs,
-including ID generation cost, database storage size & index performance, etc.
-The benefits of better developer experience and readability
-can be outweighed by performance tradeoffs for some use cases._
+_Note: like any ID scheme, Kairo IDs involve tradeoffs —
+generation cost, DB storage size, and index performance.
+Use Kairo IDs when human clarity and safety outweigh those tradeoffs._
 
 ## Installation
 
@@ -65,10 +60,9 @@ dependencies {
 
 ## Usage
 
-### Defining ID types
+### Define ID types
 
-You can't use `Id` directly.
-Instead, each ID type must be uniquely defined.
+Each entity should define its own ID type — you can't use `Id` directly.
 
 ```kotlin
 @Serializable
@@ -84,10 +78,9 @@ value class UserId(override val value: String) : Id {
 }
 ```
 
-This extra boilerplate enforces compile-time safety
-by ensuring that IDs can't be mixed up by accident.
-
-For example, say you have a function like this:
+This enforces **compile-time safety**: IDs can't be mixed up.
+Without semantic IDs, callers could accidentally swap `userId` and `businessId`.
+With Kairo IDs, the compiler prevents this mistake.
 
 ```kotlin
 fun listRoles(businessId: BusinessId, userId: UserId): List<Role> {
@@ -95,24 +88,9 @@ fun listRoles(businessId: BusinessId, userId: UserId): List<Role> {
 }
 ```
 
-Without semantic IDs, the caller could accidentally swap the parameters:
+### Generate IDs
 
-```kotlin
-listRoles(userId, businessId)
-```
-
-This mistake wouldn't be caught at compile-time.
-_With_ semantic IDs, the compiler will catch this error!
-
-#### Runtime performance
-
-Since ID types are defined as value classes (Java inline classes),
-the compiler inlines them to be strings at runtime.
-This means the compile-time safety doesn't come at the cost of runtime performance!
-
-### Generating IDs
-
-For each ID type, you must also define an ID generator.
+Each ID type also needs a generator.
 
 ```kotlin
 class UserIdGenerator(
