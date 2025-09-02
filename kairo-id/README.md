@@ -48,13 +48,15 @@ Use Kairo IDs when human clarity and safety outweigh those tradeoffs._
 
 ## Installation
 
-Install `kairo-id`.
+Install `kairo-id`.\
+You can also install `kairo-id-testing` for testing.
 
 ```kotlin
 // build.gradle.kts
 
 dependencies {
   implementation("software.airborne.kairo:kairo-id")
+  testImplementation("software.airborne.kairo:kairo-id:testing")
 }
 ```
 
