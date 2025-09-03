@@ -16,6 +16,7 @@ import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabase
 import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabaseConfig
 import org.jetbrains.exposed.v1.r2dbc.transactions.suspendTransaction
 import org.koin.core.module.Module
+import org.koin.dsl.module
 
 /**
  * The SQL Feature uses Exposed to provide access to a SQL database.
@@ -38,9 +39,10 @@ public class SqlFeature(
   private val database: R2dbcDatabase =
     createDatabase(connectionPool, config.database, configureDatabase)
 
-  override fun Module.koin() {
-    single { database }
-  }
+  override val koinModule: Module =
+    module {
+      single { database }
+    }
 
   override suspend fun start(features: List<Feature>) {
     suspendTransaction(db = database) {} // Establishes and immediately closes a connection.

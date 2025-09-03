@@ -2,7 +2,6 @@ package kairo.dependencyInjection
 
 import kairo.feature.Feature
 import org.koin.core.KoinApplication
-import org.koin.dsl.module
 
 /**
  * The Dependency Injection Feature enables Koin for dependency injection,
@@ -16,7 +15,7 @@ public class DependencyInjectionFeature(
   override fun beforeStart(features: List<Feature>) {
     features.forEach { feature ->
       if (feature !is KoinModule) return@forEach
-      application.modules(module { with(feature) { koin() } })
+      application.modules(feature.koinModule)
     }
   }
 }
