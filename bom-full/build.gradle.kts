@@ -16,11 +16,11 @@ dependencies {
 
   // exposed
   // https://github.com/JetBrains/Exposed/releases
-  api(platform("org.jetbrains.exposed:exposed-bom:1.0.0-beta-5"))
+  api(platform("org.jetbrains.exposed:exposed-bom:1.0.0-rc-1"))
 
   // gcp
   // https://github.com/googleapis/java-cloud-bom/releases
-  api(platform("com.google.cloud:libraries-bom:26.65.0"))
+  api(platform("com.google.cloud:libraries-bom:26.67.0"))
 
   // guava
   // https://github.com/google/guava/releases
@@ -28,11 +28,11 @@ dependencies {
 
   // koin
   // https://github.com/InsertKoinIO/koin/releases
-  api(platform("io.insert-koin:koin-bom:4.1.0"))
+  api(platform("io.insert-koin:koin-bom:4.1.1"))
 
   // koin-annotations
   // https://github.com/InsertKoinIO/koin-annotations/releases
-  api(platform("io.insert-koin:koin-annotations-bom:2.1.0"))
+  api(platform("io.insert-koin:koin-annotations-bom:2.2.0-RC1"))
 
   // ktor
   // https://github.com/ktorio/ktor/releases
@@ -48,5 +48,5 @@ dependencies {
 
   // slf4j
   // https://github.com/qos-ch/slf4j/releases
-  api(platform("org.slf4j:slf4j-bom:2.0.16"))
+  api(platform("org.slf4j:slf4j-bom:2.0.17"))
 }
