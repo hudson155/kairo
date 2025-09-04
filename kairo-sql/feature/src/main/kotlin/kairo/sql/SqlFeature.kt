@@ -11,7 +11,7 @@ import kairo.dependencyInjection.KoinModule
 import kairo.feature.Feature
 import kairo.protectedString.ProtectedString
 import kotlin.time.toJavaDuration
-import kotlinx.coroutines.reactive.awaitSingle
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabase
 import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabaseConfig
 import org.jetbrains.exposed.v1.r2dbc.transactions.suspendTransaction
@@ -50,7 +50,7 @@ public class SqlFeature(
   }
 
   override suspend fun stop(features: List<Feature>) {
-    connectionPool.disposeLater().awaitSingle()
+    connectionPool.disposeLater().awaitFirstOrNull()
   }
 }
 
