@@ -33,7 +33,6 @@
       <name>kotlinx.coroutines.time.*</name>
       <name>org.apache.logging.log4j.core.jmx.*</name>
       <name>org.intellij.lang.annotations.Flow</name>
-      <name>org.jdbi.v3.core.Sql</name>
       <name>org.koin.core.annotation.Singleton</name>
       <name>org.koin.core.component.*</name>
       <name>org.koin.core.context.GlobalContext.*</name>
