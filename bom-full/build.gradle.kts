@@ -42,6 +42,10 @@ dependencies {
   // https://github.com/Kotlin/kotlinx.serialization/releases
   api(platform("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.9.0"))
 
+  // testcontainers
+  // https://github.com/testcontainers/testcontainers-java/releases
+  api(platform("org.testcontainers:testcontainers-bom:1.21.3"))
+
   // log4j
   // https://github.com/apache/logging-log4j2/releases
   api(platform("org.apache.logging.log4j:log4j-bom:2.25.1"))

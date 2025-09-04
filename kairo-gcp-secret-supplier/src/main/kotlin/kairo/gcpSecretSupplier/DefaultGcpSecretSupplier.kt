@@ -28,6 +28,6 @@ public class DefaultGcpSecretSupplier : GcpSecretSupplier() {
       return null // TODO: QA that this 404 works.
     }
     @OptIn(ProtectedString.Access::class)
-    return ProtectedString(response.payload.data.toStringUtf8())
+    return response.payload.data.toStringUtf8().let { ProtectedString(it) }
   }
 }
