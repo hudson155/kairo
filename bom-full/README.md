@@ -27,6 +27,7 @@ The following external libraries are included in this BOM:
 - `org.jetbrains.kotlinx:kotlinx-coroutines-bom`
 - `org.jetbrains.kotlinx:kotlinx-serialization-bom`
 - `org.slf4j:slf4j-bom`
+- `org.testcontainers:testcontainers-bom`
 
 ## Usage
 

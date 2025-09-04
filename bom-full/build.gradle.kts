@@ -38,15 +38,19 @@ dependencies {
   // https://github.com/ktorio/ktor/releases
   api(platform("io.ktor:ktor-bom:3.2.3"))
 
-  // serialization
-  // https://github.com/Kotlin/kotlinx.serialization/releases
-  api(platform("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.9.0"))
-
   // log4j
   // https://github.com/apache/logging-log4j2/releases
   api(platform("org.apache.logging.log4j:log4j-bom:2.25.1"))
 
+  // serialization
+  // https://github.com/Kotlin/kotlinx.serialization/releases
+  api(platform("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.9.0"))
+
   // slf4j
   // https://github.com/qos-ch/slf4j/releases
   api(platform("org.slf4j:slf4j-bom:2.0.17"))
+
+  // testcontainers
+  // https://github.com/testcontainers/testcontainers-java/releases
+  api(platform("org.testcontainers:testcontainers-bom:1.21.3"))
 }
