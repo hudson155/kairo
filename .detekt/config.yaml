@@ -595,7 +595,7 @@ potential-bugs:
 
 style:
   AlsoCouldBeApply:
-    active: true
+    active: false
   BracesOnIfStatements:
     active: true
     singleLine: 'never'
