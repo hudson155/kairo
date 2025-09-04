@@ -14,20 +14,19 @@ import org.koin.dsl.module
 public class IdFeature : Feature(), KoinModule {
   override val name: String = "ID"
 
-  private val config: IdFeatureConfig =
-    ConfigFactory.load().getConfig("kairo.id")
-      .let { Hocon.decodeFromConfig(it) }
-
   override val koinModule: Module =
     module {
       single<IdGenerationStrategy> { generationStrategy() }
     }
 
-  private fun generationStrategy(): RandomIdGenerationStrategy =
-    when (config.generation) {
-      is IdFeatureConfig.Generation.Random ->
+  private fun generationStrategy(): RandomIdGenerationStrategy {
+    val idGeneration = ConfigFactory.load().getConfig("kairo.id.generation")
+      .let { Hocon.decodeFromConfig<IdGeneration>(it) }
+    return when (idGeneration) {
+      is IdGeneration.Random ->
         RandomIdGenerationStrategy(
-          length = config.generation.length,
+          length = idGeneration.length,
         )
     }
+  }
 }
