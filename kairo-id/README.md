@@ -4,9 +4,6 @@ Kairo IDs are **safe, meaningful, and efficient**.\
 `kairo-id` is an alternative to raw UUIDs or serial IDs,
 improving **developer experience** and **operational clarity**.
 
-See [kairo-id-feature](./feature)
-to easily add Kairo ID generation to your Kairo application.
-
 ### Why Kairo IDs?
 
 - **Semantic prefixes:** IDs tell you what they represent (`user_123`, `business_123`).

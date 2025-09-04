@@ -69,7 +69,6 @@ dependencies {
   implementation("software.airborne.kairo:kairo-dependency-injection-feature")
   implementation("software.airborne.kairo:kairo-gcp-secret-supplier")
   implementation("software.airborne.kairo:kairo-health-check-feature")
-  implementation("software.airborne.kairo:kairo-id-feature")
   implementation("software.airborne.kairo:kairo-logging")
   implementation("software.airborne.kairo:kairo-protected-string")
   implementation("software.airborne.kairo:kairo-reflect")

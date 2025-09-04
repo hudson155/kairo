@@ -47,7 +47,6 @@ First, define your config class using `@Serializable`.
 ```kotlin
 @Serializable
 data class Config(
-  val id: IdFeatureConfig = IdFeatureConfig(), // Optional: ID config has good defaults. 
   val rest: RestFeatureConfig,
   val sql: SqlFeatureConfig,
 )
