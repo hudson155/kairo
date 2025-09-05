@@ -69,8 +69,11 @@ value class UserId(override val value: String) : Id {
     require(regex.matches(value)) { "Malformed user ID (value=$value)." }
   }
 
-  companion object {
-    val regex: Regex = Id.regex(prefix = Regex("user"))
+  companion object : Id.Companion<UserId>() {
+    val regex: Regex = regex(prefix = Regex("user"))
+
+    override fun create(payload: String): UserId =
+      UserId("user_$payload")
   }
 }
 ```
@@ -85,15 +88,8 @@ fun listRoles(businessId: BusinessId, userId: UserId): List<Role> {
 }
 ```
 
-### Generate IDs
-
-Each ID type also needs a generator.
+Now go ahead and generate some user IDs!
 
 ```kotlin
-class UserIdGenerator(
-  strategy: IdGenerationStrategy,
-) : IdGenerator<UserId>(strategy, prefix = "user") {
-  override fun generate(value: String): UserId =
-    UserId(value)
-}
+UserId.random()
 ```
