@@ -48,7 +48,6 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
 - **Type-safe SQL using [Exposed](https://www.jetbrains.com/exposed/)'s DSL (replaces JDBI).**
   - No more manual SQL strings,
     but retaining similar semantic alignment for predictability and easier debugging.
-  - R2DBC driver for async I/O (replaces JDBC).
 
 - **Switch to [HOCON](https://github.com/lightbend/config) for industry-standard configs.**
   - Great developer ergonomics (comments, human-readable syntax, less boilerplate).
@@ -217,7 +216,8 @@ TODO: Coming soon!
 - **Type-safe SQL using [Exposed](https://www.jetbrains.com/exposed/)'s DSL (replaces JDBI).**
   - No more manual SQL strings,
     but retaining similar semantic alignment for predictability and easier debugging.
-  - R2DBC driver for async I/O (replaces JDBC).
+
+- R2DBC driver for async I/O (replaces JDBC).
 
 #### Testing
 
