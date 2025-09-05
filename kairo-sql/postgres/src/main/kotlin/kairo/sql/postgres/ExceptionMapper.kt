@@ -35,8 +35,8 @@ public fun uniqueViolation(
 ): ExceptionMapper =
   ExceptionMapper(
     condition = { details ->
-      details.code == "23505"
-        && details.constraintName.getOrNull() == constraintName
+      details.code == "23505" &&
+        details.constraintName.getOrNull() == constraintName
     },
     mapper = block,
   )
