@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 internal class RandomIdTest {
   @Test
-  fun one(): Unit =
+  fun format(): Unit =
     runTest {
       val userId = UserId.random()
       userId.toString().shouldMatch(Regex("UserId[(]value=user_[a-zA-Z0-9]{15}[)]"))
