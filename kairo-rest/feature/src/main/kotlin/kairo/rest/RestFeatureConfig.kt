@@ -48,7 +48,7 @@ public data class RestFeatureConfig(
     val cors: Cors? = null,
     val defaultHeaders: DefaultHeaders?,
     val doubleReceive: DoubleReceive? = null,
-    val forwardedHeader: ForwardedHeaders? = ForwardedHeaders,
+    val forwardedHeaders: ForwardedHeaders? = ForwardedHeaders,
   ) {
     @Serializable
     public data object AutoHeadResponse

@@ -82,7 +82,7 @@ internal object KtorServerFactory {
     installCors(config.cors)
     installDefaultHeaders(config.defaultHeaders)
     installDoubleReceive(config.doubleReceive)
-    installForwardedHeaders(config.forwardedHeader)
+    installForwardedHeaders(config.forwardedHeaders)
   }
 
   private fun Application.installAutoHeadResponse(config: RestFeatureConfig.Plugins.AutoHeadResponse?) {
