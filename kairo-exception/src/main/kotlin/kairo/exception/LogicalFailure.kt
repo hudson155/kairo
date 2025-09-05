@@ -10,6 +10,8 @@ import kotlinx.serialization.json.buildJsonObject
  * "Logical failures" describe situations not deemed successful in your domain
  * but still within the realms of that domain.
  * For example, a library book not being found is a logical failure, not a real exception.
+ *
+ * Roughly conforms to RFC 9457, but not strictly.
  */
 public abstract class LogicalFailure : Exception() {
   public abstract val type: String
