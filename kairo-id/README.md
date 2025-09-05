@@ -4,9 +4,6 @@ Kairo IDs are **safe, meaningful, and efficient**.\
 `kairo-id` is an alternative to raw UUIDs or serial IDs,
 improving **developer experience** and **operational clarity**.
 
-See [kairo-id-feature](./feature)
-to easily add Kairo ID generation to your Kairo application.
-
 ### Why Kairo IDs?
 
 - **Semantic prefixes:** IDs tell you what they represent (`user_123`, `business_123`).
@@ -39,7 +36,7 @@ The entropy of Kairo IDs depends on the length of the payload portion.
 _Entropy calculation: `length * log2(62)`._
 
 - **22:** Slightly higher entropy than UUIDs.
-- **15:** Good balance of entropy and readability.
+- **15:** Good balance of entropy and readability (default).
 - **5-8:** Only if a small keyspace is acceptable.
 
 _Note: like any ID scheme, Kairo IDs involve tradeoffs —
@@ -72,8 +69,11 @@ value class UserId(override val value: String) : Id {
     require(regex.matches(value)) { "Malformed user ID (value=$value)." }
   }
 
-  companion object {
-    val regex: Regex = Id.regex(prefix = Regex("user"))
+  companion object : Id.Companion<UserId>() {
+    val regex: Regex = regex(prefix = Regex("user"))
+
+    override fun create(payload: String): UserId =
+      UserId("user_$payload")
   }
 }
 ```
@@ -88,15 +88,8 @@ fun listRoles(businessId: BusinessId, userId: UserId): List<Role> {
 }
 ```
 
-### Generate IDs
-
-Each ID type also needs a generator.
+Now go ahead and generate some user IDs!
 
 ```kotlin
-class UserIdGenerator(
-  strategy: IdGenerationStrategy,
-) : IdGenerator<UserId>(strategy, prefix = "user") {
-  override fun generate(value: String): UserId =
-    UserId(value)
-}
+UserId.random()
 ```

@@ -127,6 +127,3 @@ These libraries **can be used anywhere**
 ### Application libraries
 
 These libraries help when **building your full application with Kairo**.
-
-- [kairo-id-feature](./kairo-id/feature):
-  Binds Kairo ID generation for use within a Kairo application.

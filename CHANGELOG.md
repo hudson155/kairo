@@ -141,6 +141,11 @@ TODO: Coming soon!
 
 - The valid entropy range has been expanded.
 
+- Testing now uses random IDs instead of deterministic IDs.
+  Deterministic IDs are no longer supported by default.
+
+- Applications no longer need to install `IdFeature` in order to generate IDs.
+
 #### Logging
 
 - **No longer tightly coupled to Log4j2.**
