@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":kairo-gcp-secret-supplier"))
+  implementation(project(":kairo-gcp-secret-supplier"))
 
   testImplementation(project(":kairo-testing"))
 }
