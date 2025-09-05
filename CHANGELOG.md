@@ -237,6 +237,8 @@ TODO: Coming soon!
 
 - Removal of `kairoEquals`, `kairoHashCode` and `kairoToString`.
 
+- Addition of `firstCauseOf<T>()` for exceptions.
+
 #### UUID
 
 TODO: Coming soon!
