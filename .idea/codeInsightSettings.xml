@@ -34,6 +34,8 @@
       <name>kotlinx.datetime.Clock</name>
       <name>org.apache.logging.log4j.core.jmx.*</name>
       <name>org.intellij.lang.annotations.Flow</name>
+      <name>org.jetbrains.exposed.v1.core.SqlExpressionBuilder</name>
+      <name>org.jetbrains.exposed.v1.core.statements.UpsertSqlExpressionBuilder</name>
       <name>org.koin.core.annotation.Singleton</name>
       <name>org.koin.core.component.*</name>
       <name>org.koin.core.context.GlobalContext.*</name>

@@ -16,7 +16,7 @@ dependencies {
 
   // exposed
   // https://github.com/JetBrains/Exposed/releases
-  api(platform("org.jetbrains.exposed:exposed-bom:1.0.0-beta-5"))
+  api(platform("org.jetbrains.exposed:exposed-bom:1.0.0-rc-1"))
 
   // gcp
   // https://github.com/googleapis/java-cloud-bom/releases

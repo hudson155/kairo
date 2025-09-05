@@ -673,6 +673,8 @@ style:
       - 'kotlinx.datetime.Clock'
       - 'org.apache.logging.log4j.core.jmx.*'
       - 'org.intellij.lang.annotations.Flow'
+      - 'org.jetbrains.exposed.v1.core.SqlExpressionBuilder'
+      - 'org.jetbrains.exposed.v1.core.statements.UpsertSqlExpressionBuilder'
       - 'org.koin.core.annotation.Singleton'
       - 'org.koin.core.component.*'
       - 'org.koin.core.context.GlobalContext.*'
