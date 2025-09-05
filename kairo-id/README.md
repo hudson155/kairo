@@ -36,7 +36,7 @@ The entropy of Kairo IDs depends on the length of the payload portion.
 _Entropy calculation: `length * log2(62)`._
 
 - **22:** Slightly higher entropy than UUIDs.
-- **15:** Good balance of entropy and readability.
+- **15:** Good balance of entropy and readability (default).
 - **5-8:** Only if a small keyspace is acceptable.
 
 _Note: like any ID scheme, Kairo IDs involve tradeoffs —
