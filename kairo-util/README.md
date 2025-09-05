@@ -19,6 +19,8 @@ dependencies {
 
 ## Usage
 
+The most popular functions are documented here.
+
 ### `firstCauseOf<T>()`
 
 For exceptions,
