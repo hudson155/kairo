@@ -10,7 +10,7 @@
 .DS_Store
 
 # IntelliJ
-*/**/.idea/
+**/.idea/
 !/.idea/
 
 # Gradle
