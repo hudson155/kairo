@@ -5,6 +5,7 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-exception"))
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
   api(project(":kairo-rest"))
@@ -18,5 +19,6 @@ dependencies {
   implementation(libs.ktorServer.doubleReceive)
   implementation(libs.ktorServer.forwardedHeader)
   implementation(libs.ktorServer.netty)
+  implementation(libs.ktorServer.statusPages)
   implementation(libs.serialization.core)
 }

@@ -5,5 +5,6 @@ plugins {
 }
 
 dependencies {
-  implementation(libs.serialization.core)
+  api(libs.ktorHttp)
+  api(libs.serialization.json)
 }

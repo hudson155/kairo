@@ -10,7 +10,7 @@ import org.jetbrains.exposed.v1.r2dbc.ExposedR2dbcException
 @Suppress("UseDataClass")
 public class ExceptionMapper(
   public val condition: (details: ErrorDetails) -> Boolean,
-  public val mapper: () -> LogicalFailure.Properties,
+  public val mapper: () -> LogicalFailure,
 )
 
 public inline fun <T> withExceptionMappers(
@@ -23,7 +23,7 @@ public inline fun <T> withExceptionMappers(
     val details = e.firstCauseOf<PostgresqlException>()?.errorDetails
       ?: throw e
     mappers.forEach { mapper ->
-      if (mapper.condition(details)) throw LogicalFailure(mapper.mapper())
+      if (mapper.condition(details)) throw mapper.mapper()
     }
     throw e
   }
@@ -31,7 +31,7 @@ public inline fun <T> withExceptionMappers(
 
 public fun uniqueViolation(
   constraintName: String,
-  block: () -> LogicalFailure.Properties,
+  block: () -> LogicalFailure,
 ): ExceptionMapper =
   ExceptionMapper(
     condition = { details ->

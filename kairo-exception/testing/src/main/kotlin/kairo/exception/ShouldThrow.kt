@@ -3,8 +3,8 @@ package kairo.exception
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 
-public inline fun shouldThrow(properties: LogicalFailure.Properties, block: () -> Any?): LogicalFailure {
-  val logicalFailure = shouldThrow<LogicalFailure>(block)
-  logicalFailure.properties.shouldBe(properties)
-  return logicalFailure
+public inline fun shouldThrow(expected: LogicalFailure, block: () -> Any?): LogicalFailure {
+  val actual = shouldThrow<LogicalFailure>(block)
+  actual.json.shouldBe(expected.json)
+  return actual
 }
