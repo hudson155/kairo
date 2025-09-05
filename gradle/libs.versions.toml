@@ -48,6 +48,8 @@ logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "loggin
 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
+postgres-r2dbc = { module = "org.postgresql:r2dbc-postgresql" }
+
 r2dbc-pool = { module = "io.r2dbc:r2dbc-pool", version.ref = "r2dbc-pool" }
 
 serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
