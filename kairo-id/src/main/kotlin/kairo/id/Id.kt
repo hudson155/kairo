@@ -18,7 +18,7 @@ public interface Id {
     private val length: Int = 15,
   ) {
     init {
-      require(length in 5..32) { "Invalid ID length (length=$length). Must be between 8 and 32 (inclusive)." }
+      require(length in 5..32) { "Invalid ID length (length=$length). Must be between 5 and 32 (inclusive)." }
     }
 
     public fun random(): T {
