@@ -222,6 +222,8 @@ TODO: Coming soon!
   - No need to spin up Ktor anymore — test the service layer directly.
   - Tests also run in parallel now!
 
+- Test helper method descriptions are now optional.
+
 #### Updater
 
 TODO: Coming soon!
