@@ -62,5 +62,3 @@ dependencies {
   // https://github.com/testcontainers/testcontainers-java/releases
   api(platform("org.testcontainers:testcontainers-bom:1.21.3"))
 }
-
-// TODO: When loading config in sample project, default value is no longer required.
