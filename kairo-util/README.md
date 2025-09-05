@@ -19,6 +19,15 @@ dependencies {
 
 ## Usage
 
+### `firstCauseOf<T>()`
+
+For exceptions,
+returns the first recursive cause of the specified type, or null if there is no matching cause.
+
+```kotlin
+e.firstCauseOf<MyExceptionType>()
+```
+
 ### `singleNullOrThrow()`
 
 Kotlin's `single()` and `singleOrNull()` functions are excellent utilities,
