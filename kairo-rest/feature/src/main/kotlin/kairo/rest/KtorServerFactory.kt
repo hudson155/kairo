@@ -18,6 +18,9 @@ import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
 import io.ktor.server.plugins.doublereceive.DoubleReceive
 import io.ktor.server.plugins.forwardedheaders.ForwardedHeaders
+import io.ktor.server.plugins.statuspages.StatusPages
+import io.ktor.server.response.respond
+import kairo.exception.LogicalFailure
 import kairo.feature.Feature
 
 private val logger: KLogger = KotlinLogging.logger {}
@@ -83,6 +86,7 @@ internal object KtorServerFactory {
     installDefaultHeaders(config.defaultHeaders)
     installDoubleReceive(config.doubleReceive)
     installForwardedHeaders(config.forwardedHeaders)
+    installStatusPages()
   }
 
   private fun Application.installAutoHeadResponse(config: RestFeatureConfig.Plugins.AutoHeadResponse?) {
@@ -138,6 +142,15 @@ internal object KtorServerFactory {
   private fun Application.installForwardedHeaders(config: RestFeatureConfig.Plugins.ForwardedHeaders?) {
     config ?: return
     install(ForwardedHeaders)
+  }
+
+  private fun Application.installStatusPages() {
+    install(StatusPages) {
+      exception<LogicalFailure> { call, cause ->
+        call.response.status(cause.status)
+        call.respond(cause.json)
+      }
+    }
   }
 
   private fun Application.routing(features: List<Feature>) {

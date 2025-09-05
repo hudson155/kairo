@@ -32,6 +32,8 @@ koin-core = { module = "io.insert-koin:koin-core" }
 
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
+ktorHttp = { module = "io.ktor:ktor-http" }
+
 ktorSerialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 
 ktorServer-autoHeadResponse = { module = "io.ktor:ktor-server-auto-head-response" }
@@ -43,6 +45,7 @@ ktorServer-defaultHeaders = { module = "io.ktor:ktor-server-default-headers" }
 ktorServer-doubleReceive = { module = "io.ktor:ktor-server-double-receive" }
 ktorServer-forwardedHeader = { module = "io.ktor:ktor-server-forwarded-header" }
 ktorServer-netty = { module = "io.ktor:ktor-server-netty" }
+ktorServer-statusPages = { module = "io.ktor:ktor-server-status-pages" }
 
 logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "logging" }
 
