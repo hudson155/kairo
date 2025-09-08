@@ -39,4 +39,6 @@ public class RestFeature(
       this.ktorServer = null
     }
   }
+
+  public companion object
 }

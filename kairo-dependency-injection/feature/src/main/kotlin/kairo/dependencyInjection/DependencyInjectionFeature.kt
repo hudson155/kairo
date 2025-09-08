@@ -18,4 +18,6 @@ public class DependencyInjectionFeature(
       application.modules(feature.koinModule)
     }
   }
+
+  public companion object
 }
