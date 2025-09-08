@@ -1,7 +1,6 @@
-package kairoSample.testing
+package kairo.sql
 
 import kairo.protectedString.ProtectedString
-import kairo.sql.SqlFeatureConfig
 import kotlin.uuid.Uuid
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.junit.jupiter.api.extension.AfterEachCallback

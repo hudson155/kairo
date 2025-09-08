@@ -1,8 +1,6 @@
 package kairo.feature
 
 import kairo.server.Server
-import kotlin.jvm.kotlin
-import kotlin.let
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.extension.AfterEachCallback
 import org.junit.jupiter.api.extension.BeforeEachCallback
@@ -62,8 +60,8 @@ public abstract class FeatureTest : FeatureTestAware, BeforeEachCallback, AfterE
     return koin.get(kClass)
   }
 
-  internal companion object {
-    val namespace: ExtensionContext.Namespace =
+  public companion object {
+    public val namespace: ExtensionContext.Namespace =
       ExtensionContext.Namespace.create(FeatureTest::class)
   }
 }
