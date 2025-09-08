@@ -17,6 +17,7 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 
 exposed-core = { module = "org.jetbrains.exposed:exposed-core" }
 exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc" }
 exposed-json = { module = "org.jetbrains.exposed:exposed-json" }
 exposed-kotlinDatetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime" }
 exposed-money = { module = "org.jetbrains.exposed:exposed-money" }
@@ -60,3 +61,5 @@ serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-ho
 serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 
 slf4j-api = { module = "org.slf4j:slf4j-api" }
+
+testcontainers-postgres = { module = "org.testcontainers:postgresql" }

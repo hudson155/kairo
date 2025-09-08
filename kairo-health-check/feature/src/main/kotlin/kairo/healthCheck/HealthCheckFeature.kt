@@ -44,4 +44,6 @@ public class HealthCheckFeature(
   override fun Application.routing() {
     with(healthCheckHandler) { routing() }
   }
+
+  public companion object
 }

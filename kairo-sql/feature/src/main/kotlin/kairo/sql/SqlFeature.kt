@@ -52,6 +52,8 @@ public class SqlFeature(
   override suspend fun stop(features: List<Feature>) {
     connectionPool.disposeLater().awaitFirstOrNull()
   }
+
+  public companion object
 }
 
 @OptIn(ProtectedString.Access::class)
