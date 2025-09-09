@@ -131,3 +131,6 @@ These libraries help when **building your full application with Kairo**.
 - [kairo-feature](./kairo-feature):
   The core building block of Kairo applications,
   including both Framework Features and Domain Features.
+- [kairo-health-check-feature](./kairo-health-check/feature):
+  With just a few lines of code
+  you can add health check endpoints to your Kairo application.
