@@ -223,6 +223,8 @@ TODO: Coming soon!
 
 - R2DBC driver for async I/O (replaces JDBC).
 
+- SQL health checks no longer run queries, avoiding DB log pollution.
+
 #### Testing
 
 - Upgrade from Kotest 5 to Kotest 6.
