@@ -55,7 +55,6 @@ public class SqlFeature(
 
   override suspend fun start(features: List<Feature>) {
     connectionPool.warmup().awaitSingle()
-    healthCheck(connectionPool)
   }
 
   override suspend fun stop(features: List<Feature>) {
