@@ -76,6 +76,16 @@ class UserFeature(
 }
 ```
 
+#### Lifecycle events
+
+Features can hook into Server lifecycle events by implementing the `start()` and `stop()` methods.
+These methods run in parallel with other Features,
+so they must be thread/coroutine-safe.
+
+More advanced Features may also implement the other lifecycle hooks
+(see `LifecycleEventListener`),
+but this should be done sparingly.
+
 ### Putting it all together
 
 For a full guide, see the [Kairo Application Guide](../docs/application-guide.md).
