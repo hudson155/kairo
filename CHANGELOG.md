@@ -130,10 +130,12 @@ TODO: Coming soon!
 
 #### Health Check
 
-TODO: Coming soon!
-
 - **Health checks now reflect actual readiness.**
   They won't pass until Ktor can serve traffic.
+
+- Health checks now run in parallel.
+
+- Health checks now have timeouts.
 
 #### ID
 

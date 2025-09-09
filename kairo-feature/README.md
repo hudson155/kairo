@@ -93,10 +93,14 @@ For a full guide, see the [Kairo Application Guide](../docs/application-guide.md
 ```kotlin
 val koinApplication = koinApplication()
 
+val healthChecks = mapOf(
+  "sql" to HealthCheck { SqlFeature.healthCheck(koinApplication.koin.get()) },
+)
+
 val features = listOf(
   // Framework Features.
   DependencyInjectionFeature(koinApplication),
-  HealthCheckFeature(),
+  HealthCheckFeature(healthChecks),
   RestFeature(config.rest),
   SqlFeature(
     config = config.sql,
