@@ -43,6 +43,7 @@ This creates 2 endpoints.
 
 More likely, you're going to want to customize the readiness checks.
 Implement the `HealthCheck` functional interface.
+Throw an exception to fail the check.
 
 ```kotlin
 val healthChecks = mapOf(
@@ -74,3 +75,12 @@ you might get other health checks for free.
   ```kotlin
   HealthCheck { SqlFeature.healthCheck(koinApplication.koin.get()) }
   ```
+
+### Advanced Feature configuration
+
+The Health Check Feature has a few more options you can configure.
+
+- `includeDefaultHealthCheck` is `true` by default.
+  This check ensures that the Server is running. If the server is still starting, or has begun stopping, it will fail.
+- `timeout` is 2 seconds by default.
+  You can customize this if needed.

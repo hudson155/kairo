@@ -135,6 +135,8 @@ TODO: Coming soon!
 
 - Health checks now run in parallel.
 
+- Health checks now have timeouts.
+
 #### ID
 
 - **Safer IDs with zero runtime cost.**
