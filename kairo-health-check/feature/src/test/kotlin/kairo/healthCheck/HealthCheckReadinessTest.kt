@@ -1,7 +1,6 @@
 package kairo.healthCheck
 
 import io.kotest.matchers.shouldBe
-import kairo.testing.setup
 import kairo.testing.test
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -10,12 +9,10 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class HealthCheckReadinessTest {
-  private lateinit var check: HealthCheck
-
-  private val healthCheckService: HealthCheckService =
+  private fun healthCheckService(check: suspend () -> Unit): HealthCheckService =
     HealthCheckService(
       healthChecks = buildMap {
-        put("test", HealthCheck { check.check() })
+        put("test", HealthCheck { check() })
       },
       timeout = 2.seconds,
     )
@@ -23,9 +20,7 @@ internal class HealthCheckReadinessTest {
   @Test
   fun success(): Unit =
     runTest {
-      setup {
-        check = HealthCheck {}
-      }
+      val healthCheckService = healthCheckService {}
       test {
         healthCheckService.readiness()
           .shouldBe(
@@ -40,9 +35,7 @@ internal class HealthCheckReadinessTest {
   @Test
   fun failure(): Unit =
     runTest {
-      setup {
-        check = HealthCheck { error("Something went wrong!") }
-      }
+      val healthCheckService = healthCheckService { error("Something went wrong!") }
       test {
         healthCheckService.readiness()
           .shouldBe(
@@ -57,11 +50,7 @@ internal class HealthCheckReadinessTest {
   @Test
   fun timeout(): Unit =
     runTest {
-      setup {
-        check = HealthCheck {
-          delay(Duration.INFINITE)
-        }
-      }
+      val healthCheckService = healthCheckService { delay(Duration.INFINITE) }
       test {
         healthCheckService.readiness()
           .shouldBe(
