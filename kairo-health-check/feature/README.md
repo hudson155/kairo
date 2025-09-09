@@ -56,11 +56,6 @@ val healthChecks = mapOf(
 val features = listOf(
   HealthCheckFeature(healthChecks),
 )
-
-val server = Server(
-  name = "...",
-  features = features,
-)
 ```
 
 ### Built-in health checks
