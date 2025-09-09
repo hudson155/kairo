@@ -43,7 +43,7 @@ internal class HealthCheckService(
       return false
     } catch (e: CancellationException) {
       throw e
-    } catch (e: Exception) {
+    } catch (e: Throwable) {
       logger.warn(e) { "Health check failed (name=$name)." }
       return false
     }
