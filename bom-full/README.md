@@ -3,7 +3,7 @@
 BOMs (Bill of Materials)
 **keep dependency versions aligned and keep build files clean**.
 
-Kairo has 2 BOMs (Bill of Materials):
+Kairo has 2 BOMs (Bill of Materials).
 
 - **This (`software.airborne.kairo:bom`) is the full BOM**,
   intended for when you're **building a Kairo application**.
@@ -14,7 +14,7 @@ Kairo has 2 BOMs (Bill of Materials):
 
 ## External libraries
 
-The following external libraries are included in this BOM:
+The following external libraries are included in this BOM.
 
 - `io.arrow-kt:arrow-stack`
 - `io.insert-koin:koin-bom`

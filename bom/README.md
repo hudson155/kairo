@@ -3,7 +3,7 @@
 BOMs (Bill of Materials)
 **keep dependency versions aligned and keep build files clean**.
 
-Kairo has 2 BOMs (Bill of Materials):
+Kairo has 2 BOMs (Bill of Materials).
 
 - **This (`software.airborne.kairo:bom`) is the regular BOM**,
   intended for when you're **using one (or just a few) Kairo libraries**.

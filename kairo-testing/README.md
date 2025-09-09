@@ -3,7 +3,7 @@
 `kairo-testing` brings together a curated set of tools and defaults
 that **make testing feel natural & fast**.
 
-It's built on proven foundations:
+It's built on proven foundations.
 
 - [JUnit](https://junit.org/): Battle-tested test runner.
 - [Kotest](https://kotest.io/): Expressive matchers and assertions.
