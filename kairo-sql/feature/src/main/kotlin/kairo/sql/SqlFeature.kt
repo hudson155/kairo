@@ -12,9 +12,9 @@ import kairo.feature.Feature
 import kairo.protectedString.ProtectedString
 import kotlin.time.toJavaDuration
 import kotlinx.coroutines.reactive.awaitFirstOrNull
+import kotlinx.coroutines.reactive.awaitSingle
 import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabase
 import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabaseConfig
-import org.jetbrains.exposed.v1.r2dbc.transactions.suspendTransaction
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -30,30 +30,52 @@ public class SqlFeature(
 ) : Feature(), KoinModule {
   override val name: String = "SQL"
 
-  private val connectionFactory: ConnectionFactory =
-    createConnectionFactory(config.connectionFactory, configureConnectionFactory)
-
   private val connectionPool: ConnectionPool =
-    createConnectionPool(connectionFactory, config.connectionPool, configureConnectionPool)
+    createConnectionPool(
+      database = createConnectionFactory(config.connectionFactory, configureConnectionFactory),
+      config = config.connectionPool,
+      block = configureConnectionPool,
+    )
 
   private val database: R2dbcDatabase =
-    createDatabase(connectionPool, config.database, configureDatabase)
+    createDatabase(
+      connectionPool = connectionPool,
+      config = config.database,
+      block = configureDatabase,
+    )
 
   override val koinModule: Module =
     module {
-      single { database }
+      single<ConnectionFactory> { connectionPool }
+      single<R2dbcDatabase> { database }
     }
 
   override suspend fun start(features: List<Feature>) {
-    suspendTransaction(db = database) {} // Establishes and immediately closes a connection.
-    // TODO: Run migrations.
+    connectionPool.warmup().awaitSingle()
+    healthCheck(connectionPool)
   }
 
   override suspend fun stop(features: List<Feature>) {
     connectionPool.disposeLater().awaitFirstOrNull()
   }
 
-  public companion object
+  public companion object {
+    public suspend fun healthCheck(connectionFactory: ConnectionFactory) {
+      val connection = connectionFactory.create().awaitSingle()
+      var exception: Exception? = null
+      try {
+        connection.validate(ValidationDepth.REMOTE).awaitSingle()
+      } catch (e: Exception) {
+        exception = e
+      } finally {
+        try {
+          connection.close().awaitFirstOrNull()
+        } catch (closeException: Exception) {
+          exception?.addSuppressed(closeException)
+        }
+      }
+    }
+  }
 }
 
 @OptIn(ProtectedString.Access::class)
