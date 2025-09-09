@@ -10,7 +10,7 @@ internal class HealthCheckLivenessTest {
   private val healthCheckService: HealthCheckService =
     HealthCheckService(
       healthChecks = buildMap {
-        put("test", HealthCheck { check(false) })
+        put("test", HealthCheck { error("Something went wrong!") })
       },
       timeout = 2.seconds,
     )
