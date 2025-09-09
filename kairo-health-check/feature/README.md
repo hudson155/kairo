@@ -75,4 +75,4 @@ The Health Check Feature has a few more options you can configure.
 - `includeDefaultHealthCheck` is `true` by default.
   This check ensures that the Server is running. If the server is still starting, or has begun stopping, it will fail.
 - `timeout` is 2 seconds by default.
-  You can customize this if needed.
+  You can adjust this if needed.
