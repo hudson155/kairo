@@ -11,4 +11,6 @@ dependencies {
   implementation(project(":kairo-rest"))
 
   implementation(libs.serialization.core)
+
+  testImplementation(project(":kairo-testing"))
 }
