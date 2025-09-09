@@ -127,3 +127,7 @@ These libraries **can be used anywhere**
 ### Application libraries
 
 These libraries help when **building your full application with Kairo**.
+
+- [kairo-feature](./kairo-feature):
+  The core building block of Kairo applications,
+  including both Framework Features and Domain Features.

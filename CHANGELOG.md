@@ -101,7 +101,11 @@ TODO: Coming soon!
 
 #### Feature
 
-TODO: Coming soon!
+- **Features now start and stop in parallel,**
+  improving Server performance.
+
+- Feature priority has been removed.
+  Advanced lifecycle events replace this need.
 
 #### GCP Secret Supplier
 
