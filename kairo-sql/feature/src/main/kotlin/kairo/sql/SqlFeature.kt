@@ -62,18 +62,21 @@ public class SqlFeature(
   }
 
   public companion object {
+    @Suppress("ThrowingExceptionFromFinally")
     public suspend fun healthCheck(connectionFactory: ConnectionFactory) {
       val connection = connectionFactory.create().awaitSingle()
-      var exception: Exception? = null
+      var exception: Throwable? = null
       try {
         connection.validate(ValidationDepth.REMOTE).awaitSingle()
-      } catch (e: Exception) {
+      } catch (e: Throwable) {
         exception = e
+        throw e
       } finally {
         try {
           connection.close().awaitFirstOrNull()
-        } catch (closeException: Exception) {
-          exception?.addSuppressed(closeException)
+        } catch (closeException: Throwable) {
+          if (exception == null) throw closeException
+          exception.addSuppressed(closeException)
         }
       }
     }
