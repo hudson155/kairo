@@ -32,7 +32,10 @@ public class SqlFeature(
 
   private val connectionPool: ConnectionPool =
     createConnectionPool(
-      database = createConnectionFactory(config.connectionFactory, configureConnectionFactory),
+      database = createConnectionFactory(
+        config = config.connectionFactory,
+        block = configureConnectionFactory,
+      ),
       config = config.connectionPool,
       block = configureConnectionPool,
     )
