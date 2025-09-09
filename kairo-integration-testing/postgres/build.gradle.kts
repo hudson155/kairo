@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-feature:testing"))
+  implementation(project(":kairo-integration-testing"))
   implementation(project(":kairo-sql:feature"))
   implementation(project(":kairo-sql:postgres"))
   implementation(project(":kairo-testing"))
