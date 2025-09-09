@@ -55,9 +55,6 @@ val healthChecks = mapOf(
 
 val features = listOf(
   HealthCheckFeature(healthChecks),
-
-  // Domain Feature.
-  UserFeature(koinApplication.koin),
 )
 
 val server = Server(
