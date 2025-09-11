@@ -25,6 +25,15 @@ databasePassword = ${DATABASE_PASSWORD} # Required env var.
 
 _This is a contrived example. See [below](#usage) for realistic examples._
 
+### Sample usage
+
+Sample usage from the [kairo-sample](https://github.com/hudson155/kairo-sample) repo.
+
+- [Config.kt](https://github.com/hudson155/kairo-sample/blob/main/src/main/kotlin/kairoSample/Config.kt)
+  (Kotlin data class)
+- [configs/](https://github.com/hudson155/kairo-sample/tree/main/src/main/resources/config)
+  (HOCON config files)
+
 ## Installation
 
 Install `kairo-config`.\
@@ -60,7 +69,7 @@ You'll probably have a base/common config with settings shared across environmen
 # common.conf
 rest {
   connector.port = 8080
-  plugins.defaultHeaders.serverName = "Kairo Sample"
+  plugins.defaultHeaders.serverName = "..."
 }
 sql.connectionFactory {
   url = ${POSTGRES_URL} # Env var

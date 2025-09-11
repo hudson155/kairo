@@ -23,6 +23,12 @@ There are 2 types of Features.
   **No hidden assumptions**
   means you're not tied to patterns that don't make sense for your application.
 
+### Sample usage
+
+Sample usage from the [kairo-sample](https://github.com/hudson155/kairo-sample) repo.
+
+- [LibraryFeature.kt](https://github.com/hudson155/kairo-sample/blob/main/feature/library/src/main/kotlin/kairoSample/library/LibraryFeature.kt)
+
 ## Installation
 
 Install `kairo-feature`.\
@@ -87,8 +93,6 @@ More advanced Features may also implement the other lifecycle hooks
 but this should be done sparingly.
 
 ### Putting it all together
-
-For a full guide, see the [Kairo Application Guide](../docs/application-guide.md).
 
 ```kotlin
 val koinApplication = koinApplication()
