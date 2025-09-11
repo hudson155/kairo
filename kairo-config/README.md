@@ -49,6 +49,10 @@ dependencies {
 
 ## Usage
 
+[lightbend/config's documentation](https://github.com/lightbend/config)
+explains HOCON and config management in detail.
+Here's how to use it through Kairo.
+
 ### Your Kotlin config class
 
 First, define your config class using `@Serializable`.
