@@ -52,15 +52,15 @@ class UserFeatureTest : FeatureTest(), PostgresExtensionAware {
 Now simply add `@ExtendWith(PostgresExtension::class)` to your test classes.
 
 ```kotlin
-@ExtendWith(PostgresExtension::class, LibraryFeatureTest::class)
-internal class GetLibraryBookTest {
+@ExtendWith(PostgresExtension::class, UserFeatureTest::class)
+internal class GetUserTest {
   // ...
 }
 ```
 
 ```kotlin
-@ExtendWith(PostgresExtension::class, LibraryFeatureTest::class)
-internal class CreateLibraryBookTest {
+@ExtendWith(PostgresExtension::class, UserFeatureTest::class)
+internal class CreateUserTest {
   // ...
 }
 ```

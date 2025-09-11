@@ -100,7 +100,7 @@ val UserModel.Creator.Companion.jeff: UserModel.Creator
 val UserModel.Companion.jeff: UserModel
   get() =
     UserModel(
-      id = LibraryBookId.zero,
+      id = UserId.zero,
       createdAt = Instant.epoch,
       emailAddress = "jeff@example.com",
     )
@@ -162,7 +162,7 @@ val UserModel.Creator.Companion.jeff: UserModel.Creator
 val UserModel.Companion.jeff: UserModel
   get() =
     UserModel(
-      id = LibraryBookId.zero,
+      id = UserId.zero,
       createdAt = Instant.epoch,
       emailAddress = "jeff@example.com",
     )
@@ -176,12 +176,12 @@ val UserModel.Creator.Companion.noah: UserModel.Creator
 val UserModel.Companion.noah: UserModel
   get() =
     UserModel(
-      id = LibraryBookId.zero,
+      id = UserId.zero,
       createdAt = Instant.epoch,
       emailAddress = "noah@example.com",
     )
 
-@ExtendWith(LibraryFeatureTest::class)
+@ExtendWith(UserFeatureTest::class)
 class CreateUserTest {
   @Test
   fun `Happy path`(userService: UserService): Unit =
