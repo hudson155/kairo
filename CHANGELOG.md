@@ -67,7 +67,11 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
 
 #### Application
 
-TODO: Coming soon!
+- Introduction of `kairo-application`
+  lets you start your Server,
+  wait for JVM termination,
+  and clean up afterwards,
+  all with a single call.
 
 #### Clock
 
@@ -213,7 +217,7 @@ TODO: Coming soon!
 
 #### Server
 
-TODO: Coming soon!
+No changes.
 
 #### SQL
 
