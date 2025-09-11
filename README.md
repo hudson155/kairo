@@ -144,6 +144,8 @@ These libraries help when **building your full application with Kairo**.
 - [kairo-health-check-feature](./kairo-health-check/feature):
   With just a few lines of code
   you can add health check endpoints to your Kairo application.
+- [kairo-integration-testing](./kairo-integration-testing):
+  Black-box integration testing support for Kairo applications.
 - [kairo-server](./kairo-server):
   Servers are composed of Features,
   and can be run as an application or as part of integration tests.

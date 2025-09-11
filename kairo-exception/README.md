@@ -1,8 +1,9 @@
 # Kairo Exceptions (Logical Failures)
 
-**"Logical failures" describe situations not deemed successful in your domain
+**"Logical failures" describe situations not deemed successful in your domain,
 but still within the realms of that domain.**
 For example, a user record not being found is a logical failure, not a "real exception".
+Whereas a network timeout or stack overflow is a "real exception".
 
 Different programming languages & frameworks offer various ways to handle logical failures.
 
@@ -57,7 +58,7 @@ data class UserNotFound(
   override val title: String = "User not found"
 
   override fun JsonObjectBuilder.buildJson() {
-    put("userId", Json.encodeToJsonElement(libraryBookId))
+    put("userId", Json.encodeToJsonElement(userId))
   }
 }
 

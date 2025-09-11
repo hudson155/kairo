@@ -153,6 +153,14 @@ TODO: Coming soon!
 
 - Applications no longer need to install `IdFeature` in order to generate IDs.
 
+#### Integration Testing
+
+- **Simpler and faster integration testing.**
+  - No need to spin up Ktor anymore — test the service layer directly.
+  - Tests also run in parallel now!
+
+- Integration tests now use JUnit extensions instead of inheritance.
+
 #### Logging
 
 - **No longer tightly coupled to Log4j2.**
@@ -234,10 +242,6 @@ No changes.
 #### Testing
 
 - Upgrade from Kotest 5 to Kotest 6.
-
-- **Simpler and faster integration testing.**
-  - No need to spin up Ktor anymore — test the service layer directly.
-  - Tests also run in parallel now!
 
 - Test helper method descriptions are now optional.
 
