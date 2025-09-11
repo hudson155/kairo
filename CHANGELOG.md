@@ -257,7 +257,8 @@ TODO: Coming soon!
 
 #### UUID
 
-TODO: Coming soon!
+- The UUID Feature has been removed.
+  Use Kotlin's `Uuid` class directly instead.
 
 #### Removed libraries
 
