@@ -7,9 +7,10 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 
 /**
- * "Logical failures" describe situations not deemed successful in your domain
+ * "Logical failures" describe situations not deemed successful in your domain,
  * but still within the realms of that domain.
  * For example, a user record not being found is a logical failure, not a real exception.
+ * Whereas a network timeout or stack overflow is a "real exception".
  *
  * Roughly conforms to RFC 9457, but not strictly.
  */
