@@ -12,7 +12,7 @@ Kairo's libraries let you move faster, write cleaner code,
 and focus on the parts of your app that actually matter.
 
 **Not sure where to start?**
-The [kairo-sample](https://github.com/hudson155/kairo-sample) app
+The [kairo-sample](https://github.com/hudson155/kairo-sample) repo
 showcases most of Kairo's functionality.
 
 ## Getting started
@@ -82,7 +82,7 @@ dependencies {
 }
 ```
 
-**Check out the [kairo-sample](https://github.com/hudson155/kairo-sample) app**
+**Check out the [kairo-sample](https://github.com/hudson155/kairo-sample) repo**
 to get an understanding of application structure.
 You could even consider forking it to use as a template for your own app.
 
@@ -128,9 +128,17 @@ These libraries **can be used anywhere**
 
 These libraries help when **building your full application with Kairo**.
 
+- [kairo-application](./kairo-application):
+  Start your Server,
+  wait for JVM termination,
+  and clean up afterwards,
+  all with a single call.
 - [kairo-feature](./kairo-feature):
   The core building block of Kairo applications,
   including both Framework Features and Domain Features.
 - [kairo-health-check-feature](./kairo-health-check/feature):
   With just a few lines of code
   you can add health check endpoints to your Kairo application.
+- [kairo-server](./kairo-server):
+  Servers are composed of Features,
+  and can be run as an application or as part of integration tests.

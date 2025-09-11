@@ -45,6 +45,7 @@ plugins {
 
 repositories {
   maven {
+    // Kairo artifacts live here.
     url = uri("artifactregistry://us-central1-maven.pkg.dev/airborne-software/maven")
   }
 }
