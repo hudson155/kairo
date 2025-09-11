@@ -5,7 +5,7 @@ Relational databases remain the backbone of many serious applications.
 using [Exposed](https://www.jetbrains.com/exposed/)'s **lightweight & idiomatic ORM DSL**,
 with support for async I/O using **R2DBC**.
 
-### Why Koin?
+### Why Exposed?
 
 - **Kotlin-first with async I/O:**
   - JetBrains' own type-safe DSL is Kotlin-idomatic.
