@@ -145,3 +145,7 @@ These libraries help when **building your full application with Kairo**.
 - [kairo-server](./kairo-server):
   Servers are composed of Features,
   and can be run as an application or as part of integration tests.
+- [kairo-sql-feature](./kairo-sql/feature):
+  Standardizes SQL access in Kairo
+  using [Exposed](https://www.jetbrains.com/exposed/)'s lightweight & idiomatic ORM DSL,
+  with support for async I/O using R2DBC.

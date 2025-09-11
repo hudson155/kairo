@@ -2,8 +2,8 @@
 
 Relational databases remain the backbone of many serious applications.
 `kairo-sql` standardizes SQL access in Kairo
-using [Exposed](https://www.jetbrains.com/exposed/)'s lightweight & idiomatic ORM DSL,
-with support for async I/O using **R2DBC** (instead of JDBC).
+using [Exposed](https://www.jetbrains.com/exposed/)'s **lightweight & idiomatic ORM DSL**,
+with support for async I/O using **R2DBC**.
 
 ### Why Koin?
 
@@ -168,6 +168,9 @@ The `ConnectionFactory` config specifies how to connect to your database.
 - `statementTimeout`: The timeout for executing statements.
   Defaults to 10 seconds.
 
+Further Exposed connection factory configuration is available
+by passing a `configureConnectionFactory` builder block to the `SqlFeature` constructor.
+
 ### `ConnectionPool`
 
 The `ConnectionPool` config specifies how connections are managed.
@@ -194,6 +197,9 @@ The `ConnectionPool` config specifies how connections are managed.
   How long to wait for a connection to validate.
   Defaults to 250 milliseconds.
 
+Further Exposed connection pool configuration is available
+by passing a `configureConnectionPool` builder block to the `SqlFeature` constructor.
+
 ### `Database`
 
 The `Database` config offers some further options regarding how the database is accessed.
@@ -204,3 +210,6 @@ The `Database` config offers some further options regarding how the database is 
   Defaults to the database driver's default.
 - `maxAttempts`: How many times to try each transaction.
   Defaults to 3.
+
+Further Exposed database configuration is available
+by passing a `configureDatabase` builder block to the `SqlFeature` constructor.

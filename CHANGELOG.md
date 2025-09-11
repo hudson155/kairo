@@ -219,8 +219,6 @@ No changes.
 
 #### SQL
 
-TODO: Coming soon!
-
 - **Type-safe SQL using [Exposed](https://www.jetbrains.com/exposed/)'s DSL (replaces JDBI).**
   - No more manual SQL strings,
     but retaining similar semantic alignment for predictability and easier debugging.
@@ -228,6 +226,10 @@ TODO: Coming soon!
 - R2DBC driver for async I/O (replaces JDBC).
 
 - SQL health checks no longer run queries, avoiding DB log pollution.
+
+- Custom type handling has been removed.
+
+- Custom transaction management has been removed.
 
 #### Testing
 
