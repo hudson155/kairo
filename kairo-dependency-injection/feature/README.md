@@ -8,7 +8,7 @@ integrated into the Kairo ecosystem.
 
 ### Why Koin?
 
-- **Kotlin-first with compile-time generation::**
+- **Kotlin-first with compile-time generation:**
   - No proxies, simple Kotlin DSL.
   - Dynamic modules (if you use them) are generated at compile time.
     No reflection!
@@ -37,11 +37,24 @@ plugins {
 
 dependencies {
   ksp("io.insert-koin:koin-ksp-compiler")
-  implementation("software.airborne.kairo:kairo-config")
+  implementation("software.airborne.kairo:kairo-dependency-injection-feature")
 }
 ```
 
 ## Usage
+
+First, add the Feature to your Server.
+
+```kotlin
+val koinApplication = koinApplication()
+
+val features = listOf(
+  DependencyInjectionFeature(koinApplication),
+)
+```
+
+Refer to [Koin's documentation](https://insert-koin.io/docs/reference/introduction)
+for advanced usage.
 
 ### Using annotations (recommended)
 
@@ -102,8 +115,8 @@ class UserFeature(
 
   override val koinModule: Module =
     module {
-      single<LibraryBookStore> { LibraryBookStore(...) }
-      single<LibraryBookService> { LibraryBookService(...) }
+      single<UserStore> { UserStore(...) }
+      single<UserService> { UserService(...) }
     }
 }
 ```
