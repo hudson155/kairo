@@ -106,6 +106,8 @@ These libraries **can be used anywhere**
 - [kairo-gcp-secret-supplier](./kairo-gcp-secret-supplier):
   Lightweight and coroutine-friendly
   Google Secret Manager wrapper.
+- [kairo-exception](./kairo-exception):
+  Differentiate between logical failures and real exceptions.
 - [kairo-id](./kairo-id):
   Human-readable semantic identifiers with variable entropy.
   Compile-time safety without runtime overhead.
