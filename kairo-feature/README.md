@@ -19,7 +19,7 @@ There are 2 types of Features.
   and configuration.
   **Clear boundaries** mean more maintainable code.
 - **Composability:**
-  Servers are composed by combining Features.
+  Servers are composed of Features.
   **No hidden assumptions**
   means you're not tied to patterns that don't make sense for your application.
 
@@ -28,6 +28,7 @@ There are 2 types of Features.
 Sample usage from the [kairo-sample](https://github.com/hudson155/kairo-sample) repo.
 
 - [LibraryFeature.kt](https://github.com/hudson155/kairo-sample/blob/main/feature/library/src/main/kotlin/kairoSample/library/LibraryFeature.kt)
+  (a Domain Feature)
 
 ## Installation
 
@@ -93,6 +94,8 @@ More advanced Features may also implement the other lifecycle hooks
 but this should be done sparingly.
 
 ### Putting it all together
+
+Combine your Features into a [Server](../kairo-server).
 
 ```kotlin
 val koinApplication = koinApplication()

@@ -140,5 +140,5 @@ These libraries help when **building your full application with Kairo**.
   With just a few lines of code
   you can add health check endpoints to your Kairo application.
 - [kairo-server](./kairo-server):
-  Servers are composed by Features,
+  Servers are composed of Features,
   and can be run as an application or as part of integration tests.
