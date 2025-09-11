@@ -10,7 +10,7 @@ import kotlinx.serialization.MetaSerializable
 public annotation class Rest(
   val method: String,
   /**
-   * Format: "/library-books/:libraryBookId".
+   * Format: "/users/:userId".
    */
   val path: String,
 ) {
