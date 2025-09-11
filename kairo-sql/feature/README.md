@@ -56,12 +56,12 @@ sql.connectionFactory {
 ### The Exposed DSL, by example
 
 Suppose you have this user model,
-where `LibraryBookModel` represents a user
-and `LibraryBookModel.Creator` represents the data needed to create a user.
+where `UserModel` represents a user
+and `UserModel.Creator` represents the data needed to create a user.
 
 ```kotlin
-data class LibraryBookModel(
-  val id: LibraryBookId,
+data class UserModel(
+  val id: UserId,
   val createdAt: Instant,
   val emailAddress: String,
 ) {
