@@ -98,8 +98,6 @@ TODO: Coming soon!
 
 #### Dependency Injection
 
-TODO: Coming soon!
-
 - **Dependency injection with [Koin](https://insert-koin.io/) (replaces Guice).**
   Reflection-free, Kotlin-friendly, better tooling, and simpler to configure.
 

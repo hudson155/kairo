@@ -133,6 +133,9 @@ These libraries help when **building your full application with Kairo**.
   wait for JVM termination,
   and clean up afterwards,
   all with a single call.
+- [kairo-dependency-injection-feature](./kairo-dependency-injection/feature):
+  Don't waste time and energy manually wiring your classes together.
+  Let Koin create and wire everything instead!
 - [kairo-feature](./kairo-feature):
   The core building block of Kairo applications,
   including both Framework Features and Domain Features.
