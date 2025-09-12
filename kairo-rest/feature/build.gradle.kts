@@ -8,7 +8,6 @@ dependencies {
   implementation(project(":kairo-exception"))
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
-  implementation(project(":kairo-optional"))
   api(project(":kairo-rest"))
   implementation(project(":kairo-serialization"))
 
