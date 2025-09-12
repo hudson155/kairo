@@ -121,6 +121,8 @@ These libraries **can be used anywhere**
 - [kairo-reflect](./kairo-reflect):
   Extends Kotlin reflection,
   unifying fragmented JVM/Kotlin into the safer and richer `KairoType<T>`.
+- [kairo-serialization](./kairo-serialization):
+  `kotlinx.serialization` "just works" — it's consistent and fast.
 - [kairo-testing](./kairo-testing):
   Kotlin-esque JUnit-style testing, with coroutine and mocking support.
 - [kairo-util](./kairo-util):

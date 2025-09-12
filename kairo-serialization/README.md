@@ -22,7 +22,7 @@ dependencies {
 
 ## Usage
 
-### Simple usage
+### Basic usage
 
 ```kotlin
 @Serializable
