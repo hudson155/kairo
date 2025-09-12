@@ -34,14 +34,14 @@ internal class OptionalSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      json.decodeFromString<Wrapper>("{ \"optional\": null }")
+      json.decodeFromString<Wrapper>("""{"optional":null}""")
         .shouldBe(Wrapper(Optional.Null))
     }
 
   @Test
   fun `deserialize, present`(): Unit =
     runTest {
-      json.decodeFromString<Wrapper>("{ \"optional\": \"some value\" }")
+      json.decodeFromString<Wrapper>("""{"optional":"some value"}""")
         .shouldBe(Wrapper(Optional.Value("some value")))
     }
 
