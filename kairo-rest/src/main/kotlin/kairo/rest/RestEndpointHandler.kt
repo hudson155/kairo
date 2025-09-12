@@ -5,6 +5,7 @@ import io.ktor.server.routing.HttpMethodRouteSelector
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.accept
+import io.ktor.server.routing.application
 import io.ktor.server.routing.contentType
 import io.ktor.server.routing.createRouteFromPath
 import io.ktor.server.routing.optionalParam
@@ -58,7 +59,7 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Routing.route(
   val responseType = KairoType.from<O>(RestEndpoint::class, 1, endpoint)
   val template = RestEndpointTemplate.from(endpoint)
   val route = buildRoute(template)
-  val reader = RestEndpointReader.from(endpoint)
+  val reader = RestEndpointReader.from(application.attributes.json, endpoint)
   route.handle {
     val handler = RestEndpointHandler(endpoint).apply(block)
     val response = requireNotNull(handler.handle) { "${error.endpoint(endpoint)}: Must define a handler." }

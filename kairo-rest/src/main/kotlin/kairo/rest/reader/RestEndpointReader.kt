@@ -6,6 +6,7 @@ import io.ktor.server.routing.RoutingCall
 import kairo.rest.RestEndpoint
 import kairo.rest.template.RestEndpointTemplateErrorBuilder
 import kotlin.reflect.KClass
+import kotlinx.serialization.json.Json
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -20,14 +21,17 @@ internal abstract class RestEndpointReader<E : RestEndpoint<*, *>> {
   internal companion object {
     private val error: RestEndpointTemplateErrorBuilder = RestEndpointTemplateErrorBuilder
 
-    fun <I : Any, E : RestEndpoint<I, *>> from(endpoint: KClass<E>): RestEndpointReader<E> {
+    fun <I : Any, E : RestEndpoint<I, *>> from(
+      json: Json,
+      endpoint: KClass<E>,
+    ): RestEndpointReader<E> {
       logger.debug { "Building REST endpoint reader (endpoint=$endpoint)." }
       require(endpoint.isData) { "${error.endpoint(endpoint)}: Must be a data class or data object." }
       val reader =
         if (endpoint.objectInstance != null) {
           DataObjectRestEndpointReader(endpoint)
         } else {
-          DataClassRestEndpointReader(endpoint)
+          DataClassRestEndpointReader(json, endpoint)
         }
       logger.debug { "Built REST endpoint reader (endpoint=$endpoint, reader=$reader)." }
       return reader

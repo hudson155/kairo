@@ -62,6 +62,6 @@ println(apiKey)
 println(apiKey.value)
 // => your_api_key
 
-println(Json.encodeToString(apiKey))
+println(json.encodeToString(apiKey))
 // => "your_api_key"
 ```
