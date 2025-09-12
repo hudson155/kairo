@@ -12,8 +12,9 @@ kotlin {
 
 dependencies {
   implementation(libs.serialization.core)
-  implementation(libs.serialization.json)
 
   testImplementation(project(":kairo-serialization"))
   testImplementation(project(":kairo-testing"))
+
+  testImplementation(libs.serialization.json)
 }

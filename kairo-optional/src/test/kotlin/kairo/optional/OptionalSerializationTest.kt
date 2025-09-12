@@ -1,13 +1,11 @@
-@file:UseContextualSerialization(Optional::class)
-
 package kairo.optional
 
 import io.kotest.matchers.shouldBe
 import kairo.serialization.kairo
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.UseContextualSerialization
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
@@ -17,7 +15,7 @@ import org.junit.jupiter.api.Test
 internal class OptionalSerializationTest {
   @Serializable
   internal data class Wrapper(
-    @EncodeDefault(EncodeDefault.Mode.NEVER)
+    @EncodeDefault(EncodeDefault.Mode.NEVER) @Contextual
     val optional: Optional<String> = Optional.Missing,
   )
 
