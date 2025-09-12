@@ -22,9 +22,11 @@ internal class LogicalFailureSerializatonTest {
     }
   }
 
+  private val json: Json = Json
+
   @Test
   fun `null key`() {
-    Json.encodeToJsonElement(Example(null).json)
+    json.encodeToJsonElement(Example(null).json)
       .shouldBe(
         buildJsonObject {
           put("type", JsonPrimitive("Example"))
@@ -38,7 +40,7 @@ internal class LogicalFailureSerializatonTest {
 
   @Test
   fun `non-null key`() {
-    Json.encodeToJsonElement(Example("expected").json)
+    json.encodeToJsonElement(Example("expected").json)
       .shouldBe(
         buildJsonObject {
           put("type", JsonPrimitive("Example"))

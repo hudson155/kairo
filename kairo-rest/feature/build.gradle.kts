@@ -9,6 +9,7 @@ dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
   api(project(":kairo-rest"))
+  implementation(project(":kairo-serialization"))
 
   implementation(libs.ktorSerialization.json)
   implementation(libs.ktorServer.autoHeadResponse)
@@ -20,5 +21,4 @@ dependencies {
   implementation(libs.ktorServer.forwardedHeader)
   implementation(libs.ktorServer.netty)
   implementation(libs.ktorServer.statusPages)
-  implementation(libs.serialization.core)
 }

@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-  implementation(libs.serialization.core)
+  implementation(project(":kairo-serialization"))
 
   testImplementation(project(":kairo-testing"))
 

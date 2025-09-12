@@ -5,8 +5,8 @@ plugins {
 }
 
 dependencies {
+  testImplementation(project(":kairo-serialization"))
   testImplementation(project(":kairo-testing"))
 
-  testImplementation(libs.serialization.core)
   testImplementation(libs.serialization.json)
 }

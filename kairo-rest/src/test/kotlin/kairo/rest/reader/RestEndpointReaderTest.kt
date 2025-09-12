@@ -13,13 +13,16 @@ import kairo.libraryBook.LibraryBookId
 import kairo.libraryBook.LibraryBookRep
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
 internal class RestEndpointReaderTest {
+  private val json: Json = Json
+
   @Test
   fun `get, missing path param`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.Get::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Get::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.Empty
       }
@@ -31,7 +34,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `get, malformed path param`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.Get::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Get::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.build {
           append("libraryBookId", "2eDS1sMt")
@@ -45,7 +48,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `get, happy path`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.Get::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Get::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.build {
           append("libraryBookId", "library_book_2eDS1sMt")
@@ -62,7 +65,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `listByIds (non-empty)`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.ListByIds::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.ListByIds::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.Empty
       }
@@ -77,7 +80,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `listByIds (empty)`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.ListByIds::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.ListByIds::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.build {
           appendAll("libraryBookIds", listOf("library_book_2eDS1sMt", "library_book_X64k1rU2"))
@@ -97,7 +100,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `listAll, happy path`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.ListAll::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.ListAll::class)
       val call = mockk<RoutingCall>()
       reader.read(call)
         .shouldBe(
@@ -108,7 +111,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `searchByGenre, missing genre`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.SearchByGenre::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.SearchByGenre::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.Empty
       }
@@ -120,7 +123,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `searchByGenre, malformed genre`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.SearchByGenre::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.SearchByGenre::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.build {
           append("genre", "Christianity")
@@ -134,7 +137,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `searchByGenre, happy path`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.SearchByGenre::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.SearchByGenre::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.build {
           append("genre", "Religion")
@@ -151,7 +154,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `searchByIsbn, missing isbn`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.SearchByIsbn::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.SearchByIsbn::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.Empty
       }
@@ -163,7 +166,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `searchByIsbn, happy path`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.SearchByIsbn::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.SearchByIsbn::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.build {
           append("isbn", "978-0060652920")
@@ -180,7 +183,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `searchByText, none provided`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.SearchByText::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.SearchByText::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.Empty
       }
@@ -196,7 +199,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `searchByText, all provided`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.SearchByText::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.SearchByText::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.build {
           append("title", "Mere Christianity")
@@ -217,7 +220,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `create, happy path`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.Create::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Create::class)
       val call = mockk<RoutingCall> {
         coEvery {
           receiveNullable<LibraryBookRep.Creator>(any())
@@ -244,7 +247,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `update, missing path param`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.Update::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Update::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.Empty
         coEvery {
@@ -263,7 +266,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `update, malformed path param`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.Update::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Update::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.build {
           append("libraryBookId", "2eDS1sMt")
@@ -302,7 +305,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `update, all provided`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.Update::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Update::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.build {
           append("libraryBookId", "library_book_2eDS1sMt")
@@ -331,7 +334,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `delete, missing path param`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.Delete::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Delete::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.Empty
       }
@@ -343,7 +346,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `delete, malformed path param`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.Delete::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Delete::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.build {
           append("libraryBookId", "2eDS1sMt")
@@ -357,7 +360,7 @@ internal class RestEndpointReaderTest {
   @Test
   fun `delete, happy path`(): Unit =
     runTest {
-      val reader = RestEndpointReader.from(LibraryBookApi.Delete::class)
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Delete::class)
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.build {
           append("libraryBookId", "library_book_2eDS1sMt")

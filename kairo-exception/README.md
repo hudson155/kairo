@@ -58,7 +58,7 @@ data class UserNotFound(
   override val title: String = "User not found"
 
   override fun JsonObjectBuilder.buildJson() {
-    put("userId", Json.encodeToJsonElement(userId))
+    put("userId", json.encodeToJsonElement(userId))
   }
 }
 

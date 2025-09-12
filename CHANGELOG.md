@@ -36,7 +36,7 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
   Keeps both Kairo and key external libraries in sync automatically.
 
 - **Serialization with `kotlinx.serialization` (replaces Jackson).**
-  Easier to use, fewer gotchas, and Kotlin-native—faster onboarding.
+  Easier to use, fewer gotchas, and Kotlin-native.
   Fewer runtime surprises.
 
 - **Dependency injection with [Koin](https://insert-koin.io/) (replaces Guice).**
@@ -215,7 +215,7 @@ TODO: Coming soon!
 #### Serialization
 
 - **Serialization with `kotlinx.serialization` (replaces Jackson).**
-  Easier to use, fewer gotchas, and Kotlin-native—faster onboarding.
+  Easier to use, fewer gotchas, and Kotlin-native.
   Fewer runtime surprises.
 
 - **Automatic string trimming removed.**

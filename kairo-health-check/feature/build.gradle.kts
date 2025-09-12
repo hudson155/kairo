@@ -9,8 +9,7 @@ dependencies {
   api(project(":kairo-health-check"))
   implementation(project(":kairo-logging"))
   implementation(project(":kairo-rest"))
-
-  implementation(libs.serialization.core)
+  implementation(project(":kairo-serialization"))
 
   testImplementation(project(":kairo-testing"))
 }
