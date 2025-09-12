@@ -1,5 +1,6 @@
 package kairo.optional
 
+import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
@@ -22,7 +23,13 @@ public class OptionalSerializer<T>(
     when (value) {
       is Optional.Value -> encoder.encodeSerializableValue(valueSerializer, value.value)
       Optional.Null -> encoder.encodeNull()
-      Optional.Missing -> error("Implementation error.")
+      Optional.Missing -> error(
+        "Tried to encode missing optional value." +
+          " Ensure that optionals are annotated with" +
+          " @${EncodeDefault::class.simpleName}(${EncodeDefault::class.simpleName}" +
+          ".${EncodeDefault.Mode::class.simpleName}" +
+          ".${EncodeDefault.Mode.NEVER}).",
+      )
     }
   }
 }
