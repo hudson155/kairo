@@ -16,7 +16,7 @@ internal class OptionalSerializationTest {
   @Serializable
   internal data class Wrapper(
     @EncodeDefault(EncodeDefault.Mode.NEVER) @Contextual
-    val optional: Optional<String> = Optional.Missing,
+    val value: Optional<String> = Optional.Missing,
   )
 
   private val json: Json =
@@ -34,14 +34,14 @@ internal class OptionalSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      json.decodeFromString<Wrapper>("""{"optional":null}""")
+      json.decodeFromString<Wrapper>("""{"value":null}""")
         .shouldBe(Wrapper(Optional.Null))
     }
 
   @Test
   fun `deserialize, present`(): Unit =
     runTest {
-      json.decodeFromString<Wrapper>("""{"optional":"some value"}""")
+      json.decodeFromString<Wrapper>("""{"value":"some value"}""")
         .shouldBe(Wrapper(Optional.Value("some value")))
     }
 
@@ -58,7 +58,7 @@ internal class OptionalSerializationTest {
       json.encodeToJsonElement(Wrapper(Optional.Null))
         .shouldBe(
           buildJsonObject {
-            put("optional", JsonPrimitive(null))
+            put("value", JsonPrimitive(null))
           },
         )
     }
@@ -69,7 +69,7 @@ internal class OptionalSerializationTest {
       json.encodeToJsonElement(Wrapper(Optional.Value("some value")))
         .shouldBe(
           buildJsonObject {
-            put("optional", JsonPrimitive("some value"))
+            put("value", JsonPrimitive("some value"))
           },
         )
     }
