@@ -2,12 +2,16 @@ package kairo.id
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import kairo.serialization.kairo
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
 internal class IdSerializationTest {
-  private val json: Json = Json
+  private val json: Json =
+    Json {
+      kairo()
+    }
 
   @Test
   fun serialize(): Unit =

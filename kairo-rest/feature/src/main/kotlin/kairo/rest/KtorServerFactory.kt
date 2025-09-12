@@ -22,6 +22,9 @@ import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.response.respond
 import kairo.exception.LogicalFailure
 import kairo.feature.Feature
+import kairo.serialization.kairo
+import kairo.serialization.kairoPrettyPrint
+import kotlinx.serialization.json.Json
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -46,6 +49,11 @@ internal object KtorServerFactory {
         ktorConfiguration()
       },
       module = {
+        attributes.json =
+          Json {
+            kairo()
+            kairoPrettyPrint()
+          }
         plugins(config.plugins)
         routing(features)
         ktorModule()

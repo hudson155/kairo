@@ -31,7 +31,10 @@ data class MyClass(
   val text: String,
 )
 
-val json: Json = Json
+val json: Json = 
+  Json {
+    kairo()
+  }
 
 json.encodeToString(MyClass(1, "foo"))
 // => {"number":1,"text":"foo"}
@@ -60,7 +63,10 @@ sealed class Animal {
   data class Cat(override val name: String, val napsPerDay: Int) : Animal()
 }
 
-val json: Json = Json
+val json: Json = 
+  Json {
+    kairo()
+  }
 
 json.encodeToString(listOf(Animal.Dog("Rex", 30), Animal.Cat("Whiskers", 12)))
 // => [{"type":"Dog","name":"Rex","barksPerMinute":30},{"type":"Cat","name":"Whiskers","napsPerDay":12}]

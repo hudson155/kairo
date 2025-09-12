@@ -1,13 +1,17 @@
 package kairo.protectedString
 
 import io.kotest.matchers.shouldBe
+import kairo.serialization.kairo
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
 @OptIn(ProtectedString.Access::class)
 internal class ProtectedStringSerializationTest {
-  private val json: Json = Json
+  private val json: Json =
+    Json {
+      kairo()
+    }
 
   @Test
   fun serialize(): Unit =

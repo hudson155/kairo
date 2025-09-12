@@ -1,0 +1,78 @@
+@file:UseContextualSerialization(Optional::class)
+
+package kairo.optional
+
+import io.kotest.matchers.shouldBe
+import kairo.serialization.kairo
+import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseContextualSerialization
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.encodeToJsonElement
+import org.junit.jupiter.api.Test
+
+internal class OptionalSerializationTest {
+  @Serializable
+  internal data class Wrapper(
+    @EncodeDefault(EncodeDefault.Mode.NEVER)
+    val optional: Optional<String> = Optional.Missing,
+  )
+
+  private val json: Json =
+    Json {
+      kairo()
+    }
+
+  @Test
+  fun `deserialize, missing`(): Unit =
+    runTest {
+      json.decodeFromString<Wrapper>("{}")
+        .shouldBe(Wrapper(Optional.Missing))
+    }
+
+  @Test
+  fun `deserialize, null`(): Unit =
+    runTest {
+      json.decodeFromString<Wrapper>("{ \"optional\": null }")
+        .shouldBe(Wrapper(Optional.Null))
+    }
+
+  @Test
+  fun `deserialize, present`(): Unit =
+    runTest {
+      json.decodeFromString<Wrapper>("{ \"optional\": \"some value\" }")
+        .shouldBe(Wrapper(Optional.Value("some value")))
+    }
+
+  @Test
+  fun `serialize, missing`(): Unit =
+    runTest {
+      json.encodeToJsonElement(Wrapper(Optional.Missing))
+        .shouldBe(buildJsonObject {})
+    }
+
+  @Test
+  fun `serialize, null`(): Unit =
+    runTest {
+      json.encodeToJsonElement(Wrapper(Optional.Null))
+        .shouldBe(
+          buildJsonObject {
+            put("optional", JsonPrimitive(null))
+          },
+        )
+    }
+
+  @Test
+  fun `serialize, present`(): Unit =
+    runTest {
+      json.encodeToJsonElement(Wrapper(Optional.Value("some value")))
+        .shouldBe(
+          buildJsonObject {
+            put("optional", JsonPrimitive("some value"))
+          },
+        )
+    }
+}
