@@ -178,6 +178,12 @@ TODO: Coming soon!
 
 TODO: Coming soon!
 
+#### Optional
+
+- Introduced `Optional` differentiate between missing and null properties.
+
+- Removed `Updater` and `update` in favor of `Optional`.
+
 #### Protected String
 
 - Minor changes to `toString()` result of `ProtectedString`.
@@ -244,10 +250,6 @@ No changes.
 - Upgrade from Kotest 5 to Kotest 6.
 
 - Test helper method descriptions are now optional.
-
-#### Updater
-
-TODO: Coming soon!
 
 #### Util
 
