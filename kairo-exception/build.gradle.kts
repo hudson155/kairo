@@ -10,6 +10,8 @@ kotlin {
 }
 
 dependencies {
+  api(project(":kairo-serialization"))
+
   api(libs.ktorHttp)
   api(libs.serialization.json)
 

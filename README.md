@@ -115,6 +115,9 @@ These libraries **can be used anywhere**
   SLF4J-standardized logging (choose your own logging backend),
   exposing [Ohad Shai's Kotlin logging interface](https://github.com/oshai/kotlin-logging)
   for a clean, Kotlin-first API.
+- [kairo-optional](./kairo-optional):
+  Differentiate between missing and null values.
+  This comes in especially handy for RFC 7396 (JSON Merge Patch).
 - [kairo-protected-string](./kairo-protected-string):
   Handle sensitive strings that shouldn't be logged.
   `toString()` auto-redacts.
