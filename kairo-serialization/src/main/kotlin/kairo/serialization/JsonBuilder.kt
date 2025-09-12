@@ -5,7 +5,7 @@ import kotlinx.serialization.json.JsonBuilder
 import kotlinx.serialization.modules.SerializersModule
 
 public fun JsonBuilder.kairo() {
-  encodeDefaults = false
+  encodeDefaults = true
   explicitNulls = true
   ignoreUnknownKeys = false
   isLenient = false
