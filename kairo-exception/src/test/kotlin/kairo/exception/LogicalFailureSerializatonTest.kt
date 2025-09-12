@@ -2,6 +2,7 @@ package kairo.exception
 
 import io.kotest.matchers.shouldBe
 import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObjectBuilder
 import kotlinx.serialization.json.JsonPrimitive
@@ -25,30 +26,32 @@ internal class LogicalFailureSerializatonTest {
   private val json: Json = Json
 
   @Test
-  fun `null key`() {
-    json.encodeToJsonElement(Example(null).json)
-      .shouldBe(
-        buildJsonObject {
-          put("type", JsonPrimitive("Example"))
-          put("status", JsonPrimitive(500))
-          put("title", JsonPrimitive("Example"))
-          put("detail", JsonPrimitive(null))
-          put("key", JsonPrimitive(null))
-        },
-      )
-  }
+  fun `null key`(): Unit =
+    runTest {
+      json.encodeToJsonElement(Example(null).json)
+        .shouldBe(
+          buildJsonObject {
+            put("type", JsonPrimitive("Example"))
+            put("status", JsonPrimitive(500))
+            put("title", JsonPrimitive("Example"))
+            put("detail", JsonPrimitive(null))
+            put("key", JsonPrimitive(null))
+          },
+        )
+    }
 
   @Test
-  fun `non-null key`() {
-    json.encodeToJsonElement(Example("expected").json)
-      .shouldBe(
-        buildJsonObject {
-          put("type", JsonPrimitive("Example"))
-          put("status", JsonPrimitive(500))
-          put("title", JsonPrimitive("Example"))
-          put("detail", JsonPrimitive(null))
-          put("key", JsonPrimitive("expected"))
-        },
-      )
-  }
+  fun `non-null key`(): Unit =
+    runTest {
+      json.encodeToJsonElement(Example("expected").json)
+        .shouldBe(
+          buildJsonObject {
+            put("type", JsonPrimitive("Example"))
+            put("status", JsonPrimitive(500))
+            put("title", JsonPrimitive("Example"))
+            put("detail", JsonPrimitive(null))
+            put("key", JsonPrimitive("expected"))
+          },
+        )
+    }
 }
