@@ -162,8 +162,6 @@ The `ConnectionFactory` config specifies how to connect to your database.
 - `password`
 - `connectTimeout`: The timeout for connecting to the database.
   Defaults to 4 seconds.
-- `statementTimeout`: The timeout for executing statements.
-  Defaults to 10 seconds.
 
 Further Exposed connection factory configuration is available
 by passing a `configureConnectionFactory` builder block to the `SqlFeature` constructor.
@@ -172,27 +170,10 @@ by passing a `configureConnectionFactory` builder block to the `SqlFeature` cons
 
 The `ConnectionPool` config specifies how connections are managed.
 
-- `size.initial`: The initial size of the connection pool.
-  Defaults to 10.
 - `size.min`: The minimum size of the connection pool.
   Defaults to 5.
 - `size.max`: The maximum size of the connection pool.
   Defaults to 25.
-- `management.createConnectionTimeout`: How long to wait when creating a new connection.
-  Defaults to 5 seconds.
-- `management.acquireTimeout`: How long to wait when acquiring a connection from the pool.
-  Defaults to 15 seconds.
-- `management.acquireAttempts`: How many times to try acquiring a connection from the pool.
-  Defaults to 3.
-- `management.maxLifetime`: The maximum lifetime of a connection.
-  Defaults to 1 hour.
-- `management.maxIdleTime`: The maximum idle time of a connection.
-  Defaults to 5 minutes.
-- `management.backgroundEvictionInterval`: How often to evict idle connections.
-  Defaults to 2 minutes.
-- `validation.timeout`: Connection validation is performed regularly.
-  How long to wait for a connection to validate.
-  Defaults to 250 milliseconds.
 
 Further Exposed connection pool configuration is available
 by passing a `configureConnectionPool` builder block to the `SqlFeature` constructor.
@@ -203,8 +184,6 @@ The `Database` config offers some further options regarding how the database is 
 
 - `readOnly`: Whether connections to the database should be read-only.
   Defaults to `false`.
-- `defaultIsolationLevel`: The default isolation level for transactions.
-  Defaults to the database driver's default.
 - `maxAttempts`: How many times to try each transaction.
   Defaults to 3.
 
