@@ -237,8 +237,6 @@ No changes.
   - No more manual SQL strings,
     but retaining similar semantic alignment for predictability and easier debugging.
 
-- R2DBC driver for async I/O (replaces JDBC).
-
 - SQL health checks no longer run queries, avoiding DB log pollution.
 
 - Custom type handling has been removed.

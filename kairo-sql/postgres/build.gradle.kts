@@ -8,5 +8,5 @@ dependencies {
   implementation(project(":kairo-sql"))
   implementation(project(":kairo-util"))
 
-  implementation(libs.postgres.r2dbc)
+  implementation(libs.postgres.jdbc)
 }

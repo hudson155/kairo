@@ -46,10 +46,6 @@ dependencies {
   // https://github.com/pgjdbc/pgjdbc/releases
   api(platform("org.postgresql:postgresql:42.7.7"))
 
-  // postgres-r2dbc
-  // https://github.com/pgjdbc/r2dbc-postgresql/releases
-  api(platform("org.postgresql:r2dbc-postgresql:1.0.7.RELEASE"))
-
   // serialization
   // https://github.com/Kotlin/kotlinx.serialization/releases
   api(platform("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.9.0"))

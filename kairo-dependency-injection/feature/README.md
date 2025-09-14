@@ -63,7 +63,7 @@ Bindings are created by annotating classes with `@Single` or `@Factory`.
 ```kotlin
 @Single
 class UserStore(
-  private val database: R2dbcDatabase, // Injected automatically.
+  private val database: Database, // Injected automatically.
 ) {
   suspend fun get(id: UserId): UserModel? =
     suspendTransaction(db = database) {

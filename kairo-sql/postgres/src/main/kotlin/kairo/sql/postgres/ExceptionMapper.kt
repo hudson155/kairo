@@ -1,15 +1,14 @@
 package kairo.sql.postgres
 
-import io.r2dbc.postgresql.api.ErrorDetails
-import io.r2dbc.postgresql.api.PostgresqlException
 import kairo.exception.LogicalFailure
 import kairo.util.firstCauseOf
-import kotlin.jvm.optionals.getOrNull
-import org.jetbrains.exposed.v1.r2dbc.ExposedR2dbcException
+import org.jetbrains.exposed.v1.exceptions.ExposedSQLException
+import org.postgresql.util.PSQLException
+import org.postgresql.util.ServerErrorMessage
 
 @Suppress("UseDataClass")
 public class ExceptionMapper(
-  public val condition: (details: ErrorDetails) -> Boolean,
+  public val condition: (details: ServerErrorMessage) -> Boolean,
   public val mapper: () -> LogicalFailure,
 )
 
@@ -19,8 +18,8 @@ public inline fun <T> withExceptionMappers(
 ): T {
   try {
     return block()
-  } catch (e: ExposedR2dbcException) {
-    val details = e.firstCauseOf<PostgresqlException>()?.errorDetails
+  } catch (e: ExposedSQLException) {
+    val details = e.firstCauseOf<PSQLException>()?.serverErrorMessage
       ?: throw e
     mappers.forEach { mapper ->
       if (mapper.condition(details)) throw mapper.mapper()
@@ -29,14 +28,15 @@ public inline fun <T> withExceptionMappers(
   }
 }
 
+@Suppress("UnderscoresInNumericLiterals")
 public fun uniqueViolation(
   constraintName: String,
   block: () -> LogicalFailure,
 ): ExceptionMapper =
   ExceptionMapper(
     condition = { details ->
-      details.code == "23505" &&
-        details.constraintName.getOrNull() == constraintName
+      details.sqlState == "23505" &&
+        details.constraint == constraintName
     },
     mapper = block,
   )

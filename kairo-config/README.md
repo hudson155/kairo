@@ -79,7 +79,6 @@ sql.connectionFactory {
   url = ${POSTGRES_URL} # Env var
   username = ${POSTGRES_USERNAME} # Env var
   password = ${POSTGRES_PASSWORD} # Env var
-  ssl = false
 }
 ```
 
@@ -109,7 +108,7 @@ rest {
   plugins.callLogging.useColors = true
 }
 sql {
-  connectionFactory.url = "r2dbc:postgresql://localhost:5432/kairo_sample"
+  connectionFactory.url = "jdbc:postgresql://localhost:5432/kairo_sample"
   connectionPool.size { initial = 2, min = 1, max = 5 }
 }
 ```
@@ -123,7 +122,7 @@ since the overrides we applied to the development config also make sense for tes
 # testing.conf
 include "development.conf"
 id.generation.type = "Deterministic"
-sql.connectionFactory.url = "r2dbc:postgresql://localhost:5432/kairo_sample_test"
+sql.connectionFactory.url = "jdbc:postgresql://localhost:5432/kairo_sample_test"
 ```
 
 ### Loading the config

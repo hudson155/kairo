@@ -1,10 +1,10 @@
 [versions]
 
+hikari = "7.0.2" # https://github.com/brettwooldridge/HikariCP/tags
 hocon = "1.4.4" # https://github.com/lightbend/config/releases
 kotest = "6.0.2" # https://github.com/kotest/kotest/releases
 logging = "7.0.13" # https://github.com/oshai/kotlin-logging/releases
 mockk = "1.14.5" # https://github.com/mockk/mockk/releases
-r2dbc-pool = "1.0.2.RELEASE" # https://github.com/r2dbc/r2dbc-pool/releases
 
 [libraries]
 
@@ -21,11 +21,12 @@ exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc" }
 exposed-json = { module = "org.jetbrains.exposed:exposed-json" }
 exposed-kotlinDatetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime" }
 exposed-money = { module = "org.jetbrains.exposed:exposed-money" }
-exposed-r2dbc = { module = "org.jetbrains.exposed:exposed-r2dbc" }
 
 gcp-secretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
 
 guava = { module = "com.google.guava:guava" }
+
+hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
 
 hocon = { module = "com.typesafe:config", version.ref = "hocon" }
 
@@ -52,9 +53,7 @@ logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "loggin
 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
-postgres-r2dbc = { module = "org.postgresql:r2dbc-postgresql" }
-
-r2dbc-pool = { module = "io.r2dbc:r2dbc-pool", version.ref = "r2dbc-pool" }
+postgres-jdbc = { module = "org.postgresql:postgresql" }
 
 serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
 serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
