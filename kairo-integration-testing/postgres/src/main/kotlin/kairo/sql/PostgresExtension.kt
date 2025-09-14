@@ -39,7 +39,7 @@ public class PostgresExtension : PostgresExtensionAware, BeforeAllCallback, Befo
       password = postgres.password,
     )
     context.connectionFactory = SqlFeatureConfig.ConnectionFactory(
-      url = postgres.jdbcUrl.replace("jdbc:", "r2dbc:").replace("/${postgres.databaseName}", "/$databaseName"),
+      url = postgres.jdbcUrl.replace("/${postgres.databaseName}", "/$databaseName"),
       username = postgres.username,
       password = postgres.password.let { ProtectedString(it) },
     )

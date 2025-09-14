@@ -9,6 +9,5 @@ dependencies {
   implementation(project(":kairo-sql:postgres"))
   implementation(project(":kairo-testing"))
 
-  implementation(libs.exposed.jdbc)
   implementation(libs.testcontainers.postgres)
 }

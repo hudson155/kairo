@@ -40,7 +40,7 @@ public fun SqlFeature.Companion.from(connectionFactory: SqlFeatureConfig.Connect
     config = SqlFeatureConfig(
       connectionFactory = connectionFactory,
       connectionPool = SqlFeatureConfig.ConnectionPool(
-        size = SqlFeatureConfig.ConnectionPool.Size(initial = 2, min = 1, max = 5),
+        size = SqlFeatureConfig.ConnectionPool.Size(min = 1, max = 5),
       ),
     ),
     configureDatabase = {

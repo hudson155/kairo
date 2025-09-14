@@ -49,7 +49,6 @@ sql.connectionFactory {
   url = ${POSTGRES_URL}
   username = ${POSTGRES_USERNAME}
   password = ${POSTGRES_PASSWORD}
-  ssl = false
 }
 ```
 
@@ -161,8 +160,6 @@ The `ConnectionFactory` config specifies how to connect to your database.
   For example, `r2dbc:postgresql://localhost:5432/...`
 - `username`
 - `password`
-- `ssl`: Whether to use SSL when connecting.
-  Defaults to `true` (you may have to disable this depending on your environment).
 - `connectTimeout`: The timeout for connecting to the database.
   Defaults to 4 seconds.
 - `statementTimeout`: The timeout for executing statements.

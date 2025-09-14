@@ -11,5 +11,5 @@ dependencies {
   implementation(project(":kairo-serialization"))
   api(project(":kairo-sql"))
 
-  implementation(libs.r2dbc.pool)
+  api(libs.hikari)
 }
