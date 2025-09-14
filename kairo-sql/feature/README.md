@@ -164,7 +164,7 @@ The `ConnectionFactory` config specifies how to connect to your database.
   Defaults to 4 seconds.
 
 Further Exposed connection factory configuration is available
-by passing a `configureConnectionFactory` builder block to the `SqlFeature` constructor.
+by passing a `configureHikari` builder block to the `SqlFeature` constructor.
 
 ### `ConnectionPool`
 
@@ -176,7 +176,7 @@ The `ConnectionPool` config specifies how connections are managed.
   Defaults to 25.
 
 Further Exposed connection pool configuration is available
-by passing a `configureConnectionPool` builder block to the `SqlFeature` constructor.
+by passing a `configureHikari` builder block to the `SqlFeature` constructor.
 
 ### `Database`
 
