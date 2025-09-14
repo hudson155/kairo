@@ -46,9 +46,8 @@ public class SqlFeature(
   }
 
   public companion object {
-    public fun healthCheck(hikari: HikariDataSource) {
-      hikari.connection
-    }
+    public fun healthCheck(@Suppress("unused") hikari: HikariDataSource): Unit =
+      Unit
   }
 }
 
