@@ -10,4 +10,9 @@ public sealed interface Optional<out T> {
   public data object Null : Optional<Nothing>
 
   public data class Value<T>(val value: T) : Optional<T>
+
+  public companion object {
+    public fun <T : Any> fromNullable(value: T?): Optional<T> =
+      if (value == null) Null else Value(value)
+  }
 }
