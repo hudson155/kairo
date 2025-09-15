@@ -11,6 +11,7 @@ import io.mockk.mockk
 import kairo.libraryBook.LibraryBookApi
 import kairo.libraryBook.LibraryBookId
 import kairo.libraryBook.LibraryBookRep
+import kairo.optional.Optional
 import kairo.serialization.kairo
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.SerializationException
@@ -257,7 +258,7 @@ internal class RestEndpointReaderTest {
         coEvery {
           receiveNullable<LibraryBookRep.Update>(any())
         } returns LibraryBookRep.Update(
-          title = "The Meaning of Marriage: Facing the Complexities of Commitment with the Wisdom of God",
+          title = Optional.Value("The Meaning of Marriage"),
           authors = listOf("Timothy Keller", "Kathy Keller"),
           genre = LibraryBookRep.Genre.Religion,
         )
@@ -278,7 +279,7 @@ internal class RestEndpointReaderTest {
         coEvery {
           receiveNullable<LibraryBookRep.Update>(any())
         } returns LibraryBookRep.Update(
-          title = "The Meaning of Marriage: Facing the Complexities of Commitment with the Wisdom of God",
+          title = Optional.Value("The Meaning of Marriage"),
           authors = listOf("Timothy Keller", "Kathy Keller"),
           genre = LibraryBookRep.Genre.Religion,
         )
@@ -291,19 +292,64 @@ internal class RestEndpointReaderTest {
   @Test
   fun `update, none provided`(): Unit =
     runTest {
-      // TODO: Test partial updates.
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Update::class)
+      val call = mockk<RoutingCall> {
+        every { parameters } returns Parameters.build {
+          append("libraryBookId", "library_book_2eDS1sMt")
+        }
+        coEvery {
+          receiveNullable<LibraryBookRep.Update>(any())
+        } returns LibraryBookRep.Update()
+      }
+      reader.read(call)
+        .shouldBe(
+          LibraryBookApi.Update(
+            libraryBookId = LibraryBookId("library_book_2eDS1sMt"),
+            body = LibraryBookRep.Update(),
+          ),
+        )
     }
 
   @Test
   fun `update, title null`(): Unit =
     runTest {
-      // TODO: Test partial updates.
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Update::class)
+      val call = mockk<RoutingCall> {
+        every { parameters } returns Parameters.build {
+          append("libraryBookId", "library_book_2eDS1sMt")
+        }
+        coEvery {
+          receiveNullable<LibraryBookRep.Update>(any())
+        } returns LibraryBookRep.Update(title = Optional.Null)
+      }
+      reader.read(call)
+        .shouldBe(
+          LibraryBookApi.Update(
+            libraryBookId = LibraryBookId("library_book_2eDS1sMt"),
+            body = LibraryBookRep.Update(title = Optional.Null),
+          ),
+        )
     }
 
   @Test
   fun `update, authors empty`(): Unit =
     runTest {
-      // TODO: Test partial updates.
+      val reader = RestEndpointReader.from(json, LibraryBookApi.Update::class)
+      val call = mockk<RoutingCall> {
+        every { parameters } returns Parameters.build {
+          append("libraryBookId", "library_book_2eDS1sMt")
+        }
+        coEvery {
+          receiveNullable<LibraryBookRep.Update>(any())
+        } returns LibraryBookRep.Update(authors = emptyList())
+      }
+      reader.read(call)
+        .shouldBe(
+          LibraryBookApi.Update(
+            libraryBookId = LibraryBookId("library_book_2eDS1sMt"),
+            body = LibraryBookRep.Update(authors = emptyList()),
+          ),
+        )
     }
 
   @Test
@@ -317,7 +363,7 @@ internal class RestEndpointReaderTest {
         coEvery {
           receiveNullable<LibraryBookRep.Update>(any())
         } returns LibraryBookRep.Update(
-          title = "The Meaning of Marriage: Facing the Complexities of Commitment with the Wisdom of God",
+          title = Optional.Value("The Meaning of Marriage"),
           authors = listOf("Timothy Keller", "Kathy Keller"),
           genre = LibraryBookRep.Genre.Religion,
         )
@@ -327,7 +373,7 @@ internal class RestEndpointReaderTest {
           LibraryBookApi.Update(
             libraryBookId = LibraryBookId("library_book_2eDS1sMt"),
             body = LibraryBookRep.Update(
-              title = "The Meaning of Marriage: Facing the Complexities of Commitment with the Wisdom of God",
+              title = Optional.Value("The Meaning of Marriage"),
               authors = listOf("Timothy Keller", "Kathy Keller"),
               genre = LibraryBookRep.Genre.Religion,
             ),
