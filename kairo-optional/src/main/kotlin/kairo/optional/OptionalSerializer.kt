@@ -6,7 +6,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-public class OptionalSerializer<T>(
+public class OptionalSerializer<T : Any>(
   private val valueSerializer: KSerializer<T>,
 ) : KSerializer<Optional<T>> {
   override val descriptor: SerialDescriptor = valueSerializer.descriptor
