@@ -16,3 +16,18 @@ public sealed interface Optional<out T : Any> {
       if (value == null) Null else Value(value)
   }
 }
+
+public val Optional<*>.isSpecified: Boolean
+  get() = when (this) {
+    is Optional.Missing -> false
+    is Optional.Null -> true
+    is Optional.Value -> true
+  }
+
+public fun <T : Any> Optional<T>.ifSpecified(block: (T?) -> Unit) {
+  when (this) {
+    is Optional.Missing -> Unit
+    is Optional.Null -> block(null)
+    is Optional.Value -> block(value)
+  }
+}
