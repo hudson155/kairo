@@ -36,7 +36,9 @@ internal data class LibraryBookRep(
   internal data class Update(
     @EncodeDefault(EncodeDefault.Mode.NEVER) @Contextual
     val title: Optional<String> = Optional.Missing,
-    val authors: List<String>? = null, // TODO: Use Required<T>.
-    val genre: Genre? = null, // TODO: Use Required<T>.
+    @EncodeDefault(EncodeDefault.Mode.NEVER) @Contextual
+    val authors: Required<List<String>> = Required.Missing,
+    @EncodeDefault(EncodeDefault.Mode.NEVER) @Contextual
+    val genre: Required<Genre> = Required.Missing,
   )
 }
