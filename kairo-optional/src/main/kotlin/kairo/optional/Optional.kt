@@ -31,3 +31,10 @@ public fun <T : Any> Optional<T>.ifSpecified(block: (T?) -> Unit) {
     is Optional.Value -> block(value)
   }
 }
+
+public fun <T : Any> Optional<T>.getOrThrow(): T? =
+  when (this) {
+    is Optional.Missing -> error("Optional value is missing.")
+    is Optional.Null -> null
+    is Optional.Value -> value
+  }
