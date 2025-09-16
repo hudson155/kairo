@@ -4,12 +4,28 @@ package kairo.optional
  * Kairo Optionals can be used to differentiate between missing and null values.
  * This comes in especially handy for RFC 7396 (JSON Merge Patch).
  */
-public sealed interface Optional<out T : Any> {
-  public data object Missing : Optional<Nothing>
+public sealed class Optional<out T : Any> : OptionalBase<T>() {
+  public data object Missing : Optional<Nothing>() {
+    override val isSpecified: Boolean = false
 
-  public data object Null : Optional<Nothing>
+    override fun getOrThrow(): Nothing {
+      error("Optional value is missing.")
+    }
+  }
 
-  public data class Value<T : Any>(val value: T) : Optional<T>
+  public data object Null : Optional<Nothing>() {
+    override val isSpecified: Boolean = true
+
+    override fun getOrThrow(): Nothing? =
+      null
+  }
+
+  public data class Value<T : Any>(val value: T) : Optional<T>() {
+    override val isSpecified: Boolean = true
+
+    override fun getOrThrow(): T =
+      value
+  }
 
   public companion object {
     public fun <T : Any> fromNullable(value: T?): Optional<T> =
@@ -17,24 +33,7 @@ public sealed interface Optional<out T : Any> {
   }
 }
 
-public val Optional<*>.isSpecified: Boolean
-  get() = when (this) {
-    is Optional.Missing -> false
-    is Optional.Null -> true
-    is Optional.Value -> true
-  }
-
 public fun <T : Any> Optional<T>.ifSpecified(block: (T?) -> Unit) {
-  when (this) {
-    is Optional.Missing -> Unit
-    is Optional.Null -> block(null)
-    is Optional.Value -> block(value)
-  }
+  if (!isSpecified) return
+  block(getOrThrow())
 }
-
-public fun <T : Any> Optional<T>.getOrThrow(): T? =
-  when (this) {
-    is Optional.Missing -> error("Optional value is missing.")
-    is Optional.Null -> null
-    is Optional.Value -> value
-  }
