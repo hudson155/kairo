@@ -20,7 +20,7 @@ public val Required<*>.isSpecified: Boolean
     is Required.Value -> true
   }
 
-public inline fun <T : Any> Required<T>.ifSpecified(crossinline block: (T?) -> Unit) {
+public inline fun <T : Any> Required<T>.ifSpecified(crossinline block: (T) -> Unit) {
   when (this) {
     is Required.Missing -> Unit
     is Required.Value -> block(value)
