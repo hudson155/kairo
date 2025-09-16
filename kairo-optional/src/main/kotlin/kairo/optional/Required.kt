@@ -13,3 +13,16 @@ public sealed interface Required<out T : Any> {
       Value(value)
   }
 }
+
+public val Required<*>.isSpecified: Boolean
+  get() = when (this) {
+    is Required.Missing -> false
+    is Required.Value -> true
+  }
+
+public inline fun <T : Any> Required<T>.ifSpecified(crossinline block: (T?) -> Unit) {
+  when (this) {
+    is Required.Missing -> Unit
+    is Required.Value -> block(value)
+  }
+}
