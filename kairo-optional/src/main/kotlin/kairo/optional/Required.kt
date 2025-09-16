@@ -26,3 +26,9 @@ public inline fun <T : Any> Required<T>.ifSpecified(crossinline block: (T) -> Un
     is Required.Value -> block(value)
   }
 }
+
+public fun <T : Any> Required<T>.getOrThrow(): T =
+  when (this) {
+    is Required.Missing -> error("Required value is missing.")
+    is Required.Value -> value
+  }
