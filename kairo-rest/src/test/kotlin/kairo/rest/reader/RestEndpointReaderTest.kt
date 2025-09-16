@@ -12,6 +12,7 @@ import kairo.libraryBook.LibraryBookApi
 import kairo.libraryBook.LibraryBookId
 import kairo.libraryBook.LibraryBookRep
 import kairo.optional.Optional
+import kairo.optional.Required
 import kairo.serialization.kairo
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.SerializationException
@@ -258,9 +259,9 @@ internal class RestEndpointReaderTest {
         coEvery {
           receiveNullable<LibraryBookRep.Update>(any())
         } returns LibraryBookRep.Update(
-          title = Optional.Value("The Meaning of Marriage"),
-          authors = listOf("Timothy Keller", "Kathy Keller"),
-          genre = LibraryBookRep.Genre.Religion,
+          title = Optional.fromNullable("The Meaning of Marriage"),
+          authors = Required.of(listOf("Timothy Keller", "Kathy Keller")),
+          genre = Required.of(LibraryBookRep.Genre.Religion),
         )
       }
       shouldThrow<SerializationException> {
@@ -280,8 +281,8 @@ internal class RestEndpointReaderTest {
           receiveNullable<LibraryBookRep.Update>(any())
         } returns LibraryBookRep.Update(
           title = Optional.Value("The Meaning of Marriage"),
-          authors = listOf("Timothy Keller", "Kathy Keller"),
-          genre = LibraryBookRep.Genre.Religion,
+          authors = Required.of(listOf("Timothy Keller", "Kathy Keller")),
+          genre = Required.of(LibraryBookRep.Genre.Religion),
         )
       }
       shouldThrow<IllegalArgumentException> {
@@ -341,13 +342,13 @@ internal class RestEndpointReaderTest {
         }
         coEvery {
           receiveNullable<LibraryBookRep.Update>(any())
-        } returns LibraryBookRep.Update(authors = emptyList())
+        } returns LibraryBookRep.Update(authors = Required.of(emptyList()))
       }
       reader.read(call)
         .shouldBe(
           LibraryBookApi.Update(
             libraryBookId = LibraryBookId("library_book_2eDS1sMt"),
-            body = LibraryBookRep.Update(authors = emptyList()),
+            body = LibraryBookRep.Update(authors = Required.of(emptyList())),
           ),
         )
     }
@@ -364,8 +365,8 @@ internal class RestEndpointReaderTest {
           receiveNullable<LibraryBookRep.Update>(any())
         } returns LibraryBookRep.Update(
           title = Optional.Value("The Meaning of Marriage"),
-          authors = listOf("Timothy Keller", "Kathy Keller"),
-          genre = LibraryBookRep.Genre.Religion,
+          authors = Required.of(listOf("Timothy Keller", "Kathy Keller")),
+          genre = Required.of(LibraryBookRep.Genre.Religion),
         )
       }
       reader.read(call)
@@ -374,8 +375,8 @@ internal class RestEndpointReaderTest {
             libraryBookId = LibraryBookId("library_book_2eDS1sMt"),
             body = LibraryBookRep.Update(
               title = Optional.Value("The Meaning of Marriage"),
-              authors = listOf("Timothy Keller", "Kathy Keller"),
-              genre = LibraryBookRep.Genre.Religion,
+              authors = Required.of(listOf("Timothy Keller", "Kathy Keller")),
+              genre = Required.of(LibraryBookRep.Genre.Religion),
             ),
           ),
         )
