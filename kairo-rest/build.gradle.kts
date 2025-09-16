@@ -12,6 +12,7 @@ kotlin {
 
 dependencies {
   implementation(project(":kairo-logging"))
+  api(project(":kairo-optional"))
   implementation(project(":kairo-reflect"))
   implementation(project(":kairo-serialization"))
 

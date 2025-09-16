@@ -1,6 +1,10 @@
 package kairo.libraryBook
 
+import kairo.optional.Optional
+import kairo.optional.Required
 import kotlin.time.Instant
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -30,10 +34,12 @@ internal data class LibraryBookRep(
   )
 
   @Serializable
-  // TODO: Support partial updates.
   internal data class Update(
-    val title: String?,
-    val authors: List<String>,
-    val genre: Genre,
+    @EncodeDefault(EncodeDefault.Mode.NEVER) @Contextual
+    val title: Optional<String> = Optional.Missing,
+    @EncodeDefault(EncodeDefault.Mode.NEVER) @Contextual
+    val authors: Required<List<String>> = Required.Missing,
+    @EncodeDefault(EncodeDefault.Mode.NEVER) @Contextual
+    val genre: Required<Genre> = Required.Missing,
   )
 }
