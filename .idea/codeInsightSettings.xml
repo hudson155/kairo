@@ -38,7 +38,7 @@
       <name>kotlinx.coroutines.time.*</name>
       <name>kotlinx.datetime.Clock</name>
       <name>kotlinx.serialization.Required</name>
-      <name>net.bytebuddy</name>
+      <name>net.bytebuddy.*</name>
       <name>org.apache.logging.log4j.core.jmx.*</name>
       <name>org.intellij.lang.annotations.Flow</name>
       <name>org.jetbrains.exposed.v1.core.SqlExpressionBuilder</name>

@@ -677,7 +677,7 @@ style:
       - 'kotlinx.coroutines.time.*'
       - 'kotlinx.datetime.Clock'
       - 'kotlinx.serialization.Required'
-      - 'net.bytebuddy'
+      - 'net.bytebuddy.*'
       - 'org.apache.logging.log4j.core.jmx.*'
       - 'org.intellij.lang.annotations.Flow'
       - 'org.jetbrains.exposed.v1.core.SqlExpressionBuilder'
