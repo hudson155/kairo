@@ -10,5 +10,7 @@ kotlin {
 }
 
 dependencies {
+  compileOnly(libs.guava)
+
   testImplementation(project(":kairo-testing"))
 }

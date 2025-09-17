@@ -6,17 +6,17 @@ plugins {
 
 kotlin {
   compilerOptions {
-    freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi")
+    freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi") // MetaSerializable.
   }
 }
 
 dependencies {
   implementation(project(":kairo-logging"))
-  api(project(":kairo-optional"))
+  api(project(":kairo-optional")) // Available for usage in reps.
   implementation(project(":kairo-reflect"))
   implementation(project(":kairo-serialization"))
 
-  api(libs.ktorServer.core)
+  api(libs.ktorServer.core) // Available for usage.
   implementation(libs.serialization.json)
 
   testImplementation(project(":kairo-id"))
