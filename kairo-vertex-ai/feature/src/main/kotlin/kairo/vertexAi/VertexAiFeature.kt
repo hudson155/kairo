@@ -33,3 +33,10 @@ public class VertexAiFeature(
 
   public companion object
 }
+
+/**
+ * TODO: Introduce integration testing support for this.
+ *  There could be 2 options:
+ *  1. Mocks and/or no-op.
+ *  2. Really hit genai backend.
+ */
