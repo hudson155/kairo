@@ -260,6 +260,10 @@ No changes.
 - The UUID Feature has been removed.
   Use Kotlin's `Uuid` class directly instead.
 
+#### Vertex AI
+
+TODO: Coming soon!
+
 #### Removed libraries
 
 - **Alternative Money Formatters**
