@@ -30,6 +30,15 @@ returns the first recursive cause of the specified type, or null if there is no 
 e.firstCauseOf<MyExceptionType>()
 ```
 
+### `resource()`
+
+Leverages Guava to fetch a given resource URL.
+
+```kotlin
+val resource = resource("...")
+println(resource)
+```
+
 ### `singleNullOrThrow()`
 
 Kotlin's `single()` and `singleOrNull()` functions are excellent utilities,
