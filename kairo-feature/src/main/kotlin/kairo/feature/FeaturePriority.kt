@@ -2,6 +2,8 @@ package kairo.feature
 
 /**
  * Some common priorities are defined here, but feel free to also create your own.
+ * During [LifecycleHandler.start], lower priorities run first.
+ * During [LifecycleHandler.stop], higher priorities run first.
  */
 public object FeaturePriority {
   public const val dependencyInjection: Int = -100_000_000
