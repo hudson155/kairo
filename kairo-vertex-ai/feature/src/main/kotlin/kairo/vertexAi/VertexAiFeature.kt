@@ -1,15 +1,23 @@
 package kairo.vertexAi
 
 import com.google.genai.Client
+import kairo.dependencyInjection.KoinModule
 import kairo.feature.Feature
+import org.koin.core.module.Module
+import org.koin.dsl.module
 
 public class VertexAiFeature(
   private val config: VertexAiFeatureConfig,
   private val block: Client.Builder.() -> Unit = {},
-) : Feature() {
+) : Feature(), KoinModule {
   override val name: String = "Vertex AI"
 
   private var client: Client? = null
+
+  override val koinModule: Module =
+    module {
+      factory<Client> { checkNotNull(client) }
+    }
 
   override suspend fun start(features: List<Feature>) {
     val client = VertexAiClientFactory.create(config, block)
