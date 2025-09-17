@@ -4,10 +4,10 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-integration-testing"))
+  implementation(project(":kairo-integration-testing")) // Forced peer dependency.
   implementation(project(":kairo-sql:feature"))
   implementation(project(":kairo-sql:postgres"))
-  implementation(project(":kairo-testing"))
+  implementation(project(":kairo-testing")) // Forced peer dependency.
 
   implementation(libs.testcontainers.postgres)
 }

@@ -4,9 +4,9 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-exception"))
+  implementation(project(":kairo-exception")) // Forced peer dependency.
   implementation(project(":kairo-sql"))
   implementation(project(":kairo-util"))
 
-  implementation(libs.postgres.jdbc)
+  compileOnly(libs.postgres.jdbc)
 }

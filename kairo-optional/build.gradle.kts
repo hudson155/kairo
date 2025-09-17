@@ -6,7 +6,7 @@ plugins {
 
 kotlin {
   compilerOptions {
-    freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi")
+    freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi") // OptionalSerializer.
   }
 }
 

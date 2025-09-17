@@ -5,7 +5,7 @@ plugins {
 
 kotlin {
   compilerOptions {
-    freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi")
+    freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi") // JsonBuilder.
   }
 }
 
@@ -13,5 +13,5 @@ dependencies {
   implementation(project(":kairo-optional"))
 
   api(libs.serialization.core)
-  implementation(libs.serialization.json)
+  compileOnly(libs.serialization.json)
 }
