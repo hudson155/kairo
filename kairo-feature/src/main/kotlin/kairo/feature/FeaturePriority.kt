@@ -1,5 +1,8 @@
 package kairo.feature
 
+/**
+ * Some common priorities are defined here, but feel free to also create your own.
+ */
 public object FeaturePriority {
   public const val dependencyInjection: Int = -100_000_000
 
