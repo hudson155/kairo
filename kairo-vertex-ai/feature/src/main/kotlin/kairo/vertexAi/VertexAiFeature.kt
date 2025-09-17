@@ -22,16 +22,19 @@ public class VertexAiFeature(
       factory<Client> { checkNotNull(client) }
     }
 
-  override suspend fun start(features: List<Feature>) {
-    val client = VertexAiClientFactory.create(config, block)
-    this.client = client
-  }
-
-  override suspend fun stop(features: List<Feature>) {
-    this.client?.let { client ->
-      client.close()
-      this.client = null
-    }
+  init {
+    lifecycle(
+      start = { _ ->
+        val client = VertexAiClientFactory.create(config, block)
+        this.client = client
+      },
+      stop = { _ ->
+        this.client?.let { client ->
+          client.close()
+          this.client = null
+        }
+      },
+    )
   }
 
   public companion object

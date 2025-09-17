@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kairo.dependencyInjection.KoinModule
 import kairo.feature.Feature
+import kairo.feature.FeaturePriority
 import kairo.protectedString.ProtectedString
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.jdbc.Database
@@ -41,8 +42,11 @@ public class SqlFeature(
       single<Database> { database }
     }
 
-  override suspend fun stop(features: List<Feature>) {
-    hikari.close()
+  init {
+    lifecycle(
+      priority = FeaturePriority.database,
+      stop = { hikari.close() },
+    )
   }
 
   public companion object {

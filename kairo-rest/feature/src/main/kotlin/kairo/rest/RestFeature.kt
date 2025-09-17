@@ -3,6 +3,7 @@ package kairo.rest
 import io.ktor.server.application.Application
 import io.ktor.server.application.ServerReady
 import kairo.feature.Feature
+import kairo.feature.FeaturePriority
 import kotlinx.coroutines.CompletableDeferred
 
 /**
@@ -17,27 +18,31 @@ public class RestFeature(
 
   private var ktorServer: KtorServer? = null
 
-  override suspend fun start(features: List<Feature>) {
-    val ktorServer = KtorServerFactory.create(
-      config = config,
-      features = features,
-      ktorConfiguration = ktorConfiguration,
-      ktorModule = ktorModule,
+  init {
+    lifecycle(
+      priority = FeaturePriority.rest,
+      start = { features ->
+        val ktorServer = KtorServerFactory.create(
+          config = config,
+          features = features,
+          ktorConfiguration = ktorConfiguration,
+          ktorModule = ktorModule,
+        )
+        this.ktorServer = ktorServer
+        val ready = CompletableDeferred<Unit>()
+        ktorServer.monitor.subscribe(ServerReady) {
+          ready.complete(Unit)
+        }
+        ktorServer.startSuspend()
+        ready.await()
+      },
+      stop = { _ ->
+        this.ktorServer?.let { ktorServer ->
+          ktorServer.stopSuspend()
+          this.ktorServer = null
+        }
+      },
     )
-    this.ktorServer = ktorServer
-    val ready = CompletableDeferred<Unit>()
-    ktorServer.monitor.subscribe(ServerReady) {
-      ready.complete(Unit)
-    }
-    ktorServer.startSuspend()
-    ready.await()
-  }
-
-  override suspend fun stop(features: List<Feature>) {
-    this.ktorServer?.let { ktorServer ->
-      ktorServer.stopSuspend()
-      this.ktorServer = null
-    }
   }
 
   public companion object

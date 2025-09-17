@@ -86,28 +86,31 @@ public class Server(
    * If any Feature fails to start, all [Feature.start] calls are canceled and this method throws.
    */
   private suspend fun onStart() {
-    features.forEach { feature ->
-      feature.beforeStart(features)
-    }
-    coroutineScope {
-      val jobs = features.map { feature ->
-        launch {
-          logger.info { "Starting Feature (server=${this@Server}, feature=$feature)." }
-          val time = measureTime {
-            try {
-              feature.start(features)
-            } catch (e: Throwable) {
-              logger.warn(e) { "Feature failed to start (server=${this@Server}, feature=$feature)." }
-              throw e
+    val stages =
+      features
+        .flatMap { feature -> feature.lifecycle.handlers.map { Pair(feature, it) } }
+        .groupBy { it.second.priority }
+        .entries
+        .sortedBy { it.key }
+    stages.forEach { (priority, handlers) ->
+      logger.info { "Starting Features (priority=$priority, handlers=${handlers.size})." }
+      coroutineScope {
+        val jobs = handlers.map { (feature, handler) ->
+          launch {
+            logger.info { "Starting Feature (server=${this@Server}, feature=$feature)." }
+            val time = measureTime {
+              try {
+                handler.start(features)
+              } catch (e: Throwable) {
+                logger.warn(e) { "Feature failed to start (server=${this@Server}, feature=$feature)." }
+                throw e
+              }
             }
+            logger.info { "Feature started (server=${this@Server}, feature=$feature, time=$time)." }
           }
-          logger.info { "Feature started (server=${this@Server}, feature=$feature, time=$time)." }
         }
+        jobs.joinAll()
       }
-      jobs.joinAll()
-    }
-    features.forEach { feature ->
-      feature.afterStart(features)
     }
   }
 
@@ -116,34 +119,29 @@ public class Server(
    * If any Feature fails to stop, remaining [Feature.stop] calls are allowed to complete. This method does not throw.
    */
   private suspend fun onStop() {
-    features.forEach { feature ->
-      try {
-        feature.beforeStop(features)
-      } catch (e: Throwable) {
-        logger.warn(e) { "Feature failed beforeStop (server=${this@Server}, feature=$feature)." }
-      }
-    }
-    supervisorScope {
-      val jobs = features.map { feature ->
-        launch {
-          logger.info { "Stopping Feature (server=${this@Server}, feature=$feature)." }
-          val time = measureTime {
-            try {
-              feature.stop(features)
-            } catch (e: Throwable) {
-              logger.error(e) { "Feature failed to stop (server=${this@Server}, feature=$feature)." }
+    val stages =
+      features
+        .flatMap { feature -> feature.lifecycle.handlers.map { Pair(feature, it) } }
+        .groupBy { it.second.priority }
+        .entries
+        .sortedByDescending { it.key }
+    stages.forEach { (priority, handlers) ->
+      logger.info { "Stopping Features (priority=$priority, handlers=${handlers.size})." }
+      supervisorScope {
+        val jobs = handlers.map { (feature, handler) ->
+          launch {
+            logger.info { "Stopping Feature (server=${this@Server}, feature=$feature)." }
+            val time = measureTime {
+              try {
+                handler.stop(features)
+              } catch (e: Throwable) {
+                logger.error(e) { "Feature failed to stop (server=${this@Server}, feature=$feature)." }
+              }
             }
+            logger.info { "Feature stopped (server=${this@Server}, feature=$feature, time=$time)." }
           }
-          logger.info { "Feature stopped (server=${this@Server}, feature=$feature, time=$time)." }
         }
-      }
-      jobs.joinAll()
-    }
-    features.forEach { feature ->
-      try {
-        feature.afterStop(features)
-      } catch (e: Throwable) {
-        logger.warn(e) { "Feature failed afterStop (server=${this@Server}, feature=$feature)." }
+        jobs.joinAll()
       }
     }
   }

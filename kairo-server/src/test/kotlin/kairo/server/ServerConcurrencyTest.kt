@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test
  * Starts a server with 1000 parallel Features,
  * ensuring that everything happens in the right order.
  */
+@Suppress("LongMethod")
 internal class ServerConcurrencyTest {
   @Test
   fun test(): Unit =
@@ -23,18 +24,21 @@ internal class ServerConcurrencyTest {
         object : Feature() {
           override val name: String = "Test ($i)"
 
-          override suspend fun start(features: List<Feature>) {
-            events.update { it + "start first" }
-            barrier.await()
-            events.update { it + "start second" }
-            barrier.await()
-          }
-
-          override suspend fun stop(features: List<Feature>) {
-            events.update { it + "stop first" }
-            barrier.await()
-            events.update { it + "stop second" }
-            barrier.await()
+          init {
+            lifecycle(
+              start = { _ ->
+                events.update { it + "start first" }
+                barrier.await()
+                events.update { it + "start second" }
+                barrier.await()
+              },
+              stop = { _ ->
+                events.update { it + "stop first" }
+                barrier.await()
+                events.update { it + "stop second" }
+                barrier.await()
+              },
+            )
           }
         }
       }

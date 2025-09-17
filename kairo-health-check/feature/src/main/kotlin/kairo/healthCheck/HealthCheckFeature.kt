@@ -2,6 +2,7 @@ package kairo.healthCheck
 
 import io.ktor.server.application.Application
 import kairo.feature.Feature
+import kairo.feature.FeaturePriority
 import kairo.rest.HasRouting
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.time.Duration
@@ -33,12 +34,12 @@ public class HealthCheckFeature(
       timeout = timeout,
     )
 
-  override fun afterStart(features: List<Feature>) {
-    serverIsRunning.store(true)
-  }
-
-  override fun beforeStop(features: List<Feature>) {
-    serverIsRunning.store(false)
+  init {
+    lifecycle(
+      priority = FeaturePriority.healthCheck,
+      start = { serverIsRunning.store(true) },
+      stop = { serverIsRunning.store(false) },
+    )
   }
 
   override fun Application.routing() {

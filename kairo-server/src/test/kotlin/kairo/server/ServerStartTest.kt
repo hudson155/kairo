@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
+@Suppress("LongMethod")
 internal class ServerStartTest {
   @Test
   fun `happy path`(): Unit =
@@ -47,31 +48,37 @@ internal class ServerStartTest {
         object : Feature() {
           override val name: String = "Test (0)"
 
-          override suspend fun start(features: List<Feature>) {
-            events.update { it + "start Test (0)" }
-            try {
-              @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
-              throw RuntimeException("Exception from Test (1)")
-            } finally {
-              signal.complete(Unit)
-            }
-          }
-
-          override suspend fun stop(features: List<Feature>) {
-            events.update { it + "stop Test (0)" }
+          init {
+            lifecycle(
+              start = { _ ->
+                events.update { it + "start Test (0)" }
+                try {
+                  @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
+                  throw RuntimeException("Exception from Test (1)")
+                } finally {
+                  signal.complete(Unit)
+                }
+              },
+              stop = { _ ->
+                events.update { it + "stop Test (0)" }
+              },
+            )
           }
         },
         object : Feature() {
           override val name: String = "Test (1)"
 
-          override suspend fun start(features: List<Feature>) {
-            signal.await()
-            delay(1.seconds)
-            events.update { it + "start Test (1)" }
-          }
-
-          override suspend fun stop(features: List<Feature>) {
-            events.update { it + "stop Test (1)" }
+          init {
+            lifecycle(
+              start = { _ ->
+                signal.await()
+                delay(1.seconds)
+                events.update { it + "start Test (1)" }
+              },
+              stop = { _ ->
+                events.update { it + "stop Test (1)" }
+              },
+            )
           }
         },
       )
@@ -105,27 +112,33 @@ internal class ServerStartTest {
         object : Feature() {
           override val name: String = "Test (0)"
 
-          override suspend fun start(features: List<Feature>) {
-            events.update { it + "start Test (0)" }
-            signal.complete(Unit)
-          }
-
-          override suspend fun stop(features: List<Feature>) {
-            events.update { it + "stop Test (0)" }
+          init {
+            lifecycle(
+              start = { _ ->
+                events.update { it + "start Test (0)" }
+                signal.complete(Unit)
+              },
+              stop = { _ ->
+                events.update { it + "stop Test (0)" }
+              },
+            )
           }
         },
         object : Feature() {
           override val name: String = "Test (1)"
 
-          override suspend fun start(features: List<Feature>) {
-            signal.await()
-            events.update { it + "start Test (1)" }
-            @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
-            throw RuntimeException("Exception from Test (1)")
-          }
-
-          override suspend fun stop(features: List<Feature>) {
-            events.update { it + "stop Test (1)" }
+          init {
+            lifecycle(
+              start = { _ ->
+                signal.await()
+                events.update { it + "start Test (1)" }
+                @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
+                throw RuntimeException("Exception from Test (1)")
+              },
+              stop = { _ ->
+                events.update { it + "stop Test (1)" }
+              },
+            )
           }
         },
       )

@@ -1,6 +1,7 @@
 package kairo.dependencyInjection
 
 import kairo.feature.Feature
+import kairo.feature.FeaturePriority
 import org.koin.core.KoinApplication
 
 /**
@@ -12,11 +13,16 @@ public class DependencyInjectionFeature(
 ) : Feature() {
   override val name: String = "Dependency Injection"
 
-  override fun beforeStart(features: List<Feature>) {
-    features.forEach { feature ->
-      if (feature !is KoinModule) return@forEach
-      application.modules(feature.koinModule)
-    }
+  init {
+    lifecycle(
+      priority = FeaturePriority.dependencyInjection,
+      start = { features ->
+        features.forEach { feature ->
+          if (feature !is KoinModule) return@forEach
+          application.modules(feature.koinModule)
+        }
+      },
+    )
   }
 
   public companion object
