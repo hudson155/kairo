@@ -1,5 +1,6 @@
 [versions]
 
+genai = "1.16.0" # https://github.com/googleapis/java-genai/releases
 hikari = "7.0.2" # https://github.com/brettwooldridge/HikariCP/tags
 hocon = "1.4.5" # https://github.com/lightbend/config/releases
 kotest = "6.0.3" # https://github.com/kotest/kotest/releases
@@ -21,6 +22,8 @@ exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc" }
 exposed-json = { module = "org.jetbrains.exposed:exposed-json" }
 exposed-kotlinDatetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime" }
 exposed-money = { module = "org.jetbrains.exposed:exposed-money" }
+
+genai = { module = "com.google.genai:google-genai", version.ref = "genai" }
 
 gcp-secretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
 
