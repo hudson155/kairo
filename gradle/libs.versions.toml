@@ -30,6 +30,7 @@ hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
 
 hocon = { module = "com.typesafe:config", version.ref = "hocon" }
 
+koin-annotations = { module = "io.insert-koin:koin-annotations" }
 koin-core = { module = "io.insert-koin:koin-core" }
 
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }

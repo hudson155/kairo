@@ -4,5 +4,6 @@ plugins {
 }
 
 dependencies {
+  api(libs.koin.annotations)
   api(libs.koin.core)
 }
