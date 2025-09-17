@@ -6,6 +6,9 @@ import kairo.feature.Feature
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
+/**
+ * The Vertex AI Feature provides access to Google Generative AI through Vertex AI.
+ */
 public class VertexAiFeature(
   private val config: VertexAiFeatureConfig,
   private val block: Client.Builder.() -> Unit = {},
