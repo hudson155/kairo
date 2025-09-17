@@ -3,6 +3,7 @@
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
       <name>com.apple.eawt.*</name>
+      <name>com.google.api.client.*</name>
       <name>com.google.cloud.secretmanager.v1beta1.*</name>
       <name>com.google.cloud.secretmanager.v1beta2.*</name>
       <name>com.google.common.collect.Table</name>
@@ -12,6 +13,7 @@
       <name>com.typesafe.config.Optional</name>
       <name>io.kotest.core.spec.*</name>
       <name>io.kotest.core.test.TestScope</name>
+      <name>io.ktor.http.ContentType.Application.Json</name>
       <name>io.netty.util.AttributeKey</name>
       <name>java.awt.*</name>
       <name>java.beans.*</name>
@@ -29,7 +31,9 @@
       <name>java.util.jar.*</name>
       <name>java.util.logging.LogManager</name>
       <name>java.xml.*</name>
+      <name>javax.annotation.Resources</name>
       <name>javax.naming.*</name>
+      <name>javax.swing.*</name>
       <name>javax.xml.*</name>
       <name>jdk.internal.*</name>
       <name>jdk.javadoc.*</name>
@@ -39,6 +43,8 @@
       <name>kotlinx.datetime.Clock</name>
       <name>kotlinx.serialization.Required</name>
       <name>net.bytebuddy.*</name>
+      <name>okhttp3.*</name>
+      <name>org.apache.http.*</name>
       <name>org.apache.logging.log4j.core.jmx.*</name>
       <name>org.intellij.lang.annotations.Flow</name>
       <name>org.jetbrains.exposed.v1.core.SqlExpressionBuilder</name>
@@ -56,6 +62,7 @@
       <name>sun.nio.*</name>
       <name>sun.rmi.*</name>
       <name>sun.security.*</name>
+      <name>sun.tools.*</name>
     </excluded-names>
   </component>
 </project>

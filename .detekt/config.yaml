@@ -642,6 +642,7 @@ style:
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
       - 'com.apple.eawt.*'
+      - 'com.google.api.client.*'
       - 'com.google.cloud.secretmanager.v1beta1.*'
       - 'com.google.cloud.secretmanager.v1beta2.*'
       - 'com.google.common.collect.Table'
@@ -651,6 +652,7 @@ style:
       - 'com.typesafe.config.Optional'
       - 'io.kotest.core.spec.*'
       - 'io.kotest.core.test.TestScope'
+      - 'io.ktor.http.ContentType.Application.Json'
       - 'io.netty.util.AttributeKey'
       - 'java.awt.*'
       - 'java.beans.*'
@@ -668,7 +670,9 @@ style:
       - 'java.util.jar.*'
       - 'java.util.logging.LogManager'
       - 'java.xml.*'
+      - 'javax.annotation.Resources'
       - 'javax.naming.*'
+      - 'javax.swing.*'
       - 'javax.xml.*'
       - 'jdk.internal.*'
       - 'jdk.javadoc.*'
@@ -678,6 +682,8 @@ style:
       - 'kotlinx.datetime.Clock'
       - 'kotlinx.serialization.Required'
       - 'net.bytebuddy.*'
+      - 'okhttp3.*'
+      - 'org.apache.http.*'
       - 'org.apache.logging.log4j.core.jmx.*'
       - 'org.intellij.lang.annotations.Flow'
       - 'org.jetbrains.exposed.v1.core.SqlExpressionBuilder'
@@ -695,6 +701,7 @@ style:
       - 'sun.nio.*'
       - 'sun.rmi.*'
       - 'sun.security.*'
+      - 'sun.tools.*'
   ForbiddenMethodCall:
     active: true
     methods:
