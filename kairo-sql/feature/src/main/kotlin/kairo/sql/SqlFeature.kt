@@ -5,6 +5,8 @@ import com.zaxxer.hikari.HikariDataSource
 import kairo.dependencyInjection.KoinModule
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
+import kairo.feature.LifecycleHandler
+import kairo.feature.lifecycle
 import kairo.protectedString.ProtectedString
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.jdbc.Database
@@ -42,12 +44,12 @@ public class SqlFeature(
       single<Database> { database }
     }
 
-  init {
-    lifecycle(
-      priority = FeaturePriority.database,
-      stop = { hikari.close() },
-    )
-  }
+  override val lifecycle: List<LifecycleHandler> =
+    lifecycle {
+      handler(FeaturePriority.database) {
+        stop { hikari.close() }
+      }
+    }
 
   public companion object {
     public fun healthCheck(@Suppress("unused") hikari: HikariDataSource): Unit =

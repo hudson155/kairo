@@ -6,6 +6,8 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import kairo.feature.Feature
+import kairo.feature.LifecycleHandler
+import kairo.feature.lifecycle
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
@@ -48,38 +50,40 @@ internal class ServerStartTest {
         object : Feature() {
           override val name: String = "Test (0)"
 
-          init {
-            lifecycle(
-              start = { _ ->
-                events.update { it + "start Test (0)" }
-                try {
-                  @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
-                  throw RuntimeException("Exception from Test (1)")
-                } finally {
-                  signal.complete(Unit)
+          override val lifecycle: List<LifecycleHandler> =
+            lifecycle {
+              handler {
+                start { _ ->
+                  events.update { it + "start Test (0)" }
+                  try {
+                    @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
+                    throw RuntimeException("Exception from Test (1)")
+                  } finally {
+                    signal.complete(Unit)
+                  }
                 }
-              },
-              stop = { _ ->
-                events.update { it + "stop Test (0)" }
-              },
-            )
-          }
+                stop { _ ->
+                  events.update { it + "stop Test (0)" }
+                }
+              }
+            }
         },
         object : Feature() {
           override val name: String = "Test (1)"
 
-          init {
-            lifecycle(
-              start = { _ ->
-                signal.await()
-                delay(1.seconds)
-                events.update { it + "start Test (1)" }
-              },
-              stop = { _ ->
-                events.update { it + "stop Test (1)" }
-              },
-            )
-          }
+          override val lifecycle: List<LifecycleHandler> =
+            lifecycle {
+              handler {
+                start { _ ->
+                  signal.await()
+                  delay(1.seconds)
+                  events.update { it + "start Test (1)" }
+                }
+                stop { _ ->
+                  events.update { it + "stop Test (1)" }
+                }
+              }
+            }
         },
       )
       val server = Server(
@@ -112,34 +116,36 @@ internal class ServerStartTest {
         object : Feature() {
           override val name: String = "Test (0)"
 
-          init {
-            lifecycle(
-              start = { _ ->
-                events.update { it + "start Test (0)" }
-                signal.complete(Unit)
-              },
-              stop = { _ ->
-                events.update { it + "stop Test (0)" }
-              },
-            )
-          }
+          override val lifecycle: List<LifecycleHandler> =
+            lifecycle {
+              handler {
+                start { _ ->
+                  events.update { it + "start Test (0)" }
+                  signal.complete(Unit)
+                }
+                stop { _ ->
+                  events.update { it + "stop Test (0)" }
+                }
+              }
+            }
         },
         object : Feature() {
           override val name: String = "Test (1)"
 
-          init {
-            lifecycle(
-              start = { _ ->
-                signal.await()
-                events.update { it + "start Test (1)" }
-                @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
-                throw RuntimeException("Exception from Test (1)")
-              },
-              stop = { _ ->
-                events.update { it + "stop Test (1)" }
-              },
-            )
-          }
+          override val lifecycle: List<LifecycleHandler> =
+            lifecycle {
+              handler {
+                start { _ ->
+                  signal.await()
+                  events.update { it + "start Test (1)" }
+                  @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
+                  throw RuntimeException("Exception from Test (1)")
+                }
+                stop { _ ->
+                  events.update { it + "stop Test (1)" }
+                }
+              }
+            }
         },
       )
       val server = Server(

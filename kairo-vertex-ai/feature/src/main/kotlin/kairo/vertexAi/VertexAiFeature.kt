@@ -3,6 +3,8 @@ package kairo.vertexAi
 import com.google.genai.Client
 import kairo.dependencyInjection.KoinModule
 import kairo.feature.Feature
+import kairo.feature.LifecycleHandler
+import kairo.feature.lifecycle
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -22,20 +24,21 @@ public class VertexAiFeature(
       factory<Client> { checkNotNull(client) }
     }
 
-  init {
-    lifecycle(
-      start = { _ ->
-        val client = VertexAiClientFactory.create(config, block)
-        this.client = client
-      },
-      stop = { _ ->
-        this.client?.let { client ->
-          client.close()
-          this.client = null
+  override val lifecycle: List<LifecycleHandler> =
+    lifecycle {
+      handler {
+        start { _ ->
+          val client = VertexAiClientFactory.create(config, block)
+          this@VertexAiFeature.client = client
         }
-      },
-    )
-  }
+        stop { _ ->
+          this@VertexAiFeature.client?.let { client ->
+            client.close()
+            this@VertexAiFeature.client = null
+          }
+        }
+      }
+    }
 
   public companion object
 }

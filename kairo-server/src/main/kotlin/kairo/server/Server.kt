@@ -3,6 +3,7 @@ package kairo.server
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.feature.Feature
+import kairo.feature.LifecycleHandler
 import kotlin.time.measureTime
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.joinAll
@@ -83,13 +84,14 @@ public class Server(
 
   /**
    * Starts all Features IN PARALLEL.
-   * If any Feature fails to start, all [Feature.start] calls are canceled and this method throws.
+   * If any Feature fails to start, all [LifecycleHandler.start] calls are canceled
+   * and this method throws.
    */
   private suspend fun onStart() {
     val stages =
       features
-        .flatMap { feature -> feature.lifecycle.handlers.map { Pair(feature, it) } }
-        .groupBy { it.second.priority }
+        .flatMap { feature -> feature.lifecycle.map { Pair(feature, it) } }
+        .groupBy(keySelector = { it.second.priority }, valueTransform = { Pair(it.first, it.second) })
         .entries
         .sortedBy { it.key }
     stages.forEach { (priority, handlers) ->
@@ -116,13 +118,14 @@ public class Server(
 
   /**
    * Stops all Features IN PARALLEL.
-   * If any Feature fails to stop, remaining [Feature.stop] calls are allowed to complete. This method does not throw.
+   * If any Feature fails to stop, remaining [LifecycleHandler.stop] calls are allowed to complete.
+   * This method does not throw.
    */
   private suspend fun onStop() {
     val stages =
       features
-        .flatMap { feature -> feature.lifecycle.handlers.map { Pair(feature, it) } }
-        .groupBy { it.second.priority }
+        .flatMap { feature -> feature.lifecycle.map { Pair(feature, it) } }
+        .groupBy(keySelector = { it.second.priority }, valueTransform = { Pair(it.first, it.second) })
         .entries
         .sortedByDescending { it.key }
     stages.forEach { (priority, handlers) ->

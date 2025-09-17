@@ -4,6 +4,8 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.ServerReady
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
+import kairo.feature.LifecycleHandler
+import kairo.feature.lifecycle
 import kotlinx.coroutines.CompletableDeferred
 
 /**
@@ -18,32 +20,32 @@ public class RestFeature(
 
   private var ktorServer: KtorServer? = null
 
-  init {
-    lifecycle(
-      priority = FeaturePriority.rest,
-      start = { features ->
-        val ktorServer = KtorServerFactory.create(
-          config = config,
-          features = features,
-          ktorConfiguration = ktorConfiguration,
-          ktorModule = ktorModule,
-        )
-        this.ktorServer = ktorServer
-        val ready = CompletableDeferred<Unit>()
-        ktorServer.monitor.subscribe(ServerReady) {
-          ready.complete(Unit)
+  override val lifecycle: List<LifecycleHandler> =
+    lifecycle {
+      handler(FeaturePriority.rest) {
+        start { features ->
+          val ktorServer = KtorServerFactory.create(
+            config = config,
+            features = features,
+            ktorConfiguration = ktorConfiguration,
+            ktorModule = ktorModule,
+          )
+          this@RestFeature.ktorServer = ktorServer
+          val ready = CompletableDeferred<Unit>()
+          ktorServer.monitor.subscribe(ServerReady) {
+            ready.complete(Unit)
+          }
+          ktorServer.startSuspend()
+          ready.await()
         }
-        ktorServer.startSuspend()
-        ready.await()
-      },
-      stop = { _ ->
-        this.ktorServer?.let { ktorServer ->
-          ktorServer.stopSuspend()
-          this.ktorServer = null
+        stop { _ ->
+          this@RestFeature.ktorServer?.let { ktorServer ->
+            ktorServer.stopSuspend()
+            this@RestFeature.ktorServer = null
+          }
         }
-      },
-    )
-  }
+      }
+    }
 
   public companion object
 }
