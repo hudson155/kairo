@@ -20,7 +20,7 @@ dependencies {
 
   // gcp
   // https://github.com/googleapis/java-cloud-bom/releases
-  api(platform("com.google.cloud:libraries-bom:26.67.0"))
+  api(platform("com.google.cloud:libraries-bom:26.68.0"))
 
   // guava
   // https://github.com/google/guava/releases
@@ -36,7 +36,7 @@ dependencies {
 
   // ktor
   // https://github.com/ktorio/ktor/releases
-  api(platform("io.ktor:ktor-bom:3.2.3"))
+  api(platform("io.ktor:ktor-bom:3.3.0"))
 
   // log4j
   // https://github.com/apache/logging-log4j2/releases

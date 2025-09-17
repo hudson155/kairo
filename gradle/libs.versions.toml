@@ -1,8 +1,8 @@
 [versions]
 
 hikari = "7.0.2" # https://github.com/brettwooldridge/HikariCP/tags
-hocon = "1.4.4" # https://github.com/lightbend/config/releases
-kotest = "6.0.2" # https://github.com/kotest/kotest/releases
+hocon = "1.4.5" # https://github.com/lightbend/config/releases
+kotest = "6.0.3" # https://github.com/kotest/kotest/releases
 logging = "7.0.13" # https://github.com/oshai/kotlin-logging/releases
 mockk = "1.14.5" # https://github.com/mockk/mockk/releases
 
