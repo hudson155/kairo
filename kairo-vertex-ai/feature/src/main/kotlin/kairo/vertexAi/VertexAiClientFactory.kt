@@ -24,8 +24,8 @@ internal object VertexAiClientFactory {
     block: Client.Builder.() -> Unit,
   ): Client =
     Client.builder().apply {
-      project(config.project)
-      location(config.location)
+      config.project?.let { project(it) }
+      config.location?.let { location(it) }
       vertexAI(true)
       block()
     }.build()

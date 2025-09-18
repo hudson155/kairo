@@ -22,11 +22,7 @@ internal class VertexAiTest {
     val correct: Boolean,
   )
 
-  private val client: Client = run {
-    System.getenv("GCP_PROJECT").let { println("GCP_PROJECT: $it") }
-    System.getenv("GCP_LOCATION").let { println("GCP_LOCATION: $it") }
-    VertexAiClientFactory.fromEnvironment()
-  }
+  private val client: Client = VertexAiClientFactory.fromEnvironment()
 
   @Test
   fun test(): Unit =
