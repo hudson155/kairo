@@ -3,10 +3,12 @@
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
       <name>com.apple.eawt.*</name>
+      <name>com.fasterxml.jackson.*</name>
       <name>com.google.api.client.*</name>
       <name>com.google.cloud.secretmanager.v1beta1.*</name>
       <name>com.google.cloud.secretmanager.v1beta2.*</name>
       <name>com.google.common.collect.Table</name>
+      <name>com.google.gson.*</name>
       <name>com.sun.jdi.*</name>
       <name>com.sun.security.*</name>
       <name>com.sun.tools.javac.*</name>
