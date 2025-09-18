@@ -642,10 +642,12 @@ style:
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
       - 'com.apple.eawt.*'
+      - 'com.fasterxml.jackson.*'
       - 'com.google.api.client.*'
       - 'com.google.cloud.secretmanager.v1beta1.*'
       - 'com.google.cloud.secretmanager.v1beta2.*'
       - 'com.google.common.collect.Table'
+      - 'com.google.gson.*'
       - 'com.sun.jdi.*'
       - 'com.sun.security.*'
       - 'com.sun.tools.javac.*'
