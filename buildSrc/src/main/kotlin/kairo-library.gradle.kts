@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 plugins {
   id("kairo")
   `java-library`
@@ -58,6 +60,7 @@ tasks.test {
     "-Dorg.slf4j.simpleLogger.logFile=System.out",
   )
   testLogging {
+    exceptionFormat = TestExceptionFormat.FULL
     events("passed", "skipped", "failed")
   }
   useJUnitPlatform()
