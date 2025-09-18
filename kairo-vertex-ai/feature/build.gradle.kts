@@ -9,4 +9,9 @@ dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-serialization"))
   api(project(":kairo-vertex-ai"))
+
+  testImplementation(project(":kairo-testing"))
+  testImplementation(project(":kairo-vertex-ai:testing"))
+
+  testImplementation(libs.serialization.json)
 }
