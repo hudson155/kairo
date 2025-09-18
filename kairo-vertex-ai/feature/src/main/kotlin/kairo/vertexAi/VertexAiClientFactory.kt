@@ -1,5 +1,6 @@
 package kairo.vertexAi
 
+import com.google.auth.oauth2.GoogleCredentials
 import com.google.genai.Client
 
 internal object VertexAiClientFactory {
@@ -7,10 +8,15 @@ internal object VertexAiClientFactory {
   fun fromEnvironment(block: Client.Builder.() -> Unit = {}): Client =
     create(
       config = VertexAiFeatureConfig(
-        project = System.getenv("GCP_PROJECT"),
-        location = System.getenv("GCP_LOCATION"),
+        project = requireNotNull(System.getenv("GCP_PROJECT")) { "GCP_PROJECT environment variable not set." },
+        location = requireNotNull(System.getenv("GCP_LOCATION")) { "GCP_LOCATION environment variable not set." },
       ),
-      block = block,
+      block = {
+        System.getenv("GCP_CREDENTIALS")?.let { credentials ->
+          credentials(GoogleCredentials.fromStream(credentials.byteInputStream()))
+        }
+        block()
+      },
     )
 
   fun create(
