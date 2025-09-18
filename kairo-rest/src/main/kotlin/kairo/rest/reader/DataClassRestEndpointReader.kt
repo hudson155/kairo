@@ -60,7 +60,7 @@ internal class DataClassRestEndpointReader<I : Any, E : RestEndpoint<I, *>>(
           json.decodeFromJsonElement(serializer, JsonArray(values?.map { JsonPrimitive(it) }.orEmpty()))
         is PrimitiveKind ->
           json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
-        else -> error("Unsupported kind: ${serializer.descriptor.kind}.")
+        else -> error("Unsupported kind (kind=${serializer.descriptor.kind}).")
       }
     }
 }
