@@ -19,10 +19,6 @@ internal object RestEndpointTemplateMethodParser {
     require(annotations.isNotEmpty()) {
       "${error.endpoint(endpoint)}: Must define ${error.restAnnotation}."
     }
-    val annotation = annotations.singleOrNull()
-    requireNotNull(annotation) {
-      "${error.endpoint(endpoint)}: Cannot define multiple of ${error.restAnnotation}."
-    }
-    return annotation
+    return annotations.single()
   }
 }

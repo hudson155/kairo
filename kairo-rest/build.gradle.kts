@@ -15,6 +15,7 @@ dependencies {
   api(project(":kairo-optional")) // Available for usage in reps.
   implementation(project(":kairo-reflect"))
   implementation(project(":kairo-serialization"))
+  implementation(project(":kairo-util"))
 
   api(libs.ktorServer.core) // Available for usage.
   implementation(libs.serialization.json)
