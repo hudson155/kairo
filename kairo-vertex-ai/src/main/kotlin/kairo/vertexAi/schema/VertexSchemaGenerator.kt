@@ -43,7 +43,7 @@ public object VertexSchemaGenerator {
     }.build()
 
   private fun generateList(descriptor: SerialDescriptor, annotations: List<Annotation>): Schema {
-    check(descriptor.elementsCount == 1) { "List must have exactly one element (descriptor=$descriptor)." }
+    check(descriptor.elementsCount == 1) { "List descriptor must have exactly one element (descriptor=$descriptor)." }
     return Schema.builder().apply {
       type(Type.Known.ARRAY)
       annotation<Vertex.Min>(annotations)?.let { minItems(it.value.toLong()) }
