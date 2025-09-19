@@ -5,12 +5,11 @@ import com.google.genai.Client
 
 internal object VertexAiClientFactory {
   @Suppress("ForbiddenMethodCall")
-  fun fromEnvironment(block: Client.Builder.() -> Unit = {}): Client {
-    System.getenv().entries.joinToString("\n") { "${it.key}=${it.value}" }.let { error(it) }
-    return create(
+  fun fromEnvironment(block: Client.Builder.() -> Unit = {}): Client =
+    create(
       config = VertexAiFeatureConfig(
-        project = System.getenv("GCP_PROJECT"),
-        location = System.getenv("GCP_LOCATION"),
+        project = System.getenv("GCLOUD_PROJECT"),
+        location = System.getenv("GCLOUD_LOCATION"),
       ),
       block = {
         System.getenv("GCP_CREDENTIALS")?.let { credentials ->
@@ -19,7 +18,6 @@ internal object VertexAiClientFactory {
         block()
       },
     )
-  }
 
   fun create(
     config: VertexAiFeatureConfig,
