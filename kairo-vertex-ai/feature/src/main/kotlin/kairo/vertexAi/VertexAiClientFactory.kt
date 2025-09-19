@@ -5,8 +5,12 @@ import com.google.genai.Client
 
 internal object VertexAiClientFactory {
   @Suppress("ForbiddenMethodCall")
-  fun fromEnvironment(block: Client.Builder.() -> Unit = {}): Client =
-    create(
+  fun fromEnvironment(block: Client.Builder.() -> Unit = {}): Client {
+    val env = System.getenv()
+    for (envName in env.keys) {
+      System.out.format("%s=%s%n", envName, env.get(envName))
+    }
+    return create(
       config = VertexAiFeatureConfig(
         project = System.getenv("GCP_PROJECT"),
         location = System.getenv("GCP_LOCATION"),
@@ -18,6 +22,7 @@ internal object VertexAiClientFactory {
         block()
       },
     )
+  }
 
   fun create(
     config: VertexAiFeatureConfig,
