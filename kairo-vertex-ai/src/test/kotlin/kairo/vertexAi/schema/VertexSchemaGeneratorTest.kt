@@ -7,6 +7,8 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.Serializable
 import org.junit.jupiter.api.Test
 
+// todo: support polymorphism (anyOf)
+
 internal class VertexSchemaGeneratorTest {
   internal enum class OperatingSystem { Linux, Mac, Windows }
 
@@ -421,6 +423,7 @@ internal class VertexSchemaGeneratorTest {
       data class TestSchema(
         val child: ChildSchema?,
         val boolean: Boolean?,
+        val enum: OperatingSystem?,
         val integer: Int?,
       )
 
@@ -448,6 +451,11 @@ internal class VertexSchemaGeneratorTest {
                   type(Type.Known.BOOLEAN)
                   nullable(true)
                 }.build(),
+                "enum" to Schema.builder().apply {
+                  type(Type.Known.STRING)
+                  enum_("Linux", "Mac", "Windows")
+                  nullable(true)
+                }.build(),
                 "integer" to Schema.builder().apply {
                   type(Type.Known.INTEGER)
                   format("int32")
@@ -455,7 +463,7 @@ internal class VertexSchemaGeneratorTest {
                 }.build(),
               ),
             )
-            required("child", "boolean", "integer")
+            required("child", "boolean", "enum", "integer")
           }.build(),
         )
     }
