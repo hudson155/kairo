@@ -1,6 +1,7 @@
 package kairo.vertexAi.schema
 
 import com.google.genai.Client
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
@@ -71,7 +72,7 @@ internal class StructuredOutputEval {
     }
 
   @Test
-  fun range(): Unit =
+  fun `number, range`(): Unit =
     runTest {
       @Serializable
       data class TestSchema(
@@ -131,5 +132,34 @@ internal class StructuredOutputEval {
           eighth = 7.0,
         ),
       )
+    }
+
+  @Test
+  fun `array, range`(): Unit =
+    runTest {
+      @Serializable
+      data class TestSchema(
+        @Vertex.Description("Provide as many baby names as possible.")
+        @Vertex.Min(1.0)
+        @Vertex.Max(3.0)
+        val babyNames: List<String>,
+        @Vertex.Description("Provide as few error messages as possible.")
+        @Vertex.Min(1.0)
+        @Vertex.Max(3.0)
+        val errorMessages: List<String>,
+      )
+
+      val input = "Provide data."
+      val response = client.models.generateContent(
+        "gemini-2.5-flash",
+        input,
+        generateContentConfig {
+          responseMimeType(ContentType.Application.Json.toString())
+          responseSchema(VertexSchemaGenerator.generate<TestSchema>())
+        },
+      )
+      val value = Json.decodeFromString<TestSchema>(response.text().shouldNotBeNull())
+      value.babyNames.shouldHaveSize(3)
+      value.errorMessages.shouldHaveSize(1)
     }
 }

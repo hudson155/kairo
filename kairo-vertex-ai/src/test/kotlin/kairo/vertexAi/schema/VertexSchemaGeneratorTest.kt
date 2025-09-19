@@ -9,6 +9,77 @@ import org.junit.jupiter.api.Test
 
 internal class VertexSchemaGeneratorTest {
   @Test
+  fun array(): Unit =
+    runTest {
+      VertexSchemaGenerator.generate<List<String>>()
+        .shouldBe(
+          Schema.builder().apply {
+            type(Type.Known.ARRAY)
+            nullable(false)
+            items(
+              Schema.builder().apply {
+                type(Type.Known.STRING)
+                nullable(false)
+              },
+            )
+          }.build(),
+        )
+    }
+
+  @Test
+  fun `array, nullable`(): Unit =
+    runTest {
+      VertexSchemaGenerator.generate<List<String?>>()
+        .shouldBe(
+          Schema.builder().apply {
+            type(Type.Known.ARRAY)
+            nullable(false)
+            items(
+              Schema.builder().apply {
+                type(Type.Known.STRING)
+                nullable(true)
+              },
+            )
+          }.build(),
+        )
+    }
+  @Test
+  fun `array, with range`(): Unit =
+    runTest {
+      @Serializable
+      data class TestSchema(
+        @Vertex.Min(1.0)
+        @Vertex.Max(7.0)
+        val value: List<String>,
+      )
+
+      VertexSchemaGenerator.generate<TestSchema>()
+        .shouldBe(
+          Schema.builder().apply {
+            type(Type.Known.OBJECT)
+            nullable(false)
+            properties(
+              mapOf(
+                "value" to Schema.builder().apply {
+                  type(Type.Known.ARRAY)
+                  minItems(1)
+                  maxItems(7)
+                  nullable(false)
+                  items(
+                    Schema.builder().apply {
+                      type(Type.Known.STRING)
+                      nullable(false)
+                    },
+                  )
+                }.build(),
+              ),
+            )
+            required("value")
+          }.build(),
+        )
+    }
+
+  @Test
   fun boolean(): Unit =
     runTest {
       VertexSchemaGenerator.generate<Boolean>()
