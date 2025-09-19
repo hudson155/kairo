@@ -85,6 +85,9 @@ complexity:
   LongMethod:
     active: true
     threshold: 40
+    excludes:
+      - '**/src/test/kotlin/**/*Eval.kt'
+      - '**/src/test/kotlin/**/*Test.kt'
   LongParameterList:
     active: true
     functionThreshold: 4

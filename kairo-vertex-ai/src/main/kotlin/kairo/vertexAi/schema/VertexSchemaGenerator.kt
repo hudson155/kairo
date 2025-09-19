@@ -35,7 +35,7 @@ public object VertexSchemaGenerator {
   private fun generateClass(descriptor: SerialDescriptor, annotations: List<Annotation>): Schema =
     Schema.builder().apply {
       type(Type.Known.OBJECT)
-      nullable(descriptor.isNullable) // TODO: QA whether this works.
+      nullable(descriptor.isNullable)
       annotation<Vertex.Description>(descriptor.annotations + annotations)?.let { description(it.value) }
       properties(
         List(descriptor.elementsCount) { i ->
@@ -58,6 +58,8 @@ public object VertexSchemaGenerator {
     Schema.builder().apply {
       type(type)
       format(format)
+      annotation<Vertex.Min>(annotations)?.let { minimum(it.value) }
+      annotation<Vertex.Max>(annotations)?.let { maximum(it.value) }
       nullable(descriptor.isNullable)
       annotation<Vertex.Description>(annotations)?.let { description(it.value) }
     }.build()
