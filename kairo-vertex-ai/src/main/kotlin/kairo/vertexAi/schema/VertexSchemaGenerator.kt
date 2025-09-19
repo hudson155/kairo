@@ -25,13 +25,13 @@ public object VertexSchemaGenerator {
     Schema.builder().apply {
       type(Type.Known.BOOLEAN)
       nullable(descriptor.isNullable)
-      annotations.getDescription()?.let { description(it) }
+      annotation<Vertex.Description>(annotations)?.let { description(it.value) }
     }.build()
 
   private fun generateClass(descriptor: SerialDescriptor, annotations: List<Annotation>): Schema =
     Schema.builder().apply {
       type(Type.Known.OBJECT)
-      (descriptor.annotations + annotations).getDescription()?.let { description(it) }
+      annotation<Vertex.Description>(descriptor.annotations + annotations)?.let { description(it.value) }
       properties(
         List(descriptor.elementsCount) { i ->
           Pair(
@@ -46,13 +46,13 @@ public object VertexSchemaGenerator {
   private fun generateString(descriptor: SerialDescriptor, annotations: List<Annotation>): Schema =
     Schema.builder().apply {
       type(Type.Known.STRING)
+      annotation<Vertex.Format>(annotations)?.let { format(it.value) }
       nullable(descriptor.isNullable)
-      annotations.getDescription()?.let { description(it) }
+      annotation<Vertex.Description>(annotations)?.let { description(it.value) }
     }.build()
 
-  private fun List<Annotation>.getDescription(): String? {
-    val annotations = filterIsInstance<Vertex.Description>()
-    val annotation = annotations.lastOrNull() ?: return null
-    return annotation.value
+  private inline fun <reified T : Annotation> annotation(annotations: List<Annotation>): T? {
+    val annotations = annotations.filterIsInstance<T>()
+    return annotations.lastOrNull()
   }
 }

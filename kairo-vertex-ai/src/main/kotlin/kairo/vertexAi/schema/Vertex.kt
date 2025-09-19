@@ -10,4 +10,9 @@ public object Vertex {
   @Retention(AnnotationRetention.SOURCE)
   @SerialInfo
   public annotation class Description(val value: String)
+
+  @Target(AnnotationTarget.PROPERTY)
+  @Retention(AnnotationRetention.SOURCE)
+  @SerialInfo
+  public annotation class Format(val value: String)
 }
