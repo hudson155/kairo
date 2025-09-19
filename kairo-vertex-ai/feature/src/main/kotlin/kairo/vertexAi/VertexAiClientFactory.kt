@@ -2,9 +2,9 @@ package kairo.vertexAi
 
 import com.google.genai.Client
 
-internal object VertexAiClientFactory {
+public object VertexAiClientFactory {
   @Suppress("ForbiddenMethodCall")
-  fun fromEnvironment(block: Client.Builder.() -> Unit = {}): Client =
+  public fun fromEnvironment(block: Client.Builder.() -> Unit = {}): Client =
     create(
       config = VertexAiFeatureConfig(
         project = System.getenv("VERTEX_AI_PROJECT"),
@@ -13,7 +13,7 @@ internal object VertexAiClientFactory {
       block = block,
     )
 
-  fun create(
+  public fun create(
     config: VertexAiFeatureConfig,
     block: Client.Builder.() -> Unit,
   ): Client =
