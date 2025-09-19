@@ -22,7 +22,7 @@ internal class StructuredOutputEval {
       @Serializable
       data class PersonSchema(
         val fullName: String,
-        val age: Int,
+        val worksAtHighbeam: Boolean,
       )
 
       val input = """
@@ -43,7 +43,7 @@ internal class StructuredOutputEval {
       person.shouldBe(
         PersonSchema(
           fullName = "Jeff Hudson",
-          age = 45,
+          worksAtHighbeam = true,
         ),
       )
     }
