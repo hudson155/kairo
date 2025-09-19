@@ -8,8 +8,8 @@ internal object VertexAiClientFactory {
   fun fromEnvironment(block: Client.Builder.() -> Unit = {}): Client =
     create(
       config = VertexAiFeatureConfig(
-        project = requireNotNull(System.getenv("GCP_PROJECT")) { "GCP_PROJECT environment variable not set." },
-        location = requireNotNull(System.getenv("GCP_LOCATION")) { "GCP_LOCATION environment variable not set." },
+        project = System.getenv("GCP_PROJECT"),
+        location = System.getenv("GCP_LOCATION"),
       ),
       block = {
         System.getenv("GCP_CREDENTIALS")?.let { credentials ->
