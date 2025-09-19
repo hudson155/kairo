@@ -51,8 +51,6 @@ public object VertexSchemaGenerator {
       annotation<Vertex.Description>(annotations)?.let { description(it.value) }
     }.build()
 
-  private inline fun <reified T : Annotation> annotation(annotations: List<Annotation>): T? {
-    val annotations = annotations.filterIsInstance<T>()
-    return annotations.lastOrNull()
-  }
+  private inline fun <reified T : Annotation> annotation(annotations: List<Annotation>): T? =
+    annotations.filterIsInstance<T>().lastOrNull()
 }
