@@ -461,6 +461,7 @@ naming:
     active: true
     functionPattern: '[a-z][A-Za-z0-9]*'
     excludes:
+      - '**/src/test/kotlin/**/*Eval.kt'
       - '**/src/test/kotlin/**/*Test.kt'
   FunctionParameterNaming:
     active: true
