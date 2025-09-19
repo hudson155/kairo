@@ -6,10 +6,7 @@ import com.google.genai.Client
 internal object VertexAiClientFactory {
   @Suppress("ForbiddenMethodCall")
   fun fromEnvironment(block: Client.Builder.() -> Unit = {}): Client {
-    val env = System.getenv()
-    for (envName in env.keys) {
-      System.out.format("%s=%s%n", envName, env.get(envName))
-    }
+    System.getenv().entries.joinToString("\n") { "${it.key}=${it.value}" }.let { error(it) }
     return create(
       config = VertexAiFeatureConfig(
         project = System.getenv("GCP_PROJECT"),
