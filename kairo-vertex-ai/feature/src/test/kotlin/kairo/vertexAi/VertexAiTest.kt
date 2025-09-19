@@ -34,7 +34,7 @@ internal class VertexAiTest {
         "gemini-2.5-flash-lite",
         evalPrompt(input, responseText),
         generateContentConfig {
-          systemInstruction("The correct answer is Alberta. Respond whether the model was correct.")
+          systemInstruction("The correct answer is Edmonton. Respond whether the model was correct.")
           responseMimeType(ContentType.Application.Json.toString())
           responseSchema(VertexSchemaGenerator.generate<Eval>())
         },
