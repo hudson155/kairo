@@ -151,7 +151,7 @@ internal class StructuredOutputEval {
 
       val input = "Provide data."
       val response = client.models.generateContent(
-        "gemini-2.5-flash",
+        "gemini-2.5-flash", // Other tests use lite, but lite doesn't work reliably with array ranges.
         input,
         generateContentConfig {
           responseMimeType(ContentType.Application.Json.toString())
