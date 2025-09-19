@@ -8,6 +8,8 @@ import kotlinx.serialization.Serializable
 import org.junit.jupiter.api.Test
 
 internal class VertexSchemaGeneratorTest {
+  internal enum class OperatingSystem { Linux, Mac, Windows }
+
   @Test
   fun array(): Unit =
     runTest {
@@ -131,6 +133,19 @@ internal class VertexSchemaGeneratorTest {
               ),
             )
             required("value")
+          }.build(),
+        )
+    }
+
+  @Test
+  fun enum(): Unit =
+    runTest {
+      VertexSchemaGenerator.generate<OperatingSystem>()
+        .shouldBe(
+          Schema.builder().apply {
+            type(Type.Known.STRING)
+            enum_("Linux", "Mac", "Windows")
+            nullable(false)
           }.build(),
         )
     }
@@ -279,6 +294,7 @@ internal class VertexSchemaGeneratorTest {
       data class TestSchema(
         val child: ChildSchema,
         val boolean: Boolean,
+        val enum: OperatingSystem,
         val integer: Int,
       )
 
@@ -306,6 +322,11 @@ internal class VertexSchemaGeneratorTest {
                   type(Type.Known.BOOLEAN)
                   nullable(false)
                 }.build(),
+                "enum" to Schema.builder().apply {
+                  type(Type.Known.STRING)
+                  enum_("Linux", "Mac", "Windows")
+                  nullable(false)
+                }.build(),
                 "integer" to Schema.builder().apply {
                   type(Type.Known.INTEGER)
                   format("int32")
@@ -313,7 +334,7 @@ internal class VertexSchemaGeneratorTest {
                 }.build(),
               ),
             )
-            required("child", "boolean", "integer")
+            required("child", "boolean", "enum", "integer")
           }.build(),
         )
     }
@@ -335,6 +356,8 @@ internal class VertexSchemaGeneratorTest {
         val child: ChildSchema,
         @Vertex.Description("My boolean")
         val boolean: Boolean,
+        @Vertex.Description("My enum")
+        val enum: OperatingSystem,
         @Vertex.Description("My integer")
         val integer: Int,
       )
@@ -367,6 +390,12 @@ internal class VertexSchemaGeneratorTest {
                   nullable(false)
                   description("My boolean")
                 }.build(),
+                "enum" to Schema.builder().apply {
+                  type(Type.Known.STRING)
+                  enum_("Linux", "Mac", "Windows")
+                  nullable(false)
+                  description("My enum")
+                }.build(),
                 "integer" to Schema.builder().apply {
                   type(Type.Known.INTEGER)
                   format("int32")
@@ -375,7 +404,7 @@ internal class VertexSchemaGeneratorTest {
                 }.build(),
               ),
             )
-            required("child", "boolean", "integer")
+            required("child", "boolean", "enum", "integer")
           }.build(),
         )
     }
