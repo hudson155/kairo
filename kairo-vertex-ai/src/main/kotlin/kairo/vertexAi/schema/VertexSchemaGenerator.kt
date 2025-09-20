@@ -41,7 +41,7 @@ public object VertexSchemaGenerator {
         descriptor.getElementDescriptor(1).elementDescriptors.map { elementDescriptor ->
           generateObject(
             descriptor = descriptor,
-            annotations = annotations,
+            annotations = elementDescriptor.annotations,
             properties = buildMap {
               put(
                 key = descriptor.getElementName(0),
@@ -64,6 +64,7 @@ public object VertexSchemaGenerator {
           )
         },
       )
+      annotation<Vertex.Description>(descriptor.annotations + annotations)?.let { description(it.value) }
     }.build()
   }
 
