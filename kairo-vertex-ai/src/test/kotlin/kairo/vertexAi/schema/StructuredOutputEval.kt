@@ -5,11 +5,13 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.types.shouldBeInstanceOf
 import io.ktor.http.ContentType
 import kairo.vertexAi.VertexAiClientFactory
 import kairo.vertexAi.dsl.generateContentConfig
 import kairo.vertexAi.dsl.systemInstruction
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
@@ -33,6 +35,19 @@ internal class StructuredOutputEval {
       NovaScotia,
       NewfoundlandAndLabrador,
     }
+  }
+
+  @Serializable
+  internal sealed class AnimalSchema {
+    internal abstract val name: String
+
+    @Serializable
+    @SerialName("Dog")
+    internal data class DogSchema(override val name: String, val barksPerMinute: Int) : AnimalSchema()
+
+    @Serializable
+    @SerialName("Cat")
+    internal data class CatSchema(override val name: String, val napsPerDay: Int) : AnimalSchema()
   }
 
   private val client: Client = VertexAiClientFactory.fromEnvironment()
@@ -176,5 +191,28 @@ internal class StructuredOutputEval {
       val value = Json.decodeFromString<TestSchema>(response.text().shouldNotBeNull())
       value.babyNames.shouldHaveSize(3)
       value.errorMessages.shouldHaveSize(1)
+    }
+
+  @Test
+  fun polymorphic(): Unit =
+    runTest {
+      @Serializable
+      data class TestSchema(
+        val cat: AnimalSchema,
+        val dog: AnimalSchema,
+      )
+
+      val input = "Provide random fixture data."
+      val response = client.models.generateContent(
+        "gemini-2.5-flash-lite",
+        input,
+        generateContentConfig {
+          responseMimeType(ContentType.Application.Json.toString())
+          responseSchema(VertexSchemaGenerator.generate<TestSchema>())
+        },
+      )
+      val json = Json.decodeFromString<TestSchema>(response.text().shouldNotBeNull())
+      json.cat.shouldBeInstanceOf<AnimalSchema.CatSchema>()
+      json.dog.shouldBeInstanceOf<AnimalSchema.DogSchema>()
     }
 }
