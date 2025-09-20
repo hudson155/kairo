@@ -106,6 +106,9 @@ complexity:
   NestedScopeFunctions:
     active: true
     threshold: 3
+    excludes:
+      - '**/src/test/kotlin/**/*Eval.kt'
+      - '**/src/test/kotlin/**/*Test.kt'
   ReplaceSafeCallChainWithRun:
     active: true
   StringLiteralDuplication:
