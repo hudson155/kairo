@@ -4,13 +4,26 @@ import com.google.genai.types.Schema
 import com.google.genai.types.Type
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.junit.jupiter.api.Test
 
-// todo: support polymorphism (anyOf)
-
 internal class VertexSchemaGeneratorTest {
+  @Suppress("unused")
   internal enum class OperatingSystem { Linux, Mac, Windows }
+
+  @Serializable
+  internal sealed class AnimalSchema {
+    internal abstract val name: String
+
+    @Serializable
+    @SerialName("Dog")
+    internal data class DogSchema(override val name: String, val barksPerMinute: Int) : AnimalSchema()
+
+    @Serializable
+    @SerialName("Cat")
+    internal data class CatSchema(override val name: String, val napsPerDay: Int) : AnimalSchema()
+  }
 
   @Test
   fun array(): Unit =
@@ -464,6 +477,81 @@ internal class VertexSchemaGeneratorTest {
               ),
             )
             required("child", "boolean", "enum", "integer")
+          }.build(),
+        )
+    }
+
+  @Test
+  fun polymorphic(): Unit =
+    runTest {
+      @Serializable
+      data class TestSchema(
+        val animal: AnimalSchema,
+      )
+
+      VertexSchemaGenerator.generate<TestSchema>()
+        .shouldBe(
+          Schema.builder().apply {
+            type(Type.Known.OBJECT)
+            nullable(false)
+            properties(
+              mapOf(
+                "animal" to Schema.builder().apply {
+                  // Sealed classes seem to appear in alphabetical order; this is undocumented.
+                  anyOf(
+                    Schema.builder().apply {
+                      type(Type.Known.OBJECT)
+                      nullable(false)
+                      properties(
+                        mapOf(
+                          "type" to Schema.builder().apply {
+                            type(Type.Known.STRING)
+                            enum_("Cat")
+                            nullable(false)
+                          }.build(),
+                          "name" to Schema.builder().apply {
+                            type(Type.Known.STRING)
+                            nullable(false)
+                          }.build(),
+                          "napsPerDay" to Schema.builder().apply {
+                            type(Type.Known.INTEGER)
+                            format("int32")
+                            nullable(false)
+                          }.build(),
+                        ),
+                      )
+                      required("type")
+                      required("type", "name", "napsPerDay")
+                    }.build(),
+                    Schema.builder().apply {
+                      type(Type.Known.OBJECT)
+                      nullable(false)
+                      properties(
+                        mapOf(
+                          "type" to Schema.builder().apply {
+                            type(Type.Known.STRING)
+                            enum_("Dog")
+                            nullable(false)
+                          }.build(),
+                          "name" to Schema.builder().apply {
+                            type(Type.Known.STRING)
+                            nullable(false)
+                          }.build(),
+                          "barksPerMinute" to Schema.builder().apply {
+                            type(Type.Known.INTEGER)
+                            format("int32")
+                            nullable(false)
+                          }.build(),
+                        ),
+                      )
+                      required("type")
+                      required("type", "name", "barksPerMinute")
+                    }.build(),
+                  )
+                }.build(),
+              ),
+            )
+            required("animal")
           }.build(),
         )
     }
