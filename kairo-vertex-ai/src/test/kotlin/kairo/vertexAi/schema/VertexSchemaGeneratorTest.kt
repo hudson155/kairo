@@ -520,7 +520,6 @@ internal class VertexSchemaGeneratorTest {
                           }.build(),
                         ),
                       )
-                      required("type")
                       required("type", "name", "napsPerDay")
                     }.build(),
                     Schema.builder().apply {
@@ -544,7 +543,6 @@ internal class VertexSchemaGeneratorTest {
                           }.build(),
                         ),
                       )
-                      required("type")
                       required("type", "name", "barksPerMinute")
                     }.build(),
                   )

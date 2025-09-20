@@ -198,11 +198,7 @@ internal class StructuredOutputEval {
     runTest {
       @Serializable
       data class TestSchema(
-        @Vertex.Min(1.0)
-        @Vertex.Max(3.0)
         val cat: AnimalSchema,
-        @Vertex.Min(1.0)
-        @Vertex.Max(3.0)
         val dog: AnimalSchema,
       )
 
