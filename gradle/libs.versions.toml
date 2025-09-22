@@ -51,7 +51,6 @@ ktorServer-netty = { module = "io.ktor:ktor-server-netty" }
 ktorServer-statusPages = { module = "io.ktor:ktor-server-status-pages" }
 
 langchain4j-core = { module = "dev.langchain4j:langchain4j-core" }
-langchain4j-vertex = { module = "dev.langchain4j:langchain4j-vertex-ai-gemini" }
 
 logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "logging" }
 

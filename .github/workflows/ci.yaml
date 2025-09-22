@@ -40,9 +40,6 @@ jobs:
       - name: "Gradle test"
         run: |
           ./gradlew test
-        env:
-          VERTEX_AI_LOCATION: "global"
-          VERTEX_AI_PROJECT: "jeff-agents-playground"
       - name: "Gradle detekt"
         run: |
           ./gradlew detektMain detektTest
