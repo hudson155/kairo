@@ -1,3 +1,5 @@
+// TODO: Split this out into a separate repo.
+
 plugins {
   kotlin("plugin.serialization")
   id("kairo-library")
@@ -13,12 +15,5 @@ kotlin {
 dependencies {
   implementation(project(":kairo-serialization"))
 
-  api(libs.genai)
-  api(libs.ktorHttp) // ContentType.
-
-  testImplementation(project(":kairo-testing"))
-  testImplementation(project(":kairo-vertex-ai:feature"))
-  testImplementation(project(":kairo-vertex-ai:testing"))
-
-  testImplementation(libs.serialization.json)
+  api(libs.langchain4j.core)
 }

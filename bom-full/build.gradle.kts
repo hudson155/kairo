@@ -38,6 +38,10 @@ dependencies {
   // https://github.com/ktorio/ktor/releases
   api(platform("io.ktor:ktor-bom:3.3.0"))
 
+  // langchain4j
+  // https://github.com/langchain4j/langchain4j/releases
+  api(platform("dev.langchain4j:langchain4j-bom:1.5.0"))
+
   // log4j
   // https://github.com/apache/logging-log4j2/releases
   api(platform("org.apache.logging.log4j:log4j-bom:2.25.1"))
