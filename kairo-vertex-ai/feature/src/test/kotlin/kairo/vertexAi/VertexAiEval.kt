@@ -28,10 +28,10 @@ internal class VertexAiEval {
   fun test(): Unit =
     runTest {
       val input = "What's the capital of Alberta?"
-      val response = client.models.generateContent("gemini-2.5-flash-lite", input, generateContentConfig())
+      val response = client.models.generateContent("gemini-2.5-flash", input, generateContentConfig())
       val responseText = response.text().shouldNotBeNull()
       val evalResponse = client.models.generateContent(
-        "gemini-2.5-flash-lite",
+        "gemini-2.5-flash",
         evalPrompt(input, responseText),
         generateContentConfig {
           systemInstruction("The correct answer is Edmonton. Respond whether the model was correct.")
