@@ -1,4 +1,4 @@
-// TODO: Split this out into a separate repo.
+// TODO: Split this out into a separate repo. BOM.
 
 plugins {
   kotlin("plugin.serialization")
