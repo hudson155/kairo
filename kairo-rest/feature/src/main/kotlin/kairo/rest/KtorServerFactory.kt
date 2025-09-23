@@ -20,6 +20,7 @@ import io.ktor.server.plugins.doublereceive.DoubleReceive
 import io.ktor.server.plugins.forwardedheaders.ForwardedHeaders
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.response.respond
+import io.ktor.server.sse.SSE
 import kairo.exception.LogicalFailure
 import kairo.feature.Feature
 import kairo.serialization.kairo
@@ -94,6 +95,7 @@ public object KtorServerFactory {
     installDefaultHeaders(config.defaultHeaders)
     installDoubleReceive(config.doubleReceive)
     installForwardedHeaders(config.forwardedHeaders)
+    installSse(config.sse)
     installStatusPages()
   }
 
@@ -150,6 +152,11 @@ public object KtorServerFactory {
   private fun Application.installForwardedHeaders(config: RestFeatureConfig.Plugins.ForwardedHeaders?) {
     config ?: return
     install(ForwardedHeaders)
+  }
+
+  private fun Application.installSse(config: RestFeatureConfig.Plugins.Sse?) {
+    config ?: return
+    install(SSE)
   }
 
   private fun Application.installStatusPages() {
