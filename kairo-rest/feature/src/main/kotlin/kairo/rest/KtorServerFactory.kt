@@ -69,7 +69,7 @@ public object KtorServerFactory {
     parallelism.connectionGroupSize?.let { connectionGroupSize = it }
     parallelism.workerGroupSize?.let { workerGroupSize = it }
     parallelism.callGroupSize?.let { callGroupSize = it }
-    requestReadTimeoutSeconds = timeouts.requestRead?.let { it.inWholeSeconds.toInt() } ?: 0
+    requestReadTimeoutSeconds = timeouts.requestRead.inWholeSeconds.toInt()
     responseWriteTimeoutSeconds = timeouts.responseWrite.inWholeSeconds.toInt()
     maxInitialLineLength = 8 * 1024
     maxHeaderSize = 16 * 1024
