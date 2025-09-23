@@ -156,6 +156,4 @@ These libraries help when **building your full application with Kairo**.
   and can be run as an application or as part of integration tests.
 - [kairo-sql-feature](./kairo-sql/feature):
   Standardizes SQL access in Kairo
-  using [Exposed](https://www.jetbrains.com/exposed/)'s lightweight & idiomatic ORM DSL.
-- [kairo-vertex-ai-feature](./kairo-vertex-ai/feature):
-  TODO.
+  using [Exposed](https://www.jetbrains.com/exposed/)'s lightweight & idiomatic ORM DSL
