@@ -16,7 +16,6 @@ public object VertexSchemaGenerator {
     @Suppress("ElseCaseInsteadOfExhaustiveWhen")
     when (descriptor.kind) {
       is StructureKind.CLASS -> generateClass(descriptor, annotations)
-      is StructureKind.LIST -> generateList(descriptor, annotations)
       is PrimitiveKind.BOOLEAN -> generateBoolean(descriptor, annotations)
       is PrimitiveKind.INT -> generateNumber(descriptor, annotations, type = Type.Known.INTEGER, format = "int32")
       is PrimitiveKind.LONG -> generateNumber(descriptor, annotations, type = Type.Known.INTEGER, format = "int64")
@@ -25,6 +24,13 @@ public object VertexSchemaGenerator {
       is PrimitiveKind.STRING -> generateString(descriptor, annotations)
       else -> error("Unsupported kind (kind=${descriptor.kind}).")
     }
+
+  private fun generateBoolean(descriptor: SerialDescriptor, annotations: List<Annotation>): Schema =
+    Schema.builder().apply {
+      type(Type.Known.BOOLEAN)
+      nullable(descriptor.isNullable)
+      annotation<Vertex.Description>(annotations)?.let { description(it.value) }
+    }.build()
 
   private fun generateClass(descriptor: SerialDescriptor, annotations: List<Annotation>): Schema =
     Schema.builder().apply {
@@ -40,25 +46,6 @@ public object VertexSchemaGenerator {
         }.toMap(),
       )
       required(List(descriptor.elementsCount) { i -> descriptor.getElementName(i) })
-    }.build()
-
-  private fun generateList(descriptor: SerialDescriptor, annotations: List<Annotation>): Schema {
-    check(descriptor.elementsCount == 1) { "List descriptor must have exactly one element (descriptor=$descriptor)." }
-    return Schema.builder().apply {
-      type(Type.Known.ARRAY)
-      annotation<Vertex.Min>(annotations)?.let { minItems(it.value.toLong()) }
-      annotation<Vertex.Max>(annotations)?.let { maxItems(it.value.toLong()) }
-      nullable(descriptor.isNullable)
-      annotation<Vertex.Description>(annotations)?.let { description(it.value) }
-      items(generate(descriptor.getElementDescriptor(0), annotations))
-    }.build()
-  }
-
-  private fun generateBoolean(descriptor: SerialDescriptor, annotations: List<Annotation>): Schema =
-    Schema.builder().apply {
-      type(Type.Known.BOOLEAN)
-      nullable(descriptor.isNullable)
-      annotation<Vertex.Description>(annotations)?.let { description(it.value) }
     }.build()
 
   @Suppress("LongParameterList")
