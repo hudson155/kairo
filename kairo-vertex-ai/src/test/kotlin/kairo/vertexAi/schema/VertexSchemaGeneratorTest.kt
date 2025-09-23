@@ -157,31 +157,4 @@ internal class VertexSchemaGeneratorTest {
           }.build(),
         )
     }
-
-  @Test
-  fun `string, format`(): Unit =
-    runTest {
-      @Serializable
-      data class TestSchema(
-        @Vertex.Format("email")
-        val emailAddress: String,
-      )
-
-      VertexSchemaGenerator.generate<TestSchema>()
-        .shouldBe(
-          Schema.builder().apply {
-            type(Type.Known.OBJECT)
-            properties(
-              mapOf(
-                "emailAddress" to Schema.builder().apply {
-                  type(Type.Known.STRING)
-                  format("email")
-                  nullable(false)
-                }.build(),
-              ),
-            )
-            required("emailAddress")
-          }.build(),
-        )
-    }
 }
