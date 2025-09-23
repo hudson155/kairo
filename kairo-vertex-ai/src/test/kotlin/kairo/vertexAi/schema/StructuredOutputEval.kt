@@ -15,31 +15,17 @@ import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
 internal class StructuredOutputEval {
-  @Serializable
-  internal data class PersonSchema(
-    val fullName: String,
-    val worksAtHighbeam: Boolean,
-    val province: Province,
-  ) {
-    internal enum class Province {
-      BritishColumbia,
-      Alberta,
-      Saskatchewan,
-      Manitoba,
-      Ontario,
-      Quebec,
-      NewBrunswick,
-      PrinceEdwardIsland,
-      NovaScotia,
-      NewfoundlandAndLabrador,
-    }
-  }
-
   private val client: Client = VertexAiClientFactory.fromEnvironment()
 
   @Test
   fun person(): Unit =
     runTest {
+      @Serializable
+      data class PersonSchema(
+        val fullName: String,
+        val worksAtHighbeam: Boolean,
+      )
+
       val input = """
         Jeff Hudson is a software engineer at Highbeam.
         He is 45 years old.
@@ -59,7 +45,6 @@ internal class StructuredOutputEval {
         PersonSchema(
           fullName = "Jeff Hudson",
           worksAtHighbeam = true,
-          province = PersonSchema.Province.Alberta,
         ),
       )
     }

@@ -5,9 +5,7 @@ import com.google.genai.types.Type
 import kotlin.reflect.typeOf
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.SerialKind
 import kotlinx.serialization.descriptors.StructureKind
-import kotlinx.serialization.descriptors.elementNames
 import kotlinx.serialization.serializer
 
 public object VertexSchemaGenerator {
@@ -25,7 +23,6 @@ public object VertexSchemaGenerator {
       is PrimitiveKind.FLOAT -> generateNumber(descriptor, annotations, type = Type.Known.NUMBER, format = "float")
       is PrimitiveKind.DOUBLE -> generateNumber(descriptor, annotations, type = Type.Known.NUMBER, format = "double")
       is PrimitiveKind.STRING -> generateString(descriptor, annotations)
-      is SerialKind.ENUM -> generateEnum(descriptor, annotations)
       else -> error("Unsupported kind (kind=${descriptor.kind}).")
     }
 
@@ -53,7 +50,7 @@ public object VertexSchemaGenerator {
       annotation<Vertex.Max>(annotations)?.let { maxItems(it.value.toLong()) }
       nullable(descriptor.isNullable)
       annotation<Vertex.Description>(annotations)?.let { description(it.value) }
-      items(generate(descriptor.getElementDescriptor(0), descriptor.getElementAnnotations(0)))
+      items(generate(descriptor.getElementDescriptor(0), annotations))
     }.build()
   }
 
@@ -84,14 +81,6 @@ public object VertexSchemaGenerator {
     Schema.builder().apply {
       type(Type.Known.STRING)
       annotation<Vertex.Format>(annotations)?.let { format(it.value) }
-      nullable(descriptor.isNullable)
-      annotation<Vertex.Description>(annotations)?.let { description(it.value) }
-    }.build()
-
-  private fun generateEnum(descriptor: SerialDescriptor, annotations: List<Annotation>): Schema =
-    Schema.builder().apply {
-      type(Type.Known.STRING)
-      enum_(descriptor.elementNames.toList())
       nullable(descriptor.isNullable)
       annotation<Vertex.Description>(annotations)?.let { description(it.value) }
     }.build()
