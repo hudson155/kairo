@@ -19,7 +19,12 @@ internal object RestEndpointTemplateAcceptParser {
 
   private fun getAnnotation(endpoint: KClass<out RestEndpoint<*, *>>): Rest.Accept? {
     val annotations = endpoint.findAnnotations<Rest.Accept>()
-    return annotations.singleNullOrThrow()
+    if (annotations.isEmpty()) return null
+    val annotation = annotations.singleOrNull()
+    requireNotNull(annotation) {
+      "Endpoint ${endpoint.qualifiedName} cannot define multiple of ${error.restAnnotation}."
+    }
+    return annotation
   }
 
   private inline fun <T> wrapErrorMessage(

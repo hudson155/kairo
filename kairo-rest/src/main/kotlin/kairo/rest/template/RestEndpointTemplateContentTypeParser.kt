@@ -19,7 +19,12 @@ internal object RestEndpointTemplateContentTypeParser {
 
   private fun getAnnotation(endpoint: KClass<out RestEndpoint<*, *>>): Rest.ContentType? {
     val annotations = endpoint.findAnnotations<Rest.ContentType>()
-    return annotations.singleNullOrThrow()
+    if (annotations.isEmpty()) return null
+    val annotation = annotations.singleOrNull()
+    requireNotNull(annotation) {
+      "Endpoint ${endpoint.qualifiedName} cannot define multiple of ${error.contentTypeAnnotation}."
+    }
+    return annotation
   }
 
   private inline fun <T> wrapErrorMessage(
