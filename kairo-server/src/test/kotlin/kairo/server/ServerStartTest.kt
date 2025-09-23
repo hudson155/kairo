@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
+@Suppress("LongMethod")
 internal class ServerStartTest {
   @Test
   fun `happy path`(): Unit =

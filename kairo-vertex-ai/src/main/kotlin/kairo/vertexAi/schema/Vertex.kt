@@ -15,14 +15,4 @@ public object Vertex {
   @Retention(AnnotationRetention.SOURCE)
   @SerialInfo
   public annotation class Format(val value: String)
-
-  @Target(AnnotationTarget.PROPERTY)
-  @Retention(AnnotationRetention.SOURCE)
-  @SerialInfo
-  public annotation class Min(val value: Double)
-
-  @Target(AnnotationTarget.PROPERTY)
-  @Retention(AnnotationRetention.SOURCE)
-  @SerialInfo
-  public annotation class Max(val value: Double)
 }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.Serializable
 import org.junit.jupiter.api.Test
 
+@Suppress("LongMethod")
 internal class VertexSchemaGeneratorTest {
   @Test
   fun boolean(): Unit =
@@ -21,228 +22,44 @@ internal class VertexSchemaGeneratorTest {
     }
 
   @Test
-  fun double(): Unit =
-    runTest {
-      VertexSchemaGenerator.generate<Double>()
-        .shouldBe(
-          Schema.builder().apply {
-            type(Type.Known.NUMBER)
-            format("double")
-            nullable(false)
-          }.build(),
-        )
-    }
-
-  @Test
-  fun `double, with range`(): Unit =
-    runTest {
-      @Serializable
-      data class TestSchema(
-        @Vertex.Min(1.0)
-        @Vertex.Max(7.0)
-        val value: Double,
-      )
-
-      VertexSchemaGenerator.generate<TestSchema>()
-        .shouldBe(
-          Schema.builder().apply {
-            type(Type.Known.OBJECT)
-            nullable(false)
-            properties(
-              mapOf(
-                "value" to Schema.builder().apply {
-                  type(Type.Known.NUMBER)
-                  format("double")
-                  minimum(1.0)
-                  maximum(7.0)
-                  nullable(false)
-                }.build(),
-              ),
-            )
-            required("value")
-          }.build(),
-        )
-    }
-
-  @Test
-  fun float(): Unit =
-    runTest {
-      VertexSchemaGenerator.generate<Float>()
-        .shouldBe(
-          Schema.builder().apply {
-            type(Type.Known.NUMBER)
-            format("float")
-            nullable(false)
-          }.build(),
-        )
-    }
-
-  @Test
-  fun `float, with range`(): Unit =
-    runTest {
-      @Serializable
-      data class TestSchema(
-        @Vertex.Min(1.0)
-        @Vertex.Max(7.0)
-        val value: Float,
-      )
-
-      VertexSchemaGenerator.generate<TestSchema>()
-        .shouldBe(
-          Schema.builder().apply {
-            type(Type.Known.OBJECT)
-            nullable(false)
-            properties(
-              mapOf(
-                "value" to Schema.builder().apply {
-                  type(Type.Known.NUMBER)
-                  format("float")
-                  minimum(1.0)
-                  maximum(7.0)
-                  nullable(false)
-                }.build(),
-              ),
-            )
-            required("value")
-          }.build(),
-        )
-    }
-
-  @Test
-  fun integer(): Unit =
-    runTest {
-      VertexSchemaGenerator.generate<Int>()
-        .shouldBe(
-          Schema.builder().apply {
-            type(Type.Known.INTEGER)
-            format("int32")
-            nullable(false)
-          }.build(),
-        )
-    }
-
-  @Test
-  fun `integer, with range`(): Unit =
-    runTest {
-      @Serializable
-      data class TestSchema(
-        @Vertex.Min(1.0)
-        @Vertex.Max(7.0)
-        val value: Int,
-      )
-
-      VertexSchemaGenerator.generate<TestSchema>()
-        .shouldBe(
-          Schema.builder().apply {
-            type(Type.Known.OBJECT)
-            nullable(false)
-            properties(
-              mapOf(
-                "value" to Schema.builder().apply {
-                  type(Type.Known.INTEGER)
-                  format("int32")
-                  minimum(1.0)
-                  maximum(7.0)
-                  nullable(false)
-                }.build(),
-              ),
-            )
-            required("value")
-          }.build(),
-        )
-    }
-
-  @Test
-  fun long(): Unit =
-    runTest {
-      VertexSchemaGenerator.generate<Long>()
-        .shouldBe(
-          Schema.builder().apply {
-            type(Type.Known.INTEGER)
-            format("int64")
-            nullable(false)
-          }.build(),
-        )
-    }
-
-  @Test
-  fun `long, with range`(): Unit =
-    runTest {
-      @Serializable
-      data class TestSchema(
-        @Vertex.Min(1.0)
-        @Vertex.Max(7.0)
-        val value: Long,
-      )
-
-      VertexSchemaGenerator.generate<TestSchema>()
-        .shouldBe(
-          Schema.builder().apply {
-            type(Type.Known.OBJECT)
-            nullable(false)
-            properties(
-              mapOf(
-                "value" to Schema.builder().apply {
-                  type(Type.Known.INTEGER)
-                  format("int64")
-                  minimum(1.0)
-                  maximum(7.0)
-                  nullable(false)
-                }.build(),
-              ),
-            )
-            required("value")
-          }.build(),
-        )
-    }
-
-  @Test
   fun `object`(): Unit =
     runTest {
       @Serializable
       data class ChildSchema(
-        val string: String,
+        val boolean: Boolean,
       )
 
       @Serializable
       data class TestSchema(
         val child: ChildSchema,
-        val boolean: Boolean,
-        val integer: Int,
+        val string: String,
       )
 
       VertexSchemaGenerator.generate<TestSchema>()
         .shouldBe(
           Schema.builder().apply {
             type(Type.Known.OBJECT)
-            nullable(false)
             properties(
               mapOf(
                 "child" to Schema.builder().apply {
                   type(Type.Known.OBJECT)
-                  nullable(false)
                   properties(
                     mapOf(
-                      "string" to Schema.builder().apply {
-                        type(Type.Known.STRING)
+                      "boolean" to Schema.builder().apply {
+                        type(Type.Known.BOOLEAN)
                         nullable(false)
                       }.build(),
                     ),
                   )
-                  required("string")
+                  required("boolean")
                 }.build(),
-                "boolean" to Schema.builder().apply {
-                  type(Type.Known.BOOLEAN)
-                  nullable(false)
-                }.build(),
-                "integer" to Schema.builder().apply {
-                  type(Type.Known.INTEGER)
-                  format("int32")
+                "string" to Schema.builder().apply {
+                  type(Type.Known.STRING)
                   nullable(false)
                 }.build(),
               ),
             )
-            required("child", "boolean", "integer")
+            required("child", "string")
           }.build(),
         )
     }
@@ -253,8 +70,8 @@ internal class VertexSchemaGeneratorTest {
       @Serializable
       @Vertex.Description("Child schema") // Overridden by "My child".
       data class ChildSchema(
-        @Vertex.Description("My string")
-        val string: String,
+        @Vertex.Description("My boolean")
+        val boolean: Boolean,
       )
 
       @Serializable
@@ -262,49 +79,39 @@ internal class VertexSchemaGeneratorTest {
       data class TestSchema(
         @Vertex.Description("My child")
         val child: ChildSchema,
-        @Vertex.Description("My boolean")
-        val boolean: Boolean,
-        @Vertex.Description("My integer")
-        val integer: Int,
+        @Vertex.Description("My string")
+        val string: String,
       )
 
       VertexSchemaGenerator.generate<TestSchema>()
         .shouldBe(
           Schema.builder().apply {
             type(Type.Known.OBJECT)
-            nullable(false)
             description("Test schema")
             properties(
               mapOf(
                 "child" to Schema.builder().apply {
                   type(Type.Known.OBJECT)
-                  nullable(false)
                   description("My child")
                   properties(
                     mapOf(
-                      "string" to Schema.builder().apply {
-                        type(Type.Known.STRING)
+                      "boolean" to Schema.builder().apply {
+                        type(Type.Known.BOOLEAN)
                         nullable(false)
-                        description("My string")
+                        description("My boolean")
                       }.build(),
                     ),
                   )
-                  required("string")
+                  required("boolean")
                 }.build(),
-                "boolean" to Schema.builder().apply {
-                  type(Type.Known.BOOLEAN)
+                "string" to Schema.builder().apply {
+                  type(Type.Known.STRING)
                   nullable(false)
-                  description("My boolean")
-                }.build(),
-                "integer" to Schema.builder().apply {
-                  type(Type.Known.INTEGER)
-                  format("int32")
-                  nullable(false)
-                  description("My integer")
+                  description("My string")
                 }.build(),
               ),
             )
-            required("child", "boolean", "integer")
+            required("child", "string")
           }.build(),
         )
     }
@@ -313,49 +120,28 @@ internal class VertexSchemaGeneratorTest {
   fun `object, with nullables`(): Unit =
     runTest {
       @Serializable
-      data class ChildSchema(
-        val string: String?,
-      )
-
-      @Serializable
       data class TestSchema(
-        val child: ChildSchema?,
         val boolean: Boolean?,
-        val integer: Int?,
+        val string: String?,
       )
 
       VertexSchemaGenerator.generate<TestSchema>()
         .shouldBe(
           Schema.builder().apply {
             type(Type.Known.OBJECT)
-            nullable(false)
             properties(
               mapOf(
-                "child" to Schema.builder().apply {
-                  type(Type.Known.OBJECT)
-                  nullable(true)
-                  properties(
-                    mapOf(
-                      "string" to Schema.builder().apply {
-                        type(Type.Known.STRING)
-                        nullable(true)
-                      }.build(),
-                    ),
-                  )
-                  required("string")
-                }.build(),
                 "boolean" to Schema.builder().apply {
                   type(Type.Known.BOOLEAN)
                   nullable(true)
                 }.build(),
-                "integer" to Schema.builder().apply {
-                  type(Type.Known.INTEGER)
-                  format("int32")
+                "string" to Schema.builder().apply {
+                  type(Type.Known.STRING)
                   nullable(true)
                 }.build(),
               ),
             )
-            required("child", "boolean", "integer")
+            required("boolean", "string")
           }.build(),
         )
     }
@@ -385,7 +171,6 @@ internal class VertexSchemaGeneratorTest {
         .shouldBe(
           Schema.builder().apply {
             type(Type.Known.OBJECT)
-            nullable(false)
             properties(
               mapOf(
                 "emailAddress" to Schema.builder().apply {

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test
  * Starts a server with 1000 parallel Features,
  * ensuring that everything happens in the right order.
  */
+@Suppress("LongMethod")
 internal class ServerConcurrencyTest {
   @Test
   fun test(): Unit =
