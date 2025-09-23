@@ -53,6 +53,7 @@ public object KtorServerFactory {
           Json {
             kairo()
             kairoPrettyPrint()
+            features.filterIsInstance<ConfiguresJson>().forEach { with(it) { configure() } }
           }
         plugins(config.plugins)
         routing(features)
@@ -72,7 +73,7 @@ public object KtorServerFactory {
     parallelism.connectionGroupSize?.let { connectionGroupSize = it }
     parallelism.workerGroupSize?.let { workerGroupSize = it }
     parallelism.callGroupSize?.let { callGroupSize = it }
-    requestReadTimeoutSeconds = timeouts.requestRead.inWholeSeconds.toInt()
+    requestReadTimeoutSeconds = timeouts.requestRead?.let { it.inWholeSeconds.toInt() } ?: 0
     responseWriteTimeoutSeconds = timeouts.responseWrite.inWholeSeconds.toInt()
     maxInitialLineLength = 8 * 1024
     maxHeaderSize = 16 * 1024
@@ -111,8 +112,9 @@ public object KtorServerFactory {
 
   private fun Application.installContentNegotiation(config: RestFeatureConfig.Plugins.ContentNegotiation?) {
     config ?: return
+    val json = attributes.json
     install(ContentNegotiation) {
-      json()
+      json(json)
     }
   }
 

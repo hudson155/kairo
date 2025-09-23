@@ -6,13 +6,8 @@ plugins {
   id("kairo-library-publish")
 }
 
-kotlin {
-  compilerOptions {
-    freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi") // SerialInfo.
-  }
-}
-
 dependencies {
+  api(project(":kairo-coroutines"))
   implementation(project(":kairo-serialization"))
 
   api(libs.langchain4j.core)
