@@ -17,8 +17,4 @@ dependencies {
   api(libs.ktorHttp) // ContentType.
 
   testImplementation(project(":kairo-testing"))
-  testImplementation(project(":kairo-vertex-ai:feature"))
-  testImplementation(project(":kairo-vertex-ai:testing"))
-
-  testImplementation(libs.serialization.json)
 }

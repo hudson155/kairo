@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
-internal class VertexAiEval {
+internal class VertexAiTest {
   @Serializable
   internal data class Eval(
     @Vertex.Description("A brief description of your correctness assessment.")

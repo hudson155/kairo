@@ -28,9 +28,9 @@ import kotlinx.serialization.json.Json
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-public object KtorServerFactory {
+internal object KtorServerFactory {
   @Suppress("LongParameterList")
-  public fun create(
+  fun create(
     config: RestFeatureConfig,
     features: List<Feature>,
     ktorConfiguration: KtorServerConfig.() -> Unit,
