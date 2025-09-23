@@ -42,7 +42,7 @@ jobs:
           ./gradlew test
         env:
           VERTEX_AI_LOCATION: "global"
-          VERTEX_AI_PROJECT: "jeff-agents-playground"
+          VERTEX_AI_PROJECT: ${{ env.GCLOUD_PROJECT }}
       - name: "Gradle detekt"
         run: |
           ./gradlew detektMain detektTest
