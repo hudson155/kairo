@@ -212,6 +212,8 @@ TODO: Coming soon!
 
 - The `@RestEndpoint.ContentType` and `@RestEndpoint.Accept` annotations are now optional.
 
+- Native Ktor SSE support.
+
 - **Better error messages** when `RestEndpoint`s are malformed — easier debugging.
 
 - **Colored call logging when running locally.**
