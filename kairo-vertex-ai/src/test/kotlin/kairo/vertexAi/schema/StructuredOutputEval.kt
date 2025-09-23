@@ -61,7 +61,7 @@ internal class StructuredOutputEval {
         He lives in Alberta.
       """.trimIndent()
       val response = client.models.generateContent(
-        "gemini-2.5-flash",
+        "gemini-2.5-flash-lite",
         input,
         generateContentConfig {
           systemInstruction("Respond with metadata about the person the user describes.")
@@ -90,7 +90,7 @@ internal class StructuredOutputEval {
 
       val input = "Provide random fixture data."
       val response = client.models.generateContent(
-        "gemini-2.5-flash",
+        "gemini-2.5-flash-lite",
         input,
         generateContentConfig {
           responseMimeType(ContentType.Application.Json.toString())
@@ -142,7 +142,7 @@ internal class StructuredOutputEval {
 
       val input = "Provide data."
       val response = client.models.generateContent(
-        "gemini-2.5-flash",
+        "gemini-2.5-flash-lite",
         input,
         generateContentConfig {
           responseMimeType(ContentType.Application.Json.toString())
@@ -181,7 +181,7 @@ internal class StructuredOutputEval {
 
       val input = "Provide data."
       val response = client.models.generateContent(
-        "gemini-2.5-flash",
+        "gemini-2.5-flash", // Other tests use lite, but lite doesn't work reliably with array ranges.
         input,
         generateContentConfig {
           responseMimeType(ContentType.Application.Json.toString())
@@ -204,7 +204,7 @@ internal class StructuredOutputEval {
 
       val input = "Provide random fixture data."
       val response = client.models.generateContent(
-        "gemini-2.5-flash",
+        "gemini-2.5-flash-lite",
         input,
         generateContentConfig {
           responseMimeType(ContentType.Application.Json.toString())
