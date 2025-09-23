@@ -3,8 +3,6 @@ package kairo.server
 import arrow.fx.coroutines.CyclicBarrier
 import io.kotest.matchers.collections.shouldContainExactly
 import kairo.feature.Feature
-import kairo.feature.LifecycleHandler
-import kairo.feature.lifecycle
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
@@ -14,7 +12,6 @@ import org.junit.jupiter.api.Test
  * Starts a server with 1000 parallel Features,
  * ensuring that everything happens in the right order.
  */
-@Suppress("LongMethod")
 internal class ServerConcurrencyTest {
   @Test
   fun test(): Unit =
@@ -26,23 +23,19 @@ internal class ServerConcurrencyTest {
         object : Feature() {
           override val name: String = "Test ($i)"
 
-          override val lifecycle: List<LifecycleHandler> =
-            lifecycle {
-              handler {
-                start { _ ->
-                  events.update { it + "start first" }
-                  barrier.await()
-                  events.update { it + "start second" }
-                  barrier.await()
-                }
-                stop { _ ->
-                  events.update { it + "stop first" }
-                  barrier.await()
-                  events.update { it + "stop second" }
-                  barrier.await()
-                }
-              }
-            }
+          override suspend fun start(features: List<Feature>) {
+            events.update { it + "start first" }
+            barrier.await()
+            events.update { it + "start second" }
+            barrier.await()
+          }
+
+          override suspend fun stop(features: List<Feature>) {
+            events.update { it + "stop first" }
+            barrier.await()
+            events.update { it + "stop second" }
+            barrier.await()
+          }
         }
       }
       val server = Server(

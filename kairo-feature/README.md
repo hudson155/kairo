@@ -15,7 +15,8 @@ There are 2 types of Features.
 ### Why Features?
 
 - **Encapsulation:**
-  Each Feature owns its lifecycle and configuration.
+  Each Feature owns its lifecycle (`start()` / `end()`)
+  and configuration.
   **Clear boundaries** mean more maintainable code.
 - **Composability:**
   Servers are composed of Features.
@@ -82,40 +83,15 @@ class UserFeature(
 }
 ```
 
-### Lifecycle handlers
+#### Lifecycle events
 
-Features can hook into Server lifecycle events by implementing lifecycle handlers.
-Lifecycle handlers define a priority (most Features should use the default priority).
-All handlers with the same priority run in parallel, 
+Features can hook into Server lifecycle events by implementing the `start()` and `stop()` methods.
+These methods run in parallel with other Features,
 so they must be thread/coroutine-safe.
 
-```kotlin
-class UserFeature(
-  private val koin: Koin,
-) : Feature(), HasRouting {
-  override val name: String = "User"
-
-  private val userHandler: UserHandler get() = koin.get()
-
-  override val lifecycle: List<LifecycleHandler> =
-    lifecycle {
-      handler {
-        start {
-          // ...
-        }
-        stop {
-          // ...
-        }
-      }
-    }
-
-  override fun Application.routing() {
-    routing {
-      with(userHandler) { routing() }
-    }
-  }
-}
-```
+More advanced Features may also implement the other lifecycle hooks
+(see `LifecycleEventListener`),
+but this should be done sparingly.
 
 ### Putting it all together
 

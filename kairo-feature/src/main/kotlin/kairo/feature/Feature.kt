@@ -6,14 +6,12 @@ package kairo.feature
  * such as support for a specific database or managed service,
  * or a domain-specific set of functionality.
  */
-public abstract class Feature {
+public abstract class Feature : LifecycleEventListener {
   /**
    * Feature names should be unique for debugging purposes,
    * but they don't strictly need to be.
    */
   public abstract val name: String
-
-  public open val lifecycle: List<LifecycleHandler> = emptyList()
 
   override fun toString(): String =
     "Feature(name='$name')"
