@@ -85,6 +85,9 @@ complexity:
   LongMethod:
     active: true
     threshold: 40
+    excludes:
+      - '**/src/test/kotlin/**/*Eval.kt'
+      - '**/src/test/kotlin/**/*Test.kt'
   LongParameterList:
     active: true
     functionThreshold: 4
@@ -103,6 +106,9 @@ complexity:
   NestedScopeFunctions:
     active: true
     threshold: 3
+    excludes:
+      - '**/src/test/kotlin/**/*Eval.kt'
+      - '**/src/test/kotlin/**/*Test.kt'
   ReplaceSafeCallChainWithRun:
     active: true
   StringLiteralDuplication:
@@ -461,6 +467,7 @@ naming:
     active: true
     functionPattern: '[a-z][A-Za-z0-9]*'
     excludes:
+      - '**/src/test/kotlin/**/*Eval.kt'
       - '**/src/test/kotlin/**/*Test.kt'
   FunctionParameterNaming:
     active: true
