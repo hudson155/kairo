@@ -50,11 +50,7 @@ public object KtorServerFactory {
         ktorConfiguration()
       },
       module = {
-        attributes.json =
-          Json {
-            kairo()
-            kairoPrettyPrint()
-          }
+        attributes.json = createJson(features)
         plugins(config.plugins)
         routing(features)
         ktorModule()
@@ -86,6 +82,13 @@ public object KtorServerFactory {
     }
   }
 
+  private fun createJson(features: List<Feature>): Json =
+    Json {
+      kairo()
+      kairoPrettyPrint()
+      features.filterIsInstance<ConfiguresJson>().forEach { with(it) { configure() } }
+    }
+
   private fun Application.plugins(config: RestFeatureConfig.Plugins) {
     // TODO: Mention plugins in changelog.
     installAutoHeadResponse(config.autoHeadResponse)
@@ -113,8 +116,9 @@ public object KtorServerFactory {
 
   private fun Application.installContentNegotiation(config: RestFeatureConfig.Plugins.ContentNegotiation?) {
     config ?: return
+    val json = attributes.json
     install(ContentNegotiation) {
-      json()
+      json(json)
     }
   }
 
