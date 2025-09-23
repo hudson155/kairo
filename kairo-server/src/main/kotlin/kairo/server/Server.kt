@@ -3,6 +3,7 @@ package kairo.server
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.feature.Feature
+import kairo.feature.LifecycleHandler
 import kotlin.time.measureTime
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.joinAll
@@ -83,67 +84,67 @@ public class Server(
 
   /**
    * Starts all Features IN PARALLEL.
-   * If any Feature fails to start, all [Feature.start] calls are canceled and this method throws.
+   * If any Feature fails to start, all [LifecycleHandler.start] calls are canceled
+   * and this method throws.
    */
   private suspend fun onStart() {
-    features.forEach { feature ->
-      feature.beforeStart(features)
-    }
-    coroutineScope {
-      val jobs = features.map { feature ->
-        launch {
-          logger.info { "Starting Feature (server=${this@Server}, feature=$feature)." }
-          val time = measureTime {
-            try {
-              feature.start(features)
-            } catch (e: Throwable) {
-              logger.warn(e) { "Feature failed to start (server=${this@Server}, feature=$feature)." }
-              throw e
+    val stages =
+      features
+        .flatMap { feature -> feature.lifecycle.map { Pair(feature, it) } }
+        .groupBy(keySelector = { it.second.priority }, valueTransform = { Pair(it.first, it.second) })
+        .entries
+        .sortedBy { it.key }
+    stages.forEach { (priority, handlers) ->
+      logger.info { "Starting Features (priority=$priority, handlers=${handlers.size})." }
+      coroutineScope {
+        val jobs = handlers.map { (feature, handler) ->
+          launch {
+            logger.info { "Starting Feature (server=${this@Server}, feature=$feature)." }
+            val time = measureTime {
+              try {
+                handler.start(features)
+              } catch (e: Throwable) {
+                logger.warn(e) { "Feature failed to start (server=${this@Server}, feature=$feature)." }
+                throw e
+              }
             }
+            logger.info { "Feature started (server=${this@Server}, feature=$feature, time=$time)." }
           }
-          logger.info { "Feature started (server=${this@Server}, feature=$feature, time=$time)." }
         }
+        jobs.joinAll()
       }
-      jobs.joinAll()
-    }
-    features.forEach { feature ->
-      feature.afterStart(features)
     }
   }
 
   /**
    * Stops all Features IN PARALLEL.
-   * If any Feature fails to stop, remaining [Feature.stop] calls are allowed to complete. This method does not throw.
+   * If any Feature fails to stop, remaining [LifecycleHandler.stop] calls are allowed to complete.
+   * This method does not throw.
    */
   private suspend fun onStop() {
-    features.forEach { feature ->
-      try {
-        feature.beforeStop(features)
-      } catch (e: Throwable) {
-        logger.warn(e) { "Feature failed beforeStop (server=${this@Server}, feature=$feature)." }
-      }
-    }
-    supervisorScope {
-      val jobs = features.map { feature ->
-        launch {
-          logger.info { "Stopping Feature (server=${this@Server}, feature=$feature)." }
-          val time = measureTime {
-            try {
-              feature.stop(features)
-            } catch (e: Throwable) {
-              logger.error(e) { "Feature failed to stop (server=${this@Server}, feature=$feature)." }
+    val stages =
+      features
+        .flatMap { feature -> feature.lifecycle.map { Pair(feature, it) } }
+        .groupBy(keySelector = { it.second.priority }, valueTransform = { Pair(it.first, it.second) })
+        .entries
+        .sortedByDescending { it.key }
+    stages.forEach { (priority, handlers) ->
+      logger.info { "Stopping Features (priority=$priority, handlers=${handlers.size})." }
+      supervisorScope {
+        val jobs = handlers.map { (feature, handler) ->
+          launch {
+            logger.info { "Stopping Feature (server=${this@Server}, feature=$feature)." }
+            val time = measureTime {
+              try {
+                handler.stop(features)
+              } catch (e: Throwable) {
+                logger.error(e) { "Feature failed to stop (server=${this@Server}, feature=$feature)." }
+              }
             }
+            logger.info { "Feature stopped (server=${this@Server}, feature=$feature, time=$time)." }
           }
-          logger.info { "Feature stopped (server=${this@Server}, feature=$feature, time=$time)." }
         }
-      }
-      jobs.joinAll()
-    }
-    features.forEach { feature ->
-      try {
-        feature.afterStop(features)
-      } catch (e: Throwable) {
-        logger.warn(e) { "Feature failed afterStop (server=${this@Server}, feature=$feature)." }
+        jobs.joinAll()
       }
     }
   }
