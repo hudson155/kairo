@@ -13,7 +13,6 @@ internal class HealthCheckHandler(
 ) : HasRouting {
   private val healthCheckService: HealthCheckService = HealthCheckService(healthChecks, timeout)
 
-  @Suppress("LongMethod")
   override fun Application.routing() {
     routing {
       route(HealthCheckApi.Liveness::class) {

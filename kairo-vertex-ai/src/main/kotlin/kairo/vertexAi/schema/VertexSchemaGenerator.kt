@@ -3,12 +3,10 @@ package kairo.vertexAi.schema
 import com.google.genai.types.Schema
 import com.google.genai.types.Type
 import kotlin.reflect.typeOf
-import kotlinx.serialization.descriptors.PolymorphicKind
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.SerialKind
 import kotlinx.serialization.descriptors.StructureKind
-import kotlinx.serialization.descriptors.elementDescriptors
 import kotlinx.serialization.descriptors.elementNames
 import kotlinx.serialization.serializer
 
@@ -19,7 +17,6 @@ public object VertexSchemaGenerator {
   public fun generate(descriptor: SerialDescriptor, annotations: List<Annotation> = emptyList()): Schema =
     @Suppress("ElseCaseInsteadOfExhaustiveWhen")
     when (descriptor.kind) {
-      is PolymorphicKind.SEALED -> generatePolymorphic(descriptor, annotations)
       is StructureKind.CLASS -> generateClass(descriptor, annotations)
       is StructureKind.LIST -> generateList(descriptor, annotations)
       is PrimitiveKind.BOOLEAN -> generateBoolean(descriptor, annotations)
@@ -32,76 +29,24 @@ public object VertexSchemaGenerator {
       else -> error("Unsupported kind (kind=${descriptor.kind}).")
     }
 
-  private fun generatePolymorphic(descriptor: SerialDescriptor, annotations: List<Annotation>): Schema {
-    check(descriptor.elementsCount == 2) {
-      "Polymorphic descriptor must have exactly 2 elements (descriptor=$descriptor)."
-    }
-    return Schema.builder().apply {
-      anyOf(
-        descriptor.getElementDescriptor(1).elementDescriptors.map { elementDescriptor ->
-          generateObject(
-            descriptor = descriptor,
-            annotations = elementDescriptor.annotations,
-            properties = buildMap {
-              put(
-                key = descriptor.getElementName(0),
-                value = Schema.builder().apply {
-                  type(Type.Known.STRING)
-                  enum_(elementDescriptor.serialName)
-                  nullable(false)
-                }.build(),
-              )
-              repeat(elementDescriptor.elementsCount) { i ->
-                put(
-                  key = elementDescriptor.getElementName(i),
-                  value = generate(
-                    descriptor = elementDescriptor.getElementDescriptor(i),
-                    annotations = elementDescriptor.getElementAnnotations(i),
-                  ),
-                )
-              }
-            },
-          )
-        },
-      )
-      annotation<Vertex.Description>(descriptor.annotations + annotations)?.let { description(it.value) }
-    }.build()
-  }
-
   private fun generateClass(descriptor: SerialDescriptor, annotations: List<Annotation>): Schema =
-    generateObject(
-      descriptor = descriptor,
-      annotations = descriptor.annotations + annotations,
-      properties = buildMap {
-        repeat(descriptor.elementsCount) { i ->
-          put(
-            key = descriptor.getElementName(i),
-            value = generate(
-              descriptor = descriptor.getElementDescriptor(i),
-              annotations = descriptor.getElementAnnotations(i),
-            ),
-          )
-        }
-      },
-    )
-
-  private fun generateObject(
-    descriptor: SerialDescriptor,
-    annotations: List<Annotation>,
-    properties: Map<String, Schema>,
-  ): Schema =
     Schema.builder().apply {
       type(Type.Known.OBJECT)
       nullable(descriptor.isNullable)
-      annotation<Vertex.Description>(annotations)?.let { description(it.value) }
-      properties(properties)
-      required(properties.keys.toList())
+      annotation<Vertex.Description>(descriptor.annotations + annotations)?.let { description(it.value) }
+      properties(
+        List(descriptor.elementsCount) { i ->
+          Pair(
+            first = descriptor.getElementName(i),
+            second = generate(descriptor.getElementDescriptor(i), descriptor.getElementAnnotations(i)),
+          )
+        }.toMap(),
+      )
+      required(List(descriptor.elementsCount) { i -> descriptor.getElementName(i) })
     }.build()
 
   private fun generateList(descriptor: SerialDescriptor, annotations: List<Annotation>): Schema {
-    check(descriptor.elementsCount == 1) {
-      "List descriptor must have exactly 1 element (descriptor=$descriptor)."
-    }
+    check(descriptor.elementsCount == 1) { "List descriptor must have exactly one element (descriptor=$descriptor)." }
     return Schema.builder().apply {
       type(Type.Known.ARRAY)
       annotation<Vertex.Min>(annotations)?.let { minItems(it.value.toLong()) }
