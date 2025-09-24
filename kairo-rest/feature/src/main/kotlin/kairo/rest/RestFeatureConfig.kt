@@ -24,8 +24,8 @@ public data class RestFeatureConfig(
 
   @Serializable
   public data class Timeouts(
-    val requestRead: Duration = 2.seconds,
-    val responseWrite: Duration = 2.seconds,
+    val requestRead: Duration = Duration.ZERO,
+    val responseWrite: Duration = 10.seconds,
   )
 
   @Serializable
