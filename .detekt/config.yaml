@@ -99,7 +99,8 @@ complexity:
     ignoreDefaultParameters: false
     ignoreDataClasses: true
     ignoreAnnotated:
-      - 'com.google.inject.Inject'
+      - 'org.koin.core.annotation.Factory'
+      - 'org.koin.core.annotation.Single'
   MethodOverloading:
     active: false
   NamedArguments:
@@ -569,8 +570,6 @@ potential-bugs:
     active: true
   LateinitUsage:
     active: true
-    ignoreAnnotated:
-      - 'com.google.inject.Inject'
   MapGetWithNotNullAssertionOperator:
     active: true
   MissingPackageDeclaration:
@@ -654,19 +653,24 @@ style:
     imports:
       - 'com.apple.eawt.*'
       - 'com.fasterxml.jackson.*'
+      - 'com.google.api.ResourceProto'
       - 'com.google.api.client.*'
       - 'com.google.cloud.secretmanager.v1beta1.*'
       - 'com.google.cloud.secretmanager.v1beta2.*'
       - 'com.google.common.collect.Table'
       - 'com.google.gson.*'
+      - 'com.google.protobuf.*'
       - 'com.sun.jdi.*'
       - 'com.sun.security.*'
       - 'com.sun.tools.javac.*'
       - 'com.typesafe.config.Optional'
+      - 'dev.langchain4j.internal.*'
       - 'io.kotest.core.spec.*'
       - 'io.kotest.core.test.TestScope'
       - 'io.ktor.http.ContentType.Application.Json'
+      - 'io.ktor.http.ContentType.Message'
       - 'io.netty.util.AttributeKey'
+      - 'io.opencensus.*'
       - 'java.awt.*'
       - 'java.beans.*'
       - 'java.io.ObjectInputFilter.Config'
@@ -690,6 +694,7 @@ style:
       - 'jdk.internal.*'
       - 'jdk.javadoc.*'
       - 'jdk.jfr.*'
+      - 'jdk.vm.*'
       - 'kotlin.coroutines.cancellation.*'
       - 'kotlinx.coroutines.time.*'
       - 'kotlinx.datetime.Clock'
@@ -697,7 +702,7 @@ style:
       - 'net.bytebuddy.*'
       - 'okhttp3.*'
       - 'org.apache.http.*'
-      - 'org.apache.logging.log4j.core.jmx.*'
+      - 'org.apache.logging.*'
       - 'org.intellij.lang.annotations.Flow'
       - 'org.jetbrains.exposed.v1.core.SqlExpressionBuilder'
       - 'org.jetbrains.exposed.v1.core.statements.UpsertSqlExpressionBuilder'
@@ -707,6 +712,7 @@ style:
       - 'org.koin.java.*'
       - 'org.koin.mp.*'
       - 'org.testcontainers.shaded.*'
+      - 'org.threeten.*'
       - 'org.w3c.dom.*'
       - 'org.xml.*'
       - 'sun.awt.*'
@@ -840,6 +846,9 @@ style:
   UseDataClass:
     active: true
     allowVars: false
+    ignoreAnnotated:
+      - 'org.koin.core.annotation.Factory'
+      - 'org.koin.core.annotation.Single'
   UseEmptyCounterpart:
     active: true
   UseIfEmptyOrIfBlank:
