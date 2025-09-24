@@ -2,7 +2,7 @@ package kairo.sql
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import kairo.dependencyInjection.KoinModule
+import kairo.dependencyInjection.HasKoinModules
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
 import kairo.feature.LifecycleHandler
@@ -21,7 +21,7 @@ public class SqlFeature(
   config: SqlFeatureConfig,
   configureHikari: HikariConfig.() -> Unit = {},
   configureDatabase: DatabaseConfig.Builder.() -> Unit = {},
-) : Feature(), KoinModule {
+) : Feature(), HasKoinModules {
   override val name: String = "SQL"
 
   private val hikari: HikariDataSource =
@@ -38,11 +38,13 @@ public class SqlFeature(
       block = configureDatabase,
     )
 
-  override val koinModule: Module =
-    module {
-      single<HikariDataSource> { hikari }
-      single<Database> { database }
-    }
+  override val koinModules: List<Module> =
+    listOf(
+      module {
+        single<HikariDataSource> { hikari }
+        single<Database> { database }
+      },
+    )
 
   override val lifecycle: List<LifecycleHandler> =
     lifecycle {
