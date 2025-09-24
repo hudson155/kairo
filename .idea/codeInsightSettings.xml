@@ -4,19 +4,24 @@
     <excluded-names>
       <name>com.apple.eawt.*</name>
       <name>com.fasterxml.jackson.*</name>
+      <name>com.google.api.ResourceProto</name>
       <name>com.google.api.client.*</name>
       <name>com.google.cloud.secretmanager.v1beta1.*</name>
       <name>com.google.cloud.secretmanager.v1beta2.*</name>
       <name>com.google.common.collect.Table</name>
       <name>com.google.gson.*</name>
+      <name>com.google.protobuf.*</name>
       <name>com.sun.jdi.*</name>
       <name>com.sun.security.*</name>
       <name>com.sun.tools.javac.*</name>
       <name>com.typesafe.config.Optional</name>
+      <name>dev.langchain4j.internal.*</name>
       <name>io.kotest.core.spec.*</name>
       <name>io.kotest.core.test.TestScope</name>
       <name>io.ktor.http.ContentType.Application.Json</name>
+      <name>io.ktor.http.ContentType.Message</name>
       <name>io.netty.util.AttributeKey</name>
+      <name>io.opencensus.*</name>
       <name>java.awt.*</name>
       <name>java.beans.*</name>
       <name>java.io.ObjectInputFilter.Config</name>
@@ -40,6 +45,7 @@
       <name>jdk.internal.*</name>
       <name>jdk.javadoc.*</name>
       <name>jdk.jfr.*</name>
+      <name>jdk.vm.*</name>
       <name>kotlin.coroutines.cancellation.*</name>
       <name>kotlinx.coroutines.time.*</name>
       <name>kotlinx.datetime.Clock</name>
@@ -47,7 +53,7 @@
       <name>net.bytebuddy.*</name>
       <name>okhttp3.*</name>
       <name>org.apache.http.*</name>
-      <name>org.apache.logging.log4j.core.jmx.*</name>
+      <name>org.apache.logging.*</name>
       <name>org.intellij.lang.annotations.Flow</name>
       <name>org.jetbrains.exposed.v1.core.SqlExpressionBuilder</name>
       <name>org.jetbrains.exposed.v1.core.statements.UpsertSqlExpressionBuilder</name>
@@ -57,6 +63,7 @@
       <name>org.koin.java.*</name>
       <name>org.koin.mp.*</name>
       <name>org.testcontainers.shaded.*</name>
+      <name>org.threeten.*</name>
       <name>org.w3c.dom.*</name>
       <name>org.xml.*</name>
       <name>sun.awt.*</name>
