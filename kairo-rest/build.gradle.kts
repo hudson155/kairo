@@ -18,6 +18,7 @@ dependencies {
   implementation(project(":kairo-util"))
 
   api(libs.ktorServer.core) // Available for usage.
+  api(libs.ktorServer.sse)
   implementation(libs.serialization.json)
 
   testImplementation(project(":kairo-id"))

@@ -63,6 +63,8 @@ complexity:
   CognitiveComplexMethod:
     active: true # Unsure how this differs from CyclomaticComplexMethod and if one is preferable.
     threshold: 12
+    ignoreAnnotated:
+      - 'kairo.rest.Routing'
   ComplexCondition:
     active: true
     threshold: 3
@@ -85,6 +87,8 @@ complexity:
   LongMethod:
     active: true
     threshold: 40
+    ignoreAnnotated:
+      - 'kairo.rest.Routing'
     excludes:
       - '**/src/test/kotlin/**/*Eval.kt'
       - '**/src/test/kotlin/**/*Test.kt'

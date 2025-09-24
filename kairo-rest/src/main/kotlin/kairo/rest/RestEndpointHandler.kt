@@ -4,6 +4,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.routing.HttpMethodRouteSelector
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.Routing
+import io.ktor.server.routing.RoutingContext
 import io.ktor.server.routing.accept
 import io.ktor.server.routing.application
 import io.ktor.server.routing.contentType
@@ -24,13 +25,13 @@ private val error: RestEndpointTemplateErrorBuilder = RestEndpointTemplateErrorB
 public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal constructor(
   private val endpoint: KClass<E>,
 ) {
-  internal var handle: (suspend (endpoint: E) -> O)? = null
+  internal var handle: (suspend RoutingContext.(endpoint: E) -> O)? = null
   internal var statusCode: (suspend (endpoint: O) -> HttpStatusCode?)? = null
 
   /**
    * Specifies the handler for the endpoint.
    */
-  public fun handle(handle: suspend (endpoint: E) -> O) {
+  public fun handle(handle: suspend RoutingContext.(endpoint: E) -> O) {
     require(this.handle == null) { "${error.endpoint(endpoint)}: Handler already defined." }
     this.handle = handle
   }
@@ -60,7 +61,7 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Routing.route(
   route.handle {
     val handler = RestEndpointHandler(endpoint).apply(block)
     val response = requireNotNull(handler.handle) { "${error.endpoint(endpoint)}: Must define a handler." }
-      .invoke(reader.read(call))
+      .invoke(this, reader.read(call))
     handler.statusCode?.let { statusCode ->
       statusCode(response)?.let { call.response.status(it) }
     }

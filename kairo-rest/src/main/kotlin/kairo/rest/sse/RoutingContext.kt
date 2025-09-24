@@ -1,4 +1,4 @@
-package kairo.rest
+package kairo.rest.sse
 
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders

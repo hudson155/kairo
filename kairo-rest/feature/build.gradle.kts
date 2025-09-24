@@ -20,6 +20,5 @@ dependencies {
   implementation(libs.ktorServer.doubleReceive)
   implementation(libs.ktorServer.forwardedHeader)
   implementation(libs.ktorServer.netty)
-  implementation(libs.ktorServer.sse)
   implementation(libs.ktorServer.statusPages)
 }
