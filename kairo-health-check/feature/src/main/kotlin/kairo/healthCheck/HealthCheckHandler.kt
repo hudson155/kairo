@@ -4,6 +4,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.routing.routing
 import kairo.rest.HasRouting
+import kairo.rest.Routing
 import kairo.rest.route
 import kotlin.time.Duration
 
@@ -13,7 +14,7 @@ internal class HealthCheckHandler(
 ) : HasRouting {
   private val healthCheckService: HealthCheckService = HealthCheckService(healthChecks, timeout)
 
-  @Suppress("LongMethod")
+  @Routing
   override fun Application.routing() {
     routing {
       route(HealthCheckApi.Liveness::class) {

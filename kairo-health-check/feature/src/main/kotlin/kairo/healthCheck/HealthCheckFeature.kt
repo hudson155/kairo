@@ -6,6 +6,7 @@ import kairo.feature.FeaturePriority
 import kairo.feature.LifecycleHandler
 import kairo.feature.lifecycle
 import kairo.rest.HasRouting
+import kairo.rest.Routing
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -44,6 +45,7 @@ public class HealthCheckFeature(
       }
     }
 
+  @Routing
   override fun Application.routing() {
     with(healthCheckHandler) { routing() }
   }
