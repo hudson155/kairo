@@ -94,11 +94,11 @@ you just need to register them with your Feature.
 ```kotlin
 @org.koin.core.annotation.Module
 @org.koin.core.annotation.ComponentScan
-class UserFeature : Feature(), KoinModule {
+class UserFeature : Feature(), HasKoinModules {
   override val name: String = "User"
 
-  // Genereated by KSP; name includes Java package.
-  override val koinModule: Module = user_UserFeature
+  // Genereated by KSP.
+  override val koinModules: List<Module> = listOf(module)
 }
 ```
 
@@ -110,13 +110,15 @@ you can wire it up manually if you prefer.
 ```kotlin
 class UserFeature(
   private val koin: Koin,
-) : Feature(), KoinModule {
+) : Feature(), HasKoinModules {
   override val name: String = "User"
 
-  override val koinModule: Module =
-    module {
-      single<UserStore> { UserStore(...) }
-      single<UserService> { UserService(...) }
-    }
+  override val koinModules: List<Module> =
+    listOf(
+      module {
+        single<UserStore> { UserStore(...) }
+        single<UserService> { UserService(...) }
+      }
+    )
 }
 ```

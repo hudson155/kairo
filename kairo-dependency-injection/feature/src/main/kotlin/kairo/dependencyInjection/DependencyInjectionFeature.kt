@@ -8,7 +8,7 @@ import org.koin.core.KoinApplication
 
 /**
  * The Dependency Injection Feature enables Koin for dependency injection,
- * allowing other Features to bind Koin dependencies by implementing [KoinModule].
+ * allowing other Features to bind Koin dependencies by implementing [HasKoinModules].
  */
 public class DependencyInjectionFeature(
   private val application: KoinApplication,
@@ -20,8 +20,8 @@ public class DependencyInjectionFeature(
       handler(FeaturePriority.dependencyInjection) {
         start { features ->
           features.forEach { feature ->
-            if (feature !is KoinModule) return@forEach
-            application.modules(feature.koinModule)
+            if (feature !is HasKoinModules) return@forEach
+            application.modules(feature.koinModules)
           }
         }
       }
