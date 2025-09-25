@@ -1,7 +1,6 @@
 import java.net.URI
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 
 internal val javaVersion: JavaLanguageVersion = JavaLanguageVersion.of(21)
@@ -30,8 +29,6 @@ internal fun MavenPublication.license() {
   }
 }
 
-internal fun PublishToMavenRepository.requireVersion(version: Any) {
-  doFirst {
-    require(version is String && version != "unspecified") { "Version is not specified" }
-  }
+internal fun requireVersion(version: Any) {
+  require(version is String && version != "unspecified") { "Version is not specified" }
 }

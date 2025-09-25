@@ -22,5 +22,7 @@ publishing {
 }
 
 tasks.withType<PublishToMavenRepository> {
-  requireVersion(version)
+  doFirst {
+    requireVersion(version)
+  }
 }
