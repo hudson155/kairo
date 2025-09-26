@@ -67,8 +67,8 @@ private fun createHikari(
 ): HikariDataSource {
   val config = HikariConfig().apply {
     jdbcUrl = connectionFactory.url
-    username = connectionFactory.username
-    password = connectionFactory.password.value
+    connectionFactory.username?.let { username = it }
+    connectionFactory.password?.let { password = it.value }
     connectionTimeout = connectionFactory.connectTimeout.inWholeMilliseconds
     minimumIdle = connectionPool.size.min
     maximumPoolSize = connectionPool.size.max

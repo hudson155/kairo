@@ -5,6 +5,7 @@ hocon = "1.4.5" # https://github.com/lightbend/config/releases
 kotest = "6.0.3" # https://github.com/kotest/kotest/releases
 logging = "7.0.13" # https://github.com/oshai/kotlin-logging/releases
 mockk = "1.14.5" # https://github.com/mockk/mockk/releases
+postgres-gcp = "1.25.3" # https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
 
 [libraries]
 
@@ -55,6 +56,7 @@ logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "loggin
 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
+postgres-gcp = { module = "com.google.cloud.sql:postgres-socket-factory", version.ref = "postgres-gcp" }
 postgres-jdbc = { module = "org.postgresql:postgresql" }
 
 serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
