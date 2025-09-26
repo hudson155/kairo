@@ -51,8 +51,8 @@ repositories {
 
 dependencies {
   val kairoVersion = "6.0.0"
-  ksp(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
-  implementation(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
+  ksp(platform("software.airborne.kairo:bom:$kairoVersion"))
+  implementation(platform("software.airborne.kairo:bom:$kairoVersion"))
 
   ksp("io.insert-koin:koin-ksp-compiler")
 

@@ -60,7 +60,7 @@ to keep your Kairo dependencies aligned.
 // build.gradle.kts
 
 dependencies {
-  implementation(enforcedPlatform("software.airborne.kairo:bom:6.0.0"))
+  implementation(platform("software.airborne.kairo:bom:6.0.0"))
   implementation("software.airborne.kairo:YOUR-LIBRARY-OF-CHOICE")
 }
 ```
@@ -78,7 +78,7 @@ but also aligns several external library versions.
 // build.gradle.kts
 
 dependencies {
-  implementation(enforcedPlatform("software.airborne.kairo:bom-full:6.0.0"))
+  implementation(platform("software.airborne.kairo:bom-full:6.0.0"))
 }
 ```
 
