@@ -1,5 +1,6 @@
 package kairo.serialization
 
+import kairo.optional.optionalModule
 import kotlinx.serialization.json.JsonBuilder
 import kotlinx.serialization.modules.plus
 
@@ -15,7 +16,7 @@ public fun JsonBuilder.kairo() {
   allowTrailingComma = false
   allowComments = false
   allowSpecialFloatingPointValues = false
-  serializersModule += serializersModule
+  serializersModule += optionalModule
 }
 
 public fun JsonBuilder.kairoPrettyPrint() {
