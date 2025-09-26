@@ -463,8 +463,7 @@ naming:
   ForbiddenClassName:
     active: false
   FunctionMaxLength:
-    active: true
-    maximumFunctionNameLength: 60
+    active: false
   FunctionMinLength:
     active: true
     minimumFunctionNameLength: 2
