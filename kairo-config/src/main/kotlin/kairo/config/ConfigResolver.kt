@@ -11,6 +11,10 @@ import kotlinx.serialization.json.encodeToJsonElement
 // TODO: Should config resolution be parallelized?
 // If fetching a lot of GCP secrets, it might have significant impact.
 
+/**
+ * Config resolvers let you dynamically resolve config string values.
+ * String values that start with [prefix] will be mapped through [resolve].
+ */
 @Suppress("UseDataClass")
 public class ConfigResolver(
   internal val prefix: String,
