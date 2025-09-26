@@ -14,8 +14,8 @@ public data class SqlFeatureConfig(
   @Serializable
   public data class ConnectionFactory(
     val url: String,
-    val username: String?,
-    val password: ProtectedString?,
+    val username: String? = null,
+    val password: ProtectedString? = null,
     val connectTimeout: Duration = 4000.milliseconds,
   )
 
