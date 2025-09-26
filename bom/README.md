@@ -30,7 +30,7 @@ repositories {
 
 dependencies {
   val kairoVersion = "6.0.0"
-  implementation(enforcedPlatform("software.airborne.kairo:bom:$kairoVersion"))
+  implementation(platform("software.airborne.kairo:bom:$kairoVersion"))
 
   // Pull in whichever Kairo dependencies you need.
   implementation("software.airborne.kairo:kairo-coroutines")
