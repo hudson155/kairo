@@ -54,9 +54,7 @@ val json: Json =
 
 val json: Json =
   Json {
-    serializersModule = SerializersModule {
-      include(optionalModule)
-    }
+    serializersModule += optionalModule
   }
 ```
 
