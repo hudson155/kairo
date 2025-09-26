@@ -80,6 +80,42 @@ json.decodeFromString<List<Animal>>(
 // => [Animal.Dog(name=Rex, barksPerMinute=30), Animal.Cat(name=Whiskers, napsPerDay=12)]
 ```
 
+### Built-in serializers
+
+There are built-in serializers for a few types, but you need to reference them manually.
+
+#### `BigDecimal`
+
+You can either serialize to a double or to a string.
+It's better to serialize to a string, because doubles have a maximum precision.
+
+```kotlin
+@Serializable
+data class MyClass(
+  @Serializable(with = BigDecimalSerializer.AsString::class)
+  val value: BigDecimal,
+)
+
+json.encodeToString(MyClass(BigDecimal("123.456")))
+// => {"value":"123.456"}
+```
+
+#### `BigInteger`
+
+You can either serialize to a long or to a string.
+It's better to serialize to a string, because longs have a maximum range.
+
+```kotlin
+@Serializable
+data class MyClass(
+  @Serializable(with = BigIntegerSerializer.AsString::class)
+  val value: BigInteger,
+)
+
+json.encodeToString(MyClass(BigInteger("12345")))
+// => {"value":"12345"}
+```
+
 ### Advanced usage
 
 This README only covers the basics.

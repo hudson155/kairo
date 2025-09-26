@@ -1,4 +1,5 @@
 plugins {
+  kotlin("plugin.serialization")
   id("kairo-library")
   id("kairo-library-publish")
 }
@@ -14,4 +15,8 @@ dependencies {
 
   api(libs.serialization.core)
   compileOnly(libs.serialization.json)
+
+  testImplementation(project(":kairo-testing"))
+
+  testImplementation(libs.serialization.json)
 }
