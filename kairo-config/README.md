@@ -23,6 +23,8 @@ sentryDsn = ${?SENTRY_DSN} # Optional env var.
 databasePassword = ${DATABASE_PASSWORD} # Required env var.
 ```
 
+TODO: Document config resolvers in this README, the CHANGELOG, and possibly the root README.
+
 _This is a contrived example. See [below](#usage) for realistic examples._
 
 ### Sample usage
