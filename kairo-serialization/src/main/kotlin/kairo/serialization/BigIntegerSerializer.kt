@@ -20,7 +20,7 @@ public abstract class BigIntegerSerializer(
 
   public object AsLong : BigIntegerSerializer(PrimitiveKind.LONG) {
     override fun serialize(encoder: Encoder, value: BigInteger) {
-      encoder.encodeLong(value.toLong())
+      encoder.encodeLong(value.longValueExact())
     }
 
     override fun deserialize(decoder: Decoder): BigInteger =
