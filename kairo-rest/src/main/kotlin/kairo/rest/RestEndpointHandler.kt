@@ -57,7 +57,7 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Routing.route(
   val responseType = KairoType.from<O>(RestEndpoint::class, 1, endpoint)
   val template = RestEndpointTemplate.from(endpoint)
   val route = buildRoute(template)
-  val reader = RestEndpointReader.from(application.attributes.json, endpoint)
+  val reader = RestEndpointReader.from(application.json, endpoint)
   route.handle {
     val handler = RestEndpointHandler(endpoint).apply(block)
     val response = requireNotNull(handler.handle) { "${error.endpoint(endpoint)}: Must define a handler." }
