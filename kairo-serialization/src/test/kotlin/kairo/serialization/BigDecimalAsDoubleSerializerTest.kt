@@ -35,6 +35,6 @@ internal class BigDecimalAsDoubleSerializerTest {
     runTest {
       val value = BigDecimal("0.81728436571892375")
       Json.encodeToString(Wrapper(value))
-        .shouldBe("""{"value":0.8172843657189237}""") // This is bad!
+        .shouldBe("""{"value":0.8172843657189237}""")
     }
 }

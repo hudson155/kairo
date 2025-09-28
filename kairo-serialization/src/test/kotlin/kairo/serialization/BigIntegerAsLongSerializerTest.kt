@@ -1,5 +1,6 @@
 package kairo.serialization
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import java.math.BigInteger
 import kotlinx.coroutines.test.runTest
@@ -34,8 +35,9 @@ internal class BigIntegerAsLongSerializerTest {
   fun `serialize, below lowest long`(): Unit =
     runTest {
       val value = BigInteger("-9223372036854775809")
-      Json.encodeToString(Wrapper(value))
-        .shouldBe("""{"value":9223372036854775807}""") // This is bad!
+      shouldThrow<ArithmeticException> {
+        Json.encodeToString(Wrapper(value))
+      }
     }
 
   @Test
@@ -50,7 +52,8 @@ internal class BigIntegerAsLongSerializerTest {
   fun `serialize, above highest long`(): Unit =
     runTest {
       val value = BigInteger("9223372036854775808")
-      Json.encodeToString(Wrapper(value))
-        .shouldBe("""{"value":-9223372036854775808}""") // This is bad!
+      shouldThrow<ArithmeticException> {
+        Json.encodeToString(Wrapper(value))
+      }
     }
 }
