@@ -1,13 +1,13 @@
 package kairo.rest
 
+import io.ktor.server.application.Application
 import io.ktor.util.AttributeKey
-import io.ktor.util.Attributes
 import kotlinx.serialization.json.Json
 
 private val key: AttributeKey<Json> = AttributeKey<Json>("Json")
 
-public var Attributes.json: Json
-  get() = get(key)
+public var Application.json: Json
+  get() = attributes[key]
   set(value) {
-    put(key, value)
+    attributes[key] = value
   }

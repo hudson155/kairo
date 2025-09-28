@@ -50,7 +50,7 @@ public object KtorServerFactory {
         ktorConfiguration()
       },
       module = {
-        attributes.json = createJson(features)
+        json = createJson(features)
         plugins(config.plugins)
         routing(features)
         ktorModule()
@@ -116,7 +116,7 @@ public object KtorServerFactory {
 
   private fun Application.installContentNegotiation(config: RestFeatureConfig.Plugins.ContentNegotiation?) {
     config ?: return
-    val json = attributes.json
+    val json = json
     install(ContentNegotiation) {
       json(json)
     }
