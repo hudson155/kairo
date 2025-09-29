@@ -26,7 +26,7 @@ public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal const
   private val endpoint: KClass<E>,
 ) {
   internal var handle: (suspend RoutingContext.(endpoint: E) -> O)? = null
-  internal var statusCode: (suspend (endpoint: O) -> HttpStatusCode?)? = null
+  internal var statusCode: (suspend (response: O) -> HttpStatusCode?)? = null
 
   /**
    * Specifies the handler for the endpoint.
