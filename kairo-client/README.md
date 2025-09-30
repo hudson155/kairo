@@ -22,7 +22,7 @@ dependencies {
 Create a separate Feature for each external integration.
 
 ```kotlin
-class WeatherFeature : ClientFeature() {
+class WeatherFeature : ClientFeature("weather") {
   override val name: String = "Weather"
 
   override val timeout: Duration = 5.seconds
@@ -39,7 +39,7 @@ class WeatherFeature : ClientFeature() {
 Inject and use the corresponding Ktor HTTP client.
 
 ```kotlin
-@Named("Weather") val weatherClient: HttpClient
+@Named("weather") val weatherClient: HttpClient
 
 val response = request {
   method = HttpMethod.Get

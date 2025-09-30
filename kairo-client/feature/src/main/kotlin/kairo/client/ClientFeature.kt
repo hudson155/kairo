@@ -11,13 +11,15 @@ import org.koin.dsl.module
 /**
  * Create a separate Feature for each external integration.
  */
-public abstract class ClientFeature : Feature(), HasKoinModules {
+public abstract class ClientFeature(
+  httpClientName: String,
+) : Feature(), HasKoinModules {
   protected abstract val timeout: Duration
 
   override val koinModules: List<Module> =
     listOf(
       module {
-        single(named(name)) {
+        single(named(httpClientName)) {
           HttpClientFactory.create(
             timeout = timeout,
             block = { configure() },
