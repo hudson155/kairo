@@ -3,8 +3,6 @@ package kairo.rest
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.routing.HttpMethodRouteSelector
 import io.ktor.server.routing.Route
-import io.ktor.server.routing.Routing
-import io.ktor.server.routing.RoutingContext
 import io.ktor.server.routing.accept
 import io.ktor.server.routing.application
 import io.ktor.server.routing.contentType
@@ -23,16 +21,16 @@ import kotlin.reflect.KClass
 private val error: RestEndpointTemplateErrorBuilder = RestEndpointTemplateErrorBuilder
 
 public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal constructor(
-  private val endpoint: KClass<E>,
+  private val kClass: KClass<E>,
 ) {
-  internal var handle: (suspend RoutingContext.(endpoint: E) -> O)? = null
-  internal var statusCode: (suspend (response: O) -> HttpStatusCode?)? = null
+  internal var handle: (suspend HandleReceiver<E>.() -> O)? = null
+  internal var statusCode: (suspend StatusCodeReceiver<O>.() -> HttpStatusCode?)? = null
 
   /**
    * Specifies the handler for the endpoint.
    */
-  public fun handle(handle: suspend RoutingContext.(endpoint: E) -> O) {
-    require(this.handle == null) { "${error.endpoint(endpoint)}: Handler already defined." }
+  public fun handle(handle: suspend HandleReceiver<E>.() -> O) {
+    require(this.handle == null) { "${error.endpoint(kClass)}: Handler already defined." }
     this.handle = handle
   }
 
@@ -40,8 +38,8 @@ public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal const
    * Specifies the HTTP status code to use for the response.
    * If this is not provided or returns null, Ktor's default will apply.
    */
-  public fun statusCode(statusCode: suspend (response: O) -> HttpStatusCode?) {
-    require(this.statusCode == null) { "${error.endpoint(endpoint)}: Status code already defined." }
+  public fun statusCode(statusCode: suspend StatusCodeReceiver<O>.() -> HttpStatusCode?) {
+    require(this.statusCode == null) { "${error.endpoint(kClass)}: Status code already defined." }
     this.statusCode = statusCode
   }
 }
@@ -50,27 +48,28 @@ public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal const
  * Routes a [RestEndpoint] with Ktor.
  * The [block] must specify a handler for the endpoint ([RestEndpointHandler.handle]).
  */
-public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Routing.route(
-  endpoint: KClass<E>,
+public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Route.route(
+  kClass: KClass<E>,
   block: RestEndpointHandler<O, E>.() -> Unit,
 ) {
-  val responseType = KairoType.from<O>(RestEndpoint::class, 1, endpoint)
-  val template = RestEndpointTemplate.from(endpoint)
+  val responseType = KairoType.from<O>(RestEndpoint::class, 1, kClass)
+  val template = RestEndpointTemplate.from(kClass)
   val route = buildRoute(template)
-  val reader = RestEndpointReader.from(application.json, endpoint)
+  val reader = RestEndpointReader.from(application.json, kClass)
   route.handle {
-    val handler = RestEndpointHandler(endpoint).apply(block)
-    val response = requireNotNull(handler.handle) { "${error.endpoint(endpoint)}: Must define a handler." }
-      .invoke(this, reader.read(call))
+    val handler = RestEndpointHandler(kClass).apply(block)
+    val endpoint = reader.read(call)
+    val response = requireNotNull(handler.handle) { "${error.endpoint(kClass)}: Must define a handler." }
+      .invoke(HandleReceiver(call, endpoint))
     handler.statusCode?.let { statusCode ->
-      statusCode(response)?.let { call.response.status(it) }
+      StatusCodeReceiver(call, response).statusCode()?.let { call.response.status(it) }
     }
     call.respond(response, responseType.toKtor())
   }
 }
 
 // TODO: Authenticate.
-private fun Routing.buildRoute(template: RestEndpointTemplate): Route {
+private fun Route.buildRoute(template: RestEndpointTemplate): Route {
   var route = createRouteFromPath(template.toKtorPath())
   route = route.createChild(HttpMethodRouteSelector(template.method))
   template.query.params.forEach { (value, required) ->
