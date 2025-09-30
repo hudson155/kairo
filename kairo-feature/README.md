@@ -87,7 +87,7 @@ class UserFeature(
 
 Features can hook into Server lifecycle events by implementing lifecycle handlers.
 Lifecycle handlers define a priority (most Features should use the default priority).
-All handlers with the same priority run in parallel, 
+All handlers with the same priority run in parallel,
 so they must be thread/coroutine-safe.
 
 ```kotlin
