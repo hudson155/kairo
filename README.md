@@ -111,6 +111,8 @@ These libraries **can be used anywhere**
 - [kairo-id](./kairo-id):
   Human-readable semantic identifiers with variable entropy.
   Compile-time safety without runtime overhead.
+- [kairo-image](./kairo-image):
+  Some utilities for working with images.
 - [kairo-logging](./kairo-logging):
   SLF4J-standardized logging (choose your own logging backend),
   exposing [Ohad Shai's Kotlin logging interface](https://github.com/oshai/kotlin-logging)
