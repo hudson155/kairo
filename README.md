@@ -142,13 +142,13 @@ These libraries help when **building your full application with Kairo**.
   wait for JVM termination,
   and clean up afterwards,
   all with a single call.
-- [kairo-dependency-injection-feature](./kairo-dependency-injection/feature):
+- [kairo-dependency-injection](./kairo-dependency-injection):
   Don't waste time and energy manually wiring your classes together.
   Let Koin create and wire everything instead!
 - [kairo-feature](./kairo-feature):
   The core building block of Kairo applications,
   including both Framework Features and Domain Features.
-- [kairo-health-check-feature](./kairo-health-check/feature):
+- [kairo-health-check](./kairo-health-check):
   With just a few lines of code
   you can add health check endpoints to your Kairo application.
 - [kairo-integration-testing](./kairo-integration-testing):
@@ -156,6 +156,6 @@ These libraries help when **building your full application with Kairo**.
 - [kairo-server](./kairo-server):
   Servers are composed of Features,
   and can be run as an application or as part of integration tests.
-- [kairo-sql-feature](./kairo-sql/feature):
+- [kairo-sql](./kairo-sql):
   Standardizes SQL access in Kairo
   using [Exposed](https://www.jetbrains.com/exposed/)'s lightweight & idiomatic ORM DSL.

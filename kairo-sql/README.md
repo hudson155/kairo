@@ -42,7 +42,7 @@ val features = listOf(
 )
 ```
 
-We recommend using [kairo-config](../../kairo-config) to configure the Feature.
+We recommend using [kairo-config](../kairo-config) to configure the Feature.
 
 ```hocon
 sql.connectionFactory {

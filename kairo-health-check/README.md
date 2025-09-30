@@ -1,11 +1,11 @@
-# Kairo Health Check Feature
+# Health Check
 
 With just a few lines of code
 you can add health check endpoints to your Kairo application.
 
 ```kotlin
 val healthChecks = mapOf(
-  "sql" to HealthCheck { SqlFeature.healthCheck(koinApplication.koin.get()) },
+  "sql" to HealthCheck { SqlFeature.healthCheck(koin) },
   "custom" to HealthCheck {
     // ...
   },
@@ -47,7 +47,7 @@ Throw an exception to fail the check.
 
 ```kotlin
 val healthChecks = mapOf(
-  "sql" to HealthCheck { SqlFeature.healthCheck(koinApplication.koin.get()) },
+  "sql" to HealthCheck { SqlFeature.healthCheck(koin) },
   "custom" to HealthCheck {
     // ...
   },
@@ -65,7 +65,7 @@ you might get other health checks for free.
 
 - SQL Feature
   ```kotlin
-  HealthCheck { SqlFeature.healthCheck(koinApplication.koin.get()) }
+  HealthCheck { SqlFeature.healthCheck(koin) }
   ```
 
 ### Advanced Feature configuration
