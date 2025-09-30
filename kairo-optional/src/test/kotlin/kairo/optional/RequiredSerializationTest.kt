@@ -2,7 +2,7 @@ package kairo.optional
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
-import kairo.serialization.kairo
+import kairo.serialization.json
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.EncodeDefault
@@ -21,10 +21,7 @@ internal class RequiredSerializationTest {
     val value: Required<String> = Required.Missing,
   )
 
-  private val json: Json =
-    Json {
-      kairo()
-    }
+  private val json: Json = json()
 
   @Test
   fun `deserialize, missing`(): Unit =

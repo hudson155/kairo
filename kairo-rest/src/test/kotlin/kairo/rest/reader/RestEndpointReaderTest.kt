@@ -13,17 +13,14 @@ import kairo.libraryBook.LibraryBookId
 import kairo.libraryBook.LibraryBookRep
 import kairo.optional.Optional
 import kairo.optional.Required
-import kairo.serialization.kairo
+import kairo.serialization.json
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
 internal class RestEndpointReaderTest {
-  private val json: Json =
-    Json {
-      kairo()
-    }
+  private val json: Json = json()
 
   @Test
   fun `get, missing path param`(): Unit =

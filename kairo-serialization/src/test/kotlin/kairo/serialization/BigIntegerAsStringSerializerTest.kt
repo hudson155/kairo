@@ -14,11 +14,13 @@ internal class BigIntegerAsStringSerializerTest {
     val value: BigInteger,
   )
 
+  private val json: Json = json()
+
   @Test
   fun `serialize, 0`(): Unit =
     runTest {
       val value = BigInteger("0")
-      Json.encodeToString(Wrapper(value))
+      json.encodeToString(Wrapper(value))
         .shouldBe("""{"value":"0"}""")
     }
 
@@ -26,7 +28,7 @@ internal class BigIntegerAsStringSerializerTest {
   fun `serialize, lowest long`(): Unit =
     runTest {
       val value = BigInteger("-9223372036854775808")
-      Json.encodeToString(Wrapper(value))
+      json.encodeToString(Wrapper(value))
         .shouldBe("""{"value":"-9223372036854775808"}""")
     }
 
@@ -34,7 +36,7 @@ internal class BigIntegerAsStringSerializerTest {
   fun `serialize, below lowest long`(): Unit =
     runTest {
       val value = BigInteger("-9223372036854775809")
-      Json.encodeToString(Wrapper(value))
+      json.encodeToString(Wrapper(value))
         .shouldBe("""{"value":"-9223372036854775809"}""")
     }
 
@@ -42,7 +44,7 @@ internal class BigIntegerAsStringSerializerTest {
   fun `serialize, highest long`(): Unit =
     runTest {
       val value = BigInteger("9223372036854775807")
-      Json.encodeToString(Wrapper(value))
+      json.encodeToString(Wrapper(value))
         .shouldBe("""{"value":"9223372036854775807"}""")
     }
 
@@ -50,7 +52,7 @@ internal class BigIntegerAsStringSerializerTest {
   fun `serialize, above highest long`(): Unit =
     runTest {
       val value = BigInteger("9223372036854775808")
-      Json.encodeToString(Wrapper(value))
+      json.encodeToString(Wrapper(value))
         .shouldBe("""{"value":"9223372036854775808"}""")
     }
 }

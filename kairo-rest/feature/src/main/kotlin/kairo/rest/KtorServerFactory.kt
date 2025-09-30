@@ -23,8 +23,7 @@ import io.ktor.server.response.respond
 import io.ktor.server.sse.SSE
 import kairo.exception.LogicalFailure
 import kairo.feature.Feature
-import kairo.serialization.kairo
-import kairo.serialization.kairoPrettyPrint
+import kairo.serialization.json
 import kotlinx.serialization.json.Json
 
 private val logger: KLogger = KotlinLogging.logger {}
@@ -83,9 +82,7 @@ public object KtorServerFactory {
   }
 
   private fun createJson(features: List<Feature>): Json =
-    Json {
-      kairo()
-      kairoPrettyPrint()
+    json(prettyPrint = true) {
       features.filterIsInstance<ConfiguresJson>().forEach { with(it) { configure() } }
     }
 
