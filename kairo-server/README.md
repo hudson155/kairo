@@ -3,12 +3,6 @@
 Servers are composed of [Features](../kairo-feature),
 and can be run as an application or as part of integration tests.
 
-### Sample usage
-
-Sample usage from the [kairo-sample](https://github.com/hudson155/kairo-sample) repo.
-
-- [Main.kt](https://github.com/hudson155/kairo-sample/blob/main/src/main/kotlin/kairoSample/Main.kt)
-
 ## Installation
 
 Install `kairo-server`.\
