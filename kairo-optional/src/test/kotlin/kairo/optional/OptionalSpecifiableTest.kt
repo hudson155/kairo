@@ -2,6 +2,7 @@ package kairo.optional
 
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -46,5 +47,29 @@ internal class OptionalSpecifiableTest {
       var specified = false
       Optional.Value(42).ifSpecified { specified = true }
       specified.shouldBeTrue()
+    }
+
+  @Test
+  fun `transform, missing`(): Unit =
+    runTest {
+      val optional: Optional<Int> = Optional.Missing
+      optional.transform { (it ?: 0) * 4 + 2 }
+        .shouldBe(Optional.Missing)
+    }
+
+  @Test
+  fun `transform, null`(): Unit =
+    runTest {
+      val optional: Optional<Int> = Optional.Null
+      optional.transform { (it ?: 0) * 4 + 2 }
+        .shouldBe(Optional.Value(2))
+    }
+
+  @Test
+  fun `transform, value`(): Unit =
+    runTest {
+      val optional: Optional<Int> = Optional.Value(10)
+      optional.transform { (it ?: 0) * 4 + 2 }
+        .shouldBe(Optional.Value(42))
     }
 }

@@ -28,6 +28,14 @@ public sealed class Required<out T : Any> : OptionalBase<T>() {
 }
 
 public fun <T : Any> Required<T>.ifSpecified(block: (T) -> Unit) {
-  if (!isSpecified) return
-  block(getOrThrow())
+  when (this) {
+    is Required.Missing -> Unit
+    is Required.Value -> block(value)
+  }
 }
+
+public fun <T : Any, R : Any> Required<T>.transform(block: (T) -> R): Required<R> =
+  when (this) {
+    is Required.Missing -> this
+    is Required.Value -> Required.of(block(value))
+  }
