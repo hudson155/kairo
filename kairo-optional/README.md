@@ -47,20 +47,10 @@ or manually add the `optionalModule`.
 
 ```kotlin
 val json: Json = json()
-
 // or
-
-val json: Json =
-  Json {
-    kairo()
-  }
-
+val json: Json = Json { kairo() }
 // or
-
-val json: Json =
-  Json {
-    serializersModule += optionalModule
-  }
+val json: Json = Json { serializersModule += optionalModule }
 ```
 
 Second, you must add the `@EncodeDefault(EncodeDefault.Mode.NEVER)` and `@Contextual` annotations

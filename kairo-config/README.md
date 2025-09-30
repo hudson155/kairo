@@ -27,15 +27,6 @@ TODO: Document config resolvers in this README, the CHANGELOG, and possibly the 
 
 _This is a contrived example. See [below](#usage) for realistic examples._
 
-### Sample usage
-
-Sample usage from the [kairo-sample](https://github.com/hudson155/kairo-sample) repo.
-
-- [Config.kt](https://github.com/hudson155/kairo-sample/blob/main/src/main/kotlin/kairoSample/Config.kt)
-  (Kotlin data class)
-- [configs/](https://github.com/hudson155/kairo-sample/tree/main/src/main/resources/config)
-  (HOCON config files)
-
 ## Installation
 
 Install `kairo-config`.\
