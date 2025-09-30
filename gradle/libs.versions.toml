@@ -36,6 +36,10 @@ koin-core = { module = "io.insert-koin:koin-core" }
 
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
+ktorClient-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation" }
+ktorClient-core = { module = "io.ktor:ktor-client-core" }
+ktorClient-java = { module = "io.ktor:ktor-client-java" }
+
 ktorHttp = { module = "io.ktor:ktor-http" }
 
 ktorSerialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
