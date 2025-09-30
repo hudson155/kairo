@@ -88,10 +88,6 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
 
 No changes.
 
-#### Date Range
-
-TODO: Coming soon!
-
 #### Dependency Injection
 
 - **Dependency injection with [Koin](https://insert-koin.io/) (replaces Guice).**
@@ -266,6 +262,7 @@ No changes.
 - **Command Runner.**
   Connecting to GCP SQL instances that use [IAM Authentication](https://cloud.google.com/sql/docs/postgres/iam-authentication)
   is now supported through TODO: How is this supported?
+- **Date Range**
 - **Do Not Log String**
 - **Environment Variable Supplier.**
   HOCON configs support native environment variable substitution.
