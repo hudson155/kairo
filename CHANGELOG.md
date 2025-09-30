@@ -73,6 +73,10 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
   and clean up afterwards,
   all with a single call.
 
+#### Client
+
+No changes.
+
 #### Config
 
 - **Switch to [HOCON](https://github.com/lightbend/config) for industry-standard configs.**
@@ -186,10 +190,6 @@ TODO: Coming soon!
 #### Reflect
 
 No changes.
-
-#### REST Client
-
-TODO: Coming soon!
 
 #### REST Feature
 
