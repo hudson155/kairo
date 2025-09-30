@@ -256,6 +256,8 @@ No changes.
 
 - Addition of `firstCauseOf<T>()` for exceptions.
 
+- Addition of the `resource()` Guava wrapper.
+
 #### UUID
 
 - The UUID Feature has been removed.

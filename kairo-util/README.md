@@ -39,6 +39,10 @@ val resource = resource("...")
 println(resource)
 ```
 
+_Note: This uses Guava under the hood.
+Guava is a large library and is **not** included in this artifact.
+Using `resource()` assumes Guava is available at runtime._
+
 ### `singleNullOrThrow()`
 
 Kotlin's `single()` and `singleOrNull()` functions are excellent utilities,
