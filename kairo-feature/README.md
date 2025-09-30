@@ -22,13 +22,6 @@ There are 2 types of Features.
   **No hidden assumptions**
   means you're not tied to patterns that don't make sense for your application.
 
-### Sample usage
-
-Sample usage from the [kairo-sample](https://github.com/hudson155/kairo-sample) repo.
-
-- [LibraryFeature.kt](https://github.com/hudson155/kairo-sample/blob/main/feature/library/src/main/kotlin/kairoSample/library/LibraryFeature.kt)
-  (a Domain Feature)
-
 ## Installation
 
 Install `kairo-feature`.\

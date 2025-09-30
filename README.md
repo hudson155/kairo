@@ -11,10 +11,6 @@ Designed to work seamlessly together but flexible enough to slot into any projec
 Kairo's libraries let you move faster, write cleaner code,
 and focus on the parts of your app that actually matter.
 
-**Not sure where to start?**
-The [kairo-sample](https://github.com/hudson155/kairo-sample) repo
-showcases most of Kairo's functionality.
-
 ## Getting started
 
 _This section assumes you're using Gradle._
@@ -81,10 +77,6 @@ dependencies {
   implementation(platform("software.airborne.kairo:bom-full:6.0.0"))
 }
 ```
-
-**Check out the [kairo-sample](https://github.com/hudson155/kairo-sample) repo**
-to get an understanding of application structure.
-You could even consider forking it to use as a template for your own app.
 
 ## Libraries
 

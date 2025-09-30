@@ -1,7 +1,7 @@
 # Health Check
 
-With just a few lines of code
-you can add health check endpoints to your Kairo application.
+Add health check endpoints to your KAiro application
+with just a few lines of code.
 
 ```kotlin
 val healthChecks = mapOf(
@@ -26,8 +26,6 @@ dependencies {
 
 ## Usage
 
-For basic usage, just add `HealthCheckFeature()`.
-
 ```kotlin
 val features = listOf(
   HealthCheckFeature(),
@@ -41,7 +39,7 @@ This creates 2 endpoints.
 
 ### Customizing health checks
 
-More likely, you're going to want to customize the readiness checks.
+You're probably going to want to customize the readiness checks.
 Implement the `HealthCheck` functional interface.
 Throw an exception to fail the check.
 

@@ -15,21 +15,16 @@ that improves safety without complicating your code.
   Pass protected strings around normally;
   only creation and access require opting in.
 
-Kairo's protected strings strike a balance between
-**developer ergonomics** and **operational safety**.
-
-_Note that this is not cryptographic memory protection.
-Protected strings **do not clean up memory after themselves**.
-Use them to prevent accidental leaks, not to secure against memory inspection._
-
-### Example
-
 ```kotlin
 val apiKey = ProtectedString("your_api_key")
 
 println(apiKey)
 // => ProtectedString(value='REDACTED')
 ```
+
+_Note that this is not cryptographic memory protection.
+Protected strings **do not clean up memory after themselves**.
+Use them to prevent accidental leaks, not to secure against memory inspection._
 
 ## Installation
 

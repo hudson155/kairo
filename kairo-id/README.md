@@ -43,12 +43,6 @@ _Note: like any ID scheme, Kairo IDs involve tradeoffs —
 generation cost, DB storage size, and index performance.
 Use Kairo IDs when human clarity and safety outweigh those tradeoffs._
 
-### Sample usage
-
-Sample usage from the [kairo-sample](https://github.com/hudson155/kairo-sample) repo.
-
-- [LibraryBookId.kt](https://github.com/hudson155/kairo-sample/blob/main/feature/library/src/main/kotlin/kairoSample/library/libraryBook/LibraryBookId.kt)
-
 ## Installation
 
 Install `kairo-id`.
