@@ -4,6 +4,8 @@ include(":bom")
 include(":bom-full")
 
 include(":kairo-application")
+include(":kairo-client")
+include(":kairo-client:feature")
 include(":kairo-config")
 include(":kairo-coroutines")
 include(":kairo-darb")
