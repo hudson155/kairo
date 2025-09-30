@@ -153,3 +153,18 @@ These libraries help when **building your full application with Kairo**.
 - [kairo-sql](./kairo-sql):
   Standardizes SQL access in Kairo
   using [Exposed](https://www.jetbrains.com/exposed/)'s lightweight & idiomatic ORM DSL.
+
+## Publishing
+
+Publish a local snapshot.
+
+```shell
+./gradlew publishToMavenLocal -Pversion=9999-SNAPSHOT
+# Or use the IntelliJ run configuration.
+```
+
+Publish a real version to Google Artifact Registry.
+
+```shell
+./gradlew --no-build-cache --no-configuration-cache publish -Pversion=0.0.0
+```
