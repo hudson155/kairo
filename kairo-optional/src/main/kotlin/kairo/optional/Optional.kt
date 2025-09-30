@@ -34,6 +34,16 @@ public sealed class Optional<out T : Any> : OptionalBase<T>() {
 }
 
 public fun <T : Any> Optional<T>.ifSpecified(block: (T?) -> Unit) {
-  if (!isSpecified) return
-  block(getOrThrow())
+  when (this) {
+    is Optional.Missing -> Unit
+    is Optional.Null -> block(null)
+    is Optional.Value -> block(value)
+  }
 }
+
+public fun <T : Any, R : Any> Optional<T>.transform(block: (T?) -> R?): Optional<R> =
+  when (this) {
+    is Optional.Missing -> this
+    is Optional.Null -> Optional.fromNullable(block(null))
+    is Optional.Value -> Optional.fromNullable(block(value))
+  }
