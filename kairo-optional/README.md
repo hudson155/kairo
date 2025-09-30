@@ -1,4 +1,4 @@
-# Kairo Optionals
+# Optionals
 
 Differentiate between missing and null values.
 
