@@ -5,7 +5,7 @@ you can add health check endpoints to your Kairo application.
 
 ```kotlin
 val healthChecks = mapOf(
-  "sql" to HealthCheck { SqlFeature.healthCheck(koin) },
+  "sql" to HealthCheck { SqlFeature.healthCheck(koinApplication.koin.get()) },
   "custom" to HealthCheck {
     // ...
   },
@@ -47,7 +47,7 @@ Throw an exception to fail the check.
 
 ```kotlin
 val healthChecks = mapOf(
-  "sql" to HealthCheck { SqlFeature.healthCheck(koin) },
+  "sql" to HealthCheck { SqlFeature.healthCheck(koinApplication.koin.get()) },
   "custom" to HealthCheck {
     // ...
   },
