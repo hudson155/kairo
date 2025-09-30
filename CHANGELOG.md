@@ -258,17 +258,12 @@ No changes.
 
 - Addition of the `resource()` Guava wrapper.
 
-#### UUID
-
-- The UUID Feature has been removed.
-  Use Kotlin's `Uuid` class directly instead.
-
 #### Removed libraries
 
 - **Alternative Money Formatters**
 - **Clock**
 - **Closeable** (use built-in closeables instead).
-- **Command Runner**
+- **Command Runner.**
   Connecting to GCP SQL instances that use [IAM Authentication](https://cloud.google.com/sql/docs/postgres/iam-authentication)
   is now supported through TODO: How is this supported?
 - **Do Not Log String**
@@ -280,3 +275,4 @@ No changes.
 - **Slack**
 - **Time**
 - **Transaction Manager**
+- **UUID** (use Kotlin's `Uuid` class directly instead).
