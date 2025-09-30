@@ -73,10 +73,6 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
   and clean up afterwards,
   all with a single call.
 
-#### Clock
-
-TODO: Coming soon!
-
 #### Config
 
 - **Switch to [HOCON](https://github.com/lightbend/config) for industry-standard configs.**
@@ -268,6 +264,7 @@ No changes.
 #### Removed libraries
 
 - **Alternative Money Formatters**
+- **Clock**
 - **Closeable** (use built-in closeables instead).
 - **Command Runner**
   Connecting to GCP SQL instances that use [IAM Authentication](https://cloud.google.com/sql/docs/postgres/iam-authentication)
@@ -275,7 +272,6 @@ No changes.
 - **Do Not Log String**
 - **Environment Variable Supplier.**
   HOCON configs support native environment variable substitution.
-- **Exception**
 - **Google Common**
 - **Hashing**
 - **Lazy Supplier**
