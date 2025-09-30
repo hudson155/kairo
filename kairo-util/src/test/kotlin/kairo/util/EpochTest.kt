@@ -2,11 +2,13 @@ package kairo.util
 
 import io.kotest.matchers.longs.shouldBeZero
 import kotlin.time.Instant
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class EpochTest {
   @Test
-  fun test() {
-    Instant.epoch.epochSeconds.shouldBeZero()
-  }
+  fun test(): Unit =
+    runTest {
+      Instant.epoch.epochSeconds.shouldBeZero()
+    }
 }
