@@ -1,15 +1,20 @@
 package kairo.config
 
+import kairo.serialization.json
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.serializer
 
 // TODO: Should config resolution be parallelized?
-// If fetching a lot of GCP secrets, it might have significant impact.
+//  If fetching a lot of GCP secrets, it might have significant impact.
+
+private val json: Json = json()
 
 /**
  * Config resolvers let you dynamically resolve config string values.
@@ -24,28 +29,35 @@ public class ConfigResolver(
 public suspend inline fun <reified T : Any> resolveConfig(
   config: T,
   resolvers: List<ConfigResolver>,
+): T =
+  resolveConfig(config, { serializer() }, resolvers)
+
+public suspend fun <T : Any> resolveConfig(
+  config: T,
+  serializer: SerializersModule.() -> KSerializer<T>,
+  resolvers: List<ConfigResolver>,
 ): T {
-  var json = Json.encodeToJsonElement(config)
-  json = resolveConfig(json, resolvers)
-  return Json.decodeFromJsonElement(json)
+  var element = json.encodeToJsonElement(json.serializersModule.serializer(), config)
+  element = resolveConfig(element, resolvers)
+  return json.decodeFromJsonElement(json.serializersModule.serializer(), element)
 }
 
 public suspend fun resolveConfig(
-  json: JsonElement,
+  element: JsonElement,
   resolvers: List<ConfigResolver>,
 ): JsonElement =
-  when (json) {
-    is JsonObject -> JsonObject(json.mapValues { (_, value) -> resolveConfig(value, resolvers) })
-    is JsonArray -> JsonArray(json.map { value -> resolveConfig(value, resolvers) })
-    is JsonPrimitive -> resolveConfig(json, resolvers)
+  when (element) {
+    is JsonObject -> JsonObject(element.mapValues { (_, value) -> resolveConfig(value, resolvers) })
+    is JsonArray -> JsonArray(element.map { value -> resolveConfig(value, resolvers) })
+    is JsonPrimitive -> resolveConfig(element, resolvers)
   }
 
 private suspend fun resolveConfig(
-  json: JsonPrimitive,
+  element: JsonPrimitive,
   resolvers: List<ConfigResolver>,
 ): JsonElement {
-  if (!json.isString) return json
-  val content = json.content
-  val resolver = resolvers.singleNullOrThrow { content.startsWith(it.prefix) } ?: return json
-  return Json.encodeToJsonElement(resolver.resolve(content.removePrefix(resolver.prefix)))
+  if (!element.isString) return element
+  val content = element.content
+  val resolver = resolvers.singleNullOrThrow { content.startsWith(it.prefix) } ?: return element
+  return json.encodeToJsonElement(resolver.resolve(content.removePrefix(resolver.prefix)))
 }

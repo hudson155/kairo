@@ -3,16 +3,13 @@ package kairo.rest.reader
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.throwable.shouldHaveMessage
 import kairo.libraryBook.BrokenLibraryBookApi
-import kairo.serialization.kairo
+import kairo.serialization.json
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
 internal class BrokenRestEndpointReaderTest {
-  private val json: Json =
-    Json {
-      kairo()
-    }
+  private val json: Json = json()
 
   @Test
   fun notDataClass(): Unit =

@@ -48,7 +48,7 @@ internal class DataClassRestEndpointReader<I : Any, E : RestEndpoint<I, *>>(
       if (paramName == RestEndpoint<*, *>::body.name) {
         return@associateWith call.receive<I>(KairoType<I>(param.type).toKtor())
       }
-      val serializer = Json.serializersModule.serializer(param.type)
+      val serializer = json.serializersModule.serializer(param.type)
       val values = call.parameters.getAll(paramName)
       @Suppress("ElseCaseInsteadOfExhaustiveWhen")
       return@associateWith when (serializer.descriptor.kind) {
