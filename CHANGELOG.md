@@ -152,6 +152,10 @@ TODO: Coming soon!
 
 - Applications no longer need to install `IdFeature` in order to generate IDs.
 
+#### Image
+
+- Introduction of `kairo-image` (some utilities for working with images).
+
 #### Integration Testing
 
 - **Simpler and faster integration testing.**
