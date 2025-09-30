@@ -23,7 +23,7 @@ internal class HealthCheckHandler(
 
       route(HealthCheckApi.Readiness::class) {
         handle { healthCheckService.readiness() }
-        statusCode { if (!it.success) HttpStatusCode.InternalServerError else null }
+        statusCode { if (!response.success) HttpStatusCode.InternalServerError else null }
       }
     }
   }
