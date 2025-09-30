@@ -22,7 +22,7 @@ dependencies {
 Create a separate Feature for each external integration.
 
 ```kotlin
-class WeatherFeature : ClientFeature("weather") {
+class WeatherFeature : ClientFeature(httpClientName = "weather") {
   override val name: String = "Weather"
 
   override val timeout: Duration = 5.seconds
