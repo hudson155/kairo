@@ -117,14 +117,6 @@ No changes.
   For apps previously running on Google App Engine,
   consider using Google Cloud Run instead.
 
-#### Google Cloud Scheduler
-
-TODO: Coming soon!
-
-#### Google Cloud Tasks
-
-TODO: Coming soon!
-
 #### Health Check
 
 - **Health checks now reflect actual readiness.**
@@ -168,10 +160,6 @@ TODO: Coming soon!
   - Simplified recommended local log format (does not affect GCP logs).
 
 - **Guidance to reduce noisy logs in production.**
-
-#### MDC
-
-TODO: Coming soon!
 
 #### Money
 
@@ -267,8 +255,11 @@ No changes.
 - **Environment Variable Supplier.**
   HOCON configs support native environment variable substitution.
 - **Google Common**
+- **Google Cloud Scheduler**
+- **Google Cloud Tasks**
 - **Hashing**
 - **Lazy Supplier**
+- **MDC**
 - **Slack**
 - **Time**
 - **Transaction Manager**
