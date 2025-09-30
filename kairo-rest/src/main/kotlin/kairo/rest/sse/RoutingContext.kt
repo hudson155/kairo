@@ -3,15 +3,15 @@ package kairo.rest.sse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.server.response.header
-import io.ktor.server.routing.RoutingContext
 import io.ktor.server.sse.SSEServerContent
 import io.ktor.server.sse.ServerSSESession
 import io.ktor.server.sse.sse
+import kairo.rest.HandleReceiver
 
 /**
  * Adapted from [sse].
  */
-public fun RoutingContext.serverSideEvents(
+public fun HandleReceiver<*>.serverSideEvents(
   handler: suspend ServerSSESession.() -> Unit,
 ): SSEServerContent {
   call.response.header(HttpHeaders.ContentType, ContentType.Text.EventStream.toString())
