@@ -25,7 +25,7 @@ public class DefaultGcpSecretSupplier : GcpSecretSupplier() {
         .let { ApiFutureToListenableFuture(it) }
         .await()
     } catch (_: NotFoundException) {
-      return null // TODO: QA that this 404 works.
+      return null
     }
     @OptIn(ProtectedString.Access::class)
     return response.payload.data.toStringUtf8().let { ProtectedString(it) }
