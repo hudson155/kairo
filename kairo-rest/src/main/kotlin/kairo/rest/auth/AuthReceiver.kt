@@ -1,6 +1,7 @@
-package kairo.rest
+package kairo.rest.auth
 
 import io.ktor.server.routing.RoutingCall
+import kairo.rest.RestEndpoint
 
 @Suppress("UseDataClass")
 public class AuthReceiver<E : RestEndpoint<*, *>> internal constructor(

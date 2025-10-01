@@ -25,6 +25,7 @@ import io.ktor.server.sse.SSE
 import kairo.exception.LogicalFailure
 import kairo.feature.Feature
 import kairo.rest.auth.AuthConfig
+import kairo.rest.auth.authConfig
 import kairo.serialization.json
 import kotlinx.serialization.json.Json
 

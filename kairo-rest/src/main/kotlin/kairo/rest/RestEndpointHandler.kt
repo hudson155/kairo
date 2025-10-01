@@ -10,6 +10,8 @@ import io.ktor.server.routing.createRouteFromPath
 import io.ktor.server.routing.optionalParam
 import io.ktor.server.routing.param
 import kairo.reflect.KairoType
+import kairo.rest.auth.AuthReceiver
+import kairo.rest.auth.authConfig
 import kairo.rest.reader.RestEndpointReader
 import kairo.rest.template.RestEndpointTemplate
 import kairo.rest.template.RestEndpointTemplateErrorBuilder

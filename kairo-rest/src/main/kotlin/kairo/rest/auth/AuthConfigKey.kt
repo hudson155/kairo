@@ -1,8 +1,7 @@
-package kairo.rest
+package kairo.rest.auth
 
 import io.ktor.server.application.Application
 import io.ktor.util.AttributeKey
-import kairo.rest.auth.AuthConfig
 
 private val key: AttributeKey<AuthConfig> = AttributeKey("authConfig")
 
