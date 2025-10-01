@@ -1,12 +1,3 @@
-[versions]
-
-hikari = "7.0.2" # https://github.com/brettwooldridge/HikariCP/tags
-hocon = "1.4.5" # https://github.com/lightbend/config/releases
-kotest = "6.0.3" # https://github.com/kotest/kotest/releases
-logging = "7.0.13" # https://github.com/oshai/kotlin-logging/releases
-mockk = "1.14.5" # https://github.com/mockk/mockk/releases
-postgres-gcp = "1.25.3" # https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
-
 [libraries]
 
 arrow-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
@@ -27,14 +18,14 @@ gcp-secretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
 
 guava = { module = "com.google.guava:guava" }
 
-hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
+hikari = { module = "com.zaxxer:HikariCP" }
 
-hocon = { module = "com.typesafe:config", version.ref = "hocon" }
+hocon = { module = "com.typesafe:config" }
 
 koin-annotations = { module = "io.insert-koin:koin-annotations" }
 koin-core = { module = "io.insert-koin:koin-core" }
 
-kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotest = { module = "io.kotest:kotest-runner-junit5" }
 
 ktorClient-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation" }
 ktorClient-core = { module = "io.ktor:ktor-client-core" }
@@ -56,11 +47,11 @@ ktorServer-netty = { module = "io.ktor:ktor-server-netty" }
 ktorServer-sse = { module = "io.ktor:ktor-server-sse" }
 ktorServer-statusPages = { module = "io.ktor:ktor-server-status-pages" }
 
-logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "logging" }
+logging = { module = "io.github.oshai:kotlin-logging-jvm" }
 
-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk = { module = "io.mockk:mockk" }
 
-postgres-gcp = { module = "com.google.cloud.sql:postgres-socket-factory", version.ref = "postgres-gcp" }
+postgres-gcp = { module = "com.google.cloud.sql:postgres-socket-factory" }
 postgres-jdbc = { module = "org.postgresql:postgresql" }
 
 serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
