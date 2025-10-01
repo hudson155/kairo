@@ -7,6 +7,7 @@ import io.ktor.http.HttpMethod
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
+import io.ktor.server.auth.Authentication
 import io.ktor.server.engine.applicationEnvironment
 import io.ktor.server.engine.connector
 import io.ktor.server.engine.embeddedServer
@@ -23,6 +24,7 @@ import io.ktor.server.response.respond
 import io.ktor.server.sse.SSE
 import kairo.exception.LogicalFailure
 import kairo.feature.Feature
+import kairo.rest.auth.AuthConfig
 import kairo.serialization.json
 import kotlinx.serialization.json.Json
 
@@ -33,7 +35,8 @@ public object KtorServerFactory {
   public fun create(
     config: RestFeatureConfig,
     features: List<Feature>,
-    ktorConfiguration: KtorServerConfig.() -> Unit,
+    ktorConfig: KtorServerConfig.() -> Unit,
+    authConfig: AuthConfig?,
     ktorModule: Application.() -> Unit,
   ): KtorServer =
     embeddedServer(
@@ -46,11 +49,13 @@ public object KtorServerFactory {
           lifecycle = config.lifecycle,
           connector = config.connector,
         )
-        ktorConfiguration()
+        ktorConfig()
       },
       module = {
-        json = createJson(features)
+        this.authConfig = authConfig
+        this.json = createJson(features)
         plugins(config.plugins)
+        auth()
         routing(features)
         ktorModule()
       },
@@ -166,6 +171,13 @@ public object KtorServerFactory {
         call.response.status(cause.status)
         call.respond(cause.json)
       }
+    }
+  }
+
+  private fun Application.auth() {
+    val authConfig = authConfig ?: return
+    install(Authentication) {
+      with(authConfig) { configure() }
     }
   }
 
