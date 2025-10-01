@@ -128,7 +128,6 @@ suspend fun listAll(): List<UserModel> =
     UserTable
       .selectAll()
       .map(UserTable::fromRow)
-      .toList()
   }
 
 suspend fun create(creator: UserModel.Creator): UserModel =
