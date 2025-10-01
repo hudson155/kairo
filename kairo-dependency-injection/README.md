@@ -23,7 +23,8 @@ integrated into the Kairo ecosystem.
 ## Installation
 
 Install `kairo-dependency-injection-feature`.\
-You don't need to install Koin separately — it's included by default.
+You don't need to install Koin separately —
+it's included by default.
 
 If you want to use Koin annotations (recommended),
 also add the relevant KSP lines from the snippet below.

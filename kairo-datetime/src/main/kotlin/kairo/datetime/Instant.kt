@@ -1,4 +1,4 @@
-package kairo.util
+package kairo.datetime
 
 import kotlin.time.Instant
 

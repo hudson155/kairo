@@ -7,6 +7,8 @@ coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 
+datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime" }
+
 exposed-core = { module = "org.jetbrains.exposed:exposed-core" }
 exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc" }

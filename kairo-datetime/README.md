@@ -1,0 +1,22 @@
+# Kairo Date/Time
+
+`kairo-datetime` extends [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
+& adds some **convenient helper functions**.
+
+## Installation
+
+Install `kairo-datetime`.\
+You don't need to install Kotlin's datetime library separately —
+it's included by default.
+
+```kotlin
+// build.gradle.kts
+
+dependencies {
+  implementation("software.airborne.kairo:kairo-datetime")
+}
+```
+
+## Usage
+
+See [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime).
