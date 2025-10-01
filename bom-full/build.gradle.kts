@@ -46,6 +46,10 @@ dependencies {
   // https://github.com/kotest/kotest/releases
   constraints.api("io.kotest:kotest-runner-junit5:6.0.3")
 
+  // kotlinx-datetime
+  // https://github.com/Kotlin/kotlinx-datetime/releases
+  constraints.api("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
+
   // ktor
   // https://github.com/ktorio/ktor/releases
   api(platform("io.ktor:ktor-bom:3.3.0"))
