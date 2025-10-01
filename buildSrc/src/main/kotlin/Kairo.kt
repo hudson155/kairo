@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 import java.net.URI
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.publish.maven.MavenPublication
