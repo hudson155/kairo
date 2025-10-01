@@ -72,7 +72,8 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Route.route(
     val endpoint = reader.read(call)
     application.authConfig?.let { authConfig ->
       val authReceiver = AuthReceiver(call, endpoint)
-      handler.auth?.invoke(AuthReceiver(call, endpoint)) ?: with(authConfig) { authReceiver.default() }
+      val auth = handler.auth
+      if (auth != null) auth.invoke(authReceiver) else with(authConfig) { authReceiver.default() }
     }
     val response = requireNotNull(handler.handle) { "${error.endpoint(kClass)}: Must define a handler." }
       .invoke(HandleReceiver(call, endpoint))
