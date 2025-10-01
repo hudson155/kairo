@@ -20,3 +20,8 @@ dependencies {
 ## Usage
 
 See [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime).
+
+- `Instant` (standard library)
+- `LocalDateTime`, `LocalDate`, `YearMonth`, `LocalTime`
+- `TimeZone`
+- `Month` and `DayOfWeek` enums
