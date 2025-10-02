@@ -10,7 +10,7 @@ Kairo has 2 BOMs (Bill of Materials).
   It will not only keep your Kairo dependencies aligned,
   but also align several external library versions.
 - _If you're just using one (or a few) Kairo libraries,
-  you should use [the regular BOM](../bom) instead._
+  you should use [the regular BOM](../bom/README.md) instead._
 
 ## Usage
 

@@ -9,7 +9,7 @@ Kairo has 2 BOMs (Bill of Materials).
   intended for when you're **using one (or just a few) Kairo libraries**.
   It will keep your Kairo dependencies aligned.
 - _If you're building a Kairo application,
-  you should use [the full BOM](../bom-full) instead._
+  you should use [the full BOM](../bom-full/README.md) instead._
 
 ## Usage
 

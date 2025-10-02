@@ -42,15 +42,15 @@ dependencies {
 
 The following Framework Features are currently available.
 
-- [ClientFeature](../kairo-client):
+- [ClientFeature](../kairo-client/README.md):
   Ktor-native outgoing HTTP requests from your Kairo application.
-- [DependencyInjectionFeature](../kairo-dependency-injection):
+- [DependencyInjectionFeature](../kairo-dependency-injection/README.md):
   Uses Koin for reflection-free, Kotlin-friendly dependency injection.
-- [HealthCheckFeature](../kairo-health-check):
+- [HealthCheckFeature](../kairo-health-check/README.md):
   Adds configurable health check REST endpoints to your application.
-- [RestFeature](../kairo-rest):
+- [RestFeature](../kairo-rest/README.md):
   Declarative REST endpoints wired through Ktor.
-- [SqlFeature](../kairo-sql):
+- [SqlFeature](../kairo-sql/README.md):
   Type-safe SQL with async I/O.
 
 You can also create your own —
@@ -116,7 +116,7 @@ class UserFeature(
 
 ### Putting it all together
 
-Combine your Features into a [Server](../kairo-server).
+Combine your Features into a [Server](../kairo-server/README.md).
 
 ```kotlin
 val koinApplication = koinApplication()

@@ -1,7 +1,7 @@
 # Postgres integration testing
 
 Library to help with Kairo integration tests for Features that use Postgres.
-Read the general [integration testing README](..) first.
+Read the general [integration testing README](../README.md) first.
 
 Uses testcontainers to run Postgres in Docker,
 creating a separate database for each test.

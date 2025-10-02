@@ -262,7 +262,7 @@ No changes.
 - **Closeable** (use built-in closeables instead).
 - **Command Runner.**
   Connecting to GCP SQL instances that use [IAM Authentication](https://cloud.google.com/sql/docs/postgres/iam-authentication)
-  is now supported through TODO: How is this supported?
+  is now supported through [kairo-sql-gcp](./kairo-sql/README.md#gcp)
 - **Date Range**
 - **Do Not Log String**
 - **Environment Variable Supplier.**
