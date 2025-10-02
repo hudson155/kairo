@@ -42,6 +42,8 @@ dependencies {
 
 The following Framework Features are currently available.
 
+- [ClientFeature](../kairo-client):
+  Ktor-native outgoing HTTP requests from your Kairo application.
 - [DependencyInjectionFeature](../kairo-dependency-injection):
   Uses Koin for reflection-free, Kotlin-friendly dependency injection.
 - [HealthCheckFeature](../kairo-health-check):
