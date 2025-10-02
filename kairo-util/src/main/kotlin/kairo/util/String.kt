@@ -15,3 +15,9 @@ public fun canonicalize(subject: String): String {
   result = result.trim()
   return result
 }
+
+/**
+ * The same canonicalization logic as [canonicalize], but lets you choose the [delimiter].
+ */
+public fun slugify(subject: String, delimiter: String): String =
+  canonicalize(subject).replace(" ", delimiter)

@@ -245,7 +245,7 @@ No changes.
 
 - Removal of `kairoEquals`, `kairoHashCode` and `kairoToString`.
 
-- Addition of `canonicalize()`.
+- Addition of `canonicalize()` and `slugify()`.
 
 - Addition of `firstCauseOf<T>()` for exceptions.
 
