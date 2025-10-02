@@ -176,10 +176,6 @@ No changes.
 
 - **Guidance to reduce noisy logs in production.**
 
-#### Money
-
-TODO: Coming soon!
-
 #### Optional
 
 - Introduced `Optional` differentiate between missing and null properties.
@@ -277,6 +273,7 @@ No changes.
 - **Hashing**
 - **Lazy Supplier**
 - **MDC**
+- **Money**
 - **Slack**
 - **Time**
 - **Transaction Manager**
