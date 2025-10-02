@@ -90,6 +90,7 @@ complexity:
     ignoreAnnotated:
       - 'kairo.rest.Routing'
     excludes:
+      - '**/src/main/kotlin/**/*Main.kt'
       - '**/src/test/kotlin/**/*Eval.kt'
       - '**/src/test/kotlin/**/*Test.kt'
   LongParameterList:
