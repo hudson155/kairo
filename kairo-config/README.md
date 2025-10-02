@@ -4,6 +4,16 @@ Application configuration should be **simple, consistent, and powerful**.\
 `kairo-config` standardizes on [lightbend/config](https://github.com/lightbend/config)'s HOCON implementation,
 giving every Kairo project a familiar, robust foundation for managing configs.
 
+```hocon
+include "common.conf" # Include another config file.
+app {
+  port = 8080
+}
+sentryDsn = ${?SENTRY_DSN} # Optional env var.
+databasePassword = ${DATABASE_PASSWORD} # Required env var.
+accessToken = "gcp::projects/012345678900/secrets/example/versions/1" # Config resolver.
+```
+
 ### HOCON
 
 - **Rich features**
@@ -12,20 +22,10 @@ giving every Kairo project a familiar, robust foundation for managing configs.
 
 - **Developer ergonomics:** Comments, human-readable syntax, less boilerplate.
 
-- **No new API:** Kairo uses lightbend/config directly — zero additional abstractions to learn.
+### Config resolvers
 
-```hocon
-include "common.conf" # Include another config file.
-app {
-  port = 8080
-}
-sentryDsn = ${?SENTRY_DSN} # Optional env var.
-databasePassword = ${DATABASE_PASSWORD} # Required env var.
-```
-
-TODO: Document config resolvers in this README, the CHANGELOG, and possibly the root README.
-
-_This is a contrived example. See [below](#usage) for realistic examples._
+Kairo's config resolvers let you pull in properties from other sources
+like **Google Secret Manager**.
 
 ## Installation
 
@@ -59,7 +59,7 @@ data class Config(
 )
 ```
 
-### Base/common config
+#### Base/common config
 
 You'll probably have a base/common config with settings shared across environments.
 
@@ -76,7 +76,7 @@ sql.connectionFactory {
 }
 ```
 
-### Production config
+#### Production config
 
 Your production config will extend the base config.
 In this case, there's nothing to override.
@@ -89,7 +89,7 @@ include "common.conf"
 
 You can create a staging config the same way.
 
-### Development config
+#### Development config
 
 Your development config will also extend the base config,
 but override a few settings.
@@ -107,7 +107,7 @@ sql {
 }
 ```
 
-### Testing config
+#### Testing config
 
 It's usually easiest to make your testing config extend the development config instead of the base config,
 since the overrides we applied to the development config also make sense for testing.
@@ -133,8 +133,29 @@ If you want to dynamically choose which config to load, use an environment varia
 
 ```kotlin
 val configName = requireNotNull(System.getenv("CONFIG"))
-
 val config: Config =
   ConfigFactory.load("config/$configName.conf")
     .let { Hocon.decodeFromConfig(it) }
 ```
+
+#### Config resolvers
+
+To use config resolvers, call `resolveConfig()` after loading your config.
+
+```kotlin
+private val gcpSecretSupplier: GcpSecretSupplier = DefaultGcpSecretSupplier()
+
+val configName = requireNotNull(System.getenv("CONFIG")) { "CONFIG environment variable not set." }
+
+val configResolvers = listOf(
+  ConfigResolver("gcp::") { gcpSecretSupplier[it]?.value },
+)
+
+val config: Config =
+  ConfigFactory.load("config/$configName.conf")
+    .let { Hocon.decodeFromConfig<Config>(it) }
+    .let { resolveConfig(it, configResolvers) }
+```
+
+This will detect any strings (or `ProtectedString`s) that start with `gcp::`,
+resolving them using the `GcpSecretSupplier`.
