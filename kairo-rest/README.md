@@ -284,5 +284,5 @@ Defaults to null, which means the plugin is disabled.
 We recommend excluding logs below the `INFO` level for this library.
 
 ```xml
-<Logger name="kairo.darb" level="info"/>
+<Logger name="kairo.rest" level="info"/>
 ```
