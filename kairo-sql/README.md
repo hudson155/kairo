@@ -136,9 +136,7 @@ suspend fun create(creator: UserModel.Creator): UserModel =
     UserTable
       .insertReturning { statement ->
         statement[this.id] = UserId.random()
-        statement[this.title] = creator.title
-        statement[this.authors] = creator.authors
-        statement[this.isbn] = creator.isbn
+        statement[this.emailAddress] = creator.emailAddress
       }
       .map(UserModel::fromRow)
       .single()
