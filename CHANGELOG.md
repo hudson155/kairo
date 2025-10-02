@@ -194,7 +194,7 @@ TODO: Coming soon!
 
 No changes.
 
-#### REST Feature
+#### REST
 
 TODO: Coming soon!
 
