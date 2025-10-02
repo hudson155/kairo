@@ -95,6 +95,9 @@ These libraries **can be used anywhere**
 - [kairo-darb](./kairo-darb):
   Compact boolean list encoding for JWT permission lists,
   maintaining human-readability.
+- [kairo-datetime](./kairo-datetime):
+  Extends [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
+  & adds some convenient helper functions.
 - [kairo-gcp-secret-supplier](./kairo-gcp-secret-supplier):
   Lightweight and coroutine-friendly
   Google Secret Manager wrapper.
