@@ -33,4 +33,4 @@ val server = Server(
 ```
 
 You can run the Server as an application using [kairo-application](../kairo-application),
-or use it in integration tests (TODO: link).
+or use it in [integration tests](../kairo-integration-testing).
