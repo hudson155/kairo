@@ -83,7 +83,7 @@ internal object UserApi {
   @Rest("POST", "/users")
   @Rest.ContentType("application/json")
   @Rest.Accept("application/json")
-  data class Search(
+  data class Create(
     override val body: UserRep.Creator,
   ) : RestEndpoint<UserRep.Creator, UserRep>()
 }
@@ -194,7 +194,7 @@ The `Parallelism` config specifies how to manage thread pools.
 The `Timeouts` config specifies how timeouts work.
 
 - `requestRead`: Defaults to 0, which is infinite.
-- `responseWrite`: Defaults to 10 seconds, which is infinite.
+- `responseWrite`: Defaults to 10 seconds.
 
 ### `Lifecycle`
 
