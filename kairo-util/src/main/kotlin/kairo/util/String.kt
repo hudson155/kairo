@@ -2,6 +2,9 @@ package kairo.util
 
 import java.text.Normalizer
 
+/**
+ * Turns an arbitrary string into exclusively lowercase latin characters.
+ */
 public fun canonicalize(subject: String): String {
   var result = Normalizer.normalize(subject, Normalizer.Form.NFD)
   result = result.lowercase()
