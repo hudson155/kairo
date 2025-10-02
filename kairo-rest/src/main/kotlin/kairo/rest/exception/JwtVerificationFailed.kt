@@ -3,8 +3,8 @@ package kairo.rest.exception
 import io.ktor.http.HttpStatusCode
 import kairo.exception.LogicalFailure
 
-public class Unauthorized : LogicalFailure() {
-  override val type: String = "Unauthorized"
+public class JwtVerificationFailed : LogicalFailure() {
+  override val type: String = "JwtVerificationFailed"
   override val status: HttpStatusCode = HttpStatusCode.Unauthorized
-  override val title: String = "Unauthorized"
+  override val title: String = "JWT verification failed"
 }

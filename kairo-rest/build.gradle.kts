@@ -19,6 +19,7 @@ dependencies {
   implementation(project(":kairo-util"))
 
   api(libs.ktorServer.auth) // Available for usage.
+  compileOnly(libs.ktorServer.authJwt)
   api(libs.ktorServer.core) // Available for usage.
   api(libs.ktorServer.sse) // Available for usage.
   implementation(libs.serialization.json)

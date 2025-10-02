@@ -8,3 +8,6 @@ public class AuthReceiver<E : RestEndpoint<*, *>> internal constructor(
   public val call: RoutingCall,
   public val endpoint: E,
 )
+
+public fun AuthReceiver<*>.public(): Unit =
+  Unit
