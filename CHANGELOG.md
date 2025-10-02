@@ -104,6 +104,14 @@ No changes.
 - **Dependency injection with [Koin](https://insert-koin.io/) (replaces Guice).**
   Reflection-free, Kotlin-friendly, better tooling, and simpler to configure.
 
+#### Exception
+
+- Introduction of **logical failures**
+  to describe situations not deemed successful in your domain,
+  but still within the realms of that domain.
+  - JSON serialization of logical failures.
+  - Easily testable.
+
 #### Feature
 
 - **Features now start and stop in parallel,**
