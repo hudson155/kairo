@@ -84,4 +84,5 @@ class YourTest {
 
 ### Integration tests
 
-TODO: Document integration tests.
+Integration testing for Kairo applications is handled using a different library:
+[kairo-integration-testing](../kairo-integration-testing).
