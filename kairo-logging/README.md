@@ -84,6 +84,7 @@ dependencies {
     </Root>
     <Logger name="kairo.darb" level="info"/>
     <Logger name="kairo.gcpSecretSupplier" level="info"/>
+    <Logger name="kairo.rest" level="info"/>
   </Loggers>
 </Configuration>
 ```

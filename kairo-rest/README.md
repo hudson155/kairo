@@ -278,3 +278,11 @@ Enabled by default. Disable by setting to null.
 Configures Ktor's `Sse` plugin.
 
 Defaults to null, which means the plugin is disabled.
+
+## Logging config
+
+We recommend excluding logs below the `INFO` level for this library.
+
+```xml
+<Logger name="kairo.darb" level="info"/>
+```
