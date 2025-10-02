@@ -84,7 +84,6 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Route.route(
   }
 }
 
-// TODO: Authenticate.
 private fun Route.buildRoute(template: RestEndpointTemplate): Route {
   var route = createRouteFromPath(template.toKtorPath())
   route = route.createChild(HttpMethodRouteSelector(template.method))

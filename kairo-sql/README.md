@@ -43,7 +43,7 @@ val features = listOf(
 )
 ```
 
-We recommend using [kairo-config](../kairo-config) to configure the Feature.
+We recommend using [kairo-config](../kairo-config/README.md) to configure the Feature.
 
 ```hocon
 sql.connectionFactory {
@@ -136,9 +136,7 @@ suspend fun create(creator: UserModel.Creator): UserModel =
     UserTable
       .insertReturning { statement ->
         statement[this.id] = UserId.random()
-        statement[this.title] = creator.title
-        statement[this.authors] = creator.authors
-        statement[this.isbn] = creator.isbn
+        statement[this.emailAddress] = creator.emailAddress
       }
       .map(UserModel::fromRow)
       .single()
@@ -189,3 +187,49 @@ The `Database` config offers some further options regarding how the database is 
 
 Further Exposed database configuration is available
 by passing a `configureDatabase` builder block to the `SqlFeature` constructor.
+
+## Vendor-specific
+
+### GCP
+
+To support GCP, install `kairo-sql-gcp` and call `gcpAuth()`.
+
+```kotlin
+// build.gradle.kts
+
+dependencies {
+  implementation("software.airborne.kairo:kairo-sql-feature")
+  implementation("software.airborne.kairo:kairo-sql-gcp")
+}
+```
+
+```kotlin
+SqlFeature(
+  config = config.sql,
+  configureHikari = {
+    config.gcpSql?.let { gcpAuth(it) }
+  },
+)
+```
+
+### Postgres
+
+To support Postgres, install `kairo-sql-postgres` and use `PostgreSQLDialect()`.
+
+```kotlin
+// build.gradle.kts
+
+dependencies {
+  implementation("software.airborne.kairo:kairo-sql-feature")
+  implementation("software.airborne.kairo:kairo-sql-postgres")
+}
+```
+
+```kotlin
+SqlFeature(
+  config = config.sql,
+  configureDatabase = {
+    explicitDialect = PostgreSQLDialect()
+  },
+)
+```

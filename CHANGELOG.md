@@ -43,7 +43,8 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
   Reflection-free, Kotlin-friendly, better tooling, and simpler to configure.
 
 - **Easier REST definition & routing.**
-  TODO: Explain this further.
+  Some custom Kairo syntax has been reverted to Ktor native routing syntax
+  plus optional DSL helpers.
 
 - **Type-safe SQL using [Exposed](https://www.jetbrains.com/exposed/)'s DSL (replaces JDBI).**
   - No more manual SQL strings,
@@ -103,6 +104,14 @@ No changes.
 
 - **Dependency injection with [Koin](https://insert-koin.io/) (replaces Guice).**
   Reflection-free, Kotlin-friendly, better tooling, and simpler to configure.
+
+#### Exception
+
+- Introduction of **logical failures**
+  to describe situations not deemed successful in your domain,
+  but still within the realms of that domain.
+  - JSON serialization of logical failures.
+  - Easily testable.
 
 #### Feature
 
@@ -168,10 +177,6 @@ No changes.
 
 - **Guidance to reduce noisy logs in production.**
 
-#### Money
-
-TODO: Coming soon!
-
 #### Optional
 
 - Introduced `Optional` differentiate between missing and null properties.
@@ -186,12 +191,11 @@ TODO: Coming soon!
 
 No changes.
 
-#### REST Feature
-
-TODO: Coming soon!
+#### REST
 
 - **Easier REST definition & routing.**
-  TODO: Explain this further.
+  Some custom Kairo syntax has been reverted to Ktor native routing syntax
+  plus optional DSL helpers.
 
 - **Switch from CIO to Netty.**
   Netty's performance far exceeds CIOs in most situations,
@@ -202,6 +206,8 @@ TODO: Coming soon!
 - Added support for **list query params.**
 
 - The `@RestEndpoint.ContentType` and `@RestEndpoint.Accept` annotations are now optional.
+
+- No more REST context class. Access Ktor's `RoutingCall` directly.
 
 - Native Ktor SSE support.
 
@@ -258,7 +264,7 @@ No changes.
 - **Closeable** (use built-in closeables instead).
 - **Command Runner.**
   Connecting to GCP SQL instances that use [IAM Authentication](https://cloud.google.com/sql/docs/postgres/iam-authentication)
-  is now supported through TODO: How is this supported?
+  is now supported through [kairo-sql-gcp](./kairo-sql/README.md#gcp)
 - **Date Range**
 - **Do Not Log String**
 - **Environment Variable Supplier.**
@@ -269,6 +275,7 @@ No changes.
 - **Hashing**
 - **Lazy Supplier**
 - **MDC**
+- **Money**
 - **Slack**
 - **Time**
 - **Transaction Manager**

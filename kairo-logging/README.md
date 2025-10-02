@@ -84,6 +84,17 @@ dependencies {
     </Root>
     <Logger name="kairo.darb" level="info"/>
     <Logger name="kairo.gcpSecretSupplier" level="info"/>
+    <Logger name="kairo.rest" level="info"/>
   </Loggers>
 </Configuration>
 ```
+
+#### A note about Log4j2 and Server shutdown
+
+Log4j2 automatically installs a shutdown hook that listens for JVM termination,
+flushing buffers and ignoring future logging calls.
+This means that you aren't guaranteed to see any log messages after the JVM terminates.
+To see Kairo shutdown messages in your logs,
+
+1. Add `shutdownHook="disable"` to your `log4j2.xml` file.
+2. Add `LogManager.shutdown()` to your `release` block.

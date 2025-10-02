@@ -21,7 +21,7 @@ that targets the **service layer**.
 You should use this library if:
 
 - You're using Kairo Features and a Kairo Server.
-- You're using Koin (Kairo's recommended [dependency injection](../kairo-dependency-injection) approach).
+- You're using Koin (Kairo's recommended [dependency injection](../kairo-dependency-injection/README.md) approach).
 
 ```kotlin
 @ExtendWith(UserFeatureTest::class)
@@ -55,7 +55,7 @@ dependencies {
 
 ### Integration testing modules
 
-- [Postgres](./postgres)
+- [Postgres](./postgres/README.md)
 
 ## Usage
 

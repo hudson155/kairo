@@ -93,7 +93,6 @@ public object KtorServerFactory {
     }
 
   private fun Application.plugins(config: RestFeatureConfig.Plugins) {
-    // TODO: Mention plugins in changelog.
     installAutoHeadResponse(config.autoHeadResponse)
     installCallLogging(config.callLogging)
     installContentNegotiation(config.contentNegotiation)

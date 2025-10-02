@@ -1,6 +1,6 @@
 # Kairo Server
 
-Servers are composed of [Features](../kairo-feature),
+Servers are composed of [Features](../kairo-feature/README.md),
 and can be run as an application or as part of integration tests.
 
 ## Installation
@@ -19,7 +19,7 @@ dependencies {
 
 ## Usage
 
-All you need are your [Features](../kairo-feature) and a name.
+All you need are your [Features](../kairo-feature/README.md) and a name.
 
 ```kotlin
 val features = listOf(
@@ -32,5 +32,5 @@ val server = Server(
 )
 ```
 
-You can run the Server as an application using [kairo-application](../kairo-application),
-or use it in integration tests (TODO: link).
+You can run the Server as an application using [kairo-application](../kairo-application/README.md),
+or use it in [integration tests](../kairo-integration-testing/README.md).
