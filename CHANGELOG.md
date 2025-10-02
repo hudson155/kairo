@@ -43,7 +43,8 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
   Reflection-free, Kotlin-friendly, better tooling, and simpler to configure.
 
 - **Easier REST definition & routing.**
-  TODO: Explain this further.
+  Some custom Kairo syntax has been reverted to Ktor native routing syntax
+  plus optional DSL helpers.
 
 - **Type-safe SQL using [Exposed](https://www.jetbrains.com/exposed/)'s DSL (replaces JDBI).**
   - No more manual SQL strings,
@@ -192,10 +193,9 @@ No changes.
 
 #### REST
 
-TODO: Coming soon!
-
 - **Easier REST definition & routing.**
-  TODO: Explain this further.
+  Some custom Kairo syntax has been reverted to Ktor native routing syntax
+  plus optional DSL helpers.
 
 - **Switch from CIO to Netty.**
   Netty's performance far exceeds CIOs in most situations,
@@ -206,6 +206,8 @@ TODO: Coming soon!
 - Added support for **list query params.**
 
 - The `@RestEndpoint.ContentType` and `@RestEndpoint.Accept` annotations are now optional.
+
+- No more REST context class. Access Ktor's `RoutingCall` directly.
 
 - Native Ktor SSE support.
 
