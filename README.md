@@ -99,11 +99,11 @@ These libraries **can be used anywhere**
 - [kairo-datetime](./kairo-datetime):
   Extends [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
   & adds some convenient helper functions.
+- [kairo-exception](./kairo-exception):
+  Differentiate between logical failures and real exceptions.
 - [kairo-gcp-secret-supplier](./kairo-gcp-secret-supplier):
   Lightweight and coroutine-friendly
   Google Secret Manager wrapper.
-- [kairo-exception](./kairo-exception):
-  Differentiate between logical failures and real exceptions.
 - [kairo-id](./kairo-id):
   Human-readable semantic identifiers with variable entropy.
   Compile-time safety without runtime overhead.
