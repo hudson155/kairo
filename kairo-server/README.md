@@ -32,5 +32,5 @@ val server = Server(
 )
 ```
 
-You can run the Server as an application using [kairo-application/README.md](../kairo-application),
+You can run the Server as an application using [kairo-application](../kairo-application/README.md),
 or use it in [integration tests](../kairo-integration-testing/README.md).
