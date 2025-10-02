@@ -13,9 +13,9 @@ private val logger: KLogger = KotlinLogging.logger {}
  * This makes our job easy, since we just return the singleton!
  */
 internal class DataObjectRestEndpointReader<E : RestEndpoint<*, *>>(
-  endpoint: KClass<E>,
+  kClass: KClass<E>,
 ) : RestEndpointReader<E>() {
-  private val objectInstance: E = checkNotNull(endpoint.objectInstance)
+  private val objectInstance: E = checkNotNull(kClass.objectInstance)
 
   override suspend fun read(call: RoutingCall): E {
     logger.debug { "Using data object." }

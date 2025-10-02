@@ -20,6 +20,6 @@ internal object RestEndpointTemplateErrorBuilder {
   val acceptAnnotation: String =
     "@${Rest::class.simpleName}.${Rest.Accept::class.simpleName}"
 
-  fun endpoint(endpoint: KClass<out RestEndpoint<*, *>>): String =
-    "REST endpoint ${endpoint.qualifiedName}"
+  fun endpoint(kClass: KClass<out RestEndpoint<*, *>>): String =
+    "REST endpoint ${kClass.qualifiedName}"
 }

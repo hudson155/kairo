@@ -10,6 +10,8 @@ import io.ktor.server.routing.createRouteFromPath
 import io.ktor.server.routing.optionalParam
 import io.ktor.server.routing.param
 import kairo.reflect.KairoType
+import kairo.rest.auth.AuthReceiver
+import kairo.rest.auth.authConfig
 import kairo.rest.reader.RestEndpointReader
 import kairo.rest.template.RestEndpointTemplate
 import kairo.rest.template.RestEndpointTemplateErrorBuilder
@@ -23,8 +25,17 @@ private val error: RestEndpointTemplateErrorBuilder = RestEndpointTemplateErrorB
 public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal constructor(
   private val kClass: KClass<E>,
 ) {
+  internal var auth: (suspend AuthReceiver<E>.() -> Unit)? = null
   internal var handle: (suspend HandleReceiver<E>.() -> O)? = null
   internal var statusCode: (suspend StatusCodeReceiver<O>.() -> HttpStatusCode?)? = null
+
+  /**
+   * Specifies auth for the endpoint.
+   */
+  public fun auth(auth: suspend AuthReceiver<E>.() -> Unit) {
+    require(this.auth == null) { "${error.endpoint(kClass)}: Auth already defined." }
+    this.auth = auth
+  }
 
   /**
    * Specifies the handler for the endpoint.
@@ -59,6 +70,11 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Route.route(
   route.handle {
     val handler = RestEndpointHandler(kClass).apply(block)
     val endpoint = reader.read(call)
+    application.authConfig?.let { authConfig ->
+      val authReceiver = AuthReceiver(call, endpoint)
+      val auth = handler.auth
+      if (auth != null) auth.invoke(authReceiver) else with(authConfig) { authReceiver.default() }
+    }
     val response = requireNotNull(handler.handle) { "${error.endpoint(kClass)}: Must define a handler." }
       .invoke(HandleReceiver(call, endpoint))
     handler.statusCode?.let { statusCode ->

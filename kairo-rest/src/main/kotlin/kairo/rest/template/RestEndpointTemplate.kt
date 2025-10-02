@@ -38,27 +38,27 @@ internal data class RestEndpointTemplate(
   internal companion object {
     private val error: RestEndpointTemplateErrorBuilder = RestEndpointTemplateErrorBuilder
 
-    fun from(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
-      logger.debug { "Building REST endpoint template (endpoint=$endpoint)." }
-      require(endpoint.isData) { "${error.endpoint(endpoint)}: Must be a data class or data object." }
-      val params = deriveParams(endpoint)
+    fun from(kClass: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
+      logger.debug { "Building REST endpoint template (endpoint=$kClass)." }
+      require(kClass.isData) { "${error.endpoint(kClass)}: Must be a data class or data object." }
+      val params = deriveParams(kClass)
       val template = RestEndpointTemplate(
-        method = RestEndpointTemplateMethodParser.parse(endpoint),
-        path = RestEndpointTemplatePathParser.parse(endpoint, params),
-        query = RestEndpointTemplateQueryParser.parse(endpoint, params),
-        contentType = RestEndpointTemplateContentTypeParser.parse(endpoint),
-        accept = RestEndpointTemplateAcceptParser.parse(endpoint),
+        method = RestEndpointTemplateMethodParser.parse(kClass),
+        path = RestEndpointTemplatePathParser.parse(kClass, params),
+        query = RestEndpointTemplateQueryParser.parse(kClass, params),
+        contentType = RestEndpointTemplateContentTypeParser.parse(kClass),
+        accept = RestEndpointTemplateAcceptParser.parse(kClass),
       )
-      logger.debug { "Built REST endpoint template (endpoint=$endpoint, template=$template)." }
+      logger.debug { "Built REST endpoint template (endpoint=$kClass, template=$template)." }
       return template
     }
 
-    private fun deriveParams(endpoint: KClass<out RestEndpoint<*, *>>): List<KParameter> {
+    private fun deriveParams(kClass: KClass<out RestEndpoint<*, *>>): List<KParameter> {
       val params =
-        if (endpoint.objectInstance != null) {
+        if (kClass.objectInstance != null) {
           emptyList()
         } else {
-          checkNotNull(endpoint.primaryConstructor) { "Data classes always have primary constructors." }
+          checkNotNull(kClass.primaryConstructor) { "Data classes always have primary constructors." }
             .let { it.valueParameters }
         }
       params.forEach { param ->
@@ -67,15 +67,15 @@ internal data class RestEndpointTemplate(
         val isQuery = param.hasAnnotation<RestEndpoint.QueryParam>()
         if (paramName == RestEndpoint<*, *>::body.name) {
           require(!isPath && !isQuery) {
-            "${error.endpoint(endpoint)}: Body cannot be param."
+            "${error.endpoint(kClass)}: Body cannot be param."
           }
           return@forEach
         }
         require(!(isPath && isQuery)) {
-          "${error.endpoint(endpoint)}: Param cannot be both path and query (param=$paramName)."
+          "${error.endpoint(kClass)}: Param cannot be both path and query (param=$paramName)."
         }
         require(isPath || isQuery) {
-          "${error.endpoint(endpoint)}: Param must be path or query (param=$paramName)."
+          "${error.endpoint(kClass)}: Param must be path or query (param=$paramName)."
         }
       }
       return params
