@@ -245,6 +245,8 @@ No changes.
 
 - Removal of `kairoEquals`, `kairoHashCode` and `kairoToString`.
 
+- Addition of `canonicalize()`.
+
 - Addition of `firstCauseOf<T>()` for exceptions.
 
 - Addition of the `resource()` Guava wrapper.
