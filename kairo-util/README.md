@@ -21,13 +21,19 @@ dependencies {
 
 The most popular functions are documented here.
 
-### `canonicalize()`
+### `canonicalize()` and `slugify()`
 
-Turns an arbitrary string into exclusively lowercase latin characters.
+`canonicalize()` turns an arbitrary string into exclusively lowercase latin characters.
 
 ```kotlin
 canonicalize(" Con  | dãnas^t")
-// => "con danast"
+// => con danast
+```
+
+`slugify()` does something similar, but allows you to choose the delimiter.
+```kotlin
+slugify(" Con  | dãnas^t", delimiter = "-")
+// => con-danast
 ```
 
 ### `firstCauseOf<T>()`
