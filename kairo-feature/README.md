@@ -42,13 +42,13 @@ dependencies {
 
 The following Framework Features are currently available.
 
-- [DependencyInjectionFeature](../kairo-dependency-injection/feature):
+- [DependencyInjectionFeature](../kairo-dependency-injection):
   Uses Koin for reflection-free, Kotlin-friendly dependency injection.
-- [HealthCheckFeature](../kairo-health-check/feature):
+- [HealthCheckFeature](../kairo-health-check):
   Adds configurable health check REST endpoints to your application.
-- [RestFeature](../kairo-rest/feature):
+- [RestFeature](../kairo-rest):
   Declarative REST endpoints wired through Ktor.
-- [SqlFeature](../kairo-sql/feature):
+- [SqlFeature](../kairo-sql):
   Type-safe SQL with async I/O.
 
 You can also create your own —
