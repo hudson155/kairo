@@ -84,6 +84,9 @@ No changes.
   - Built-in config inheritance and overrides for easy multi-env (dev/staging/prod).
   - Native environment variable substitution.
 
+- Introduction of config resolvers, 
+  which let you pull in properties from other sources like **Google Secret Manager**.
+
 #### Coroutines
 
 - `singleNullOrThrow()` now works with Kotlin `Flow`.

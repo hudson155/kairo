@@ -87,7 +87,8 @@ These libraries **can be used anywhere**
 
 - [kairo-config](./kairo-config):
   HOCON-based configuration library
-  with multi-env (dev/staging/prod) support and environment variable substitution.
+  with multi-env (dev/staging/prod) support, environment variable substitution,
+  and dynamic config resolvers to pull properties from sources like Google Secret Manager.
 - [kairo-coroutines](./kairo-coroutines):
   Extends Kotlin coroutines
   using [Arrow's coroutines library](https://arrow-kt.io/learn/coroutines/)
