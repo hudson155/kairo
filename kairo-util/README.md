@@ -21,6 +21,15 @@ dependencies {
 
 The most popular functions are documented here.
 
+### `canonicalize()`
+
+Turns an arbitrary string into exclusively lowercase latin characters.
+
+```kotlin
+canonicalize(" Con  | dãnas^t")
+// => "con danast"
+```
+
 ### `firstCauseOf<T>()`
 
 For exceptions,
