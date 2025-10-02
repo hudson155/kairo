@@ -173,6 +173,10 @@ Publish a real version to Google Artifact Registry.
 ./gradlew --no-build-cache --no-configuration-cache publish -Pversion=0.0.0
 ```
 
+## Code style
+
+[Click here](https://github.com/hudson155/intellij-settings) for Kairo's IntelliJ code style.
+
 ## Style guide
 
 Other than the rules defined here, please follow the
