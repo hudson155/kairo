@@ -111,7 +111,7 @@ internal class UserHandler(
       route(UserApi.GetByEmailAddress::class) {
         handle {
           val user = userService.getByEmailAddress(endpoint.emailAddress)
-            ?: throw UserNotFound(endpoint.userId)
+            ?: throw UserNotFound(null)
           userMapper.rep(user)
         }
       }
