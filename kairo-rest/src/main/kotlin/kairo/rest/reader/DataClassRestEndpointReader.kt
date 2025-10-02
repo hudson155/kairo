@@ -31,9 +31,9 @@ private val logger: KLogger = KotlinLogging.logger {}
  */
 internal class DataClassRestEndpointReader<I : Any, E : RestEndpoint<I, *>>(
   private val json: Json,
-  endpoint: KClass<E>,
+  kClass: KClass<E>,
 ) : RestEndpointReader<E>() {
-  private val constructor: KFunction<E> = checkNotNull(endpoint.primaryConstructor)
+  private val constructor: KFunction<E> = checkNotNull(kClass.primaryConstructor)
 
   override suspend fun read(call: RoutingCall): E {
     logger.debug { "Using data class." }

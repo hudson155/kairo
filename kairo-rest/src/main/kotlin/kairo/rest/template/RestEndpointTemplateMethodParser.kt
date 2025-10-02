@@ -9,15 +9,15 @@ import kotlin.reflect.full.findAnnotations
 internal object RestEndpointTemplateMethodParser {
   private val error: RestEndpointTemplateErrorBuilder = RestEndpointTemplateErrorBuilder
 
-  fun parse(endpoint: KClass<out RestEndpoint<*, *>>): HttpMethod {
-    val annotation = getAnnotation(endpoint)
+  fun parse(kClass: KClass<out RestEndpoint<*, *>>): HttpMethod {
+    val annotation = getAnnotation(kClass)
     return HttpMethod.parse(annotation.method.uppercase())
   }
 
-  private fun getAnnotation(endpoint: KClass<out RestEndpoint<*, *>>): Rest {
-    val annotations = endpoint.findAnnotations<Rest>()
+  private fun getAnnotation(kClass: KClass<out RestEndpoint<*, *>>): Rest {
+    val annotations = kClass.findAnnotations<Rest>()
     require(annotations.isNotEmpty()) {
-      "${error.endpoint(endpoint)}: Must define ${error.restAnnotation}."
+      "${error.endpoint(kClass)}: Must define ${error.restAnnotation}."
     }
     return annotations.single()
   }

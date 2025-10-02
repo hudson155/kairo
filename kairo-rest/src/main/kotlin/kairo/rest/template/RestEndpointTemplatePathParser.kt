@@ -12,12 +12,12 @@ internal object RestEndpointTemplatePathParser {
   private val error: RestEndpointTemplateErrorBuilder = RestEndpointTemplateErrorBuilder
 
   fun parse(
-    endpoint: KClass<out RestEndpoint<*, *>>,
+    kClass: KClass<out RestEndpoint<*, *>>,
     params: List<KParameter>,
   ): RestEndpointTemplatePath {
     val pathParams = params.filter { it.hasAnnotation<RestEndpoint.PathParam>() }
-    val annotation = getAnnotation(endpoint)
-    wrapErrorMessage(endpoint) {
+    val annotation = getAnnotation(kClass)
+    wrapErrorMessage(kClass) {
       require(annotation.path.startsWith('/')) { "${error.restAnnotation} path is invalid. Must start with a slash" }
       val path =
         if (annotation.path.length == 1) {
@@ -31,22 +31,22 @@ internal object RestEndpointTemplatePathParser {
     }
   }
 
-  private fun getAnnotation(endpoint: KClass<out RestEndpoint<*, *>>): Rest {
-    val annotations = endpoint.findAnnotations<Rest>()
+  private fun getAnnotation(kClass: KClass<out RestEndpoint<*, *>>): Rest {
+    val annotations = kClass.findAnnotations<Rest>()
     require(annotations.isNotEmpty()) {
-      "${error.endpoint(endpoint)}: Must define ${error.restAnnotation}."
+      "${error.endpoint(kClass)}: Must define ${error.restAnnotation}."
     }
     return annotations.single()
   }
 
   private inline fun <T> wrapErrorMessage(
-    endpoint: KClass<out RestEndpoint<*, *>>,
+    kClass: KClass<out RestEndpoint<*, *>>,
     block: () -> T,
   ): T {
     try {
       return block()
     } catch (e: IllegalArgumentException) {
-      val message = e.message?.let { "${error.endpoint(endpoint)}: $it." } ?: throw e
+      val message = e.message?.let { "${error.endpoint(kClass)}: $it." } ?: throw e
       throw IllegalArgumentException(message, e)
     }
   }

@@ -5,7 +5,6 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-exception"))
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
   api(project(":kairo-rest"))

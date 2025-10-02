@@ -23,17 +23,17 @@ internal abstract class RestEndpointReader<E : RestEndpoint<*, *>> {
 
     fun <I : Any, E : RestEndpoint<I, *>> from(
       json: Json,
-      endpoint: KClass<E>,
+      kClass: KClass<E>,
     ): RestEndpointReader<E> {
-      logger.debug { "Building REST endpoint reader (endpoint=$endpoint)." }
-      require(endpoint.isData) { "${error.endpoint(endpoint)}: Must be a data class or data object." }
+      logger.debug { "Building REST endpoint reader (endpoint=$kClass)." }
+      require(kClass.isData) { "${error.endpoint(kClass)}: Must be a data class or data object." }
       val reader =
-        if (endpoint.objectInstance != null) {
-          DataObjectRestEndpointReader(endpoint)
+        if (kClass.objectInstance != null) {
+          DataObjectRestEndpointReader(kClass)
         } else {
-          DataClassRestEndpointReader(json, endpoint)
+          DataClassRestEndpointReader(json, kClass)
         }
-      logger.debug { "Built REST endpoint reader (endpoint=$endpoint, reader=$reader)." }
+      logger.debug { "Built REST endpoint reader (endpoint=$kClass, reader=$reader)." }
       return reader
     }
   }

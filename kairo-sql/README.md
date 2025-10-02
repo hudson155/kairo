@@ -16,7 +16,8 @@ with support for async I/O using **R2DBC**.
 ## Installation
 
 Install `kairo-sql-feature`.\
-You don't need to install Exposed separately — it's included by default.
+You don't need to install Exposed separately —
+it's included by default.
 
 ```kotlin
 // build.gradle.kts

@@ -30,7 +30,8 @@ like **Google Secret Manager**.
 ## Installation
 
 Install `kairo-config`.\
-You don't need to install lightbend/config separately — it's included by default.
+You don't need to install lightbend/config separately —
+it's included by default.
 
 ```kotlin
 // build.gradle.kts

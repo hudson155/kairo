@@ -26,6 +26,14 @@ dependencies {
   // https://github.com/google/guava/releases
   api(platform("com.google.guava:guava-bom:33.4.8-jre"))
 
+  // hikari
+  // https://github.com/brettwooldridge/HikariCP/tags
+  constraints.api("com.zaxxer:HikariCP:7.0.2")
+
+  // hocon
+  // https://github.com/lightbend/config/releases
+  constraints.api("com.typesafe:config:1.4.5")
+
   // koin
   // https://github.com/InsertKoinIO/koin/releases
   api(platform("io.insert-koin:koin-bom:4.1.1"))
@@ -33,6 +41,14 @@ dependencies {
   // koin-annotations
   // https://github.com/InsertKoinIO/koin-annotations/releases
   api(platform("io.insert-koin:koin-annotations-bom:2.2.0-RC1"))
+
+  // kotest
+  // https://github.com/kotest/kotest/releases
+  constraints.api("io.kotest:kotest-runner-junit5:6.0.3")
+
+  // kotlinx-datetime
+  // https://github.com/Kotlin/kotlinx-datetime/releases
+  constraints.api("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
 
   // ktor
   // https://github.com/ktorio/ktor/releases
@@ -42,9 +58,21 @@ dependencies {
   // https://github.com/apache/logging-log4j2/releases
   api(platform("org.apache.logging.log4j:log4j-bom:2.25.1"))
 
+  // logging
+  // https://github.com/oshai/kotlin-logging/releases
+  constraints.api("io.github.oshai:kotlin-logging-jvm:7.0.13")
+
+  // mockk
+  // https://github.com/mockk/mockk/releases
+  constraints.api("io.mockk:mockk:1.14.5")
+
+  // postgres-gcp
+  // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
+  constraints.api("com.google.cloud.sql:postgres-socket-factory:1.25.3")
+
   // postgres-jdbc
   // https://github.com/pgjdbc/pgjdbc/releases
-  api(platform("org.postgresql:postgresql:42.7.7"))
+  constraints.api("org.postgresql:postgresql:42.7.7")
 
   // serialization
   // https://github.com/Kotlin/kotlinx.serialization/releases

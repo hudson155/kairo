@@ -92,6 +92,10 @@ No changes.
 
 No changes.
 
+#### Datetime
+
+* Introduced [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime).
+
 #### Dependency Injection
 
 - **Dependency injection with [Koin](https://insert-koin.io/) (replaces Guice).**

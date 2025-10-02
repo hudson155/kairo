@@ -12,24 +12,6 @@ Kairo has 2 BOMs (Bill of Materials).
 - _If you're just using one (or a few) Kairo libraries,
   you should use [the regular BOM](../bom) instead._
 
-## External libraries
-
-The following external libraries are included in this BOM.
-
-- `io.arrow-kt:arrow-stack`
-- `io.insert-koin:koin-bom`
-- `io.insert-koin:koin-annotations-bom`
-- `io.ktor:ktor-bom`
-- `com.google.cloud:libraries-bom`
-- `com.google.guava:guava-bom`
-- `org.apache.logging.log4j:log4j-bom`
-- `org.jetbrains.exposed:exposed-bom`
-- `org.jetbrains.kotlinx:kotlinx-coroutines-bom`
-- `org.jetbrains.kotlinx:kotlinx-serialization-bom`
-- `org.postgresql:postgresql`
-- `org.slf4j:slf4j-bom`
-- `org.testcontainers:testcontainers-bom`
-
 ## Usage
 
 Here's an example of what your `build.gradle.kts` file might look like

@@ -1,4 +1,4 @@
-package kairo.util
+package kairo.datetime
 
 import io.kotest.matchers.longs.shouldBeZero
 import kotlin.time.Instant

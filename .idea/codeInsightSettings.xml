@@ -3,6 +3,7 @@
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
       <name>com.apple.eawt.*</name>
+      <name>com.auth0.jwt.interfaces.*</name>
       <name>com.fasterxml.jackson.*</name>
       <name>com.google.api.ResourceProto</name>
       <name>com.google.api.client.*</name>

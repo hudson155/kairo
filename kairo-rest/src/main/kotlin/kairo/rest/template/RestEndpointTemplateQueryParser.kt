@@ -9,11 +9,11 @@ internal object RestEndpointTemplateQueryParser {
   private val error: RestEndpointTemplateErrorBuilder = RestEndpointTemplateErrorBuilder
 
   fun parse(
-    endpoint: KClass<out RestEndpoint<*, *>>,
+    kClass: KClass<out RestEndpoint<*, *>>,
     params: List<KParameter>,
   ): RestEndpointTemplateQuery {
     val queryParams = params.filter { it.hasAnnotation<RestEndpoint.QueryParam>() }
-    validateQueryParams(endpoint, queryParams)
+    validateQueryParams(kClass, queryParams)
     return RestEndpointTemplateQuery(
       queryParams.map { param ->
         val paramName = checkNotNull(param.name)
@@ -26,13 +26,13 @@ internal object RestEndpointTemplateQueryParser {
   }
 
   private fun validateQueryParams(
-    endpoint: KClass<out RestEndpoint<*, *>>,
+    kClass: KClass<out RestEndpoint<*, *>>,
     queryParams: List<KParameter>,
   ) {
     queryParams.forEach { param ->
       val paramName = checkNotNull(param.name)
       require(!param.isOptional) {
-        "${error.endpoint(endpoint)}: ${error.queryParamAnnotation} must not be optional (param=$paramName)."
+        "${error.endpoint(kClass)}: ${error.queryParamAnnotation} must not be optional (param=$paramName)."
       }
     }
   }
