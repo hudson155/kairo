@@ -6,12 +6,10 @@ permissions:
 on:
   pull_request:
     branches:
-      - "kairo-5"
-      - "kairo-6"
+      - "main"
   push:
     branches:
-      - "kairo-5"
-      - "kairo-6"
+      - "main"
   workflow_dispatch:
 
 concurrency:
