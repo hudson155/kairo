@@ -652,6 +652,7 @@ style:
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
       - 'com.apple.eawt.*'
+      - 'com.auth0.jwt.interfaces.*'
       - 'com.fasterxml.jackson.*'
       - 'com.google.api.ResourceProto'
       - 'com.google.api.client.*'
