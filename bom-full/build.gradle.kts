@@ -40,7 +40,7 @@ dependencies {
 
   // koin-annotations
   // https://github.com/InsertKoinIO/koin-annotations/releases
-  api(platform("io.insert-koin:koin-annotations-bom:2.2.0-RC1"))
+  api(platform("io.insert-koin:koin-annotations-bom:2.2.0"))
 
   // kotest
   // https://github.com/kotest/kotest/releases
