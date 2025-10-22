@@ -12,6 +12,7 @@
       <name>com.google.common.collect.Table</name>
       <name>com.google.gson.*</name>
       <name>com.google.protobuf.*</name>
+      <name>com.google.type.TimeZone</name>
       <name>com.sun.jdi.*</name>
       <name>com.sun.org.apache.bcel.*</name>
       <name>com.sun.org.apache.xalan.*</name>
@@ -20,6 +21,7 @@
       <name>com.sun.tools.javac.*</name>
       <name>com.sun.tools.jdeps.*</name>
       <name>com.typesafe.config.Optional</name>
+      <name>dev.langchain4j.agent.*</name>
       <name>dev.langchain4j.internal.*</name>
       <name>io.grpc.*</name>
       <name>io.kotest.core.spec.*</name>
@@ -28,6 +30,7 @@
       <name>io.ktor.http.ContentType.Message</name>
       <name>io.netty.util.AttributeKey</name>
       <name>io.opencensus.*</name>
+      <name>jakarta.inject.*</name>
       <name>java.awt.*</name>
       <name>java.beans.*</name>
       <name>java.io.ObjectInputFilter.Config</name>
@@ -37,6 +40,7 @@
       <name>java.util.Base64.*</name>
       <name>java.util.Optional</name>
       <name>java.util.Random</name>
+      <name>java.util.TimeZone</name>
       <name>java.util.UUID</name>
       <name>java.util.concurrent.CancellationException</name>
       <name>java.util.concurrent.CountDownLatch</name>
@@ -67,7 +71,19 @@
       <name>org.intellij.lang.annotations.Flow</name>
       <name>org.jetbrains.exposed.v1.core.SqlExpressionBuilder</name>
       <name>org.jetbrains.exposed.v1.core.statements.UpsertSqlExpressionBuilder</name>
+      <name>org.koin.core.annotation.ComponentScan</name>
+      <name>org.koin.core.annotation.Configuration</name>
+      <name>org.koin.core.annotation.KoinApplication</name>
+      <name>org.koin.core.annotation.Module</name>
+      <name>org.koin.core.annotation.Monitor</name>
+      <name>org.koin.core.annotation.Property</name>
+      <name>org.koin.core.annotation.PropertyValue</name>
+      <name>org.koin.core.annotation.Qualifier</name>
+      <name>org.koin.core.annotation.Scope</name>
+      <name>org.koin.core.annotation.Scoped</name>
+      <name>org.koin.core.annotation.ScopeId</name>
       <name>org.koin.core.annotation.Singleton</name>
+      <name>org.koin.core.annotation.ViewModelScope</name>
       <name>org.koin.core.component.*</name>
       <name>org.koin.core.context.GlobalContext.*</name>
       <name>org.koin.java.*</name>

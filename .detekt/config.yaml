@@ -90,7 +90,7 @@ complexity:
     ignoreAnnotated:
       - 'kairo.rest.Routing'
     excludes:
-      - '**/src/main/kotlin/**/*Main.kt'
+      - '**/src/main/kotlin/**/Main.kt'
       - '**/src/test/kotlin/**/*Eval.kt'
       - '**/src/test/kotlin/**/*Test.kt'
   LongParameterList:
@@ -652,6 +652,7 @@ style:
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
       - 'com.apple.eawt.*'
+      - 'com.auth0.jwt.interfaces.*'
       - 'com.fasterxml.jackson.*'
       - 'com.google.api.ResourceProto'
       - 'com.google.api.client.*'
@@ -660,6 +661,7 @@ style:
       - 'com.google.common.collect.Table'
       - 'com.google.gson.*'
       - 'com.google.protobuf.*'
+      - 'com.google.type.TimeZone'
       - 'com.sun.jdi.*'
       - 'com.sun.org.apache.bcel.*'
       - 'com.sun.org.apache.xalan.*'
@@ -668,6 +670,7 @@ style:
       - 'com.sun.tools.javac.*'
       - 'com.sun.tools.jdeps.*'
       - 'com.typesafe.config.Optional'
+      - 'dev.langchain4j.agent.*'
       - 'dev.langchain4j.internal.*'
       - 'io.grpc.*'
       - 'io.kotest.core.spec.*'
@@ -676,6 +679,7 @@ style:
       - 'io.ktor.http.ContentType.Message'
       - 'io.netty.util.AttributeKey'
       - 'io.opencensus.*'
+      - 'jakarta.inject.*'
       - 'java.awt.*'
       - 'java.beans.*'
       - 'java.io.ObjectInputFilter.Config'
@@ -685,6 +689,7 @@ style:
       - 'java.util.Base64.*'
       - 'java.util.Optional'
       - 'java.util.Random'
+      - 'java.util.TimeZone'
       - 'java.util.UUID'
       - 'java.util.concurrent.CancellationException'
       - 'java.util.concurrent.CountDownLatch'
