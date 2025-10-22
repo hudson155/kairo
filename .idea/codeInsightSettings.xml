@@ -67,10 +67,10 @@
       <name>org.intellij.lang.annotations.Flow</name>
       <name>org.jetbrains.exposed.v1.core.SqlExpressionBuilder</name>
       <name>org.jetbrains.exposed.v1.core.statements.UpsertSqlExpressionBuilder</name>
-      <name>org.koin.core.annotation.ComponentScan</name> # Fully-qualify it.
+      <name>org.koin.core.annotation.ComponentScan</name>
       <name>org.koin.core.annotation.Configuration</name>
       <name>org.koin.core.annotation.KoinApplication</name>
-      <name>org.koin.core.annotation.Module</name> # Fully-qualify it.
+      <name>org.koin.core.annotation.Module</name>
       <name>org.koin.core.annotation.Monitor</name>
       <name>org.koin.core.annotation.Property</name>
       <name>org.koin.core.annotation.PropertyValue</name>
