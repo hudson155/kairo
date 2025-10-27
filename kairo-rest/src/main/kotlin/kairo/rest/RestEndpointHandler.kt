@@ -86,6 +86,7 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Route.route(
       ).apply {
         handler.auth?.let { auth(it) }
         handler.authOverriddenBy.forEach { authOverriddenBy(it) }
+        authOverriddenBy(with(authConfig) { { fallback() } })
       }.getOrThrow()
     }
     val response = requireNotNull(handler.handle) { "${error.endpoint(kClass)}: Must define a handler." }

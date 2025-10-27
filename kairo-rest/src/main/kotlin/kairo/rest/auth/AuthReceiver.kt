@@ -28,18 +28,18 @@ public class AuthReceiver<E : RestEndpoint<*, *>> internal constructor(
   private var result: Result<Unit>? = null
 
   internal suspend fun auth(auth: suspend AuthReceiver<E>.() -> Unit) {
-    if (result?.isFailure == true) return
-    result = attempt(auth)
+    if (this.result?.isFailure == true) return
+    this.result = attempt(auth)
   }
 
   internal suspend fun authOverriddenBy(auth: suspend AuthReceiver<E>.() -> Unit) {
-    if (result?.isSuccess != false) return
+    if (this.result?.isSuccess == true) return
     val result = attempt(auth)
     if (result.isSuccess) this.result = result
   }
 
   internal suspend fun getOrThrow() {
-    (result ?: attempt { default() }).getOrThrow()
+    (this.result ?: attempt { this.default() }).getOrThrow()
   }
 
   private suspend fun attempt(auth: suspend AuthReceiver<E>.() -> Unit): Result<Unit> {
