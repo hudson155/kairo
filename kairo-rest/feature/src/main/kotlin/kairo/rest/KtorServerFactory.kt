@@ -168,6 +168,7 @@ public object KtorServerFactory {
   private fun Application.installStatusPages() {
     install(StatusPages) {
       exception<LogicalFailure> { call, cause ->
+        logger.debug(cause) { "Logical failure." }
         call.response.status(cause.status)
         call.respond(cause.json)
       }
