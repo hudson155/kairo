@@ -23,7 +23,6 @@ public fun AuthenticationConfig.jwt(createVerifier: (credential: BearerTokenCred
       } catch (e: TokenExpiredException) {
         throw ExpiredJwt(e)
       } catch (e: JWTVerificationException) {
-        logger.warn(e) { "JWT verification failed." }
         throw JwtVerificationFailed(e)
       }
       return@authenticate JWTPrincipal(payload)
