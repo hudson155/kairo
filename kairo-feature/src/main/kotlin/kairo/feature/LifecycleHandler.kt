@@ -1,6 +1,5 @@
 package kairo.feature
 
-@Suppress("UseDataClass")
 public class LifecycleHandler internal constructor(
   public val priority: Int,
   private val handleStart: (suspend (features: List<Feature>) -> Unit)?,

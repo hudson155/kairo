@@ -28,7 +28,6 @@ public inline fun <T> withExceptionMappers(
   }
 }
 
-@Suppress("UnderscoresInNumericLiterals")
 public fun uniqueViolation(
   constraintName: String,
   block: () -> LogicalFailure,
