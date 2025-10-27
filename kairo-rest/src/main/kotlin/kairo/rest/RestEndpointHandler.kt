@@ -26,6 +26,7 @@ public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal const
   private val kClass: KClass<E>,
 ) {
   internal var auth: (suspend AuthReceiver<E>.() -> Unit)? = null
+  internal val authOverriddenBy: MutableList<(suspend AuthReceiver<E>.() -> Unit)> = mutableListOf()
   internal var handle: (suspend HandleReceiver<E>.() -> O)? = null
   internal var statusCode: (suspend StatusCodeReceiver<O>.() -> HttpStatusCode?)? = null
 
@@ -35,6 +36,13 @@ public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal const
   public fun auth(auth: suspend AuthReceiver<E>.() -> Unit) {
     require(this.auth == null) { "${error.endpoint(kClass)}: Auth already defined." }
     this.auth = auth
+  }
+
+  /**
+   * Specifies auth for the endpoint.
+   */
+  public fun authOverriddenBy(auth: suspend AuthReceiver<E>.() -> Unit) {
+    this.authOverriddenBy += auth
   }
 
   /**
@@ -71,9 +79,14 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Route.route(
     val handler = RestEndpointHandler(kClass).apply(block)
     val endpoint = reader.read(call)
     application.authConfig?.let { authConfig ->
-      val authReceiver = AuthReceiver(call, endpoint)
-      val auth = handler.auth
-      if (auth != null) auth.invoke(authReceiver) else with(authConfig) { authReceiver.default() }
+      AuthReceiver(
+        call = call,
+        endpoint = endpoint,
+        default = with(authConfig) { { default() } },
+      ).apply {
+        handler.auth?.let { auth(it) }
+        handler.authOverriddenBy.forEach { authOverriddenBy(it) }
+      }.getOrThrow()
     }
     val response = requireNotNull(handler.handle) { "${error.endpoint(kClass)}: Must define a handler." }
       .invoke(HandleReceiver(call, endpoint))
