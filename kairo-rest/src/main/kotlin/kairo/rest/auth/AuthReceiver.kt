@@ -34,7 +34,8 @@ public class AuthReceiver<E : RestEndpoint<*, *>> internal constructor(
 
   internal suspend fun authOverriddenBy(auth: suspend AuthReceiver<E>.() -> Unit) {
     if (result?.isSuccess != false) return
-    result = attempt(auth)
+    val result = attempt(auth)
+    if (result.isSuccess) this.result = result
   }
 
   internal suspend fun getOrThrow() {
