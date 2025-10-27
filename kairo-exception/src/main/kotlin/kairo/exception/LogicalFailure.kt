@@ -14,17 +14,19 @@ import kotlinx.serialization.json.buildJsonObject
  *
  * Roughly conforms to RFC 9457, but not strictly.
  */
-public abstract class LogicalFailure : Exception() {
+public abstract class LogicalFailure(
+  override val message: String,
+  cause: Throwable? = null,
+) : Exception(message, cause) {
   public abstract val type: String
   public abstract val status: HttpStatusCode
-  public abstract val title: String
   public open val detail: String? = null
 
   public open val json: JsonElement by lazy {
     buildJsonObject {
       put("type", JsonPrimitive(type))
       put("status", JsonPrimitive(status.value))
-      put("title", JsonPrimitive(title))
+      put("message", JsonPrimitive(message))
       put("detail", JsonPrimitive(detail))
       buildJson()
     }

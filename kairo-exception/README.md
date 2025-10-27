@@ -52,15 +52,14 @@ Extend `LogicalFailure` to create your own logical failures.
 ```kotlin
 data class UserNotFound(
   val userId: UserId?,
-) : LogicalFailure() {
+) : LogicalFailure("User not found") {
   override val type: String = "UserNotFound"
   override val status: HttpStatusCode = HttpStatusCode.NotFound
-  override val title: String = "User not found"
 
   override fun JsonObjectBuilder.buildJson() {
     put("userId", json.encodeToJsonElement(userId))
   }
 }
 
-// Serializes to { "type": "UserNotFound", "status": 404, "title": "User not found", "detail": null, "userId": "..." }
+// Serializes to { "type": "UserNotFound", "status": 404, "message": "User not found", "detail": null, "userId": "..." }
 ```
