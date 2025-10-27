@@ -20,11 +20,11 @@ public fun AuthenticationConfig.jwt(createVerifier: (credential: BearerTokenCred
       val verifier = createVerifier(credential)
       val payload = try {
         verifier.verify(credential.token)
-      } catch (_: TokenExpiredException) {
-        throw ExpiredJwt()
+      } catch (e: TokenExpiredException) {
+        throw ExpiredJwt(e)
       } catch (e: JWTVerificationException) {
         logger.warn(e) { "JWT verification failed." }
-        throw JwtVerificationFailed()
+        throw JwtVerificationFailed(e)
       }
       return@authenticate JWTPrincipal(payload)
     }
