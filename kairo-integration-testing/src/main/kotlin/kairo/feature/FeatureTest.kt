@@ -42,7 +42,6 @@ public abstract class FeatureTest : FeatureTestAware, BeforeEachCallback, AfterE
       Server::class -> return true
     }
     val koin = checkNotNull(extensionContext.koin)
-    @Suppress("UndeclaredKoinUsage")
     return koin.getOrNull<Any>(kClass) != null
   }
 
@@ -56,7 +55,6 @@ public abstract class FeatureTest : FeatureTestAware, BeforeEachCallback, AfterE
       Server::class -> return checkNotNull(extensionContext.server)
     }
     val koin = checkNotNull(extensionContext.koin)
-    @Suppress("UndeclaredKoinUsage")
     return koin.get(kClass)
   }
 

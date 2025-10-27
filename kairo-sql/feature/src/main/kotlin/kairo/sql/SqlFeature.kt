@@ -16,7 +16,6 @@ import org.koin.dsl.module
 /**
  * The SQL Feature uses Exposed to provide access to a SQL database.
  */
-@Suppress("LongParameterList")
 public class SqlFeature(
   config: SqlFeatureConfig,
   configureHikari: HikariConfig.() -> Unit = {},
