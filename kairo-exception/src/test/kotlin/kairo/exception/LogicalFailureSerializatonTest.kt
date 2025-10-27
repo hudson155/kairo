@@ -14,10 +14,9 @@ import org.junit.jupiter.api.Test
 internal class LogicalFailureSerializatonTest {
   internal data class Example(
     val key: String?,
-  ) : LogicalFailure() {
+  ) : LogicalFailure("Example") {
     override val type: String = "Example"
     override val status: HttpStatusCode = HttpStatusCode.InternalServerError
-    override val title: String = "Example"
 
     override fun JsonObjectBuilder.buildJson() {
       put("key", JsonPrimitive(key))
@@ -34,7 +33,7 @@ internal class LogicalFailureSerializatonTest {
           buildJsonObject {
             put("type", JsonPrimitive("Example"))
             put("status", JsonPrimitive(500))
-            put("title", JsonPrimitive("Example"))
+            put("message", JsonPrimitive("Example"))
             put("detail", JsonPrimitive(null))
             put("key", JsonPrimitive(null))
           },
@@ -49,7 +48,7 @@ internal class LogicalFailureSerializatonTest {
           buildJsonObject {
             put("type", JsonPrimitive("Example"))
             put("status", JsonPrimitive(500))
-            put("title", JsonPrimitive("Example"))
+            put("message", JsonPrimitive("Example"))
             put("detail", JsonPrimitive(null))
             put("key", JsonPrimitive("expected"))
           },

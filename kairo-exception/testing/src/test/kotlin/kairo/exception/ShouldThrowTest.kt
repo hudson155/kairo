@@ -11,10 +11,9 @@ import org.junit.jupiter.api.Test
 internal class ShouldThrowTest {
   internal data class Example(
     val key: String,
-  ) : LogicalFailure() {
+  ) : LogicalFailure("Example") {
     override val type: String = "Example"
     override val status: HttpStatusCode = HttpStatusCode.InternalServerError
-    override val title: String = "Example"
 
     override fun JsonObjectBuilder.buildJson() {
       put("key", JsonPrimitive(key))
