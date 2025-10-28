@@ -28,11 +28,13 @@ dependencies {
 
   // hikari
   // https://github.com/brettwooldridge/HikariCP/tags
-  constraints.api("com.zaxxer:HikariCP:7.0.2")
+  val hikariVersion = "7.0.2"
+  constraints.api("com.zaxxer:HikariCP:$hikariVersion")
 
   // hocon
   // https://github.com/lightbend/config/releases
-  constraints.api("com.typesafe:config:1.4.5")
+  val hoconVersion = "1.4.5"
+  constraints.api("com.typesafe:config:$hoconVersion")
 
   // koin
   // https://github.com/InsertKoinIO/koin/releases
@@ -44,11 +46,13 @@ dependencies {
 
   // kotest
   // https://github.com/kotest/kotest/releases
-  constraints.api("io.kotest:kotest-runner-junit5:6.0.3")
+  val kotestVersion = "6.0.3"
+  constraints.api("io.kotest:kotest-runner-junit5:$kotestVersion")
 
   // kotlinx-datetime
   // https://github.com/Kotlin/kotlinx-datetime/releases
-  constraints.api("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
+  val kotlinxDatetimeVersion = "0.7.1"
+  constraints.api("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetimeVersion")
 
   // ktor
   // https://github.com/ktorio/ktor/releases
@@ -60,19 +64,23 @@ dependencies {
 
   // logging
   // https://github.com/oshai/kotlin-logging/releases
-  constraints.api("io.github.oshai:kotlin-logging-jvm:7.0.13")
+  val loggingVersion = "7.0.13"
+  constraints.api("io.github.oshai:kotlin-logging-jvm:$loggingVersion")
 
   // mockk
   // https://github.com/mockk/mockk/releases
-  constraints.api("io.mockk:mockk:1.14.5")
+  val mockkVersion = "1.14.5"
+  constraints.api("io.mockk:mockk:$mockkVersion")
 
   // postgres-gcp
   // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
-  constraints.api("com.google.cloud.sql:postgres-socket-factory:1.25.3")
+  val postgresGcpVersion = "1.25.3"
+  constraints.api("com.google.cloud.sql:postgres-socket-factory:$postgresGcpVersion")
 
   // postgres-jdbc
   // https://github.com/pgjdbc/pgjdbc/releases
-  constraints.api("org.postgresql:postgresql:42.7.7")
+  val postgresJdbcVersion = "42.7.7"
+  constraints.api("org.postgresql:postgresql:$postgresJdbcVersion")
 
   // serialization
   // https://github.com/Kotlin/kotlinx.serialization/releases
