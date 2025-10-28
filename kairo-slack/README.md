@@ -45,7 +45,7 @@ Now send a Slack message!
 
 ```kotlin
 slack.chatPostMessage { builder ->
-  builder.channel(slack.channels.getValue("jeff-testing"))
+  builder.channel(slack.channels.getValue("general"))
   builder.blocks {
     section {
       plainText("Hello, World!")
