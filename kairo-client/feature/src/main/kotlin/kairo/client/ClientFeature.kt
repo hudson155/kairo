@@ -9,6 +9,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 /**
+ * Extend this to create Ktor-native HTTP clients.
  * Create a separate Feature for each external integration.
  */
 public abstract class ClientFeature(
@@ -28,6 +29,9 @@ public abstract class ClientFeature(
       },
     )
 
+  /**
+   * Configure the HTTP client.
+   */
   protected open fun HttpClientConfig<*>.configure(): Unit =
     Unit
 }
