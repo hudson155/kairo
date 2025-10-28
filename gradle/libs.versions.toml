@@ -62,6 +62,9 @@ serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cor
 serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
 serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 
+slack = { module = "com.slack.api:slack-api-client" }
+slack-kotlin = { module = "com.slack.api:slack-api-client-kotlin-extension" }
+
 slf4j-api = { module = "org.slf4j:slf4j-api" }
 
 testcontainers-postgres = { module = "org.testcontainers:postgresql" }

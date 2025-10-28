@@ -86,6 +86,12 @@ dependencies {
   // https://github.com/Kotlin/kotlinx.serialization/releases
   api(platform("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.9.0"))
 
+  // slack
+  // https://github.com/slackapi/java-slack-sdk/releases
+  val slackVersion = "1.45.3"
+  constraints.api("com.slack.api:slack-api-client:$slackVersion")
+  constraints.api("com.slack.api:slack-api-client-kotlin-extension:$slackVersion")
+
   // slf4j
   // https://github.com/qos-ch/slf4j/releases
   api(platform("org.slf4j:slf4j-bom:2.0.17"))
