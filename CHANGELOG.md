@@ -229,6 +229,10 @@ No changes.
 
 No changes.
 
+#### Slack
+
+- Now uses Slack's `AsyncMethodsClient` directly.
+
 #### SQL
 
 - **Type-safe SQL using [Exposed](https://www.jetbrains.com/exposed/)'s DSL (replaces JDBI).**

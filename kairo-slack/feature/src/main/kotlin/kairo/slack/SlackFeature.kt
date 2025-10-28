@@ -16,8 +16,12 @@ public class SlackFeature(
     listOf(
       module {
         single {
+          val slack = Slack.getInstance()
           @OptIn(ProtectedString.Access::class)
-          Slack.getInstance().methodsAsync(config.token.value)
+          return@single SlackClient(
+            asyncMethodsClient = slack.methodsAsync(config.token.value),
+            channels = config.channels,
+          )
         }
       },
     )
