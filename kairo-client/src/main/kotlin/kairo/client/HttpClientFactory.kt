@@ -8,6 +8,9 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlin.time.Duration
 
+/**
+ * Creates Ktor HTTP clients.
+ */
 public object HttpClientFactory {
   public fun create(
     timeout: Duration,

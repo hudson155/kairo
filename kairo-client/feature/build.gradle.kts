@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
   api(project(":kairo-client"))
-  api(project(":kairo-dependency-injection"))
+  implementation(project(":kairo-dependency-injection")) // HasKoinModules should not be exposed.
   api(project(":kairo-feature"))
-  api(project(":kairo-protected-string"))
 }
