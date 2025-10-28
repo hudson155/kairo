@@ -154,6 +154,10 @@ These libraries help when **building your full application with Kairo**.
 - [kairo-server](./kairo-server/README.md):
   Servers are composed of Features,
   and can be run as an application or as part of integration tests.
+- [kairo-slack](./kairo-slack/README.md):
+  Leverages Slack's native [JVM client](https://github.com/slackapi/java-slack-sdk) and Kotlin DSL
+  to make Slack interaction easy.
+  Also offers channel mapping functionality.
 - [kairo-sql](./kairo-sql/README.md):
   Standardizes SQL access in Kairo
   using [Exposed](https://www.jetbrains.com/exposed/)'s lightweight & idiomatic ORM DSL.
