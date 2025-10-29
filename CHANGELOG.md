@@ -91,6 +91,7 @@ No changes.
 #### Coroutines
 
 - `singleNullOrThrow()` now works with Kotlin `Flow`.
+- Introduction of `emitAll()` for `Iterable`.
 
 #### DARB
 
