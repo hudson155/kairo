@@ -47,6 +47,11 @@ List(10) { barrier.await() }
 
 ### Helper functions
 
+### `emitAll()`
+
+Kotlin's `emitAll()` method only accepts another `Flow`.
+Kairo's version accepts any `Iterable`.
+
 ### `singleNullOrThrow()`
 
 Kotlin's `single()` and `singleOrNull()` functions are excellent utilities,
