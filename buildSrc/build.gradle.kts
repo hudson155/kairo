@@ -12,10 +12,12 @@ dependencies {
   implementation(kotlin("serialization", kotlinVersion))
 
   // https://plugins.gradle.org/plugin/com.google.cloud.artifactregistry.gradle-plugin
-  implementation("com.google.cloud.artifactregistry:artifactregistry-gradle-plugin:2.2.5")
+  val artifactRegistryVersion = "2.2.5"
+  implementation("com.google.cloud.artifactregistry:artifactregistry-gradle-plugin:$artifactRegistryVersion")
 
   // https://github.com/detekt/detekt/releases
-  implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.8")
+  val detektVersion = "1.23.8"
+  implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion")
 }
 
 kotlin {
