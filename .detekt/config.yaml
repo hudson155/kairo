@@ -198,242 +198,323 @@ ktlint:
     active: false
   AnnotationSpacing:
     active: true
+    autoCorrect: true
   ArgumentListWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
     maxLineLength: 120
     ignoreRuleParameterThreshold: 2147483647
   BackingPropertyNaming:
     active: true
+    autoCorrect: true
   BinaryExpressionWrapping:
     active: true
+    autoCorrect: true
     maxLineLength: 120
     indentSize: 2
   BlankLineBeforeDeclaration:
     active: true
+    autoCorrect: true
   BlankLineBetweenWhenConditions:
     active: true
+    autoCorrect: true
     lineBreakAfterWhenEntries: false
   BlockCommentInitialStarAlignment:
     active: true
+    autoCorrect: true
   ChainMethodContinuation:
     active: false
   ChainWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
   ClassName:
     active: true
+    autoCorrect: true
   ClassSignature:
     active: false
   CommentSpacing:
     active: true
+    autoCorrect: true
   CommentWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
   ContextReceiverListWrapping:
     active: true
+    autoCorrect: true
     maxLineLength: 120
     indentSize: 2
   ContextReceiverMapping:
     active: true
+    autoCorrect: true
     maxLineLength: 120
     indentSize: 2
   EnumEntryNameCase:
     active: false # Overlaps with naming>EnumNaming.
   EnumWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
   ExpressionOperandWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
   Filename:
     active: false # Overlaps with naming>MatchingDeclarationName.
   FinalNewline:
     active: true
+    autoCorrect: true
     insertFinalNewLine: true
   FunKeywordSpacing:
     active: true
+    autoCorrect: true
   FunctionExpressionBody:
     active: false # Overlaps with style>ExpressionBodySyntax.
   FunctionLiteral:
     active: true
+    autoCorrect: true
     indentSize: 2
     maxLineLength: 120
   FunctionName: # Overlaps with naming>FunctionNaming.
     active: false
   FunctionReturnTypeSpacing:
     active: true
+    autoCorrect: true
     maxLineLength: 120
   FunctionSignature:
     active: false
   FunctionStartOfBodySpacing:
     active: true
+    autoCorrect: true
   FunctionTypeModifierSpacing:
     active: true
+    autoCorrect: true
   FunctionTypeReferenceSpacing:
     active: true
+    autoCorrect: true
   IfElseBracing:
     active: true
+    autoCorrect: true
     indentSize: 2
   IfElseWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
   ImportOrdering:
     active: true
+    autoCorrect: true
     layout: '*,^'
   Indentation:
     active: true
+    autoCorrect: true
     indentSize: 2
     indentWhenArrowOnNewLine: true
   Kdoc:
     active: false
   KdocWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
   MaximumLineLength:
     active: true
+    autoCorrect: true
     maxLineLength: 120
     ignoreBackTickedIdentifier: false
   MixedConditionOperators:
     active: true
+    autoCorrect: true
   ModifierListSpacing:
     active: true
+    autoCorrect: true
     indentSize: 2
   ModifierOrdering:
     active: true
+    autoCorrect: true
   MultiLineIfElse:
     active: true
+    autoCorrect: true
     indentSize: 2
   MultilineExpressionWrapping:
     active: false
   MultilineLoop:
     active: true
+    autoCorrect: true
     indentSize: 2
   NoBlankLineBeforeRbrace:
     active: true
+    autoCorrect: true
   NoBlankLineInList:
     active: true
+    autoCorrect: true
   NoBlankLinesInChainedMethodCalls:
     active: true
+    autoCorrect: true
   NoConsecutiveBlankLines:
     active: true
+    autoCorrect: true
   NoConsecutiveComments:
     active: true
+    autoCorrect: true
   NoEmptyClassBody:
     active: true
+    autoCorrect: true
   NoEmptyFirstLineInClassBody:
     active: true
+    autoCorrect: true
     indentSize: 2
   NoEmptyFirstLineInMethodBlock:
     active: true
+    autoCorrect: true
   NoLineBreakAfterElse:
     active: true
+    autoCorrect: true
   NoLineBreakBeforeAssignment:
     active: true
+    autoCorrect: true
   NoMultipleSpaces:
     active: true
+    autoCorrect: true
   NoSemicolons:
     active: true
+    autoCorrect: true
   NoSingleLineBlockComment:
     active: true
+    autoCorrect: true
     indentSize: 2
   NoTrailingSpaces:
     active: true
+    autoCorrect: true
   NoUnitReturn:
     active: true
+    autoCorrect: true
   NoUnusedImports:
     active: true
+    autoCorrect: true
   NoWildcardImports:
     active: false # Overlaps with style>WildcardImport.
   NullableTypeSpacing:
     active: true
+    autoCorrect: true
   PackageName:
     active: true
+    autoCorrect: true
   ParameterListSpacing:
     active: true
+    autoCorrect: true
     maxLineLength: 120
   ParameterListWrapping:
     active: true
+    autoCorrect: true
     maxLineLength: 120
     indentSize: 2
   ParameterWrapping:
     active: true
+    autoCorrect: true
     maxLineLength: 120
     indentSize: 2
   PropertyName:
     active: false
   PropertyWrapping:
     active: true
+    autoCorrect: true
     maxLineLength: 120
     indentSize: 2
   SpacingAroundAngleBrackets:
     active: true
+    autoCorrect: true
   SpacingAroundColon:
     active: true
+    autoCorrect: true
   SpacingAroundComma:
     active: true
+    autoCorrect: true
   SpacingAroundCurly:
     active: true
+    autoCorrect: true
     indentSize: 2
   SpacingAroundDot:
     active: true
+    autoCorrect: true
   SpacingAroundDoubleColon:
     active: true
+    autoCorrect: true
   SpacingAroundKeyword:
     active: true
+    autoCorrect: true
   SpacingAroundOperators:
     active: true
+    autoCorrect: true
   SpacingAroundParens:
     active: true
+    autoCorrect: true
   SpacingAroundRangeOperator:
     active: true
+    autoCorrect: true
   SpacingAroundSquareBrackets:
     active: true
+    autoCorrect: true
   SpacingAroundUnaryOperator:
     active: true
+    autoCorrect: true
   SpacingBetweenDeclarationsWithAnnotations:
     active: false
   SpacingBetweenDeclarationsWithComments:
     active: false
   SpacingBetweenFunctionNameAndOpeningParenthesis:
     active: true
+    autoCorrect: true
   StatementWrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
   StringTemplate:
     active: true
+    autoCorrect: true
   StringTemplateIndent:
     active: false
     indentSize: 2
   TrailingCommaOnCallSite:
     active: true
+    autoCorrect: true
     useTrailingCommaOnCallSite: true
   TrailingCommaOnDeclarationSite:
     active: true
+    autoCorrect: true
     useTrailingCommaOnDeclarationSite: true
   TryCatchFinallySpacing:
     active: true
+    autoCorrect: true
     indentSize: 2
   TypeArgumentComment:
     active: true
+    autoCorrect: true
   TypeArgumentListSpacing:
     active: true
+    autoCorrect: true
     indentSize: 2
   TypeParameterComment:
     active: true
+    autoCorrect: true
   TypeParameterListSpacing:
     active: true
+    autoCorrect: true
     indentSize: 2
   UnnecessaryParenthesesBeforeTrailingLambda:
     active: true
+    autoCorrect: true
   ValueArgumentComment:
     active: true
+    autoCorrect: true
   ValueParameterComment:
     active: true
+    autoCorrect: true
   WhenEntryBracing:
     active: false
   Wrapping:
     active: true
+    autoCorrect: true
     indentSize: 2
     maxLineLength: 120
 
