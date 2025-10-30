@@ -270,8 +270,7 @@ performance:
   ArrayPrimitive:
     active: true
   CouldBeSequence:
-    active: true
-    allowedOperations: 2
+    active: false
   ForEachOnRange:
     active: true
   SpreadOperator:
