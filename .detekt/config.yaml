@@ -207,7 +207,6 @@ ktlint:
     ignoreRuleParameterThreshold: 2147483647
   BackingPropertyNaming:
     active: true
-    autoCorrect: true
   BinaryExpressionWrapping:
     active: true
     autoCorrect: true
@@ -231,7 +230,6 @@ ktlint:
     indentSize: 2
   ClassName:
     active: true
-    autoCorrect: true
   ClassSignature:
     active: false
   CommentSpacing:
@@ -399,7 +397,6 @@ ktlint:
     autoCorrect: true
   PackageName:
     active: true
-    autoCorrect: true
   ParameterListSpacing:
     active: true
     autoCorrect: true
