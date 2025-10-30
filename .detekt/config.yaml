@@ -193,11 +193,257 @@ exceptions:
   TooGenericExceptionThrown:
     active: true
 
-# TODO: Formatting
-
-# TODO: Ktlint
-
-# TODO: Libraries
+ktlint:
+  AnnotationOnSeparateLine:
+    active: false
+  AnnotationSpacing:
+    active: true
+  ArgumentListWrapping:
+    active: true
+    indentSize: 2
+    maxLineLength: 120
+    ignoreRuleParameterThreshold: 2147483647
+  BackingPropertyNaming:
+    active: true
+  BinaryExpressionWrapping:
+    active: true
+    maxLineLength: 120
+    indentSize: 2
+  BlankLineBeforeDeclaration:
+    active: true
+  BlankLineBetweenWhenConditions:
+    active: true
+    lineBreakAfterWhenEntries: true
+  BlockCommentInitialStarAlignment:
+    active: true
+  ChainMethodContinuation:
+    active: true
+    indentSize: 2
+    maxLineLength: 120
+    forceMultilineWhenChainOperatorCountGreaterOrEqualThan: 4
+  ChainWrapping:
+    active: true
+    indentSize: 2
+  ClassName:
+    active: true
+  ClassSignature:
+    active: true
+    indentSize: 2
+    maxLineLength: 120
+  CommentSpacing:
+    active: true
+  CommentWrapping:
+    active: true
+    indentSize: 2
+  ContextReceiverListWrapping:
+    active: true
+    maxLineLength: 120
+    indentSize: 2
+  ContextReceiverMapping:
+    active: true
+    maxLineLength: 120
+    indentSize: 2
+  EnumEntryNameCase:
+    active: false # Overlaps with naming>EnumNaming.
+  EnumWrapping:
+    active: true
+    indentSize: 2
+  ExpressionOperandWrapping:
+    active: true
+    indentSize: 2
+  Filename:
+    active: false # Overlaps with naming>MatchingDeclarationName.
+  FinalNewline:
+    active: true
+    insertFinalNewLine: true
+  FunKeywordSpacing:
+    active: true
+  FunctionExpressionBody:
+    active: true
+    indentSize: 2
+    maxLineLength: 120
+  FunctionLiteral:
+    active: true
+    indentSize: 2
+    maxLineLength: 120
+  FunctionName: # Overlaps with naming>FunctionNaming.
+    active: false
+  FunctionReturnTypeSpacing:
+    active: true
+    maxLineLength: 120
+  FunctionSignature:
+    active: false
+  FunctionStartOfBodySpacing:
+    active: true
+  FunctionTypeModifierSpacing:
+    active: true
+  FunctionTypeReferenceSpacing:
+    active: true
+  IfElseBracing:
+    active: true
+    indentSize: 2
+  IfElseWrapping:
+    active: true
+    indentSize: 2
+  ImportOrdering:
+    active: true
+    layout: '*,^'
+  Indentation:
+    active: true
+    indentSize: 2
+    indentWhenArrowOnNewLine: true
+  Kdoc:
+    active: false
+  KdocWrapping:
+    active: true
+    indentSize: 2
+  MaximumLineLength:
+    active: true
+    maxLineLength: 120
+    ignoreBackTickedIdentifier: false
+  MixedConditionOperators:
+    active: true
+  ModifierListSpacing:
+    active: true
+    indentSize: 2
+  ModifierOrdering:
+    active: true
+  MultiLineIfElse:
+    active: true
+    indentSize: 2
+  MultilineExpressionWrapping:
+    active: false
+  MultilineLoop:
+    active: true
+    indentSize: 2
+  NoBlankLineBeforeRbrace:
+    active: true
+  NoBlankLineInList:
+    active: true
+  NoBlankLinesInChainedMethodCalls:
+    active: true
+  NoConsecutiveBlankLines:
+    active: true
+  NoConsecutiveComments:
+    active: true
+  NoEmptyClassBody:
+    active: true
+  NoEmptyFirstLineInClassBody:
+    active: true
+    indentSize: 2
+  NoEmptyFirstLineInMethodBlock:
+    active: true
+  NoLineBreakAfterElse:
+    active: true
+  NoLineBreakBeforeAssignment:
+    active: true
+  NoMultipleSpaces:
+    active: true
+  NoSemicolons:
+    active: true
+  NoSingleLineBlockComment:
+    active: true
+    indentSize: 2
+  NoTrailingSpaces:
+    active: true
+  NoUnitReturn:
+    active: true
+  NoUnusedImports:
+    active: true
+  NoWildcardImports:
+    active: false # Overlaps with style>WildcardImport.
+  NullableTypeSpacing:
+    active: true
+  PackageName:
+    active: true
+  ParameterListSpacing:
+    active: true
+    maxLineLength: 120
+  ParameterListWrapping:
+    active: true
+    maxLineLength: 120
+    indentSize: 2
+  ParameterWrapping:
+    active: true
+    maxLineLength: 120
+    indentSize: 2
+  PropertyName:
+    active: false
+  PropertyWrapping:
+    active: true
+    maxLineLength: 120
+    indentSize: 2
+  SpacingAroundAngleBrackets:
+    active: true
+  SpacingAroundColon:
+    active: true
+  SpacingAroundComma:
+    active: true
+  SpacingAroundCurly:
+    active: true
+    indentSize: 2
+  SpacingAroundDot:
+    active: true
+  SpacingAroundDoubleColon:
+    active: true
+  SpacingAroundKeyword:
+    active: true
+  SpacingAroundOperators:
+    active: true
+  SpacingAroundParens:
+    active: true
+  SpacingAroundRangeOperator:
+    active: true
+  SpacingAroundSquareBrackets:
+    active: true
+  SpacingAroundUnaryOperator:
+    active: true
+  SpacingBetweenDeclarationsWithAnnotations:
+    active: false
+  SpacingBetweenDeclarationsWithComments:
+    active: false
+  SpacingBetweenFunctionNameAndOpeningParenthesis:
+    active: true
+  StatementWrapping:
+    active: true
+    indentSize: 2
+  StringTemplate:
+    active: true
+  StringTemplateIndent:
+    active: false
+    indentSize: 2
+  TrailingCommaOnCallSite:
+    active: true
+    useTrailingCommaOnCallSite: true
+  TrailingCommaOnDeclarationSite:
+    active: true
+    useTrailingCommaOnDeclarationSite: true
+  TryCatchFinallySpacing:
+    active: true
+    indentSize: 2
+  TypeArgumentComment:
+    active: true
+  TypeArgumentListSpacing:
+    active: true
+    indentSize: 2
+  TypeParameterComment:
+    active: true
+  TypeParameterListSpacing:
+    active: true
+    indentSize: 2
+  UnnecessaryParenthesesBeforeTrailingLambda:
+    active: true
+  ValueArgumentComment:
+    active: true
+  ValueParameterComment:
+    active: true
+  WhenEntryBracing:
+    active: true
+    indentSize: 2
+  Wrapping:
+    active: true
+    indentSize: 2
+    maxLineLength: 120
 
 naming:
   BooleanPropertyNaming:
