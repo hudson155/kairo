@@ -14,6 +14,7 @@ public class PostgresExtension : PostgresExtensionAware, BeforeAllCallback, Befo
   /**
    * Idempotently starts a Postgres Docker container.
    */
+  @Suppress("MissingUseCall")
   override fun beforeAll(context: ExtensionContext) {
     context.root.getStore(namespace).getOrComputeIfAbsent("postgres") {
       val postgres = PostgreSQLContainer("postgres:16.9")

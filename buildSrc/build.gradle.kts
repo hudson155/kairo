@@ -16,8 +16,8 @@ dependencies {
   implementation("com.google.cloud.artifactregistry:artifactregistry-gradle-plugin:$artifactRegistryVersion")
 
   // https://github.com/detekt/detekt/releases
-  val detektVersion = "1.23.8"
-  implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion")
+  val detektVersion = "2.0.0-alpha.1"
+  implementation("dev.detekt:detekt-gradle-plugin:$detektVersion")
 }
 
 kotlin {

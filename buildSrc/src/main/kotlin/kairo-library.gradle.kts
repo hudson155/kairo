@@ -4,7 +4,7 @@ plugins {
   id("kairo")
   `java-library`
   kotlin("jvm")
-  id("io.gitlab.arturbosch.detekt")
+  id("dev.detekt")
 }
 
 java {
@@ -35,7 +35,7 @@ kotlin {
 dependencies {
   api(platform(project(":bom-full")))
   testRuntimeOnly("org.slf4j:slf4j-simple")
-  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${detekt.toolVersion}")
+  detektPlugins("dev.detekt:detekt-rules-ktlint-wrapper:${detekt.toolVersion.get()}")
 }
 
 /**

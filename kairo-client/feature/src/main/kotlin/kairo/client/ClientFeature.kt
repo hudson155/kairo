@@ -21,6 +21,7 @@ public abstract class ClientFeature(
     listOf(
       module {
         single(named(httpClientName)) {
+          @Suppress("MissingUseCall")
           HttpClientFactory.create(
             timeout = timeout,
             block = { configure() },
