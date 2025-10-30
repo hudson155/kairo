@@ -489,14 +489,14 @@ ktlint:
     indentSize: 2
   TypeArgumentComment:
     active: true
-    autoCorrect: true
+    autoCorrect: false
   TypeArgumentListSpacing:
     active: true
     autoCorrect: true
     indentSize: 2
   TypeParameterComment:
     active: true
-    autoCorrect: true
+    autoCorrect: false
   TypeParameterListSpacing:
     active: true
     autoCorrect: true
@@ -506,10 +506,10 @@ ktlint:
     autoCorrect: true
   ValueArgumentComment:
     active: true
-    autoCorrect: true
+    autoCorrect: false
   ValueParameterComment:
     active: true
-    autoCorrect: true
+    autoCorrect: false
   WhenEntryBracing:
     active: false
   Wrapping:
