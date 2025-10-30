@@ -14,8 +14,10 @@ import kairo.feature.LifecycleHandler
 import kairo.feature.lifecycle
 import kairo.protectedString.ProtectedString
 import kotlin.time.toJavaDuration
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.reactive.awaitSingle
+import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabase
 import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabaseConfig
 import org.koin.core.module.Module
@@ -77,7 +79,9 @@ public class SqlFeature(
         throw e
       } finally {
         try {
-          connection.close().awaitFirstOrNull()
+          withContext(NonCancellable) {
+            connection.close().awaitFirstOrNull()
+          }
         } catch (closeException: Throwable) {
           if (exception == null) throw closeException
           exception.addSuppressed(closeException)
