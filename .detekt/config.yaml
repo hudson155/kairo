@@ -213,23 +213,18 @@ ktlint:
     active: true
   BlankLineBetweenWhenConditions:
     active: true
-    lineBreakAfterWhenEntries: true
+    lineBreakAfterWhenEntries: false
   BlockCommentInitialStarAlignment:
     active: true
   ChainMethodContinuation:
-    active: true
-    indentSize: 2
-    maxLineLength: 120
-    forceMultilineWhenChainOperatorCountGreaterOrEqualThan: 4
+    active: false
   ChainWrapping:
     active: true
     indentSize: 2
   ClassName:
     active: true
   ClassSignature:
-    active: true
-    indentSize: 2
-    maxLineLength: 120
+    active: false
   CommentSpacing:
     active: true
   CommentWrapping:
@@ -259,9 +254,7 @@ ktlint:
   FunKeywordSpacing:
     active: true
   FunctionExpressionBody:
-    active: true
-    indentSize: 2
-    maxLineLength: 120
+    active: false # Overlaps with style>ExpressionBodySyntax.
   FunctionLiteral:
     active: true
     indentSize: 2
@@ -438,8 +431,7 @@ ktlint:
   ValueParameterComment:
     active: true
   WhenEntryBracing:
-    active: true
-    indentSize: 2
+    active: false
   Wrapping:
     active: true
     indentSize: 2
