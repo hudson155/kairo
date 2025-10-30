@@ -24,15 +24,31 @@ internal class DarbEncoderTest {
       DarbEncoder.encode(listOf(true, false, false, false, false)).shouldBe("5.80")
       DarbEncoder.encode(listOf(true, true, false, false, true)).shouldBe("5.C8")
       DarbEncoder.encode(listOf(true, true, true, true, true)).shouldBe("5.F8")
-      @Suppress("ArgumentListWrapping")
       DarbEncoder.encode(
         listOf(
-          false, false, true, false,
-          true, true, false, false,
-          true, false, true, true,
-          false, false, false, false,
-          true, false, false, false,
-          true, true, true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
         ),
       ).shouldBe("23.2CB08E")
     }
@@ -54,23 +70,55 @@ internal class DarbEncoderTest {
       DarbEncoder.decode("5.C8").shouldContainExactly(true, true, false, false, true)
       DarbEncoder.decode("5.F8").shouldContainExactly(true, true, true, true, true)
       DarbEncoder.decode("5.f8").shouldContainExactly(true, true, true, true, true)
-      @Suppress("ArgumentListWrapping")
       DarbEncoder.decode("23.2CB08E").shouldContainExactly(
-        false, false, true, false,
-        true, true, false, false,
-        true, false, true, true,
-        false, false, false, false,
-        true, false, false, false,
-        true, true, true,
+        false,
+        false,
+        true,
+        false,
+        true,
+        true,
+        false,
+        false,
+        true,
+        false,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
       )
-      @Suppress("ArgumentListWrapping")
       DarbEncoder.decode("23.2cb08e").shouldContainExactly(
-        false, false, true, false,
-        true, true, false, false,
-        true, false, true, true,
-        false, false, false, false,
-        true, false, false, false,
-        true, true, true,
+        false,
+        false,
+        true,
+        false,
+        true,
+        true,
+        false,
+        false,
+        true,
+        false,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
       )
     }
 
