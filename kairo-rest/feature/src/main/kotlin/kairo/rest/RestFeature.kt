@@ -12,7 +12,6 @@ import kotlinx.coroutines.CompletableDeferred
 /**
  * The REST Feature runs a Ktor server for the lifecycle of a Kairo application.
  */
-@Suppress("LongParameterList")
 public class RestFeature(
   private val config: RestFeatureConfig,
   private val ktorConfig: KtorServerConfig.() -> Unit = {},
