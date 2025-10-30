@@ -80,12 +80,12 @@ dependencies {
   // postgres-r2dbc
   // https://github.com/pgjdbc/r2dbc-postgresql/releases
   val postgresR2dbcVersion = "1.1.1.RELEASE"
-  api(platform("org.postgresql:r2dbc-postgresql:$postgresR2dbcVersion"))
+  constraints.api("org.postgresql:r2dbc-postgresql:$postgresR2dbcVersion")
 
   // r2dbc-pool
   // https://github.com/r2dbc/r2dbc-pool/releases
   val r2dbcPoolVersion = "1.0.2.RELEASE"
-  api(platform("io.r2dbc:r2dbc-pool:$r2dbcPoolVersion"))
+  constraints.api("io.r2dbc:r2dbc-pool:$r2dbcPoolVersion")
 
   // serialization
   // https://github.com/Kotlin/kotlinx.serialization/releases
