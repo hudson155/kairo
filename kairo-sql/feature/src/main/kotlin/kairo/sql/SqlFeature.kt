@@ -23,6 +23,7 @@ public class SqlFeature(
 ) : Feature(), HasKoinModules {
   override val name: String = "SQL"
 
+  @Suppress("MissingUseCall")
   private val hikari: HikariDataSource =
     createHikari(
       connectionFactory = config.connectionFactory,
