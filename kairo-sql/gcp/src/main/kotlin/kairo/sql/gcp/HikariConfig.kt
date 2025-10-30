@@ -1,9 +1,10 @@
 package kairo.sql.gcp
 
-import com.zaxxer.hikari.HikariConfig
+import io.r2dbc.spi.ConnectionFactoryOptions
+import io.r2dbc.spi.Option
 
-public fun HikariConfig.gcpAuth(config: GcpSqlConfig) {
-  addDataSourceProperty("socketFactory", "com.google.cloud.sql.postgres.SocketFactory")
-  addDataSourceProperty("cloudSqlInstance", config.instanceName)
-  addDataSourceProperty("enableIamAuth", "true")
+public fun ConnectionFactoryOptions.Builder.gcpAuth(config: GcpSqlConfig) {
+  option(Option.valueOf("socketFactory"), "com.google.cloud.sql.postgres.SocketFactory")
+  option(Option.valueOf("cloudSqlInstance"), config.instanceName)
+  option(Option.valueOf("enableIamAuth"), "true")
 }

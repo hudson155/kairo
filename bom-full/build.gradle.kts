@@ -26,11 +26,6 @@ dependencies {
   // https://github.com/google/guava/releases
   api(platform("com.google.guava:guava-bom:33.4.8-jre"))
 
-  // hikari
-  // https://github.com/brettwooldridge/HikariCP/tags
-  val hikariVersion = "7.0.2"
-  constraints.api("com.zaxxer:HikariCP:$hikariVersion")
-
   // hocon
   // https://github.com/lightbend/config/releases
   val hoconVersion = "1.4.5"
@@ -81,6 +76,16 @@ dependencies {
   // https://github.com/pgjdbc/pgjdbc/releases
   val postgresJdbcVersion = "42.7.7"
   constraints.api("org.postgresql:postgresql:$postgresJdbcVersion")
+
+  // postgres-r2dbc
+  // https://github.com/pgjdbc/r2dbc-postgresql/releases
+  val postgresR2dbcVersion = "1.1.1.RELEASE"
+  api(platform("org.postgresql:r2dbc-postgresql:$postgresR2dbcVersion"))
+
+  // r2dbc-pool
+  // https://github.com/r2dbc/r2dbc-pool/releases
+  val r2dbcPoolVersion = "1.0.2.RELEASE"
+  api(platform("io.r2dbc:r2dbc-pool:$r2dbcPoolVersion"))
 
   // serialization
   // https://github.com/Kotlin/kotlinx.serialization/releases

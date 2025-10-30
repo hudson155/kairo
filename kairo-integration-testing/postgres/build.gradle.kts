@@ -9,5 +9,6 @@ dependencies {
   implementation(project(":kairo-sql:postgres"))
   implementation(project(":kairo-testing")) // Forced peer dependency.
 
+  implementation(libs.exposed.jdbc)
   implementation(libs.testcontainers.postgres)
 }
