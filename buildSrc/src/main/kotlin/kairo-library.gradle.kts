@@ -34,8 +34,8 @@ kotlin {
 
 dependencies {
   api(platform(project(":bom-full")))
-  testRuntimeOnly("org.slf4j:slf4j-simple")
   detektPlugins("dev.detekt:detekt-rules-ktlint-wrapper:${detekt.toolVersion.get()}")
+  testRuntimeOnly("org.slf4j:slf4j-simple")
 }
 
 /**
