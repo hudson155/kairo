@@ -160,7 +160,8 @@ These libraries help when **building your full application with Kairo**.
   Also offers channel mapping functionality.
 - [kairo-sql](./kairo-sql/README.md):
   Standardizes SQL access in Kairo
-  using [Exposed](https://www.jetbrains.com/exposed/)'s lightweight & idiomatic ORM DSL.
+  using [Exposed](https://www.jetbrains.com/exposed/)'s lightweight & idiomatic ORM DSL,
+  with support for async I/O using R2DBC.
 
 ## Publishing
 
