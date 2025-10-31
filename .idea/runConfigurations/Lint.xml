@@ -10,7 +10,8 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="detekt" />
+          <option value="detektMain" />
+          <option value="detektTest" />
         </list>
       </option>
       <option name="vmOptions" />
