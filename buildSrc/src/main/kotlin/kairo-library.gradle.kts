@@ -38,6 +38,19 @@ dependencies {
   detektPlugins("dev.detekt:detekt-rules-ktlint-wrapper:${detekt.toolVersion.get()}")
 }
 
+/**
+ * Detekt makes the [check] task depend on the [detekt] task automatically.
+ * However, since the [detekt] task doesn't support type resolution,
+ * some issues get missed.
+ *
+ * Here, we remove the default dependency and replace it with [detektMain] and [detektTest]
+ * which do support type resolution.
+ */
+tasks.named("check").configure {
+  setDependsOn(dependsOn.filterNot { it is TaskProvider<*> && it.name == "detekt" })
+  dependsOn("detektMain", "detektTest")
+}
+
 tasks.test {
   jvmArgs(
     "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug",
