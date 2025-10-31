@@ -7,7 +7,8 @@ repositories {
 }
 
 dependencies {
-  val kotlinVersion = "2.2.20" // https://kotlinlang.org/docs/releases.html#release-details
+  // https://kotlinlang.org/docs/releases.html#release-details
+  val kotlinVersion = "2.2.20"
   implementation(kotlin("gradle-plugin", kotlinVersion))
   implementation(kotlin("serialization", kotlinVersion))
 
