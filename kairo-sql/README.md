@@ -215,25 +215,8 @@ by passing a `configureDatabase` builder block to the `SqlFeature` constructor.
 
 ### GCP
 
-To support GCP, install `kairo-sql-gcp` and call `gcpAuth()`.
-
-```kotlin
-// build.gradle.kts
-
-dependencies {
-  implementation("software.airborne.kairo:kairo-sql-feature")
-  implementation("software.airborne.kairo:kairo-sql-gcp")
-}
-```
-
-```kotlin
-SqlFeature(
-  config = config.sql,
-  configureHikari = {
-    config.gcpSql?.let { gcpAuth(it) }
-  },
-)
-```
+To support GCP,
+[see Google's guide](https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/blob/main/docs/r2dbc.md).
 
 ### Postgres
 
