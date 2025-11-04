@@ -54,7 +54,6 @@ logging = { module = "io.github.oshai:kotlin-logging-jvm" }
 
 mockk = { module = "io.mockk:mockk" }
 
-postgres-gcp = { module = "com.google.cloud.sql:postgres-socket-factory" }
 postgres-jdbc = { module = "org.postgresql:postgresql" }
 postgres-r2dbc = { module = "org.postgresql:r2dbc-postgresql" }
 
