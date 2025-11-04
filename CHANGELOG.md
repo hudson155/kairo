@@ -283,7 +283,6 @@ No changes.
 - **Lazy Supplier**
 - **MDC**
 - **Money**
-- **Slack**
 - **Time**
 - **Transaction Manager**
 - **UUID** (use Kotlin's `Uuid` class directly instead).
