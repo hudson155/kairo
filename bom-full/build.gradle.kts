@@ -64,7 +64,7 @@ dependencies {
 
   // mockk
   // https://github.com/mockk/mockk/releases
-  val mockkVersion = "1.14.5"
+  val mockkVersion = "1.14.6"
   constraints.api("io.mockk:mockk:$mockkVersion")
 
   // postgres-gcp
