@@ -24,7 +24,7 @@ dependencies {
 
   // guava
   // https://github.com/google/guava/releases
-  api(platform("com.google.guava:guava-bom:33.4.8-jre"))
+  api(platform("com.google.guava:guava-bom:33.5.0-jre"))
 
   // hocon
   // https://github.com/lightbend/config/releases
