@@ -8,7 +8,7 @@ dependencies {
 
   // arrow
   // https://github.com/arrow-kt/arrow/releases
-  api(platform("io.arrow-kt:arrow-stack:2.1.2"))
+  api(platform("io.arrow-kt:arrow-stack:2.2.0"))
 
   // coroutines
   // https://github.com/Kotlin/kotlinx.coroutines/releases
