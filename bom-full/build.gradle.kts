@@ -55,7 +55,7 @@ dependencies {
 
   // log4j
   // https://github.com/apache/logging-log4j2/releases
-  api(platform("org.apache.logging.log4j:log4j-bom:2.25.1"))
+  api(platform("org.apache.logging.log4j:log4j-bom:2.25.2"))
 
   // logging
   // https://github.com/oshai/kotlin-logging/releases
