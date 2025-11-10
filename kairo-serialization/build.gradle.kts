@@ -13,7 +13,7 @@ kotlin {
 dependencies {
   implementation(project(":kairo-optional"))
 
-  api(libs.serialization.core)
+  api(libs.serialization)
   compileOnly(libs.serialization.json)
 
   testImplementation(project(":kairo-testing"))
