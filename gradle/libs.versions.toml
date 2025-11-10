@@ -54,6 +54,8 @@ logging = { module = "io.github.oshai:kotlin-logging-jvm" }
 
 mockk = { module = "io.mockk:mockk" }
 
+moneta = { module = "org.javamoney:moneta" }
+
 postgres-jdbc = { module = "org.postgresql:postgresql" }
 postgres-r2dbc = { module = "org.postgresql:r2dbc-postgresql" }
 

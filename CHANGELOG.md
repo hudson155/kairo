@@ -178,6 +178,10 @@ No changes.
 
 - **Guidance to reduce noisy logs in production.**
 
+#### Money
+
+No changes.
+
 #### Optional
 
 - Introduced `Optional` differentiate between missing and null properties.
@@ -282,7 +286,6 @@ No changes.
 - **Hashing**
 - **Lazy Supplier**
 - **MDC**
-- **Money**
 - **Time**
 - **Transaction Manager**
 - **UUID** (use Kotlin's `Uuid` class directly instead).

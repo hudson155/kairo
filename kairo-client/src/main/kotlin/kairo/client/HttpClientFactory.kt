@@ -27,7 +27,7 @@ public object HttpClientFactory {
         json(
           Json {
             ignoreUnknownKeys = true
-            serializersModule += optionalModule
+            serializersModule += optionalModule()
             configureJson()
           },
         )

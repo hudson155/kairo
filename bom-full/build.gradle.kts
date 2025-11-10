@@ -67,6 +67,11 @@ dependencies {
   val mockkVersion = "1.14.6"
   constraints.api("io.mockk:mockk:$mockkVersion")
 
+  // moneta
+  // https://github.com/JavaMoney/jsr354-ri/releases
+  val monetaVersion = "1.4.5"
+  constraints.api("org.javamoney:moneta:$monetaVersion")
+
   // postgresGcp-r2dbc
   // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
   val postgresGcpR2dbcVersion = "1.27.0"

@@ -11,14 +11,6 @@ public class OptionalSerializer<T : Any>(
 ) : KSerializer<Optional<T>> {
   override val descriptor: SerialDescriptor = valueSerializer.descriptor
 
-  override fun deserialize(decoder: Decoder): Optional<T> {
-    if (decoder.decodeNotNullMark()) {
-      return Optional.Value(decoder.decodeSerializableValue(valueSerializer))
-    }
-    decoder.decodeNull()
-    return Optional.Null
-  }
-
   override fun serialize(encoder: Encoder, value: Optional<T>) {
     when (value) {
       is Optional.Value -> encoder.encodeSerializableValue(valueSerializer, value.value)
@@ -31,5 +23,13 @@ public class OptionalSerializer<T : Any>(
           ".${EncodeDefault.Mode.NEVER}).",
       )
     }
+  }
+
+  override fun deserialize(decoder: Decoder): Optional<T> {
+    if (decoder.decodeNotNullMark()) {
+      return Optional.Value(decoder.decodeSerializableValue(valueSerializer))
+    }
+    decoder.decodeNull()
+    return Optional.Null
   }
 }

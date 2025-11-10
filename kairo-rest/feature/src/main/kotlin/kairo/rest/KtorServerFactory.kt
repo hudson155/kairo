@@ -92,7 +92,7 @@ public object KtorServerFactory {
   private fun createJson(features: List<Feature>): Json =
     Json {
       prettyPrint()
-      serializersModule += optionalModule
+      serializersModule += optionalModule()
       features.filterIsInstance<ConfiguresJson>().forEach { with(it) { configure() } }
     }
 
