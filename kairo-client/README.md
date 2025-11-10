@@ -27,6 +27,10 @@ class WeatherFeature : ClientFeature(httpClientName = "weather") {
 
   override val timeout: Duration = 5.seconds
 
+  override fun JsonBuilder.configure() {
+    // Optionally configure JSON serialization.
+  }
+
   override fun HttpClientConfig<*>.configure() {
     defaultRequest {
       url("https://api.weather.gov")
