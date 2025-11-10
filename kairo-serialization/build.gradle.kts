@@ -11,8 +11,6 @@ kotlin {
 }
 
 dependencies {
-  implementation(project(":kairo-optional"))
-
   api(libs.serialization)
   compileOnly(libs.serialization.json)
 

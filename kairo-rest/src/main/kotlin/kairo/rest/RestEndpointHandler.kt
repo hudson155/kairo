@@ -74,7 +74,7 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Route.route(
   val responseType = KairoType.from<O>(RestEndpoint::class, 1, kClass)
   val template = RestEndpointTemplate.from(kClass)
   val route = buildRoute(template)
-  val reader = RestEndpointReader.from(application.json, kClass)
+  val reader = RestEndpointReader.from(kClass)
   route.handle {
     val handler = RestEndpointHandler(kClass).apply(block)
     val endpoint = reader.read(call)

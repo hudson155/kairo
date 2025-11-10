@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-optional"))
   implementation(project(":kairo-serialization"))
 
   api(libs.ktorClient)

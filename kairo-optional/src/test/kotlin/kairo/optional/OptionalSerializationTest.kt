@@ -1,7 +1,6 @@
 package kairo.optional
 
 import io.kotest.matchers.shouldBe
-import kairo.serialization.json
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.EncodeDefault
@@ -10,6 +9,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.modules.plus
 import org.junit.jupiter.api.Test
 
 internal class OptionalSerializationTest {
@@ -19,7 +19,7 @@ internal class OptionalSerializationTest {
     val value: Optional<String> = Optional.Missing,
   )
 
-  private val json: Json = json()
+  private val json: Json = Json { serializersModule += optionalModule }
 
   @Test
   fun `deserialize, missing`(): Unit =

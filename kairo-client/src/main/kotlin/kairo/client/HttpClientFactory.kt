@@ -6,7 +6,10 @@ import io.ktor.client.engine.java.Java
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
+import kairo.optional.optionalModule
 import kotlin.time.Duration
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.plus
 
 /**
  * Creates Ktor HTTP clients.
@@ -19,7 +22,12 @@ public object HttpClientFactory {
     HttpClient(Java) {
       expectSuccess = true
       install(ContentNegotiation) {
-        json(kairo.serialization.json { ignoreUnknownKeys = true })
+        json(
+          Json {
+            ignoreUnknownKeys = true
+            serializersModule += optionalModule
+          },
+        )
       }
       install(HttpTimeout) {
         requestTimeoutMillis = timeout.inWholeMilliseconds

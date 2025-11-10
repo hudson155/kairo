@@ -2,7 +2,6 @@ package kairo.exception
 
 import io.kotest.matchers.shouldBe
 import io.ktor.http.HttpStatusCode
-import kairo.serialization.json
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObjectBuilder
@@ -23,12 +22,10 @@ internal class LogicalFailureSerializatonTest {
     }
   }
 
-  private val json: Json = json()
-
   @Test
   fun `null key`(): Unit =
     runTest {
-      json.encodeToJsonElement(Example(null).json)
+      Json.encodeToJsonElement(Example(null).json)
         .shouldBe(
           buildJsonObject {
             put("type", JsonPrimitive("Example"))
@@ -43,7 +40,7 @@ internal class LogicalFailureSerializatonTest {
   @Test
   fun `non-null key`(): Unit =
     runTest {
-      json.encodeToJsonElement(Example("expected").json)
+      Json.encodeToJsonElement(Example("expected").json)
         .shouldBe(
           buildJsonObject {
             put("type", JsonPrimitive("Example"))

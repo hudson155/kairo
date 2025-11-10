@@ -1,6 +1,5 @@
 package kairo.config
 
-import kairo.serialization.json
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -8,13 +7,10 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.encodeToJsonElement
-import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.serializer
 
 // TODO: Should config resolution be parallelized?
 //  If fetching a lot of GCP secrets, it might have significant impact.
-
-private val json: Json = json()
 
 /**
  * Config resolvers let you dynamically resolve config string values.
@@ -30,16 +26,16 @@ public suspend inline fun <reified T : Any> resolveConfig(
   config: T,
   resolvers: List<ConfigResolver>,
 ): T =
-  resolveConfig(config, { serializer() }, resolvers)
+  resolveConfig(config, serializer(), resolvers)
 
 public suspend fun <T : Any> resolveConfig(
   config: T,
-  serializer: SerializersModule.() -> KSerializer<T>,
+  serializer: KSerializer<T>,
   resolvers: List<ConfigResolver>,
 ): T {
-  var element = json.encodeToJsonElement(json.serializersModule.serializer(), config)
+  var element = Json.encodeToJsonElement(serializer, config)
   element = resolveConfig(element, resolvers)
-  return json.decodeFromJsonElement(json.serializersModule.serializer(), element)
+  return Json.decodeFromJsonElement(serializer, element)
 }
 
 public suspend fun resolveConfig(
@@ -59,5 +55,5 @@ private suspend fun resolveConfig(
   if (!element.isString) return element
   val content = element.content
   val resolver = resolvers.singleNullOrThrow { content.startsWith(it.prefix) } ?: return element
-  return json.encodeToJsonElement(resolver.resolve(content.removePrefix(resolver.prefix)))
+  return Json.encodeToJsonElement(resolver.resolve(content.removePrefix(resolver.prefix)))
 }

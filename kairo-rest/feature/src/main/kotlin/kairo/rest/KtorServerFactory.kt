@@ -24,10 +24,12 @@ import io.ktor.server.response.respond
 import io.ktor.server.sse.SSE
 import kairo.exception.LogicalFailure
 import kairo.feature.Feature
+import kairo.optional.optionalModule
 import kairo.rest.auth.AuthConfig
 import kairo.rest.auth.authConfig
-import kairo.serialization.json
+import kairo.serialization.prettyPrint
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.plus
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -88,7 +90,9 @@ public object KtorServerFactory {
   }
 
   private fun createJson(features: List<Feature>): Json =
-    json(prettyPrint = true) {
+    Json {
+      prettyPrint()
+      serializersModule += optionalModule
       features.filterIsInstance<ConfiguresJson>().forEach { with(it) { configure() } }
     }
 

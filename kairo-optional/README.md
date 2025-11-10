@@ -41,15 +41,9 @@ dependencies {
 
 There are two important points to note when using `Optional<T>`.
 
-First, you must either use `json()` to create your `Json` instance,
-use `kairo()` to configure it,
-or manually add the `optionalModule`.
+First, you must add the `optionalModule` to your `Json` instance.
 
 ```kotlin
-val json: Json = json()
-// or
-val json: Json = Json { kairo() }
-// or
 val json: Json = Json { serializersModule += optionalModule }
 ```
 
