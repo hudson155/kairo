@@ -67,10 +67,10 @@ dependencies {
   val mockkVersion = "1.14.6"
   constraints.api("io.mockk:mockk:$mockkVersion")
 
-  // postgres-gcp
+  // postgresGcp-r2dbc
   // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
-  val postgresGcpVersion = "1.27.0"
-  constraints.api("com.google.cloud.sql:cloud-sql-connector-r2dbc-postgres:$postgresGcpVersion")
+  val postgresGcpR2dbcVersion = "1.27.0"
+  constraints.api("com.google.cloud.sql:cloud-sql-connector-r2dbc-postgres:$postgresGcpR2dbcVersion")
 
   // postgres-jdbc
   // https://github.com/pgjdbc/pgjdbc/releases
