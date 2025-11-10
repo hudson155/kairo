@@ -113,6 +113,9 @@ These libraries **can be used anywhere**
   SLF4J-standardized logging (choose your own logging backend),
   exposing [Ohad Shai's Kotlin logging interface](https://github.com/oshai/kotlin-logging)
   for a clean, Kotlin-first API.
+- [kairo-money](./kairo-money/README.md):
+  Modern JVM money handling
+  (`javax.money` backed by [Moneta](https://javamoney.github.io/ri.html)).
 - [kairo-optional](./kairo-optional/README.md):
   Differentiate between missing and null values.
   This comes in especially handy for RFC 7396 (JSON Merge Patch).

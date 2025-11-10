@@ -19,28 +19,7 @@ internal class OptionalSerializationTest {
     val value: Optional<String> = Optional.Missing,
   )
 
-  private val json: Json = Json { serializersModule += optionalModule }
-
-  @Test
-  fun `deserialize, missing`(): Unit =
-    runTest {
-      json.decodeFromString<Wrapper>("{}")
-        .shouldBe(Wrapper(Optional.Missing))
-    }
-
-  @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      json.decodeFromString<Wrapper>("""{"value":null}""")
-        .shouldBe(Wrapper(Optional.Null))
-    }
-
-  @Test
-  fun `deserialize, present`(): Unit =
-    runTest {
-      json.decodeFromString<Wrapper>("""{"value":"some value"}""")
-        .shouldBe(Wrapper(Optional.Value("some value")))
-    }
+  private val json: Json = Json { serializersModule += optionalModule() }
 
   @Test
   fun `serialize, missing`(): Unit =
@@ -69,5 +48,26 @@ internal class OptionalSerializationTest {
             put("value", JsonPrimitive("some value"))
           },
         )
+    }
+
+  @Test
+  fun `deserialize, missing`(): Unit =
+    runTest {
+      json.decodeFromString<Wrapper>("{}")
+        .shouldBe(Wrapper(Optional.Missing))
+    }
+
+  @Test
+  fun `deserialize, null`(): Unit =
+    runTest {
+      json.decodeFromString<Wrapper>("""{"value":null}""")
+        .shouldBe(Wrapper(Optional.Null))
+    }
+
+  @Test
+  fun `deserialize, present`(): Unit =
+    runTest {
+      json.decodeFromString<Wrapper>("""{"value":"some value"}""")
+        .shouldBe(Wrapper(Optional.Value("some value")))
     }
 }

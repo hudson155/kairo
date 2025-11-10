@@ -44,7 +44,7 @@ There are two important points to note when using `Optional<T>`.
 First, you must add the `optionalModule` to your `Json` instance.
 
 ```kotlin
-val json: Json = Json { serializersModule += optionalModule }
+val json: Json = Json { serializersModule += optionalModule() }
 ```
 
 Second, you must add the `@EncodeDefault(EncodeDefault.Mode.NEVER)` and `@Contextual` annotations

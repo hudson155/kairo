@@ -3,7 +3,7 @@ package kairo.optional
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.modules.SerializersModule
 
-public val optionalModule: SerializersModule =
+public fun optionalModule(): SerializersModule =
   SerializersModule {
     contextual(Required::class) { typeArgumentsSerializers ->
       @Suppress("UNCHECKED_CAST")

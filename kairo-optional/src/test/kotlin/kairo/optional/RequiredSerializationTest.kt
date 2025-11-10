@@ -21,7 +21,25 @@ internal class RequiredSerializationTest {
     val value: Required<String> = Required.Missing,
   )
 
-  private val json: Json = Json { serializersModule += optionalModule }
+  private val json: Json = Json { serializersModule += optionalModule() }
+
+  @Test
+  fun `serialize, missing`(): Unit =
+    runTest {
+      json.encodeToJsonElement(Wrapper(Required.Missing))
+        .shouldBe(buildJsonObject {})
+    }
+
+  @Test
+  fun `serialize, present`(): Unit =
+    runTest {
+      json.encodeToJsonElement(Wrapper(Required.Value("some value")))
+        .shouldBe(
+          buildJsonObject {
+            put("value", JsonPrimitive("some value"))
+          },
+        )
+    }
 
   @Test
   fun `deserialize, missing`(): Unit =
@@ -43,23 +61,5 @@ internal class RequiredSerializationTest {
     runTest {
       json.decodeFromString<Wrapper>("""{"value":"some value"}""")
         .shouldBe(Wrapper(Required.Value("some value")))
-    }
-
-  @Test
-  fun `serialize, missing`(): Unit =
-    runTest {
-      json.encodeToJsonElement(Wrapper(Required.Missing))
-        .shouldBe(buildJsonObject {})
-    }
-
-  @Test
-  fun `serialize, present`(): Unit =
-    runTest {
-      json.encodeToJsonElement(Wrapper(Required.Value("some value")))
-        .shouldBe(
-          buildJsonObject {
-            put("value", JsonPrimitive("some value"))
-          },
-        )
     }
 }

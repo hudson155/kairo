@@ -4,14 +4,10 @@ plugins {
   id("kairo-library-publish")
 }
 
-kotlin {
-  compilerOptions {
-    freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi") // OptionalSerializer.
-  }
-}
-
 dependencies {
-  implementation(project(":kairo-serialization"))
+  api(project(":kairo-serialization"))
+
+  api(libs.moneta)
 
   testImplementation(project(":kairo-testing"))
 
