@@ -122,9 +122,8 @@ public object KtorServerFactory {
 
   private fun Application.installContentNegotiation(config: RestFeatureConfig.Plugins.ContentNegotiation?) {
     config ?: return
-    val json = json
     install(ContentNegotiation) {
-      json(json)
+      json(this@installContentNegotiation.json)
     }
   }
 
