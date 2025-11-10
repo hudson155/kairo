@@ -18,19 +18,21 @@ public abstract class MoneySerializer : KSerializer<Money> {
       val currency: String,
     )
 
+    private val delegateSerializer: KSerializer<Delegate> = Delegate.serializer()
+
     override val descriptor: SerialDescriptor =
-      Delegate.serializer().descriptor
+      delegateSerializer.descriptor
 
     override fun serialize(encoder: Encoder, value: Money) {
       val delegate = Delegate(
         amount = value.number.numberValueExact<BigDecimal>(),
         currency = value.currency.currencyCode,
       )
-      encoder.encodeSerializableValue(Delegate.serializer(), delegate)
+      encoder.encodeSerializableValue(delegateSerializer, delegate)
     }
 
     override fun deserialize(decoder: Decoder): Money {
-      val delegate = decoder.decodeSerializableValue(Delegate.serializer())
+      val delegate = decoder.decodeSerializableValue(delegateSerializer)
       return Money.of(delegate.amount, delegate.currency)
     }
   }

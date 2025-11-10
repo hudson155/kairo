@@ -27,7 +27,8 @@ Refer to the [JavaMoney specification](https://javamoney.github.io/).
 
 ### Serialization
 
-For serialization to work, add `moneyModule()` to your `Json` instance.
+For serialization to work, add `moneyModule()` to your `Json` instance
+and mark `Money` instances as `@Contextual`.
 
 ```kotlin
 val json: Json = Json { serializersModule += moneyModule() }
