@@ -9,6 +9,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kairo.optional.optionalModule
 import kotlin.time.Duration
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonBuilder
 import kotlinx.serialization.modules.plus
 
 /**
@@ -17,6 +18,7 @@ import kotlinx.serialization.modules.plus
 public object HttpClientFactory {
   public fun create(
     timeout: Duration,
+    configureJson: JsonBuilder.() -> Unit,
     block: HttpClientConfig<*>.() -> Unit,
   ): HttpClient =
     HttpClient(Java) {
@@ -26,6 +28,7 @@ public object HttpClientFactory {
           Json {
             ignoreUnknownKeys = true
             serializersModule += optionalModule
+            configureJson()
           },
         )
       }
