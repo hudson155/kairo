@@ -6,8 +6,8 @@ plugins {
 dependencies {
   implementation(project(":kairo-serialization"))
 
+  api(libs.ktorClient)
   implementation(libs.ktorClient.contentNegotiation)
-  api(libs.ktorClient.core)
   implementation(libs.ktorClient.java)
   implementation(libs.ktorSerialization.json)
 }

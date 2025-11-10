@@ -11,7 +11,7 @@ kotlin {
 }
 
 dependencies {
-  implementation(libs.serialization.core)
+  implementation(libs.serialization)
 
   testImplementation(project(":kairo-serialization"))
   testImplementation(project(":kairo-testing"))

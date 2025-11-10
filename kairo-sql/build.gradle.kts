@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(libs.exposed.core)
+  api(libs.exposed)
   api(libs.exposed.crypt)
   api(libs.exposed.json)
   api(libs.exposed.kotlinDatetime)
