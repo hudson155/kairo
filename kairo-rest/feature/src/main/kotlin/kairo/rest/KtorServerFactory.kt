@@ -29,6 +29,7 @@ import kairo.rest.auth.AuthConfig
 import kairo.rest.auth.authConfig
 import kairo.serialization.prettyPrint
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonBuilder
 import kotlinx.serialization.modules.plus
 
 private val logger: KLogger = KotlinLogging.logger {}
@@ -40,6 +41,7 @@ public object KtorServerFactory {
     features: List<Feature>,
     ktorConfig: KtorServerConfig.() -> Unit,
     authConfig: AuthConfig?,
+    configureJson: JsonBuilder.() -> Unit,
     ktorModule: Application.() -> Unit,
   ): KtorServer =
     embeddedServer(
@@ -56,7 +58,7 @@ public object KtorServerFactory {
       },
       module = {
         this.authConfig = authConfig
-        this.json = createJson(features)
+        this.json = createJson(configureJson, features)
         plugins(config.plugins)
         auth()
         routing(features)
@@ -89,10 +91,14 @@ public object KtorServerFactory {
     }
   }
 
-  private fun createJson(features: List<Feature>): Json =
+  private fun createJson(
+    configureJson: JsonBuilder.() -> Unit,
+    features: List<Feature>,
+  ): Json =
     Json {
       prettyPrint()
       serializersModule += optionalModule()
+      configureJson()
       features.filterIsInstance<ConfiguresJson>().forEach { with(it) { configure() } }
     }
 
