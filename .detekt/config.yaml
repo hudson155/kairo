@@ -758,8 +758,6 @@ style:
       - 'com.sun.tools.javac.*'
       - 'com.sun.tools.jdeps.*'
       - 'com.typesafe.config.Optional'
-      - 'dev.langchain4j.agent.*'
-      - 'dev.langchain4j.internal.*'
       - 'io.grpc.*'
       - 'io.kotest.core.spec.*'
       - 'io.kotest.core.test.TestScope'

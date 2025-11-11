@@ -21,8 +21,6 @@
       <name>com.sun.tools.javac.*</name>
       <name>com.sun.tools.jdeps.*</name>
       <name>com.typesafe.config.Optional</name>
-      <name>dev.langchain4j.agent.*</name>
-      <name>dev.langchain4j.internal.*</name>
       <name>io.grpc.*</name>
       <name>io.kotest.core.spec.*</name>
       <name>io.kotest.core.test.TestScope</name>
