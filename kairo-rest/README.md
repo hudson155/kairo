@@ -63,7 +63,7 @@ data class UserRep(
   )
 }
 
-internal object UserApi {
+object UserApi {
   @Rest("GET", "/users/:userId")
   @Rest.Accept("application/json")
   data class Get(
@@ -93,7 +93,7 @@ internal object UserApi {
 
 ```kotlin
 @Single
-internal class UserHandler(
+class UserHandler(
   private val userMapper: UserMapper,
   private val userService: UserService,
 ) : HasRouting {
