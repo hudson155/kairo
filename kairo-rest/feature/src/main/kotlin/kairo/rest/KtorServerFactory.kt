@@ -93,7 +93,7 @@ public object KtorServerFactory {
 
   private fun createJson(
     configureJson: JsonBuilder.() -> Unit,
-    features: List<Feature>
+    features: List<Feature>,
   ): Json =
     Json {
       prettyPrint()

@@ -13,6 +13,7 @@ import kotlinx.serialization.json.JsonBuilder
 /**
  * The REST Feature runs a Ktor server for the lifecycle of a Kairo application.
  */
+@Suppress("LongParameterList")
 public class RestFeature(
   config: RestFeatureConfig,
   ktorConfig: KtorServerConfig.() -> Unit = {},
