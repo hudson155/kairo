@@ -8,15 +8,17 @@ import kairo.feature.LifecycleHandler
 import kairo.feature.lifecycle
 import kairo.rest.auth.AuthConfig
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.serialization.json.JsonBuilder
 
 /**
  * The REST Feature runs a Ktor server for the lifecycle of a Kairo application.
  */
 public class RestFeature(
-  private val config: RestFeatureConfig,
-  private val ktorConfig: KtorServerConfig.() -> Unit = {},
-  private val authConfig: AuthConfig?,
-  private val ktorModule: Application.() -> Unit = {},
+  config: RestFeatureConfig,
+  ktorConfig: KtorServerConfig.() -> Unit = {},
+  authConfig: AuthConfig?,
+  configureJson: JsonBuilder.() -> Unit = {},
+  ktorModule: Application.() -> Unit = {},
 ) : Feature() {
   override val name: String = "REST"
 
@@ -31,6 +33,7 @@ public class RestFeature(
             features = features,
             ktorConfig = ktorConfig,
             authConfig = authConfig,
+            configureJson = configureJson,
             ktorModule = ktorModule,
           )
           this@RestFeature.ktorServer = ktorServer
