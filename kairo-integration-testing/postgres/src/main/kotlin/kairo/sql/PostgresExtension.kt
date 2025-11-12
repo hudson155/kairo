@@ -7,7 +7,7 @@ import org.junit.jupiter.api.extension.AfterEachCallback
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtensionContext
-import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.postgresql.PostgreSQLContainer
 
 @Suppress("SqlSourceToSinkFlow")
 public class PostgresExtension : PostgresExtensionAware, BeforeAllCallback, BeforeEachCallback, AfterEachCallback {

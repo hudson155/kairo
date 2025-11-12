@@ -70,4 +70,4 @@ slack-kotlin = { module = "com.slack.api:slack-api-client-kotlin-extension" }
 
 slf4j-api = { module = "org.slf4j:slf4j-api" }
 
-testcontainers-postgres = { module = "org.testcontainers:postgresql" }
+testcontainers-postgres = { module = "org.testcontainers:testcontainers-postgresql" }
