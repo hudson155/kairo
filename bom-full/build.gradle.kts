@@ -18,6 +18,10 @@ dependencies {
   // https://github.com/JetBrains/Exposed/releases
   api(platform("org.jetbrains.exposed:exposed-bom:1.0.0-rc-3"))
 
+  // flyway
+  // https://github.com/flyway/flyway/releases
+  constraints.api("org.flywaydb:flyway-core:10.6.0")
+
   // gcp
   // https://github.com/googleapis/java-cloud-bom/releases
   api(platform("com.google.cloud:libraries-bom:26.71.0"))
