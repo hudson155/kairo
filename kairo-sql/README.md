@@ -17,13 +17,15 @@ with support for async I/O using **R2DBC**.
 
 Install `kairo-sql-feature`.\
 You don't need to install Exposed separately —
-it's included by default.
+it's included by default.\
+However, you must include a Postgres driver at runtime.
 
 ```kotlin
 // build.gradle.kts
 
 dependencies {
   implementation("software.airborne.kairo:kairo-sql-feature")
+  runtimeOnly("org.postgresql:r2dbc-postgresql")
 }
 ```
 
