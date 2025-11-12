@@ -76,16 +76,6 @@ dependencies {
   val monetaVersion = "1.4.5"
   constraints.api("org.javamoney:moneta:$monetaVersion")
 
-  // postgresGcp-jdbc
-  // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
-  val postgresGcpJdbcVersion = "1.27.0"
-  constraints.api("com.google.cloud.sql:postgres-socket-factory:$postgresGcpJdbcVersion")
-
-  // postgresGcp-r2dbc
-  // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
-  val postgresGcpR2dbcVersion = "1.27.0"
-  constraints.api("com.google.cloud.sql:cloud-sql-connector-r2dbc-postgres:$postgresGcpR2dbcVersion")
-
   // postgres-jdbc
   // https://github.com/pgjdbc/pgjdbc/releases
   val postgresJdbcVersion = "42.7.8"
@@ -95,6 +85,16 @@ dependencies {
   // https://github.com/pgjdbc/r2dbc-postgresql/releases
   val postgresR2dbcVersion = "1.1.1.RELEASE"
   constraints.api("org.postgresql:r2dbc-postgresql:$postgresR2dbcVersion")
+
+  // postgresGcp-jdbc
+  // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
+  val postgresGcpJdbcVersion = "1.27.0"
+  constraints.api("com.google.cloud.sql:postgres-socket-factory:$postgresGcpJdbcVersion")
+
+  // postgresGcp-r2dbc
+  // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
+  val postgresGcpR2dbcVersion = "1.27.0"
+  constraints.api("com.google.cloud.sql:cloud-sql-connector-r2dbc-postgres:$postgresGcpR2dbcVersion")
 
   // r2dbc-pool
   // https://github.com/r2dbc/r2dbc-pool/releases
