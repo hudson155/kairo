@@ -72,6 +72,11 @@ dependencies {
   val monetaVersion = "1.4.5"
   constraints.api("org.javamoney:moneta:$monetaVersion")
 
+  // postgresGcp-jdbc
+  // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
+  val postgresGcpJdbcVersion = "1.27.0"
+  constraints.api("com.google.cloud.sql:postgres-socket-factory:$postgresGcpJdbcVersion")
+
   // postgresGcp-r2dbc
   // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
   val postgresGcpR2dbcVersion = "1.27.0"
