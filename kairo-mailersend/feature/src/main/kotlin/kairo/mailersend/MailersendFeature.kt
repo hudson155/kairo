@@ -12,19 +12,21 @@ public class MailersendFeature(
 ) : Feature(), HasKoinModules {
   override val name: String = "MailerSend"
 
+  private val mailer: Mailer by lazy {
+    val mailersend = MailerSend().apply {
+      @OptIn(ProtectedString.Access::class)
+      token = config.apiToken.value
+    }
+    return@lazy Mailer(
+      mailersend = mailersend,
+      templates = config.templates,
+    )
+  }
+
   override val koinModules: List<Module> =
     listOf(
       module {
-        single {
-          val mailersend = MailerSend().apply {
-            @OptIn(ProtectedString.Access::class)
-            token = config.apiToken.value
-          }
-          return@single Mailer(
-            mailersend = mailersend,
-            templates = config.templates,
-          )
-        }
+        single { mailer }
       },
     )
 }
