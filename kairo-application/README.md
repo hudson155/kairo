@@ -18,6 +18,10 @@ dependencies {
 }
 ```
 
+## Reference implementation
+
+See [kairoSample/Main.kt](https://github.com/hudson155/kairo-sample/blob/main/src/main/kotlin/kairoSample/Main.kt).
+
 ## Usage
 
 Call `startAndWait()` inside a `kairo` block.
