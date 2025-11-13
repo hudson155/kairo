@@ -169,7 +169,7 @@ include "common.conf"
 sql.connectionFactory {
   url = ${?POSTGRES_URL}
   username = "kairo_sample"
-  password = "gcp::projects/012345678900/secrets/example/versions/1"
+  password = "gcp::projects/012345678900/secrets/example/versions/1" # Config resolver.
   ssl = false
 }
 ```
