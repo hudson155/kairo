@@ -1,6 +1,6 @@
 # Kairo Configs
 
-Application configuration should be **simple, consistent, and powerful**.\
+Application configuration should be **simple, consistent, and powerful**.
 `kairo-config` standardizes on [lightbend/config](https://github.com/lightbend/config)'s HOCON implementation,
 giving every Kairo project a familiar, robust foundation for managing configs.
 
@@ -30,7 +30,7 @@ like **Google Secret Manager**.
 
 ## Installation
 
-Install `kairo-config`.\
+Install `kairo-config`.
 You don't need to install lightbend/config separately —
 it's included by default.
 
