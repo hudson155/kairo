@@ -68,7 +68,7 @@ data class Config(
 )
 ```
 
-#### Base/common config
+#### Common (base) config
 
 You'll probably have a base/common config with settings shared across environments.
 
@@ -78,22 +78,22 @@ rest {
   connector.port = 8080
   plugins.defaultHeaders.serverName = "..."
 }
-sql.connectionFactory {
-  url = ${POSTGRES_URL} # Env var
-  username = ${POSTGRES_USERNAME} # Env var
-  password = ${POSTGRES_PASSWORD} # Env var
-}
 ```
 
 #### Production config
 
-Your production config will extend the base config.
-In this case, there's nothing to override.
-Just make sure the Postgres-related environment variables are set at runtime.
+Your production config will extend the base config,
+specifying anything that was missing or overriding things that are different.
 
 ```hocon
 # production.conf
 include "common.conf"
+sql.connectionFactory {
+  url = ${?POSTGRES_URL}
+  username = "kairo_sample"
+  password = ${?POSTGRES_PASSWORD}
+  ssl = false
+}
 ```
 
 You can create a staging config the same way.
@@ -111,21 +111,14 @@ rest {
   plugins.callLogging.useColors = true
 }
 sql {
-  connectionFactory.url = "r2dbc:postgresql://localhost:5432/kairo_sample"
+  connectionFactory {
+    url = "r2dbc:postgresql://localhost/kairo_sample"
+    username = ${?KAIRO_SAMPLE_POSTGRES_USERNAME}
+    password = ${?KAIRO_SAMPLE_POSTGRES_PASSWORD}
+    ssl = false
+  }
   connectionPool.size { initial = 2, min = 1, max = 5 }
 }
-```
-
-#### Testing config
-
-It's usually easiest to make your testing config extend the development config instead of the base config,
-since the overrides we applied to the development config also make sense for testing.
-
-```hocon
-# testing.conf
-include "development.conf"
-id.generation.type = "Deterministic"
-sql.connectionFactory.url = "r2dbc:postgresql://localhost:5432/kairo_sample_test"
 ```
 
 ### Loading the config
@@ -134,7 +127,7 @@ Back to your Kotlin code — load the config and deserialize it into your config
 
 ```kotlin
 val config: Config =
-  ConfigFactory.load("config/production.conf")
+  ConfigFactory.load("production.conf")
     .let { Hocon.decodeFromConfig(it) }
 ```
 
@@ -154,12 +147,10 @@ To use config resolvers, call `resolveConfig()` after loading your config.
 ```kotlin
 private val gcpSecretSupplier: GcpSecretSupplier = DefaultGcpSecretSupplier()
 
-val configName = requireNotNull(System.getenv("CONFIG")) { "CONFIG environment variable not set." }
-
+val configName = requireNotNull(System.getenv("CONFIG"))
 val configResolvers = listOf(
   ConfigResolver("gcp::") { gcpSecretSupplier[it]?.value },
 )
-
 val config: Config =
   ConfigFactory.load("config/$configName.conf")
     .let { Hocon.decodeFromConfig<Config>(it) }
