@@ -41,6 +41,8 @@ mailersend {
 Now send an email!
 
 ```kotlin
+val mailer: Mailer // Inject this.
+
 val email = Email().apply {
   setFrom("Kairo Sample", "kairo-sample@airborne.software")
   addRecipient("Jeff Hudson", "jeff@example.com")
