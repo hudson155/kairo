@@ -122,5 +122,5 @@ dependencies {
 
   // testcontainers
   // https://github.com/testcontainers/testcontainers-java/releases
-  api(platform("org.testcontainers:testcontainers-bom:2.0.1"))
+  api(platform("org.testcontainers:testcontainers-bom:2.0.2"))
 }
