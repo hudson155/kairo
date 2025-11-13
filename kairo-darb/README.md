@@ -43,7 +43,7 @@ val booleanList = listOf(
   - `E` becomes `[true, true, true]`
     (last boolean ignored, since prefix is `23`).
 
-For this example, DARB uses **62.5% less space** than a plain binary string.\
+In this example, DARB uses **62.5% less space** than a plain binary string.\
 For larger lists, the savings approach **75%**.
 
 ## Installation
