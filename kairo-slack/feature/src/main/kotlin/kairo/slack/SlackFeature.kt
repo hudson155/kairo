@@ -15,6 +15,7 @@ public class SlackFeature(
 
   private val slackClient: SlackClient by lazy {
     val slack = Slack.getInstance()
+    @Suppress("MissingUseCall")
     return@lazy SlackClient(
       slack = slack,
       token = config.token,
