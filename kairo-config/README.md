@@ -5,13 +5,14 @@ Application configuration should be **simple, consistent, and powerful**.\
 giving every Kairo project a familiar, robust foundation for managing configs.
 
 ```hocon
+# production.conf
 include "common.conf" # Include another config file.
-app {
-  port = 8080
+sql.connectionFactory {
+  url = ${?POSTGRES_URL} # Environment variable.
+  username = "kairo_sample"
+  password = "gcp::projects/012345678900/secrets/example/versions/1" # Config resolver.
+  ssl = false
 }
-sentryDsn = ${?SENTRY_DSN} # Optional env var.
-databasePassword = ${DATABASE_PASSWORD} # Required env var.
-accessToken = "gcp::projects/012345678900/secrets/example/versions/1" # Config resolver.
 ```
 
 ### HOCON
@@ -159,3 +160,16 @@ val config: Config =
 
 This will detect any strings (or `ProtectedString`s) that start with `gcp::`,
 resolving them using the `GcpSecretSupplier`.
+
+Now you could change your production config to pull GCP secrets.
+
+```hocon
+# production.conf
+include "common.conf"
+sql.connectionFactory {
+  url = ${?POSTGRES_URL}
+  username = "kairo_sample"
+  password = "gcp::projects/012345678900/secrets/example/versions/1"
+  ssl = false
+}
+```
