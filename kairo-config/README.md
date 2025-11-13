@@ -71,28 +71,28 @@ data class Config(
 
 #### Common (base) config
 
-You'll probably have a base/common config with settings shared across environments.
+You'll probably have a base config with settings shared across environments.
 
 ```hocon
 # common.conf
 rest {
   connector.port = 8080
-  plugins.defaultHeaders.serverName = "..."
+  plugins.defaultHeaders.serverName = "Kairo Sample"
 }
 ```
 
 #### Production config
 
 Your production config will extend the base config,
-specifying anything that was missing or overriding things that are different.
+specifying anything that was missing and/or overriding things that are different.
 
 ```hocon
 # production.conf
 include "common.conf"
 sql.connectionFactory {
-  url = ${?POSTGRES_URL}
+  url = ${?POSTGRES_URL} # Environment variable.
   username = "kairo_sample"
-  password = ${?POSTGRES_PASSWORD}
+  password = ${?POSTGRES_PASSWORD} # Environment variable.
   ssl = false
 }
 ```
@@ -108,8 +108,8 @@ but override a few settings.
 # development.conf
 include "common.conf"
 rest {
-  parallelism { runningLimit = 10, callGroupSize = 2 }
-  plugins.callLogging.useColors = true
+  parallelism { runningLimit = 10, callGroupSize = 2 } # Reduced parallelism.
+  plugins.callLogging.useColors = true # Nice local experience.
 }
 sql {
   connectionFactory {
@@ -118,7 +118,7 @@ sql {
     password = ${?KAIRO_SAMPLE_POSTGRES_PASSWORD}
     ssl = false
   }
-  connectionPool.size { initial = 2, min = 1, max = 5 }
+  connectionPool.size { initial = 2, min = 1, max = 5 } # Reduced pool size.
 }
 ```
 
