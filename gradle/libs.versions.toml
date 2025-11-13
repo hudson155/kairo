@@ -52,6 +52,8 @@ ktorServer-statusPages = { module = "io.ktor:ktor-server-status-pages" }
 
 logging = { module = "io.github.oshai:kotlin-logging-jvm" }
 
+mailersend = { module = "com.mailersend:java-sdk" }
+
 mockk = { module = "io.mockk:mockk" }
 
 moneta = { module = "org.javamoney:moneta" }

@@ -154,6 +154,9 @@ These libraries help when **building your full application with Kairo**.
   you can add health check endpoints to your Kairo application.
 - [kairo-integration-testing](./kairo-integration-testing/README.md):
   Black-box integration testing support for Kairo applications.
+- [kairo-mailersend](./kairo-mailersend/README.md):
+  Interface for [MailerSend](https://www.mailersend.com/),
+  letting you easily send emails!
 - [kairo-server](./kairo-server/README.md):
   Servers are composed of Features,
   and can be run as an application or as part of integration tests.
