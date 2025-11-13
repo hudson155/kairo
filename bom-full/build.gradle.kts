@@ -66,6 +66,11 @@ dependencies {
   val loggingVersion = "7.0.13"
   constraints.api("io.github.oshai:kotlin-logging-jvm:$loggingVersion")
 
+  // mailersend
+  // https://github.com/mailersend/mailersend-java/releases
+  val mailersendVersion = "1.4.1"
+  constraints.api("com.mailersend:java-sdk:$mailersendVersion")
+
   // mockk
   // https://github.com/mockk/mockk/releases
   val mockkVersion = "1.14.6"

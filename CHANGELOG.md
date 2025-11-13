@@ -178,6 +178,11 @@ No changes.
 
 - **Guidance to reduce noisy logs in production.**
 
+#### Mailersend
+
+- Introduction of `kairo-mailersend`,
+  letting you easily send emails through [MailerSend](https://www.mailersend.com/).
+
 #### Money
 
 No changes.
