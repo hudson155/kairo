@@ -8,7 +8,7 @@
 
 ## Installation
 
-Install `kairo-coroutines`.\
+Install `kairo-coroutines`.
 You don't need to install Kotlin or Arrow's coroutines libraries separately —
 they're included by default.
 
@@ -57,8 +57,8 @@ Kairo's version accepts any `Iterable`.
 Kotlin's `single()` and `singleOrNull()` functions are excellent utilities,
 but `singleOrNull()` can be surprising because it returns `null` when there are multiple items.
 
-`singleNullOrThrow()` returns the single element, or null if the collection is empty.
-If the collection has more than one element, throws `IllegalArgumentException`.
+`singleNullOrThrow()` returns the single element, or null if the flow is empty.
+If the flow has more than one element, throws `IllegalArgumentException`.
 
 [kairo-util](../kairo-util/README.md) already exposes this function with `Array`, `Iterable`, and `Sequence` receivers.
 This library exposes it with the `Flow` receiver.
