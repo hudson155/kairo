@@ -9,19 +9,17 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.encodeToJsonElement
 import kotlinx.serialization.serializer
 
-// TODO: Should config resolution be parallelized?
-//  If fetching a lot of GCP secrets, it might have significant impact.
-
-/**
- * Config resolvers let you dynamically resolve config string values.
- * String values that start with [prefix] will be mapped through [resolve].
- */
 @Suppress("UseDataClass")
 public class ConfigResolver(
   internal val prefix: String,
   internal val resolve: suspend (raw: String) -> String?,
 )
 
+/**
+ * Config resolvers let you dynamically resolve config string values.
+ * String values that start with [ConfigResolver.prefix]
+ * will be mapped through [ConfigResolver.resolve].
+ */
 public suspend inline fun <reified T : Any> resolveConfig(
   config: T,
   resolvers: List<ConfigResolver>,
@@ -52,8 +50,16 @@ private suspend fun resolveConfig(
   element: JsonPrimitive,
   resolvers: List<ConfigResolver>,
 ): JsonElement {
-  if (!element.isString) return element
+  if (!element.isString) {
+    // Only strings can be resolved using config resolvers. Other primitives are left alone.
+    return element
+  }
   val content = element.content
-  val resolver = resolvers.singleNullOrThrow { content.startsWith(it.prefix) } ?: return element
-  return Json.encodeToJsonElement(resolver.resolve(content.removePrefix(resolver.prefix)))
+  val resolver = resolvers.singleNullOrThrow { content.startsWith(it.prefix) }
+  if (resolver == null) {
+    // No config resolver matched the prefix; leave the string alone.
+    return element
+  }
+  val resolved = resolver.resolve(content.removePrefix(resolver.prefix))
+  return Json.encodeToJsonElement(resolved)
 }
