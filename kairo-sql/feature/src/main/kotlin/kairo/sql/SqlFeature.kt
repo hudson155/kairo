@@ -9,7 +9,6 @@ import io.r2dbc.spi.IsolationLevel
 import io.r2dbc.spi.ValidationDepth
 import kairo.dependencyInjection.HasKoinModules
 import kairo.feature.Feature
-import kairo.feature.FeaturePriority
 import kairo.feature.LifecycleHandler
 import kairo.feature.lifecycle
 import kairo.protectedString.ProtectedString
@@ -61,7 +60,7 @@ public class SqlFeature(
 
   override val lifecycle: List<LifecycleHandler> =
     lifecycle {
-      handler(FeaturePriority.database) {
+      handler {
         start { connectionPool.warmup().awaitSingle() }
         stop { connectionPool.disposeLater().awaitFirstOrNull() }
       }
