@@ -3,7 +3,8 @@ package kairo.slack
 import com.slack.api.Slack
 import kairo.dependencyInjection.HasKoinModules
 import kairo.feature.Feature
-import kairo.protectedString.ProtectedString
+import kairo.feature.LifecycleHandler
+import kairo.feature.lifecycle
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -12,17 +13,28 @@ public class SlackFeature(
 ) : Feature(), HasKoinModules {
   override val name: String = "Slack"
 
+  private val slackClient: SlackClient by lazy {
+    val slack = Slack.getInstance()
+    @Suppress("MissingUseCall")
+    return@lazy SlackClient(
+      slack = slack,
+      token = config.token,
+      channels = config.channels,
+    )
+  }
+
   override val koinModules: List<Module> =
     listOf(
       module {
-        single {
-          val slack = Slack.getInstance()
-          @OptIn(ProtectedString.Access::class)
-          return@single SlackClient(
-            asyncMethodsClient = slack.methodsAsync(config.token.value),
-            channels = config.channels,
-          )
-        }
+        single { slackClient }
       },
     )
+
+  override val lifecycle: List<LifecycleHandler> =
+    lifecycle {
+      handler {
+        start { slackClient }
+        stop { slackClient.close() }
+      }
+    }
 }
