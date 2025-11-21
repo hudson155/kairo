@@ -29,6 +29,18 @@ public inline fun <T> withExceptionMappers(
   }
 }
 
+public fun foreignKeyViolation(
+  constraintName: String,
+  block: () -> LogicalFailure,
+): ExceptionMapper =
+  ExceptionMapper(
+    condition = { details ->
+      details.code == "23503" &&
+        details.constraintName.getOrNull() == constraintName
+    },
+    mapper = block,
+  )
+
 public fun uniqueViolation(
   constraintName: String,
   block: () -> LogicalFailure,
