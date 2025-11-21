@@ -23,32 +23,36 @@ public class ConfigResolver(
 public suspend inline fun <reified T : Any> resolveConfig(
   config: T,
   resolvers: List<ConfigResolver>,
+  json: Json = Json,
 ): T =
-  resolveConfig(config, serializer(), resolvers)
+  resolveConfig(config, json.serializersModule.serializer(), resolvers, json)
 
 public suspend fun <T : Any> resolveConfig(
   config: T,
   serializer: KSerializer<T>,
   resolvers: List<ConfigResolver>,
+  json: Json = Json,
 ): T {
-  var element = Json.encodeToJsonElement(serializer, config)
+  var element = json.encodeToJsonElement(serializer, config)
   element = resolveConfig(element, resolvers)
-  return Json.decodeFromJsonElement(serializer, element)
+  return json.decodeFromJsonElement(serializer, element)
 }
 
 public suspend fun resolveConfig(
   element: JsonElement,
   resolvers: List<ConfigResolver>,
+  json: Json = Json,
 ): JsonElement =
   when (element) {
-    is JsonObject -> JsonObject(element.mapValues { (_, value) -> resolveConfig(value, resolvers) })
-    is JsonArray -> JsonArray(element.map { value -> resolveConfig(value, resolvers) })
-    is JsonPrimitive -> resolveConfig(element, resolvers)
+    is JsonObject -> JsonObject(element.mapValues { (_, value) -> resolveConfig(value, resolvers, json) })
+    is JsonArray -> JsonArray(element.map { value -> resolveConfig(value, resolvers, json) })
+    is JsonPrimitive -> resolveConfig(element, resolvers, json)
   }
 
 private suspend fun resolveConfig(
   element: JsonPrimitive,
   resolvers: List<ConfigResolver>,
+  json: Json,
 ): JsonElement {
   if (!element.isString) {
     // Only strings can be resolved using config resolvers. Other primitives are left alone.
@@ -61,5 +65,5 @@ private suspend fun resolveConfig(
     return element
   }
   val resolved = resolver.resolve(content.removePrefix(resolver.prefix))
-  return Json.encodeToJsonElement(resolved)
+  return json.encodeToJsonElement(resolved)
 }
