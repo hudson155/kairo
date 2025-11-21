@@ -7,15 +7,18 @@ repositories {
 }
 
 dependencies {
-  val kotlinVersion = "2.3.0-RC" // https://kotlinlang.org/docs/releases.html#release-details
-  implementation(kotlin("gradle-plugin", kotlinVersion))
-  implementation(kotlin("serialization", kotlinVersion))
-
   // https://plugins.gradle.org/plugin/com.google.cloud.artifactregistry.gradle-plugin
-  implementation("com.google.cloud.artifactregistry:artifactregistry-gradle-plugin:2.2.5")
+  val artifactRegistryVersion = "2.2.5"
+  implementation("com.google.cloud.artifactregistry:artifactregistry-gradle-plugin:$artifactRegistryVersion")
 
   // https://github.com/detekt/detekt/releases
-  implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.8")
+  val detektVersion = "2.0.0-alpha.1"
+  implementation("dev.detekt:detekt-gradle-plugin:$detektVersion")
+
+  // https://kotlinlang.org/docs/releases.html#release-details
+  val kotlinVersion = "2.3.0-RC"
+  implementation(kotlin("gradle-plugin", kotlinVersion))
+  implementation(kotlin("serialization", kotlinVersion))
 }
 
 kotlin {

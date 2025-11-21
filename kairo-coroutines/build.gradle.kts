@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
   api(libs.arrow.coroutines)
-  api(libs.coroutines.core)
+  api(libs.coroutines)
 
   testImplementation(project(":kairo-testing"))
 }

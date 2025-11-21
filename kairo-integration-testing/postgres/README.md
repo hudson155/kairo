@@ -53,14 +53,14 @@ Now simply add `@ExtendWith(PostgresExtension::class)` to your test classes.
 
 ```kotlin
 @ExtendWith(PostgresExtension::class, UserFeatureTest::class)
-internal class GetUserTest {
+class GetUserTest {
   // ...
 }
 ```
 
 ```kotlin
 @ExtendWith(PostgresExtension::class, UserFeatureTest::class)
-internal class CreateUserTest {
+class CreateUserTest {
   // ...
 }
 ```

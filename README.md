@@ -113,6 +113,9 @@ These libraries **can be used anywhere**
   SLF4J-standardized logging (choose your own logging backend),
   exposing [Ohad Shai's Kotlin logging interface](https://github.com/oshai/kotlin-logging)
   for a clean, Kotlin-first API.
+- [kairo-money](./kairo-money/README.md):
+  Modern JVM money handling
+  (`javax.money` backed by [Moneta](https://javamoney.github.io/ri.html)).
 - [kairo-optional](./kairo-optional/README.md):
   Differentiate between missing and null values.
   This comes in especially handy for RFC 7396 (JSON Merge Patch).
@@ -151,12 +154,20 @@ These libraries help when **building your full application with Kairo**.
   you can add health check endpoints to your Kairo application.
 - [kairo-integration-testing](./kairo-integration-testing/README.md):
   Black-box integration testing support for Kairo applications.
+- [kairo-mailersend](./kairo-mailersend/README.md):
+  Interface for [MailerSend](https://www.mailersend.com/),
+  letting you easily send emails!
 - [kairo-server](./kairo-server/README.md):
   Servers are composed of Features,
   and can be run as an application or as part of integration tests.
+- [kairo-slack](./kairo-slack/README.md):
+  Leverages Slack's native [JVM client](https://github.com/slackapi/java-slack-sdk) and Kotlin DSL
+  to make Slack interaction easy.
+  Also offers channel mapping functionality.
 - [kairo-sql](./kairo-sql/README.md):
   Standardizes SQL access in Kairo
-  using [Exposed](https://www.jetbrains.com/exposed/)'s lightweight & idiomatic ORM DSL.
+  using [Exposed](https://www.jetbrains.com/exposed/)'s lightweight & idiomatic ORM DSL,
+  with support for async I/O using R2DBC.
 
 ## Publishing
 

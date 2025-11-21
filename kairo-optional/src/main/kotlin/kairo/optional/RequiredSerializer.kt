@@ -11,9 +11,6 @@ public class RequiredSerializer<T : Any>(
 ) : KSerializer<Required<T>> {
   override val descriptor: SerialDescriptor = valueSerializer.descriptor
 
-  override fun deserialize(decoder: Decoder): Required<T> =
-    Required.Value(decoder.decodeSerializableValue(valueSerializer))
-
   override fun serialize(encoder: Encoder, value: Required<T>) {
     when (value) {
       is Required.Value -> encoder.encodeSerializableValue(valueSerializer, value.value)
@@ -26,4 +23,7 @@ public class RequiredSerializer<T : Any>(
       )
     }
   }
+
+  override fun deserialize(decoder: Decoder): Required<T> =
+    Required.Value(decoder.decodeSerializableValue(valueSerializer))
 }

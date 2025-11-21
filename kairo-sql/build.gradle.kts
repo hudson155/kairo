@@ -4,10 +4,10 @@ plugins {
 }
 
 dependencies {
-  api(libs.exposed.core)
+  api(libs.exposed)
   api(libs.exposed.crypt)
-  api(libs.exposed.jdbc)
   api(libs.exposed.json)
   api(libs.exposed.kotlinDatetime)
   api(libs.exposed.money)
+  api(libs.exposed.r2dbc)
 }

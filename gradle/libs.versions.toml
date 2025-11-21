@@ -3,34 +3,33 @@
 arrow-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
 arrow-suspend = { module = "io.arrow-kt:suspendapp" }
 
-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 
 datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime" }
 
-exposed-core = { module = "org.jetbrains.exposed:exposed-core" }
+exposed = { module = "org.jetbrains.exposed:exposed-core" }
 exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc" }
 exposed-json = { module = "org.jetbrains.exposed:exposed-json" }
 exposed-kotlinDatetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime" }
 exposed-money = { module = "org.jetbrains.exposed:exposed-money" }
+exposed-r2dbc = { module = "org.jetbrains.exposed:exposed-r2dbc" }
 
 gcp-secretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
 
 guava = { module = "com.google.guava:guava" }
 
-hikari = { module = "com.zaxxer:HikariCP" }
-
 hocon = { module = "com.typesafe:config" }
 
+koin = { module = "io.insert-koin:koin-core" }
 koin-annotations = { module = "io.insert-koin:koin-annotations" }
-koin-core = { module = "io.insert-koin:koin-core" }
 
 kotest = { module = "io.kotest:kotest-runner-junit5" }
 
+ktorClient = { module = "io.ktor:ktor-client-core" }
 ktorClient-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation" }
-ktorClient-core = { module = "io.ktor:ktor-client-core" }
 ktorClient-java = { module = "io.ktor:ktor-client-java" }
 
 ktorHttp = { module = "io.ktor:ktor-http" }
@@ -42,7 +41,7 @@ ktorServer-authJwt = { module = "io.ktor:ktor-server-auth-jwt" }
 ktorServer-autoHeadResponse = { module = "io.ktor:ktor-server-auto-head-response" }
 ktorServer-callLogging = { module = "io.ktor:ktor-server-call-logging" }
 ktorServer-contentNegotiation = { module = "io.ktor:ktor-server-content-negotiation" }
-ktorServer-core = { module = "io.ktor:ktor-server-core" }
+ktorServer = { module = "io.ktor:ktor-server-core" }
 ktorServer-cors = { module = "io.ktor:ktor-server-cors" }
 ktorServer-defaultHeaders = { module = "io.ktor:ktor-server-default-headers" }
 ktorServer-doubleReceive = { module = "io.ktor:ktor-server-double-receive" }
@@ -53,15 +52,24 @@ ktorServer-statusPages = { module = "io.ktor:ktor-server-status-pages" }
 
 logging = { module = "io.github.oshai:kotlin-logging-jvm" }
 
+mailersend = { module = "com.mailersend:java-sdk" }
+
 mockk = { module = "io.mockk:mockk" }
 
-postgres-gcp = { module = "com.google.cloud.sql:postgres-socket-factory" }
-postgres-jdbc = { module = "org.postgresql:postgresql" }
+moneta = { module = "org.javamoney:moneta" }
 
-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
+postgres-jdbc = { module = "org.postgresql:postgresql" }
+postgres-r2dbc = { module = "org.postgresql:r2dbc-postgresql" }
+
+r2dbc-pool = { module = "io.r2dbc:r2dbc-pool" }
+
+serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
 serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
 serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 
+slack = { module = "com.slack.api:slack-api-client" }
+slack-kotlin = { module = "com.slack.api:slack-api-client-kotlin-extension" }
+
 slf4j-api = { module = "org.slf4j:slf4j-api" }
 
-testcontainers-postgres = { module = "org.testcontainers:postgresql" }
+testcontainers-postgres = { module = "org.testcontainers:testcontainers-postgresql" }

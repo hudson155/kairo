@@ -8,4 +8,8 @@ public abstract class AuthConfig {
   public open suspend fun AuthReceiver<*>.default() {
     error("This endpoint must implement auth.")
   }
+
+  public open suspend fun AuthReceiver<*>.fallback() {
+    error("No auth fallback.")
+  }
 }

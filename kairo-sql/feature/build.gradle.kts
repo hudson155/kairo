@@ -5,11 +5,11 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-dependency-injection"))
+  api(project(":kairo-dependency-injection")) // HasKoinModules.
   api(project(":kairo-feature"))
   api(project(":kairo-protected-string")) // In config.
   implementation(project(":kairo-serialization"))
   api(project(":kairo-sql"))
 
-  api(libs.hikari)
+  api(libs.r2dbc.pool)
 }

@@ -96,6 +96,7 @@ No changes.
 #### Coroutines
 
 - `singleNullOrThrow()` now works with Kotlin `Flow`.
+- Introduction of `emitAll()` for `Iterable`.
 
 #### DARB
 
@@ -182,6 +183,15 @@ No changes.
 
 - **Guidance to reduce noisy logs in production.**
 
+#### Mailersend
+
+- Introduction of `kairo-mailersend`,
+  letting you easily send emails through [MailerSend](https://www.mailersend.com/).
+
+#### Money
+
+No changes.
+
 #### Optional
 
 - Introduced `Optional` differentiate between missing and null properties.
@@ -234,11 +244,17 @@ No changes.
 
 No changes.
 
+#### Slack
+
+- Now uses Slack's `AsyncMethodsClient` directly.
+
 #### SQL
 
 - **Type-safe SQL using [Exposed](https://www.jetbrains.com/exposed/)'s DSL (replaces JDBI).**
   - No more manual SQL strings,
     but retaining similar semantic alignment for predictability and easier debugging.
+
+- R2DBC driver for async I/O (replaces JDBC).
 
 - SQL health checks no longer run queries, avoiding DB log pollution.
 
@@ -280,8 +296,6 @@ No changes.
 - **Hashing**
 - **Lazy Supplier**
 - **MDC**
-- **Money**
-- **Slack**
 - **Time**
 - **Transaction Manager**
 - **UUID** (use Kotlin's `Uuid` class directly instead).

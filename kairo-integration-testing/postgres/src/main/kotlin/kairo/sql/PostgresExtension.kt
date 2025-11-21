@@ -7,13 +7,14 @@ import org.junit.jupiter.api.extension.AfterEachCallback
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtensionContext
-import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.postgresql.PostgreSQLContainer
 
 @Suppress("SqlSourceToSinkFlow")
 public class PostgresExtension : PostgresExtensionAware, BeforeAllCallback, BeforeEachCallback, AfterEachCallback {
   /**
    * Idempotently starts a Postgres Docker container.
    */
+  @Suppress("MissingUseCall")
   override fun beforeAll(context: ExtensionContext) {
     context.root.getStore(namespace).getOrComputeIfAbsent("postgres") {
       val postgres = PostgreSQLContainer("postgres:16.9")
@@ -39,7 +40,7 @@ public class PostgresExtension : PostgresExtensionAware, BeforeAllCallback, Befo
       password = postgres.password,
     )
     context.connectionFactory = SqlFeatureConfig.ConnectionFactory(
-      url = postgres.jdbcUrl.replace("/${postgres.databaseName}", "/$databaseName"),
+      url = postgres.jdbcUrl.replace("jdbc:", "r2dbc:").replace("/${postgres.databaseName}", "/$databaseName"),
       username = postgres.username,
       password = postgres.password.let { ProtectedString(it) },
     )

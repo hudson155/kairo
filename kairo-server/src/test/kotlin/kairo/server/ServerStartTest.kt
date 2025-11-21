@@ -55,7 +55,7 @@ internal class ServerStartTest {
                 start { _ ->
                   events.update { it + "start Test (0)" }
                   try {
-                    @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
+                    @Suppress("TooGenericExceptionThrown")
                     throw RuntimeException("Exception from Test (1)")
                   } finally {
                     signal.complete(Unit)
@@ -137,7 +137,7 @@ internal class ServerStartTest {
                 start { _ ->
                   signal.await()
                   events.update { it + "start Test (1)" }
-                  @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
+                  @Suppress("TooGenericExceptionThrown")
                   throw RuntimeException("Exception from Test (1)")
                 }
                 stop { _ ->

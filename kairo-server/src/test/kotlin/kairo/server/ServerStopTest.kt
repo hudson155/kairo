@@ -58,7 +58,7 @@ internal class ServerStopTest {
                 stop { _ ->
                   events.update { it + "stop Test (0)" }
                   try {
-                    @Suppress("ThrowingExceptionsWithoutMessageOrCause", "TooGenericExceptionThrown")
+                    @Suppress("TooGenericExceptionThrown")
                     throw RuntimeException("Exception from Test (1)")
                   } finally {
                     signal.complete(Unit)

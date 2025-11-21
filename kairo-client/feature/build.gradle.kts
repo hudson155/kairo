@@ -5,7 +5,9 @@ plugins {
 
 dependencies {
   api(project(":kairo-client"))
-  api(project(":kairo-dependency-injection"))
+  api(project(":kairo-dependency-injection")) // HasKoinModules.
   api(project(":kairo-feature"))
-  api(project(":kairo-protected-string"))
+  api(project(":kairo-serialization"))
+
+  api(libs.serialization.json)
 }

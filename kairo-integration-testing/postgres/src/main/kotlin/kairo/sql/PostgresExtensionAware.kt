@@ -7,7 +7,7 @@ import kairo.sql.PostgresExtension.Companion.namespace
 import org.jetbrains.exposed.v1.core.vendors.PostgreSQLDialect
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.junit.jupiter.api.extension.ExtensionContext
-import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.postgresql.PostgreSQLContainer
 
 public interface PostgresExtensionAware {
   public var ExtensionContext.connectionFactory: SqlFeatureConfig.ConnectionFactory?
@@ -28,10 +28,10 @@ public interface PostgresExtensionAware {
       getStore(namespace).put("databaseName", value)
     }
 
-  public val ExtensionContext.postgres: PostgreSQLContainer<*>?
-    get() = root.getStore(namespace).get<PostgreSQLContainer<*>>("postgres")
+  public val ExtensionContext.postgres: PostgreSQLContainer?
+    get() = root.getStore(namespace).get<PostgreSQLContainer>("postgres")
 
-  public fun <T> PostgreSQLContainer<*>.connection(block: (connection: Connection) -> T): T =
+  public fun <T> PostgreSQLContainer.connection(block: (connection: Connection) -> T): T =
     DriverManager.getConnection(jdbcUrl, username, password).use(block)
 }
 
@@ -40,7 +40,7 @@ public fun SqlFeature.Companion.from(connectionFactory: SqlFeatureConfig.Connect
     config = SqlFeatureConfig(
       connectionFactory = connectionFactory,
       connectionPool = SqlFeatureConfig.ConnectionPool(
-        size = SqlFeatureConfig.ConnectionPool.Size(min = 1, max = 5),
+        size = SqlFeatureConfig.ConnectionPool.Size(initial = 2, min = 1, max = 5),
       ),
     ),
     configureDatabase = {
