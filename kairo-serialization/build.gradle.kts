@@ -11,6 +11,8 @@ kotlin {
 }
 
 dependencies {
+  implementation(project(":kairo-reflect"))
+
   api(libs.serialization)
   compileOnly(libs.serialization.json)
 

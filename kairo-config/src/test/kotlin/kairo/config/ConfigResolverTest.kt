@@ -36,136 +36,136 @@ internal class ConfigResolverTest {
   @Test
   fun `string, no resolver match`(): Unit =
     runTest {
-      var config = StringConfig("gcp::$key")
-      config = resolveConfig(
-        config = config,
+      val configResolver = ConfigResolver(
         resolvers = listOf(
-          ConfigResolver("other::") { if (it == key) "supersecretvalue" else null },
+          ConfigResolver.Resolver("other::") { if (it == key) "supersecretvalue" else null },
         ),
       )
+      var config = StringConfig("gcp::$key")
+      config = configResolver.resolve(config)
       config.value.shouldBe("gcp::$key")
     }
 
   @Test
   fun `string, with resolver match`(): Unit =
     runTest {
-      var config = StringConfig("gcp::$key")
-      config = resolveConfig(
-        config = config,
+      val configResolver = ConfigResolver(
         resolvers = listOf(
-          ConfigResolver("gcp::") { if (it == key) "supersecretvalue" else null },
+          ConfigResolver.Resolver("gcp::") { if (it == key) "supersecretvalue" else null },
         ),
       )
+      var config = StringConfig("gcp::$key")
+      config = configResolver.resolve(config)
       config.value.shouldBe("supersecretvalue")
     }
 
   @Test
   fun `string, with resolver match, null (not supported)`(): Unit =
     runTest {
+      val configResolver = ConfigResolver(
+        resolvers = listOf(
+          ConfigResolver.Resolver("gcp::") { null },
+        ),
+      )
       var config = StringConfig("gcp::$key")
       shouldThrow<SerializationException> {
-        config = resolveConfig(
-          config = config,
-          resolvers = listOf(
-            ConfigResolver("gcp::") { null },
-          ),
-        )
+        config = configResolver.resolve(config)
       }
     }
 
   @Test
   fun `string, with resolver match, null (supported)`(): Unit =
     runTest {
-      var config = NullableStringConfig("gcp::$key")
-      config = resolveConfig(
-        config = config,
+      val configResolver = ConfigResolver(
         resolvers = listOf(
-          ConfigResolver("gcp::") { null },
+          ConfigResolver.Resolver("gcp::") { null },
         ),
       )
+      var config = NullableStringConfig("gcp::$key")
+      config = configResolver.resolve(config)
       config.value.shouldBeNull()
     }
 
   @Test
   fun `string, multiple resolver matches`(): Unit =
     runTest {
+      val configResolver = ConfigResolver(
+        resolvers = listOf(
+          ConfigResolver.Resolver("gcp::") { if (it == key) "supersecretvalue" else null },
+          ConfigResolver.Resolver("gcp::") { if (it == key) "supersecretvalue" else null },
+        ),
+      )
       var config = StringConfig("gcp::$key")
       shouldThrow<IllegalArgumentException> {
-        config = resolveConfig(
-          config = config,
-          resolvers = listOf(
-            ConfigResolver("gcp::") { if (it == key) "supersecretvalue" else null },
-            ConfigResolver("gcp::") { if (it == key) "supersecretvalue" else null },
-          ),
-        )
+        config = configResolver.resolve(config)
       }
     }
 
   @Test
   fun `protected string, no resolver match`(): Unit =
     runTest {
-      var config = ProtectedStringConfig(ProtectedString("gcp::$key"))
-      config = resolveConfig(
-        config = config,
+      val configResolver = ConfigResolver(
         resolvers = listOf(
-          ConfigResolver("other::") { if (it == key) "supersecretvalue" else null },
+          ConfigResolver.Resolver("other::") { if (it == key) "supersecretvalue" else null },
         ),
       )
+      var config = ProtectedStringConfig(ProtectedString("gcp::$key"))
+      config = configResolver.resolve(config)
       config.value.shouldBe(ProtectedString("gcp::$key"))
     }
 
   @Test
   fun `protected string, with resolver match`(): Unit =
     runTest {
-      var config = ProtectedStringConfig(ProtectedString("gcp::$key"))
-      config = resolveConfig(
-        config = config,
+      val configResolver = ConfigResolver(
         resolvers = listOf(
-          ConfigResolver("gcp::") { if (it == key) "supersecretvalue" else null },
+          ConfigResolver.Resolver("gcp::") { if (it == key) "supersecretvalue" else null },
         ),
       )
+      var config = ProtectedStringConfig(ProtectedString("gcp::$key"))
+      config = configResolver.resolve(config)
       config.value.shouldBe(ProtectedString("supersecretvalue"))
     }
 
   @Test
   fun `protected string, with resolver match, null (not supported)`(): Unit =
     runTest {
+      val configResolver = ConfigResolver(
+        resolvers = listOf(
+          ConfigResolver.Resolver("gcp::") { null },
+        ),
+      )
       var config = ProtectedStringConfig(ProtectedString("gcp::$key"))
       shouldThrow<SerializationException> {
-        config = resolveConfig(
-          config = config,
-          resolvers = listOf(
-            ConfigResolver("gcp::") { null },
-          ),
-        )
+        config = configResolver.resolve(config)
       }
     }
 
   @Test
   fun `protected string, with resolver match, null (supported)`(): Unit =
     runTest {
-      var config = NullableProtectedStringConfig(ProtectedString("gcp::$key"))
-      config = resolveConfig(
-        config = config,
+      val configResolver = ConfigResolver(
         resolvers = listOf(
-          ConfigResolver("gcp::") { null },
+          ConfigResolver.Resolver("gcp::") { null },
         ),
       )
+      var config = NullableProtectedStringConfig(ProtectedString("gcp::$key"))
+      config = configResolver.resolve(config)
       config.value.shouldBeNull()
     }
 
   @Test
   fun `protected string, multiple resolver matches`(): Unit =
     runTest {
+      val configResolver = ConfigResolver(
+        resolvers = listOf(
+          ConfigResolver.Resolver("gcp::") { if (it == key) "supersecretvalue" else null },
+          ConfigResolver.Resolver("gcp::") { if (it == key) "supersecretvalue" else null },
+        ),
+      )
       var config = ProtectedStringConfig(ProtectedString("gcp::$key"))
       shouldThrow<IllegalArgumentException> {
-        config = resolveConfig(
-          config = config,
-          resolvers = listOf(
-            ConfigResolver("gcp::") { if (it == key) "supersecretvalue" else null },
-            ConfigResolver("gcp::") { if (it == key) "supersecretvalue" else null },
-          ),
-        )
+        config = configResolver.resolve(config)
       }
     }
 }
