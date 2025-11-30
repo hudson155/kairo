@@ -149,13 +149,16 @@ To use config resolvers, call `resolveConfig()` after loading your config.
 private val gcpSecretSupplier: GcpSecretSupplier = DefaultGcpSecretSupplier()
 
 val configName = requireNotNull(System.getenv("CONFIG"))
-val configResolvers = listOf(
-  ConfigResolver("gcp::") { gcpSecretSupplier[it]?.value },
+val configResolver = ConfigResolver(
+  resolvers = listOf(
+    ConfigResolver.Resolver("gcp::") { gcpSecretSupplier[it]?.value },
+  ),
 )
+
 val config: Config =
   ConfigFactory.load("config/$configName.conf")
     .let { Hocon.decodeFromConfig<Config>(it) }
-    .let { resolveConfig(it, configResolvers) }
+    .let { ConfigResolver.resolve(it) }
 ```
 
 This will detect any strings (or `ProtectedString`s) that start with `gcp::`,

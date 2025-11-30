@@ -5,6 +5,7 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-reflect"))
   implementation(project(":kairo-serialization"))
   implementation(project(":kairo-util"))
 
