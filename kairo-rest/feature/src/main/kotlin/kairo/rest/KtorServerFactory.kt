@@ -27,6 +27,7 @@ import kairo.feature.Feature
 import kairo.optional.optionalModule
 import kairo.rest.auth.AuthConfig
 import kairo.rest.auth.authConfig
+import kairo.serialization.json
 import kairo.serialization.prettyPrint
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonBuilder
@@ -95,8 +96,7 @@ public object KtorServerFactory {
     configureJson: JsonBuilder.() -> Unit,
     features: List<Feature>,
   ): Json =
-    Json {
-      prettyPrint()
+    json(prettyPrint = true) {
       serializersModule += optionalModule()
       configureJson()
       features.filterIsInstance<ConfiguresJson>().forEach { with(it) { configure() } }

@@ -1,6 +1,7 @@
 package kairo.money
 
 import io.kotest.matchers.shouldBe
+import kairo.serialization.json
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.plus
@@ -8,7 +9,7 @@ import org.javamoney.moneta.Money
 import org.junit.jupiter.api.Test
 
 internal class MoneySerializationTest {
-  private val json: Json = Json { serializersModule += moneyModule() }
+  private val json: Json = json { serializersModule += moneyModule() }
 
   @Test
   fun serialize(): Unit =

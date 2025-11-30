@@ -16,9 +16,7 @@ public open class ConfigResolver(
   configureJson: JsonBuilder.() -> Unit = {},
 ) {
   private val json: Json =
-    Json {
-      configureJson()
-    }
+    Json { configureJson() }
 
   /**
    * Resolvers let you dynamically resolve config string values.

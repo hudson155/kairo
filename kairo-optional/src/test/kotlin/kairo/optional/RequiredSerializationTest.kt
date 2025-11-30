@@ -21,7 +21,7 @@ internal class RequiredSerializationTest {
     val value: Required<String> = Required.Missing,
   )
 
-  private val json: Json = Json { serializersModule += optionalModule() }
+  private val json: Json = json { serializersModule += optionalModule() }
 
   @Test
   fun `serialize, missing`(): Unit =

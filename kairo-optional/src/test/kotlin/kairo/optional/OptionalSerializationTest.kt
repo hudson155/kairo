@@ -19,7 +19,7 @@ internal class OptionalSerializationTest {
     val value: Optional<String> = Optional.Missing,
   )
 
-  private val json: Json = Json { serializersModule += optionalModule() }
+  private val json: Json = json { serializersModule += optionalModule() }
 
   @Test
   fun `serialize, missing`(): Unit =
