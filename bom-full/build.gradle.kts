@@ -45,7 +45,7 @@ dependencies {
 
   // kotest
   // https://github.com/kotest/kotest/releases
-  val kotestVersion = "6.0.4"
+  val kotestVersion = "6.0.5"
   constraints.api("io.kotest:kotest-runner-junit5:$kotestVersion")
 
   // kotlinx-datetime
