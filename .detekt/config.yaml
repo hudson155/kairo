@@ -845,6 +845,7 @@ style:
       - 'kotlin.io.print'
       - 'kotlin.io.println'
       - 'kotlinx.serialization.json.Json'
+      - 'kotlinx.serialization.serializer'
   ForbiddenNamedParam:
     active: false
   ForbiddenOptIn:
