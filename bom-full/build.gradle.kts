@@ -55,7 +55,7 @@ dependencies {
 
   // ktor
   // https://github.com/ktorio/ktor/releases
-  api(platform("io.ktor:ktor-bom:3.3.2"))
+  api(platform("io.ktor:ktor-bom:3.3.3"))
 
   // log4j
   // https://github.com/apache/logging-log4j2/releases
