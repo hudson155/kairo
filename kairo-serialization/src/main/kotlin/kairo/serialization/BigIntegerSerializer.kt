@@ -16,7 +16,7 @@ public abstract class BigIntegerSerializer(
   kind: PrimitiveKind,
 ) : KSerializer<BigInteger> {
   final override val descriptor: SerialDescriptor =
-    PrimitiveSerialDescriptor("BigInteger", kind)
+    PrimitiveSerialDescriptor(BigInteger::class.qualifiedName!!, kind)
 
   public object AsLong : BigIntegerSerializer(PrimitiveKind.LONG) {
     override fun serialize(encoder: Encoder, value: BigInteger) {

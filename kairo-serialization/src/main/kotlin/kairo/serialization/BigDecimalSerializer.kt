@@ -16,7 +16,7 @@ public abstract class BigDecimalSerializer(
   kind: PrimitiveKind,
 ) : KSerializer<BigDecimal> {
   final override val descriptor: SerialDescriptor =
-    PrimitiveSerialDescriptor("BigDecimal", kind)
+    PrimitiveSerialDescriptor(BigDecimal::class.qualifiedName!!, kind)
 
   public object AsDouble : BigDecimalSerializer(PrimitiveKind.DOUBLE) {
     override fun serialize(encoder: Encoder, value: BigDecimal) {
