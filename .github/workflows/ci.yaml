@@ -21,7 +21,7 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - name: "Check out"
-        uses: "actions/checkout@v5" # https://github.com/actions/checkout/releases
+        uses: "actions/checkout@v6" # https://github.com/actions/checkout/releases
       - name: "GCP auth"
         uses: "google-github-actions/auth@v3" # https://github.com/google-github-actions/auth/releases
         with:
