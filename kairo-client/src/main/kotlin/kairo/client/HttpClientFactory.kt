@@ -7,8 +7,8 @@ import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kairo.optional.optionalModule
+import kairo.serialization.json
 import kotlin.time.Duration
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonBuilder
 import kotlinx.serialization.modules.plus
 
@@ -25,7 +25,7 @@ public object HttpClientFactory {
       expectSuccess = true
       install(ContentNegotiation) {
         json(
-          Json {
+          json {
             ignoreUnknownKeys = true
             serializersModule += optionalModule()
             configureJson()

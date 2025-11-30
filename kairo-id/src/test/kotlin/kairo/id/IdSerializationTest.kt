@@ -2,25 +2,28 @@ package kairo.id
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import kairo.serialization.json
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
 internal class IdSerializationTest {
+  private val json: Json = json()
+
   @Test
   fun serialize(): Unit =
     runTest {
-      Json.encodeToString(UserId("user_2eDS1sMt"))
+      json.encodeToString(UserId("user_2eDS1sMt"))
         .shouldBe("\"user_2eDS1sMt\"")
     }
 
   @Test
   fun deserialize(): Unit =
     runTest {
-      Json.decodeFromString<UserId>("\"user_2eDS1sMt\"")
+      json.decodeFromString<UserId>("\"user_2eDS1sMt\"")
         .shouldBe(UserId("user_2eDS1sMt"))
       shouldThrow<IllegalArgumentException> {
-        Json.decodeFromString<UserId>("\"user-2eDS1sMt\"")
+        json.decodeFromString<UserId>("\"user-2eDS1sMt\"")
       }
     }
 }
