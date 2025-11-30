@@ -2,6 +2,7 @@ package kairo.optional
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import kairo.serialization.json
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.EncodeDefault
