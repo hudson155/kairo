@@ -10,7 +10,7 @@ import kotlinx.serialization.encoding.Encoder
 @OptIn(ProtectedString.Access::class)
 internal object ProtectedStringSerializer : KSerializer<ProtectedString> {
   override val descriptor: SerialDescriptor =
-    PrimitiveSerialDescriptor("ProtectedString", PrimitiveKind.STRING)
+    PrimitiveSerialDescriptor(ProtectedString::class.qualifiedName!!, PrimitiveKind.STRING)
 
   override fun serialize(encoder: Encoder, value: ProtectedString) {
     encoder.encodeString(value.value)
