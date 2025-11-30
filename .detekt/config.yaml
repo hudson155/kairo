@@ -844,6 +844,7 @@ style:
       - 'java.lang.Thread.currentThread'
       - 'kotlin.io.print'
       - 'kotlin.io.println'
+      - 'kotlinx.serialization.json.Json'
   ForbiddenNamedParam:
     active: false
   ForbiddenOptIn:
