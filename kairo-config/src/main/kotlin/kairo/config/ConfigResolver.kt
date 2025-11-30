@@ -62,6 +62,4 @@ public open class ConfigResolver(
     val resolved = resolver.resolve(content.removePrefix(resolver.prefix))
     return json.encodeToJsonElement(resolved)
   }
-
-  public companion object Default : ConfigResolver()
 }
