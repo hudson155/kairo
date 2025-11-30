@@ -2,6 +2,7 @@ package kairo.config
 
 import kairo.reflect.KairoType
 import kairo.reflect.kairoType
+import kairo.serialization.json
 import kairo.serialization.serializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -16,7 +17,7 @@ public open class ConfigResolver(
   configureJson: JsonBuilder.() -> Unit = {},
 ) {
   private val json: Json =
-    Json { configureJson() }
+    json { configureJson() }
 
   /**
    * Resolvers let you dynamically resolve config string values.
