@@ -5,6 +5,7 @@ import kairo.reflect.kairoType
 import kairo.serialization.serializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonBuilder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -12,8 +13,13 @@ import kotlinx.serialization.json.encodeToJsonElement
 
 public open class ConfigResolver(
   private val resolvers: List<Resolver> = emptyList(),
-  private val json: Json = Json,
+  configureJson: JsonBuilder.() -> Unit = {},
 ) {
+  private val json: Json =
+    Json {
+      configureJson()
+    }
+
   /**
    * Resolvers let you dynamically resolve config string values.
    * String values that start with [prefix]
