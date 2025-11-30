@@ -31,7 +31,7 @@ For serialization to work, add `moneyModule()` to your `Json` instance
 and mark `Money` instances as `@Contextual`.
 
 ```kotlin
-val json: Json = Json { serializersModule += moneyModule() }
+val json: Json = json { serializersModule += moneyModule() }
 ```
 
 ```kotlin

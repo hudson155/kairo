@@ -31,6 +31,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  */
 internal class DataClassRestEndpointReader<I : Any, E : RestEndpoint<I, *>>(
   kClass: KClass<E>,
+  private val json: Json,
 ) : RestEndpointReader<E>() {
   private val constructor: KFunction<E> = checkNotNull(kClass.primaryConstructor)
 
@@ -47,18 +48,18 @@ internal class DataClassRestEndpointReader<I : Any, E : RestEndpoint<I, *>>(
       if (paramName == RestEndpoint<*, *>::body.name) {
         return@associateWith call.receive<I>(KairoType<I>(param.type).toKtor())
       }
-      val serializer = serializer(param.type)
+      val serializer = json.serializersModule.serializer(param.type)
       val values = call.parameters.getAll(paramName)
       @Suppress("ElseCaseInsteadOfExhaustiveWhen")
       return@associateWith when (serializer.descriptor.kind) {
         is StructureKind.CLASS ->
-          Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
+          json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
         is SerialKind.ENUM ->
-          Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
+          json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
         is StructureKind.LIST ->
-          Json.decodeFromJsonElement(serializer, JsonArray(values?.map { JsonPrimitive(it) }.orEmpty()))
+          json.decodeFromJsonElement(serializer, JsonArray(values?.map { JsonPrimitive(it) }.orEmpty()))
         is PrimitiveKind ->
-          Json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
+          json.decodeFromJsonElement(serializer, JsonPrimitive(values?.single()))
         else -> error("Unsupported kind (kind=${serializer.descriptor.kind}).")
       }
     }
