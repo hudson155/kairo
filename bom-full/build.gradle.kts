@@ -24,7 +24,7 @@ dependencies {
 
   // gcp
   // https://github.com/googleapis/java-cloud-bom/releases
-  api(platform("com.google.cloud:libraries-bom:26.71.0"))
+  api(platform("com.google.cloud:libraries-bom:26.72.0"))
 
   // guava
   // https://github.com/google/guava/releases
