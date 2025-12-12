@@ -11,7 +11,7 @@ import kairo.rest.HandleReceiver
 /**
  * Adapted from [sse].
  */
-public fun HandleReceiver<*>.serverSideEvents(
+public fun HandleReceiver<*>.serverSentEvents(
   handler: suspend ServerSSESession.() -> Unit,
 ): SSEServerContent {
   call.response.header(HttpHeaders.ContentType, ContentType.Text.EventStream.toString())
