@@ -16,7 +16,7 @@ dependencies {
   implementation("dev.detekt:detekt-gradle-plugin:$detektVersion")
 
   // https://kotlinlang.org/docs/releases.html#release-details
-  val kotlinVersion = "2.3.0-RC"
+  val kotlinVersion = "2.3.0"
   implementation(kotlin("gradle-plugin", kotlinVersion))
   implementation(kotlin("serialization", kotlinVersion))
 }
