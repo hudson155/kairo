@@ -68,7 +68,6 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
 
 #### Overall
 
-- Upgrade Java from 21 to 25.
 - Upgrade Gradle from 8 to 9.
 
 #### Application

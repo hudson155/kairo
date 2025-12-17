@@ -5,7 +5,7 @@ import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 
-internal val javaVersion: JavaLanguageVersion = JavaLanguageVersion.of(25)
+internal val javaVersion: JavaLanguageVersion = JavaLanguageVersion.of(21)
 
 internal fun RepositoryHandler.artifactRegistry() {
   maven {
