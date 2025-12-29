@@ -118,6 +118,11 @@ dependencies {
   // https://github.com/qos-ch/slf4j/releases
   api(platform("org.slf4j:slf4j-bom:2.0.17"))
 
+  // stytch
+  // https://github.com/stytchauth/stytch-java/releases
+  val stytchVersion = "9.0.0"
+  constraints.api("com.stytch.java:sdk:$stytchVersion")
+
   // testcontainers
   // https://github.com/testcontainers/testcontainers-java/releases
   api(platform("org.testcontainers:testcontainers-bom:2.0.2"))
