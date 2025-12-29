@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
   implementation(project(":kairo-coroutines"))
+  implementation(project(":kairo-logging"))
 
   api(libs.stytch) // Available for usage.
 }

@@ -8,22 +8,25 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 public class StytchFeature(
-  config: StytchFeatureConfig,
+  stytch: Lazy<Stytch>,
 ) : Feature(), HasKoinModules {
   override val name: String = "Stytch"
-
-  private val stytchClient: StytchClient by lazy {
-    StytchClient(
-      config.projectId,
-      @OptIn(ProtectedString.Access::class)
-      config.secret.value,
-    )
-  }
 
   override val koinModules: List<Module> =
     listOf(
       module {
-        single { stytchClient }
+        single { stytch.value }
       },
     )
+
+  public constructor(config: StytchFeatureConfig) : this(
+    lazy {
+      val stytchClient = StytchClient(
+        config.projectId,
+        @OptIn(ProtectedString.Access::class)
+        config.secret.value,
+      )
+      return@lazy Stytch(stytchClient)
+    },
+  )
 }
