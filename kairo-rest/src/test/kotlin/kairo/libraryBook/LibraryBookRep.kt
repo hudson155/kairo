@@ -27,7 +27,7 @@ internal data class LibraryBookRep(
 
   @Serializable
   internal data class Creator(
-    val title: String?,
+    val title: String? = null,
     val authors: List<String>,
     val isbn: String,
     val genre: Genre,
