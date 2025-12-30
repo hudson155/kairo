@@ -72,4 +72,6 @@ slack-kotlin = { module = "com.slack.api:slack-api-client-kotlin-extension" }
 
 slf4j-api = { module = "org.slf4j:slf4j-api" }
 
+stytch = { module = "com.stytch.java:sdk" }
+
 testcontainers-postgres = { module = "org.testcontainers:testcontainers-postgresql" }
