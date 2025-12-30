@@ -29,7 +29,7 @@ internal class KairoTypeTest {
         type.kotlinType.shouldBe(typeOf<Int>())
         type.javaType.typeName.shouldBe("java.lang.Integer")
         type.kotlinClass.shouldBe(Int::class)
-        type.javaClass.shouldBe(Int::class.javaObjectType)
+        type.javaClass.shouldBe(Int::class.java)
       }
     }
 
@@ -40,7 +40,7 @@ internal class KairoTypeTest {
         type.kotlinType.shouldBe(typeOf<String>())
         type.javaType.typeName.shouldBe("java.lang.String")
         type.kotlinClass.shouldBe(String::class)
-        type.javaClass.shouldBe(String::class.javaObjectType)
+        type.javaClass.shouldBe(String::class.java)
       }
     }
 
@@ -51,7 +51,7 @@ internal class KairoTypeTest {
         type.kotlinType.shouldBe(typeOf<List<String>>())
         type.javaType.typeName.shouldBe("java.util.List<? extends java.lang.String>")
         type.kotlinClass.shouldBe(List::class)
-        type.javaClass.shouldBe(List::class.javaObjectType)
+        type.javaClass.shouldBe(List::class.java)
       }
     }
 
