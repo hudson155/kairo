@@ -168,6 +168,9 @@ These libraries help when **building your full application with Kairo**.
   Standardizes SQL access in Kairo
   using [Exposed](https://www.jetbrains.com/exposed/)'s lightweight & idiomatic ORM DSL,
   with support for async I/O using R2DBC.
+- [kairo-stytch](./kairo-stytch/README.md):
+  Interface for [Stytch](https://stytch.com/),
+  letting you easily manage identity.
 
 ## Publishing
 
