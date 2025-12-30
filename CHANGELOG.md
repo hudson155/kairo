@@ -257,6 +257,11 @@ No changes.
 
 - Custom transaction management has been removed.
 
+#### Stytch
+
+- Introduction of `kairo-stytch`,
+  letting you easily manage identity through [Stytch](https://stytch.com/).
+
 #### Testing
 
 - Upgrade from Kotest 5 to Kotest 6.
