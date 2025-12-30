@@ -16,7 +16,6 @@
 
 - [ ] Dependencies
 - [ ] Issues
-- [ ] Sample repo
 
 #### Tests
 
