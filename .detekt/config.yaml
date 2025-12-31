@@ -736,7 +736,9 @@ style:
   ForbiddenComment:
     active: false
   ForbiddenImport:
-    active: false
+    active: true
+    # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
+    imports: []
   ForbiddenMethodCall:
     active: true
   ForbiddenNamedParam:
