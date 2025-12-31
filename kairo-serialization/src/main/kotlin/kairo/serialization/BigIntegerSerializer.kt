@@ -33,6 +33,6 @@ public abstract class BigIntegerSerializer(
     }
 
     override fun deserialize(decoder: Decoder): BigInteger =
-      BigInteger(decoder.decodeString())
+      decoder.decodeString().toBigInteger()
   }
 }
