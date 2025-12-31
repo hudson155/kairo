@@ -11,8 +11,7 @@ import kotlin.reflect.typeOf
  * Unifies [Class], [KClass], [Type], and [KType] into a safer and richer wrapper
  * Preserves full generic fidelity.
  */
-@Suppress("UseDataClass")
-public class KairoType<T : Any>(
+public data class KairoType<T : Any>(
   public val kotlinType: KType,
 ) {
   public val javaType: Type
@@ -26,6 +25,9 @@ public class KairoType<T : Any>(
     get() = kotlinClass.java
 
   public companion object {
+    /**
+     * Infers a [KairoType] at runtime, from within a generic abstract class.
+     */
     public fun <T : Any> from(baseClass: KClass<*>, i: Int, thisClass: KClass<*>): KairoType<T> {
       val supertype = thisClass.allSupertypes.single { it.classifier == baseClass }
       val type = checkNotNull(supertype.arguments[i].type)
