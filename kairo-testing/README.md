@@ -44,8 +44,8 @@ First, configure testing in your Gradle build file.
 
 test {
   testLogging {
+    exceptionFormat = TestExceptionFormat.FULL
     events("passed", "skipped", "failed")
-    showStandardStreams = true
   }
   useJUnitPlatform()
 }
@@ -67,20 +67,6 @@ If your use case cannot support this, you have two options.
 2. To override globally,
    create a file called `kotest.properties` in your project's test resources,
    and set `kotlinx.coroutines.test.default_timeout` to some higher value.
-
-### Simple tests
-
-Simple tests look like this.
-
-```kotlin
-class YourTest {
-  @Test
-  fun test(): Unit =
-    runTest {
-      doSomething(1).shouldBe("wonderful result!")
-    }
-}
-```
 
 ### Integration tests
 
