@@ -62,8 +62,6 @@ If the flow has more than one element, throws `IllegalArgumentException`.
 
 [kairo-util](../kairo-util/README.md) already exposes this function with `Array`, `Iterable`, and `Sequence` receivers.
 This library exposes it with the `Flow` receiver.
-Feel free to [open an issue](https://github.com/hudson155/kairo/issues/new)
-if you need other receiver types.
 
 ```kotlin
 emptyFlow<Int>().singleNullOrThrow()
