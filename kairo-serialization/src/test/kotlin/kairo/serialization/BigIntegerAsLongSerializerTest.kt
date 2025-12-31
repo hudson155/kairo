@@ -20,7 +20,7 @@ internal class BigIntegerAsLongSerializerTest {
   @Test
   fun `serialize, 0`(): Unit =
     runTest {
-      val value = 0.toBigDecimal()
+      val value = BigInteger("0")
       json.encodeToString(Wrapper(value))
         .shouldBe("""{"value":0}""")
     }
@@ -28,7 +28,7 @@ internal class BigIntegerAsLongSerializerTest {
   @Test
   fun `serialize, lowest long`(): Unit =
     runTest {
-      val value = -9223372036854775808.toBigDecimal()
+      val value = BigInteger("-9223372036854775808")
       json.encodeToString(Wrapper(value))
         .shouldBe("""{"value":-9223372036854775808}""")
     }
@@ -36,7 +36,7 @@ internal class BigIntegerAsLongSerializerTest {
   @Test
   fun `serialize, below lowest long`(): Unit =
     runTest {
-      val value = -9223372036854775809.toBigDecimal()
+      val value = BigInteger("-9223372036854775809")
       shouldThrow<ArithmeticException> {
         json.encodeToString(Wrapper(value))
       }
@@ -45,7 +45,7 @@ internal class BigIntegerAsLongSerializerTest {
   @Test
   fun `serialize, highest long`(): Unit =
     runTest {
-      val value = 9223372036854775807.toBigDecimal()
+      val value = BigInteger("9223372036854775807")
       json.encodeToString(Wrapper(value))
         .shouldBe("""{"value":9223372036854775807}""")
     }
@@ -53,7 +53,7 @@ internal class BigIntegerAsLongSerializerTest {
   @Test
   fun `serialize, above highest long`(): Unit =
     runTest {
-      val value = 9223372036854775808.toBigDecimal()
+      val value = BigInteger("9223372036854775808")
       shouldThrow<ArithmeticException> {
         json.encodeToString(Wrapper(value))
       }

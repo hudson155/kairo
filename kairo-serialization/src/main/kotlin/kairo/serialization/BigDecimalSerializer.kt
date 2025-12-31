@@ -33,6 +33,6 @@ public abstract class BigDecimalSerializer(
     }
 
     override fun deserialize(decoder: Decoder): BigDecimal =
-      decoder.decodeString().toBigDecimal()
+      BigDecimal(decoder.decodeString())
   }
 }
