@@ -1,0 +1,108 @@
+package kairo.serialization
+
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue
+import com.fasterxml.jackson.databind.json.JsonMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import io.kotest.assertions.throwables.shouldThrowAny
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Test
+
+internal class EnumSerializationTest {
+  internal enum class Genre {
+    Fantasy,
+    History,
+    Religion,
+    Romance,
+    Science,
+    ScienceFiction,
+
+    /**
+     * [JsonEnumDefaultValue] is used to ensure that Jackson does NOT use it for deserialization.
+     */
+    @JsonEnumDefaultValue
+    Default,
+    ;
+
+    /**
+     * [toString] is implemented to ensure that Jackson does NOT use it for serialization.
+     */
+    override fun toString(): String =
+      name.filter { it.isUpperCase() }
+  }
+
+  private val jsonMapper: JsonMapper = kairoJson()
+
+  @Test
+  fun serialize(): Unit =
+    runTest {
+      jsonMapper.writeValueAsString(Genre.Science).shouldBe("\"Science\"")
+      jsonMapper.writeValueAsString(Genre.ScienceFiction).shouldBe("\"ScienceFiction\"")
+    }
+
+  @Test
+  fun deserialize(): Unit =
+    runTest {
+      jsonMapper.readValue<Genre>("\"Science\"").shouldBe(Genre.Science)
+      jsonMapper.readValue<Genre>("\"ScienceFiction\"").shouldBe(Genre.ScienceFiction)
+    }
+
+  @Test
+  fun `deserialize, unknown enum`(): Unit =
+    runTest {
+      shouldThrowAny {
+        jsonMapper.readValue<Genre>("\"Education\"")
+      }
+    }
+
+  @Test
+  fun `deserialize, null`(): Unit =
+    runTest {
+      shouldThrowAny {
+        jsonMapper.readValue<Genre>("null")
+      }
+
+      jsonMapper.readValue<Genre?>("null").shouldBeNull()
+    }
+
+  @Test
+  fun `deserialize, wrong type (boolean)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        jsonMapper.readValue<Genre>("true")
+      }
+    }
+
+  @Test
+  fun `deserialize, wrong type (int)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        jsonMapper.readValue<Genre>("0")
+      }
+    }
+
+  @Test
+  fun `deserialize, wrong type (float)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        jsonMapper.readValue<Genre>("0.0")
+      }
+    }
+
+  @Test
+  fun `deserialize, wrong type (object)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        jsonMapper.readValue<Genre>("""{}""")
+      }
+    }
+
+  @Test
+  fun `deserialize, wrong type (array)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        jsonMapper.readValue<Genre>("""[]""")
+      }
+    }
+}

@@ -1,22 +1,12 @@
 plugins {
-  kotlin("plugin.serialization")
   id("kairo-library")
   id("kairo-library-publish")
 }
 
-kotlin {
-  compilerOptions {
-    freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi") // JsonBuilder.
-  }
-}
-
 dependencies {
-  implementation(project(":kairo-reflect"))
-
-  api(libs.serialization)
-  compileOnly(libs.serialization.json)
+  api(libs.jackson) // Available for usage.
+  implementation(libs.jackson.datatypeJsr310)
+  api(libs.jackson.moduleKotlin) // Available for usage.
 
   testImplementation(project(":kairo-testing"))
-
-  testImplementation(libs.serialization.json)
 }
