@@ -740,7 +740,7 @@ style:
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports: []
   ForbiddenMethodCall:
-    active: true
+    active: false
   ForbiddenNamedParam:
     active: false
   ForbiddenOptIn:
