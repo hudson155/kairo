@@ -87,7 +87,7 @@ data class MyClass(
   val value: BigDecimal,
 )
 
-json.encodeToString(MyClass(BigDecimal("123.456")))
+json.encodeToString(MyClass(123.456.toBigDecimal()))
 // => {"value":"123.456"}
 ```
 

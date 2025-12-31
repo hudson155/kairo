@@ -19,7 +19,7 @@ internal class BigDecimalAsDoubleSerializerTest {
   @Test
   fun `serialize, 0`(): Unit =
     runTest {
-      val value = BigDecimal("0")
+      val value = 0.toBigDecimal()
       json.encodeToString(Wrapper(value))
         .shouldBe("""{"value":0.0}""")
     }
@@ -27,7 +27,7 @@ internal class BigDecimalAsDoubleSerializerTest {
   @Test
   fun `serialize, maximum precision`(): Unit =
     runTest {
-      val value = BigDecimal("0.8172843657189237")
+      val value = 0.8172843657189237.toBigDecimal()
       json.encodeToString(Wrapper(value))
         .shouldBe("""{"value":0.8172843657189237}""")
     }
@@ -35,7 +35,7 @@ internal class BigDecimalAsDoubleSerializerTest {
   @Test
   fun `serialize, exceeds maximum precision`(): Unit =
     runTest {
-      val value = BigDecimal("0.81728436571892375")
+      val value = 0.81728436571892375.toBigDecimal()
       json.encodeToString(Wrapper(value))
         .shouldBe("""{"value":0.8172843657189237}""")
     }
