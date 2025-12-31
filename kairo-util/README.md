@@ -30,7 +30,7 @@ canonicalize(" Con  | dãnas^t")
 // => con danast
 ```
 
-`slugify()` does something similar, but allows you to choose the delimiter.
+`slugify()` works similarly, but allows you to choose the delimiter.
 ```kotlin
 slugify(" Con  | dãnas^t", delimiter = "-")
 // => con-danast
@@ -56,7 +56,7 @@ println(resource)
 
 _Note: This uses Guava under the hood.
 Guava is a large library and is **not** included in this artifact.
-Using `resource()` assumes Guava is available at runtime._
+Usage of `resource()` requires Guava to be available at runtime._
 
 ### `singleNullOrThrow()`
 
@@ -68,8 +68,6 @@ If the collection has more than one element, throws `IllegalArgumentException`.
 
 This works with `Array`, `Iterable`, and `Sequence` receivers,
 as well as `Flow` through [kairo-coroutines](../kairo-coroutines/README.md).
-Feel free to [open an issue](https://github.com/hudson155/kairo/issues/new)
-if you need other receiver types.
 
 ```kotlin
 emptyList<Int>().singleNullOrThrow()

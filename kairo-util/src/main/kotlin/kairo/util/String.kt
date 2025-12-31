@@ -3,7 +3,7 @@ package kairo.util
 import java.text.Normalizer
 
 /**
- * Turns an arbitrary string into exclusively lowercase latin characters.
+ * Turns an arbitrary string into exclusively lowercase Latin characters.
  */
 public fun canonicalize(subject: String): String {
   var result = Normalizer.normalize(subject, Normalizer.Form.NFD)
