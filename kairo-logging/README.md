@@ -46,8 +46,8 @@ This is great for simple projects.
 // build.gradle.kts
 
 dependencies {
-  testRuntimeOnly("org.slf4j:slf4j-simple")
   implementation("software.airborne.kairo:kairo-logging")
+  testRuntimeOnly("org.slf4j:slf4j-simple")
 }
 ```
 
@@ -60,9 +60,9 @@ Or you could use Logback.
 // build.gradle.kts
 
 dependencies {
+  implementation("software.airborne.kairo:kairo-logging")
   testRuntimeOnly("org.apache.logging.log4j:log4j-core")
   testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")
-  implementation("software.airborne.kairo:kairo-logging")
 }
 ```
 
@@ -82,6 +82,7 @@ dependencies {
     <Root level="${env:LOG_LEVEL:-info}">
       <AppenderRef ref="Console"/>
     </Root>
+    <Logger name="io.ktor.server.plugins.cors.CORS" level="warn"/>
     <Logger name="kairo.darb" level="info"/>
     <Logger name="kairo.gcpSecretSupplier" level="info"/>
     <Logger name="kairo.rest" level="info"/>
