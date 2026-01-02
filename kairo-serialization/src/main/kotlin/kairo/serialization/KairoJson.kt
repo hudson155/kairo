@@ -243,10 +243,6 @@ public fun JsonMapper.Builder.kairo() {
   configure(StreamWriteFeature.STRICT_DUPLICATE_DETECTION, true)
   configure(StreamWriteFeature.USE_FAST_DOUBLE_WRITER, true)
 
-  defaultLeniency(false)
-
-  defaultDateFormat(StdDateFormat().withLenient(false))
-
   addModule(
     kotlinModule {
       configure(KotlinFeature.NullToEmptyCollection, false)
@@ -259,4 +255,8 @@ public fun JsonMapper.Builder.kairo() {
       configure(KotlinFeature.NewStrictNullChecks, true)
     },
   )
+
+  defaultLeniency(false)
+
+  defaultDateFormat(StdDateFormat().withLenient(false))
 }
