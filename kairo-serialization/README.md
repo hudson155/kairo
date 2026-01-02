@@ -1,20 +1,54 @@
 # Kairo Serialization
 
-`kotlinx.serialization` "just works" — it's **consistent and fast**.
+Kairo provides a wrapper around [Jackson](https://github.com/FasterXML/jackson)
+for serialization.
+
+### Why not `kotlinx.serialization`?
+
+`kotlinx.serialization` is a very good library.
+It works very well with Ktor, and excels on Multiplatform.
+However, it's not yet as robust as Jackson in several ways.
+
+- One of these key ways is that Jackson's exceptions are very rich:
+  They include the exact problem details, the JSON path to the offending field, and even the source location.
+  `kotlinx.serialization` doesn't have anywhere near this level of detail in its exceptions.
+  Jackson's level of exception detail allows Kairo to convert these failures into user-friendly API errors.
+
+- Another place Jackson shows its maturity is with polymorphic serialization.
+  `kotlinx.serialization` supports this in a good but limited way;
+  Jackson has robust support for configurable type ID resolution, ensuring compatibility with third-party APIs.
+
+## Jackson
+
+That said, being such an old library, Jackson has its fair share of baggage.
+
+- Jackson has a lot of poor defaults around type leniency, property naming, etc.
+  These defaults are in place mostly for backwards-compatibility, but they can lead to surprising results.
+  **Kairo replaces these defaults with much stricter and less surprising ones.**
+  You can still override Kairo's defaults the same way you would for Jackson.
+
+- Another issue with Jackson is that it loses type information during runtime serialization.
+  This can lead to surprises
+  like polymorphic type information not being included when serializing the type directly
+  (rather than as a property).
+  **Kairo fixes this issue by leveraging Kotlin type inference
+  through [kairo-reflect](../kairo-reflect/README.md).**
+
+- Finally, since Jackson is a Java library rather than a Kotlin one,
+  it doesn't have native support for Kotlin's nullability guarantees.
+  **The Kairo wrapper supports Kotlin's nullability guarantees.**
+
+In order to fix the problems mentioned above,
+`kairo-serialization` provides a wrapper around Jackson.
 
 ## Installation
 
-Install `kairo-serialization` and the serialization plugin.
-You don't need to install `kotlinx-serialization-core` separately —
+Install `kairo-serialization`.
+You don't need to install Jackson separately —
 it's included by default.
-But you should install `kotlinx-serialization-json` or other format-specific libraries if you need them.
 
 ```kotlin
 // build.gradle.kts
-
-plugins {
-  kotlin("plugin.serialization")
-}
 
 dependencies {
   implementation("software.airborne.kairo:kairo-serialization")
@@ -26,88 +60,62 @@ dependencies {
 ### Basic usage
 
 ```kotlin
-@Serializable
 data class MyClass(
   val number: Int,
   val text: String,
 )
 
-Json.encodeToString(MyClass(1, "foo"))
+val json: KairoJson = KairoJson()
+
+json.serialize(MyClass(1, "foo"))
 // => {"number":1,"text":"foo"}
 
-Json.decodeFromString<MyClass>("""{"number":1,"text":"foo"}""")
+json.deserialize<MyClass>("""{"number":1,"text":"foo"}""")
 // => MyClass(number=1, text=foo)
 ```
 
 ### Polymorphic serialization
 
 It's pretty common to need to serialize/deserialize polymorphic types.
-`kotlinx.serialization` is opinionated on how to do this.
-Use sealed classes if you can.
+Jackson supports this well. Use sealed classes if you can.
 
 ```kotlin
-@Serializable
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes(
+  JsonSubTypes.Type(Animal.Dog::class, name = "Dog"),
+  JsonSubTypes.Type(Animal.Cat::class, name = "Cat"),
+)
 sealed class Animal {
   abstract val name: String
 
-  @Serializable
-  @SerialName("Dog")
   data class Dog(override val name: String, val barksPerMinute: Int) : Animal()
 
-  @Serializable
-  @SerialName("Cat")
   data class Cat(override val name: String, val napsPerDay: Int) : Animal()
 }
 
-Json.encodeToString(listOf(Animal.Dog("Rex", 30), Animal.Cat("Whiskers", 12)))
+json.serialize(
+  listOf(Animal.Dog("Rex", 30), Animal.Cat("Whiskers", 12)),
+)
 // => [{"type":"Dog","name":"Rex","barksPerMinute":30},{"type":"Cat","name":"Whiskers","napsPerDay":12}]
 
-Json.decodeFromString<List<Animal>>(
-  """[
-    {"type":"Dog","name":"Rex","barksPerMinute":30},
-    {"type":"Cat","name":"Whiskers","napsPerDay":12}
-  ]""",
+json.deserialize<List<Animal>>(
+  "["type":"Dog","name":"Rex","barksPerMinute":30},{"type":"Cat","name":"Whiskers","napsPerDay":12}]",
 )
 // => [Animal.Dog(name=Rex, barksPerMinute=30), Animal.Cat(name=Whiskers, napsPerDay=12)]
 ```
 
-### Built-in serializers
+### Well-known types
 
-There are built-in serializers for a few types, but you need to reference them manually.
-
-#### `BigDecimal`
-
-You can either serialize to a double or to a string.
-It's better to serialize to a string, because doubles have a maximum precision.
-
-```kotlin
-@Serializable
-data class MyClass(
-  @Serializable(with = BigDecimalSerializer.AsString::class)
-  val value: BigDecimal,
-)
-
-json.encodeToString(MyClass(BigDecimal("123.456")))
-// => {"value":"123.456"}
-```
-
-#### `BigInteger`
-
-You can either serialize to a long or to a string.
-It's better to serialize to a string, because longs have a maximum range.
-
-```kotlin
-@Serializable
-data class MyClass(
-  @Serializable(with = BigIntegerSerializer.AsString::class)
-  val value: BigInteger,
-)
-
-json.encodeToString(MyClass(BigInteger("12345")))
-// => {"value":"12345"}
-```
+The following types are considered "well-known",
+meaning that Kairo is known to support them well,
+and has exploratory testing for them which ensures release-to-release stability.
 
 ### Advanced usage
 
-This README only covers the basics.
-Refer to `kotlinx.serialization`'s documentation for advanced usage.
+This README only covers the basics of Jackson.
+Refer to Jackson's own documentation for advanced usage.
+
+#### Accessing the underlying `JsonMapper`
+
+You can always access the underlying Jackson `JsonMapper` if you need to,
+but you must explicitly opt in using `@OptIn(KairoJson.RawJsonMapper::class)`.
