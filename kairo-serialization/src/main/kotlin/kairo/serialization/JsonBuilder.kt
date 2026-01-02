@@ -1,0 +1,22 @@
+package kairo.serialization
+
+import kotlinx.serialization.json.JsonBuilder
+
+public fun JsonBuilder.kairo() {
+  encodeDefaults = true
+  explicitNulls = true
+  ignoreUnknownKeys = false
+  isLenient = false
+  coerceInputValues = false
+  classDiscriminator = "type"
+  useAlternativeNames = false
+  decodeEnumsCaseInsensitive = false
+  allowTrailingComma = false
+  allowComments = false
+  allowSpecialFloatingPointValues = false
+}
+
+public fun JsonBuilder.kairoPrettyPrint() {
+  prettyPrint = true
+  prettyPrintIndent = "  "
+}

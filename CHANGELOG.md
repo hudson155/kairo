@@ -35,6 +35,10 @@ reflecting the ecosystem's maturity since Kairo started in 2019.
   or `software.airborne.kairo:bom-full` for Kairo applications.
   Keeps both Kairo and key external libraries in sync automatically.
 
+- **Serialization with `kotlinx.serialization` (replaces Jackson).**
+  Easier to use, fewer gotchas, and Kotlin-native.
+  Fewer runtime surprises.
+
 - **Dependency injection with [Koin](https://insert-koin.io/) (replaces Guice).**
   Reflection-free, Kotlin-friendly, better tooling, and simpler to configure.
 
@@ -223,6 +227,10 @@ No changes.
   Instantly spot failures!
 
 #### Serialization
+
+- **Serialization with `kotlinx.serialization` (replaces Jackson).**
+  Easier to use, fewer gotchas, and Kotlin-native.
+  Fewer runtime surprises.
 
 - **Automatic string trimming removed.**
   Data is now preserved exactly as sent.
