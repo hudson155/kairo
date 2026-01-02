@@ -110,6 +110,29 @@ The following types are considered "well-known",
 meaning that Kairo is known to support them well,
 and has exploratory testing for them which ensures release-to-release stability.
 
+#### Numeric types
+
+- `BigDecimal`
+- `BigInteger`
+- `Byte` and `UByte`
+- `Double`
+- `Float`
+- `Int` and `UInt`
+- `Long` and `ULong`
+- `Short` and `UShort`
+
+#### String and string-like
+
+- `CharArray`
+- `Char`
+- `String`
+
+#### Other
+
+- `Boolean`
+- Enums
+- `Unit`
+
 ### Advanced usage
 
 This README only covers the basics of Jackson.

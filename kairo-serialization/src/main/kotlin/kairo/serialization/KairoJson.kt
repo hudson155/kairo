@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.json.JsonWriteFeature
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.MapperFeature
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.cfg.EnumFeature
 import com.fasterxml.jackson.databind.cfg.JsonNodeFeature
@@ -48,11 +49,27 @@ public class KairoJson @RawJsonMapper constructor(
   @Target(AnnotationTarget.CONSTRUCTOR, AnnotationTarget.PROPERTY)
   public annotation class RawJsonMapper
 
-  public inline fun <reified T> serialize(value: T?): String =
-    delegate.writerFor(object : TypeReference<T>() {}).writeValueAsString(value)
+  public inline fun <reified T> serialize(value: T?): String {
+    val writer = delegate.writerFor(object : TypeReference<T>() {})
+    return writer.writeValueAsString(value)
+  }
 
-  public inline fun <reified T> deserialize(string: String): T =
-    delegate.readerFor(object : TypeReference<T>() {}).readValue(string)
+  public inline fun <reified T> deserialize(string: String): T {
+    val reader = delegate.readerFor(object : TypeReference<T>() {})
+    val result = reader.readValue<T>(string)
+    checkResult(result)
+    return result
+  }
+
+  public inline fun <reified T> checkResult(result: T?) {
+    if (result !is T) {
+      val nullability = if (null is T) "?" else "(non-null)"
+      throw RuntimeJsonMappingException(
+        "Deserialized value did not match the specified type; " +
+          "specified ${T::class.qualifiedName}${nullability} but was ${result?.let { it::class.qualifiedName }}",
+      )
+    }
+  }
 }
 
 @Suppress("LongMethod")
