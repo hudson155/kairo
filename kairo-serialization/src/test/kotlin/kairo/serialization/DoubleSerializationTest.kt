@@ -1,13 +1,12 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
+@Suppress("UnderscoresInNumericLiterals")
 internal class DoubleSerializationTest {
   private val json: KairoJson = KairoJson()
 

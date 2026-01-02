@@ -523,7 +523,7 @@ naming:
     active: false # Prefixing booleans isn't always useful.
   ClassNaming:
     active: true
-    classPattern: '([A-Z][a-z0-9]+|A|I|KClass)+'
+    classPattern: '([A-Z][a-z0-9]+|A|I|KClass|UByte|UInt|ULong|UShort)+'
   ConstructorParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'

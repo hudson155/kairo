@@ -66,7 +66,7 @@ public class KairoJson @RawJsonMapper constructor(
       val nullability = if (null is T) "?" else "(non-null)"
       throw RuntimeJsonMappingException(
         "Deserialized value did not match the specified type; " +
-          "specified ${T::class.qualifiedName}${nullability} but was ${result?.let { it::class.qualifiedName }}",
+          "specified ${T::class.qualifiedName}$nullability but was ${result?.let { it::class.qualifiedName }}",
       )
     }
   }

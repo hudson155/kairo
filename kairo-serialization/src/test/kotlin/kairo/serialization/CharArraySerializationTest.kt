@@ -1,7 +1,5 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
@@ -27,10 +25,10 @@ internal class CharArraySerializationTest {
       json.deserialize<CharArray>("\"✝\uFE0F\"").shouldBe("✝\uFE0F".toCharArray())
 
       json.deserialize<CharArray>(
-        """[]"""
+        """[]""",
       ).shouldBe("".toCharArray())
       json.deserialize<CharArray>(
-        """["H","e","l","l","o",","," ","W","o","r","l","d","!"]"""
+        """["H","e","l","l","o",","," ","W","o","r","l","d","!"]""",
       ).shouldBe("Hello, World!".toCharArray())
     }
 
