@@ -13,11 +13,15 @@ internal class BigDecimalSerializationTest {
   @Test
   fun serialize(): Unit =
     runTest {
+      json.serialize(BigDecimal("-90210.0")).shouldBe("-90210.0")
       json.serialize(BigDecimal("-90210")).shouldBe("-90210")
       json.serialize(BigDecimal("-3.14")).shouldBe("-3.14")
+      json.serialize(BigDecimal("-0.0")).shouldBe("0.0")
       json.serialize(BigDecimal("0")).shouldBe("0")
+      json.serialize(BigDecimal("0.0")).shouldBe("0.0")
       json.serialize(BigDecimal("3.14")).shouldBe("3.14")
       json.serialize(BigDecimal("90210")).shouldBe("90210")
+      json.serialize(BigDecimal("90210.0")).shouldBe("90210.0")
     }
 
   @Test
@@ -26,12 +30,12 @@ internal class BigDecimalSerializationTest {
       json.deserialize<BigDecimal>("-90210.0").shouldBe(BigDecimal("-90210.0"))
       json.deserialize<BigDecimal>("-90210").shouldBe(BigDecimal("-90210"))
       json.deserialize<BigDecimal>("-3.14").shouldBe(BigDecimal("-3.14"))
-      json.deserialize<BigDecimal>("-1e0").shouldBe(BigDecimal("-1e0"))
+      json.deserialize<BigDecimal>("-1e0").shouldBe(BigDecimal("-1"))
       json.deserialize<BigDecimal>("-0.0").shouldBe(BigDecimal("-0.0"))
       json.deserialize<BigDecimal>("-0").shouldBe(BigDecimal("-0"))
       json.deserialize<BigDecimal>("0").shouldBe(BigDecimal("0"))
       json.deserialize<BigDecimal>("0.0").shouldBe(BigDecimal("0.0"))
-      json.deserialize<BigDecimal>("1e0").shouldBe(BigDecimal("1e0"))
+      json.deserialize<BigDecimal>("1e0").shouldBe(BigDecimal("1"))
       json.deserialize<BigDecimal>("3.14").shouldBe(BigDecimal("3.14"))
       json.deserialize<BigDecimal>("90210").shouldBe(BigDecimal("90210"))
       json.deserialize<BigDecimal>("90210.0").shouldBe(BigDecimal("90210.0"))
