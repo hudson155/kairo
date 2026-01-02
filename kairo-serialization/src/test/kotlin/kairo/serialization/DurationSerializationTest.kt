@@ -95,12 +95,12 @@ internal class DurationSerializationTest {
   @Test
   fun `deserialize, float`(): Unit =
     runTest {
-      json.deserialize<Duration>("-1234567890.0")
-        .shouldBe(Duration.ofNanos(-1234567890000000000))
+      json.deserialize<Duration>("-1234567890.987654321")
+        .shouldBe(Duration.ofNanos(-1234567890987654321))
       json.deserialize<Duration>("0.0")
         .shouldBe(Duration.ZERO)
-      json.deserialize<Duration>("1234567890.0")
-        .shouldBe(Duration.ofNanos(1234567890000000000))
+      json.deserialize<Duration>("1234567890.987654321")
+        .shouldBe(Duration.ofNanos(1234567890987654321))
     }
 
   @Test
