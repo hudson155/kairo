@@ -42,7 +42,7 @@ class GetUserTest {
 
 ## Installation
 
-Install `kairo-integration-testing`.\
+Install `kairo-integration-testing`.
 You should also install the integration testing libraries for any other modules you rely on.
 
 ```kotlin

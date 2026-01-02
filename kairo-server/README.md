@@ -5,7 +5,7 @@ and can be run as an application or as part of integration tests.
 
 ## Installation
 
-Install `kairo-server`.\
+Install `kairo-server`.
 But if you've already installed `kairo-application`,
 you don't need `kairo-server` too.
 

@@ -22,7 +22,7 @@ integrated into the Kairo ecosystem.
 
 ## Installation
 
-Install `kairo-dependency-injection-feature`.\
+Install `kairo-dependency-injection-feature`.
 You don't need to install Koin separately —
 it's included by default.
 

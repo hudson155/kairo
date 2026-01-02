@@ -1,6 +1,6 @@
 # Protected Strings
 
-Secrets should never show up in logs or stack traces.\
+Secrets should never show up in logs or stack traces.
 `kairo-protected-string` provides a **lightweight wrapper around sensitive strings**
 that improves safety without complicating your code.
 
