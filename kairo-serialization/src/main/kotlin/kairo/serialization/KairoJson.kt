@@ -61,6 +61,12 @@ public class KairoJson @RawJsonMapper constructor(
     return result
   }
 
+  /**
+   * Ensures that the result matches the expected type.
+   * The primary purpose is shim support for Kotlin's nullability guarantees.
+   * 
+   * Adapted from [com.fasterxml.jackson.module.kotlin.checkTypeMismatch].
+   */
   public inline fun <reified T> checkResult(result: T?) {
     if (result !is T) {
       val nullability = if (null is T) "?" else "(non-null)"
