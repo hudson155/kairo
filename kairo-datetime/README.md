@@ -5,7 +5,7 @@
 
 ## Installation
 
-Install `kairo-datetime`.\
+Install `kairo-datetime`.
 You don't need to install Kotlin's datetime library separately —
 it's included by default.
 

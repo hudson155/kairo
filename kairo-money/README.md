@@ -9,7 +9,7 @@ val amount = Money.of("123.45", "USD")
 
 ## Installation
 
-Install `kairo-money`.\
+Install `kairo-money`.
 You don't need to install `javax.money` or Moneta separately —
 they're included by default.
 

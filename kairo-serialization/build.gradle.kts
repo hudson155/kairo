@@ -4,6 +4,8 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-reflect"))
+
   api(libs.jackson) // Available for usage.
   api(libs.jackson.moduleKotlin) // Available for usage.
 

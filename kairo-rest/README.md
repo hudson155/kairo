@@ -8,7 +8,7 @@ which is optional but highly recommended.
 
 ## Installation
 
-Install `kairo-rest-feature`.\
+Install `kairo-rest-feature`.
 You don't need to install Ktor separately —
 it's included by default.
 

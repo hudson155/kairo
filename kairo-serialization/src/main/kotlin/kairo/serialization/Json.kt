@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.StreamReadFeature
 import com.fasterxml.jackson.core.StreamWriteFeature
 import com.fasterxml.jackson.core.json.JsonReadFeature
 import com.fasterxml.jackson.core.json.JsonWriteFeature
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.SerializationFeature
@@ -17,15 +18,42 @@ import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.kotlinModule
 
 /**
- * Creates an instance of Jackson's [JsonMapper],
- * using Kairo's much stricter and more intuitive configuration.
- * You can still configure the instance as you normally would, using [builder].
+ * A wrapper around Jackson's [JsonMapper].
+ *
+ * Has stricter and less surprising defaults than native Jackson,
+ * but you can still override them the same way you would for Jackson.
+ *
+ * Serialization and deserialization retain type information,
+ * reducing surprises like polymorphic type information not being included when serializing the type directly.
+ *
+ * Supports Kotlin's nullability guarantees.
  */
-public fun kairoJson(builder: JsonMapper.Builder.() -> Unit = {}): JsonMapper =
-  JsonMapper.builder().apply {
-    kairo()
-    builder()
-  }.build()
+@OptIn(ExperimentalStdlibApi::class, KairoJson.RawJsonMapper::class)
+public class KairoJson @RawJsonMapper constructor(
+  @RawJsonMapper public val delegate: JsonMapper
+) {
+  public constructor(
+    builder: JsonMapper.Builder.() -> Unit = {}
+  ) : this(
+    JsonMapper.builder().apply {
+      kairo()
+      builder()
+    }.build()
+  )
+
+  /**
+   * You must opt in to access the raw [JsonMapper].
+   */
+  @RequiresOptIn
+  @Target(AnnotationTarget.CONSTRUCTOR, AnnotationTarget.PROPERTY)
+  public annotation class RawJsonMapper
+
+  public inline fun <reified T> serialize(value: T?): String =
+    delegate.writerFor(object : TypeReference<T>() {}).writeValueAsString(value)
+
+  public inline fun <reified T> deserialize(string: String): T =
+    delegate.readerFor(object : TypeReference<T>() {}).readValue(string)
+}
 
 @Suppress("LongMethod")
 public fun JsonMapper.Builder.kairo() {
@@ -34,7 +62,7 @@ public fun JsonMapper.Builder.kairo() {
   configure(MapperFeature.PROPAGATE_TRANSIENT_MARKER, true)
   configure(MapperFeature.AUTO_DETECT_CREATORS, false)
   configure(MapperFeature.AUTO_DETECT_FIELDS, false)
-  configure(MapperFeature.AUTO_DETECT_GETTERS, false)
+  configure(MapperFeature.AUTO_DETECT_GETTERS, true)
   configure(MapperFeature.AUTO_DETECT_IS_GETTERS, false)
   configure(MapperFeature.AUTO_DETECT_SETTERS, false)
   configure(MapperFeature.REQUIRE_SETTERS_FOR_GETTERS, false)

@@ -19,7 +19,7 @@ dependencies {
 }
 ```
 
-You'll also need to add an SLF4J backend to your runtime classpath.\
+You'll also need to add an SLF4J backend to your runtime classpath.
 We recommend Log4j2, which you can configure using XML.
 But you can use anything (really)!
 

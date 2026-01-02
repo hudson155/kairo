@@ -33,7 +33,7 @@ using the `LogicalFailure` exception subclass.
 
 ## Installation
 
-Install `kairo-exception`.\
+Install `kairo-exception`.
 You can also install `kairo-exception-testing` for testing.
 
 ```kotlin

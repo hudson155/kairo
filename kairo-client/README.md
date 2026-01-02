@@ -5,7 +5,7 @@ outgoing HTTP requests from your Kairo application.
 
 ## Installation
 
-Install `kairo-client-feature`.\
+Install `kairo-client-feature`.
 You don't need to install Ktor dependencies separately —
 they're included by default.
 

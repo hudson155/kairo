@@ -24,7 +24,7 @@ There are 2 types of Features.
 
 ## Installation
 
-Install `kairo-feature`.\
+Install `kairo-feature`.
 But if you've already installed `kairo-server` or `kairo-application`,
 you don't need `kairo-feature` too.
 
