@@ -6,7 +6,7 @@
 
 JVM/Kotlin reflection is powerful,
 but the standard APIs are fragmented
-across `Class<T>`, `KClass<T>`, `Type`, and `KType`.\
+across `Class<T>`, `KClass<T>`, `Type`, and `KType`.
 `kairo-reflect` unifies these into a single, runtime-rich abstraction: `KairoType<T>`.
 
 - **Full generic fidelity:**
@@ -23,7 +23,7 @@ more **reliable and maintainable**.
 
 ## Installation
 
-Install `kairo-reflect`.\
+Install `kairo-reflect`.
 You don't need to install Kotlin's reflection library separately —
 it's included by default.
 

@@ -8,7 +8,7 @@ so you can refer to channels by name instead of ID.
 
 ## Installation
 
-Install `kairo-slack-feature`.\
+Install `kairo-slack-feature`.
 You don't need to install the Slack client separately —
 it's included by default.
 

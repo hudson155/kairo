@@ -4,7 +4,7 @@
 
 ## Installation
 
-Install `kairo-serialization` and the serialization plugin.\
+Install `kairo-serialization` and the serialization plugin.
 You don't need to install `kotlinx-serialization-core` separately —
 it's included by default.
 But you should install `kotlinx-serialization-json` or other format-specific libraries if you need them.

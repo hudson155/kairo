@@ -1,6 +1,6 @@
 # Kairo IDs
 
-Kairo IDs are **safe, meaningful, and efficient**.\
+Kairo IDs are **safe, meaningful, and efficient**.
 `kairo-id` is an alternative to raw UUIDs or serial IDs,
 improving **developer experience** and **operational clarity**.
 
@@ -78,7 +78,7 @@ value class UserId(override val value: String) : Id {
 }
 ```
 
-This enforces **compile-time safety**: IDs can't be mixed up.\
+This enforces **compile-time safety**: IDs can't be mixed up.
 Without semantic IDs, callers could accidentally swap `userId` and `businessId`.
 With Kairo IDs, the compiler prevents this mistake.
 

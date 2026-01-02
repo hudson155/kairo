@@ -11,7 +11,7 @@ gcpSecretSupplier["projects/012345678900/secrets/example/versions/1"]
 
 ## Installation
 
-Install `kairo-gcp-secret-supplier`.\
+Install `kairo-gcp-secret-supplier`.
 You can also install `kairo-gcp-secret-supplier-testing` for testing.
 
 ```kotlin
