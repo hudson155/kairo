@@ -30,15 +30,15 @@ import com.fasterxml.jackson.module.kotlin.kotlinModule
  */
 @OptIn(ExperimentalStdlibApi::class, KairoJson.RawJsonMapper::class)
 public class KairoJson @RawJsonMapper constructor(
-  @RawJsonMapper public val delegate: JsonMapper
+  @RawJsonMapper public val delegate: JsonMapper,
 ) {
   public constructor(
-    builder: JsonMapper.Builder.() -> Unit = {}
+    builder: JsonMapper.Builder.() -> Unit = {},
   ) : this(
     JsonMapper.builder().apply {
       kairo()
       builder()
-    }.build()
+    }.build(),
   )
 
   /**
