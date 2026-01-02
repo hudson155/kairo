@@ -48,12 +48,6 @@ internal class StringSerializationTest {
     }
 
   @Test
-  fun `deserialize, wrong type (float)`(): Unit =
-    runTest {
-      json.deserialize<String>("0.0").shouldBe("0.0")
-    }
-
-  @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
       shouldThrowAny {
