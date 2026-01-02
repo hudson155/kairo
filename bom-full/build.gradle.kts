@@ -26,6 +26,10 @@ dependencies {
   // https://github.com/google/guava/releases
   api(platform("com.google.guava:guava-bom:33.5.0-jre"))
 
+  // jackson
+  // https://github.com/FasterXML/jackson/releases
+  api(platform("com.fasterxml.jackson:jackson-bom:2.20.1"))
+
   // hocon
   // https://github.com/lightbend/config/releases
   val hoconVersion = "1.4.5"

@@ -23,6 +23,9 @@ guava = { module = "com.google.guava:guava" }
 
 hocon = { module = "com.typesafe:config" }
 
+jackson = { module = "com.fasterxml.jackson.core:jackson-databind" }
+jackson-moduleKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
+
 koin = { module = "io.insert-koin:koin-core" }
 koin-annotations = { module = "io.insert-koin:koin-annotations" }
 
