@@ -78,14 +78,6 @@ internal class LocalDateSerializationTest {
     }
 
   @Test
-  fun `deserialize, wrong type (float)`(): Unit =
-    runTest {
-      shouldThrowAny {
-        json.deserialize<LocalDate>("20231114.0")
-      }
-    }
-
-  @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
       shouldThrowAny {

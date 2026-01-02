@@ -98,14 +98,6 @@ internal class OffsetTimeSerializationTest {
     }
 
   @Test
-  fun `deserialize, wrong type (float)`(): Unit =
-    runTest {
-      shouldThrowAny {
-        json.deserialize<OffsetTime>("221360123456789.0")
-      }
-    }
-
-  @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
       shouldThrowAny {

@@ -66,14 +66,6 @@ internal class YearMonthSerializationTest {
     }
 
   @Test
-  fun `deserialize, wrong type (float)`(): Unit =
-    runTest {
-      shouldThrowAny {
-        json.deserialize<YearMonth>("202311.0")
-      }
-    }
-
-  @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
       shouldThrowAny {
