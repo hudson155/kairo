@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.cfg.EnumFeature
 import com.fasterxml.jackson.databind.cfg.JsonNodeFeature
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.databind.util.StdDateFormat
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.kotlinModule
 
@@ -276,6 +278,15 @@ public fun JsonMapper.Builder.kairo() {
       configure(KotlinFeature.KotlinPropertyNameAsImplicitName, true)
       configure(KotlinFeature.UseJavaDurationConversion, true)
       configure(KotlinFeature.NewStrictNullChecks, true)
+    },
+  )
+
+  addModule(
+    JavaTimeModule().apply {
+      disable(JavaTimeFeature.NORMALIZE_DESERIALIZED_ZONE_ID)
+      disable(JavaTimeFeature.USE_TIME_ZONE_FOR_LENIENT_DATE_PARSING)
+      disable(JavaTimeFeature.ALWAYS_ALLOW_STRINGIFIED_DATE_TIMESTAMPS)
+      disable(JavaTimeFeature.ONE_BASED_MONTHS)
     },
   )
 

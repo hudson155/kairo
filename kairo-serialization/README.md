@@ -127,6 +127,25 @@ and has exploratory testing for them which ensures release-to-release stability.
 - `Char`
 - `String`
 
+#### Time-related
+
+- `DayOfWeek`
+- `Duration`
+- `Instant`
+- `LocalDateTime`
+- `LocalDate`
+- `LocalTime`
+- `MonthDay`
+- `Month`
+- `OffsetDateTime`
+- `OffsetTime`
+- `Period`
+- `YearMonth`
+- `Year`
+- `ZonedDateTime`
+- `ZoneId`
+- `ZoneOffset`
+
 #### Other
 
 - `Boolean`
