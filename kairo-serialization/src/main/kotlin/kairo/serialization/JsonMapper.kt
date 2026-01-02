@@ -27,6 +27,7 @@ public fun kairoJson(builder: JsonMapper.Builder.() -> Unit = {}): JsonMapper =
     builder()
   }.build()
 
+@Suppress("LongMethod")
 public fun JsonMapper.Builder.kairo() {
   configure(MapperFeature.USE_ANNOTATIONS, true)
   configure(MapperFeature.USE_GETTERS_AS_SETTERS, false)
