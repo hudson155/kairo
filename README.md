@@ -126,7 +126,8 @@ These libraries **can be used anywhere**
   Extends Kotlin reflection,
   unifying fragmented JVM/Kotlin into the safer and richer `KairoType<T>`.
 - [kairo-serialization](./kairo-serialization/README.md):
-  Kairo uses [Jackson](https://github.com/FasterXML/jackson) for serialization.
+  Kairo provides a wrapper around [Jackson](https://github.com/FasterXML/jackson)
+  for serialization.
 - [kairo-testing](./kairo-testing/README.md):
   Kotlin-esque JUnit-style testing, with coroutine and mocking support.
 - [kairo-util](./kairo-util/README.md):
