@@ -1,0 +1,95 @@
+package kairo.serialization
+
+import io.kotest.assertions.throwables.shouldThrowAny
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.shouldBe
+import kotlin.uuid.Uuid
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Test
+
+internal class KotlinUuidSerializationTest {
+  private val json: KairoJson = KairoJson()
+
+  @Test
+  fun serialize(): Unit =
+    runTest {
+      json.serialize(Uuid.parse("a042df12-b775-42b2-aeb1-5bdd4ea78dc5"))
+        .shouldBe("\"a042df12-b775-42b2-aeb1-5bdd4ea78dc5\"")
+    }
+
+  @Test
+  fun deserialize(): Unit =
+    runTest {
+      json.deserialize<Uuid>("\"a042df12-b775-42b2-aeb1-5bdd4ea78dc5\"")
+        .shouldBe(Uuid.parse("a042df12-b775-42b2-aeb1-5bdd4ea78dc5"))
+
+      json.deserialize<Uuid>("\"A042DF12-B775-42B2-AEB1-5BDD4EA78DC5\"")
+        .shouldBe(Uuid.parse("a042df12-b775-42b2-aeb1-5bdd4ea78dc5"))
+    }
+
+  @Test
+  fun `deserialize, wrong format (too short)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<Uuid>("\"a042df12-b775-42b2-aeb1-5bdd4ea78dc\"")
+      }
+    }
+
+  @Test
+  fun `deserialize, wrong format (too long)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<Uuid>("\"a042df12-b775-42b2-aeb1-5bdd4ea78dc5c\"")
+      }
+    }
+
+  @Test
+  fun `deserialize, wrong format (missing dashes)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<Uuid>("\"a042df12b77542b2aeb15bdd4ea78dc5\"")
+      }
+    }
+
+  @Test
+  fun `deserialize, null`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<Uuid>("null")
+      }
+
+      json.deserialize<Uuid?>("null").shouldBeNull()
+    }
+
+  @Test
+  fun `deserialize, wrong type (boolean)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<Uuid>("true")
+      }
+    }
+
+  @Test
+  fun `deserialize, wrong type (int)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<Uuid>("2")
+      }
+    }
+
+  @Test
+  fun `deserialize, wrong type (object)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<Uuid>("""{}""")
+      }
+    }
+
+  @Test
+  fun `deserialize, wrong type (array)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<Uuid>("""[]""")
+      }
+    }
+}
