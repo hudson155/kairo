@@ -14,17 +14,23 @@ internal class LocalTimeSerializationTest {
   @Test
   fun serialize(): Unit =
     runTest {
-      json.serialize(LocalTime.of(0, 0, 0, 0)).shouldBe("\"00:00:00\"")
-      json.serialize(LocalTime.of(22, 13, 20, 123456789)).shouldBe("\"22:13:20.123456789\"")
-      json.serialize(LocalTime.of(23, 59, 59, 999999999)).shouldBe("\"23:59:59.999999999\"")
+      json.serialize(LocalTime.of(0, 0, 0, 0))
+        .shouldBe("\"00:00:00\"")
+      json.serialize(LocalTime.of(22, 13, 20, 123456789))
+        .shouldBe("\"22:13:20.123456789\"")
+      json.serialize(LocalTime.of(23, 59, 59, 999999999))
+        .shouldBe("\"23:59:59.999999999\"")
     }
 
   @Test
   fun deserialize(): Unit =
     runTest {
-      json.deserialize<LocalTime>("\"00:00:00\"").shouldBe(LocalTime.of(0, 0, 0, 0))
-      json.deserialize<LocalTime>("\"22:13:20.123456789\"").shouldBe(LocalTime.of(22, 13, 20, 123456789))
-      json.deserialize<LocalTime>("\"23:59:59.999999999\"").shouldBe(LocalTime.of(23, 59, 59, 999999999))
+      json.deserialize<LocalTime>("\"00:00:00\"")
+        .shouldBe(LocalTime.of(0, 0, 0, 0))
+      json.deserialize<LocalTime>("\"22:13:20.123456789\"")
+        .shouldBe(LocalTime.of(22, 13, 20, 123456789))
+      json.deserialize<LocalTime>("\"23:59:59.999999999\"")
+        .shouldBe(LocalTime.of(23, 59, 59, 999999999))
     }
 
   @Test

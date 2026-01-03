@@ -14,17 +14,23 @@ internal class MonthDaySerializationTest {
   @Test
   fun serialize(): Unit =
     runTest {
-      json.serialize(MonthDay.of(Month.JANUARY, 1)).shouldBe("\"--01-01\"")
-      json.serialize(MonthDay.of(Month.NOVEMBER, 14)).shouldBe("\"--11-14\"")
-      json.serialize(MonthDay.of(Month.DECEMBER, 30)).shouldBe("\"--12-30\"")
+      json.serialize(MonthDay.of(Month.JANUARY, 1))
+        .shouldBe("\"--01-01\"")
+      json.serialize(MonthDay.of(Month.NOVEMBER, 14))
+        .shouldBe("\"--11-14\"")
+      json.serialize(MonthDay.of(Month.DECEMBER, 30))
+        .shouldBe("\"--12-30\"")
     }
 
   @Test
   fun deserialize(): Unit =
     runTest {
-      json.deserialize<MonthDay>("\"--01-01\"").shouldBe(MonthDay.of(Month.JANUARY, 1))
-      json.deserialize<MonthDay>("\"--11-14\"").shouldBe(MonthDay.of(Month.NOVEMBER, 14))
-      json.deserialize<MonthDay>("\"--12-30\"").shouldBe(MonthDay.of(Month.DECEMBER, 30))
+      json.deserialize<MonthDay>("\"--01-01\"")
+        .shouldBe(MonthDay.of(Month.JANUARY, 1))
+      json.deserialize<MonthDay>("\"--11-14\"")
+        .shouldBe(MonthDay.of(Month.NOVEMBER, 14))
+      json.deserialize<MonthDay>("\"--12-30\"")
+        .shouldBe(MonthDay.of(Month.DECEMBER, 30))
     }
 
   @Test

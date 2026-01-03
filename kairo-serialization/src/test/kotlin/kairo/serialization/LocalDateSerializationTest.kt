@@ -14,17 +14,23 @@ internal class LocalDateSerializationTest {
   @Test
   fun serialize(): Unit =
     runTest {
-      json.serialize(LocalDate.of(-2023, Month.JANUARY, 1)).shouldBe("\"-2023-01-01\"")
-      json.serialize(LocalDate.of(2023, Month.NOVEMBER, 14)).shouldBe("\"2023-11-14\"")
-      json.serialize(LocalDate.of(3716, Month.DECEMBER, 30)).shouldBe("\"3716-12-30\"")
+      json.serialize(LocalDate.of(-2023, Month.JANUARY, 1))
+        .shouldBe("\"-2023-01-01\"")
+      json.serialize(LocalDate.of(2023, Month.NOVEMBER, 14))
+        .shouldBe("\"2023-11-14\"")
+      json.serialize(LocalDate.of(3716, Month.DECEMBER, 30))
+        .shouldBe("\"3716-12-30\"")
     }
 
   @Test
   fun deserialize(): Unit =
     runTest {
-      json.deserialize<LocalDate>("\"-2023-01-01\"").shouldBe(LocalDate.of(-2023, Month.JANUARY, 1))
-      json.deserialize<LocalDate>("\"2023-11-14\"").shouldBe(LocalDate.of(2023, Month.NOVEMBER, 14))
-      json.deserialize<LocalDate>("\"3716-12-30\"").shouldBe(LocalDate.of(3716, Month.DECEMBER, 30))
+      json.deserialize<LocalDate>("\"-2023-01-01\"")
+        .shouldBe(LocalDate.of(-2023, Month.JANUARY, 1))
+      json.deserialize<LocalDate>("\"2023-11-14\"")
+        .shouldBe(LocalDate.of(2023, Month.NOVEMBER, 14))
+      json.deserialize<LocalDate>("\"3716-12-30\"")
+        .shouldBe(LocalDate.of(3716, Month.DECEMBER, 30))
     }
 
   @Test

@@ -34,65 +34,55 @@ internal class OffsetDateTimeSerializationTest {
   @Test
   fun `deserialize, string`(): Unit =
     runTest {
-      json.deserialize<OffsetDateTime>(
-        "\"-2023-01-01T00:00:00-18:00\"",
-      ).shouldBe(
-        LocalDateTime.of(-2023, Month.JANUARY, 1, 0, 0, 0, 0)
-          .atOffset(ZoneOffset.MIN),
-      )
-      json.deserialize<OffsetDateTime>(
-        "\"2023-11-14T22:13:20.123456789Z\"",
-      ).shouldBe(
-        LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
-          .atOffset(ZoneOffset.UTC),
-      )
-      json.deserialize<OffsetDateTime>(
-        "\"3716-12-30T23:59:59.999999999+18:00\"",
-      ).shouldBe(
-        LocalDateTime.of(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999)
-          .atOffset(ZoneOffset.MAX),
-      )
+      json.deserialize<OffsetDateTime>("\"-2023-01-01T00:00:00-18:00\"")
+        .shouldBe(
+          LocalDateTime.of(-2023, Month.JANUARY, 1, 0, 0, 0, 0)
+            .atOffset(ZoneOffset.MIN),
+        )
+      json.deserialize<OffsetDateTime>("\"2023-11-14T22:13:20.123456789Z\"")
+        .shouldBe(
+          LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
+            .atOffset(ZoneOffset.UTC),
+        )
+      json.deserialize<OffsetDateTime>("\"3716-12-30T23:59:59.999999999+18:00\"")
+        .shouldBe(
+          LocalDateTime.of(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999)
+            .atOffset(ZoneOffset.MAX),
+        )
     }
 
   @Test
   fun `deserialize, int`(): Unit =
     runTest {
-      json.deserialize<OffsetDateTime>(
-        "1700000000",
-      ).shouldBe(
-        LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 0)
-          .atOffset(ZoneOffset.UTC),
-      )
+      json.deserialize<OffsetDateTime>("1700000000")
+        .shouldBe(
+          LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 0)
+            .atOffset(ZoneOffset.UTC),
+        )
 
       shouldThrowAny {
-        json.deserialize<OffsetDateTime>(
-          "1700000000123456789",
-        )
+        json.deserialize<OffsetDateTime>("1700000000123456789")
       }
     }
 
   @Test
   fun `deserialize, float`(): Unit =
     runTest {
-      json.deserialize<OffsetDateTime>(
-        "1700000000.0",
-      ).shouldBe(
-        LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 0)
-          .atOffset(ZoneOffset.UTC),
-      )
+      json.deserialize<OffsetDateTime>("1700000000.0")
+        .shouldBe(
+          LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 0)
+            .atOffset(ZoneOffset.UTC),
+        )
 
       shouldThrowAny {
-        json.deserialize<OffsetDateTime>(
-          "1700000000123456789.0",
-        )
+        json.deserialize<OffsetDateTime>("1700000000123456789.0")
       }
 
-      json.deserialize<OffsetDateTime>(
-        "1700000000.123456789",
-      ).shouldBe(
-        LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
-          .atOffset(ZoneOffset.UTC),
-      )
+      json.deserialize<OffsetDateTime>("1700000000.123456789")
+        .shouldBe(
+          LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
+            .atOffset(ZoneOffset.UTC),
+        )
     }
 
   @Test

@@ -15,29 +15,23 @@ internal class LocalDateTimeSerializationTest {
   @Test
   fun serialize(): Unit =
     runTest {
-      json.serialize(
-        LocalDateTime.of(-2023, Month.JANUARY, 1, 0, 0, 0, 0),
-      ).shouldBe("\"-2023-01-01T00:00:00\"")
-      json.serialize(
-        LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789),
-      ).shouldBe("\"2023-11-14T22:13:20.123456789\"")
-      json.serialize(
-        LocalDateTime.of(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999),
-      ).shouldBe("\"3716-12-30T23:59:59.999999999\"")
+      json.serialize(LocalDateTime.of(-2023, Month.JANUARY, 1, 0, 0, 0, 0))
+        .shouldBe("\"-2023-01-01T00:00:00\"")
+      json.serialize(LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789))
+        .shouldBe("\"2023-11-14T22:13:20.123456789\"")
+      json.serialize(LocalDateTime.of(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999))
+        .shouldBe("\"3716-12-30T23:59:59.999999999\"")
     }
 
   @Test
   fun deserialize(): Unit =
     runTest {
-      json.deserialize<LocalDateTime>(
-        "\"-2023-01-01T00:00:00\"",
-      ).shouldBe(LocalDateTime.of(-2023, Month.JANUARY, 1, 0, 0, 0, 0))
-      json.deserialize<LocalDateTime>(
-        "\"2023-11-14T22:13:20.123456789\"",
-      ).shouldBe(LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789))
-      json.deserialize<LocalDateTime>(
-        "\"3716-12-30T23:59:59.999999999\"",
-      ).shouldBe(LocalDateTime.of(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999))
+      json.deserialize<LocalDateTime>("\"-2023-01-01T00:00:00\"")
+        .shouldBe(LocalDateTime.of(-2023, Month.JANUARY, 1, 0, 0, 0, 0))
+      json.deserialize<LocalDateTime>("\"2023-11-14T22:13:20.123456789\"")
+        .shouldBe(LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789))
+      json.deserialize<LocalDateTime>("\"3716-12-30T23:59:59.999999999\"")
+        .shouldBe(LocalDateTime.of(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999))
     }
 
   @Test

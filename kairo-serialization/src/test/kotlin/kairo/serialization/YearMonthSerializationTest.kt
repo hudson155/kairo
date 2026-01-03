@@ -14,17 +14,23 @@ internal class YearMonthSerializationTest {
   @Test
   fun serialize(): Unit =
     runTest {
-      json.serialize(YearMonth.of(-2023, Month.JANUARY)).shouldBe("\"-2023-01\"")
-      json.serialize(YearMonth.of(2023, Month.NOVEMBER)).shouldBe("\"2023-11\"")
-      json.serialize(YearMonth.of(3716, Month.DECEMBER)).shouldBe("\"3716-12\"")
+      json.serialize(YearMonth.of(-2023, Month.JANUARY))
+        .shouldBe("\"-2023-01\"")
+      json.serialize(YearMonth.of(2023, Month.NOVEMBER))
+        .shouldBe("\"2023-11\"")
+      json.serialize(YearMonth.of(3716, Month.DECEMBER))
+        .shouldBe("\"3716-12\"")
     }
 
   @Test
   fun deserialize(): Unit =
     runTest {
-      json.deserialize<YearMonth>("\"-2023-01\"").shouldBe(YearMonth.of(-2023, Month.JANUARY))
-      json.deserialize<YearMonth>("\"2023-11\"").shouldBe(YearMonth.of(2023, Month.NOVEMBER))
-      json.deserialize<YearMonth>("\"3716-12\"").shouldBe(YearMonth.of(3716, Month.DECEMBER))
+      json.deserialize<YearMonth>("\"-2023-01\"")
+        .shouldBe(YearMonth.of(-2023, Month.JANUARY))
+      json.deserialize<YearMonth>("\"2023-11\"")
+        .shouldBe(YearMonth.of(2023, Month.NOVEMBER))
+      json.deserialize<YearMonth>("\"3716-12\"")
+        .shouldBe(YearMonth.of(3716, Month.DECEMBER))
     }
 
   @Test

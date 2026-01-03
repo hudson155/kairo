@@ -38,7 +38,7 @@ internal class ZoneIdSerializationTest {
   fun `deserialize, unknown`(): Unit =
     runTest {
       shouldThrowAny {
-        json.deserialize<ZoneId>("\"pacific/edmonton\"")
+        json.deserialize<ZoneId>("\"Pacific/Edmonton\"")
       }
     }
 

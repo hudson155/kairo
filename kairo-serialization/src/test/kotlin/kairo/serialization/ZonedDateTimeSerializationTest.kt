@@ -34,65 +34,55 @@ internal class ZonedDateTimeSerializationTest {
   @Test
   fun `deserialize, string`(): Unit =
     runTest {
-      json.deserialize<ZonedDateTime>(
-        "\"-2023-01-01T00:00:00-12:00[Etc/GMT+12]\"",
-      ).shouldBe(
-        LocalDateTime.of(-2023, Month.JANUARY, 1, 0, 0, 0, 0)
-          .atZone(ZoneId.of("Etc/GMT+12")),
-      )
-      json.deserialize<ZonedDateTime>(
-        "\"2023-11-14T22:13:20.123456789Z[UTC]\"",
-      ).shouldBe(
-        LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
-          .atZone(ZoneId.of("UTC")),
-      )
-      json.deserialize<ZonedDateTime>(
-        "\"3716-12-30T23:59:59.999999999+14:00[Pacific/Kiritimati]\"",
-      ).shouldBe(
-        LocalDateTime.of(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999)
-          .atZone(ZoneId.of("Pacific/Kiritimati")),
-      )
+      json.deserialize<ZonedDateTime>("\"-2023-01-01T00:00:00-12:00[Etc/GMT+12]\"")
+        .shouldBe(
+          LocalDateTime.of(-2023, Month.JANUARY, 1, 0, 0, 0, 0)
+            .atZone(ZoneId.of("Etc/GMT+12")),
+        )
+      json.deserialize<ZonedDateTime>("\"2023-11-14T22:13:20.123456789Z[UTC]\"")
+        .shouldBe(
+          LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
+            .atZone(ZoneId.of("UTC")),
+        )
+      json.deserialize<ZonedDateTime>("\"3716-12-30T23:59:59.999999999+14:00[Pacific/Kiritimati]\"")
+        .shouldBe(
+          LocalDateTime.of(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999)
+            .atZone(ZoneId.of("Pacific/Kiritimati")),
+        )
     }
 
   @Test
   fun `deserialize, int`(): Unit =
     runTest {
-      json.deserialize<ZonedDateTime>(
-        "1700000000",
-      ).shouldBe(
-        LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 0)
-          .atZone(ZoneId.of("UTC")),
-      )
+      json.deserialize<ZonedDateTime>("1700000000")
+        .shouldBe(
+          LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 0)
+            .atZone(ZoneId.of("UTC")),
+        )
 
       shouldThrowAny {
-        json.deserialize<ZonedDateTime>(
-          "1700000000123456789",
-        )
+        json.deserialize<ZonedDateTime>("1700000000123456789")
       }
     }
 
   @Test
   fun `deserialize, float`(): Unit =
     runTest {
-      json.deserialize<ZonedDateTime>(
-        "1700000000.0",
-      ).shouldBe(
-        LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 0)
-          .atZone(ZoneId.of("UTC")),
-      )
+      json.deserialize<ZonedDateTime>("1700000000.0")
+        .shouldBe(
+          LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 0)
+            .atZone(ZoneId.of("UTC")),
+        )
 
       shouldThrowAny {
-        json.deserialize<ZonedDateTime>(
-          "1700000000123456789.0",
-        )
+        json.deserialize<ZonedDateTime>("1700000000123456789.0")
       }
 
-      json.deserialize<ZonedDateTime>(
-        "1700000000.123456789",
-      ).shouldBe(
-        LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
-          .atZone(ZoneId.of("UTC")),
-      )
+      json.deserialize<ZonedDateTime>("1700000000.123456789")
+        .shouldBe(
+          LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
+            .atZone(ZoneId.of("UTC")),
+        )
     }
 
   @Test
