@@ -5,6 +5,7 @@ import kotlin.time.Duration
 import kotlin.time.Instant
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.FixedOffsetTimeZone
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
@@ -22,6 +23,9 @@ internal class KotlinDatetimeModule : SimpleModule() {
 
     addSerializer(Duration::class.java, KotlinDurationSerializer())
     addDeserializer(Duration::class.java, KotlinDurationDeserializer())
+
+    addSerializer(FixedOffsetTimeZone::class.java, KotlinFixedOffsetTimeZoneSerializer())
+    addDeserializer(FixedOffsetTimeZone::class.java, KotlinFixedOffsetTimeZoneDeserializer())
 
     addSerializer(Instant::class.java, KotlinInstantSerializer())
     addDeserializer(Instant::class.java, KotlinInstantDeserializer())
