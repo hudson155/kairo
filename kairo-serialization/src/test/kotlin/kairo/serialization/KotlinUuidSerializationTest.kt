@@ -73,7 +73,7 @@ internal class KotlinUuidSerializationTest {
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowAny {
-        json.deserialize<Uuid>("2")
+        json.deserialize<Uuid>("0")
       }
     }
 
