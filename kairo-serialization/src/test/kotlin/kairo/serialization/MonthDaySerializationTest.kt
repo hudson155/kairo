@@ -50,6 +50,7 @@ internal class MonthDaySerializationTest {
         json.deserialize<MonthDay>("\"--11-31\"")
       }
     }
+
   @Test
   fun `deserialize, wrong format (missing dashes)`(): Unit =
     runTest {

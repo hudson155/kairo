@@ -66,7 +66,7 @@ internal class ZonedDateTimeSerializationTest {
 
       shouldThrowAny {
         json.deserialize<ZonedDateTime>(
-          "1700000000123456789"
+          "1700000000123456789",
         )
       }
     }
@@ -83,7 +83,7 @@ internal class ZonedDateTimeSerializationTest {
 
       shouldThrowAny {
         json.deserialize<ZonedDateTime>(
-          "1700000000123456789.0"
+          "1700000000123456789.0",
         )
       }
 
