@@ -7,12 +7,12 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toJavaZoneId
 
 internal class KotlinTimeZoneSerializer : StdSerializer<TimeZone>(
-  TimeZone::class.java
+  TimeZone::class.java,
 ) {
   override fun serialize(
     value: TimeZone,
     gen: JsonGenerator,
-    provider: SerializerProvider
+    provider: SerializerProvider,
   ) {
     val javaZoneId = value.toJavaZoneId()
     provider.defaultSerializeValue(javaZoneId, gen)

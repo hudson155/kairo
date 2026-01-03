@@ -7,7 +7,7 @@ import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.toKotlinDayOfWeek
 
 internal class KotlinDayOfWeekDeserializer : StdDeserializer<DayOfWeek>(
-  DayOfWeek::class.java
+  DayOfWeek::class.java,
 ) {
   override fun deserialize(
     p: JsonParser,

@@ -7,12 +7,12 @@ import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.toJavaPeriod
 
 internal class KotlinDatePeriodSerializer : StdSerializer<DatePeriod>(
-  DatePeriod::class.java
+  DatePeriod::class.java,
 ) {
   override fun serialize(
     value: DatePeriod,
     gen: JsonGenerator,
-    provider: SerializerProvider
+    provider: SerializerProvider,
   ) {
     val javaPeriod = value.toJavaPeriod()
     provider.defaultSerializeValue(javaPeriod, gen)

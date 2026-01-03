@@ -7,7 +7,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toKotlinTimeZone
 
 internal class KotlinTimeZoneDeserializer : StdDeserializer<TimeZone>(
-  TimeZone::class.java
+  TimeZone::class.java,
 ) {
   override fun deserialize(
     p: JsonParser,

@@ -7,7 +7,7 @@ import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.toKotlinDatePeriod
 
 internal class KotlinDatePeriodDeserializer : StdDeserializer<DatePeriod>(
-  DatePeriod::class.java
+  DatePeriod::class.java,
 ) {
   override fun deserialize(
     p: JsonParser,

@@ -7,12 +7,12 @@ import kotlinx.datetime.FixedOffsetTimeZone
 import kotlinx.datetime.toJavaZoneOffset
 
 internal class KotlinFixedOffsetTimeZoneSerializer : StdSerializer<FixedOffsetTimeZone>(
-  FixedOffsetTimeZone::class.java
+  FixedOffsetTimeZone::class.java,
 ) {
   override fun serialize(
     value: FixedOffsetTimeZone,
     gen: JsonGenerator,
-    provider: SerializerProvider
+    provider: SerializerProvider,
   ) {
     val javaZoneOffset = value.toJavaZoneOffset()
     provider.defaultSerializeValue(javaZoneOffset, gen)

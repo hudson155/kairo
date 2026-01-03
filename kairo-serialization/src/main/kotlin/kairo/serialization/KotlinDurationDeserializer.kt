@@ -7,7 +7,7 @@ import kotlin.time.Duration
 import kotlin.time.toKotlinDuration
 
 internal class KotlinDurationDeserializer : StdDeserializer<Duration>(
-  Duration::class.java
+  Duration::class.java,
 ) {
   override fun deserialize(
     p: JsonParser,

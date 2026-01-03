@@ -7,14 +7,14 @@ import kotlin.time.Duration
 import kotlin.time.toJavaDuration
 
 internal class KotlinDurationSerializer : StdSerializer<Duration>(
-  Duration::class.java
+  Duration::class.java,
 ) {
   override fun serialize(
     value: Duration,
     gen: JsonGenerator,
-    provider: SerializerProvider
+    provider: SerializerProvider,
   ) {
-    val javaPeriod = value.toJavaDuration()
-    provider.defaultSerializeValue(javaPeriod, gen)
+    val javaDuration = value.toJavaDuration()
+    provider.defaultSerializeValue(javaDuration, gen)
   }
 }

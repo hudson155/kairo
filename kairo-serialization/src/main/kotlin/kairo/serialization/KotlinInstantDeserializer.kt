@@ -7,7 +7,7 @@ import kotlin.time.Instant
 import kotlin.time.toKotlinInstant
 
 internal class KotlinInstantDeserializer : StdDeserializer<Instant>(
-  Instant::class.java
+  Instant::class.java,
 ) {
   override fun deserialize(
     p: JsonParser,

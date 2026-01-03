@@ -48,7 +48,7 @@ internal class KotlinDurationSerializationTest {
         .shouldBe("\"PT7H\"")
       json.serialize(8.days)
         .shouldBe("\"PT192H\"")
-      json.serialize((1234567890987654321L).nanoseconds)
+      json.serialize(1234567890987654321L.nanoseconds)
         .shouldBe("\"PT342935H31M30.987654321S\"")
     }
 
@@ -84,7 +84,7 @@ internal class KotlinDurationSerializationTest {
       json.deserialize<Duration>("\"PT192H\"")
         .shouldBe(8.days)
       json.deserialize<Duration>("\"PT342935H31M30.987654321S\"")
-        .shouldBe((1234567890987654321L).nanoseconds)
+        .shouldBe(1234567890987654321L.nanoseconds)
     }
 
   @Test
@@ -95,7 +95,7 @@ internal class KotlinDurationSerializationTest {
       json.deserialize<Duration>("0")
         .shouldBe(Duration.ZERO)
       json.deserialize<Duration>("1234567890")
-        .shouldBe((1234567890000000000L).nanoseconds)
+        .shouldBe(1234567890000000000L.nanoseconds)
     }
 
   @Test
@@ -106,7 +106,7 @@ internal class KotlinDurationSerializationTest {
       json.deserialize<Duration>("0.0")
         .shouldBe(Duration.ZERO)
       json.deserialize<Duration>("1234567890.987654321")
-        .shouldBe((1234567890987654321).nanoseconds)
+        .shouldBe(1234567890987654321.nanoseconds)
     }
 
   @Test

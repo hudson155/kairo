@@ -7,12 +7,12 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.toJavaLocalDate
 
 internal class KotlinLocalDateSerializer : StdSerializer<LocalDate>(
-  LocalDate::class.java
+  LocalDate::class.java,
 ) {
   override fun serialize(
     value: LocalDate,
     gen: JsonGenerator,
-    provider: SerializerProvider
+    provider: SerializerProvider,
   ) {
     val javaLocalDate = value.toJavaLocalDate()
     provider.defaultSerializeValue(javaLocalDate, gen)

@@ -7,7 +7,7 @@ import kotlinx.datetime.FixedOffsetTimeZone
 import kotlinx.datetime.toKotlinFixedOffsetTimeZone
 
 internal class KotlinFixedOffsetTimeZoneDeserializer : StdDeserializer<FixedOffsetTimeZone>(
-  FixedOffsetTimeZone::class.java
+  FixedOffsetTimeZone::class.java,
 ) {
   override fun deserialize(
     p: JsonParser,

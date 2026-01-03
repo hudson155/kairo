@@ -7,7 +7,7 @@ import kotlinx.datetime.LocalTime
 import kotlinx.datetime.toKotlinLocalTime
 
 internal class KotlinLocalTimeDeserializer : StdDeserializer<LocalTime>(
-  LocalTime::class.java
+  LocalTime::class.java,
 ) {
   override fun deserialize(
     p: JsonParser,

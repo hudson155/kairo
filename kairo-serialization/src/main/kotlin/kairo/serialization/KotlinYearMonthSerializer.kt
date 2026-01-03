@@ -7,12 +7,12 @@ import kotlinx.datetime.YearMonth
 import kotlinx.datetime.toJavaYearMonth
 
 internal class KotlinYearMonthSerializer : StdSerializer<YearMonth>(
-  YearMonth::class.java
+  YearMonth::class.java,
 ) {
   override fun serialize(
     value: YearMonth,
     gen: JsonGenerator,
-    provider: SerializerProvider
+    provider: SerializerProvider,
   ) {
     val javaYearMonth = value.toJavaYearMonth()
     provider.defaultSerializeValue(javaYearMonth, gen)

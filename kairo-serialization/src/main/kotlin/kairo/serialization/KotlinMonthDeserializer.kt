@@ -7,7 +7,7 @@ import kotlinx.datetime.Month
 import kotlinx.datetime.toKotlinMonth
 
 internal class KotlinMonthDeserializer : StdDeserializer<Month>(
-  Month::class.java
+  Month::class.java,
 ) {
   override fun deserialize(
     p: JsonParser,
