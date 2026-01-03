@@ -281,6 +281,8 @@ public fun JsonMapper.Builder.kairo() {
     },
   )
 
+  addModule(KairoKotlinModule())
+
   addModule(
     JavaTimeModule().apply {
       disable(JavaTimeFeature.NORMALIZE_DESERIALIZED_ZONE_ID)

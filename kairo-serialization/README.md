@@ -150,7 +150,8 @@ and has exploratory testing for them which ensures release-to-release stability.
 
 - `Boolean`
 - Enums
-- `Unit`
+- Kotlin `Unit`
+- `UUID` (Java) and `Uuid` (Kotlin)
 
 ### Advanced usage
 
