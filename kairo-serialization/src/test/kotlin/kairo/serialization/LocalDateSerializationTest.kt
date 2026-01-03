@@ -52,6 +52,14 @@ internal class LocalDateSerializationTest {
     }
 
   @Test
+  fun `deserialize, wrong format (missing dashes)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<LocalDate>("\"20231114\"")
+      }
+    }
+
+  @Test
   fun `deserialize, null`(): Unit =
     runTest {
       shouldThrowAny {

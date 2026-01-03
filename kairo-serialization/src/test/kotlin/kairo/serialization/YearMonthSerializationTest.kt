@@ -40,6 +40,14 @@ internal class YearMonthSerializationTest {
     }
 
   @Test
+  fun `deserialize, wrong format (missing dash)`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<YearMonth>("\"202311\"")
+      }
+    }
+
+  @Test
   fun `deserialize, null`(): Unit =
     runTest {
       shouldThrowAny {

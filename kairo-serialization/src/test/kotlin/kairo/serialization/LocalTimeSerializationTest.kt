@@ -85,7 +85,11 @@ internal class LocalTimeSerializationTest {
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowAny {
-        json.deserialize<LocalTime>("221360123456789")
+        json.deserialize<LocalTime>("221320")
+      }
+
+      shouldThrowAny {
+        json.deserialize<LocalTime>("221320123456789")
       }
     }
 

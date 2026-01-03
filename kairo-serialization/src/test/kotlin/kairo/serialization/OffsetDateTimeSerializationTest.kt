@@ -65,7 +65,9 @@ internal class OffsetDateTimeSerializationTest {
       )
 
       shouldThrowAny {
-        json.deserialize<OffsetDateTime>("1700000000123456789")
+        json.deserialize<OffsetDateTime>(
+          "1700000000123456789"
+        )
       }
     }
 
@@ -80,7 +82,9 @@ internal class OffsetDateTimeSerializationTest {
       )
 
       shouldThrowAny {
-        json.deserialize<OffsetDateTime>("1700000000123456789.0")
+        json.deserialize<OffsetDateTime>(
+          "1700000000123456789.0"
+        )
       }
 
       json.deserialize<OffsetDateTime>(
