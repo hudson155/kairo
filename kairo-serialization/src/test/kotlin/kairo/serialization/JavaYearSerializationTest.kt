@@ -7,7 +7,7 @@ import java.time.Year
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-internal class YearSerializationTest {
+internal class JavaYearSerializationTest {
   private val json: KairoJson = KairoJson()
 
   @Test

@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 @Suppress("UnderscoresInNumericLiterals")
-internal class DurationSerializationTest {
+internal class JavaDurationSerializationTest {
   private val json: KairoJson = KairoJson()
 
   @Test

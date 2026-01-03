@@ -7,7 +7,7 @@ import java.time.ZoneOffset
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-internal class ZoneOffsetSerializationTest {
+internal class JavaZoneOffsetSerializationTest {
   private val json: KairoJson = KairoJson()
 
   @Test

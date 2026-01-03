@@ -290,6 +290,8 @@ public fun JsonMapper.Builder.kairo() {
     },
   )
 
+  addModule(KotlinDatetimeModule())
+
   defaultLeniency(false)
 
   defaultDateFormat(StdDateFormat().withLenient(false))

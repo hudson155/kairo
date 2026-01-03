@@ -3,31 +3,32 @@ package kairo.serialization
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.Month
-import java.time.ZoneOffset
+import kotlin.time.Instant
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.Month
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 import org.junit.jupiter.api.Test
 
 @Suppress("UnderscoresInNumericLiterals")
-internal class InstantSerializationTest {
+internal class KotlinInstantSerializationTest {
   private val json: KairoJson = KairoJson()
 
   @Test
   fun serialize(): Unit =
     runTest {
       json.serialize(
-        LocalDateTime.of(-2023, Month.JANUARY, 1, 0, 0, 0, 0)
-          .toInstant(ZoneOffset.UTC),
+        LocalDateTime(-2023, Month.JANUARY, 1, 0, 0, 0, 0)
+          .toInstant(TimeZone.UTC),
       ).shouldBe("\"-2023-01-01T00:00:00Z\"")
       json.serialize(
-        LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
-          .toInstant(ZoneOffset.UTC),
+        LocalDateTime(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
+          .toInstant(TimeZone.UTC),
       ).shouldBe("\"2023-11-14T22:13:20.123456789Z\"")
       json.serialize(
-        LocalDateTime.of(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999)
-          .toInstant(ZoneOffset.UTC),
+        LocalDateTime(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999)
+          .toInstant(TimeZone.UTC),
       ).shouldBe("\"3716-12-30T23:59:59.999999999Z\"")
     }
 
@@ -36,18 +37,18 @@ internal class InstantSerializationTest {
     runTest {
       json.deserialize<Instant>("\"-2023-01-01T00:00:00Z\"")
         .shouldBe(
-          LocalDateTime.of(-2023, Month.JANUARY, 1, 0, 0, 0, 0)
-            .toInstant(ZoneOffset.UTC),
+          LocalDateTime(-2023, Month.JANUARY, 1, 0, 0, 0, 0)
+            .toInstant(TimeZone.UTC),
         )
       json.deserialize<Instant>("\"2023-11-14T22:13:20.123456789Z\"")
         .shouldBe(
-          LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
-            .toInstant(ZoneOffset.UTC),
+          LocalDateTime(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
+            .toInstant(TimeZone.UTC),
         )
       json.deserialize<Instant>("\"3716-12-30T23:59:59.999999999Z\"")
         .shouldBe(
-          LocalDateTime.of(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999)
-            .toInstant(ZoneOffset.UTC),
+          LocalDateTime(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999)
+            .toInstant(TimeZone.UTC),
         )
     }
 
@@ -56,8 +57,8 @@ internal class InstantSerializationTest {
     runTest {
       json.deserialize<Instant>("1700000000")
         .shouldBe(
-          LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 0)
-            .toInstant(ZoneOffset.UTC),
+          LocalDateTime(2023, Month.NOVEMBER, 14, 22, 13, 20, 0)
+            .toInstant(TimeZone.UTC),
         )
 
       shouldThrowAny {
@@ -70,8 +71,8 @@ internal class InstantSerializationTest {
     runTest {
       json.deserialize<Instant>("1700000000.0")
         .shouldBe(
-          LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 0)
-            .toInstant(ZoneOffset.UTC),
+          LocalDateTime(2023, Month.NOVEMBER, 14, 22, 13, 20, 0)
+            .toInstant(TimeZone.UTC),
         )
 
       shouldThrowAny {
@@ -80,8 +81,8 @@ internal class InstantSerializationTest {
 
       json.deserialize<Instant>("1700000000.123456789")
         .shouldBe(
-          LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
-            .toInstant(ZoneOffset.UTC),
+          LocalDateTime(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789)
+            .toInstant(TimeZone.UTC),
         )
     }
 

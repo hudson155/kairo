@@ -7,7 +7,7 @@ import java.time.Period
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-internal class PeriodSerializationTest {
+internal class JavaPeriodSerializationTest {
   private val json: KairoJson = KairoJson()
 
   @Test

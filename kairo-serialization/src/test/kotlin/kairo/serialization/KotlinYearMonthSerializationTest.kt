@@ -3,22 +3,22 @@ package kairo.serialization
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import java.time.Month
-import java.time.YearMonth
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Month
+import kotlinx.datetime.YearMonth
 import org.junit.jupiter.api.Test
 
-internal class YearMonthSerializationTest {
+internal class KotlinYearMonthSerializationTest {
   private val json: KairoJson = KairoJson()
 
   @Test
   fun serialize(): Unit =
     runTest {
-      json.serialize(YearMonth.of(-2023, Month.JANUARY))
+      json.serialize(YearMonth(-2023, Month.JANUARY))
         .shouldBe("\"-2023-01\"")
-      json.serialize(YearMonth.of(2023, Month.NOVEMBER))
+      json.serialize(YearMonth(2023, Month.NOVEMBER))
         .shouldBe("\"2023-11\"")
-      json.serialize(YearMonth.of(3716, Month.DECEMBER))
+      json.serialize(YearMonth(3716, Month.DECEMBER))
         .shouldBe("\"3716-12\"")
     }
 
@@ -26,11 +26,11 @@ internal class YearMonthSerializationTest {
   fun deserialize(): Unit =
     runTest {
       json.deserialize<YearMonth>("\"-2023-01\"")
-        .shouldBe(YearMonth.of(-2023, Month.JANUARY))
+        .shouldBe(YearMonth(-2023, Month.JANUARY))
       json.deserialize<YearMonth>("\"2023-11\"")
-        .shouldBe(YearMonth.of(2023, Month.NOVEMBER))
+        .shouldBe(YearMonth(2023, Month.NOVEMBER))
       json.deserialize<YearMonth>("\"3716-12\"")
-        .shouldBe(YearMonth.of(3716, Month.DECEMBER))
+        .shouldBe(YearMonth(3716, Month.DECEMBER))
     }
 
   @Test

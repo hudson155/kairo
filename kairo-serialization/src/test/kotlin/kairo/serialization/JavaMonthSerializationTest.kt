@@ -7,7 +7,7 @@ import java.time.Month
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-internal class MonthSerializationTest {
+internal class JavaMonthSerializationTest {
   private val json: KairoJson = KairoJson()
 
   @Test

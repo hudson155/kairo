@@ -3,23 +3,23 @@ package kairo.serialization
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import java.time.LocalDateTime
-import java.time.Month
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.Month
 import org.junit.jupiter.api.Test
 
 @Suppress("UnderscoresInNumericLiterals")
-internal class LocalDateTimeSerializationTest {
+internal class KotlinLocalDateTimeSerializationTest {
   private val json: KairoJson = KairoJson()
 
   @Test
   fun serialize(): Unit =
     runTest {
-      json.serialize(LocalDateTime.of(-2023, Month.JANUARY, 1, 0, 0, 0, 0))
+      json.serialize(LocalDateTime(-2023, Month.JANUARY, 1, 0, 0, 0, 0))
         .shouldBe("\"-2023-01-01T00:00:00\"")
-      json.serialize(LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789))
+      json.serialize(LocalDateTime(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789))
         .shouldBe("\"2023-11-14T22:13:20.123456789\"")
-      json.serialize(LocalDateTime.of(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999))
+      json.serialize(LocalDateTime(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999))
         .shouldBe("\"3716-12-30T23:59:59.999999999\"")
     }
 
@@ -27,11 +27,11 @@ internal class LocalDateTimeSerializationTest {
   fun deserialize(): Unit =
     runTest {
       json.deserialize<LocalDateTime>("\"-2023-01-01T00:00:00\"")
-        .shouldBe(LocalDateTime.of(-2023, Month.JANUARY, 1, 0, 0, 0, 0))
+        .shouldBe(LocalDateTime(-2023, Month.JANUARY, 1, 0, 0, 0, 0))
       json.deserialize<LocalDateTime>("\"2023-11-14T22:13:20.123456789\"")
-        .shouldBe(LocalDateTime.of(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789))
+        .shouldBe(LocalDateTime(2023, Month.NOVEMBER, 14, 22, 13, 20, 123456789))
       json.deserialize<LocalDateTime>("\"3716-12-30T23:59:59.999999999\"")
-        .shouldBe(LocalDateTime.of(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999))
+        .shouldBe(LocalDateTime(3716, Month.DECEMBER, 30, 23, 59, 59, 999999999))
     }
 
   @Test
