@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-datetime"))
   implementation(project(":kairo-reflect"))
 
   api(libs.jackson) // Available for usage.

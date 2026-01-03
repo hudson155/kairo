@@ -3,11 +3,11 @@ package kairo.serialization
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import java.time.DayOfWeek
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.DayOfWeek
 import org.junit.jupiter.api.Test
 
-internal class DayOfWeekSerializationTest {
+internal class KotlinDayOfWeekSerializationTest {
   private val json: KairoJson = KairoJson()
 
   @Test

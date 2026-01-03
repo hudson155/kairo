@@ -10,7 +10,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 @Suppress("UnderscoresInNumericLiterals")
-internal class OffsetTimeSerializationTest {
+internal class JavaOffsetTimeSerializationTest {
   private val json: KairoJson = KairoJson()
 
   @Test

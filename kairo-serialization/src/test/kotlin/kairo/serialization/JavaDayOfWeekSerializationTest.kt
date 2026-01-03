@@ -3,42 +3,42 @@ package kairo.serialization
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import java.time.ZoneId
+import java.time.DayOfWeek
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-internal class ZoneIdSerializationTest {
+internal class JavaDayOfWeekSerializationTest {
   private val json: KairoJson = KairoJson()
 
   @Test
   fun serialize(): Unit =
     runTest {
-      json.serialize(ZoneId.of("Etc/GMT+12")).shouldBe("\"Etc/GMT+12\"")
-      json.serialize(ZoneId.of("UTC")).shouldBe("\"UTC\"")
-      json.serialize(ZoneId.of("Pacific/Kiritimati")).shouldBe("\"Pacific/Kiritimati\"")
+      json.serialize(DayOfWeek.MONDAY).shouldBe("\"MONDAY\"")
+      json.serialize(DayOfWeek.TUESDAY).shouldBe("\"TUESDAY\"")
+      json.serialize(DayOfWeek.SUNDAY).shouldBe("\"SUNDAY\"")
     }
 
   @Test
   fun deserialize(): Unit =
     runTest {
-      json.deserialize<ZoneId>("\"Etc/GMT+12\"").shouldBe(ZoneId.of("Etc/GMT+12"))
-      json.deserialize<ZoneId>("\"UTC\"").shouldBe(ZoneId.of("UTC"))
-      json.deserialize<ZoneId>("\"Pacific/Kiritimati\"").shouldBe(ZoneId.of("Pacific/Kiritimati"))
+      json.deserialize<DayOfWeek>("\"MONDAY\"").shouldBe(DayOfWeek.MONDAY)
+      json.deserialize<DayOfWeek>("\"TUESDAY\"").shouldBe(DayOfWeek.TUESDAY)
+      json.deserialize<DayOfWeek>("\"SUNDAY\"").shouldBe(DayOfWeek.SUNDAY)
     }
 
   @Test
   fun `deserialize, wrong format (lowercase)`(): Unit =
     runTest {
       shouldThrowAny {
-        json.deserialize<ZoneId>("\"pacific/kiritimati\"")
+        json.deserialize<DayOfWeek>("\"tuesday\"")
       }
     }
 
   @Test
-  fun `deserialize, unknown`(): Unit =
+  fun `deserialize, wrong format (short)`(): Unit =
     runTest {
       shouldThrowAny {
-        json.deserialize<ZoneId>("\"Pacific/Edmonton\"")
+        json.deserialize<DayOfWeek>("\"tue\"")
       }
     }
 
@@ -46,17 +46,17 @@ internal class ZoneIdSerializationTest {
   fun `deserialize, null`(): Unit =
     runTest {
       shouldThrowAny {
-        json.deserialize<ZoneId>("null")
+        json.deserialize<DayOfWeek>("null")
       }
 
-      json.deserialize<ZoneId?>("null").shouldBeNull()
+      json.deserialize<DayOfWeek?>("null").shouldBeNull()
     }
 
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
       shouldThrowAny {
-        json.deserialize<ZoneId>("true")
+        json.deserialize<DayOfWeek>("true")
       }
     }
 
@@ -64,7 +64,7 @@ internal class ZoneIdSerializationTest {
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowAny {
-        json.deserialize<ZoneId>("0")
+        json.deserialize<DayOfWeek>("2")
       }
     }
 
@@ -72,7 +72,7 @@ internal class ZoneIdSerializationTest {
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
       shouldThrowAny {
-        json.deserialize<ZoneId>("""{}""")
+        json.deserialize<DayOfWeek>("""{}""")
       }
     }
 
@@ -80,7 +80,7 @@ internal class ZoneIdSerializationTest {
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
       shouldThrowAny {
-        json.deserialize<ZoneId>("""[]""")
+        json.deserialize<DayOfWeek>("""[]""")
       }
     }
 }

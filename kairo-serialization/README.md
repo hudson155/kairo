@@ -129,22 +129,22 @@ and has exploratory testing for them which ensures release-to-release stability.
 
 #### Time-related
 
-- `DayOfWeek`
-- `Duration`
-- `Instant`
-- `LocalDateTime`
-- `LocalDate`
-- `LocalTime`
-- `MonthDay`
-- `Month`
-- `OffsetDateTime`
-- `OffsetTime`
-- `Period`
-- `YearMonth`
-- `Year`
-- `ZonedDateTime`
-- `ZoneId`
-- `ZoneOffset`
+- `DayOfWeek` (Java and Kotlin)
+- `Duration` (Java and Kotlin)
+- `Instant` (Java and Kotlin)
+- `LocalDateTime` (Java and Kotlin)
+- `LocalDate` (Java and Kotlin)
+- `LocalTime` (Java and Kotlin)
+- `MonthDay` (Java-only)
+- `Month` (Java and Kotlin)
+- `OffsetDateTime` (Java-only)
+- `OffsetTime` (Java-only)
+- `Period` (Java) and `DatePeriod` (Kotlin)
+- `YearMonth` (Java and Kotlin)
+- `Year` (Java-only)
+- `ZonedDateTime` (Java-only)
+- `ZoneId` (Java) and `TimeZone` (Kotlin)
+- `ZoneOffset` (Java) and `FixedOffsetTimeZone` (Kotlin)
 
 #### Other
 
