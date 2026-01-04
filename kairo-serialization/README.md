@@ -165,6 +165,8 @@ and has exploratory testing for them which ensures release-to-release stability.
 
 - `Boolean`
 - Enums
+- Kotlin data classes and data objects,
+  when their properties are other well-known types.
 - Kotlin `Unit`
 - `UUID` (Java) and `Uuid` (Kotlin)
 
