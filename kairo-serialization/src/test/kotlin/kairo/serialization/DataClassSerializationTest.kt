@@ -6,6 +6,9 @@ import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
+/**
+ * This test does NOT attempt to comprehensively include other well-known types in [DataClass].
+ */
 internal class DataClassSerializationTest {
   private val json: KairoJson = KairoJson {
     pretty = true
