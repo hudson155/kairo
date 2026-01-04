@@ -7,7 +7,6 @@ import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-@Suppress("UnderscoresInNumericLiterals")
 internal class DataClassSerializationTest {
   private val json: KairoJson = KairoJson {
     configure(SerializationFeature.INDENT_OUTPUT, true)
