@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import kairo.serialization.DataClassSerializationTest.DataClass
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 

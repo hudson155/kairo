@@ -167,6 +167,8 @@ and has exploratory testing for them which ensures release-to-release stability.
 - Enums
 - Kotlin data classes and data objects,
   when their properties are other well-known types.
+- Polymorphic Kotlin sealed classes,
+  as described above.
 - Kotlin `Unit`
 - `UUID` (Java) and `Uuid` (Kotlin)
 
