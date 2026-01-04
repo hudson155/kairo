@@ -1,6 +1,5 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.SerializationFeature
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
@@ -9,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 internal class DataObjectSerializationTest {
   private val json: KairoJson = KairoJson {
-    configure(SerializationFeature.INDENT_OUTPUT, true)
+    pretty = true
   }
 
   internal data object DataObject
