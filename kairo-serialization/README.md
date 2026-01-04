@@ -104,6 +104,19 @@ json.deserialize<List<Animal>>(
 // => [Animal.Dog(name=Rex, barksPerMinute=30), Animal.Cat(name=Whiskers, napsPerDay=12)]
 ```
 
+### Configuration
+
+When creating your `KairoJson` instance,
+you can configure Jackson in the constructor.
+
+```kotlin
+val json: KairoJson = KairoJson {
+  allowUnknown = true
+  pretty = true
+  // Configure Jackson here...
+}
+```
+
 ### Well-known types
 
 The following types are considered "well-known",
