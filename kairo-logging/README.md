@@ -47,7 +47,7 @@ This is great for simple projects.
 
 dependencies {
   implementation("software.airborne.kairo:kairo-logging")
-  testRuntimeOnly("org.slf4j:slf4j-simple")
+  runtimeOnly("org.slf4j:slf4j-simple")
 }
 ```
 
@@ -61,8 +61,8 @@ Or you could use Logback.
 
 dependencies {
   implementation("software.airborne.kairo:kairo-logging")
-  testRuntimeOnly("org.apache.logging.log4j:log4j-core")
-  testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")
+  runtimeOnly("org.apache.logging.log4j:log4j-core")
+  runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")
 }
 ```
 
