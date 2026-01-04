@@ -7,6 +7,9 @@ import com.fasterxml.jackson.core.StreamWriteFeature
 import com.fasterxml.jackson.core.json.JsonReadFeature
 import com.fasterxml.jackson.core.json.JsonWriteFeature
 import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.core.util.DefaultIndenter
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
+import com.fasterxml.jackson.core.util.Separators
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException
@@ -294,7 +297,28 @@ public fun JsonMapper.Builder.kairo() {
 
   addModule(KotlinDatetimeModule())
 
+  defaultPrettyPrinter(
+    DefaultPrettyPrinter()
+      .withArrayIndenter(DefaultIndenter.SYSTEM_LINEFEED_INSTANCE)
+      .withSeparators(
+        Separators.createDefaultInstance()
+          .withObjectFieldValueSpacing(Separators.Spacing.AFTER),
+      ),
+  )
+
   defaultLeniency(false)
 
   defaultDateFormat(StdDateFormat().withLenient(false))
 }
+
+public var JsonMapper.Builder.allowUnknown: Boolean
+  get() = !isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+  set(value) {
+    configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, !value)
+  }
+
+public var JsonMapper.Builder.pretty: Boolean
+  get() = isEnabled(SerializationFeature.INDENT_OUTPUT)
+  set(value) {
+    configure(SerializationFeature.INDENT_OUTPUT, value)
+  }
