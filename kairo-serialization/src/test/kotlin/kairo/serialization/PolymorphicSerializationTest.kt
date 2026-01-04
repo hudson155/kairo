@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import kairo.serialization.DataClassSerializationTest.DataClass
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -134,6 +135,69 @@ internal class PolymorphicSerializationTest {
             ]
           """.trimIndent(),
         )
+    }
+
+  @Test
+  fun `deserialize, missing discriminator`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<Animal>(
+          """
+            {
+              "name": "Rex",
+              "barksPerMinute": 30
+            }
+          """.trimIndent(),
+        )
+      }
+    }
+
+  @Test
+  fun `deserialize, unknown discriminator`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<Animal>(
+          """
+            {
+              "type": "Fish",
+              "name": "Rex",
+              "barksPerMinute": 30
+            }
+          """.trimIndent(),
+        )
+      }
+    }
+
+  @Test
+  fun `deserialize, missing property`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<Animal>(
+          """
+            {
+              "type": "Dog",
+              "name": "Rex"
+            }
+          """.trimIndent(),
+        )
+      }
+    }
+
+  @Test
+  fun `deserialize, unknown property`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<Animal>(
+          """
+            {
+              "type": "Dog",
+              "name": "Rex",
+              "barksPerMinute": 30,
+              "other": "unknown"
+            }
+          """.trimIndent(),
+        )
+      }
     }
 
   @Test
