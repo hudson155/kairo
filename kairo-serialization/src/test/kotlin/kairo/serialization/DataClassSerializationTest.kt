@@ -31,57 +31,11 @@ internal class DataClassSerializationTest {
           boolean = true,
           ints = listOf(1, 2, 3),
           nested = DataClass.Nested("Hello, World!"),
-        )
+        ),
       ).shouldBe(
         """
-        {
-          "boolean": true,
-          "ints": [
-            1,
-            2,
-            3
-          ],
-          "nested": {
-            "string": "Hello, World!"
-          }
-        }
-        """.trimIndent()
-      )
-    }
-
-  @Test
-  fun deserialize(): Unit =
-    runTest {
-      json.deserialize<DataClass>(
-        """
-        {
-          "boolean": true,
-          "ints": [
-            1,
-            2,
-            3
-          ],
-          "nested": {
-            "string": "Hello, World!"
-          }
-        }
-        """.trimIndent()
-      ).shouldBe(
-        DataClass(
-          boolean = true,
-          ints = listOf(1, 2, 3),
-          nested = DataClass.Nested("Hello, World!"),
-        )
-      )
-    }
-
-  @Test
-  fun `deserialize, missing property`(): Unit =
-    runTest {
-      shouldThrowAny {
-        json.deserialize<DataClass>(
-          """
           {
+            "boolean": true,
             "ints": [
               1,
               2,
@@ -91,7 +45,53 @@ internal class DataClassSerializationTest {
               "string": "Hello, World!"
             }
           }
-          """.trimIndent()
+        """.trimIndent(),
+      )
+    }
+
+  @Test
+  fun deserialize(): Unit =
+    runTest {
+      json.deserialize<DataClass>(
+        """
+          {
+            "boolean": true,
+            "ints": [
+              1,
+              2,
+              3
+            ],
+            "nested": {
+              "string": "Hello, World!"
+            }
+          }
+        """.trimIndent(),
+      ).shouldBe(
+        DataClass(
+          boolean = true,
+          ints = listOf(1, 2, 3),
+          nested = DataClass.Nested("Hello, World!"),
+        ),
+      )
+    }
+
+  @Test
+  fun `deserialize, missing property`(): Unit =
+    runTest {
+      shouldThrowAny {
+        json.deserialize<DataClass>(
+          """
+            {
+              "ints": [
+                1,
+                2,
+                3
+              ],
+              "nested": {
+                "string": "Hello, World!"
+              }
+            }
+          """.trimIndent(),
         )
       }
     }
@@ -102,19 +102,19 @@ internal class DataClassSerializationTest {
       shouldThrowAny {
         json.deserialize<DataClass>(
           """
-          {
-            "boolean": true,
-            "ints": [
-              1,
-              2,
-              3
-            ],
-            "nested": {
-              "string": "Hello, World!"
-            },
-            "other": "unknown"
-          }
-          """.trimIndent()
+            {
+              "boolean": true,
+              "ints": [
+                1,
+                2,
+                3
+              ],
+              "nested": {
+                "string": "Hello, World!"
+              },
+              "other": "unknown"
+            }
+          """.trimIndent(),
         )
       }
     }
