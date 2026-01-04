@@ -112,8 +112,10 @@ you can configure Jackson in the constructor.
 ```kotlin
 val json: KairoJson = KairoJson {
   allowUnknown = true
+  // Alias for configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+
   pretty = true
-  // Configure Jackson here...
+  // Alias for configure(SerializationFeature.INDENT_OUTPUT, true)
 }
 ```
 
