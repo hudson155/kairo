@@ -104,6 +104,65 @@ json.deserialize<List<Animal>>(
 // => [Animal.Dog(name=Rex, barksPerMinute=30), Animal.Cat(name=Whiskers, napsPerDay=12)]
 ```
 
+### Well-known types
+
+The following types are considered "well-known",
+meaning that Kairo is known to support them well,
+and has exploratory testing for them which ensures release-to-release stability.
+
+#### Numeric types
+
+- `BigDecimal`
+- `BigInteger`
+- `Byte` and `UByte`
+- `Double`
+- `Float`
+- `Int` and `UInt`
+- `Long` and `ULong`
+- `Short` and `UShort`
+
+#### String and string-like
+
+- `CharArray`
+- `Char`
+- `String`
+
+#### Time-related
+
+- `DayOfWeek` (Java and Kotlin)
+- `Duration` (Java and Kotlin)
+- `Instant` (Java and Kotlin)
+- `LocalDateTime` (Java and Kotlin)
+- `LocalDate` (Java and Kotlin)
+- `LocalTime` (Java and Kotlin)
+- `MonthDay` (Java-only)
+- `Month` (Java and Kotlin)
+- `OffsetDateTime` (Java-only)
+- `OffsetTime` (Java-only)
+- `Period` (Java) and `DatePeriod` (Kotlin)
+- `YearMonth` (Java and Kotlin)
+- `Year` (Java-only)
+- `ZonedDateTime` (Java-only)
+- `ZoneId` (Java) and `TimeZone` (Kotlin)
+- `ZoneOffset` (Java) and `FixedOffsetTimeZone` (Kotlin)
+
+#### Collections
+
+- `List<E>`
+- `Set<E>`
+- `Map<K, V>`
+
+#### Other
+
+- `Boolean`
+- Enums
+- Kotlin data classes and data objects,
+  when their properties are other well-known types.
+- Polymorphic Kotlin sealed classes,
+  as described above.
+- Kotlin `Unit`
+- `UUID` (Java) and `Uuid` (Kotlin)
+
 ### Configuration
 
 When creating your `KairoJson` instance,
@@ -169,65 +228,6 @@ data class MyClass(
   val value: BigInteger,
 )
 ```
-
-### Well-known types
-
-The following types are considered "well-known",
-meaning that Kairo is known to support them well,
-and has exploratory testing for them which ensures release-to-release stability.
-
-#### Numeric types
-
-- `BigDecimal`
-- `BigInteger`
-- `Byte` and `UByte`
-- `Double`
-- `Float`
-- `Int` and `UInt`
-- `Long` and `ULong`
-- `Short` and `UShort`
-
-#### String and string-like
-
-- `CharArray`
-- `Char`
-- `String`
-
-#### Time-related
-
-- `DayOfWeek` (Java and Kotlin)
-- `Duration` (Java and Kotlin)
-- `Instant` (Java and Kotlin)
-- `LocalDateTime` (Java and Kotlin)
-- `LocalDate` (Java and Kotlin)
-- `LocalTime` (Java and Kotlin)
-- `MonthDay` (Java-only)
-- `Month` (Java and Kotlin)
-- `OffsetDateTime` (Java-only)
-- `OffsetTime` (Java-only)
-- `Period` (Java) and `DatePeriod` (Kotlin)
-- `YearMonth` (Java and Kotlin)
-- `Year` (Java-only)
-- `ZonedDateTime` (Java-only)
-- `ZoneId` (Java) and `TimeZone` (Kotlin)
-- `ZoneOffset` (Java) and `FixedOffsetTimeZone` (Kotlin)
-
-#### Collections
-
-- `List<E>`
-- `Set<E>`
-- `Map<K, V>`
-
-#### Other
-
-- `Boolean`
-- Enums
-- Kotlin data classes and data objects,
-  when their properties are other well-known types.
-- Polymorphic Kotlin sealed classes,
-  as described above.
-- Kotlin `Unit`
-- `UUID` (Java) and `Uuid` (Kotlin)
 
 ### Advanced usage
 
