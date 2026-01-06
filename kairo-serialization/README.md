@@ -163,6 +163,11 @@ and has exploratory testing for them which ensures release-to-release stability.
 - Kotlin `Unit`
 - `UUID` (Java) and `Uuid` (Kotlin)
 
+#### Ktor types
+
+- `HttpMethod`
+- `HttpStatusCode`
+
 ### Configuration
 
 When creating your `KairoJson` instance,
