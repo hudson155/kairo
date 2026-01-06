@@ -1,6 +1,14 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+
+import java.time.DateTimeException
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import java.time.LocalDateTime
@@ -60,7 +68,7 @@ internal class JavaZonedDateTimeSerializationTest {
             .atZone(ZoneId.of("UTC")),
         )
 
-      shouldThrowAny {
+      shouldThrowExactly<DateTimeException> {
         json.deserialize<ZonedDateTime>("1700000000123456789")
       }
     }
@@ -74,7 +82,7 @@ internal class JavaZonedDateTimeSerializationTest {
             .atZone(ZoneId.of("UTC")),
         )
 
-      shouldThrowAny {
+      shouldThrowExactly<DateTimeException> {
         json.deserialize<ZonedDateTime>("1700000000123456789.0")
       }
 
@@ -88,11 +96,11 @@ internal class JavaZonedDateTimeSerializationTest {
   @Test
   fun `deserialize, month out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZonedDateTime>("\"2023-00-14T22:13:20.123456789Z[UTC]\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZonedDateTime>("\"2023-13-14T22:13:20.123456789Z[UTC]\"")
       }
     }
@@ -100,11 +108,11 @@ internal class JavaZonedDateTimeSerializationTest {
   @Test
   fun `deserialize, day out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZonedDateTime>("\"2023-11-00T22:13:20.123456789Z[UTC]\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZonedDateTime>("\"2023-11-31T22:13:20.123456789Z[UTC]\"")
       }
     }
@@ -112,11 +120,11 @@ internal class JavaZonedDateTimeSerializationTest {
   @Test
   fun `deserialize, hour out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZonedDateTime>("\"2023-11-14T-01:13:20.123456789Z[UTC]\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZonedDateTime>("\"2023-11-14T24:13:20.123456789Z[UTC]\"")
       }
     }
@@ -124,11 +132,11 @@ internal class JavaZonedDateTimeSerializationTest {
   @Test
   fun `deserialize, minute out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZonedDateTime>("\"2023-11-14T22:-01:20.123456789Z[UTC]\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZonedDateTime>("\"2023-11-14T22:60:20.123456789Z[UTC]\"")
       }
     }
@@ -136,11 +144,11 @@ internal class JavaZonedDateTimeSerializationTest {
   @Test
   fun `deserialize, second out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZonedDateTime>("\"2023-11-14T22:13:-01.123456789Z[UTC]\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZonedDateTime>("\"2023-11-14T22:13:60.123456789Z[UTC]\"")
       }
     }
@@ -148,7 +156,7 @@ internal class JavaZonedDateTimeSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<ZonedDateTime>("null")
       }
 
@@ -158,7 +166,7 @@ internal class JavaZonedDateTimeSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZonedDateTime>("true")
       }
     }
@@ -166,7 +174,7 @@ internal class JavaZonedDateTimeSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZonedDateTime>("""{}""")
       }
     }
@@ -174,7 +182,7 @@ internal class JavaZonedDateTimeSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZonedDateTime>("""[]""")
       }
     }

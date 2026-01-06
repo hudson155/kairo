@@ -1,6 +1,12 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import java.time.Period
@@ -45,7 +51,7 @@ internal class JavaPeriodSerializationTest {
   @Test
   fun `deserialize, wrong format (missing p)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Period>("\"0D\"")
       }
     }
@@ -53,7 +59,7 @@ internal class JavaPeriodSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Period>("\"P 0D\"")
       }
     }
@@ -61,7 +67,7 @@ internal class JavaPeriodSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Period>("null")
       }
 
@@ -71,7 +77,7 @@ internal class JavaPeriodSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Period>("true")
       }
     }
@@ -79,7 +85,7 @@ internal class JavaPeriodSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Period>("0")
       }
     }
@@ -87,7 +93,7 @@ internal class JavaPeriodSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Period>("""{}""")
       }
     }
@@ -95,7 +101,7 @@ internal class JavaPeriodSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Period>("""[]""")
       }
     }

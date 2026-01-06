@@ -1,6 +1,12 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
@@ -29,7 +35,7 @@ internal class KotlinMonthSerializationTest {
   @Test
   fun `deserialize, wrong format (lowercase)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Month>("\"november\"")
       }
     }
@@ -37,7 +43,7 @@ internal class KotlinMonthSerializationTest {
   @Test
   fun `deserialize, wrong format (short)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Month>("\"NOV\"")
       }
     }
@@ -45,7 +51,7 @@ internal class KotlinMonthSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Month>("null")
       }
 
@@ -55,7 +61,7 @@ internal class KotlinMonthSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Month>("true")
       }
     }
@@ -63,7 +69,7 @@ internal class KotlinMonthSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Month>("11")
       }
     }
@@ -71,7 +77,7 @@ internal class KotlinMonthSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Month>("""{}""")
       }
     }
@@ -79,7 +85,7 @@ internal class KotlinMonthSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Month>("""[]""")
       }
     }

@@ -1,6 +1,8 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
@@ -35,7 +37,7 @@ internal class CharArraySerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<CharArray>("null")
       }
 
@@ -45,7 +47,7 @@ internal class CharArraySerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<CharArray>("true")
       }
     }
@@ -53,7 +55,7 @@ internal class CharArraySerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<CharArray>("0")
       }
     }
@@ -61,7 +63,7 @@ internal class CharArraySerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<CharArray>("""{}""")
       }
     }

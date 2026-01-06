@@ -1,6 +1,14 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.core.JsonParseException
+
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldBeNull
@@ -28,11 +36,11 @@ internal class BooleanSerializationTest {
   @Test
   fun `deserialize, wrong format (all caps)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<Boolean>("TRUE")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<Boolean>("FALSE")
       }
     }
@@ -40,11 +48,11 @@ internal class BooleanSerializationTest {
   @Test
   fun `deserialize, wrong format (leading capital)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<Boolean>("True")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<Boolean>("False")
       }
     }
@@ -52,7 +60,7 @@ internal class BooleanSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Boolean>("null")
       }
 
@@ -62,15 +70,15 @@ internal class BooleanSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Boolean>("-1")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Boolean>("0")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Boolean>("1")
       }
     }
@@ -78,11 +86,11 @@ internal class BooleanSerializationTest {
   @Test
   fun `deserialize, wrong type (string)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Boolean>("\"true\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Boolean>("\"false\"")
       }
     }
@@ -90,7 +98,7 @@ internal class BooleanSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Boolean>("""{}""")
       }
     }
@@ -98,7 +106,7 @@ internal class BooleanSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Boolean>("""[]""")
       }
     }

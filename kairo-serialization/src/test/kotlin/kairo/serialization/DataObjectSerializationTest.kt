@@ -1,6 +1,14 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
+
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
@@ -28,7 +36,7 @@ internal class DataObjectSerializationTest {
   @Test
   fun `deserialize, unknown property`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<UnrecognizedPropertyException> {
         json.deserialize<DataObject>("""{"other":"unknown"}""")
       }
     }
@@ -36,7 +44,7 @@ internal class DataObjectSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<DataObject>("null")
       }
 
@@ -46,7 +54,7 @@ internal class DataObjectSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataObject>("true")
       }
     }
@@ -54,7 +62,7 @@ internal class DataObjectSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataObject>("0")
       }
     }
@@ -62,7 +70,7 @@ internal class DataObjectSerializationTest {
   @Test
   fun `deserialize, wrong type (string)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DataObject>("\"\"")
       }
     }
@@ -70,7 +78,7 @@ internal class DataObjectSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataObject>("""[]""")
       }
     }

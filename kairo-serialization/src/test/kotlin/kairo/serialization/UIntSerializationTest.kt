@@ -1,6 +1,14 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+
+import com.fasterxml.jackson.core.JsonParseException
+
+import com.fasterxml.jackson.core.exc.InputCoercionException
+
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
@@ -27,11 +35,11 @@ internal class UIntSerializationTest {
   @Test
   fun `deserialize, out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InputCoercionException> {
         json.deserialize<UInt>("-1")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InputCoercionException> {
         json.deserialize<UInt>("4294967296")
       }
     }
@@ -39,7 +47,7 @@ internal class UIntSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<UInt>("2 147573858")
       }
     }
@@ -47,7 +55,7 @@ internal class UIntSerializationTest {
   @Test
   fun `deserialize, wrong format (leading 0)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("02147573858")
       }
     }
@@ -64,7 +72,7 @@ internal class UIntSerializationTest {
   @Test
   fun `deserialize, wrong format (hex)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("0x0")
       }
     }
@@ -72,7 +80,7 @@ internal class UIntSerializationTest {
   @Test
   fun `deserialize, wrong format (NaN)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("NaN")
       }
     }
@@ -80,11 +88,11 @@ internal class UIntSerializationTest {
   @Test
   fun `deserialize, wrong format (Infinity)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("Infinity")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("-Infinity")
       }
     }
@@ -92,7 +100,7 @@ internal class UIntSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<UInt>("null")
       }
 
@@ -102,7 +110,7 @@ internal class UIntSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("true")
       }
     }
@@ -119,7 +127,7 @@ internal class UIntSerializationTest {
   @Test
   fun `deserialize, wrong type (string)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("\"0\"")
       }
     }
@@ -127,7 +135,7 @@ internal class UIntSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("""{}""")
       }
     }
@@ -135,7 +143,7 @@ internal class UIntSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("""[]""")
       }
     }

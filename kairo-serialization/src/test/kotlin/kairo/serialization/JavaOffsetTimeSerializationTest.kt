@@ -1,6 +1,12 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import java.time.LocalTime
@@ -38,11 +44,11 @@ internal class JavaOffsetTimeSerializationTest {
   @Test
   fun `deserialize, hour out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetTime>("\"-01:13:20.123456789Z\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetTime>("\"24:13:20.123456789Z\"")
       }
     }
@@ -50,11 +56,11 @@ internal class JavaOffsetTimeSerializationTest {
   @Test
   fun `deserialize, minute out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetTime>("\"22:-01:20.123456789Z\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetTime>("\"22:60:20.123456789Z\"")
       }
     }
@@ -62,11 +68,11 @@ internal class JavaOffsetTimeSerializationTest {
   @Test
   fun `deserialize, second out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetTime>("\"22:13:-01.123456789Z\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetTime>("\"22:13:60.123456789Z\"")
       }
     }
@@ -74,7 +80,7 @@ internal class JavaOffsetTimeSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<OffsetTime>("null")
       }
 
@@ -84,7 +90,7 @@ internal class JavaOffsetTimeSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<OffsetTime>("true")
       }
     }
@@ -92,7 +98,7 @@ internal class JavaOffsetTimeSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<OffsetTime>("221360123456789")
       }
     }
@@ -100,7 +106,7 @@ internal class JavaOffsetTimeSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<OffsetTime>("""{}""")
       }
     }
@@ -108,7 +114,7 @@ internal class JavaOffsetTimeSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<OffsetTime>("""[]""")
       }
     }

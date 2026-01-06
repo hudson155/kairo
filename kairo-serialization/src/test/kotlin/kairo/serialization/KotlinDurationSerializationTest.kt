@@ -1,6 +1,12 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlin.time.Duration
@@ -112,7 +118,7 @@ internal class KotlinDurationSerializationTest {
   @Test
   fun `deserialize, wrong format (missing pt)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Duration>("\"0S\"")
       }
     }
@@ -120,7 +126,7 @@ internal class KotlinDurationSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Duration>("\"PT 0S\"")
       }
     }
@@ -128,7 +134,7 @@ internal class KotlinDurationSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Duration>("null")
       }
 
@@ -138,7 +144,7 @@ internal class KotlinDurationSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Duration>("true")
       }
     }
@@ -146,7 +152,7 @@ internal class KotlinDurationSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Duration>("""{}""")
       }
     }
@@ -154,7 +160,7 @@ internal class KotlinDurationSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Duration>("""[]""")
       }
     }

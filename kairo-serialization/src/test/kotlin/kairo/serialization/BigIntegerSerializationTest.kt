@@ -1,6 +1,14 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.core.JsonParseException
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import java.math.BigInteger
@@ -30,7 +38,7 @@ internal class BigIntegerSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigInteger>("1 234567890987654321")
       }
     }
@@ -38,7 +46,7 @@ internal class BigIntegerSerializationTest {
   @Test
   fun `deserialize, wrong format (leading 0)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<BigInteger>("01234567890987654321")
       }
     }
@@ -46,7 +54,7 @@ internal class BigIntegerSerializationTest {
   @Test
   fun `deserialize, wrong format (scientific notation)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<BigInteger>("1e0")
       }
     }
@@ -54,7 +62,7 @@ internal class BigIntegerSerializationTest {
   @Test
   fun `deserialize, wrong format (hex)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<BigInteger>("0x0")
       }
     }
@@ -62,7 +70,7 @@ internal class BigIntegerSerializationTest {
   @Test
   fun `deserialize, wrong format (NaN)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<BigInteger>("NaN")
       }
     }
@@ -70,11 +78,11 @@ internal class BigIntegerSerializationTest {
   @Test
   fun `deserialize, wrong format (Infinity)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<BigInteger>("Infinity")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<BigInteger>("-Infinity")
       }
     }
@@ -82,7 +90,7 @@ internal class BigIntegerSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<BigInteger>("null")
       }
 
@@ -92,7 +100,7 @@ internal class BigIntegerSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigInteger>("true")
       }
     }
@@ -100,7 +108,7 @@ internal class BigIntegerSerializationTest {
   @Test
   fun `deserialize, wrong type (float)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<BigInteger>("0.0")
       }
     }
@@ -108,7 +116,7 @@ internal class BigIntegerSerializationTest {
   @Test
   fun `deserialize, wrong type (string)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigInteger>("\"0\"")
       }
     }
@@ -116,7 +124,7 @@ internal class BigIntegerSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigInteger>("""{}""")
       }
     }
@@ -124,7 +132,7 @@ internal class BigIntegerSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigInteger>("""[]""")
       }
     }

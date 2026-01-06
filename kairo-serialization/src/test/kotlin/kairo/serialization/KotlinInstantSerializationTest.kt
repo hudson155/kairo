@@ -1,6 +1,14 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+
+import java.time.DateTimeException
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlin.time.Instant
@@ -61,7 +69,7 @@ internal class KotlinInstantSerializationTest {
             .toInstant(TimeZone.UTC),
         )
 
-      shouldThrowAny {
+      shouldThrowExactly<DateTimeException> {
         json.deserialize<Instant>("1700000000123456789")
       }
     }
@@ -75,7 +83,7 @@ internal class KotlinInstantSerializationTest {
             .toInstant(TimeZone.UTC),
         )
 
-      shouldThrowAny {
+      shouldThrowExactly<DateTimeException> {
         json.deserialize<Instant>("1700000000123456789.0")
       }
 
@@ -89,11 +97,11 @@ internal class KotlinInstantSerializationTest {
   @Test
   fun `deserialize, month out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-00-14T22:13:20.123456789Z\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-13-14T22:13:20.123456789Z\"")
       }
     }
@@ -101,11 +109,11 @@ internal class KotlinInstantSerializationTest {
   @Test
   fun `deserialize, day out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-11-00T22:13:20.123456789Z\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-11-31T22:13:20.123456789Z\"")
       }
     }
@@ -113,11 +121,11 @@ internal class KotlinInstantSerializationTest {
   @Test
   fun `deserialize, hour out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-11-14T-01:13:20.123456789Z\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-11-14T24:13:20.123456789Z\"")
       }
     }
@@ -125,11 +133,11 @@ internal class KotlinInstantSerializationTest {
   @Test
   fun `deserialize, minute out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-11-14T22:-01:20.123456789Z\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-11-14T22:60:20.123456789Z\"")
       }
     }
@@ -137,11 +145,11 @@ internal class KotlinInstantSerializationTest {
   @Test
   fun `deserialize, second out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-11-14T22:13:-01.123456789Z\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-11-14T22:13:60.123456789Z\"")
       }
     }
@@ -149,7 +157,7 @@ internal class KotlinInstantSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Instant>("null")
       }
 
@@ -159,7 +167,7 @@ internal class KotlinInstantSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Instant>("true")
       }
     }
@@ -167,7 +175,7 @@ internal class KotlinInstantSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Instant>("""{}""")
       }
     }
@@ -175,7 +183,7 @@ internal class KotlinInstantSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Instant>("""[]""")
       }
     }

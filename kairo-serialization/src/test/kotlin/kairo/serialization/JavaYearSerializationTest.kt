@@ -1,6 +1,12 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import java.time.Year
@@ -37,7 +43,7 @@ internal class JavaYearSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Year>("\"2 023\"")
       }
     }
@@ -45,7 +51,7 @@ internal class JavaYearSerializationTest {
   @Test
   fun `deserialize, wrong format (has comma)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Year>("\"2,023\"")
       }
     }
@@ -53,7 +59,7 @@ internal class JavaYearSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Year>("null")
       }
 
@@ -63,7 +69,7 @@ internal class JavaYearSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Year>("true")
       }
     }
@@ -71,7 +77,7 @@ internal class JavaYearSerializationTest {
   @Test
   fun `deserialize, wrong type (float)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Year>("2023.0")
       }
     }
@@ -79,7 +85,7 @@ internal class JavaYearSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Year>("""{}""")
       }
     }
@@ -87,7 +93,7 @@ internal class JavaYearSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Year>("""[]""")
       }
     }
