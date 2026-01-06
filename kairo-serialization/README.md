@@ -161,6 +161,12 @@ and has exploratory testing for them which ensures release-to-release stability.
 - `ZoneId` (Java) and `TimeZone` (Kotlin)
 - `ZoneOffset` (Java) and `FixedOffsetTimeZone` (Kotlin)
 
+#### Collections
+
+- `List<E>`
+- `Set<E>`
+- `Map<K, V>`
+
 #### Other
 
 - `Boolean`
