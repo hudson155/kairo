@@ -1,8 +1,5 @@
 package kairo.id
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 @JvmInline
 internal value class UserId(override val value: String) : Id {
   init {
