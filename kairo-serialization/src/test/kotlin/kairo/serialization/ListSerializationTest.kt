@@ -37,7 +37,8 @@ internal class ListSerializationTest {
         json.deserialize<List<Nothing>>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.collections.List(non-null) but was null",
+          "; specified kotlin.collections.List(non-null)" +
+          " but was null",
       )
 
       json.deserialize<List<Nothing>?>("null").shouldBeNull()

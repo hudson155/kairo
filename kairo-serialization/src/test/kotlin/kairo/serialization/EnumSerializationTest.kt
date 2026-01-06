@@ -68,7 +68,8 @@ internal class EnumSerializationTest {
         json.deserialize<Genre>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.EnumSerializationTest.Genre(non-null) but was null",
+          "; specified kairo.serialization.EnumSerializationTest.Genre(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Genre?>("null").shouldBeNull()

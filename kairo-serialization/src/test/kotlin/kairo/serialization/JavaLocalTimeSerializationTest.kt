@@ -98,7 +98,8 @@ internal class JavaLocalTimeSerializationTest {
         json.deserialize<LocalTime>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.LocalTime(non-null) but was null",
+          "; specified java.time.LocalTime(non-null)" +
+          " but was null",
       )
 
       json.deserialize<LocalTime?>("null").shouldBeNull()
@@ -147,7 +148,8 @@ internal class JavaLocalTimeSerializationTest {
         json.deserialize<LocalTime>("""[]""")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.LocalTime(non-null) but was null",
+          "; specified java.time.LocalTime(non-null)" +
+          " but was null",
       )
     }
 }

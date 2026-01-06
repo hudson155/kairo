@@ -100,7 +100,8 @@ internal class JavaOffsetTimeSerializationTest {
         json.deserialize<OffsetTime>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.OffsetTime(non-null) but was null",
+          "; specified java.time.OffsetTime(non-null)" +
+          " but was null",
       )
 
       json.deserialize<OffsetTime?>("null").shouldBeNull()
@@ -143,7 +144,8 @@ internal class JavaOffsetTimeSerializationTest {
         json.deserialize<OffsetTime>("""[]""")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.OffsetTime(non-null) but was null",
+          "; specified java.time.OffsetTime(non-null)" +
+          " but was null",
       )
     }
 }

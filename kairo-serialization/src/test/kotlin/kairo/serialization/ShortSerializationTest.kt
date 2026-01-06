@@ -124,7 +124,8 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Short(non-null) but was null",
+          "; specified kotlin.Short(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Short?>("null").shouldBeNull()

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
@@ -152,7 +151,8 @@ internal class BigIntegerAsStringSerializationTest {
         json.deserialize<DefaultWrapper>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.BigIntegerAsStringSerializationTest.DefaultWrapper(non-null) but was null",
+          "; specified kairo.serialization.BigIntegerAsStringSerializationTest.DefaultWrapper(non-null)" +
+          " but was null",
       )
 
       json.deserialize<DefaultWrapper?>("null").shouldBeNull()
@@ -162,7 +162,7 @@ internal class BigIntegerAsStringSerializationTest {
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
       shouldThrowExactly<JsonMappingException> {
-        json.deserialize<DefaultWrapper>("""{"value":"true"}""")
+        json.deserialize<DefaultWrapper>("""{"value":true}""")
       }.message.shouldStartWith(
         "For input string: \"true\"",
       )
@@ -179,22 +179,20 @@ internal class BigIntegerAsStringSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowExactly<MismatchedInputException> {
+      shouldThrowExactly<JsonMappingException> {
         json.deserialize<DefaultWrapper>("""{"value":{}}""")
       }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.String`" +
-          " from Object value",
+        "For input string: \"{\"",
       )
     }
 
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowExactly<MismatchedInputException> {
+      shouldThrowExactly<JsonMappingException> {
         json.deserialize<DefaultWrapper>("""{"value":[]}""")
       }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.String`" +
-          " from Array value",
+        "For input string: \"[\"",
       )
     }
 }

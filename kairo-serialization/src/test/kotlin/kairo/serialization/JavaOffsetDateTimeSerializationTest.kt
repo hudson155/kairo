@@ -191,7 +191,8 @@ internal class JavaOffsetDateTimeSerializationTest {
         json.deserialize<OffsetDateTime>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.OffsetDateTime(non-null) but was null",
+          "; specified java.time.OffsetDateTime(non-null)" +
+          " but was null",
       )
 
       json.deserialize<OffsetDateTime?>("null").shouldBeNull()

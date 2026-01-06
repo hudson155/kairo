@@ -91,7 +91,8 @@ internal class KotlinLocalDateSerializationTest {
         json.deserialize<LocalDate>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlinx.datetime.LocalDate(non-null) but was null",
+          "; specified kotlinx.datetime.LocalDate(non-null)" +
+          " but was null",
       )
 
       json.deserialize<LocalDate?>("null").shouldBeNull()

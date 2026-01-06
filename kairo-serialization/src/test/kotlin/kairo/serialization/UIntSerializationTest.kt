@@ -117,7 +117,8 @@ internal class UIntSerializationTest {
         json.deserialize<UInt>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.UInt(non-null) but was null",
+          "; specified kotlin.UInt(non-null)" +
+          " but was null",
       )
 
       json.deserialize<UInt?>("null").shouldBeNull()

@@ -191,7 +191,8 @@ internal class JavaInstantSerializationTest {
         json.deserialize<Instant>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.Instant(non-null) but was null",
+          "; specified java.time.Instant(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Instant?>("null").shouldBeNull()

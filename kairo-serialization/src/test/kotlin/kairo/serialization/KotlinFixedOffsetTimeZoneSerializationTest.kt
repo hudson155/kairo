@@ -56,7 +56,8 @@ internal class KotlinFixedOffsetTimeZoneSerializationTest {
         json.deserialize<FixedOffsetTimeZone>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlinx.datetime.FixedOffsetTimeZone(non-null) but was null",
+          "; specified kotlinx.datetime.FixedOffsetTimeZone(non-null)" +
+          " but was null",
       )
 
       json.deserialize<FixedOffsetTimeZone?>("null").shouldBeNull()

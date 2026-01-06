@@ -117,7 +117,8 @@ internal class UByteSerializationTest {
         json.deserialize<UByte>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.UByte(non-null) but was null",
+          "; specified kotlin.UByte(non-null)" +
+          " but was null",
       )
 
       json.deserialize<UByte?>("null").shouldBeNull()

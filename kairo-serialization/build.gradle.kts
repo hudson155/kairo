@@ -10,6 +10,7 @@ dependencies {
   api(libs.jackson) // Available for usage.
   implementation(libs.jackson.datatypeJsr310)
   api(libs.jackson.moduleKotlin) // Available for usage.
+  implementation(libs.ktorHttp) // Used for [HttpStatusCode].
   api(libs.ktorUtils) // Used for [Attributes].
 
   testImplementation(project(":kairo-testing"))

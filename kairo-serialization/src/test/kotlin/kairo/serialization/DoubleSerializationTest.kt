@@ -118,7 +118,8 @@ internal class DoubleSerializationTest {
         json.deserialize<Double>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Double(non-null) but was null",
+          "; specified kotlin.Double(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Double?>("null").shouldBeNull()
