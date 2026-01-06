@@ -117,6 +117,10 @@ val json: KairoJson =
 
     pretty = true
     // Alias for configure(SerializationFeature.INDENT_OUTPUT, true)
+
+    configure {
+      // Configure Jackson directly.
+    }
   }
 ```
 
