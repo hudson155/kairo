@@ -104,22 +104,6 @@ json.deserialize<List<Animal>>(
 // => [Animal.Dog(name=Rex, barksPerMinute=30), Animal.Cat(name=Whiskers, napsPerDay=12)]
 ```
 
-### Configuration
-
-When creating your `KairoJson` instance,
-you can configure Jackson in the constructor.
-
-```kotlin
-val json: KairoJson =
-  KairoJson {
-    allowUnknown = true
-    // Alias for configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-
-    pretty = true
-    // Alias for configure(SerializationFeature.INDENT_OUTPUT, true)
-  }
-```
-
 ### Well-known types
 
 The following types are considered "well-known",
@@ -178,6 +162,72 @@ and has exploratory testing for them which ensures release-to-release stability.
   as described above.
 - Kotlin `Unit`
 - `UUID` (Java) and `Uuid` (Kotlin)
+
+### Configuration
+
+When creating your `KairoJson` instance,
+you can configure Jackson in the constructor.
+
+```kotlin
+val json: KairoJson =
+  KairoJson {
+    allowUnknown = true
+    // Alias for configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+
+    pretty = true
+    // Alias for configure(SerializationFeature.INDENT_OUTPUT, true)
+
+    configure {
+      // Configure Jackson directly.
+    }
+  }
+```
+
+#### Customizing `BigDecimal` serialization
+
+By default, `BigDecimal` serializes to a `Double`.
+To use a different approach for serializing `BigDecimal`,
+you can either change it globally
+
+```kotlin
+val json: KairoJson =
+  KairoJson {
+    bigDecimalFormat = BigDecimalFormat.String
+  }
+```
+
+or change it locally
+
+```kotlin
+data class MyClass(
+  @JsonSerialize(using = BigDecimalSerializer.AsString::class)
+  @JsonDeserialize(using = BigDecimalDeserializer.AsString::class)
+  val value: BigDecimal,
+)
+```
+
+#### Customizing `BigInteger` serialization
+
+By default, `BigInteger` serializes to a `Long`.
+To use a different approach for serializing `BigInteger`,
+you can either change it globally
+
+```kotlin
+val json: KairoJson =
+  KairoJson {
+    bigIntegerFormat = BigIntegerFormat.String
+  }
+```
+
+or change it locally
+
+```kotlin
+data class MyClass(
+  @JsonSerialize(using = BigIntegerSerializer.String::class)
+  @JsonDeserialize(using = BigIntegerDeserializer.String::class)
+  val value: BigInteger,
+)
+```
 
 ### Advanced usage
 

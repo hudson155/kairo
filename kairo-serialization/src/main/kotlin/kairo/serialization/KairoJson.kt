@@ -302,7 +302,7 @@ public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder) {
     },
   )
 
-  addModule(KairoKotlinModule())
+  addModule(KairoKotlinModule(builder))
 
   addModule(
     JavaTimeModule().apply {
