@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -98,7 +99,9 @@ internal class DataClassSerializationTest {
             }
           """.trimIndent(),
         )
-      }
+      }.message.shouldStartWith(
+        "Missing required creator property 'boolean'",
+      )
     }
 
   @Test
@@ -121,7 +124,9 @@ internal class DataClassSerializationTest {
             }
           """.trimIndent(),
         )
-      }
+      }.message.shouldStartWith(
+        "Unrecognized field \"other\"",
+      )
     }
 
   @Test
@@ -129,7 +134,10 @@ internal class DataClassSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<DataClass>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kairo.serialization.DataClassSerializationTest.DataClass(non-null) but was null",
+      )
 
       json.deserialize<DataClass?>("null").shouldBeNull()
     }
@@ -139,7 +147,9 @@ internal class DataClassSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataClass>("true")
-      }
+      }.message.shouldStartWith(
+        "Cannot construct instance of `kairo.serialization.DataClassSerializationTest\$DataClass`",
+      )
     }
 
   @Test
@@ -147,7 +157,9 @@ internal class DataClassSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataClass>("0")
-      }
+      }.message.shouldStartWith(
+        "Cannot construct instance of `kairo.serialization.DataClassSerializationTest\$DataClass`",
+      )
     }
 
   @Test
@@ -155,7 +167,10 @@ internal class DataClassSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DataClass>("\"\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot coerce empty String (\"\")" +
+          " to `kairo.serialization.DataClassSerializationTest\$DataClass` value",
+      )
     }
 
   @Test
@@ -163,6 +178,9 @@ internal class DataClassSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataClass>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `kairo.serialization.DataClassSerializationTest\$DataClass`" +
+          " from Array value",
+      )
     }
 }

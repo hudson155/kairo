@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Month
 import org.junit.jupiter.api.Test
@@ -34,7 +35,10 @@ internal class KotlinMonthSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Month>("\"november\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Month`" +
+          " from String \"november\"",
+      )
     }
 
   @Test
@@ -42,7 +46,10 @@ internal class KotlinMonthSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Month>("\"NOV\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Month`" +
+          " from String \"NOV\"",
+      )
     }
 
   @Test
@@ -50,7 +57,10 @@ internal class KotlinMonthSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Month>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlinx.datetime.Month(non-null) but was null",
+      )
 
       json.deserialize<Month?>("null").shouldBeNull()
     }
@@ -60,7 +70,10 @@ internal class KotlinMonthSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Month>("true")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Month`" +
+          " from Boolean value",
+      )
     }
 
   @Test
@@ -68,7 +81,10 @@ internal class KotlinMonthSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Month>("11")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Month`" +
+          " from number 11: not allowed to deserialize Enum value out of number",
+      )
     }
 
   @Test
@@ -76,7 +92,10 @@ internal class KotlinMonthSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Month>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Month`" +
+          " from Object value",
+      )
     }
 
   @Test
@@ -84,6 +103,9 @@ internal class KotlinMonthSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Month>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Month`" +
+          " from Array value",
+      )
     }
 }

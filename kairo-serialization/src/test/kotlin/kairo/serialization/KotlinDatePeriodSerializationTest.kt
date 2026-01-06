@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.DatePeriod
 import org.junit.jupiter.api.Test
@@ -46,7 +47,10 @@ internal class KotlinDatePeriodSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DatePeriod>("\"0D\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Period`" +
+          " from String \"0D\"",
+      )
     }
 
   @Test
@@ -54,7 +58,10 @@ internal class KotlinDatePeriodSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DatePeriod>("\"P 0D\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Period`" +
+          " from String \"P 0D\"",
+      )
     }
 
   @Test
@@ -62,7 +69,10 @@ internal class KotlinDatePeriodSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<DatePeriod>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlinx.datetime.DatePeriod(non-null) but was null",
+      )
 
       json.deserialize<DatePeriod?>("null").shouldBeNull()
     }
@@ -72,7 +82,9 @@ internal class KotlinDatePeriodSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DatePeriod>("true")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_TRUE)",
+      )
     }
 
   @Test
@@ -80,7 +92,9 @@ internal class KotlinDatePeriodSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DatePeriod>("0")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_NUMBER_INT)",
+      )
     }
 
   @Test
@@ -88,7 +102,9 @@ internal class KotlinDatePeriodSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DatePeriod>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (START_OBJECT)",
+      )
     }
 
   @Test
@@ -96,6 +112,9 @@ internal class KotlinDatePeriodSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DatePeriod>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Period`" +
+          " from Array value",
+      )
     }
 }

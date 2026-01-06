@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import java.time.Duration
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -111,7 +112,10 @@ internal class JavaDurationSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Duration>("\"0S\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Duration`" +
+          " from String \"0S\"",
+      )
     }
 
   @Test
@@ -119,7 +123,10 @@ internal class JavaDurationSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Duration>("\"PT 0S\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Duration`" +
+          " from String \"PT 0S\"",
+      )
     }
 
   @Test
@@ -127,7 +134,10 @@ internal class JavaDurationSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Duration>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified java.time.Duration(non-null) but was null",
+      )
 
       json.deserialize<Duration?>("null").shouldBeNull()
     }
@@ -137,7 +147,9 @@ internal class JavaDurationSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Duration>("true")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_TRUE)",
+      )
     }
 
   @Test
@@ -145,7 +157,9 @@ internal class JavaDurationSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Duration>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (START_OBJECT)",
+      )
     }
 
   @Test
@@ -153,6 +167,9 @@ internal class JavaDurationSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Duration>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Duration`" +
+          " from Array value",
+      )
     }
 }

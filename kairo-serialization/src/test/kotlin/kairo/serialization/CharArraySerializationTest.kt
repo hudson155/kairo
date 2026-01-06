@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -39,7 +40,10 @@ internal class CharArraySerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<CharArray>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlin.CharArray(non-null) but was null",
+      )
 
       json.deserialize<CharArray?>("null").shouldBeNull()
     }
@@ -49,7 +53,10 @@ internal class CharArraySerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<CharArray>("true")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `char[]`" +
+          " from Boolean value",
+      )
     }
 
   @Test
@@ -57,7 +64,10 @@ internal class CharArraySerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<CharArray>("0")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `char[]`" +
+          " from Integer value",
+      )
     }
 
   @Test
@@ -65,6 +75,9 @@ internal class CharArraySerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<CharArray>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `char[]`" +
+          " from Object value",
+      )
     }
 }

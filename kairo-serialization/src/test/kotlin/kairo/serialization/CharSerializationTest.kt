@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -29,7 +30,10 @@ internal class CharSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Char>("\"\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot coerce empty String (\"\")" +
+          " to `java.lang.Character` value",
+      )
     }
 
   @Test
@@ -37,7 +41,10 @@ internal class CharSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Char>("\"Hello, World!\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot coerce String value (\"Hello, World!\")" +
+          " to `java.lang.Character` value",
+      )
     }
 
   @Test
@@ -45,7 +52,10 @@ internal class CharSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Char>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlin.Char(non-null) but was null",
+      )
 
       json.deserialize<Char?>("null").shouldBeNull()
     }
@@ -55,7 +65,10 @@ internal class CharSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Char>("true")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.Character`" +
+          " from Boolean value",
+      )
     }
 
   @Test
@@ -63,7 +76,10 @@ internal class CharSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Char>("0")
-      }
+      }.message.shouldStartWith(
+        "Cannot coerce Integer value (0)" +
+          " to `java.lang.Character` value",
+      )
     }
 
   @Test
@@ -71,7 +87,10 @@ internal class CharSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Char>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.Character`" +
+          " from Object value",
+      )
     }
 
   @Test
@@ -79,6 +98,9 @@ internal class CharSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Char>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.Character`" +
+          " from Array value",
+      )
     }
 }

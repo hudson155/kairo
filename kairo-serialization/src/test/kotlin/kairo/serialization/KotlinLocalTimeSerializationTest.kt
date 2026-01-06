@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalTime
 import org.junit.jupiter.api.Test
@@ -41,11 +42,17 @@ internal class KotlinLocalTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalTime>("\"-01:13:20.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalTime`" +
+          " from String \"-01:13:20.123456789\"",
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalTime>("\"24:13:20.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalTime`" +
+          " from String \"24:13:20.123456789\"",
+      )
     }
 
   @Test
@@ -53,11 +60,17 @@ internal class KotlinLocalTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalTime>("\"22:-01:20.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalTime`" +
+          " from String \"22:-01:20.123456789\"",
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalTime>("\"22:60:20.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalTime`" +
+          " from String \"22:60:20.123456789\"",
+      )
     }
 
   @Test
@@ -65,11 +78,17 @@ internal class KotlinLocalTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalTime>("\"22:13:-01.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalTime`" +
+          " from String \"22:13:-01.123456789\"",
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalTime>("\"22:13:60.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalTime`" +
+          " from String \"22:13:60.123456789\"",
+      )
     }
 
   @Test
@@ -77,7 +96,10 @@ internal class KotlinLocalTimeSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<LocalTime>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlinx.datetime.LocalTime(non-null) but was null",
+      )
 
       json.deserialize<LocalTime?>("null").shouldBeNull()
     }
@@ -87,7 +109,9 @@ internal class KotlinLocalTimeSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalTime>("true")
-      }
+      }.message.shouldStartWith(
+        "Expected array or string",
+      )
     }
 
   @Test
@@ -95,11 +119,15 @@ internal class KotlinLocalTimeSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalTime>("221320")
-      }
+      }.message.shouldStartWith(
+        "raw timestamp (221320) not allowed for `java.time.LocalTime`",
+      )
 
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalTime>("221320123456789")
-      }
+      }.message.shouldStartWith(
+        "raw timestamp (221320123456789) not allowed for `java.time.LocalTime`",
+      )
     }
 
   @Test
@@ -107,7 +135,9 @@ internal class KotlinLocalTimeSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalTime>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Expected array or string",
+      )
     }
 
   @Test
@@ -115,6 +145,6 @@ internal class KotlinLocalTimeSerializationTest {
     runTest {
       shouldThrowExactly<NullPointerException> {
         json.deserialize<LocalTime>("""[]""")
-      }
+      }.message.shouldBeNull() // This seems like a bug in Jackson! I don't think this should be null.
     }
 }

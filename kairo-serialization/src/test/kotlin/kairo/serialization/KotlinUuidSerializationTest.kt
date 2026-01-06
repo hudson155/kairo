@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -35,7 +36,10 @@ internal class KotlinUuidSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Uuid>("\"a042df12-b775-42b2-aeb1-5bdd4ea78dc\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.util.UUID`" +
+          " from String \"a042df12-b775-42b2-aeb1-5bdd4ea78dc\"",
+      )
     }
 
   @Test
@@ -43,7 +47,10 @@ internal class KotlinUuidSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Uuid>("\"a042df12-b775-42b2-aeb1-5bdd4ea78dc5c\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.util.UUID`" +
+          " from String \"a042df12-b775-42b2-aeb1-5bdd4ea78dc5c\"",
+      )
     }
 
   @Test
@@ -51,7 +58,10 @@ internal class KotlinUuidSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Uuid>("\"a042df12b77542b2aeb15bdd4ea78dc5\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.util.UUID`" +
+          " from String \"a042df12b77542b2aeb15bdd4ea78dc5\"",
+      )
     }
 
   @Test
@@ -59,7 +69,10 @@ internal class KotlinUuidSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Uuid>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlin.uuid.Uuid(non-null) but was null",
+      )
 
       json.deserialize<Uuid?>("null").shouldBeNull()
     }
@@ -69,7 +82,10 @@ internal class KotlinUuidSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Uuid>("true")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.util.UUID`" +
+          " from String \"true\"",
+      )
     }
 
   @Test
@@ -77,7 +93,10 @@ internal class KotlinUuidSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Uuid>("0")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.util.UUID`" +
+          " from String \"0\"",
+      )
     }
 
   @Test
@@ -85,7 +104,10 @@ internal class KotlinUuidSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Uuid>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.util.UUID`" +
+          " from Object value",
+      )
     }
 
   @Test
@@ -93,6 +115,9 @@ internal class KotlinUuidSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Uuid>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.util.UUID`" +
+          " from Array value",
+      )
     }
 }

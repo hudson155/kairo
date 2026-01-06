@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import java.math.BigDecimal
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -49,11 +50,16 @@ internal class BigDecimalSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("9 0210")
-      }
+      }.message.shouldStartWith(
+        "Invalid numeric value: Leading zeroes not allowed",
+      )
 
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigDecimal>("3.1 4")
-      }
+      }.message.shouldStartWith(
+        "Trailing token (of type VALUE_NUMBER_INT) found after value" +
+          " (bound as `java.math.BigDecimal`)",
+      )
     }
 
   @Test
@@ -61,11 +67,15 @@ internal class BigDecimalSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("090210")
-      }
+      }.message.shouldStartWith(
+        "Invalid numeric value: Leading zeroes not allowed",
+      )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("03.14")
-      }
+      }.message.shouldStartWith(
+        "Invalid numeric value: Leading zeroes not allowed",
+      )
     }
 
   @Test
@@ -73,7 +83,10 @@ internal class BigDecimalSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("0x0")
-      }
+      }.message.shouldStartWith(
+        "Unexpected character ('x' (code 120))" +
+          ": Expected space separating root-level values",
+      )
     }
 
   @Test
@@ -81,7 +94,9 @@ internal class BigDecimalSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("NaN")
-      }
+      }.message.shouldStartWith(
+        "Non-standard token 'NaN'",
+      )
     }
 
   @Test
@@ -89,11 +104,15 @@ internal class BigDecimalSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("Infinity")
-      }
+      }.message.shouldStartWith(
+        "Non-standard token 'Infinity'",
+      )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("-Infinity")
-      }
+      }.message.shouldStartWith(
+        "Non-standard token '-Infinity'",
+      )
     }
 
   @Test
@@ -101,7 +120,10 @@ internal class BigDecimalSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<BigDecimal>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified java.math.BigDecimal(non-null) but was null",
+      )
 
       json.deserialize<BigDecimal?>("null").shouldBeNull()
     }
@@ -111,7 +133,10 @@ internal class BigDecimalSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigDecimal>("true")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.math.BigDecimal`" +
+          " from Boolean value",
+      )
     }
 
   @Test
@@ -119,7 +144,10 @@ internal class BigDecimalSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigDecimal>("\"0\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot coerce String value (\"0\")" +
+          " to `java.math.BigDecimal` value",
+      )
     }
 
   @Test
@@ -127,7 +155,10 @@ internal class BigDecimalSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigDecimal>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.math.BigDecimal`" +
+          " from Object value",
+      )
     }
 
   @Test
@@ -135,6 +166,9 @@ internal class BigDecimalSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigDecimal>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.math.BigDecimal`" +
+          " from Array value",
+      )
     }
 }

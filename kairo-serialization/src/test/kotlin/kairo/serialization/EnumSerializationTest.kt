@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -54,7 +55,10 @@ internal class EnumSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Genre>("\"Education\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `kairo.serialization.EnumSerializationTest\$Genre`" +
+          " from String \"Education\"",
+      )
     }
 
   @Test
@@ -62,7 +66,10 @@ internal class EnumSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Genre>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kairo.serialization.EnumSerializationTest.Genre(non-null) but was null",
+      )
 
       json.deserialize<Genre?>("null").shouldBeNull()
     }
@@ -72,7 +79,10 @@ internal class EnumSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Genre>("true")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `kairo.serialization.EnumSerializationTest\$Genre`" +
+          " from Boolean value",
+      )
     }
 
   @Test
@@ -80,7 +90,10 @@ internal class EnumSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Genre>("0")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `kairo.serialization.EnumSerializationTest\$Genre`" +
+          " from number 0: not allowed to deserialize Enum value out of number",
+      )
     }
 
   @Test
@@ -88,7 +101,10 @@ internal class EnumSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Genre>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `kairo.serialization.EnumSerializationTest\$Genre`" +
+          " from Object value",
+      )
     }
 
   @Test
@@ -96,6 +112,9 @@ internal class EnumSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Genre>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `kairo.serialization.EnumSerializationTest\$Genre`" +
+          " from Array value",
+      )
     }
 }

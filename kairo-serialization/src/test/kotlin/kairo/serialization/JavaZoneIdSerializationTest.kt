@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import java.time.ZoneId
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -34,7 +35,10 @@ internal class JavaZoneIdSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZoneId>("\"pacific/kiritimati\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.ZoneId`" +
+          " from String \"pacific/kiritimati\"",
+      )
     }
 
   @Test
@@ -42,7 +46,10 @@ internal class JavaZoneIdSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZoneId>("\"Pacific/Edmonton\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.ZoneId`" +
+          " from String \"Pacific/Edmonton\"",
+      )
     }
 
   @Test
@@ -50,7 +57,10 @@ internal class JavaZoneIdSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<ZoneId>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified java.time.ZoneId(non-null) but was null",
+      )
 
       json.deserialize<ZoneId?>("null").shouldBeNull()
     }
@@ -60,7 +70,9 @@ internal class JavaZoneIdSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneId>("true")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_TRUE)",
+      )
     }
 
   @Test
@@ -68,7 +80,9 @@ internal class JavaZoneIdSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneId>("0")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_NUMBER_INT)",
+      )
     }
 
   @Test
@@ -76,7 +90,9 @@ internal class JavaZoneIdSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneId>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (START_OBJECT)",
+      )
     }
 
   @Test
@@ -84,6 +100,9 @@ internal class JavaZoneIdSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneId>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.ZoneId`" +
+          " from Array value",
+      )
     }
 }
