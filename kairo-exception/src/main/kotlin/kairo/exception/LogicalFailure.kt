@@ -1,10 +1,6 @@
 package kairo.exception
 
 import io.ktor.http.HttpStatusCode
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObjectBuilder
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.buildJsonObject
 
 /**
  * "Logical failures" describe situations not deemed successful in your domain,
@@ -15,23 +11,23 @@ import kotlinx.serialization.json.buildJsonObject
  * Roughly conforms to RFC 9457, but not strictly.
  */
 public abstract class LogicalFailure(
-  override val message: String,
+  message: String,
   cause: Throwable? = null,
 ) : Exception(message, cause) {
   public abstract val type: String
   public abstract val status: HttpStatusCode
   public open val detail: String? = null
 
-  public open val json: JsonElement by lazy {
-    buildJsonObject {
-      put("type", JsonPrimitive(type))
-      put("status", JsonPrimitive(status.value))
-      put("message", JsonPrimitive(message))
-      put("detail", JsonPrimitive(detail))
+  public open val json: Map<String, Any?> by lazy {
+    buildMap {
+      put("type", type)
+      put("status", status)
+      put("message", message)
+      put("detail", detail)
       buildJson()
     }
   }
 
-  protected open fun JsonObjectBuilder.buildJson(): Unit =
+  protected open fun MutableMap<String, Any?>.buildJson(): Unit =
     Unit
 }

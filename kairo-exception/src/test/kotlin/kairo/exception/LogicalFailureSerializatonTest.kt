@@ -2,13 +2,8 @@ package kairo.exception
 
 import io.kotest.matchers.shouldBe
 import io.ktor.http.HttpStatusCode
-import kairo.serialization.json
+import kairo.serialization.KairoJson
 import kotlinx.coroutines.test.runTest
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObjectBuilder
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.encodeToJsonElement
 import org.junit.jupiter.api.Test
 
 internal class LogicalFailureSerializatonTest {
@@ -18,40 +13,47 @@ internal class LogicalFailureSerializatonTest {
     override val type: String = "Example"
     override val status: HttpStatusCode = HttpStatusCode.InternalServerError
 
-    override fun JsonObjectBuilder.buildJson() {
-      put("key", JsonPrimitive(key))
+    override fun MutableMap<String, Any?>.buildJson() {
+      put("key", key)
     }
   }
 
-  private val json: Json = json()
+  private val json: KairoJson =
+    KairoJson {
+      pretty = true
+    }
 
   @Test
   fun `null key`(): Unit =
     runTest {
-      json.encodeToJsonElement(Example(null).json)
+      json.serialize(Example(null).json)
         .shouldBe(
-          buildJsonObject {
-            put("type", JsonPrimitive("Example"))
-            put("status", JsonPrimitive(500))
-            put("message", JsonPrimitive("Example"))
-            put("detail", JsonPrimitive(null))
-            put("key", JsonPrimitive(null))
-          },
+          """
+            {
+              "type": "Example",
+              "status": 500,
+              "message": "Example",
+              "detail": null,
+              "key": null
+            }
+          """.trimIndent()
         )
     }
 
   @Test
   fun `non-null key`(): Unit =
     runTest {
-      json.encodeToJsonElement(Example("expected").json)
+      json.serialize(Example("expected").json)
         .shouldBe(
-          buildJsonObject {
-            put("type", JsonPrimitive("Example"))
-            put("status", JsonPrimitive(500))
-            put("message", JsonPrimitive("Example"))
-            put("detail", JsonPrimitive(null))
-            put("key", JsonPrimitive("expected"))
-          },
+          """
+            {
+              "type": "Example",
+              "status": 500,
+              "message": "Example",
+              "detail": null,
+              "key": "expected"
+            }
+          """.trimIndent()
         )
     }
 }

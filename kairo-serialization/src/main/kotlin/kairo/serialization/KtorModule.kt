@@ -11,7 +11,7 @@ internal class KtorModule(
     addSerializer(HttpMethod::class.java, HttpMethodSerializer())
     addDeserializer(HttpMethod::class.java, HttpMethodDeserializer())
 
-    addSerializer(HttpStatusCode::class.java, builder.httpStatusCodeFormat.serializer.value)
-    addDeserializer(HttpStatusCode::class.java, builder.httpStatusCodeFormat.deserializer.value)
+    addSerializer(HttpStatusCode::class.java, HttpStatusCodeSerializer())
+    addDeserializer(HttpStatusCode::class.java, HttpStatusCodeDeserializer())
   }
 }
