@@ -12,9 +12,10 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class DataObjectSerializationTest {
-  private val json: KairoJson = KairoJson {
-    pretty = true
-  }
+  private val json: KairoJson =
+    KairoJson {
+      pretty = true
+    }
 
   internal data object DataObject
 

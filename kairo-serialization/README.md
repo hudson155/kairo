@@ -110,13 +110,14 @@ When creating your `KairoJson` instance,
 you can configure Jackson in the constructor.
 
 ```kotlin
-val json: KairoJson = KairoJson {
-  allowUnknown = true
-  // Alias for configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+val json: KairoJson =
+  KairoJson {
+    allowUnknown = true
+    // Alias for configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-  pretty = true
-  // Alias for configure(SerializationFeature.INDENT_OUTPUT, true)
-}
+    pretty = true
+    // Alias for configure(SerializationFeature.INDENT_OUTPUT, true)
+  }
 ```
 
 ### Well-known types

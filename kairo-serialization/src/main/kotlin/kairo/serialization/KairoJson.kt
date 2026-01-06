@@ -22,6 +22,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.kotlinModule
+import io.ktor.util.Attributes
 
 /**
  * A wrapper around Jackson's [JsonMapper].
@@ -38,12 +39,25 @@ import com.fasterxml.jackson.module.kotlin.kotlinModule
 public class KairoJson @RawJsonMapper constructor(
   @RawJsonMapper public val delegate: JsonMapper,
 ) {
+  public class Builder internal constructor() {
+    internal val configures: MutableList<JsonMapper.Builder.() -> Unit> = mutableListOf()
+
+    public val attributes: Attributes = Attributes(concurrent = false)
+
+    public var allowUnknown: Boolean = false
+
+    public var pretty: Boolean = false
+
+    public fun configure(configure: JsonMapper.Builder.() -> Unit) {
+      configures += configure
+    }
+  }
+
   public constructor(
-    builder: JsonMapper.Builder.() -> Unit = {},
+    builder: Builder.() -> Unit = {},
   ) : this(
     JsonMapper.builder().apply {
-      kairo()
-      builder()
+      kairo(builder)
     }.build(),
   )
 
@@ -83,8 +97,12 @@ public class KairoJson @RawJsonMapper constructor(
   }
 }
 
+public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder.() -> Unit = {}) {
+  kairo(KairoJson.Builder().apply(builder))
+}
+
 @Suppress("LongMethod")
-public fun JsonMapper.Builder.kairo() {
+public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder) {
   configure(MapperFeature.USE_ANNOTATIONS, true)
   configure(MapperFeature.USE_GETTERS_AS_SETTERS, false)
   configure(MapperFeature.PROPAGATE_TRANSIENT_MARKER, true)
@@ -126,7 +144,7 @@ public fun JsonMapper.Builder.kairo() {
   configure(MapperFeature.REQUIRE_HANDLERS_FOR_JAVA8_TIMES, true)
 
   configure(SerializationFeature.WRAP_ROOT_VALUE, false)
-  configure(SerializationFeature.INDENT_OUTPUT, false)
+  configure(SerializationFeature.INDENT_OUTPUT, builder.pretty)
   configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true)
   configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, true)
   configure(SerializationFeature.WRAP_EXCEPTIONS, true)
@@ -157,7 +175,7 @@ public fun JsonMapper.Builder.kairo() {
   configure(DeserializationFeature.USE_BIG_INTEGER_FOR_INTS, true)
   configure(DeserializationFeature.USE_LONG_FOR_INTS, true)
   configure(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY, false)
-  configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true)
+  configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, !builder.allowUnknown)
   configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, true)
   configure(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS, true)
   configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, true)
@@ -309,16 +327,6 @@ public fun JsonMapper.Builder.kairo() {
   defaultLeniency(false)
 
   defaultDateFormat(StdDateFormat().withLenient(false))
+
+  builder.configures.forEach { it() }
 }
-
-public var JsonMapper.Builder.allowUnknown: Boolean
-  get() = !isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-  set(value) {
-    configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, !value)
-  }
-
-public var JsonMapper.Builder.pretty: Boolean
-  get() = isEnabled(SerializationFeature.INDENT_OUTPUT)
-  set(value) {
-    configure(SerializationFeature.INDENT_OUTPUT, value)
-  }
