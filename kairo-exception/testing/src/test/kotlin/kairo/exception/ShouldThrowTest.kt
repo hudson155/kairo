@@ -4,8 +4,6 @@ import io.kotest.assertions.shouldFail
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.test.runTest
-import kotlinx.serialization.json.JsonObjectBuilder
-import kotlinx.serialization.json.JsonPrimitive
 import org.junit.jupiter.api.Test
 
 internal class ShouldThrowTest {
@@ -15,8 +13,8 @@ internal class ShouldThrowTest {
     override val type: String = "Example"
     override val status: HttpStatusCode = HttpStatusCode.InternalServerError
 
-    override fun JsonObjectBuilder.buildJson() {
-      put("key", JsonPrimitive(key))
+    override fun MutableMap<String, Any?>.buildJson() {
+      put("key", key)
     }
   }
 

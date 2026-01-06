@@ -3,17 +3,10 @@ plugins {
   id("kairo-library-publish")
 }
 
-kotlin {
-  compilerOptions {
-    freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi") // JsonPrimitive.
-  }
-}
-
 dependencies {
-  api(project(":kairo-serialization")) // LogicalFailure exposes JsonElement.
+  implementation(project(":kairo-serialization"))
 
-  api(libs.ktorHttp) // LogicalFailure exposes HttpStatusCode.
-  api(libs.serialization.json) // LogicalFailure exposes JsonElement.
+  api(libs.ktorHttp) // LogicalFailure exposes [HttpStatusCode].
 
   testImplementation(project(":kairo-testing"))
 }

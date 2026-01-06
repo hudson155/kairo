@@ -324,7 +324,7 @@ public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder) {
       ),
   )
 
-  addModule(KtorModule(builder))
+  addModule(KtorModule())
 
   defaultLeniency(false)
 

@@ -61,5 +61,15 @@ data class UserNotFound(
   }
 }
 
-// Serializes to { "type": "UserNotFound", "status": 404, "message": "User not found", "detail": null, "userId": "..." }
+// => {"type":"UserNotFound","status":404,"message":"User not found","detail":null,"userId":"..."}
+```
+
+### Testing
+
+For testing, consider using `shouldThrow<LogicalFailure>`
+
+```kotlin
+shouldThrow(UserNotFound(userId)) {
+  // ...
+}
 ```
