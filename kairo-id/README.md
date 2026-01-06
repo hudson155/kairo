@@ -62,7 +62,6 @@ dependencies {
 Each entity should define its own ID type — you can't use `Id` directly.
 
 ```kotlin
-@Serializable
 @JvmInline
 value class UserId(override val value: String) : Id {
   init {
