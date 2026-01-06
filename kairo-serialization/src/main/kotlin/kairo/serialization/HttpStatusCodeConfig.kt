@@ -18,7 +18,7 @@ public enum class HttpStatusCodeFormat(
   ),
 }
 
-internal class HttpStatusCodeObjectDelegate(
+internal data class HttpStatusCodeObjectDelegate(
   val value: Int,
   val description: String,
 )
