@@ -65,19 +65,19 @@ internal class AllowUnknownSerializationTest {
 
       json.deserialize<DataClass>(
         """
-            {
-              "boolean": true,
-              "ints": [
-                1,
-                2,
-                3
-              ],
-              "nested": {
-                "string": "Hello, World!"
-              },
-              "other": "unknown"
-            }
-          """.trimIndent(),
+          {
+            "boolean": true,
+            "ints": [
+              1,
+              2,
+              3
+            ],
+            "nested": {
+              "string": "Hello, World!"
+            },
+            "other": "unknown"
+          }
+        """.trimIndent(),
       ).shouldBe(
         DataClass(
           boolean = true,

@@ -27,7 +27,7 @@ internal class PrettySerializationTest {
           nested = DataClass.Nested("Hello, World!"),
         ),
       ).shouldBe(
-        """{"boolean":true,"ints":[1,2,3],"nested":{"string":"Hello, World!"}}"""
+        """{"boolean":true,"ints":[1,2,3],"nested":{"string":"Hello, World!"}}""",
       )
     }
 
