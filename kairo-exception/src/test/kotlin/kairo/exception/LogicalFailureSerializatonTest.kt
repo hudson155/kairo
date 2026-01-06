@@ -36,7 +36,7 @@ internal class LogicalFailureSerializatonTest {
               "detail": null,
               "key": null
             }
-          """.trimIndent()
+          """.trimIndent(),
         )
     }
 
@@ -53,7 +53,7 @@ internal class LogicalFailureSerializatonTest {
               "detail": null,
               "key": "expected"
             }
-          """.trimIndent()
+          """.trimIndent(),
         )
     }
 }
