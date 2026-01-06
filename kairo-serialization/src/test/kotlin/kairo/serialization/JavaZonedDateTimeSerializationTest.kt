@@ -191,7 +191,8 @@ internal class JavaZonedDateTimeSerializationTest {
         json.deserialize<ZonedDateTime>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.ZonedDateTime(non-null) but was null",
+          "; specified java.time.ZonedDateTime(non-null)" +
+          " but was null",
       )
 
       json.deserialize<ZonedDateTime?>("null").shouldBeNull()

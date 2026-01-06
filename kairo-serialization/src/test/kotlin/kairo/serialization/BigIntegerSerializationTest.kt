@@ -108,7 +108,8 @@ internal class BigIntegerSerializationTest {
         json.deserialize<BigInteger>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.math.BigInteger(non-null) but was null",
+          "; specified java.math.BigInteger(non-null)" +
+          " but was null",
       )
 
       json.deserialize<BigInteger?>("null").shouldBeNull()

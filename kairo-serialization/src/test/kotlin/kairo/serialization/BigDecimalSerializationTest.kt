@@ -122,7 +122,8 @@ internal class BigDecimalSerializationTest {
         json.deserialize<BigDecimal>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.math.BigDecimal(non-null) but was null",
+          "; specified java.math.BigDecimal(non-null)" +
+          " but was null",
       )
 
       json.deserialize<BigDecimal?>("null").shouldBeNull()

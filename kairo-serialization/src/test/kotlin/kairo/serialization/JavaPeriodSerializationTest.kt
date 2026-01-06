@@ -75,7 +75,8 @@ internal class JavaPeriodSerializationTest {
         json.deserialize<Period>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.Period(non-null) but was null",
+          "; specified java.time.Period(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Period?>("null").shouldBeNull()

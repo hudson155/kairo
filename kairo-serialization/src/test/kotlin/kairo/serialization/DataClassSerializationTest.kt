@@ -136,7 +136,8 @@ internal class DataClassSerializationTest {
         json.deserialize<DataClass>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.DataClassSerializationTest.DataClass(non-null) but was null",
+          "; specified kairo.serialization.DataClassSerializationTest.DataClass(non-null)" +
+          " but was null",
       )
 
       json.deserialize<DataClass?>("null").shouldBeNull()

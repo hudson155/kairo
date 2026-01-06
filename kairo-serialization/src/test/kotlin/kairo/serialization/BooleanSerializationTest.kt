@@ -69,7 +69,8 @@ internal class BooleanSerializationTest {
         json.deserialize<Boolean>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Boolean(non-null) but was null",
+          "; specified kotlin.Boolean(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Boolean?>("null").shouldBeNull()

@@ -117,7 +117,8 @@ internal class UShortSerializationTest {
         json.deserialize<UShort>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.UShort(non-null) but was null",
+          "; specified kotlin.UShort(non-null)" +
+          " but was null",
       )
 
       json.deserialize<UShort?>("null").shouldBeNull()

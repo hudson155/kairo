@@ -42,7 +42,8 @@ internal class UnitSerializationTest {
         json.deserialize<Unit>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Unit(non-null) but was null",
+          "; specified kotlin.Unit(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Unit?>("null").shouldBeNull()

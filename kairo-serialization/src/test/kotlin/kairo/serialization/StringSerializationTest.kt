@@ -35,7 +35,8 @@ internal class StringSerializationTest {
         json.deserialize<String>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.String(non-null) but was null",
+          "; specified kotlin.String(non-null)" +
+          " but was null",
       )
 
       json.deserialize<String?>("null").shouldBeNull()

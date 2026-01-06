@@ -71,7 +71,8 @@ internal class KotlinDatePeriodSerializationTest {
         json.deserialize<DatePeriod>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlinx.datetime.DatePeriod(non-null) but was null",
+          "; specified kotlinx.datetime.DatePeriod(non-null)" +
+          " but was null",
       )
 
       json.deserialize<DatePeriod?>("null").shouldBeNull()

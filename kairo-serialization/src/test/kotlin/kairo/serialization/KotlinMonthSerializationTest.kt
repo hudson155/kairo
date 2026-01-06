@@ -59,7 +59,8 @@ internal class KotlinMonthSerializationTest {
         json.deserialize<Month>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlinx.datetime.Month(non-null) but was null",
+          "; specified kotlinx.datetime.Month(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Month?>("null").shouldBeNull()

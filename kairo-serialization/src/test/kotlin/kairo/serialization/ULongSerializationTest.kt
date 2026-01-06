@@ -117,7 +117,8 @@ internal class ULongSerializationTest {
         json.deserialize<ULong>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.ULong(non-null) but was null",
+          "; specified kotlin.ULong(non-null)" +
+          " but was null",
       )
 
       json.deserialize<ULong?>("null").shouldBeNull()

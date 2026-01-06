@@ -219,7 +219,8 @@ internal class PolymorphicSerializationTest {
         json.deserialize<Animal>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.PolymorphicSerializationTest.Animal(non-null) but was null",
+          "; specified kairo.serialization.PolymorphicSerializationTest.Animal(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Animal?>("null").shouldBeNull()

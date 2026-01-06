@@ -60,7 +60,8 @@ internal class KotlinTimeZoneSerializationTest {
         json.deserialize<ZoneId>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.ZoneId(non-null) but was null",
+          "; specified java.time.ZoneId(non-null)" +
+          " but was null",
       )
 
       json.deserialize<ZoneId?>("null").shouldBeNull()
