@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -34,7 +35,9 @@ internal class DataObjectSerializationTest {
     runTest {
       shouldThrowExactly<UnrecognizedPropertyException> {
         json.deserialize<DataObject>("""{"other":"unknown"}""")
-      }
+      }.message.shouldStartWith(
+        "Unrecognized field \"other\""
+      )
     }
 
   @Test
@@ -42,7 +45,10 @@ internal class DataObjectSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<DataObject>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kairo.serialization.DataObjectSerializationTest.DataObject(non-null) but was null"
+      )
 
       json.deserialize<DataObject?>("null").shouldBeNull()
     }
@@ -52,7 +58,9 @@ internal class DataObjectSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataObject>("true")
-      }
+      }.message.shouldStartWith(
+        "Cannot construct instance of `kairo.serialization.DataObjectSerializationTest\$DataObject`"
+      )
     }
 
   @Test
@@ -60,7 +68,9 @@ internal class DataObjectSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataObject>("0")
-      }
+      }.message.shouldStartWith(
+        "Cannot construct instance of `kairo.serialization.DataObjectSerializationTest\$DataObject`"
+      )
     }
 
   @Test
@@ -68,7 +78,10 @@ internal class DataObjectSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DataObject>("\"\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot coerce empty String (\"\")" +
+          " to `kairo.serialization.DataObjectSerializationTest\$DataObject` value"
+      )
     }
 
   @Test
@@ -76,6 +89,9 @@ internal class DataObjectSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataObject>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `kairo.serialization.DataObjectSerializationTest\$DataObject`" +
+          " from Array value"
+      )
     }
 }

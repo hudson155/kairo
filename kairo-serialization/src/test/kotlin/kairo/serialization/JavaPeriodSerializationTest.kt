@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import java.time.Period
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -50,7 +51,10 @@ internal class JavaPeriodSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Period>("\"0D\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Period`" +
+          " from String \"0D\""
+      )
     }
 
   @Test
@@ -58,7 +62,10 @@ internal class JavaPeriodSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Period>("\"P 0D\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Period`" +
+          " from String \"P 0D\""
+      )
     }
 
   @Test
@@ -66,7 +73,10 @@ internal class JavaPeriodSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Period>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified java.time.Period(non-null) but was null"
+      )
 
       json.deserialize<Period?>("null").shouldBeNull()
     }
@@ -76,7 +86,9 @@ internal class JavaPeriodSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Period>("true")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_TRUE)"
+      )
     }
 
   @Test
@@ -84,7 +96,9 @@ internal class JavaPeriodSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Period>("0")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_NUMBER_INT)"
+      )
     }
 
   @Test
@@ -92,7 +106,9 @@ internal class JavaPeriodSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Period>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (START_OBJECT)"
+      )
     }
 
   @Test
@@ -100,6 +116,9 @@ internal class JavaPeriodSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Period>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Period`" +
+          " from Array value"
+      )
     }
 }

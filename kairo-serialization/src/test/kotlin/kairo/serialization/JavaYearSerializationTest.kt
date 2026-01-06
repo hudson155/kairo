@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import java.time.Year
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -42,7 +43,10 @@ internal class JavaYearSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Year>("\"2 023\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Year`" +
+          " from String \"2 023\""
+      )
     }
 
   @Test
@@ -50,7 +54,10 @@ internal class JavaYearSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Year>("\"2,023\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Year`" +
+          " from String \"2,023\""
+      )
     }
 
   @Test
@@ -58,7 +65,10 @@ internal class JavaYearSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Year>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified java.time.Year(non-null) but was null"
+      )
 
       json.deserialize<Year?>("null").shouldBeNull()
     }
@@ -68,7 +78,9 @@ internal class JavaYearSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Year>("true")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_TRUE)"
+      )
     }
 
   @Test
@@ -76,7 +88,9 @@ internal class JavaYearSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Year>("2023.0")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_NUMBER_FLOAT)"
+      )
     }
 
   @Test
@@ -84,7 +98,9 @@ internal class JavaYearSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Year>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (START_OBJECT)"
+      )
     }
 
   @Test
@@ -92,6 +108,9 @@ internal class JavaYearSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Year>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.Year`" +
+          " from Array value"
+      )
     }
 }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import java.time.LocalTime
 import java.time.OffsetTime
 import java.time.ZoneOffset
@@ -43,11 +44,17 @@ internal class JavaOffsetTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetTime>("\"-01:13:20.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetTime`" +
+          " from String \"-01:13:20.123456789Z\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetTime>("\"24:13:20.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetTime`" +
+          " from String \"24:13:20.123456789Z\""
+      )
     }
 
   @Test
@@ -55,11 +62,17 @@ internal class JavaOffsetTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetTime>("\"22:-01:20.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetTime`" +
+          " from String \"22:-01:20.123456789Z\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetTime>("\"22:60:20.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetTime`" +
+          " from String \"22:60:20.123456789Z\""
+      )
     }
 
   @Test
@@ -67,11 +80,17 @@ internal class JavaOffsetTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetTime>("\"22:13:-01.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetTime`" +
+          " from String \"22:13:-01.123456789Z\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetTime>("\"22:13:60.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetTime`" +
+          " from String \"22:13:60.123456789Z\""
+      )
     }
 
   @Test
@@ -79,7 +98,10 @@ internal class JavaOffsetTimeSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<OffsetTime>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified java.time.OffsetTime(non-null) but was null"
+      )
 
       json.deserialize<OffsetTime?>("null").shouldBeNull()
     }
@@ -89,7 +111,9 @@ internal class JavaOffsetTimeSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<OffsetTime>("true")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_TRUE)"
+      )
     }
 
   @Test
@@ -97,7 +121,9 @@ internal class JavaOffsetTimeSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<OffsetTime>("221360123456789")
-      }
+      }.message.shouldStartWith(
+        "raw timestamp (221360123456789) not allowed for `java.time.OffsetTime`"
+      )
     }
 
   @Test
@@ -105,7 +131,9 @@ internal class JavaOffsetTimeSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<OffsetTime>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (START_OBJECT)"
+      )
     }
 
   @Test
@@ -113,6 +141,9 @@ internal class JavaOffsetTimeSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<OffsetTime>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified java.time.OffsetTime(non-null) but was null"
+      )
     }
 }

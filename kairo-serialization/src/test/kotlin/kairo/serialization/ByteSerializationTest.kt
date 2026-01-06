@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -36,11 +37,11 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<Byte>("-129")
-      }
+      }.message.shouldStartWith(
+        "Numeric value (-129) out of range of Java byte"
+      )
 
-      /**
-       * This seems like a bug in Jackson!
-       */
+      // This seems like a bug in Jackson! I think this should throw.
       json.deserialize<Byte>("128").shouldBe((-128).toByte())
     }
 
@@ -49,7 +50,10 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Byte>("4 2")
-      }
+      }.message.shouldStartWith(
+        "Trailing token (of type VALUE_NUMBER_INT) found after value" +
+          " (bound as `java.lang.Byte`)"
+      )
     }
 
   @Test
@@ -57,7 +61,9 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Byte>("042")
-      }
+      }.message.shouldStartWith(
+        "Invalid numeric value: Leading zeroes not allowed"
+      )
     }
 
   @Test
@@ -65,7 +71,10 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Byte>("1e0")
-      }
+      }.message.shouldStartWith(
+        "Cannot coerce Floating-point value (1e0)" +
+          " to `java.lang.Byte` value"
+      )
     }
 
   @Test
@@ -73,7 +82,10 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Byte>("0x0")
-      }
+      }.message.shouldStartWith(
+        "Unexpected character ('x' (code 120))" +
+          ": Expected space separating root-level values"
+      )
     }
 
   @Test
@@ -81,7 +93,9 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Byte>("NaN")
-      }
+      }.message.shouldStartWith(
+        "Non-standard token 'NaN'"
+      )
     }
 
   @Test
@@ -89,11 +103,15 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Byte>("Infinity")
-      }
+      }.message.shouldStartWith(
+        "Non-standard token 'Infinity'"
+      )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Byte>("-Infinity")
-      }
+      }.message.shouldStartWith(
+        "Non-standard token '-Infinity'"
+      )
     }
 
   @Test
@@ -101,7 +119,10 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Byte>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlin.Byte(non-null) but was null"
+      )
 
       json.deserialize<Byte?>("null").shouldBeNull()
     }
@@ -111,7 +132,10 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Byte>("true")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.Byte`" +
+          " from Boolean value"
+      )
     }
 
   @Test
@@ -119,7 +143,10 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Byte>("0.0")
-      }
+      }.message.shouldStartWith(
+        "Cannot coerce Floating-point value (0.0)" +
+          " to `java.lang.Byte` value"
+      )
     }
 
   @Test
@@ -127,7 +154,10 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Byte>("\"0\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot coerce String value (\"0\")" +
+          " to `java.lang.Byte` value"
+      )
     }
 
   @Test
@@ -135,7 +165,10 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Byte>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.Byte`" +
+          " from Object value"
+      )
     }
 
   @Test
@@ -143,6 +176,9 @@ internal class ByteSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Byte>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.Byte`" +
+          " from Array value"
+      )
     }
 }

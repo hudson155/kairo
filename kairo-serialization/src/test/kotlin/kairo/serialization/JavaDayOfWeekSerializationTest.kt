@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import java.time.DayOfWeek
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -34,7 +35,10 @@ internal class JavaDayOfWeekSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DayOfWeek>("\"tuesday\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.DayOfWeek`" +
+          " from String \"tuesday\""
+      )
     }
 
   @Test
@@ -42,7 +46,10 @@ internal class JavaDayOfWeekSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DayOfWeek>("\"tue\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.DayOfWeek`" +
+          " from String \"tue\""
+      )
     }
 
   @Test
@@ -50,7 +57,10 @@ internal class JavaDayOfWeekSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<DayOfWeek>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified java.time.DayOfWeek(non-null) but was null"
+      )
 
       json.deserialize<DayOfWeek?>("null").shouldBeNull()
     }
@@ -60,7 +70,10 @@ internal class JavaDayOfWeekSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DayOfWeek>("true")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.DayOfWeek`" +
+          " from Boolean value"
+      )
     }
 
   @Test
@@ -68,7 +81,10 @@ internal class JavaDayOfWeekSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DayOfWeek>("2")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.DayOfWeek`" +
+          " from number 2: not allowed to deserialize Enum value out of number"
+      )
     }
 
   @Test
@@ -76,7 +92,10 @@ internal class JavaDayOfWeekSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DayOfWeek>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.DayOfWeek`" +
+          " from Object value"
+      )
     }
 
   @Test
@@ -84,6 +103,9 @@ internal class JavaDayOfWeekSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DayOfWeek>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.DayOfWeek`" +
+          " from Array value"
+      )
     }
 }

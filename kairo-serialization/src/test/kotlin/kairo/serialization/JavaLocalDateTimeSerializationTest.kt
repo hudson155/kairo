@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import java.time.LocalDateTime
 import java.time.Month
 import kotlinx.coroutines.test.runTest
@@ -42,11 +43,17 @@ internal class JavaLocalDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-00-14T22:13:20.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalDateTime`" +
+          " from String \"2023-00-14T22:13:20.123456789\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-13-14T22:13:20.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalDateTime`" +
+          " from String \"2023-13-14T22:13:20.123456789\""
+      )
     }
 
   @Test
@@ -54,11 +61,17 @@ internal class JavaLocalDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-11-00T22:13:20.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalDateTime`" +
+          " from String \"2023-11-00T22:13:20.123456789\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-11-31T22:13:20.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalDateTime`" +
+          " from String \"2023-11-31T22:13:20.123456789\""
+      )
     }
 
   @Test
@@ -66,11 +79,17 @@ internal class JavaLocalDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-11-14T-01:13:20.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalDateTime`" +
+          " from String \"2023-11-14T-01:13:20.123456789\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-11-14T24:13:20.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalDateTime`" +
+          " from String \"2023-11-14T24:13:20.123456789\""
+      )
     }
 
   @Test
@@ -78,11 +97,17 @@ internal class JavaLocalDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-11-14T22:-01:20.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalDateTime`" +
+          " from String \"2023-11-14T22:-01:20.123456789\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-11-14T22:60:20.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalDateTime`" +
+          " from String \"2023-11-14T22:60:20.123456789\""
+      )
     }
 
   @Test
@@ -90,11 +115,17 @@ internal class JavaLocalDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-11-14T22:13:-01.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalDateTime`" +
+          " from String \"2023-11-14T22:13:-01.123456789\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-11-14T22:13:60.123456789\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.LocalDateTime`" +
+          " from String \"2023-11-14T22:13:60.123456789\""
+      )
     }
 
   @Test
@@ -102,7 +133,10 @@ internal class JavaLocalDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<LocalDateTime>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified java.time.LocalDateTime(non-null) but was null"
+      )
 
       json.deserialize<LocalDateTime?>("null").shouldBeNull()
     }
@@ -112,7 +146,9 @@ internal class JavaLocalDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDateTime>("true")
-      }
+      }.message.shouldStartWith(
+        "Expected array or string"
+      )
     }
 
   @Test
@@ -120,15 +156,21 @@ internal class JavaLocalDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDateTime>("20231114221320123456789")
-      }
+      }.message.shouldStartWith(
+        "raw timestamp (20231114221320123456789) not allowed for `java.time.LocalDateTime`"
+      )
 
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDateTime>("1700000000")
-      }
+      }.message.shouldStartWith(
+        "raw timestamp (1700000000) not allowed for `java.time.LocalDateTime`"
+      )
 
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDateTime>("1700000000123456789")
-      }
+      }.message.shouldStartWith(
+        "raw timestamp (1700000000123456789) not allowed for `java.time.LocalDateTime`"
+      )
     }
 
   @Test
@@ -136,7 +178,9 @@ internal class JavaLocalDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDateTime>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Expected array or string"
+      )
     }
 
   @Test
@@ -144,6 +188,9 @@ internal class JavaLocalDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<LocalDateTime>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified java.time.LocalDateTime(non-null) but was null"
+      )
     }
 }

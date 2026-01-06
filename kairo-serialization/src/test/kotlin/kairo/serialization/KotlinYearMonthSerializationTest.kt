@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Month
 import kotlinx.datetime.YearMonth
@@ -41,11 +42,17 @@ internal class KotlinYearMonthSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<YearMonth>("\"2023-00\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.YearMonth`" +
+          " from String \"2023-00\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<YearMonth>("\"2023-13\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.YearMonth`" +
+          " from String \"2023-13\""
+      )
     }
 
   @Test
@@ -53,7 +60,10 @@ internal class KotlinYearMonthSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<YearMonth>("\"202311\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.YearMonth`" +
+          " from String \"202311\""
+      )
     }
 
   @Test
@@ -61,7 +71,10 @@ internal class KotlinYearMonthSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<YearMonth>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlinx.datetime.YearMonth(non-null) but was null"
+      )
 
       json.deserialize<YearMonth?>("null").shouldBeNull()
     }
@@ -71,7 +84,9 @@ internal class KotlinYearMonthSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<YearMonth>("true")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_TRUE)"
+      )
     }
 
   @Test
@@ -79,7 +94,9 @@ internal class KotlinYearMonthSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<YearMonth>("202311")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_NUMBER_INT)"
+      )
     }
 
   @Test
@@ -87,7 +104,9 @@ internal class KotlinYearMonthSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<YearMonth>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (START_OBJECT)"
+      )
     }
 
   @Test
@@ -95,6 +114,6 @@ internal class KotlinYearMonthSerializationTest {
     runTest {
       shouldThrowExactly<NullPointerException> {
         json.deserialize<YearMonth>("""[]""")
-      }
+      }.message.shouldBeNull() // This seems like a bug in Jackson! I don't think this should be null.
     }
 }

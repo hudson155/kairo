@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -32,7 +33,10 @@ internal class StringSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<String>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlin.String(non-null) but was null"
+      )
 
       json.deserialize<String?>("null").shouldBeNull()
     }
@@ -54,7 +58,10 @@ internal class StringSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<String>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.String`" +
+          " from Object value"
+      )
     }
 
   @Test
@@ -62,6 +69,9 @@ internal class StringSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<String>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.String`" +
+          " from Array value"
+      )
     }
 }

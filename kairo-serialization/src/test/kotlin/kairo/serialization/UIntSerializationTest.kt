@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -33,11 +34,15 @@ internal class UIntSerializationTest {
     runTest {
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<UInt>("-1")
-      }
+      }.message.shouldStartWith(
+        "Numeric value (-1) out of range of UInt (0 - 4294967295)."
+      )
 
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<UInt>("4294967296")
-      }
+      }.message.shouldStartWith(
+        "Numeric value (4294967296) out of range of UInt (0 - 4294967295)."
+      )
     }
 
   @Test
@@ -45,7 +50,10 @@ internal class UIntSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<UInt>("2 147573858")
-      }
+      }.message.shouldStartWith(
+        "Trailing token (of type VALUE_NUMBER_INT) found after value" +
+          " (bound as `kotlin.UInt`)"
+      )
     }
 
   @Test
@@ -53,15 +61,15 @@ internal class UIntSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("02147573858")
-      }
+      }.message.shouldStartWith(
+        "Invalid numeric value: Leading zeroes not allowed"
+      )
     }
 
   @Test
   fun `deserialize, wrong format (scientific notation)`(): Unit =
     runTest {
-      /**
-       * This seems like a bug in Jackson!
-       */
+      // This seems like a bug in Jackson! I think this should throw.
       json.deserialize<UInt>("1e0").shouldBe(1U)
     }
 
@@ -70,7 +78,10 @@ internal class UIntSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("0x0")
-      }
+      }.message.shouldStartWith(
+        "Unexpected character ('x' (code 120))" +
+          ": Expected space separating root-level values"
+      )
     }
 
   @Test
@@ -78,7 +89,9 @@ internal class UIntSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("NaN")
-      }
+      }.message.shouldStartWith(
+        "Non-standard token 'NaN'"
+      )
     }
 
   @Test
@@ -86,11 +99,15 @@ internal class UIntSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("Infinity")
-      }
+      }.message.shouldStartWith(
+        "Non-standard token 'Infinity'"
+      )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("-Infinity")
-      }
+      }.message.shouldStartWith(
+        "Non-standard token '-Infinity'"
+      )
     }
 
   @Test
@@ -98,7 +115,10 @@ internal class UIntSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<UInt>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlin.UInt(non-null) but was null"
+      )
 
       json.deserialize<UInt?>("null").shouldBeNull()
     }
@@ -108,15 +128,15 @@ internal class UIntSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("true")
-      }
+      }.message.shouldStartWith(
+        "Current token (VALUE_TRUE) not numeric, can not use numeric value accessors"
+      )
     }
 
   @Test
   fun `deserialize, wrong type (float)`(): Unit =
     runTest {
-      /**
-       * This seems like a bug in Jackson!
-       */
+      // This seems like a bug in Jackson! I think this should throw.
       json.deserialize<UInt>("0.0").shouldBe(0U)
     }
 
@@ -125,7 +145,9 @@ internal class UIntSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("\"0\"")
-      }
+      }.message.shouldStartWith(
+        "Current token (VALUE_STRING) not numeric, can not use numeric value accessors"
+      )
     }
 
   @Test
@@ -133,7 +155,9 @@ internal class UIntSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Current token (START_OBJECT) not numeric, can not use numeric value accessors"
+      )
     }
 
   @Test
@@ -141,6 +165,8 @@ internal class UIntSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UInt>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Current token (START_ARRAY) not numeric, can not use numeric value accessors"
+      )
     }
 }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -45,11 +46,16 @@ internal class FloatSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("9 0210")
-      }
+      }.message.shouldStartWith(
+        "Invalid numeric value: Leading zeroes not allowed"
+      )
 
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Float>("3.1 4")
-      }
+      }.message.shouldStartWith(
+        "Trailing token (of type VALUE_NUMBER_INT) found after value" +
+          " (bound as `java.lang.Float`)"
+      )
     }
 
   @Test
@@ -57,11 +63,15 @@ internal class FloatSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("090210")
-      }
+      }.message.shouldStartWith(
+        "Invalid numeric value: Leading zeroes not allowed"
+      )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("03.14")
-      }
+      }.message.shouldStartWith(
+        "Invalid numeric value: Leading zeroes not allowed"
+      )
     }
 
   @Test
@@ -69,7 +79,10 @@ internal class FloatSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("0x0")
-      }
+      }.message.shouldStartWith(
+        "Unexpected character ('x' (code 120))" +
+          ": Expected space separating root-level values"
+      )
     }
 
   @Test
@@ -77,7 +90,9 @@ internal class FloatSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("NaN")
-      }
+      }.message.shouldStartWith(
+        "Non-standard token 'NaN'"
+      )
     }
 
   @Test
@@ -85,11 +100,15 @@ internal class FloatSerializationTest {
     runTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("Infinity")
-      }
+      }.message.shouldStartWith(
+        "Non-standard token 'Infinity'"
+      )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("-Infinity")
-      }
+      }.message.shouldStartWith(
+        "Non-standard token '-Infinity'"
+      )
     }
 
   @Test
@@ -97,7 +116,10 @@ internal class FloatSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Float>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlin.Float(non-null) but was null"
+      )
 
       json.deserialize<Float?>("null").shouldBeNull()
     }
@@ -107,7 +129,10 @@ internal class FloatSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Float>("true")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.Float`" +
+          " from Boolean value"
+      )
     }
 
   @Test
@@ -115,7 +140,10 @@ internal class FloatSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Float>("\"0\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot coerce String value (\"0\")" +
+          " to `java.lang.Float` value"
+      )
     }
 
   @Test
@@ -123,7 +151,10 @@ internal class FloatSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Float>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.Float`" +
+          " from Object value"
+      )
     }
 
   @Test
@@ -131,6 +162,9 @@ internal class FloatSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Float>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.Float`" +
+          " from Array value"
+      )
     }
 }

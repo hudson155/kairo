@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import java.time.DateTimeException
 import java.time.LocalDateTime
 import java.time.Month
@@ -66,7 +67,9 @@ internal class JavaOffsetDateTimeSerializationTest {
 
       shouldThrowExactly<DateTimeException> {
         json.deserialize<OffsetDateTime>("1700000000123456789")
-      }
+      }.message.shouldStartWith(
+        "Instant exceeds minimum or maximum instant"
+      )
     }
 
   @Test
@@ -80,7 +83,9 @@ internal class JavaOffsetDateTimeSerializationTest {
 
       shouldThrowExactly<DateTimeException> {
         json.deserialize<OffsetDateTime>("1700000000123456789.0")
-      }
+      }.message.shouldStartWith(
+        "Instant exceeds minimum or maximum instant"
+      )
 
       json.deserialize<OffsetDateTime>("1700000000.123456789")
         .shouldBe(
@@ -94,11 +99,17 @@ internal class JavaOffsetDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetDateTime>("\"2023-00-14T22:13:20.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetDateTime`" +
+          " from String \"2023-00-14T22:13:20.123456789Z\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetDateTime>("\"2023-13-14T22:13:20.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetDateTime`" +
+          " from String \"2023-13-14T22:13:20.123456789Z\""
+      )
     }
 
   @Test
@@ -106,11 +117,17 @@ internal class JavaOffsetDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetDateTime>("\"2023-11-00T22:13:20.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetDateTime`" +
+          " from String \"2023-11-00T22:13:20.123456789Z\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetDateTime>("\"2023-11-31T22:13:20.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetDateTime`" +
+          " from String \"2023-11-31T22:13:20.123456789Z\""
+      )
     }
 
   @Test
@@ -118,11 +135,17 @@ internal class JavaOffsetDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetDateTime>("\"2023-11-14T-01:13:20.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetDateTime`" +
+          " from String \"2023-11-14T-01:13:20.123456789Z\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetDateTime>("\"2023-11-14T24:13:20.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetDateTime`" +
+          " from String \"2023-11-14T24:13:20.123456789Z\""
+      )
     }
 
   @Test
@@ -130,11 +153,17 @@ internal class JavaOffsetDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetDateTime>("\"2023-11-14T22:-01:20.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetDateTime`" +
+          " from String \"2023-11-14T22:-01:20.123456789Z\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetDateTime>("\"2023-11-14T22:60:20.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetDateTime`" +
+          " from String \"2023-11-14T22:60:20.123456789Z\""
+      )
     }
 
   @Test
@@ -142,11 +171,17 @@ internal class JavaOffsetDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetDateTime>("\"2023-11-14T22:13:-01.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetDateTime`" +
+          " from String \"2023-11-14T22:13:-01.123456789Z\""
+      )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<OffsetDateTime>("\"2023-11-14T22:13:60.123456789Z\"")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetDateTime`" +
+          " from String \"2023-11-14T22:13:60.123456789Z\""
+      )
     }
 
   @Test
@@ -154,7 +189,10 @@ internal class JavaOffsetDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<OffsetDateTime>("null")
-      }
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified java.time.OffsetDateTime(non-null) but was null"
+      )
 
       json.deserialize<OffsetDateTime?>("null").shouldBeNull()
     }
@@ -164,7 +202,9 @@ internal class JavaOffsetDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<OffsetDateTime>("true")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (VALUE_TRUE)"
+      )
     }
 
   @Test
@@ -172,7 +212,9 @@ internal class JavaOffsetDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<OffsetDateTime>("""{}""")
-      }
+      }.message.shouldStartWith(
+        "Unexpected token (START_OBJECT)"
+      )
     }
 
   @Test
@@ -180,6 +222,9 @@ internal class JavaOffsetDateTimeSerializationTest {
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<OffsetDateTime>("""[]""")
-      }
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.time.OffsetDateTime`" +
+          " from Array value"
+      )
     }
 }
