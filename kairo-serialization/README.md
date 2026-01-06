@@ -124,6 +124,52 @@ val json: KairoJson =
   }
 ```
 
+#### Customizing `BigDecimal` serialization
+
+By default, `BigDecimal` serializes to a `Double`.
+To use a different approach for serializing `BigDecimal`,
+you can either change it globally
+
+```kotlin
+val json: KairoJson =
+  KairoJson {
+    bigDecimalFormat = BigDecimalFormat.String
+  }
+```
+
+or change it locally
+
+```kotlin
+data class MyClass(
+  @JsonSerialize(using = BigDecimalSerializer.AsString::class)
+  @JsonDeserialize(using = BigDecimalDeserializer.AsString::class)
+  val value: BigDecimal,
+)
+```
+
+#### Customizing `BigInteger` serialization
+
+By default, `BigInteger` serializes to a `Long`.
+To use a different approach for serializing `BigInteger`,
+you can either change it globally
+
+```kotlin
+val json: KairoJson =
+  KairoJson {
+    bigIntegerFormat = BigIntegerFormat.String
+  }
+```
+
+or change it locally
+
+```kotlin
+data class MyClass(
+  @JsonSerialize(using = BigIntegerSerializer.String::class)
+  @JsonDeserialize(using = BigIntegerDeserializer.String::class)
+  val value: BigInteger,
+)
+```
+
 ### Well-known types
 
 The following types are considered "well-known",
