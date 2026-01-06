@@ -15,9 +15,10 @@ import org.junit.jupiter.api.Test
  * This test does NOT attempt to comprehensively include other well-known types in [DataClass].
  */
 internal class DataClassSerializationTest {
-  private val json: KairoJson = KairoJson {
-    pretty = true
-  }
+  private val json: KairoJson =
+    KairoJson {
+      pretty = true
+    }
 
   internal data class DataClass(
     val boolean: Boolean,

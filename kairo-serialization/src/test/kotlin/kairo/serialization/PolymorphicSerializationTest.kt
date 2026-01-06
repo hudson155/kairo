@@ -20,9 +20,10 @@ import org.junit.jupiter.api.Test
  * so that we can test generic type erasure.
  */
 internal class PolymorphicSerializationTest {
-  private val json: KairoJson = KairoJson {
-    pretty = true
-  }
+  private val json: KairoJson =
+    KairoJson {
+      pretty = true
+    }
 
   @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
   @JsonSubTypes(

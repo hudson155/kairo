@@ -54,6 +54,8 @@ ktorServer-netty = { module = "io.ktor:ktor-server-netty" }
 ktorServer-sse = { module = "io.ktor:ktor-server-sse" }
 ktorServer-statusPages = { module = "io.ktor:ktor-server-status-pages" }
 
+ktorUtils = { module = "io.ktor:ktor-utils" }
+
 logging = { module = "io.github.oshai:kotlin-logging-jvm" }
 
 mailersend = { module = "com.mailersend:java-sdk" }
