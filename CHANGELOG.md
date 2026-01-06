@@ -227,6 +227,11 @@ No changes.
 - **Automatic string trimming removed.**
   Data is now preserved exactly as sent.
 
+- **Native support for Ktor types**
+  (`HttpMethod` and `HttpStatusCode`).
+
+- **Ability to customize several default serialization formats.**
+
 #### Server
 
 No changes.
