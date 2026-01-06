@@ -11,7 +11,6 @@ import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-@Suppress("UnderscoresInNumericLiterals")
 internal class SetSerializationTest {
   private val json: KairoJson = KairoJson()
 
