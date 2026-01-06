@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package kairo.serialization
 
 import io.ktor.util.AttributeKey
