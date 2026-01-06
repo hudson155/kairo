@@ -48,10 +48,16 @@ The following Framework Features are currently available.
   Uses Koin for reflection-free, Kotlin-friendly dependency injection.
 - [HealthCheckFeature](../kairo-health-check/README.md):
   Adds configurable health check REST endpoints to your application.
+- [MailersendFeature](../kairo-mailersend/README.md)
+  for sending emails.
 - [RestFeature](../kairo-rest/README.md):
   Declarative REST endpoints wired through Ktor.
+- [SlackFeature](../kairo-slack/README.md)
+  for sending messages to Slack channels.
 - [SqlFeature](../kairo-sql/README.md):
   Type-safe SQL with async I/O.
+- [StytchFeature](../kairo-stytch/README.md)
+  for identity management.
 
 You can also create your own —
 most of these are fairly straightforward.
