@@ -1,6 +1,10 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
@@ -79,7 +83,7 @@ internal class DataClassSerializationTest {
   @Test
   fun `deserialize, missing property`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataClass>(
           """
             {
@@ -100,7 +104,7 @@ internal class DataClassSerializationTest {
   @Test
   fun `deserialize, unknown property`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<UnrecognizedPropertyException> {
         json.deserialize<DataClass>(
           """
             {
@@ -123,7 +127,7 @@ internal class DataClassSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<DataClass>("null")
       }
 
@@ -133,7 +137,7 @@ internal class DataClassSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataClass>("true")
       }
     }
@@ -141,7 +145,7 @@ internal class DataClassSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataClass>("0")
       }
     }
@@ -149,7 +153,7 @@ internal class DataClassSerializationTest {
   @Test
   fun `deserialize, wrong type (string)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DataClass>("\"\"")
       }
     }
@@ -157,7 +161,7 @@ internal class DataClassSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataClass>("""[]""")
       }
     }

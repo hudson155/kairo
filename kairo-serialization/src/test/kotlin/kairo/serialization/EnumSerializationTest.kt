@@ -1,7 +1,10 @@
 package kairo.serialization
 
 import com.fasterxml.jackson.annotation.JsonEnumDefaultValue
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
@@ -49,7 +52,7 @@ internal class EnumSerializationTest {
   @Test
   fun `deserialize, unknown enum`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Genre>("\"Education\"")
       }
     }
@@ -57,7 +60,7 @@ internal class EnumSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Genre>("null")
       }
 
@@ -67,7 +70,7 @@ internal class EnumSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Genre>("true")
       }
     }
@@ -75,7 +78,7 @@ internal class EnumSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Genre>("0")
       }
     }
@@ -83,7 +86,7 @@ internal class EnumSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Genre>("""{}""")
       }
     }
@@ -91,7 +94,7 @@ internal class EnumSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Genre>("""[]""")
       }
     }

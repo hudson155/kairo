@@ -1,6 +1,10 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.core.JsonParseException
+import com.fasterxml.jackson.core.exc.InputCoercionException
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
@@ -27,11 +31,11 @@ internal class UShortSerializationTest {
   @Test
   fun `deserialize, out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InputCoercionException> {
         json.deserialize<UShort>("-1")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InputCoercionException> {
         json.deserialize<UShort>("65536")
       }
     }
@@ -39,7 +43,7 @@ internal class UShortSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<UShort>("3 2923")
       }
     }
@@ -47,7 +51,7 @@ internal class UShortSerializationTest {
   @Test
   fun `deserialize, wrong format (leading 0)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("032923")
       }
     }
@@ -64,7 +68,7 @@ internal class UShortSerializationTest {
   @Test
   fun `deserialize, wrong format (hex)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("0x0")
       }
     }
@@ -72,7 +76,7 @@ internal class UShortSerializationTest {
   @Test
   fun `deserialize, wrong format (NaN)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("NaN")
       }
     }
@@ -80,11 +84,11 @@ internal class UShortSerializationTest {
   @Test
   fun `deserialize, wrong format (Infinity)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("Infinity")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("-Infinity")
       }
     }
@@ -92,7 +96,7 @@ internal class UShortSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<UShort>("null")
       }
 
@@ -102,7 +106,7 @@ internal class UShortSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("true")
       }
     }
@@ -119,7 +123,7 @@ internal class UShortSerializationTest {
   @Test
   fun `deserialize, wrong type (string)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("\"0\"")
       }
     }
@@ -127,7 +131,7 @@ internal class UShortSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("""{}""")
       }
     }
@@ -135,7 +139,7 @@ internal class UShortSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("""[]""")
       }
     }

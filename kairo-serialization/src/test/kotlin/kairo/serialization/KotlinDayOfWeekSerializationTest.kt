@@ -1,6 +1,9 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
@@ -29,7 +32,7 @@ internal class KotlinDayOfWeekSerializationTest {
   @Test
   fun `deserialize, wrong format (lowercase)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DayOfWeek>("\"tuesday\"")
       }
     }
@@ -37,7 +40,7 @@ internal class KotlinDayOfWeekSerializationTest {
   @Test
   fun `deserialize, wrong format (short)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DayOfWeek>("\"tue\"")
       }
     }
@@ -45,7 +48,7 @@ internal class KotlinDayOfWeekSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<DayOfWeek>("null")
       }
 
@@ -55,7 +58,7 @@ internal class KotlinDayOfWeekSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DayOfWeek>("true")
       }
     }
@@ -63,7 +66,7 @@ internal class KotlinDayOfWeekSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DayOfWeek>("2")
       }
     }
@@ -71,7 +74,7 @@ internal class KotlinDayOfWeekSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DayOfWeek>("""{}""")
       }
     }
@@ -79,7 +82,7 @@ internal class KotlinDayOfWeekSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DayOfWeek>("""[]""")
       }
     }

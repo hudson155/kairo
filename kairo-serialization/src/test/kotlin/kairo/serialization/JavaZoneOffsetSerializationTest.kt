@@ -1,6 +1,9 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import java.time.ZoneOffset
@@ -29,11 +32,11 @@ internal class JavaZoneOffsetSerializationTest {
   @Test
   fun `deserialize, out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZoneOffset>("\"-19:00\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZoneOffset>("\"+19:00\"")
       }
     }
@@ -41,7 +44,7 @@ internal class JavaZoneOffsetSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<ZoneOffset>("null")
       }
 
@@ -51,7 +54,7 @@ internal class JavaZoneOffsetSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneOffset>("true")
       }
     }
@@ -59,7 +62,7 @@ internal class JavaZoneOffsetSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneOffset>("0")
       }
     }
@@ -67,7 +70,7 @@ internal class JavaZoneOffsetSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneOffset>("""{}""")
       }
     }
@@ -75,7 +78,7 @@ internal class JavaZoneOffsetSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneOffset>("""[]""")
       }
     }

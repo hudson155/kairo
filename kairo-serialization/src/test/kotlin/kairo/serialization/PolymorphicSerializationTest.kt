@@ -2,7 +2,11 @@ package kairo.serialization
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.InvalidTypeIdException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
@@ -139,7 +143,7 @@ internal class PolymorphicSerializationTest {
   @Test
   fun `deserialize, missing discriminator`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidTypeIdException> {
         json.deserialize<Animal>(
           """
             {
@@ -154,7 +158,7 @@ internal class PolymorphicSerializationTest {
   @Test
   fun `deserialize, unknown discriminator`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidTypeIdException> {
         json.deserialize<Animal>(
           """
             {
@@ -170,7 +174,7 @@ internal class PolymorphicSerializationTest {
   @Test
   fun `deserialize, missing property`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Animal>(
           """
             {
@@ -185,7 +189,7 @@ internal class PolymorphicSerializationTest {
   @Test
   fun `deserialize, unknown property`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<UnrecognizedPropertyException> {
         json.deserialize<Animal>(
           """
             {
@@ -202,7 +206,7 @@ internal class PolymorphicSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Animal>("null")
       }
 
@@ -212,7 +216,7 @@ internal class PolymorphicSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidTypeIdException> {
         json.deserialize<Animal>("true")
       }
     }
@@ -220,7 +224,7 @@ internal class PolymorphicSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidTypeIdException> {
         json.deserialize<Animal>("0")
       }
     }
@@ -228,7 +232,7 @@ internal class PolymorphicSerializationTest {
   @Test
   fun `deserialize, wrong type (string)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidTypeIdException> {
         json.deserialize<Animal>("\"\"")
       }
     }
@@ -236,7 +240,7 @@ internal class PolymorphicSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Animal>("""[]""")
       }
     }

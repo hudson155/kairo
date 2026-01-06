@@ -1,6 +1,9 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
@@ -36,11 +39,11 @@ internal class KotlinLocalDateSerializationTest {
   @Test
   fun `deserialize, month out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDate>("\"2023-00-14\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDate>("\"2023-13-14\"")
       }
     }
@@ -48,11 +51,11 @@ internal class KotlinLocalDateSerializationTest {
   @Test
   fun `deserialize, day out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDate>("\"2023-11-00\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDate>("\"2023-11-31\"")
       }
     }
@@ -60,7 +63,7 @@ internal class KotlinLocalDateSerializationTest {
   @Test
   fun `deserialize, wrong format (missing dashes)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDate>("\"20231114\"")
       }
     }
@@ -68,7 +71,7 @@ internal class KotlinLocalDateSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<LocalDate>("null")
       }
 
@@ -78,7 +81,7 @@ internal class KotlinLocalDateSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDate>("true")
       }
     }
@@ -86,7 +89,7 @@ internal class KotlinLocalDateSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDate>("20231114")
       }
     }
@@ -94,7 +97,7 @@ internal class KotlinLocalDateSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDate>("""{}""")
       }
     }
@@ -102,7 +105,7 @@ internal class KotlinLocalDateSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<NullPointerException> {
         json.deserialize<LocalDate>("""[]""")
       }
     }

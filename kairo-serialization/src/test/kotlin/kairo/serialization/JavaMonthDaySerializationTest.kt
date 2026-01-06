@@ -1,6 +1,9 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import java.time.Month
@@ -36,11 +39,11 @@ internal class JavaMonthDaySerializationTest {
   @Test
   fun `deserialize, month out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<MonthDay>("\"--00-14\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<MonthDay>("\"--13-14\"")
       }
     }
@@ -48,11 +51,11 @@ internal class JavaMonthDaySerializationTest {
   @Test
   fun `deserialize, day out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<MonthDay>("\"--11-00\"")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<MonthDay>("\"--11-31\"")
       }
     }
@@ -60,7 +63,7 @@ internal class JavaMonthDaySerializationTest {
   @Test
   fun `deserialize, wrong format (missing dashes)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<MonthDay>("\"1114\"")
       }
     }
@@ -68,7 +71,7 @@ internal class JavaMonthDaySerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<MonthDay>("null")
       }
 
@@ -78,7 +81,7 @@ internal class JavaMonthDaySerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<MonthDay>("true")
       }
     }
@@ -86,7 +89,7 @@ internal class JavaMonthDaySerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<MonthDay>("1114")
       }
     }
@@ -94,7 +97,7 @@ internal class JavaMonthDaySerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<MonthDay>("""{}""")
       }
     }
@@ -102,7 +105,7 @@ internal class JavaMonthDaySerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<MonthDay>("""[]""")
       }
     }

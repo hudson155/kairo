@@ -1,6 +1,9 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.core.JsonParseException
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import java.math.BigDecimal
@@ -44,11 +47,11 @@ internal class BigDecimalSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("9 0210")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigDecimal>("3.1 4")
       }
     }
@@ -56,11 +59,11 @@ internal class BigDecimalSerializationTest {
   @Test
   fun `deserialize, wrong format (leading 0)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("090210")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("03.14")
       }
     }
@@ -68,7 +71,7 @@ internal class BigDecimalSerializationTest {
   @Test
   fun `deserialize, wrong format (hex)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("0x0")
       }
     }
@@ -76,7 +79,7 @@ internal class BigDecimalSerializationTest {
   @Test
   fun `deserialize, wrong format (NaN)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("NaN")
       }
     }
@@ -84,11 +87,11 @@ internal class BigDecimalSerializationTest {
   @Test
   fun `deserialize, wrong format (Infinity)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("Infinity")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("-Infinity")
       }
     }
@@ -96,7 +99,7 @@ internal class BigDecimalSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<BigDecimal>("null")
       }
 
@@ -106,7 +109,7 @@ internal class BigDecimalSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigDecimal>("true")
       }
     }
@@ -114,7 +117,7 @@ internal class BigDecimalSerializationTest {
   @Test
   fun `deserialize, wrong type (string)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigDecimal>("\"0\"")
       }
     }
@@ -122,7 +125,7 @@ internal class BigDecimalSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigDecimal>("""{}""")
       }
     }
@@ -130,7 +133,7 @@ internal class BigDecimalSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigDecimal>("""[]""")
       }
     }

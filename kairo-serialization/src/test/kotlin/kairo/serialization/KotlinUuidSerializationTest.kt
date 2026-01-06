@@ -1,6 +1,9 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlin.uuid.Uuid
@@ -30,7 +33,7 @@ internal class KotlinUuidSerializationTest {
   @Test
   fun `deserialize, wrong format (too short)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Uuid>("\"a042df12-b775-42b2-aeb1-5bdd4ea78dc\"")
       }
     }
@@ -38,7 +41,7 @@ internal class KotlinUuidSerializationTest {
   @Test
   fun `deserialize, wrong format (too long)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Uuid>("\"a042df12-b775-42b2-aeb1-5bdd4ea78dc5c\"")
       }
     }
@@ -46,7 +49,7 @@ internal class KotlinUuidSerializationTest {
   @Test
   fun `deserialize, wrong format (missing dashes)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Uuid>("\"a042df12b77542b2aeb15bdd4ea78dc5\"")
       }
     }
@@ -54,7 +57,7 @@ internal class KotlinUuidSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Uuid>("null")
       }
 
@@ -64,7 +67,7 @@ internal class KotlinUuidSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Uuid>("true")
       }
     }
@@ -72,7 +75,7 @@ internal class KotlinUuidSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Uuid>("0")
       }
     }
@@ -80,7 +83,7 @@ internal class KotlinUuidSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Uuid>("""{}""")
       }
     }
@@ -88,7 +91,7 @@ internal class KotlinUuidSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Uuid>("""[]""")
       }
     }

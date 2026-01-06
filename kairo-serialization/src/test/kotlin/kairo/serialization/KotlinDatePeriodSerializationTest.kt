@@ -1,6 +1,9 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
@@ -41,7 +44,7 @@ internal class KotlinDatePeriodSerializationTest {
   @Test
   fun `deserialize, wrong format (missing p)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DatePeriod>("\"0D\"")
       }
     }
@@ -49,7 +52,7 @@ internal class KotlinDatePeriodSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<DatePeriod>("\"P 0D\"")
       }
     }
@@ -57,7 +60,7 @@ internal class KotlinDatePeriodSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<DatePeriod>("null")
       }
 
@@ -67,7 +70,7 @@ internal class KotlinDatePeriodSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DatePeriod>("true")
       }
     }
@@ -75,7 +78,7 @@ internal class KotlinDatePeriodSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DatePeriod>("0")
       }
     }
@@ -83,7 +86,7 @@ internal class KotlinDatePeriodSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DatePeriod>("""{}""")
       }
     }
@@ -91,7 +94,7 @@ internal class KotlinDatePeriodSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DatePeriod>("""[]""")
       }
     }

@@ -1,6 +1,11 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.core.JsonParseException
+import com.fasterxml.jackson.core.exc.InputCoercionException
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
@@ -30,11 +35,11 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, out of range`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InputCoercionException> {
         json.deserialize<Long>("-9223372036854775809")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<InputCoercionException> {
         json.deserialize<Long>("9223372036854775808")
       }
     }
@@ -42,7 +47,7 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Long>("9 876543210")
       }
     }
@@ -50,7 +55,7 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, wrong format (leading 0)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<Long>("04032816692")
       }
     }
@@ -58,7 +63,7 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, wrong format (scientific notation)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Long>("1e0")
       }
     }
@@ -66,7 +71,7 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, wrong format (hex)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<Long>("0x0")
       }
     }
@@ -74,7 +79,7 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, wrong format (NaN)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<Long>("NaN")
       }
     }
@@ -82,11 +87,11 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, wrong format (Infinity)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<Long>("Infinity")
       }
 
-      shouldThrowAny {
+      shouldThrowExactly<JsonParseException> {
         json.deserialize<Long>("-Infinity")
       }
     }
@@ -94,7 +99,7 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<Long>("null")
       }
 
@@ -104,7 +109,7 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Long>("true")
       }
     }
@@ -112,7 +117,7 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, wrong type (float)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Long>("0.0")
       }
     }
@@ -120,7 +125,7 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, wrong type (string)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Long>("\"0\"")
       }
     }
@@ -128,7 +133,7 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Long>("""{}""")
       }
     }
@@ -136,7 +141,7 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Long>("""[]""")
       }
     }

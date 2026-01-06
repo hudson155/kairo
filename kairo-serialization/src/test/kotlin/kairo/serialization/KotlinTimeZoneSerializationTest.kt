@@ -1,6 +1,9 @@
 package kairo.serialization
 
-import io.kotest.assertions.throwables.shouldThrowAny
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import java.time.ZoneId
@@ -30,7 +33,7 @@ internal class KotlinTimeZoneSerializationTest {
   @Test
   fun `deserialize, wrong format (lowercase)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZoneId>("\"pacific/kiritimati\"")
       }
     }
@@ -38,7 +41,7 @@ internal class KotlinTimeZoneSerializationTest {
   @Test
   fun `deserialize, unknown`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZoneId>("\"Pacific/Edmonton\"")
       }
     }
@@ -46,7 +49,7 @@ internal class KotlinTimeZoneSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<RuntimeJsonMappingException> {
         json.deserialize<ZoneId>("null")
       }
 
@@ -56,7 +59,7 @@ internal class KotlinTimeZoneSerializationTest {
   @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneId>("true")
       }
     }
@@ -64,7 +67,7 @@ internal class KotlinTimeZoneSerializationTest {
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneId>("0")
       }
     }
@@ -72,7 +75,7 @@ internal class KotlinTimeZoneSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneId>("""{}""")
       }
     }
@@ -80,7 +83,7 @@ internal class KotlinTimeZoneSerializationTest {
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowAny {
+      shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneId>("""[]""")
       }
     }
