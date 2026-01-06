@@ -53,7 +53,7 @@ internal class JavaPeriodSerializationTest {
         json.deserialize<Period>("\"0D\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Period`" +
-          " from String \"0D\""
+          " from String \"0D\"",
       )
     }
 
@@ -64,7 +64,7 @@ internal class JavaPeriodSerializationTest {
         json.deserialize<Period>("\"P 0D\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Period`" +
-          " from String \"P 0D\""
+          " from String \"P 0D\"",
       )
     }
 
@@ -75,7 +75,7 @@ internal class JavaPeriodSerializationTest {
         json.deserialize<Period>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.Period(non-null) but was null"
+          "; specified java.time.Period(non-null) but was null",
       )
 
       json.deserialize<Period?>("null").shouldBeNull()
@@ -87,7 +87,7 @@ internal class JavaPeriodSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Period>("true")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)"
+        "Unexpected token (VALUE_TRUE)",
       )
     }
 
@@ -97,7 +97,7 @@ internal class JavaPeriodSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Period>("0")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_NUMBER_INT)"
+        "Unexpected token (VALUE_NUMBER_INT)",
       )
     }
 
@@ -107,7 +107,7 @@ internal class JavaPeriodSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Period>("""{}""")
       }.message.shouldStartWith(
-        "Unexpected token (START_OBJECT)"
+        "Unexpected token (START_OBJECT)",
       )
     }
 
@@ -118,7 +118,7 @@ internal class JavaPeriodSerializationTest {
         json.deserialize<Period>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Period`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

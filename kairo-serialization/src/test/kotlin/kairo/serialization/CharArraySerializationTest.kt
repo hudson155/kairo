@@ -42,7 +42,7 @@ internal class CharArraySerializationTest {
         json.deserialize<CharArray>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.CharArray(non-null) but was null"
+          "; specified kotlin.CharArray(non-null) but was null",
       )
 
       json.deserialize<CharArray?>("null").shouldBeNull()
@@ -55,7 +55,7 @@ internal class CharArraySerializationTest {
         json.deserialize<CharArray>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `char[]`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -66,7 +66,7 @@ internal class CharArraySerializationTest {
         json.deserialize<CharArray>("0")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `char[]`" +
-          " from Integer value"
+          " from Integer value",
       )
     }
 
@@ -77,7 +77,7 @@ internal class CharArraySerializationTest {
         json.deserialize<CharArray>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `char[]`" +
-          " from Object value"
+          " from Object value",
       )
     }
 }

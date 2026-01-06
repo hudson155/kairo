@@ -44,14 +44,14 @@ internal class JavaMonthDaySerializationTest {
         json.deserialize<MonthDay>("\"--00-14\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.MonthDay`" +
-          " from String \"--00-14\""
+          " from String \"--00-14\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<MonthDay>("\"--13-14\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.MonthDay`" +
-          " from String \"--13-14\""
+          " from String \"--13-14\"",
       )
     }
 
@@ -62,14 +62,14 @@ internal class JavaMonthDaySerializationTest {
         json.deserialize<MonthDay>("\"--11-00\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.MonthDay`" +
-          " from String \"--11-00\""
+          " from String \"--11-00\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<MonthDay>("\"--11-31\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.MonthDay`" +
-          " from String \"--11-31\""
+          " from String \"--11-31\"",
       )
     }
 
@@ -80,7 +80,7 @@ internal class JavaMonthDaySerializationTest {
         json.deserialize<MonthDay>("\"1114\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.MonthDay`" +
-          " from String \"1114\""
+          " from String \"1114\"",
       )
     }
 
@@ -91,7 +91,7 @@ internal class JavaMonthDaySerializationTest {
         json.deserialize<MonthDay>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.MonthDay(non-null) but was null"
+          "; specified java.time.MonthDay(non-null) but was null",
       )
 
       json.deserialize<MonthDay?>("null").shouldBeNull()
@@ -103,7 +103,7 @@ internal class JavaMonthDaySerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<MonthDay>("true")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)"
+        "Unexpected token (VALUE_TRUE)",
       )
     }
 
@@ -113,7 +113,7 @@ internal class JavaMonthDaySerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<MonthDay>("1114")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_NUMBER_INT)"
+        "Unexpected token (VALUE_NUMBER_INT)",
       )
     }
 
@@ -123,7 +123,7 @@ internal class JavaMonthDaySerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<MonthDay>("""{}""")
       }.message.shouldStartWith(
-        "Unexpected token (START_OBJECT)"
+        "Unexpected token (START_OBJECT)",
       )
     }
 
@@ -134,7 +134,7 @@ internal class JavaMonthDaySerializationTest {
         json.deserialize<MonthDay>("""[]""")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.MonthDay(non-null) but was null"
+          "; specified java.time.MonthDay(non-null) but was null",
       )
     }
 }

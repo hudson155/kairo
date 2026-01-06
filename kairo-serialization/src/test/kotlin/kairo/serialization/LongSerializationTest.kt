@@ -39,13 +39,13 @@ internal class LongSerializationTest {
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<Long>("-9223372036854775809")
       }.message.shouldStartWith(
-        "Numeric value (-9223372036854775809) out of range of long (-9223372036854775808 - 9223372036854775807)"
+        "Numeric value (-9223372036854775809) out of range of long (-9223372036854775808 - 9223372036854775807)",
       )
 
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<Long>("9223372036854775808")
       }.message.shouldStartWith(
-        "Numeric value (9223372036854775808) out of range of long (-9223372036854775808 - 9223372036854775807)"
+        "Numeric value (9223372036854775808) out of range of long (-9223372036854775808 - 9223372036854775807)",
       )
     }
 
@@ -56,7 +56,7 @@ internal class LongSerializationTest {
         json.deserialize<Long>("9 876543210")
       }.message.shouldStartWith(
         "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `java.lang.Long`)"
+          " (bound as `java.lang.Long`)",
       )
     }
 
@@ -66,7 +66,7 @@ internal class LongSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Long>("04032816692")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
     }
 
@@ -77,7 +77,7 @@ internal class LongSerializationTest {
         json.deserialize<Long>("1e0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (1e0)" +
-          " to `java.lang.Long` value"
+          " to `java.lang.Long` value",
       )
     }
 
@@ -88,7 +88,7 @@ internal class LongSerializationTest {
         json.deserialize<Long>("0x0")
       }.message.shouldStartWith(
         "Unexpected character ('x' (code 120))" +
-          ": Expected space separating root-level values"
+          ": Expected space separating root-level values",
       )
     }
 
@@ -98,7 +98,7 @@ internal class LongSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Long>("NaN")
       }.message.shouldStartWith(
-        "Non-standard token 'NaN'"
+        "Non-standard token 'NaN'",
       )
     }
 
@@ -108,13 +108,13 @@ internal class LongSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Long>("Infinity")
       }.message.shouldStartWith(
-        "Non-standard token 'Infinity'"
+        "Non-standard token 'Infinity'",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Long>("-Infinity")
       }.message.shouldStartWith(
-        "Non-standard token '-Infinity'"
+        "Non-standard token '-Infinity'",
       )
     }
 
@@ -125,7 +125,7 @@ internal class LongSerializationTest {
         json.deserialize<Long>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Long(non-null) but was null"
+          "; specified kotlin.Long(non-null) but was null",
       )
 
       json.deserialize<Long?>("null").shouldBeNull()
@@ -138,7 +138,7 @@ internal class LongSerializationTest {
         json.deserialize<Long>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Long`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -149,7 +149,7 @@ internal class LongSerializationTest {
         json.deserialize<Long>("0.0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (0.0)" +
-          " to `java.lang.Long` value"
+          " to `java.lang.Long` value",
       )
     }
 
@@ -160,7 +160,7 @@ internal class LongSerializationTest {
         json.deserialize<Long>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.lang.Long` value"
+          " to `java.lang.Long` value",
       )
     }
 
@@ -171,7 +171,7 @@ internal class LongSerializationTest {
         json.deserialize<Long>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Long`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -182,7 +182,7 @@ internal class LongSerializationTest {
         json.deserialize<Long>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Long`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

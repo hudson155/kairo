@@ -49,7 +49,7 @@ internal class KotlinDatePeriodSerializationTest {
         json.deserialize<DatePeriod>("\"0D\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Period`" +
-          " from String \"0D\""
+          " from String \"0D\"",
       )
     }
 
@@ -60,7 +60,7 @@ internal class KotlinDatePeriodSerializationTest {
         json.deserialize<DatePeriod>("\"P 0D\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Period`" +
-          " from String \"P 0D\""
+          " from String \"P 0D\"",
       )
     }
 
@@ -71,7 +71,7 @@ internal class KotlinDatePeriodSerializationTest {
         json.deserialize<DatePeriod>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlinx.datetime.DatePeriod(non-null) but was null"
+          "; specified kotlinx.datetime.DatePeriod(non-null) but was null",
       )
 
       json.deserialize<DatePeriod?>("null").shouldBeNull()
@@ -83,7 +83,7 @@ internal class KotlinDatePeriodSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DatePeriod>("true")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)"
+        "Unexpected token (VALUE_TRUE)",
       )
     }
 
@@ -93,7 +93,7 @@ internal class KotlinDatePeriodSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DatePeriod>("0")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_NUMBER_INT)"
+        "Unexpected token (VALUE_NUMBER_INT)",
       )
     }
 
@@ -103,7 +103,7 @@ internal class KotlinDatePeriodSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DatePeriod>("""{}""")
       }.message.shouldStartWith(
-        "Unexpected token (START_OBJECT)"
+        "Unexpected token (START_OBJECT)",
       )
     }
 
@@ -114,7 +114,7 @@ internal class KotlinDatePeriodSerializationTest {
         json.deserialize<DatePeriod>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Period`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

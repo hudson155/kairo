@@ -38,14 +38,14 @@ internal class KotlinFixedOffsetTimeZoneSerializationTest {
         json.deserialize<FixedOffsetTimeZone>("\"-19:00\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.ZoneOffset`" +
-          " from String \"-19:00\""
+          " from String \"-19:00\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<FixedOffsetTimeZone>("\"+19:00\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.ZoneOffset`" +
-          " from String \"+19:00\""
+          " from String \"+19:00\"",
       )
     }
 
@@ -56,7 +56,7 @@ internal class KotlinFixedOffsetTimeZoneSerializationTest {
         json.deserialize<FixedOffsetTimeZone>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlinx.datetime.FixedOffsetTimeZone(non-null) but was null"
+          "; specified kotlinx.datetime.FixedOffsetTimeZone(non-null) but was null",
       )
 
       json.deserialize<FixedOffsetTimeZone?>("null").shouldBeNull()
@@ -68,7 +68,7 @@ internal class KotlinFixedOffsetTimeZoneSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<FixedOffsetTimeZone>("true")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)"
+        "Unexpected token (VALUE_TRUE)",
       )
     }
 
@@ -78,7 +78,7 @@ internal class KotlinFixedOffsetTimeZoneSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<FixedOffsetTimeZone>("0")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_NUMBER_INT)"
+        "Unexpected token (VALUE_NUMBER_INT)",
       )
     }
 
@@ -88,7 +88,7 @@ internal class KotlinFixedOffsetTimeZoneSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<FixedOffsetTimeZone>("""{}""")
       }.message.shouldStartWith(
-        "Unexpected token (START_OBJECT)"
+        "Unexpected token (START_OBJECT)",
       )
     }
 
@@ -99,7 +99,7 @@ internal class KotlinFixedOffsetTimeZoneSerializationTest {
         json.deserialize<FixedOffsetTimeZone>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.ZoneOffset`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

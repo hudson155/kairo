@@ -47,14 +47,14 @@ internal class DoubleSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Double>("9 0210")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
 
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Double>("3.1 4")
       }.message.shouldStartWith(
         "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `java.lang.Double`)"
+          " (bound as `java.lang.Double`)",
       )
     }
 
@@ -64,13 +64,13 @@ internal class DoubleSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Double>("090210")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Double>("03.14")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
     }
 
@@ -81,7 +81,7 @@ internal class DoubleSerializationTest {
         json.deserialize<Double>("0x0")
       }.message.shouldStartWith(
         "Unexpected character ('x' (code 120))" +
-          ": Expected space separating root-level values"
+          ": Expected space separating root-level values",
       )
     }
 
@@ -91,7 +91,7 @@ internal class DoubleSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Double>("NaN")
       }.message.shouldStartWith(
-        "Non-standard token 'NaN'"
+        "Non-standard token 'NaN'",
       )
     }
 
@@ -101,13 +101,13 @@ internal class DoubleSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Double>("Infinity")
       }.message.shouldStartWith(
-        "Non-standard token 'Infinity'"
+        "Non-standard token 'Infinity'",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Double>("-Infinity")
       }.message.shouldStartWith(
-        "Non-standard token '-Infinity'"
+        "Non-standard token '-Infinity'",
       )
     }
 
@@ -118,7 +118,7 @@ internal class DoubleSerializationTest {
         json.deserialize<Double>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Double(non-null) but was null"
+          "; specified kotlin.Double(non-null) but was null",
       )
 
       json.deserialize<Double?>("null").shouldBeNull()
@@ -131,7 +131,7 @@ internal class DoubleSerializationTest {
         json.deserialize<Double>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Double`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -142,7 +142,7 @@ internal class DoubleSerializationTest {
         json.deserialize<Double>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.lang.Double` value"
+          " to `java.lang.Double` value",
       )
     }
 
@@ -153,7 +153,7 @@ internal class DoubleSerializationTest {
         json.deserialize<Double>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Double`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -164,7 +164,7 @@ internal class DoubleSerializationTest {
         json.deserialize<Double>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Double`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

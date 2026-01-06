@@ -38,7 +38,7 @@ internal class KotlinUuidSerializationTest {
         json.deserialize<Uuid>("\"a042df12-b775-42b2-aeb1-5bdd4ea78dc\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.util.UUID`" +
-          " from String \"a042df12-b775-42b2-aeb1-5bdd4ea78dc\""
+          " from String \"a042df12-b775-42b2-aeb1-5bdd4ea78dc\"",
       )
     }
 
@@ -49,7 +49,7 @@ internal class KotlinUuidSerializationTest {
         json.deserialize<Uuid>("\"a042df12-b775-42b2-aeb1-5bdd4ea78dc5c\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.util.UUID`" +
-          " from String \"a042df12-b775-42b2-aeb1-5bdd4ea78dc5c\""
+          " from String \"a042df12-b775-42b2-aeb1-5bdd4ea78dc5c\"",
       )
     }
 
@@ -60,7 +60,7 @@ internal class KotlinUuidSerializationTest {
         json.deserialize<Uuid>("\"a042df12b77542b2aeb15bdd4ea78dc5\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.util.UUID`" +
-          " from String \"a042df12b77542b2aeb15bdd4ea78dc5\""
+          " from String \"a042df12b77542b2aeb15bdd4ea78dc5\"",
       )
     }
 
@@ -71,7 +71,7 @@ internal class KotlinUuidSerializationTest {
         json.deserialize<Uuid>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.uuid.Uuid(non-null) but was null"
+          "; specified kotlin.uuid.Uuid(non-null) but was null",
       )
 
       json.deserialize<Uuid?>("null").shouldBeNull()
@@ -84,7 +84,7 @@ internal class KotlinUuidSerializationTest {
         json.deserialize<Uuid>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.util.UUID`" +
-          " from String \"true\""
+          " from String \"true\"",
       )
     }
 
@@ -95,7 +95,7 @@ internal class KotlinUuidSerializationTest {
         json.deserialize<Uuid>("0")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.util.UUID`" +
-          " from String \"0\""
+          " from String \"0\"",
       )
     }
 
@@ -106,7 +106,7 @@ internal class KotlinUuidSerializationTest {
         json.deserialize<Uuid>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.util.UUID`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -117,7 +117,7 @@ internal class KotlinUuidSerializationTest {
         json.deserialize<Uuid>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.util.UUID`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

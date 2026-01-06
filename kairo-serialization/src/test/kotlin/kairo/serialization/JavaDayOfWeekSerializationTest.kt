@@ -37,7 +37,7 @@ internal class JavaDayOfWeekSerializationTest {
         json.deserialize<DayOfWeek>("\"tuesday\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.DayOfWeek`" +
-          " from String \"tuesday\""
+          " from String \"tuesday\"",
       )
     }
 
@@ -48,7 +48,7 @@ internal class JavaDayOfWeekSerializationTest {
         json.deserialize<DayOfWeek>("\"tue\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.DayOfWeek`" +
-          " from String \"tue\""
+          " from String \"tue\"",
       )
     }
 
@@ -59,7 +59,7 @@ internal class JavaDayOfWeekSerializationTest {
         json.deserialize<DayOfWeek>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.DayOfWeek(non-null) but was null"
+          "; specified java.time.DayOfWeek(non-null) but was null",
       )
 
       json.deserialize<DayOfWeek?>("null").shouldBeNull()
@@ -72,7 +72,7 @@ internal class JavaDayOfWeekSerializationTest {
         json.deserialize<DayOfWeek>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.DayOfWeek`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -83,7 +83,7 @@ internal class JavaDayOfWeekSerializationTest {
         json.deserialize<DayOfWeek>("2")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.DayOfWeek`" +
-          " from number 2: not allowed to deserialize Enum value out of number"
+          " from number 2: not allowed to deserialize Enum value out of number",
       )
     }
 
@@ -94,7 +94,7 @@ internal class JavaDayOfWeekSerializationTest {
         json.deserialize<DayOfWeek>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.DayOfWeek`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -105,7 +105,7 @@ internal class JavaDayOfWeekSerializationTest {
         json.deserialize<DayOfWeek>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.DayOfWeek`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

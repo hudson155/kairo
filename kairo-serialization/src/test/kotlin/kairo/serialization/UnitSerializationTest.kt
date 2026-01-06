@@ -31,7 +31,7 @@ internal class UnitSerializationTest {
       shouldThrowExactly<UnrecognizedPropertyException> {
         json.deserialize<Unit>("""{"other":"unknown"}""").shouldBe(Unit)
       }.message.shouldStartWith(
-        "Unrecognized field \"other\""
+        "Unrecognized field \"other\"",
       )
     }
 
@@ -42,7 +42,7 @@ internal class UnitSerializationTest {
         json.deserialize<Unit>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Unit(non-null) but was null"
+          "; specified kotlin.Unit(non-null) but was null",
       )
 
       json.deserialize<Unit?>("null").shouldBeNull()
@@ -54,7 +54,7 @@ internal class UnitSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Unit>("true")
       }.message.shouldStartWith(
-        "Cannot construct instance of `kotlin.Unit`"
+        "Cannot construct instance of `kotlin.Unit`",
       )
     }
 
@@ -64,7 +64,7 @@ internal class UnitSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Unit>("0")
       }.message.shouldStartWith(
-        "Cannot construct instance of `kotlin.Unit`"
+        "Cannot construct instance of `kotlin.Unit`",
       )
     }
 
@@ -75,7 +75,7 @@ internal class UnitSerializationTest {
         json.deserialize<Unit>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `kotlin.Unit`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

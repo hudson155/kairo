@@ -45,14 +45,14 @@ internal class KotlinLocalDateTimeSerializationTest {
         json.deserialize<LocalDateTime>("\"2023-00-14T22:13:20.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDateTime`" +
-          " from String \"2023-00-14T22:13:20.123456789\""
+          " from String \"2023-00-14T22:13:20.123456789\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-13-14T22:13:20.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDateTime`" +
-          " from String \"2023-13-14T22:13:20.123456789\""
+          " from String \"2023-13-14T22:13:20.123456789\"",
       )
     }
 
@@ -63,14 +63,14 @@ internal class KotlinLocalDateTimeSerializationTest {
         json.deserialize<LocalDateTime>("\"2023-11-00T22:13:20.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDateTime`" +
-          " from String \"2023-11-00T22:13:20.123456789\""
+          " from String \"2023-11-00T22:13:20.123456789\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-11-31T22:13:20.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDateTime`" +
-          " from String \"2023-11-31T22:13:20.123456789\""
+          " from String \"2023-11-31T22:13:20.123456789\"",
       )
     }
 
@@ -81,14 +81,14 @@ internal class KotlinLocalDateTimeSerializationTest {
         json.deserialize<LocalDateTime>("\"2023-11-14T-01:13:20.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDateTime`" +
-          " from String \"2023-11-14T-01:13:20.123456789\""
+          " from String \"2023-11-14T-01:13:20.123456789\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-11-14T24:13:20.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDateTime`" +
-          " from String \"2023-11-14T24:13:20.123456789\""
+          " from String \"2023-11-14T24:13:20.123456789\"",
       )
     }
 
@@ -99,14 +99,14 @@ internal class KotlinLocalDateTimeSerializationTest {
         json.deserialize<LocalDateTime>("\"2023-11-14T22:-01:20.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDateTime`" +
-          " from String \"2023-11-14T22:-01:20.123456789\""
+          " from String \"2023-11-14T22:-01:20.123456789\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-11-14T22:60:20.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDateTime`" +
-          " from String \"2023-11-14T22:60:20.123456789\""
+          " from String \"2023-11-14T22:60:20.123456789\"",
       )
     }
 
@@ -117,14 +117,14 @@ internal class KotlinLocalDateTimeSerializationTest {
         json.deserialize<LocalDateTime>("\"2023-11-14T22:13:-01.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDateTime`" +
-          " from String \"2023-11-14T22:13:-01.123456789\""
+          " from String \"2023-11-14T22:13:-01.123456789\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDateTime>("\"2023-11-14T22:13:60.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDateTime`" +
-          " from String \"2023-11-14T22:13:60.123456789\""
+          " from String \"2023-11-14T22:13:60.123456789\"",
       )
     }
 
@@ -135,7 +135,7 @@ internal class KotlinLocalDateTimeSerializationTest {
         json.deserialize<LocalDateTime>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlinx.datetime.LocalDateTime(non-null) but was null"
+          "; specified kotlinx.datetime.LocalDateTime(non-null) but was null",
       )
 
       json.deserialize<LocalDateTime?>("null").shouldBeNull()
@@ -147,7 +147,7 @@ internal class KotlinLocalDateTimeSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDateTime>("true")
       }.message.shouldStartWith(
-        "Expected array or string"
+        "Expected array or string",
       )
     }
 
@@ -157,19 +157,19 @@ internal class KotlinLocalDateTimeSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDateTime>("20231114221320123456789")
       }.message.shouldStartWith(
-        "raw timestamp (20231114221320123456789) not allowed for `java.time.LocalDateTime`"
+        "raw timestamp (20231114221320123456789) not allowed for `java.time.LocalDateTime`",
       )
 
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDateTime>("1700000000")
       }.message.shouldStartWith(
-        "raw timestamp (1700000000) not allowed for `java.time.LocalDateTime`"
+        "raw timestamp (1700000000) not allowed for `java.time.LocalDateTime`",
       )
 
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDateTime>("1700000000123456789")
       }.message.shouldStartWith(
-        "raw timestamp (1700000000123456789) not allowed for `java.time.LocalDateTime`"
+        "raw timestamp (1700000000123456789) not allowed for `java.time.LocalDateTime`",
       )
     }
 
@@ -179,7 +179,7 @@ internal class KotlinLocalDateTimeSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDateTime>("""{}""")
       }.message.shouldStartWith(
-        "Expected array or string"
+        "Expected array or string",
       )
     }
 

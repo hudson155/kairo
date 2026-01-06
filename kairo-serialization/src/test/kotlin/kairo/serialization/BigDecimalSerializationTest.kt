@@ -51,14 +51,14 @@ internal class BigDecimalSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("9 0210")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
 
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<BigDecimal>("3.1 4")
       }.message.shouldStartWith(
         "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `java.math.BigDecimal`)"
+          " (bound as `java.math.BigDecimal`)",
       )
     }
 
@@ -68,13 +68,13 @@ internal class BigDecimalSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("090210")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("03.14")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
     }
 
@@ -85,7 +85,7 @@ internal class BigDecimalSerializationTest {
         json.deserialize<BigDecimal>("0x0")
       }.message.shouldStartWith(
         "Unexpected character ('x' (code 120))" +
-          ": Expected space separating root-level values"
+          ": Expected space separating root-level values",
       )
     }
 
@@ -95,7 +95,7 @@ internal class BigDecimalSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("NaN")
       }.message.shouldStartWith(
-        "Non-standard token 'NaN'"
+        "Non-standard token 'NaN'",
       )
     }
 
@@ -105,13 +105,13 @@ internal class BigDecimalSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("Infinity")
       }.message.shouldStartWith(
-        "Non-standard token 'Infinity'"
+        "Non-standard token 'Infinity'",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigDecimal>("-Infinity")
       }.message.shouldStartWith(
-        "Non-standard token '-Infinity'"
+        "Non-standard token '-Infinity'",
       )
     }
 
@@ -122,7 +122,7 @@ internal class BigDecimalSerializationTest {
         json.deserialize<BigDecimal>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.math.BigDecimal(non-null) but was null"
+          "; specified java.math.BigDecimal(non-null) but was null",
       )
 
       json.deserialize<BigDecimal?>("null").shouldBeNull()
@@ -135,7 +135,7 @@ internal class BigDecimalSerializationTest {
         json.deserialize<BigDecimal>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.math.BigDecimal`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -146,7 +146,7 @@ internal class BigDecimalSerializationTest {
         json.deserialize<BigDecimal>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.math.BigDecimal` value"
+          " to `java.math.BigDecimal` value",
       )
     }
 
@@ -157,7 +157,7 @@ internal class BigDecimalSerializationTest {
         json.deserialize<BigDecimal>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.math.BigDecimal`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -168,7 +168,7 @@ internal class BigDecimalSerializationTest {
         json.deserialize<BigDecimal>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.math.BigDecimal`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

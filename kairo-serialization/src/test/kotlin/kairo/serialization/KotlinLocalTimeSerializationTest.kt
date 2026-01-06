@@ -44,14 +44,14 @@ internal class KotlinLocalTimeSerializationTest {
         json.deserialize<LocalTime>("\"-01:13:20.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalTime`" +
-          " from String \"-01:13:20.123456789\""
+          " from String \"-01:13:20.123456789\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalTime>("\"24:13:20.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalTime`" +
-          " from String \"24:13:20.123456789\""
+          " from String \"24:13:20.123456789\"",
       )
     }
 
@@ -62,14 +62,14 @@ internal class KotlinLocalTimeSerializationTest {
         json.deserialize<LocalTime>("\"22:-01:20.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalTime`" +
-          " from String \"22:-01:20.123456789\""
+          " from String \"22:-01:20.123456789\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalTime>("\"22:60:20.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalTime`" +
-          " from String \"22:60:20.123456789\""
+          " from String \"22:60:20.123456789\"",
       )
     }
 
@@ -80,14 +80,14 @@ internal class KotlinLocalTimeSerializationTest {
         json.deserialize<LocalTime>("\"22:13:-01.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalTime`" +
-          " from String \"22:13:-01.123456789\""
+          " from String \"22:13:-01.123456789\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalTime>("\"22:13:60.123456789\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalTime`" +
-          " from String \"22:13:60.123456789\""
+          " from String \"22:13:60.123456789\"",
       )
     }
 
@@ -98,7 +98,7 @@ internal class KotlinLocalTimeSerializationTest {
         json.deserialize<LocalTime>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlinx.datetime.LocalTime(non-null) but was null"
+          "; specified kotlinx.datetime.LocalTime(non-null) but was null",
       )
 
       json.deserialize<LocalTime?>("null").shouldBeNull()
@@ -110,7 +110,7 @@ internal class KotlinLocalTimeSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalTime>("true")
       }.message.shouldStartWith(
-        "Expected array or string"
+        "Expected array or string",
       )
     }
 
@@ -120,13 +120,13 @@ internal class KotlinLocalTimeSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalTime>("221320")
       }.message.shouldStartWith(
-        "raw timestamp (221320) not allowed for `java.time.LocalTime`"
+        "raw timestamp (221320) not allowed for `java.time.LocalTime`",
       )
 
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalTime>("221320123456789")
       }.message.shouldStartWith(
-        "raw timestamp (221320123456789) not allowed for `java.time.LocalTime`"
+        "raw timestamp (221320123456789) not allowed for `java.time.LocalTime`",
       )
     }
 
@@ -136,7 +136,7 @@ internal class KotlinLocalTimeSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalTime>("""{}""")
       }.message.shouldStartWith(
-        "Expected array or string"
+        "Expected array or string",
       )
     }
 

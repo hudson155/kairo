@@ -44,14 +44,14 @@ internal class JavaLocalDateSerializationTest {
         json.deserialize<LocalDate>("\"2023-00-14\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDate`" +
-          " from String \"2023-00-14\""
+          " from String \"2023-00-14\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDate>("\"2023-13-14\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDate`" +
-          " from String \"2023-13-14\""
+          " from String \"2023-13-14\"",
       )
     }
 
@@ -62,14 +62,14 @@ internal class JavaLocalDateSerializationTest {
         json.deserialize<LocalDate>("\"2023-11-00\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDate`" +
-          " from String \"2023-11-00\""
+          " from String \"2023-11-00\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<LocalDate>("\"2023-11-31\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDate`" +
-          " from String \"2023-11-31\""
+          " from String \"2023-11-31\"",
       )
     }
 
@@ -80,7 +80,7 @@ internal class JavaLocalDateSerializationTest {
         json.deserialize<LocalDate>("\"20231114\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.LocalDate`" +
-          " from String \"20231114\""
+          " from String \"20231114\"",
       )
     }
 
@@ -91,7 +91,7 @@ internal class JavaLocalDateSerializationTest {
         json.deserialize<LocalDate>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.LocalDate(non-null) but was null"
+          "; specified java.time.LocalDate(non-null) but was null",
       )
 
       json.deserialize<LocalDate?>("null").shouldBeNull()
@@ -103,7 +103,7 @@ internal class JavaLocalDateSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDate>("true")
       }.message.shouldStartWith(
-        "Expected array or string"
+        "Expected array or string",
       )
     }
 
@@ -114,7 +114,7 @@ internal class JavaLocalDateSerializationTest {
         json.deserialize<LocalDate>("20231114")
       }.message.shouldStartWith(
         "Cannot coerce Integer value (20231114)" +
-          " to `java.time.LocalDate` value"
+          " to `java.time.LocalDate` value",
       )
     }
 
@@ -124,7 +124,7 @@ internal class JavaLocalDateSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<LocalDate>("""{}""")
       }.message.shouldStartWith(
-        "Expected array or string"
+        "Expected array or string",
       )
     }
 
@@ -135,7 +135,7 @@ internal class JavaLocalDateSerializationTest {
         json.deserialize<LocalDate>("""[]""")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.LocalDate(non-null) but was null"
+          "; specified java.time.LocalDate(non-null) but was null",
       )
     }
 }

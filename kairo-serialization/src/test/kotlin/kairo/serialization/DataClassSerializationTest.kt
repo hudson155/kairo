@@ -100,7 +100,7 @@ internal class DataClassSerializationTest {
           """.trimIndent(),
         )
       }.message.shouldStartWith(
-        "Missing required creator property 'boolean'"
+        "Missing required creator property 'boolean'",
       )
     }
 
@@ -125,7 +125,7 @@ internal class DataClassSerializationTest {
           """.trimIndent(),
         )
       }.message.shouldStartWith(
-        "Unrecognized field \"other\""
+        "Unrecognized field \"other\"",
       )
     }
 
@@ -136,7 +136,7 @@ internal class DataClassSerializationTest {
         json.deserialize<DataClass>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.DataClassSerializationTest.DataClass(non-null) but was null"
+          "; specified kairo.serialization.DataClassSerializationTest.DataClass(non-null) but was null",
       )
 
       json.deserialize<DataClass?>("null").shouldBeNull()
@@ -148,7 +148,7 @@ internal class DataClassSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataClass>("true")
       }.message.shouldStartWith(
-        "Cannot construct instance of `kairo.serialization.DataClassSerializationTest\$DataClass`"
+        "Cannot construct instance of `kairo.serialization.DataClassSerializationTest\$DataClass`",
       )
     }
 
@@ -158,7 +158,7 @@ internal class DataClassSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<DataClass>("0")
       }.message.shouldStartWith(
-        "Cannot construct instance of `kairo.serialization.DataClassSerializationTest\$DataClass`"
+        "Cannot construct instance of `kairo.serialization.DataClassSerializationTest\$DataClass`",
       )
     }
 
@@ -169,7 +169,7 @@ internal class DataClassSerializationTest {
         json.deserialize<DataClass>("\"\"")
       }.message.shouldStartWith(
         "Cannot coerce empty String (\"\")" +
-          " to `kairo.serialization.DataClassSerializationTest\$DataClass` value"
+          " to `kairo.serialization.DataClassSerializationTest\$DataClass` value",
       )
     }
 
@@ -180,7 +180,7 @@ internal class DataClassSerializationTest {
         json.deserialize<DataClass>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `kairo.serialization.DataClassSerializationTest\$DataClass`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

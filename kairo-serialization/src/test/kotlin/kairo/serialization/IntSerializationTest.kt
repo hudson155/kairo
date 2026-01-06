@@ -39,13 +39,13 @@ internal class IntSerializationTest {
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<Int>("-2147483649")
       }.message.shouldStartWith(
-        "Numeric value (-2147483649) out of range of int (-2147483648 - 2147483647)"
+        "Numeric value (-2147483649) out of range of int (-2147483648 - 2147483647)",
       )
 
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<Int>("2147483648")
       }.message.shouldStartWith(
-        "Numeric value (2147483648) out of range of int (-2147483648 - 2147483647)"
+        "Numeric value (2147483648) out of range of int (-2147483648 - 2147483647)",
       )
     }
 
@@ -55,7 +55,7 @@ internal class IntSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Int>("9 0210")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
     }
 
@@ -65,7 +65,7 @@ internal class IntSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Int>("090210")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
     }
 
@@ -76,7 +76,7 @@ internal class IntSerializationTest {
         json.deserialize<Int>("1e0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (1e0)" +
-          " to `java.lang.Integer` value"
+          " to `java.lang.Integer` value",
       )
     }
 
@@ -87,7 +87,7 @@ internal class IntSerializationTest {
         json.deserialize<Int>("0x0")
       }.message.shouldStartWith(
         "Unexpected character ('x' (code 120))" +
-          ": Expected space separating root-level values"
+          ": Expected space separating root-level values",
       )
     }
 
@@ -97,7 +97,7 @@ internal class IntSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Int>("NaN")
       }.message.shouldStartWith(
-        "Non-standard token 'NaN'"
+        "Non-standard token 'NaN'",
       )
     }
 
@@ -107,13 +107,13 @@ internal class IntSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Int>("Infinity")
       }.message.shouldStartWith(
-        "Non-standard token 'Infinity'"
+        "Non-standard token 'Infinity'",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Int>("-Infinity")
       }.message.shouldStartWith(
-        "Non-standard token '-Infinity'"
+        "Non-standard token '-Infinity'",
       )
     }
 
@@ -124,7 +124,7 @@ internal class IntSerializationTest {
         json.deserialize<Int>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Int(non-null) but was null"
+          "; specified kotlin.Int(non-null) but was null",
       )
 
       json.deserialize<Int?>("null").shouldBeNull()
@@ -137,7 +137,7 @@ internal class IntSerializationTest {
         json.deserialize<Int>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Integer`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -148,7 +148,7 @@ internal class IntSerializationTest {
         json.deserialize<Int>("0.0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (0.0)" +
-          " to `java.lang.Integer` value"
+          " to `java.lang.Integer` value",
       )
     }
 
@@ -159,7 +159,7 @@ internal class IntSerializationTest {
         json.deserialize<Int>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.lang.Integer` value"
+          " to `java.lang.Integer` value",
       )
     }
 
@@ -170,7 +170,7 @@ internal class IntSerializationTest {
         json.deserialize<Int>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Integer`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -181,7 +181,7 @@ internal class IntSerializationTest {
         json.deserialize<Int>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Integer`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

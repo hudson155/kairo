@@ -69,7 +69,7 @@ internal class KotlinInstantSerializationTest {
       shouldThrowExactly<DateTimeException> {
         json.deserialize<Instant>("1700000000123456789")
       }.message.shouldStartWith(
-        "Instant exceeds minimum or maximum instant"
+        "Instant exceeds minimum or maximum instant",
       )
     }
 
@@ -85,7 +85,7 @@ internal class KotlinInstantSerializationTest {
       shouldThrowExactly<DateTimeException> {
         json.deserialize<Instant>("1700000000123456789.0")
       }.message.shouldStartWith(
-        "Instant exceeds minimum or maximum instant"
+        "Instant exceeds minimum or maximum instant",
       )
 
       json.deserialize<Instant>("1700000000.123456789")
@@ -102,14 +102,14 @@ internal class KotlinInstantSerializationTest {
         json.deserialize<Instant>("\"2023-00-14T22:13:20.123456789Z\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Instant`" +
-          " from String \"2023-00-14T22:13:20.123456789Z\""
+          " from String \"2023-00-14T22:13:20.123456789Z\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-13-14T22:13:20.123456789Z\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Instant`" +
-          " from String \"2023-13-14T22:13:20.123456789Z\""
+          " from String \"2023-13-14T22:13:20.123456789Z\"",
       )
     }
 
@@ -120,14 +120,14 @@ internal class KotlinInstantSerializationTest {
         json.deserialize<Instant>("\"2023-11-00T22:13:20.123456789Z\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Instant`" +
-          " from String \"2023-11-00T22:13:20.123456789Z\""
+          " from String \"2023-11-00T22:13:20.123456789Z\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-11-31T22:13:20.123456789Z\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Instant`" +
-          " from String \"2023-11-31T22:13:20.123456789Z\""
+          " from String \"2023-11-31T22:13:20.123456789Z\"",
       )
     }
 
@@ -138,14 +138,14 @@ internal class KotlinInstantSerializationTest {
         json.deserialize<Instant>("\"2023-11-14T-01:13:20.123456789Z\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Instant`" +
-          " from String \"2023-11-14T-01:13:20.123456789Z\""
+          " from String \"2023-11-14T-01:13:20.123456789Z\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-11-14T24:13:20.123456789Z\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Instant`" +
-          " from String \"2023-11-14T24:13:20.123456789Z\""
+          " from String \"2023-11-14T24:13:20.123456789Z\"",
       )
     }
 
@@ -156,14 +156,14 @@ internal class KotlinInstantSerializationTest {
         json.deserialize<Instant>("\"2023-11-14T22:-01:20.123456789Z\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Instant`" +
-          " from String \"2023-11-14T22:-01:20.123456789Z\""
+          " from String \"2023-11-14T22:-01:20.123456789Z\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-11-14T22:60:20.123456789Z\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Instant`" +
-          " from String \"2023-11-14T22:60:20.123456789Z\""
+          " from String \"2023-11-14T22:60:20.123456789Z\"",
       )
     }
 
@@ -174,14 +174,14 @@ internal class KotlinInstantSerializationTest {
         json.deserialize<Instant>("\"2023-11-14T22:13:-01.123456789Z\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Instant`" +
-          " from String \"2023-11-14T22:13:-01.123456789Z\""
+          " from String \"2023-11-14T22:13:-01.123456789Z\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Instant>("\"2023-11-14T22:13:60.123456789Z\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Instant`" +
-          " from String \"2023-11-14T22:13:60.123456789Z\""
+          " from String \"2023-11-14T22:13:60.123456789Z\"",
       )
     }
 
@@ -192,7 +192,7 @@ internal class KotlinInstantSerializationTest {
         json.deserialize<Instant>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.time.Instant(non-null) but was null"
+          "; specified kotlin.time.Instant(non-null) but was null",
       )
 
       json.deserialize<Instant?>("null").shouldBeNull()
@@ -204,7 +204,7 @@ internal class KotlinInstantSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Instant>("true")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)"
+        "Unexpected token (VALUE_TRUE)",
       )
     }
 
@@ -214,7 +214,7 @@ internal class KotlinInstantSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Instant>("""{}""")
       }.message.shouldStartWith(
-        "Unexpected token (START_OBJECT)"
+        "Unexpected token (START_OBJECT)",
       )
     }
 
@@ -225,7 +225,7 @@ internal class KotlinInstantSerializationTest {
         json.deserialize<Instant>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Instant`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

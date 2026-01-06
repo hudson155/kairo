@@ -154,7 +154,7 @@ internal class PolymorphicSerializationTest {
           """.trimIndent(),
         )
       }.message.shouldStartWith(
-        "Could not resolve subtype of [simple type, class kairo.serialization.PolymorphicSerializationTest\$Animal]"
+        "Could not resolve subtype of [simple type, class kairo.serialization.PolymorphicSerializationTest\$Animal]",
       )
     }
 
@@ -172,7 +172,7 @@ internal class PolymorphicSerializationTest {
           """.trimIndent(),
         )
       }.message.shouldStartWith(
-        "Could not resolve type id 'Fish' as a subtype of `kairo.serialization.PolymorphicSerializationTest\$Animal`"
+        "Could not resolve type id 'Fish' as a subtype of `kairo.serialization.PolymorphicSerializationTest\$Animal`",
       )
     }
 
@@ -189,7 +189,7 @@ internal class PolymorphicSerializationTest {
           """.trimIndent(),
         )
       }.message.shouldStartWith(
-        "Missing required creator property 'barksPerMinute'"
+        "Missing required creator property 'barksPerMinute'",
       )
     }
 
@@ -208,7 +208,7 @@ internal class PolymorphicSerializationTest {
           """.trimIndent(),
         )
       }.message.shouldStartWith(
-        "Unrecognized field \"other\""
+        "Unrecognized field \"other\"",
       )
     }
 
@@ -219,7 +219,7 @@ internal class PolymorphicSerializationTest {
         json.deserialize<Animal>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.PolymorphicSerializationTest.Animal(non-null) but was null"
+          "; specified kairo.serialization.PolymorphicSerializationTest.Animal(non-null) but was null",
       )
 
       json.deserialize<Animal?>("null").shouldBeNull()
@@ -231,7 +231,7 @@ internal class PolymorphicSerializationTest {
       shouldThrowExactly<InvalidTypeIdException> {
         json.deserialize<Animal>("true")
       }.message.shouldStartWith(
-        "Could not resolve subtype of [simple type, class kairo.serialization.PolymorphicSerializationTest\$Animal]"
+        "Could not resolve subtype of [simple type, class kairo.serialization.PolymorphicSerializationTest\$Animal]",
       )
     }
 
@@ -241,7 +241,7 @@ internal class PolymorphicSerializationTest {
       shouldThrowExactly<InvalidTypeIdException> {
         json.deserialize<Animal>("0")
       }.message.shouldStartWith(
-        "Could not resolve subtype of [simple type, class kairo.serialization.PolymorphicSerializationTest\$Animal]"
+        "Could not resolve subtype of [simple type, class kairo.serialization.PolymorphicSerializationTest\$Animal]",
       )
     }
 
@@ -251,7 +251,7 @@ internal class PolymorphicSerializationTest {
       shouldThrowExactly<InvalidTypeIdException> {
         json.deserialize<Animal>("\"\"")
       }.message.shouldStartWith(
-        "Could not resolve subtype of [simple type, class kairo.serialization.PolymorphicSerializationTest\$Animal]"
+        "Could not resolve subtype of [simple type, class kairo.serialization.PolymorphicSerializationTest\$Animal]",
       )
     }
 
@@ -261,7 +261,7 @@ internal class PolymorphicSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Animal>("""[]""")
       }.message.shouldStartWith(
-        "Unexpected token (END_ARRAY)"
+        "Unexpected token (END_ARRAY)",
       )
     }
 }

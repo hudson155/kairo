@@ -39,7 +39,7 @@ internal class BigIntegerSerializationTest {
         json.deserialize<BigInteger>("1 234567890987654321")
       }.message.shouldStartWith(
         "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `java.math.BigInteger`)"
+          " (bound as `java.math.BigInteger`)",
       )
     }
 
@@ -49,7 +49,7 @@ internal class BigIntegerSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigInteger>("01234567890987654321")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
     }
 
@@ -60,7 +60,7 @@ internal class BigIntegerSerializationTest {
         json.deserialize<BigInteger>("1e0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (1e0)" +
-          " to `java.math.BigInteger` value"
+          " to `java.math.BigInteger` value",
       )
     }
 
@@ -71,7 +71,7 @@ internal class BigIntegerSerializationTest {
         json.deserialize<BigInteger>("0x0")
       }.message.shouldStartWith(
         "Unexpected character ('x' (code 120))" +
-          ": Expected space separating root-level values"
+          ": Expected space separating root-level values",
       )
     }
 
@@ -81,7 +81,7 @@ internal class BigIntegerSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigInteger>("NaN")
       }.message.shouldStartWith(
-        "Non-standard token 'NaN'"
+        "Non-standard token 'NaN'",
       )
     }
 
@@ -91,13 +91,13 @@ internal class BigIntegerSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigInteger>("Infinity")
       }.message.shouldStartWith(
-        "Non-standard token 'Infinity'"
+        "Non-standard token 'Infinity'",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<BigInteger>("-Infinity")
       }.message.shouldStartWith(
-        "Non-standard token '-Infinity'"
+        "Non-standard token '-Infinity'",
       )
     }
 
@@ -108,7 +108,7 @@ internal class BigIntegerSerializationTest {
         json.deserialize<BigInteger>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.math.BigInteger(non-null) but was null"
+          "; specified java.math.BigInteger(non-null) but was null",
       )
 
       json.deserialize<BigInteger?>("null").shouldBeNull()
@@ -121,7 +121,7 @@ internal class BigIntegerSerializationTest {
         json.deserialize<BigInteger>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.math.BigInteger`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -132,7 +132,7 @@ internal class BigIntegerSerializationTest {
         json.deserialize<BigInteger>("0.0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (0.0)" +
-          " to `java.math.BigInteger` value"
+          " to `java.math.BigInteger` value",
       )
     }
 
@@ -143,7 +143,7 @@ internal class BigIntegerSerializationTest {
         json.deserialize<BigInteger>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.math.BigInteger` value"
+          " to `java.math.BigInteger` value",
       )
     }
 
@@ -154,7 +154,7 @@ internal class BigIntegerSerializationTest {
         json.deserialize<BigInteger>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.math.BigInteger`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -165,7 +165,7 @@ internal class BigIntegerSerializationTest {
         json.deserialize<BigInteger>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.math.BigInteger`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

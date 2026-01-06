@@ -38,13 +38,13 @@ internal class ShortSerializationTest {
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<Short>("-32769")
       }.message.shouldStartWith(
-        "Numeric value (-32769) out of range of Java short"
+        "Numeric value (-32769) out of range of Java short",
       )
 
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<Short>("32768")
       }.message.shouldStartWith(
-        "Numeric value (32768) out of range of Java short"
+        "Numeric value (32768) out of range of Java short",
       )
     }
 
@@ -55,7 +55,7 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("1 55")
       }.message.shouldStartWith(
         "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `java.lang.Short`)"
+          " (bound as `java.lang.Short`)",
       )
     }
 
@@ -65,7 +65,7 @@ internal class ShortSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Short>("0155")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
     }
 
@@ -76,7 +76,7 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("1e0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (1e0)" +
-          " to `java.lang.Short` value"
+          " to `java.lang.Short` value",
       )
     }
 
@@ -87,7 +87,7 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("0x0")
       }.message.shouldStartWith(
         "Unexpected character ('x' (code 120))" +
-          ": Expected space separating root-level values"
+          ": Expected space separating root-level values",
       )
     }
 
@@ -97,7 +97,7 @@ internal class ShortSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Short>("NaN")
       }.message.shouldStartWith(
-        "Non-standard token 'NaN'"
+        "Non-standard token 'NaN'",
       )
     }
 
@@ -107,13 +107,13 @@ internal class ShortSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Short>("Infinity")
       }.message.shouldStartWith(
-        "Non-standard token 'Infinity'"
+        "Non-standard token 'Infinity'",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Short>("-Infinity")
       }.message.shouldStartWith(
-        "Non-standard token '-Infinity'"
+        "Non-standard token '-Infinity'",
       )
     }
 
@@ -124,7 +124,7 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Short(non-null) but was null"
+          "; specified kotlin.Short(non-null) but was null",
       )
 
       json.deserialize<Short?>("null").shouldBeNull()
@@ -137,7 +137,7 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Short`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -148,7 +148,7 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("0.0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (0.0)" +
-          " to `java.lang.Short` value"
+          " to `java.lang.Short` value",
       )
     }
 
@@ -159,7 +159,7 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.lang.Short` value"
+          " to `java.lang.Short` value",
       )
     }
 
@@ -170,7 +170,7 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Short`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -181,7 +181,7 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Short`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

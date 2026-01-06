@@ -35,13 +35,13 @@ internal class ULongSerializationTest {
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<ULong>("-1")
       }.message.shouldStartWith(
-        "Numeric value (-1) out of range of ULong (0 - 18446744073709551615)."
+        "Numeric value (-1) out of range of ULong (0 - 18446744073709551615).",
       )
 
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<ULong>("18446744073709551616")
       }.message.shouldStartWith(
-        "Numeric value (18446744073709551616) out of range of ULong (0 - 18446744073709551615)."
+        "Numeric value (18446744073709551616) out of range of ULong (0 - 18446744073709551615).",
       )
     }
 
@@ -52,7 +52,7 @@ internal class ULongSerializationTest {
         json.deserialize<ULong>("9 223372046731319018")
       }.message.shouldStartWith(
         "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `kotlin.ULong`)"
+          " (bound as `kotlin.ULong`)",
       )
     }
 
@@ -62,7 +62,7 @@ internal class ULongSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<ULong>("09223372046731319018")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
     }
 
@@ -80,7 +80,7 @@ internal class ULongSerializationTest {
         json.deserialize<ULong>("0x0")
       }.message.shouldStartWith(
         "Unexpected character ('x' (code 120))" +
-          ": Expected space separating root-level values"
+          ": Expected space separating root-level values",
       )
     }
 
@@ -90,7 +90,7 @@ internal class ULongSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<ULong>("NaN")
       }.message.shouldStartWith(
-        "Non-standard token 'NaN'"
+        "Non-standard token 'NaN'",
       )
     }
 
@@ -100,13 +100,13 @@ internal class ULongSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<ULong>("Infinity")
       }.message.shouldStartWith(
-        "Non-standard token 'Infinity'"
+        "Non-standard token 'Infinity'",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<ULong>("-Infinity")
       }.message.shouldStartWith(
-        "Non-standard token '-Infinity'"
+        "Non-standard token '-Infinity'",
       )
     }
 
@@ -117,7 +117,7 @@ internal class ULongSerializationTest {
         json.deserialize<ULong>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.ULong(non-null) but was null"
+          "; specified kotlin.ULong(non-null) but was null",
       )
 
       json.deserialize<ULong?>("null").shouldBeNull()
@@ -129,7 +129,7 @@ internal class ULongSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<ULong>("true")
       }.message.shouldStartWith(
-        "Current token (VALUE_TRUE) not numeric, can not use numeric value accessors"
+        "Current token (VALUE_TRUE) not numeric, can not use numeric value accessors",
       )
     }
 
@@ -146,7 +146,7 @@ internal class ULongSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<ULong>("\"0\"")
       }.message.shouldStartWith(
-        "Current token (VALUE_STRING) not numeric, can not use numeric value accessors"
+        "Current token (VALUE_STRING) not numeric, can not use numeric value accessors",
       )
     }
 
@@ -156,7 +156,7 @@ internal class ULongSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<ULong>("""{}""")
       }.message.shouldStartWith(
-        "Current token (START_OBJECT) not numeric, can not use numeric value accessors"
+        "Current token (START_OBJECT) not numeric, can not use numeric value accessors",
       )
     }
 
@@ -166,7 +166,7 @@ internal class ULongSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<ULong>("""[]""")
       }.message.shouldStartWith(
-        "Current token (START_ARRAY) not numeric, can not use numeric value accessors"
+        "Current token (START_ARRAY) not numeric, can not use numeric value accessors",
       )
     }
 }

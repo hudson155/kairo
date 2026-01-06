@@ -37,14 +37,14 @@ internal class JavaZoneOffsetSerializationTest {
         json.deserialize<ZoneOffset>("\"-19:00\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.ZoneOffset`" +
-          " from String \"-19:00\""
+          " from String \"-19:00\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<ZoneOffset>("\"+19:00\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.ZoneOffset`" +
-          " from String \"+19:00\""
+          " from String \"+19:00\"",
       )
     }
 
@@ -55,7 +55,7 @@ internal class JavaZoneOffsetSerializationTest {
         json.deserialize<ZoneOffset>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.ZoneOffset(non-null) but was null"
+          "; specified java.time.ZoneOffset(non-null) but was null",
       )
 
       json.deserialize<ZoneOffset?>("null").shouldBeNull()
@@ -67,7 +67,7 @@ internal class JavaZoneOffsetSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneOffset>("true")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)"
+        "Unexpected token (VALUE_TRUE)",
       )
     }
 
@@ -77,7 +77,7 @@ internal class JavaZoneOffsetSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneOffset>("0")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_NUMBER_INT)"
+        "Unexpected token (VALUE_NUMBER_INT)",
       )
     }
 
@@ -87,7 +87,7 @@ internal class JavaZoneOffsetSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneOffset>("""{}""")
       }.message.shouldStartWith(
-        "Unexpected token (START_OBJECT)"
+        "Unexpected token (START_OBJECT)",
       )
     }
 
@@ -98,7 +98,7 @@ internal class JavaZoneOffsetSerializationTest {
         json.deserialize<ZoneOffset>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.ZoneOffset`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

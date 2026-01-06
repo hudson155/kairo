@@ -32,7 +32,7 @@ internal class CharSerializationTest {
         json.deserialize<Char>("\"\"")
       }.message.shouldStartWith(
         "Cannot coerce empty String (\"\")" +
-          " to `java.lang.Character` value"
+          " to `java.lang.Character` value",
       )
     }
 
@@ -43,7 +43,7 @@ internal class CharSerializationTest {
         json.deserialize<Char>("\"Hello, World!\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"Hello, World!\")" +
-          " to `java.lang.Character` value"
+          " to `java.lang.Character` value",
       )
     }
 
@@ -54,7 +54,7 @@ internal class CharSerializationTest {
         json.deserialize<Char>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Char(non-null) but was null"
+          "; specified kotlin.Char(non-null) but was null",
       )
 
       json.deserialize<Char?>("null").shouldBeNull()
@@ -67,7 +67,7 @@ internal class CharSerializationTest {
         json.deserialize<Char>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Character`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -78,7 +78,7 @@ internal class CharSerializationTest {
         json.deserialize<Char>("0")
       }.message.shouldStartWith(
         "Cannot coerce Integer value (0)" +
-          " to `java.lang.Character` value"
+          " to `java.lang.Character` value",
       )
     }
 
@@ -89,7 +89,7 @@ internal class CharSerializationTest {
         json.deserialize<Char>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Character`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -100,7 +100,7 @@ internal class CharSerializationTest {
         json.deserialize<Char>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Character`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

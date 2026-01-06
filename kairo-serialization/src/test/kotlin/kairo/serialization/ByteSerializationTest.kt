@@ -38,7 +38,7 @@ internal class ByteSerializationTest {
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<Byte>("-129")
       }.message.shouldStartWith(
-        "Numeric value (-129) out of range of Java byte"
+        "Numeric value (-129) out of range of Java byte",
       )
 
       // This seems like a bug in Jackson! I think this should throw.
@@ -52,7 +52,7 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("4 2")
       }.message.shouldStartWith(
         "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `java.lang.Byte`)"
+          " (bound as `java.lang.Byte`)",
       )
     }
 
@@ -62,7 +62,7 @@ internal class ByteSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Byte>("042")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
     }
 
@@ -73,7 +73,7 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("1e0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (1e0)" +
-          " to `java.lang.Byte` value"
+          " to `java.lang.Byte` value",
       )
     }
 
@@ -84,7 +84,7 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("0x0")
       }.message.shouldStartWith(
         "Unexpected character ('x' (code 120))" +
-          ": Expected space separating root-level values"
+          ": Expected space separating root-level values",
       )
     }
 
@@ -94,7 +94,7 @@ internal class ByteSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Byte>("NaN")
       }.message.shouldStartWith(
-        "Non-standard token 'NaN'"
+        "Non-standard token 'NaN'",
       )
     }
 
@@ -104,13 +104,13 @@ internal class ByteSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Byte>("Infinity")
       }.message.shouldStartWith(
-        "Non-standard token 'Infinity'"
+        "Non-standard token 'Infinity'",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Byte>("-Infinity")
       }.message.shouldStartWith(
-        "Non-standard token '-Infinity'"
+        "Non-standard token '-Infinity'",
       )
     }
 
@@ -121,7 +121,7 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Byte(non-null) but was null"
+          "; specified kotlin.Byte(non-null) but was null",
       )
 
       json.deserialize<Byte?>("null").shouldBeNull()
@@ -134,7 +134,7 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Byte`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -145,7 +145,7 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("0.0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (0.0)" +
-          " to `java.lang.Byte` value"
+          " to `java.lang.Byte` value",
       )
     }
 
@@ -156,7 +156,7 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.lang.Byte` value"
+          " to `java.lang.Byte` value",
       )
     }
 
@@ -167,7 +167,7 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Byte`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -178,7 +178,7 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Byte`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

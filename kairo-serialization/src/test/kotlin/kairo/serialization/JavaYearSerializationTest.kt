@@ -45,7 +45,7 @@ internal class JavaYearSerializationTest {
         json.deserialize<Year>("\"2 023\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Year`" +
-          " from String \"2 023\""
+          " from String \"2 023\"",
       )
     }
 
@@ -56,7 +56,7 @@ internal class JavaYearSerializationTest {
         json.deserialize<Year>("\"2,023\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Year`" +
-          " from String \"2,023\""
+          " from String \"2,023\"",
       )
     }
 
@@ -67,7 +67,7 @@ internal class JavaYearSerializationTest {
         json.deserialize<Year>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.Year(non-null) but was null"
+          "; specified java.time.Year(non-null) but was null",
       )
 
       json.deserialize<Year?>("null").shouldBeNull()
@@ -79,7 +79,7 @@ internal class JavaYearSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Year>("true")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)"
+        "Unexpected token (VALUE_TRUE)",
       )
     }
 
@@ -89,7 +89,7 @@ internal class JavaYearSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Year>("2023.0")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_NUMBER_FLOAT)"
+        "Unexpected token (VALUE_NUMBER_FLOAT)",
       )
     }
 
@@ -99,7 +99,7 @@ internal class JavaYearSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Year>("""{}""")
       }.message.shouldStartWith(
-        "Unexpected token (START_OBJECT)"
+        "Unexpected token (START_OBJECT)",
       )
     }
 
@@ -110,7 +110,7 @@ internal class JavaYearSerializationTest {
         json.deserialize<Year>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Year`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

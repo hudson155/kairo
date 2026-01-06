@@ -37,7 +37,7 @@ internal class KotlinMonthSerializationTest {
         json.deserialize<Month>("\"november\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Month`" +
-          " from String \"november\""
+          " from String \"november\"",
       )
     }
 
@@ -48,7 +48,7 @@ internal class KotlinMonthSerializationTest {
         json.deserialize<Month>("\"NOV\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Month`" +
-          " from String \"NOV\""
+          " from String \"NOV\"",
       )
     }
 
@@ -59,7 +59,7 @@ internal class KotlinMonthSerializationTest {
         json.deserialize<Month>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlinx.datetime.Month(non-null) but was null"
+          "; specified kotlinx.datetime.Month(non-null) but was null",
       )
 
       json.deserialize<Month?>("null").shouldBeNull()
@@ -72,7 +72,7 @@ internal class KotlinMonthSerializationTest {
         json.deserialize<Month>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Month`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -83,7 +83,7 @@ internal class KotlinMonthSerializationTest {
         json.deserialize<Month>("11")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Month`" +
-          " from number 11: not allowed to deserialize Enum value out of number"
+          " from number 11: not allowed to deserialize Enum value out of number",
       )
     }
 
@@ -94,7 +94,7 @@ internal class KotlinMonthSerializationTest {
         json.deserialize<Month>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Month`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -105,7 +105,7 @@ internal class KotlinMonthSerializationTest {
         json.deserialize<Month>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Month`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

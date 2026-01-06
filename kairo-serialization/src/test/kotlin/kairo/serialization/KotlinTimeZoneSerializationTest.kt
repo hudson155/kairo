@@ -38,7 +38,7 @@ internal class KotlinTimeZoneSerializationTest {
         json.deserialize<ZoneId>("\"pacific/kiritimati\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.ZoneId`" +
-          " from String \"pacific/kiritimati\""
+          " from String \"pacific/kiritimati\"",
       )
     }
 
@@ -49,7 +49,7 @@ internal class KotlinTimeZoneSerializationTest {
         json.deserialize<ZoneId>("\"Pacific/Edmonton\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.ZoneId`" +
-          " from String \"Pacific/Edmonton\""
+          " from String \"Pacific/Edmonton\"",
       )
     }
 
@@ -60,7 +60,7 @@ internal class KotlinTimeZoneSerializationTest {
         json.deserialize<ZoneId>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.ZoneId(non-null) but was null"
+          "; specified java.time.ZoneId(non-null) but was null",
       )
 
       json.deserialize<ZoneId?>("null").shouldBeNull()
@@ -72,7 +72,7 @@ internal class KotlinTimeZoneSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneId>("true")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)"
+        "Unexpected token (VALUE_TRUE)",
       )
     }
 
@@ -82,7 +82,7 @@ internal class KotlinTimeZoneSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneId>("0")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_NUMBER_INT)"
+        "Unexpected token (VALUE_NUMBER_INT)",
       )
     }
 
@@ -92,7 +92,7 @@ internal class KotlinTimeZoneSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<ZoneId>("""{}""")
       }.message.shouldStartWith(
-        "Unexpected token (START_OBJECT)"
+        "Unexpected token (START_OBJECT)",
       )
     }
 
@@ -103,7 +103,7 @@ internal class KotlinTimeZoneSerializationTest {
         json.deserialize<ZoneId>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.ZoneId`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

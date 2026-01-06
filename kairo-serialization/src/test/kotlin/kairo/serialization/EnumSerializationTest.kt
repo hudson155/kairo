@@ -57,7 +57,7 @@ internal class EnumSerializationTest {
         json.deserialize<Genre>("\"Education\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `kairo.serialization.EnumSerializationTest\$Genre`" +
-          " from String \"Education\""
+          " from String \"Education\"",
       )
     }
 
@@ -68,7 +68,7 @@ internal class EnumSerializationTest {
         json.deserialize<Genre>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.EnumSerializationTest.Genre(non-null) but was null"
+          "; specified kairo.serialization.EnumSerializationTest.Genre(non-null) but was null",
       )
 
       json.deserialize<Genre?>("null").shouldBeNull()
@@ -81,7 +81,7 @@ internal class EnumSerializationTest {
         json.deserialize<Genre>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `kairo.serialization.EnumSerializationTest\$Genre`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -92,7 +92,7 @@ internal class EnumSerializationTest {
         json.deserialize<Genre>("0")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `kairo.serialization.EnumSerializationTest\$Genre`" +
-          " from number 0: not allowed to deserialize Enum value out of number"
+          " from number 0: not allowed to deserialize Enum value out of number",
       )
     }
 
@@ -103,7 +103,7 @@ internal class EnumSerializationTest {
         json.deserialize<Genre>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `kairo.serialization.EnumSerializationTest\$Genre`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -114,7 +114,7 @@ internal class EnumSerializationTest {
         json.deserialize<Genre>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `kairo.serialization.EnumSerializationTest\$Genre`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

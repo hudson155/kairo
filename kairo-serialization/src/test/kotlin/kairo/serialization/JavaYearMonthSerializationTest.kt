@@ -44,14 +44,14 @@ internal class JavaYearMonthSerializationTest {
         json.deserialize<YearMonth>("\"2023-00\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.YearMonth`" +
-          " from String \"2023-00\""
+          " from String \"2023-00\"",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<YearMonth>("\"2023-13\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.YearMonth`" +
-          " from String \"2023-13\""
+          " from String \"2023-13\"",
       )
     }
 
@@ -62,7 +62,7 @@ internal class JavaYearMonthSerializationTest {
         json.deserialize<YearMonth>("\"202311\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.YearMonth`" +
-          " from String \"202311\""
+          " from String \"202311\"",
       )
     }
 
@@ -73,7 +73,7 @@ internal class JavaYearMonthSerializationTest {
         json.deserialize<YearMonth>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.YearMonth(non-null) but was null"
+          "; specified java.time.YearMonth(non-null) but was null",
       )
 
       json.deserialize<YearMonth?>("null").shouldBeNull()
@@ -85,7 +85,7 @@ internal class JavaYearMonthSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<YearMonth>("true")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)"
+        "Unexpected token (VALUE_TRUE)",
       )
     }
 
@@ -95,7 +95,7 @@ internal class JavaYearMonthSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<YearMonth>("202311")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_NUMBER_INT)"
+        "Unexpected token (VALUE_NUMBER_INT)",
       )
     }
 
@@ -105,7 +105,7 @@ internal class JavaYearMonthSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<YearMonth>("""{}""")
       }.message.shouldStartWith(
-        "Unexpected token (START_OBJECT)"
+        "Unexpected token (START_OBJECT)",
       )
     }
 
@@ -116,7 +116,7 @@ internal class JavaYearMonthSerializationTest {
         json.deserialize<YearMonth>("""[]""")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.YearMonth(non-null) but was null"
+          "; specified java.time.YearMonth(non-null) but was null",
       )
     }
 }

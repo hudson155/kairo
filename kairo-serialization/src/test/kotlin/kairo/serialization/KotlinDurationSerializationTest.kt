@@ -120,7 +120,7 @@ internal class KotlinDurationSerializationTest {
         json.deserialize<Duration>("\"0S\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Duration`" +
-          " from String \"0S\""
+          " from String \"0S\"",
       )
     }
 
@@ -131,7 +131,7 @@ internal class KotlinDurationSerializationTest {
         json.deserialize<Duration>("\"PT 0S\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Duration`" +
-          " from String \"PT 0S\""
+          " from String \"PT 0S\"",
       )
     }
 
@@ -142,7 +142,7 @@ internal class KotlinDurationSerializationTest {
         json.deserialize<Duration>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.time.Duration(non-null) but was null"
+          "; specified kotlin.time.Duration(non-null) but was null",
       )
 
       json.deserialize<Duration?>("null").shouldBeNull()
@@ -154,7 +154,7 @@ internal class KotlinDurationSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Duration>("true")
       }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)"
+        "Unexpected token (VALUE_TRUE)",
       )
     }
 
@@ -164,7 +164,7 @@ internal class KotlinDurationSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Duration>("""{}""")
       }.message.shouldStartWith(
-        "Unexpected token (START_OBJECT)"
+        "Unexpected token (START_OBJECT)",
       )
     }
 
@@ -175,7 +175,7 @@ internal class KotlinDurationSerializationTest {
         json.deserialize<Duration>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Duration`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

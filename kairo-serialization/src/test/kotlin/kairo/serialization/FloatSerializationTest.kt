@@ -47,14 +47,14 @@ internal class FloatSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("9 0210")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
 
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Float>("3.1 4")
       }.message.shouldStartWith(
         "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `java.lang.Float`)"
+          " (bound as `java.lang.Float`)",
       )
     }
 
@@ -64,13 +64,13 @@ internal class FloatSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("090210")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("03.14")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
     }
 
@@ -81,7 +81,7 @@ internal class FloatSerializationTest {
         json.deserialize<Float>("0x0")
       }.message.shouldStartWith(
         "Unexpected character ('x' (code 120))" +
-          ": Expected space separating root-level values"
+          ": Expected space separating root-level values",
       )
     }
 
@@ -91,7 +91,7 @@ internal class FloatSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("NaN")
       }.message.shouldStartWith(
-        "Non-standard token 'NaN'"
+        "Non-standard token 'NaN'",
       )
     }
 
@@ -101,13 +101,13 @@ internal class FloatSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("Infinity")
       }.message.shouldStartWith(
-        "Non-standard token 'Infinity'"
+        "Non-standard token 'Infinity'",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<Float>("-Infinity")
       }.message.shouldStartWith(
-        "Non-standard token '-Infinity'"
+        "Non-standard token '-Infinity'",
       )
     }
 
@@ -118,7 +118,7 @@ internal class FloatSerializationTest {
         json.deserialize<Float>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Float(non-null) but was null"
+          "; specified kotlin.Float(non-null) but was null",
       )
 
       json.deserialize<Float?>("null").shouldBeNull()
@@ -131,7 +131,7 @@ internal class FloatSerializationTest {
         json.deserialize<Float>("true")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Float`" +
-          " from Boolean value"
+          " from Boolean value",
       )
     }
 
@@ -142,7 +142,7 @@ internal class FloatSerializationTest {
         json.deserialize<Float>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.lang.Float` value"
+          " to `java.lang.Float` value",
       )
     }
 
@@ -153,7 +153,7 @@ internal class FloatSerializationTest {
         json.deserialize<Float>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Float`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -164,7 +164,7 @@ internal class FloatSerializationTest {
         json.deserialize<Float>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.Float`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }

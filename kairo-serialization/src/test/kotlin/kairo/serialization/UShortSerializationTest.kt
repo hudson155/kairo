@@ -35,13 +35,13 @@ internal class UShortSerializationTest {
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<UShort>("-1")
       }.message.shouldStartWith(
-        "Numeric value (-1) out of range of UShort (0 - 65535)."
+        "Numeric value (-1) out of range of UShort (0 - 65535).",
       )
 
       shouldThrowExactly<InputCoercionException> {
         json.deserialize<UShort>("65536")
       }.message.shouldStartWith(
-        "Numeric value (65536) out of range of UShort (0 - 65535)."
+        "Numeric value (65536) out of range of UShort (0 - 65535).",
       )
     }
 
@@ -52,7 +52,7 @@ internal class UShortSerializationTest {
         json.deserialize<UShort>("3 2923")
       }.message.shouldStartWith(
         "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `kotlin.UShort`)"
+          " (bound as `kotlin.UShort`)",
       )
     }
 
@@ -62,7 +62,7 @@ internal class UShortSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("032923")
       }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed"
+        "Invalid numeric value: Leading zeroes not allowed",
       )
     }
 
@@ -80,7 +80,7 @@ internal class UShortSerializationTest {
         json.deserialize<UShort>("0x0")
       }.message.shouldStartWith(
         "Unexpected character ('x' (code 120))" +
-          ": Expected space separating root-level values"
+          ": Expected space separating root-level values",
       )
     }
 
@@ -90,7 +90,7 @@ internal class UShortSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("NaN")
       }.message.shouldStartWith(
-        "Non-standard token 'NaN'"
+        "Non-standard token 'NaN'",
       )
     }
 
@@ -100,13 +100,13 @@ internal class UShortSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("Infinity")
       }.message.shouldStartWith(
-        "Non-standard token 'Infinity'"
+        "Non-standard token 'Infinity'",
       )
 
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("-Infinity")
       }.message.shouldStartWith(
-        "Non-standard token '-Infinity'"
+        "Non-standard token '-Infinity'",
       )
     }
 
@@ -117,7 +117,7 @@ internal class UShortSerializationTest {
         json.deserialize<UShort>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.UShort(non-null) but was null"
+          "; specified kotlin.UShort(non-null) but was null",
       )
 
       json.deserialize<UShort?>("null").shouldBeNull()
@@ -129,7 +129,7 @@ internal class UShortSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("true")
       }.message.shouldStartWith(
-        "Current token (VALUE_TRUE) not numeric, can not use numeric value accessors"
+        "Current token (VALUE_TRUE) not numeric, can not use numeric value accessors",
       )
     }
 
@@ -146,7 +146,7 @@ internal class UShortSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("\"0\"")
       }.message.shouldStartWith(
-        "Current token (VALUE_STRING) not numeric, can not use numeric value accessors"
+        "Current token (VALUE_STRING) not numeric, can not use numeric value accessors",
       )
     }
 
@@ -156,7 +156,7 @@ internal class UShortSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("""{}""")
       }.message.shouldStartWith(
-        "Current token (START_OBJECT) not numeric, can not use numeric value accessors"
+        "Current token (START_OBJECT) not numeric, can not use numeric value accessors",
       )
     }
 
@@ -166,7 +166,7 @@ internal class UShortSerializationTest {
       shouldThrowExactly<JsonParseException> {
         json.deserialize<UShort>("""[]""")
       }.message.shouldStartWith(
-        "Current token (START_ARRAY) not numeric, can not use numeric value accessors"
+        "Current token (START_ARRAY) not numeric, can not use numeric value accessors",
       )
     }
 }

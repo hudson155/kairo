@@ -35,7 +35,7 @@ internal class StringSerializationTest {
         json.deserialize<String>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.String(non-null) but was null"
+          "; specified kotlin.String(non-null) but was null",
       )
 
       json.deserialize<String?>("null").shouldBeNull()
@@ -60,7 +60,7 @@ internal class StringSerializationTest {
         json.deserialize<String>("""{}""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.String`" +
-          " from Object value"
+          " from Object value",
       )
     }
 
@@ -71,7 +71,7 @@ internal class StringSerializationTest {
         json.deserialize<String>("""[]""")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.lang.String`" +
-          " from Array value"
+          " from Array value",
       )
     }
 }
