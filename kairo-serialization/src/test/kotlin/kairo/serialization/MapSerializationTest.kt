@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.maps.shouldBeEmpty
 import io.kotest.matchers.maps.shouldContainExactly
 import io.kotest.matchers.nulls.shouldBeNull
@@ -45,7 +44,8 @@ internal class MapSerializationTest {
         json.deserialize<Map<String, Nothing>>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.collections.Map(non-null) but was null",
+          "; specified kotlin.collections.Map(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Map<String, Nothing>?>("null").shouldBeNull()

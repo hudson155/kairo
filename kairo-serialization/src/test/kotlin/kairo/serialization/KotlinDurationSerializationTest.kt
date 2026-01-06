@@ -142,7 +142,8 @@ internal class KotlinDurationSerializationTest {
         json.deserialize<Duration>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.time.Duration(non-null) but was null",
+          "; specified kotlin.time.Duration(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Duration?>("null").shouldBeNull()

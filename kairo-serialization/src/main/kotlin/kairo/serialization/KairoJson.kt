@@ -324,6 +324,8 @@ public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder) {
       ),
   )
 
+  addModule(KtorModule(builder))
+
   defaultLeniency(false)
 
   defaultDateFormat(StdDateFormat().withLenient(false))

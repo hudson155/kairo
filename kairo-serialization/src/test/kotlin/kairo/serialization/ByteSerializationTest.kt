@@ -121,7 +121,8 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Byte(non-null) but was null",
+          "; specified kotlin.Byte(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Byte?>("null").shouldBeNull()

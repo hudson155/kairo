@@ -25,10 +25,7 @@ internal class BigIntegerAsLongSerializationTest {
     val value: BigInteger,
   )
 
-  private val json: KairoJson =
-    KairoJson {
-      bigIntegerFormat = BigIntegerFormat.Long
-    }
+  private val json: KairoJson = KairoJson()
 
   @Test
   fun `serialize, configured in constructor`(): Unit =
@@ -44,8 +41,6 @@ internal class BigIntegerAsLongSerializationTest {
   @Test
   fun `serialize, configured using annotations`(): Unit =
     runTest {
-      val json = KairoJson()
-
       json.serialize(WrapperWithAnnotations(BigInteger("-1234567890987654321")))
         .shouldBe("""{"value":-1234567890987654321}""")
       json.serialize(WrapperWithAnnotations(BigInteger("0")))
@@ -70,8 +65,6 @@ internal class BigIntegerAsLongSerializationTest {
   @Test
   fun `deserialize, configured using annotations`(): Unit =
     runTest {
-      val json = KairoJson()
-
       json.deserialize<WrapperWithAnnotations>("""{"value":-1234567890987654321}""")
         .shouldBe(WrapperWithAnnotations(BigInteger("-1234567890987654321")))
       json.deserialize<WrapperWithAnnotations>("""{"value":0}""")
@@ -158,7 +151,8 @@ internal class BigIntegerAsLongSerializationTest {
         json.deserialize<DefaultWrapper>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.BigIntegerAsLongSerializationTest.DefaultWrapper(non-null) but was null",
+          "; specified kairo.serialization.BigIntegerAsLongSerializationTest.DefaultWrapper(non-null)" +
+          " but was null",
       )
 
       json.deserialize<DefaultWrapper?>("null").shouldBeNull()

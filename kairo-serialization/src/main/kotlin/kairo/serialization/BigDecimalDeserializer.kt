@@ -26,7 +26,7 @@ public abstract class BigDecimalDeserializer : StdDeserializer<BigDecimal>(
       p: JsonParser,
       ctxt: DeserializationContext,
     ): BigDecimal {
-      val string = ctxt.readValue(p, String::class.java)
+      val string = p.text
       return BigDecimal(string)
     }
   }

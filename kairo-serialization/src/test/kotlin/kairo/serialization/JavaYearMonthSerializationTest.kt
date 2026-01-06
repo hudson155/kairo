@@ -73,7 +73,8 @@ internal class JavaYearMonthSerializationTest {
         json.deserialize<YearMonth>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.YearMonth(non-null) but was null",
+          "; specified java.time.YearMonth(non-null)" +
+          " but was null",
       )
 
       json.deserialize<YearMonth?>("null").shouldBeNull()
@@ -116,7 +117,8 @@ internal class JavaYearMonthSerializationTest {
         json.deserialize<YearMonth>("""[]""")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.YearMonth(non-null) but was null",
+          "; specified java.time.YearMonth(non-null)" +
+          " but was null",
       )
     }
 }

@@ -192,7 +192,8 @@ internal class KotlinInstantSerializationTest {
         json.deserialize<Instant>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.time.Instant(non-null) but was null",
+          "; specified kotlin.time.Instant(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Instant?>("null").shouldBeNull()

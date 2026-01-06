@@ -118,7 +118,8 @@ internal class FloatSerializationTest {
         json.deserialize<Float>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Float(non-null) but was null",
+          "; specified kotlin.Float(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Float?>("null").shouldBeNull()

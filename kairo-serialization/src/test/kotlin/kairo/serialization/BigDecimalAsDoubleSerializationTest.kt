@@ -24,10 +24,7 @@ internal class BigDecimalAsDoubleSerializationTest {
     val value: BigDecimal,
   )
 
-  private val json: KairoJson =
-    KairoJson {
-      bigDecimalFormat = BigDecimalFormat.Double
-    }
+  private val json: KairoJson = KairoJson()
 
   @Test
   fun `serialize, configured in constructor`(): Unit =
@@ -55,8 +52,6 @@ internal class BigDecimalAsDoubleSerializationTest {
   @Test
   fun `serialize, configured using annotations`(): Unit =
     runTest {
-      val json = KairoJson()
-
       json.serialize(WrapperWithAnnotations(BigDecimal("-90210.0")))
         .shouldBe("""{"value":-90210.0}""")
       json.serialize(WrapperWithAnnotations(BigDecimal("-90210")))
@@ -109,8 +104,6 @@ internal class BigDecimalAsDoubleSerializationTest {
   @Test
   fun `deserialize, configured using annotations`(): Unit =
     runTest {
-      val json = KairoJson()
-
       json.deserialize<WrapperWithAnnotations>("""{"value":-90210.0}""")
         .shouldBe(WrapperWithAnnotations(BigDecimal("-90210.0")))
       json.deserialize<WrapperWithAnnotations>("""{"value":-90210}""")
@@ -215,7 +208,8 @@ internal class BigDecimalAsDoubleSerializationTest {
         json.deserialize<DefaultWrapper>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.BigDecimalAsDoubleSerializationTest.DefaultWrapper(non-null) but was null",
+          "; specified kairo.serialization.BigDecimalAsDoubleSerializationTest.DefaultWrapper(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Double?>("null").shouldBeNull()

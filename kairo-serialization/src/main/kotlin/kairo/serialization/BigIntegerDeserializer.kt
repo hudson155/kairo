@@ -26,7 +26,7 @@ public abstract class BigIntegerDeserializer : StdDeserializer<BigInteger>(
       p: JsonParser,
       ctxt: DeserializationContext,
     ): BigInteger {
-      val string = ctxt.readValue(p, String::class.java)
+      val string = p.text
       return BigInteger(string)
     }
   }

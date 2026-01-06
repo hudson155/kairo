@@ -71,7 +71,8 @@ internal class JavaUuidSerializationTest {
         json.deserialize<UUID>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.util.UUID(non-null) but was null",
+          "; specified java.util.UUID(non-null)" +
+          " but was null",
       )
 
       json.deserialize<UUID?>("null").shouldBeNull()

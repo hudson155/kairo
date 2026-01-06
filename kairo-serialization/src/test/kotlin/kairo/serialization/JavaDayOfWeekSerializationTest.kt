@@ -59,7 +59,8 @@ internal class JavaDayOfWeekSerializationTest {
         json.deserialize<DayOfWeek>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.DayOfWeek(non-null) but was null",
+          "; specified java.time.DayOfWeek(non-null)" +
+          " but was null",
       )
 
       json.deserialize<DayOfWeek?>("null").shouldBeNull()

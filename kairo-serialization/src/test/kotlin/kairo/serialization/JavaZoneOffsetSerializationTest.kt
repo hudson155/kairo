@@ -55,7 +55,8 @@ internal class JavaZoneOffsetSerializationTest {
         json.deserialize<ZoneOffset>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.ZoneOffset(non-null) but was null",
+          "; specified java.time.ZoneOffset(non-null)" +
+          " but was null",
       )
 
       json.deserialize<ZoneOffset?>("null").shouldBeNull()

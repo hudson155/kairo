@@ -37,7 +37,8 @@ internal class SetSerializationTest {
         json.deserialize<Set<Nothing>>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.collections.Set(non-null) but was null",
+          "; specified kotlin.collections.Set(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Set<Nothing>?>("null").shouldBeNull()

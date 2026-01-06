@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
@@ -208,7 +207,8 @@ internal class BigDecimalAsStringSerializationTest {
         json.deserialize<DefaultWrapper>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.BigDecimalAsStringSerializationTest.DefaultWrapper(non-null) but was null",
+          "; specified kairo.serialization.BigDecimalAsStringSerializationTest.DefaultWrapper(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Double?>("null").shouldBeNull()
@@ -235,22 +235,20 @@ internal class BigDecimalAsStringSerializationTest {
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
-      shouldThrowExactly<MismatchedInputException> {
+      shouldThrowExactly<JsonMappingException> {
         json.deserialize<DefaultWrapper>("""{"value":{}}""")
       }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.String`" +
-          " from Object value",
+        "Character { is neither a decimal digit number, decimal point, nor \"e\" notation exponential mark.",
       )
     }
 
   @Test
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
-      shouldThrowExactly<MismatchedInputException> {
+      shouldThrowExactly<JsonMappingException> {
         json.deserialize<DefaultWrapper>("""{"value":[]}""")
       }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.String`" +
-          " from Array value",
+        "Character [ is neither a decimal digit number, decimal point, nor \"e\" notation exponential mark.",
       )
     }
 }

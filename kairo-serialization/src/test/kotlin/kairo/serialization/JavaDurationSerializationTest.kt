@@ -136,7 +136,8 @@ internal class JavaDurationSerializationTest {
         json.deserialize<Duration>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.Duration(non-null) but was null",
+          "; specified java.time.Duration(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Duration?>("null").shouldBeNull()

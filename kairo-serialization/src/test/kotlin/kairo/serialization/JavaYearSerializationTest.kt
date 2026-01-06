@@ -67,7 +67,8 @@ internal class JavaYearSerializationTest {
         json.deserialize<Year>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified java.time.Year(non-null) but was null",
+          "; specified java.time.Year(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Year?>("null").shouldBeNull()

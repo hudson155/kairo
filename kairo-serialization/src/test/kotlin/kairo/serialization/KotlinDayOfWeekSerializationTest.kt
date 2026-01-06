@@ -59,7 +59,8 @@ internal class KotlinDayOfWeekSerializationTest {
         json.deserialize<DayOfWeek>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlinx.datetime.DayOfWeek(non-null) but was null",
+          "; specified kotlinx.datetime.DayOfWeek(non-null)" +
+          " but was null",
       )
 
       json.deserialize<DayOfWeek?>("null").shouldBeNull()

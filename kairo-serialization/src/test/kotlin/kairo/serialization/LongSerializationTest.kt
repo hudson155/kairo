@@ -125,7 +125,8 @@ internal class LongSerializationTest {
         json.deserialize<Long>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Long(non-null) but was null",
+          "; specified kotlin.Long(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Long?>("null").shouldBeNull()

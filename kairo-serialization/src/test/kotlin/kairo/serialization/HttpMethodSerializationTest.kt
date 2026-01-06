@@ -6,62 +6,51 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
+import io.ktor.http.HttpMethod
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-internal class StringSerializationTest {
+internal class HttpMethodSerializationTest {
   private val json: KairoJson = KairoJson()
 
   @Test
   fun serialize(): Unit =
     runTest {
-      json.serialize("").shouldBe("\"\"")
-      json.serialize("Hello, World!").shouldBe("\"Hello, World!\"")
-      json.serialize("✝\uFE0F").shouldBe("\"✝\uFE0F\"")
+      json.serialize(HttpMethod.Get).shouldBe("\"GET\"")
+      json.serialize(HttpMethod.Post).shouldBe("\"POST\"")
+      json.serialize(HttpMethod("CUSTOM")).shouldBe("\"CUSTOM\"")
     }
 
   @Test
   fun deserialize(): Unit =
     runTest {
-      json.deserialize<String>("\"\"").shouldBe("")
-      json.deserialize<String>("\"Hello, World!\"").shouldBe("Hello, World!")
-      json.deserialize<String>("\"✝\uFE0F\"").shouldBe("✝\uFE0F")
+      json.deserialize<HttpMethod>("\"GET\"").shouldBe(HttpMethod.Get)
+      json.deserialize<HttpMethod>("\"POST\"").shouldBe(HttpMethod.Post)
+      json.deserialize<HttpMethod>("\"CUSTOM\"").shouldBe(HttpMethod("CUSTOM"))
     }
 
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
       shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<String>("null")
+        json.deserialize<HttpMethod>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.String(non-null)" +
+          "; specified io.ktor.http.HttpMethod(non-null)" +
           " but was null",
       )
 
-      json.deserialize<String?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      json.deserialize<String>("true").shouldBe("true")
-    }
-
-  @Test
-  fun `deserialize, wrong type (int)`(): Unit =
-    runTest {
-      json.deserialize<String>("0").shouldBe("0")
+      json.deserialize<HttpMethod?>("null").shouldBeNull()
     }
 
   @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<String>("""{}""")
+        json.deserialize<HttpMethod>("""{}""")
       }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.String`" +
-          " from Object value",
+        "Trailing token (of type END_OBJECT) found after value" +
+          " (bound as `io.ktor.http.HttpMethod`)",
       )
     }
 
@@ -69,10 +58,10 @@ internal class StringSerializationTest {
   fun `deserialize, wrong type (array)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<String>("""[]""")
+        json.deserialize<HttpMethod>("""[]""")
       }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.String`" +
-          " from Array value",
+        "Trailing token (of type END_ARRAY) found after value" +
+          " (bound as `io.ktor.http.HttpMethod`)",
       )
     }
 }

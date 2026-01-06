@@ -124,7 +124,8 @@ internal class IntSerializationTest {
         json.deserialize<Int>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Int(non-null) but was null",
+          "; specified kotlin.Int(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Int?>("null").shouldBeNull()

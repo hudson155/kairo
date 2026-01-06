@@ -42,7 +42,8 @@ internal class CharArraySerializationTest {
         json.deserialize<CharArray>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.CharArray(non-null) but was null",
+          "; specified kotlin.CharArray(non-null)" +
+          " but was null",
       )
 
       json.deserialize<CharArray?>("null").shouldBeNull()

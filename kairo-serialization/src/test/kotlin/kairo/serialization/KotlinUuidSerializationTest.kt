@@ -71,7 +71,8 @@ internal class KotlinUuidSerializationTest {
         json.deserialize<Uuid>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.uuid.Uuid(non-null) but was null",
+          "; specified kotlin.uuid.Uuid(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Uuid?>("null").shouldBeNull()

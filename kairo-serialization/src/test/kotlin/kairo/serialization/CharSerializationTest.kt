@@ -54,7 +54,8 @@ internal class CharSerializationTest {
         json.deserialize<Char>("null")
       }.message.shouldStartWith(
         "Deserialized value did not match the specified type" +
-          "; specified kotlin.Char(non-null) but was null",
+          "; specified kotlin.Char(non-null)" +
+          " but was null",
       )
 
       json.deserialize<Char?>("null").shouldBeNull()
