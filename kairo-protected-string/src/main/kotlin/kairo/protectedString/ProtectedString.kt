@@ -1,6 +1,7 @@
 package kairo.protectedString
 
-import kotlinx.serialization.Serializable
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonValue
 
 /**
  * Secrets should never show up in logs or stack traces.
@@ -9,10 +10,8 @@ import kotlinx.serialization.Serializable
  */
 @Suppress("UseDataClass")
 @OptIn(ProtectedString.Access::class)
-@Serializable(with = ProtectedStringSerializer::class)
-public class ProtectedString @Access constructor(
-  @Access
-  public val value: String,
+public class ProtectedString @Access @JsonCreator(mode = JsonCreator.Mode.DELEGATING) constructor(
+  @Access @JsonValue public val value: String,
 ) {
   /**
    * You must opt in to create protected strings or access their values.
