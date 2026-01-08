@@ -1,19 +1,19 @@
-package kairo.serialization
+package kairo.rest.serialization
 
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
-import io.ktor.http.HttpStatusCode
+import io.ktor.http.HttpMethod
 
-public class HttpStatusCodeSerializer : StdSerializer<HttpStatusCode>(
-  HttpStatusCode::class.java,
+internal class HttpMethodSerializer : StdSerializer<HttpMethod>(
+  HttpMethod::class.java,
 ) {
   override fun serialize(
-    value: HttpStatusCode,
+    value: HttpMethod,
     gen: JsonGenerator,
     provider: SerializerProvider,
   ) {
-    val int = value.value
-    gen.writeNumber(int)
+    val string = value.value
+    gen.writeString(string)
   }
 }
