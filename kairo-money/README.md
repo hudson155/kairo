@@ -31,13 +31,16 @@ For serialization to work, add `moneyModule()` to your `Json` instance
 and mark `Money` instances as `@Contextual`.
 
 ```kotlin
-val json: Json = json { serializersModule += moneyModule() }
+val json: KairoJson =
+  KairoJson {
+    addModule(MoneyModule())
+  }
 ```
 
 ```kotlin
-json.encodeToString(Money.of("123.45", "USD"))
-// => {"amount":"123.45","currency":"USD"}
+json.serialize(Money.of("123.45", "USD"))
+// => {"amount":123.45,"currency":"USD"}
 
-json.decodeFromString<Money>("""{"amount":"123.45","currency":"USD"}""")
+json.deserialize<Money>("""{"amount":"123.45","currency":"USD"}""")
 // => Money.of("123.45", "USD")
 ```

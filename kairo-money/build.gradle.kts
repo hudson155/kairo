@@ -1,15 +1,13 @@
 plugins {
-  kotlin("plugin.serialization")
   id("kairo-library")
   id("kairo-library-publish")
 }
 
 dependencies {
-  api(project(":kairo-serialization"))
+  compileOnly(project(":kairo-serialization")) // Forced peer dependency.
 
-  api(libs.moneta)
+  api(libs.moneta) // Available for usage.
 
+  testImplementation(project(":kairo-serialization"))
   testImplementation(project(":kairo-testing"))
-
-  testImplementation(libs.serialization.json)
 }
