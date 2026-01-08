@@ -318,7 +318,6 @@ public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder) {
       disable(JavaTimeFeature.ONE_BASED_MONTHS)
     },
   )
-  addModule(Jdk8Module())
 
   addModule(KotlinDatetimeModule())
 
