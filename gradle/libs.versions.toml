@@ -24,6 +24,7 @@ guava = { module = "com.google.guava:guava" }
 hocon = { module = "com.typesafe:config" }
 
 jackson = { module = "com.fasterxml.jackson.core:jackson-databind" }
+jackson-datatypeJdk8 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jdk8" }
 jackson-datatypeJsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" }
 jackson-moduleKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
 

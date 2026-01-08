@@ -7,9 +7,9 @@ import com.fasterxml.jackson.databind.JsonDeserializer
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 
-internal class OptionalDeserializer(
+internal class RequiredDeserializer(
   private val valueDeserializer: JsonDeserializer<Any>?,
-) : StdDeserializer<Optional<*>>(Optional::class.java), ContextualDeserializer {
+) : StdDeserializer<Required<*>>(Required::class.java), ContextualDeserializer {
   constructor() : this(null)
 
   override fun createContextual(
@@ -19,21 +19,18 @@ internal class OptionalDeserializer(
     property ?: return this
     val referencedType = property.type.referencedType ?: return this
     val valueDeserializer = ctxt.findContextualValueDeserializer(referencedType, property)
-    return OptionalDeserializer(valueDeserializer)
+    return RequiredDeserializer(valueDeserializer)
   }
 
-  override fun getNullValue(ctxt: DeserializationContext?): Optional<*> =
-    Optional.Null
-
-  override fun getAbsentValue(ctxt: DeserializationContext?): Optional.Missing =
-    Optional.Missing
+  override fun getAbsentValue(ctxt: DeserializationContext?): Required.Missing =
+    Required.Missing
 
   override fun deserialize(
     p: JsonParser,
     ctxt: DeserializationContext,
-  ): Optional<*> {
-    checkNotNull(valueDeserializer) { "Cannot deserialize Optional of unknown type." }
+  ): Required<*> {
+    checkNotNull(valueDeserializer) { "Cannot deserialize Required of unknown type." }
     val value = valueDeserializer.deserialize(p, ctxt)
-    return Optional.Value(value)
+    return Required.Value(value)
   }
 }

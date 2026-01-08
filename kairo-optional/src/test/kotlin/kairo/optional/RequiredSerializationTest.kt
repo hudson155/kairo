@@ -1,11 +1,12 @@
 package kairo.optional
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import kairo.serialization.KairoJson
 import kotlinx.coroutines.test.runTest
-import kotlinx.serialization.SerializationException
 import org.junit.jupiter.api.Test
 
 internal class RequiredSerializationTest {
@@ -43,9 +44,11 @@ internal class RequiredSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrow<SerializationException> {
+      shouldThrow<MismatchedInputException> {
         json.deserialize<Wrapper>("""{"value":null}""")
-      }
+      }.message.shouldStartWith(
+        "Null value for creator property 'value' (index 0)",
+      )
     }
 
   @Test
