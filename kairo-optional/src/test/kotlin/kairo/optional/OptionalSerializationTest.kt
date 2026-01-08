@@ -1,74 +1,86 @@
 package kairo.optional
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
-import kairo.serialization.json
+import io.kotest.matchers.string.shouldStartWith
+import kairo.serialization.KairoJson
 import kotlinx.coroutines.test.runTest
-import kotlinx.serialization.Contextual
-import kotlinx.serialization.EncodeDefault
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.encodeToJsonElement
-import kotlinx.serialization.modules.plus
 import org.junit.jupiter.api.Test
 
 internal class OptionalSerializationTest {
-  @Serializable
+  @JsonInclude(JsonInclude.Include.NON_ABSENT)
   internal data class Wrapper(
-    @EncodeDefault(EncodeDefault.Mode.NEVER) @Contextual
-    val value: Optional<String> = Optional.Missing,
+    val value: Optional<String>,
   )
 
-  private val json: Json = json { serializersModule += optionalModule() }
+  private val json: KairoJson =
+    KairoJson {
+      addModule(OptionalModule())
+    }
 
   @Test
   fun `serialize, missing`(): Unit =
     runTest {
-      json.encodeToJsonElement(Wrapper(Optional.Missing))
-        .shouldBe(buildJsonObject {})
+      json.serialize(Wrapper(Optional.Missing))
+        .shouldBe("""{}""")
     }
 
   @Test
   fun `serialize, null`(): Unit =
     runTest {
-      json.encodeToJsonElement(Wrapper(Optional.Null))
-        .shouldBe(
-          buildJsonObject {
-            put("value", JsonPrimitive(null))
-          },
-        )
+      json.serialize(Wrapper(Optional.Null))
+        .shouldBe("""{"value":null}""")
     }
 
   @Test
   fun `serialize, present`(): Unit =
     runTest {
-      json.encodeToJsonElement(Wrapper(Optional.Value("some value")))
-        .shouldBe(
-          buildJsonObject {
-            put("value", JsonPrimitive("some value"))
-          },
-        )
+      json.serialize(Wrapper(Optional.Value("some value")))
+        .shouldBe("""{"value":"some value"}""")
     }
 
   @Test
   fun `deserialize, missing`(): Unit =
     runTest {
-      json.decodeFromString<Wrapper>("{}")
+      json.deserialize<Wrapper>("""{}""")
         .shouldBe(Wrapper(Optional.Missing))
     }
 
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      json.decodeFromString<Wrapper>("""{"value":null}""")
+      json.deserialize<Wrapper>("""{"value":null}""")
         .shouldBe(Wrapper(Optional.Null))
     }
 
   @Test
   fun `deserialize, present`(): Unit =
     runTest {
-      json.decodeFromString<Wrapper>("""{"value":"some value"}""")
+      json.deserialize<Wrapper>("""{"value":"some value"}""")
         .shouldBe(Wrapper(Optional.Value("some value")))
+    }
+
+  @Test
+  fun `deserialize, wrong type (object)`(): Unit =
+    runTest {
+      shouldThrowExactly<MismatchedInputException> {
+        json.deserialize<String>("""{"value":{}}""")
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.String`" +
+          " from Object value",
+      )
+    }
+
+  @Test
+  fun `deserialize, wrong type (array)`(): Unit =
+    runTest {
+      shouldThrowExactly<MismatchedInputException> {
+        json.deserialize<Wrapper>("""{"value":[]}""")
+      }.message.shouldStartWith(
+        "Cannot deserialize value of type `java.lang.String`" +
+          " from Array value",
+      )
     }
 }

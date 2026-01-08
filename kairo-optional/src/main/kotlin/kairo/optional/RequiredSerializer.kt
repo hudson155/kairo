@@ -1,29 +1,23 @@
 package kairo.optional
 
-import kotlinx.serialization.EncodeDefault
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.ser.std.StdSerializer
 
-public class RequiredSerializer<T : Any>(
-  private val valueSerializer: KSerializer<T>,
-) : KSerializer<Required<T>> {
-  override val descriptor: SerialDescriptor = valueSerializer.descriptor
+internal class RequiredSerializer : StdSerializer<Required<*>>(
+  Required::class.java,
+) {
+  override fun isEmpty(provider: SerializerProvider, value: Required<*>?): Boolean =
+    super.isEmpty(provider, value) || value is Required.Missing
 
-  override fun serialize(encoder: Encoder, value: Required<T>) {
+  override fun serialize(
+    value: Required<*>,
+    gen: JsonGenerator,
+    provider: SerializerProvider,
+  ) {
     when (value) {
-      is Required.Value -> encoder.encodeSerializableValue(valueSerializer, value.value)
-      Required.Missing -> error(
-        "Tried to encode missing required value." +
-          " Ensure that requireds are annotated with" +
-          " @${EncodeDefault::class.simpleName}(${EncodeDefault::class.simpleName}" +
-          ".${EncodeDefault.Mode::class.simpleName}" +
-          ".${EncodeDefault.Mode.NEVER}).",
-      )
+      is Required.Missing -> error("Serializing an Required must only include non-empty.")
+      is Required.Value<*> -> provider.defaultSerializeValue(value.value, gen)
     }
   }
-
-  override fun deserialize(decoder: Decoder): Required<T> =
-    Required.Value(decoder.decodeSerializableValue(valueSerializer))
 }
