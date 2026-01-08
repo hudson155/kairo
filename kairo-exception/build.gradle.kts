@@ -4,10 +4,9 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-serialization"))
-
   api(libs.ktorHttp) // LogicalFailure exposes [HttpStatusCode].
 
   testImplementation(project(":kairo-rest:serialization"))
+  testImplementation(project(":kairo-serialization"))
   testImplementation(project(":kairo-testing"))
 }
