@@ -1,4 +1,4 @@
-package kairo.serialization
+package kairo.rest.serialization
 
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException
@@ -7,11 +7,15 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import io.ktor.http.HttpStatusCode
+import kairo.serialization.KairoJson
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class HttpStatusCodeSerializationTest {
-  private val json: KairoJson = KairoJson()
+  private val json: KairoJson =
+    KairoJson {
+      addModule(RestModule())
+    }
 
   @Test
   fun serialize(): Unit =

@@ -15,6 +15,7 @@ dependencies {
   implementation(project(":kairo-logging"))
   api(project(":kairo-optional")) // Available for usage in reps.
   implementation(project(":kairo-reflect"))
+  api(project(":kairo-rest:serialization"))
   implementation(project(":kairo-serialization"))
   implementation(project(":kairo-util"))
 

@@ -1,10 +1,10 @@
-package kairo.serialization
+package kairo.rest.serialization
 
 import com.fasterxml.jackson.databind.module.SimpleModule
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 
-internal class KtorModule : SimpleModule() {
+public class RestModule : SimpleModule() {
   init {
     addSerializer(HttpMethod::class.java, HttpMethodSerializer())
     addDeserializer(HttpMethod::class.java, HttpMethodDeserializer())

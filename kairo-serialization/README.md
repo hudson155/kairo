@@ -163,7 +163,9 @@ and has exploratory testing for them which ensures release-to-release stability.
 - Kotlin `Unit`
 - `UUID` (Java) and `Uuid` (Kotlin)
 
-#### Ktor types
+### Modules
+
+#### [RestModule](../kairo-rest/README.md)
 
 - `HttpMethod`
 - `HttpStatusCode`

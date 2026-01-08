@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
 import com.fasterxml.jackson.core.util.Separators
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.MapperFeature
+import com.fasterxml.jackson.databind.Module
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.cfg.EnumFeature
@@ -47,6 +48,10 @@ public class KairoJson @RawJsonMapper constructor(
     public var allowUnknown: Boolean = false
 
     public var pretty: Boolean = false
+
+    public fun addModule(module: Module) {
+      configures += { addModule(module) }
+    }
 
     public fun configure(configure: JsonMapper.Builder.() -> Unit) {
       configures += configure
@@ -323,8 +328,6 @@ public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder) {
           .withObjectFieldValueSpacing(Separators.Spacing.AFTER),
       ),
   )
-
-  addModule(KtorModule())
 
   defaultLeniency(false)
 
