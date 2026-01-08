@@ -2,6 +2,7 @@ package kairo.exception
 
 import io.kotest.matchers.shouldBe
 import io.ktor.http.HttpStatusCode
+import kairo.rest.serialization.RestModule
 import kairo.serialization.KairoJson
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -21,6 +22,7 @@ internal class LogicalFailureSerializatonTest {
   private val json: KairoJson =
     KairoJson {
       pretty = true
+      addModule(RestModule())
     }
 
   @Test
