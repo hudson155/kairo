@@ -41,6 +41,6 @@ val json: KairoJson =
 json.serialize(Money.of("123.45", "USD"))
 // => {"amount":123.45,"currency":"USD"}
 
-json.deserialize<Money>("""{"amount":"123.45","currency":"USD"}""")
+json.deserialize<Money>("""{"amount":123.45,"currency":"USD"}""")
 // => Money.of("123.45", "USD")
 ```
