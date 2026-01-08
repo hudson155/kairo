@@ -7,5 +7,5 @@ dependencies {
   testImplementation(project(":kairo-testing"))
   testImplementation(project(":kairo-util"))
 
-  testImplementation(libs.guava)
+  testImplementation(libs.guava) // For [Resources]
 }
