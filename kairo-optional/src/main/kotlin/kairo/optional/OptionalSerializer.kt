@@ -1,35 +1,24 @@
 package kairo.optional
 
-import kotlinx.serialization.EncodeDefault
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.ser.std.StdSerializer
 
-public class OptionalSerializer<T : Any>(
-  private val valueSerializer: KSerializer<T>,
-) : KSerializer<Optional<T>> {
-  override val descriptor: SerialDescriptor = valueSerializer.descriptor
+internal class OptionalSerializer : StdSerializer<Optional<*>>(
+  Optional::class.java,
+) {
+  override fun isEmpty(provider: SerializerProvider, value: Optional<*>?): Boolean =
+    super.isEmpty(provider, value) || value is Optional.Missing
 
-  override fun serialize(encoder: Encoder, value: Optional<T>) {
+  override fun serialize(
+    value: Optional<*>,
+    gen: JsonGenerator,
+    provider: SerializerProvider,
+  ) {
     when (value) {
-      is Optional.Value -> encoder.encodeSerializableValue(valueSerializer, value.value)
-      Optional.Null -> encoder.encodeNull()
-      Optional.Missing -> error(
-        "Tried to encode missing optional value." +
-          " Ensure that optionals are annotated with" +
-          " @${EncodeDefault::class.simpleName}(${EncodeDefault::class.simpleName}" +
-          ".${EncodeDefault.Mode::class.simpleName}" +
-          ".${EncodeDefault.Mode.NEVER}).",
-      )
+      is Optional.Missing -> error("Serializing an Optional must only include non-empty.")
+      is Optional.Null -> gen.writeNull()
+      is Optional.Value<*> -> provider.defaultSerializeValue(value.value, gen)
     }
-  }
-
-  override fun deserialize(decoder: Decoder): Optional<T> {
-    if (decoder.decodeNotNullMark()) {
-      return Optional.Value(decoder.decodeSerializableValue(valueSerializer))
-    }
-    decoder.decodeNull()
-    return Optional.Null
   }
 }
