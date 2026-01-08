@@ -58,5 +58,5 @@ println(apiKey.value)
 // => your_api_key
 
 println(json.serialize(apiKey))
-// => "your_api_key"
+// => "\"your_api_key\""
 ```
