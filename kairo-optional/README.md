@@ -52,11 +52,10 @@ val json: KairoJson =
 
 Second, you must add the `@JsonInclude(JsonInclude.Include.NON_ABSENT)` annotation
 to the class or property.
-You must also specify `Optional.Missing` as the default value.
 
 ```kotlin
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 data class Update(
-  val value: Optional<String> = Optional.Missing,
+  val value: Optional<String>,
 )
 ```
