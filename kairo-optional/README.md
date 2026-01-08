@@ -15,13 +15,13 @@ which traditional serialization libraries like `kotlinx.serialization` and Jacks
 Kairo provides `Optional<T>`.
 
 ```kotlin
-json.decodeFromString<Optional>("{}")
+json.deserialize<Optional>("{}")
 // => Optional.Missing
 
-json.decodeFromString<Optional>("""{"value":null}""")
+json.deserialize<Optional>("""{"value":null}""")
 // => Optional.Null
 
-json.decodeFromString<Optional>("""{"value":"some value"}""")
+json.deserialize<Optional>("""{"value":"some value"}""")
 // => Optional.Value("some value")
 ```
 
@@ -41,20 +41,22 @@ dependencies {
 
 There are two important points to note when using `Optional<T>`.
 
-First, you must add the `optionalModule` to your `Json` instance.
+First, you must add the `optionalModule` to your `KairoJson` instance.
 
 ```kotlin
-val json: Json = json { serializersModule += optionalModule() }
+val json: KairoJson =
+  KairoJson {
+    addModule(OptionalModule())
+  }
 ```
 
-Second, you must add the `@EncodeDefault(EncodeDefault.Mode.NEVER)` and `@Contextual` annotations
-to your `Optional` properties.
+Second, you must add the `@JsonInclude(JsonInclude.Include.NON_ABSENT)` annotation
+to the class or property.
 You must also specify `Optional.Missing` as the default value.
 
 ```kotlin
-@Serializable
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 data class Update(
-  @EncodeDefault(EncodeDefault.Mode.NEVER) @Contextual
   val value: Optional<String> = Optional.Missing,
 )
 ```
