@@ -10,8 +10,8 @@ specifies:
 - `null` properties in JSON PATCH requests
   should be interpreted as "remove this property".
 
-In order to implement this, we must have some way to differentiate between missing and null properties,
-which traditional serialization libraries like `kotlinx.serialization` and Jackson don't provide this out of the box.
+In order to implement this, we must have some way to differentiate between missing and null properties.
+Traditional serialization libraries like `kotlinx.serialization` and Jackson don't provide this out of the box.
 Kairo provides `Optional<T>`.
 
 ```kotlin
