@@ -56,8 +56,8 @@ data class UserNotFound(
   override val type: String = "UserNotFound"
   override val status: HttpStatusCode = HttpStatusCode.NotFound
 
-  override fun JsonObjectBuilder.buildJson() {
-    put("userId", json.encodeToJsonElement(userId))
+  override fun Map<String, Any?>.buildJson() {
+    put("userId", userId)
   }
 }
 
