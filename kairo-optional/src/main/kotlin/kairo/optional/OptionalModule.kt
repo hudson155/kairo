@@ -1,16 +1,15 @@
 package kairo.optional
 
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.modules.SerializersModule
+import com.fasterxml.jackson.databind.module.SimpleModule
 
-public fun optionalModule(): SerializersModule =
-  SerializersModule {
-    contextual(Required::class) { typeArgumentsSerializers ->
-      @Suppress("UNCHECKED_CAST")
-      RequiredSerializer(typeArgumentsSerializers[0] as KSerializer<Any>)
-    }
-    contextual(Optional::class) { typeArgumentsSerializers ->
-      @Suppress("UNCHECKED_CAST")
-      OptionalSerializer(typeArgumentsSerializers[0] as KSerializer<Any>)
-    }
+public class OptionalModule : SimpleModule() {
+  init {
+    addSerializer(Optional::class.java, OptionalSerializer())
+    addDeserializer(Optional::class.java, OptionalDeserializer())
   }
+
+  override fun setupModule(context: SetupContext) {
+    super.setupModule(context)
+    context.addTypeModifier(OptionalTypeModifier())
+  }
+}
