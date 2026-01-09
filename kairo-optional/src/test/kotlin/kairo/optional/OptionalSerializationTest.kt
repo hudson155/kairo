@@ -25,6 +25,13 @@ internal class OptionalSerializationTest {
     }
 
   @Test
+  fun `serialize, null`(): Unit =
+    runTest {
+      json.serialize(Wrapper(Optional.Null))
+        .shouldBe("""{"value":null}""")
+    }
+
+  @Test
   fun `serialize, present`(): Unit =
     runTest {
       json.serialize(Wrapper(Optional.Value("some value")))
@@ -36,6 +43,13 @@ internal class OptionalSerializationTest {
     runTest {
       json.deserialize<Wrapper>("""{}""")
         .shouldBe(Wrapper(Optional.Missing))
+    }
+
+  @Test
+  fun `deserialize, null`(): Unit =
+    runTest {
+      json.deserialize<Wrapper>("""{"value":null}""")
+        .shouldBe(Wrapper(Optional.Null))
     }
 
   @Test
