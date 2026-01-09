@@ -130,7 +130,9 @@ suspend fun listAll(): List<UserModel> =
   suspendTransaction(db = database) {
     UserTable
       .selectAll()
-      .map(UserTable::fromRow)
+      .orderBy(Pair(UserTable.createdAt, SortOrder.DESC))
+      .map(UserModel::fromRow)
+      .toList()
   }
 
 suspend fun create(creator: UserModel.Creator): UserModel =
