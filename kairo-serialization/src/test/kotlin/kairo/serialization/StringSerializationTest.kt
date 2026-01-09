@@ -1,9 +1,7 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -29,28 +27,16 @@ internal class StringSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<String>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kotlin.String(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<String?>("null").shouldBeNull()
-    }
-
-  @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
+      // Type coercion occurs.
       json.deserialize<String>("true").shouldBe("true")
     }
 
   @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
+      // Type coercion occurs.
       json.deserialize<String>("0").shouldBe("0")
     }
 

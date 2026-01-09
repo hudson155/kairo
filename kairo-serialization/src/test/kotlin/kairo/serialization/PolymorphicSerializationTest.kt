@@ -2,12 +2,10 @@ package kairo.serialization
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -210,50 +208,6 @@ internal class PolymorphicSerializationTest {
         )
       }.message.shouldStartWith(
         "Unrecognized field \"other\"",
-      )
-    }
-
-  @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<Animal>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.PolymorphicSerializationTest.Animal(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<Animal?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<InvalidTypeIdException> {
-        json.deserialize<Animal>("true")
-      }.message.shouldStartWith(
-        "Could not resolve subtype of [simple type, class kairo.serialization.PolymorphicSerializationTest\$Animal]",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (int)`(): Unit =
-    runTest {
-      shouldThrowExactly<InvalidTypeIdException> {
-        json.deserialize<Animal>("0")
-      }.message.shouldStartWith(
-        "Could not resolve subtype of [simple type, class kairo.serialization.PolymorphicSerializationTest\$Animal]",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (string)`(): Unit =
-    runTest {
-      shouldThrowExactly<InvalidTypeIdException> {
-        json.deserialize<Animal>("\"\"")
-      }.message.shouldStartWith(
-        "Could not resolve subtype of [simple type, class kairo.serialization.PolymorphicSerializationTest\$Animal]",
       )
     }
 

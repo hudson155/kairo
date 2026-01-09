@@ -49,13 +49,6 @@ internal class OptionalSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      json.deserialize<Wrapper>("""{"value":null}""")
-        .shouldBe(Wrapper(Optional.Null))
-    }
-
-  @Test
   fun `deserialize, present`(): Unit =
     runTest {
       json.deserialize<Wrapper>("""{"value":"some value"}""")

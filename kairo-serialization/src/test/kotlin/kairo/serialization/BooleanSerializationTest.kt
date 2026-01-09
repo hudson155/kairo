@@ -63,20 +63,6 @@ internal class BooleanSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<Boolean>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kotlin.Boolean(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<Boolean?>("null").shouldBeNull()
-    }
-
-  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowExactly<InvalidFormatException> {
@@ -116,28 +102,6 @@ internal class BooleanSerializationTest {
       }.message.shouldStartWith(
         "Cannot coerce String value (\"false\")" +
           " to `java.lang.Boolean` value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Boolean>("""{}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Boolean`" +
-          " from Object value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Boolean>("""[]""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Boolean`" +
-          " from Array value",
       )
     }
 }

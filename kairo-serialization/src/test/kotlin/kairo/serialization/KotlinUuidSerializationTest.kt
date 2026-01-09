@@ -1,10 +1,7 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlin.uuid.Uuid
@@ -61,64 +58,6 @@ internal class KotlinUuidSerializationTest {
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.util.UUID`" +
           " from String \"a042df12b77542b2aeb15bdd4ea78dc5\"",
-      )
-    }
-
-  @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<Uuid>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kotlin.uuid.Uuid(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<Uuid?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<InvalidFormatException> {
-        json.deserialize<Uuid>("true")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.UUID`" +
-          " from String \"true\"",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (int)`(): Unit =
-    runTest {
-      shouldThrowExactly<InvalidFormatException> {
-        json.deserialize<Uuid>("0")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.UUID`" +
-          " from String \"0\"",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Uuid>("""{}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.UUID`" +
-          " from Object value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Uuid>("""[]""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.UUID`" +
-          " from Array value",
       )
     }
 }

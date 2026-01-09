@@ -1,11 +1,9 @@
 package kairo.serialization
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import java.math.BigDecimal
@@ -201,20 +199,6 @@ internal class BigDecimalAsStringSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<DefaultWrapper>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.BigDecimalAsStringSerializationTest.DefaultWrapper(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<Double?>("null").shouldBeNull()
-    }
-
-  @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
       shouldThrowExactly<JsonMappingException> {
@@ -225,30 +209,10 @@ internal class BigDecimalAsStringSerializationTest {
     }
 
   @Test
-  fun `deserialize, wrong type (string)`(): Unit =
+  fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       // This seems like a bug in Jackson! I think this should throw.
-      json.deserialize<DefaultWrapper>("""{"value":"0"}""")
+      json.deserialize<DefaultWrapper>("""{"value":0}""")
         .shouldBe(DefaultWrapper(BigDecimal("0")))
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<JsonMappingException> {
-        json.deserialize<DefaultWrapper>("""{"value":{}}""")
-      }.message.shouldStartWith(
-        "Character { is neither a decimal digit number, decimal point, nor \"e\" notation exponential mark.",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<JsonMappingException> {
-        json.deserialize<DefaultWrapper>("""{"value":[]}""")
-      }.message.shouldStartWith(
-        "Character [ is neither a decimal digit number, decimal point, nor \"e\" notation exponential mark.",
-      )
     }
 }

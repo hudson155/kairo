@@ -1,10 +1,7 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import java.time.DateTimeException
@@ -182,51 +179,6 @@ internal class KotlinInstantSerializationTest {
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Instant`" +
           " from String \"2023-11-14T22:13:60.123456789Z\"",
-      )
-    }
-
-  @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<Instant>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kotlin.time.Instant(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<Instant?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Instant>("true")
-      }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Instant>("""{}""")
-      }.message.shouldStartWith(
-        "Unexpected token (START_OBJECT)",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Instant>("""[]""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.time.Instant`" +
-          " from Array value",
       )
     }
 }

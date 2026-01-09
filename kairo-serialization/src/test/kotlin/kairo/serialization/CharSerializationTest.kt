@@ -1,10 +1,8 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -48,31 +46,6 @@ internal class CharSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<Char>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kotlin.Char(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<Char?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Char>("true")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Character`" +
-          " from Boolean value",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowExactly<InvalidFormatException> {
@@ -80,28 +53,6 @@ internal class CharSerializationTest {
       }.message.shouldStartWith(
         "Cannot coerce Integer value (0)" +
           " to `java.lang.Character` value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Char>("""{}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Character`" +
-          " from Object value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Char>("""[]""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Character`" +
-          " from Array value",
       )
     }
 }

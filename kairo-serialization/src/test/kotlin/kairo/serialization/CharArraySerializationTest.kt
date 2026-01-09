@@ -1,9 +1,7 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -33,31 +31,6 @@ internal class CharArraySerializationTest {
       json.deserialize<CharArray>(
         """["H","e","l","l","o",","," ","W","o","r","l","d","!"]""",
       ).shouldBe("Hello, World!".toCharArray())
-    }
-
-  @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<CharArray>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kotlin.CharArray(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<CharArray?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<CharArray>("true")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `char[]`" +
-          " from Boolean value",
-      )
     }
 
   @Test

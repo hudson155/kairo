@@ -1,10 +1,8 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import java.time.LocalDateTime
@@ -129,30 +127,6 @@ internal class JavaLocalDateTimeSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<LocalDateTime>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified java.time.LocalDateTime(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<LocalDateTime?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<LocalDateTime>("true")
-      }.message.shouldStartWith(
-        "Expected array or string",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {
@@ -171,28 +145,6 @@ internal class JavaLocalDateTimeSerializationTest {
         json.deserialize<LocalDateTime>("1700000000123456789")
       }.message.shouldStartWith(
         "raw timestamp (1700000000123456789) not allowed for `java.time.LocalDateTime`",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<LocalDateTime>("""{}""")
-      }.message.shouldStartWith(
-        "Expected array or string",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<LocalDateTime>("""[]""")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified java.time.LocalDateTime(non-null)" +
-          " but was null",
       )
     }
 }

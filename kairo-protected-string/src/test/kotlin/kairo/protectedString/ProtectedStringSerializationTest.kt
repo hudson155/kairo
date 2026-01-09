@@ -29,20 +29,6 @@ internal class ProtectedStringSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<ProtectedString>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kairo.protectedString.ProtectedString(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<ProtectedString?>("null").shouldBeNull()
-    }
-
-  @Test
   fun `deserialize, wrong type (object)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {

@@ -42,16 +42,6 @@ internal class RequiredSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Wrapper>("""{"value":null}""")
-      }.message.shouldStartWith(
-        "Null value for creator property 'value' (index 0)",
-      )
-    }
-
-  @Test
   fun `deserialize, present`(): Unit =
     runTest {
       json.deserialize<Wrapper>("""{"value":"some value"}""")

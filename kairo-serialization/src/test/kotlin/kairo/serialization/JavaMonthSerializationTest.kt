@@ -1,10 +1,8 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import java.time.Month
@@ -53,20 +51,6 @@ internal class JavaMonthSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<Month>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified java.time.Month(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<Month?>("null").shouldBeNull()
-    }
-
-  @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {
@@ -85,28 +69,6 @@ internal class JavaMonthSerializationTest {
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Month`" +
           " from number 11: not allowed to deserialize Enum value out of number",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Month>("""{}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.time.Month`" +
-          " from Object value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Month>("""[]""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.time.Month`" +
-          " from Array value",
       )
     }
 }

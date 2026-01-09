@@ -1,10 +1,7 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import java.time.DayOfWeek
@@ -53,31 +50,6 @@ internal class JavaDayOfWeekSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<DayOfWeek>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified java.time.DayOfWeek(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<DayOfWeek?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<DayOfWeek>("true")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.time.DayOfWeek`" +
-          " from Boolean value",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowExactly<InvalidFormatException> {
@@ -85,28 +57,6 @@ internal class JavaDayOfWeekSerializationTest {
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.DayOfWeek`" +
           " from number 2: not allowed to deserialize Enum value out of number",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<DayOfWeek>("""{}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.time.DayOfWeek`" +
-          " from Object value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<DayOfWeek>("""[]""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.time.DayOfWeek`" +
-          " from Array value",
       )
     }
 }

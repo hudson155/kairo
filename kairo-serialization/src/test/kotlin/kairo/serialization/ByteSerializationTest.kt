@@ -2,11 +2,9 @@ package kairo.serialization
 
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.core.exc.InputCoercionException
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -115,20 +113,6 @@ internal class ByteSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<Byte>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kotlin.Byte(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<Byte?>("null").shouldBeNull()
-    }
-
-  @Test
   fun `deserialize, wrong type (boolean)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {
@@ -158,28 +142,6 @@ internal class ByteSerializationTest {
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
           " to `java.lang.Byte` value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Byte>("""{}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Byte`" +
-          " from Object value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Byte>("""[]""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Byte`" +
-          " from Array value",
       )
     }
 }

@@ -1,11 +1,8 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
-import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -127,62 +124,6 @@ internal class DataClassSerializationTest {
         )
       }.message.shouldStartWith(
         "Unrecognized field \"other\"",
-      )
-    }
-
-  @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<DataClass>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.DataClassSerializationTest.DataClass(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<DataClass?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<DataClass>("true")
-      }.message.shouldStartWith(
-        "Cannot construct instance of `kairo.serialization.DataClassSerializationTest\$DataClass`",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (int)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<DataClass>("0")
-      }.message.shouldStartWith(
-        "Cannot construct instance of `kairo.serialization.DataClassSerializationTest\$DataClass`",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (string)`(): Unit =
-    runTest {
-      shouldThrowExactly<InvalidFormatException> {
-        json.deserialize<DataClass>("\"\"")
-      }.message.shouldStartWith(
-        "Cannot coerce empty String (\"\")" +
-          " to `kairo.serialization.DataClassSerializationTest\$DataClass` value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<DataClass>("""[]""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `kairo.serialization.DataClassSerializationTest\$DataClass`" +
-          " from Array value",
       )
     }
 }

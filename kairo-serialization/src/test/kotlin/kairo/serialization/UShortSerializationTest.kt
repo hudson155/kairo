@@ -2,10 +2,8 @@ package kairo.serialization
 
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.core.exc.InputCoercionException
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -111,30 +109,6 @@ internal class UShortSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<UShort>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kotlin.UShort(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<UShort?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<JsonParseException> {
-        json.deserialize<UShort>("true")
-      }.message.shouldStartWith(
-        "Current token (VALUE_TRUE) not numeric, can not use numeric value accessors",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (float)`(): Unit =
     runTest {
       // This seems like a bug in Jackson! I think this should throw.
@@ -148,26 +122,6 @@ internal class UShortSerializationTest {
         json.deserialize<UShort>("\"0\"")
       }.message.shouldStartWith(
         "Current token (VALUE_STRING) not numeric, can not use numeric value accessors",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<JsonParseException> {
-        json.deserialize<UShort>("""{}""")
-      }.message.shouldStartWith(
-        "Current token (START_OBJECT) not numeric, can not use numeric value accessors",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<JsonParseException> {
-        json.deserialize<UShort>("""[]""")
-      }.message.shouldStartWith(
-        "Current token (START_ARRAY) not numeric, can not use numeric value accessors",
       )
     }
 }

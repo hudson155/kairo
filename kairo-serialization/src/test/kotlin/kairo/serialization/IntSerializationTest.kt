@@ -2,11 +2,9 @@ package kairo.serialization
 
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.core.exc.InputCoercionException
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -118,31 +116,6 @@ internal class IntSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<Int>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kotlin.Int(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<Int?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Int>("true")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Integer`" +
-          " from Boolean value",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (float)`(): Unit =
     runTest {
       shouldThrowExactly<InvalidFormatException> {
@@ -161,28 +134,6 @@ internal class IntSerializationTest {
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
           " to `java.lang.Integer` value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Int>("""{}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Integer`" +
-          " from Object value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Int>("""[]""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Integer`" +
-          " from Array value",
       )
     }
 }

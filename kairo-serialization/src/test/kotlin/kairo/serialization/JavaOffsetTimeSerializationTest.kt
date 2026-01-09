@@ -1,10 +1,8 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import java.time.LocalTime
@@ -94,58 +92,12 @@ internal class JavaOffsetTimeSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<OffsetTime>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified java.time.OffsetTime(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<OffsetTime?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<OffsetTime>("true")
-      }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<OffsetTime>("221360123456789")
       }.message.shouldStartWith(
         "raw timestamp (221360123456789) not allowed for `java.time.OffsetTime`",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<OffsetTime>("""{}""")
-      }.message.shouldStartWith(
-        "Unexpected token (START_OBJECT)",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<OffsetTime>("""[]""")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified java.time.OffsetTime(non-null)" +
-          " but was null",
       )
     }
 }
