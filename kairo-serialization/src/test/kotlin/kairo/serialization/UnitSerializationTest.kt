@@ -26,7 +26,7 @@ internal class UnitSerializationTest {
   fun `deserialize, unknown property`(): Unit =
     runTest {
       shouldThrowExactly<UnrecognizedPropertyException> {
-        json.deserialize<Unit>("""{"other":"unknown"}""").shouldBe(Unit)
+        json.deserialize<Unit>("""{"other":"unknown"}""")
       }.message.shouldStartWith(
         "Unrecognized field \"other\"",
       )
