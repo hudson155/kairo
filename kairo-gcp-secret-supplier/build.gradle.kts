@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
   implementation(project(":kairo-logging"))
-  api(project(":kairo-protected-string"))
+  api(project(":kairo-protected-string")) // Return type.
 
   implementation(libs.coroutines.guava) // Some utils are used internally.
   implementation(libs.gcp.secretManager)
