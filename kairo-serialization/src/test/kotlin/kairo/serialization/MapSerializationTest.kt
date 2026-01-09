@@ -1,10 +1,12 @@
 package kairo.serialization
 
 import com.fasterxml.jackson.core.JsonParseException
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.maps.shouldBeEmpty
 import io.kotest.matchers.maps.shouldContainExactly
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -33,6 +35,20 @@ internal class MapSerializationTest {
         .shouldContainExactly(mapOf("first" to 1, "second" to 2))
       json.deserialize<Map<String, String>>("""{"first":"foo","second":"bar"}""")
         .shouldContainExactly(mapOf("first" to "foo", "second" to "bar"))
+    }
+
+  @Test
+  fun `deserialize, null`(): Unit =
+    runTest {
+      shouldThrowExactly<RuntimeJsonMappingException> {
+        json.deserialize<Map<String, Nothing>>("null")
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlin.collections.Map(non-null)" +
+          " but was null",
+      )
+
+      json.deserialize<Map<String, Nothing>?>("null").shouldBeNull()
     }
 
   @Test

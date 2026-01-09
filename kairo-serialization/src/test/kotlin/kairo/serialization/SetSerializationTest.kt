@@ -1,9 +1,11 @@
 package kairo.serialization
 
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -26,6 +28,20 @@ internal class SetSerializationTest {
       json.deserialize<Set<Nothing>>("""[]""").shouldBeEmpty()
       json.deserialize<Set<Int>>("""[1,2,3]""").shouldContainExactlyInAnyOrder(1, 2, 3)
       json.deserialize<Set<String>>("""["a","b","c"]""").shouldContainExactlyInAnyOrder("a", "b", "c")
+    }
+
+  @Test
+  fun `deserialize, null`(): Unit =
+    runTest {
+      shouldThrowExactly<RuntimeJsonMappingException> {
+        json.deserialize<Set<Nothing>>("null")
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlin.collections.Set(non-null)" +
+          " but was null",
+      )
+
+      json.deserialize<Set<Nothing>?>("null").shouldBeNull()
     }
 
   @Test

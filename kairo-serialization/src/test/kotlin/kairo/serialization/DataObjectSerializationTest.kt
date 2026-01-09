@@ -1,7 +1,9 @@
 package kairo.serialization
 
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -35,5 +37,19 @@ internal class DataObjectSerializationTest {
       }.message.shouldStartWith(
         "Unrecognized field \"other\"",
       )
+    }
+
+  @Test
+  fun `deserialize, null`(): Unit =
+    runTest {
+      shouldThrowExactly<RuntimeJsonMappingException> {
+        json.deserialize<DataObject>("null")
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kairo.serialization.DataObjectSerializationTest.DataObject(non-null)" +
+          " but was null",
+      )
+
+      json.deserialize<DataObject?>("null").shouldBeNull()
     }
 }

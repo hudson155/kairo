@@ -1,9 +1,11 @@
 package kairo.serialization
 
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -26,6 +28,20 @@ internal class ListSerializationTest {
       json.deserialize<List<Nothing>>("""[]""").shouldBeEmpty()
       json.deserialize<List<Int>>("""[1,2,3]""").shouldContainExactly(1, 2, 3)
       json.deserialize<List<String>>("""["a","b","c"]""").shouldContainExactly("a", "b", "c")
+    }
+
+  @Test
+  fun `deserialize, null`(): Unit =
+    runTest {
+      shouldThrowExactly<RuntimeJsonMappingException> {
+        json.deserialize<List<Nothing>>("null")
+      }.message.shouldStartWith(
+        "Deserialized value did not match the specified type" +
+          "; specified kotlin.collections.List(non-null)" +
+          " but was null",
+      )
+
+      json.deserialize<List<Nothing>?>("null").shouldBeNull()
     }
 
   @Test
