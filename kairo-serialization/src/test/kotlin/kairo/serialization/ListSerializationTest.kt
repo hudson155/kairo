@@ -45,7 +45,7 @@ internal class ListSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<List<Int>>("0")
       }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.ArrayList<java.lang.Object>`" +
+        "Cannot deserialize value of type `java.util.ArrayList<java.lang.Integer>`" +
           " from Integer value",
       )
     }
