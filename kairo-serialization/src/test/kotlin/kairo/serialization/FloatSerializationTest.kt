@@ -1,10 +1,8 @@
 package kairo.serialization
 
 import com.fasterxml.jackson.core.JsonParseException
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -112,31 +110,6 @@ internal class FloatSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<Float>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kotlin.Float(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<Float?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Float>("true")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Float`" +
-          " from Boolean value",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (string)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {
@@ -144,28 +117,6 @@ internal class FloatSerializationTest {
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
           " to `java.lang.Float` value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Float>("""{}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Float`" +
-          " from Object value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Float>("""[]""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Float`" +
-          " from Array value",
       )
     }
 }

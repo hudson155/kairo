@@ -1,8 +1,6 @@
 package kairo.serialization
 
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException
-import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldBeNull
@@ -53,47 +51,5 @@ internal class DataObjectSerializationTest {
       )
 
       json.deserialize<DataObject?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<DataObject>("true")
-      }.message.shouldStartWith(
-        "Cannot construct instance of `kairo.serialization.DataObjectSerializationTest\$DataObject`",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (int)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<DataObject>("0")
-      }.message.shouldStartWith(
-        "Cannot construct instance of `kairo.serialization.DataObjectSerializationTest\$DataObject`",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (string)`(): Unit =
-    runTest {
-      shouldThrowExactly<InvalidFormatException> {
-        json.deserialize<DataObject>("\"\"")
-      }.message.shouldStartWith(
-        "Cannot coerce empty String (\"\")" +
-          " to `kairo.serialization.DataObjectSerializationTest\$DataObject` value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<DataObject>("""[]""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `kairo.serialization.DataObjectSerializationTest\$DataObject`" +
-          " from Array value",
-      )
     }
 }

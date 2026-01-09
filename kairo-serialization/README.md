@@ -165,7 +165,17 @@ and has exploratory testing for them which ensures release-to-release stability.
 
 ### Modules
 
-#### [RestModule](../kairo-rest/README.md)
+#### [kairo-money](../kairo-money/README.md)'s `MoneyModule`
+
+- `CurrencyUnit`
+- `Money`
+
+#### [kairo-optional](../kairo-optional/README.md)'s `OptionalModule`
+
+- `Optional`
+- `Required`
+
+#### [kairo-rest](../kairo-rest/README.md)'s `RestModule`
 
 - `HttpMethod`
 - `HttpStatusCode`
@@ -235,6 +245,12 @@ data class MyClass(
   val value: BigInteger,
 )
 ```
+
+#### Customizing `Money` serialization
+
+With [kairo-money](../kairo-money/README.md)'s `MoneyModule`,
+`Money` serializes to an object.
+There are currently no alternatives.
 
 ### Advanced usage
 

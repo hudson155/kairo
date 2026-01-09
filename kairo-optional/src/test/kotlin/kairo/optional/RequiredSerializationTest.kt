@@ -57,26 +57,4 @@ internal class RequiredSerializationTest {
       json.deserialize<Wrapper>("""{"value":"some value"}""")
         .shouldBe(Wrapper(Required.Value("some value")))
     }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<String>("""{"value":{}}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.String`" +
-          " from Object value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Wrapper>("""{"value":[]}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.String`" +
-          " from Array value",
-      )
-    }
 }

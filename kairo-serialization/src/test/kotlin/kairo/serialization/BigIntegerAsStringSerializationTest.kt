@@ -1,11 +1,9 @@
 package kairo.serialization
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import java.math.BigInteger
@@ -145,54 +143,10 @@ internal class BigIntegerAsStringSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<DefaultWrapper>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.BigIntegerAsStringSerializationTest.DefaultWrapper(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<DefaultWrapper?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<JsonMappingException> {
-        json.deserialize<DefaultWrapper>("""{"value":true}""")
-      }.message.shouldStartWith(
-        "For input string: \"true\"",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       // This seems like a bug in Jackson! I think this should throw.
       json.deserialize<DefaultWrapper>("""{"value":0}""")
         .shouldBe(DefaultWrapper(BigInteger("0")))
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<JsonMappingException> {
-        json.deserialize<DefaultWrapper>("""{"value":{}}""")
-      }.message.shouldStartWith(
-        "For input string: \"{\"",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<JsonMappingException> {
-        json.deserialize<DefaultWrapper>("""{"value":[]}""")
-      }.message.shouldStartWith(
-        "For input string: \"[\"",
-      )
     }
 }

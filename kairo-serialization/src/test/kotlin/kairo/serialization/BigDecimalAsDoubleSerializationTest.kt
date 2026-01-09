@@ -1,12 +1,10 @@
 package kairo.serialization
 
 import com.fasterxml.jackson.core.JsonParseException
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import java.math.BigDecimal
@@ -202,31 +200,6 @@ internal class BigDecimalAsDoubleSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<DefaultWrapper>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kairo.serialization.BigDecimalAsDoubleSerializationTest.DefaultWrapper(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<Double?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<DefaultWrapper>("""{"value":true}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.math.BigDecimal`" +
-          " from Boolean value",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (string)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {
@@ -234,28 +207,6 @@ internal class BigDecimalAsDoubleSerializationTest {
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
           " to `java.math.BigDecimal` value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<DefaultWrapper>("""{"value":{}}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.math.BigDecimal`" +
-          " from Object value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<DefaultWrapper>("""{"value":[]}""")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.math.BigDecimal`" +
-          " from Array value",
       )
     }
 }

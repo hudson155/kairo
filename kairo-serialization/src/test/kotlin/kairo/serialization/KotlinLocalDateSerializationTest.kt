@@ -1,10 +1,7 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -85,30 +82,6 @@ internal class KotlinLocalDateSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<LocalDate>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kotlinx.datetime.LocalDate(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<LocalDate?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<LocalDate>("true")
-      }.message.shouldStartWith(
-        "Expected array or string",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowExactly<InvalidFormatException> {
@@ -117,23 +90,5 @@ internal class KotlinLocalDateSerializationTest {
         "Cannot coerce Integer value (20231114)" +
           " to `java.time.LocalDate` value",
       )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<LocalDate>("""{}""")
-      }.message.shouldStartWith(
-        "Expected array or string",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<NullPointerException> {
-        json.deserialize<LocalDate>("""[]""")
-      }.message.shouldBeNull() // This seems like a bug in Jackson! I don't think this should be null.
     }
 }

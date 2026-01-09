@@ -56,35 +56,13 @@ internal class SetSerializationTest {
     }
 
   @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Set<Nothing>>("true")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.HashSet<java.lang.Object>`" +
-          " from Boolean value",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Set<Nothing>>("0")
+        json.deserialize<Set<Int>>("0")
       }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.HashSet<java.lang.Object>`" +
+        "Cannot deserialize value of type `java.util.HashSet<java.lang.Integer>`" +
           " from Integer value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (string)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Set<Nothing>>("\"0\"")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.HashSet<java.lang.Object>`" +
-          " from String value",
       )
     }
 

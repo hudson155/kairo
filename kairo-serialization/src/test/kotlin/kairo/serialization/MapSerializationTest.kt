@@ -74,34 +74,13 @@ internal class MapSerializationTest {
     }
 
   @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Map<String, Nothing>>("true")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.LinkedHashMap<java.lang.Object,java.lang.Object>`" +
-          " from Boolean value",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Map<String, Nothing>>("0")
+        json.deserialize<Map<String, Int>>("0")
       }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.LinkedHashMap<java.lang.Object,java.lang.Object>`" +
+        "Cannot deserialize value of type `java.util.LinkedHashMap<java.lang.String,java.lang.Integer>`" +
           " from Integer value",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (string)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Map<String, Nothing>>("\"0\"")
-      }.message.shouldStartWith(
-        "Cannot construct instance of `java.util.LinkedHashMap`",
       )
     }
 

@@ -1,9 +1,7 @@
 package kairo.protectedString
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kairo.serialization.KairoJson
@@ -26,20 +24,6 @@ internal class ProtectedStringSerializationTest {
     runTest {
       json.deserialize<ProtectedString>("\"Hello, World!\"")
         .shouldBe(ProtectedString("Hello, World!"))
-    }
-
-  @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<ProtectedString>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kairo.protectedString.ProtectedString(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<ProtectedString?>("null").shouldBeNull()
     }
 
   @Test

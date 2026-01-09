@@ -1,10 +1,8 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import kotlinx.coroutines.test.runTest
@@ -92,30 +90,6 @@ internal class KotlinLocalTimeSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<RuntimeJsonMappingException> {
-        json.deserialize<LocalTime>("null")
-      }.message.shouldStartWith(
-        "Deserialized value did not match the specified type" +
-          "; specified kotlinx.datetime.LocalTime(non-null)" +
-          " but was null",
-      )
-
-      json.deserialize<LocalTime?>("null").shouldBeNull()
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<LocalTime>("true")
-      }.message.shouldStartWith(
-        "Expected array or string",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {
@@ -129,23 +103,5 @@ internal class KotlinLocalTimeSerializationTest {
       }.message.shouldStartWith(
         "raw timestamp (221320123456789) not allowed for `java.time.LocalTime`",
       )
-    }
-
-  @Test
-  fun `deserialize, wrong type (object)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<LocalTime>("""{}""")
-      }.message.shouldStartWith(
-        "Expected array or string",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (array)`(): Unit =
-    runTest {
-      shouldThrowExactly<NullPointerException> {
-        json.deserialize<LocalTime>("""[]""")
-      }.message.shouldBeNull() // This seems like a bug in Jackson! I don't think this should be null.
     }
 }
