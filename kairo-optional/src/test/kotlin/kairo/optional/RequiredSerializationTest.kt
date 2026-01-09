@@ -28,16 +28,6 @@ internal class RequiredSerializationTest {
     }
 
   @Test
-  fun `deserialize, null`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Wrapper>("""{"value":null}""")
-      }.message.shouldStartWith(
-        "Null value for creator property 'value' (index 0)",
-      )
-    }
-
-  @Test
   fun `serialize, present`(): Unit =
     runTest {
       json.serialize(Wrapper(Required.Value("some value")))
@@ -49,6 +39,16 @@ internal class RequiredSerializationTest {
     runTest {
       json.deserialize<Wrapper>("""{}""")
         .shouldBe(Wrapper(Required.Missing))
+    }
+
+  @Test
+  fun `deserialize, null`(): Unit =
+    runTest {
+      shouldThrowExactly<MismatchedInputException> {
+        json.deserialize<Wrapper>("""{"value":null}""")
+      }.message.shouldStartWith(
+        "Null value for creator property 'value' (index 0)",
+      )
     }
 
   @Test
