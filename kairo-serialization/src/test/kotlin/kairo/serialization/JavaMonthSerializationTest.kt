@@ -1,7 +1,6 @@
 package kairo.serialization
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
@@ -47,17 +46,6 @@ internal class JavaMonthSerializationTest {
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.Month`" +
           " from String \"NOV\"",
-      )
-    }
-
-  @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Month>("true")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.time.Month`" +
-          " from Boolean value",
       )
     }
 

@@ -34,6 +34,13 @@ internal class CharArraySerializationTest {
     }
 
   @Test
+  fun `deserialize, wrong type (boolean)`(): Unit =
+    runTest {
+      // Type coercion occurs.
+      json.deserialize<CharArray>("true").shouldBe("true")
+    }
+
+  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {

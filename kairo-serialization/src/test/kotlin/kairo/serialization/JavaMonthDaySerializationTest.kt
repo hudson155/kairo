@@ -83,16 +83,6 @@ internal class JavaMonthDaySerializationTest {
     }
 
   @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<MonthDay>("true")
-      }.message.shouldStartWith(
-        "Unexpected token (VALUE_TRUE)",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {

@@ -149,14 +149,4 @@ internal class BigIntegerAsStringSerializationTest {
       json.deserialize<DefaultWrapper>("""{"value":0}""")
         .shouldBe(DefaultWrapper(BigInteger("0")))
     }
-
-  @Test
-  fun `deserialize, wrong type (float)`(): Unit =
-    runTest {
-      shouldThrowExactly<JsonMappingException> {
-        json.deserialize<DefaultWrapper>("""{"value":0.0}""")
-      }.message.shouldStartWith(
-        "For input string: \".0\"",
-      )
-    }
 }

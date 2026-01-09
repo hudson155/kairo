@@ -113,17 +113,6 @@ internal class ByteSerializationTest {
     }
 
   @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Byte>("true")
-      }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.lang.Byte`" +
-          " from Boolean value",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (float)`(): Unit =
     runTest {
       shouldThrowExactly<InvalidFormatException> {

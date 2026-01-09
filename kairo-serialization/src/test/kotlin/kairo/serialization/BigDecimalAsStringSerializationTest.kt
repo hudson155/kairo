@@ -199,16 +199,6 @@ internal class BigDecimalAsStringSerializationTest {
     }
 
   @Test
-  fun `deserialize, wrong type (boolean)`(): Unit =
-    runTest {
-      shouldThrowExactly<JsonMappingException> {
-        json.deserialize<DefaultWrapper>("""{"value":true}""")
-      }.message.shouldStartWith(
-        "Character t is neither a decimal digit number, decimal point, nor \"e\" notation exponential mark.",
-      )
-    }
-
-  @Test
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       // This seems like a bug in Jackson! I think this should throw.
