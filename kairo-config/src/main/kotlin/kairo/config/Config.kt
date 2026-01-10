@@ -7,7 +7,14 @@ import com.typesafe.config.ConfigValueFactory
 import com.typesafe.config.ConfigValueType
 import kairo.serialization.KairoJson
 
+/**
+ * Call this to load your config file.
+ */
 public suspend inline fun <reified T : Any> loadConfig(
+  /**
+   * The name of the config file, in your resources' "config" package.
+   * If unset, defaults to the "CONFIG" environment variable.
+   */
   configName: String = requireNotNull(System.getenv("CONFIG")) { "CONFIG environment variable not set." },
   json: KairoJson = KairoJson(),
   resolvers: List<ConfigResolver> = emptyList(),

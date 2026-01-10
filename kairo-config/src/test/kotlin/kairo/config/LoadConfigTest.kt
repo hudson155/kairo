@@ -3,6 +3,7 @@ package kairo.config
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import io.kotest.matchers.shouldBe
+import kairo.protectedString.ProtectedString
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test
  * This single test covers several use cases: see inline comments.
  * This is only a happy-path test.
  */
+@OptIn(ProtectedString.Access::class)
 internal class LoadConfigTest {
   internal data class Config(
     val stringFromCommon: String, // This string comes from common.conf.
@@ -26,6 +28,7 @@ internal class LoadConfigTest {
     val list: List<Int>,
     val map: Map<String, String>,
     val animal: Animal,
+    val protectedString: ProtectedString,
   ) {
     internal data class Nested(
       val intFromCommon: Int, // This int comes from common.conf.
@@ -78,6 +81,7 @@ internal class LoadConfigTest {
           list = listOf(1, 2, 3),
           map = mapOf("key0" to "common", "key1" to "test"),
           animal = Config.Animal.Dog("Rex", 30),
+          protectedString = ProtectedString("supersecretvalue"),
         ),
       )
     }

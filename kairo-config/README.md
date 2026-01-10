@@ -26,7 +26,7 @@ sql.connectionFactory {
 ### Config resolvers
 
 Kairo's config resolvers let you pull in properties from other sources
-like **Google Secret Manager**.
+like [Google Secret Manager](../kairo-gcp-secret-supplier/README.md).
 
 ## Installation
 
@@ -50,10 +50,9 @@ Here's how to use it through Kairo.
 
 ### Your Kotlin config class
 
-First, define your config class using `@Serializable`.
+First, define your config class using a data class.
 
 ```kotlin
-@Serializable
 data class Config(
   val rest: RestFeatureConfig,
   val sql: SqlFeatureConfig,
@@ -119,37 +118,33 @@ Back to your Kotlin code — load the config and deserialize it into your config
 
 ```kotlin
 val config: Config =
-  ConfigFactory.load("production.conf")
-    .let { Hocon.decodeFromConfig(it) }
+  loadConfig<Config>(
+    configName = "production.conf",
+  )
 ```
 
-If you want to dynamically choose which config to load, use an environment variable.
+If you want to dynamically choose which config to load,
+omit `configName` and set the `CONFIG` environment variable instead.
 
 ```kotlin
-val configName = requireNotNull(System.getenv("CONFIG"))
-val config: Config =
-  ConfigFactory.load("config/$configName.conf")
-    .let { Hocon.decodeFromConfig(it) }
+val config: Config = loadConfig<Config>()
 ```
 
 #### Config resolvers
 
-To use config resolvers, call `resolveConfig()` after loading your config.
+Config resolvers let you pull in properties from other sources
+like [Google Secret Manager](../kairo-gcp-secret-supplier/README.md).
+To use config resolvers, pass them to `loadConfig`.
 
 ```kotlin
 private val gcpSecretSupplier: GcpSecretSupplier = DefaultGcpSecretSupplier()
 
-val configName = requireNotNull(System.getenv("CONFIG"))
-val configResolver = ConfigResolver(
-  resolvers = listOf(
-    ConfigResolver.Resolver("gcp::") { gcpSecretSupplier[it]?.value },
-  ),
-)
-
 val config: Config =
-  ConfigFactory.load("config/$configName.conf")
-    .let { Hocon.decodeFromConfig<Config>(it) }
-    .let { ConfigResolver.resolve(it) }
+  loadConfig(
+    resolvers = listOf(
+      ConfigResolver.Resolver("gcp::") { gcpSecretSupplier[it]?.value },
+    )
+  )
 ```
 
 This will detect any strings (or `ProtectedString`s) that start with `gcp::`,
