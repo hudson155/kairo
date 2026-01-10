@@ -1,6 +1,6 @@
 # Health Check
 
-Add health check endpoints to your KAiro application
+Add health check endpoints to your Kairo application
 with just a few lines of code.
 
 ```kotlin

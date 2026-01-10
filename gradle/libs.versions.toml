@@ -70,10 +70,6 @@ postgres-r2dbc = { module = "org.postgresql:r2dbc-postgresql" }
 
 r2dbc-pool = { module = "io.r2dbc:r2dbc-pool" }
 
-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core" }
-serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon" }
-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
-
 slack = { module = "com.slack.api:slack-api-client" }
 slack-kotlin = { module = "com.slack.api:slack-api-client-kotlin-extension" }
 
