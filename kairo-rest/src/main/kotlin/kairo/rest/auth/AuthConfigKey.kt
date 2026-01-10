@@ -8,5 +8,9 @@ private val key: AttributeKey<AuthConfig> = AttributeKey("authConfig")
 public var Application.authConfig: AuthConfig?
   get() = attributes.getOrNull(key)
   set(value) {
-    value?.let { attributes[key] = value } ?: attributes.remove(key)
+    if (value != null) {
+      attributes[key] = value
+    } else {
+      attributes.remove(key)
+    }
   }
