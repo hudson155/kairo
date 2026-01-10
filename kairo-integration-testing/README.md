@@ -85,6 +85,8 @@ Include whatever Features you rely on from the service layer down.
 _Note: Even if you're using REST, you **don't** need to install the REST feature.
 Integration testing happens at the service layer._
 
+**Each test method can have any Koin-bound types as parameters.**
+
 ### Write a GET test
 
 ```kotlin
