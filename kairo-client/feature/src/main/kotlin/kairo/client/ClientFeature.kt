@@ -19,7 +19,10 @@ import org.koin.dsl.module
 public abstract class ClientFeature(
   httpClientName: String,
 ) : Feature(), HasKoinModules {
-  protected open val json: KairoJson = KairoJson()
+  protected open val json: KairoJson =
+    KairoJson {
+      addModule(OptionalModule())
+    }
 
   protected abstract val timeout: Duration
 

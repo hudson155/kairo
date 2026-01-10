@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-optional")) // For serialization.
   compileOnly(project(":kairo-serialization")) // Forced peer dependency.
 
   api(libs.ktorClient)
