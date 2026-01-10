@@ -162,6 +162,7 @@ and has exploratory testing for them which ensures release-to-release stability.
   as described above.
 - Kotlin `Unit`
 - `UUID` (Java) and `Uuid` (Kotlin)
+- [kairo-protected-string](../kairo-protected-string)'s `ProtectedString`
 
 ### Modules
 
