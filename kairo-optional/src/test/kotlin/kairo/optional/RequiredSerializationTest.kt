@@ -1,7 +1,7 @@
 package kairo.optional
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
+import com.fasterxml.jackson.module.kotlin.KotlinInvalidNullException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
@@ -44,10 +44,13 @@ internal class RequiredSerializationTest {
   @Test
   fun `deserialize, null`(): Unit =
     runTest {
-      shouldThrowExactly<MismatchedInputException> {
+      shouldThrowExactly<KotlinInvalidNullException> {
         json.deserialize<Wrapper>("""{"value":null}""")
       }.message.shouldStartWith(
-        "Null value for creator property 'value' (index 0)",
+        "Instantiation of [simple type, class kairo.optional.RequiredSerializationTest\$Wrapper] value" +
+          " failed for JSON property value" +
+          " due to missing (therefore NULL) value for creator parameter value" +
+          " which is a non-nullable type",
       )
     }
 

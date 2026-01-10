@@ -22,8 +22,8 @@ public suspend inline fun <reified T : Any> loadConfig(
 public suspend fun applyConfigResolvers(
   hocon: Config,
   resolvers: List<ConfigResolver>,
-): Config {
-  return hocon.entrySet().fold(hocon) { config, (path, value) ->
+): Config =
+  hocon.entrySet().fold(hocon) { config, (path, value) ->
     if (value.valueType() != ConfigValueType.STRING) {
       // Only strings can be resolved using config resolvers. Other primitives are left alone.
       return@fold config
@@ -37,4 +37,3 @@ public suspend fun applyConfigResolvers(
     val resolved = resolver.resolve(string.removePrefix(resolver.prefix))
     return@fold config.withValue(path, ConfigValueFactory.fromAnyRef(resolved))
   }
-}

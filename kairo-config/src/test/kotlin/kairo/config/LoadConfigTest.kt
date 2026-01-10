@@ -57,7 +57,7 @@ internal class LoadConfigTest {
             if (raw == "missing") return@ConfigResolver null
             return@ConfigResolver "resolved-$raw"
           },
-        )
+        ),
       )
 
       config.shouldBe(
@@ -68,7 +68,7 @@ internal class LoadConfigTest {
           nested = Config.Nested(
             intFromCommon = 42,
             intFromTest = 1337,
-            overriddenInt = 12345,
+            overriddenInt = 12_345,
           ),
           nullEnvironmentVariable = null,
           environmentVariable = "Hello, World!",
@@ -78,7 +78,7 @@ internal class LoadConfigTest {
           list = listOf(1, 2, 3),
           map = mapOf("key0" to "common", "key1" to "test"),
           animal = Config.Animal.Dog("Rex", 30),
-        )
+        ),
       )
     }
 }
