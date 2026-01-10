@@ -5,9 +5,8 @@ plugins {
 
 dependencies {
   api(project(":kairo-client"))
-  api(project(":kairo-dependency-injection")) // HasKoinModules.
-  api(project(":kairo-feature"))
-  api(project(":kairo-serialization"))
-
-  api(libs.serialization.json)
+  implementation(project(":kairo-dependency-injection")) // Optional peer dependency.
+  compileOnly(project(":kairo-feature")) // Forced peer dependency.
+  implementation(project(":kairo-optional")) // For serialization.
+  compileOnly(project(":kairo-serialization")) // Forced peer dependency.
 }

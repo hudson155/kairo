@@ -6,9 +6,9 @@ import kairo.dependencyInjection.HasKoinModules
 import kairo.feature.Feature
 import kairo.feature.LifecycleHandler
 import kairo.feature.lifecycle
+import kairo.optional.OptionalModule
+import kairo.serialization.KairoJson
 import kotlin.time.Duration
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonBuilder
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -20,13 +20,18 @@ import org.koin.dsl.module
 public abstract class ClientFeature(
   httpClientName: String,
 ) : Feature(), HasKoinModules {
+  protected open val json: KairoJson =
+    KairoJson {
+      addModule(OptionalModule())
+    }
+
   protected abstract val timeout: Duration
 
   private val httpClient: HttpClient by lazy {
     @Suppress("MissingUseCall")
     HttpClientFactory.create(
       timeout = timeout,
-      configureJson = { configure() },
+      json = json,
       block = { configure() },
     )
   }
@@ -46,15 +51,6 @@ public abstract class ClientFeature(
       }
     }
 
-  /**
-   * Configure the [Json] instance.
-   */
-  protected open fun JsonBuilder.configure(): Unit =
-    Unit
-
-  /**
-   * Configure the HTTP client.
-   */
   protected open fun HttpClientConfig<*>.configure(): Unit =
     Unit
 }

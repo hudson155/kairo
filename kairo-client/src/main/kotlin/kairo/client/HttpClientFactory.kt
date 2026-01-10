@@ -5,31 +5,27 @@ import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.java.Java
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.serialization.kotlinx.json.json
-import kairo.optional.optionalModule
-import kairo.serialization.json
+import io.ktor.http.ContentType
+import io.ktor.serialization.jackson.JacksonConverter
+import kairo.serialization.KairoJson
 import kotlin.time.Duration
-import kotlinx.serialization.json.JsonBuilder
-import kotlinx.serialization.modules.plus
 
 /**
  * Creates Ktor HTTP clients.
  */
 public object HttpClientFactory {
+  @OptIn(KairoJson.RawJsonMapper::class)
   public fun create(
     timeout: Duration,
-    configureJson: JsonBuilder.() -> Unit,
+    json: KairoJson,
     block: HttpClientConfig<*>.() -> Unit,
   ): HttpClient =
     HttpClient(Java) {
       expectSuccess = true
       install(ContentNegotiation) {
-        json(
-          json {
-            ignoreUnknownKeys = true
-            serializersModule += optionalModule()
-            configureJson()
-          },
+        register(
+          contentType = ContentType.Application.Json,
+          converter = JacksonConverter(json.delegate),
         )
       }
       install(HttpTimeout) {
