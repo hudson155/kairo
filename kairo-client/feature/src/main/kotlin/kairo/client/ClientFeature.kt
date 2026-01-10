@@ -6,6 +6,7 @@ import kairo.dependencyInjection.HasKoinModules
 import kairo.feature.Feature
 import kairo.feature.LifecycleHandler
 import kairo.feature.lifecycle
+import kairo.optional.OptionalModule
 import kairo.serialization.KairoJson
 import kotlin.time.Duration
 import org.koin.core.module.Module
