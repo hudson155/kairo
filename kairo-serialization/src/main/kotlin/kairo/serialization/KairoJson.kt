@@ -188,7 +188,7 @@ public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder) {
   configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, true)
   configure(DeserializationFeature.FAIL_ON_UNRESOLVED_OBJECT_IDS, true)
   configure(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES, true)
-  configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true)
+  configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, false)
   configure(DeserializationFeature.FAIL_ON_MISSING_EXTERNAL_TYPE_ID_PROPERTY, true)
   configure(DeserializationFeature.FAIL_ON_TRAILING_TOKENS, true)
   configure(DeserializationFeature.FAIL_ON_SUBTYPE_CLASS_NOT_REGISTERED, true)

@@ -42,15 +42,6 @@ dependencies {
 }
 ```
 
-## Reference implementation
-
-The Kotlin data class is defined in [kairoSample/Config.kt](https://github.com/hudson155/kairo-sample/blob/main/src/main/kotlin/kairoSample/Config.kt),
-and various HOCON files are defined.
-
-- [config/development.conf](https://github.com/hudson155/kairo-sample/blob/main/src/main/resources/config/development.conf)
-- [config/local-production.conf](https://github.com/hudson155/kairo-sample/blob/main/src/main/resources/config/local-production.conf)
-- [config/production.conf](https://github.com/hudson155/kairo-sample/blob/main/src/main/resources/config/production.conf)
-
 ## Usage
 
 [lightbend/config's documentation](https://github.com/lightbend/config)
