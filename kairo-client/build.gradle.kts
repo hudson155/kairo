@@ -4,11 +4,11 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-optional"))
-  implementation(project(":kairo-serialization"))
+  implementation(project(":kairo-optional")) // For serialization.
+  compileOnly(project(":kairo-serialization")) // Forced peer dependency.
 
   api(libs.ktorClient)
   implementation(libs.ktorClient.contentNegotiation)
   implementation(libs.ktorClient.java)
-  implementation(libs.ktorSerialization.json)
+  implementation(libs.ktorSerialization.jackson)
 }
