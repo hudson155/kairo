@@ -100,6 +100,13 @@ public class KairoJson @RawJsonMapper constructor(
       )
     }
   }
+
+  public fun copy(builder: Builder.() -> Unit = {}): KairoJson =
+    KairoJson(
+      delegate.rebuild().apply {
+        kairo(builder)
+      }.build()
+    )
 }
 
 public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder.() -> Unit = {}) {
