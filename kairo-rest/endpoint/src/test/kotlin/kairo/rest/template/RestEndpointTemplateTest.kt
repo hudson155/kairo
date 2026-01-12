@@ -113,6 +113,7 @@ internal class RestEndpointTemplateTest {
             query = RestEndpointTemplateQuery(
               RestEndpointTemplateQuery.Param("title", required = false),
               RestEndpointTemplateQuery.Param("author", required = false),
+              RestEndpointTemplateQuery.Param("limit", required = false),
             ),
             contentType = null,
             accept = ContentType.Application.Json,

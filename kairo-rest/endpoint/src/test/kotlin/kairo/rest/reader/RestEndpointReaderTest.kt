@@ -134,7 +134,7 @@ internal class RestEndpointReaderTest {
         reader.read(call)
       }.message.shouldStartWith(
         "Cannot deserialize value of type `kairo.libraryBook.LibraryBookRep\$Genre`" +
-          " from String \"Christianity\""
+          " from String \"Christianity\"",
       )
     }
 
@@ -196,6 +196,7 @@ internal class RestEndpointReaderTest {
           LibraryBookApi.SearchByText(
             title = null,
             author = null,
+            limit = null,
           ),
         )
     }
@@ -208,6 +209,7 @@ internal class RestEndpointReaderTest {
         every { parameters } returns Parameters.build {
           append("title", "Mere Christianity")
           append("author", "C. S. Lewis")
+          append("limit", "100")
         }
       }
       reader.read(call)
@@ -215,6 +217,7 @@ internal class RestEndpointReaderTest {
           LibraryBookApi.SearchByText(
             title = "Mere Christianity",
             author = "C. S. Lewis",
+            limit = 100,
           ),
         )
     }

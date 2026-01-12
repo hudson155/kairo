@@ -1,6 +1,8 @@
 package kairo.rest.reader
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.JavaType
+import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.json.JsonMapper
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -29,8 +31,24 @@ private val logger: KLogger = KotlinLogging.logger {}
  */
 internal class DataClassRestEndpointReader<I : Any, E : RestEndpoint<I, *>>(
   kClass: KClass<E>,
-  private val json: KairoJson,
+  json: KairoJson,
 ) : RestEndpointReader<E>() {
+  private val json: KairoJson =
+    json.copy {
+      configure {
+        /**
+         * [ApplicationCall.parameters] always contains strings, even if the underlying type is not string-like.
+         * Allowing coercion of scalars is necessary for non-string-like types to deserialize properly.
+         */
+        configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, true)
+        /**
+         * Jackson has a bug where deserializing value classes can lead to trailing tokens.
+         * See https://chatgpt.com/share/6965494f-a5e8-800c-ab1f-260ef33171c3.
+         */
+        configure(DeserializationFeature.FAIL_ON_TRAILING_TOKENS, false)
+      }
+    }
+
   private val constructor: KFunction<E> = checkNotNull(kClass.primaryConstructor)
 
   override suspend fun read(call: RoutingCall): E {

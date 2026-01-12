@@ -1,7 +1,6 @@
 package kairo.libraryBook
 
 import kairo.id.Id
-import kotlinx.serialization.Serializable
 
 @JvmInline
 internal value class LibraryBookId(override val value: String) : Id {

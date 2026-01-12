@@ -1,6 +1,5 @@
 package kairo.rest.template
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.throwable.shouldHaveMessage
 import kairo.libraryBook.BrokenLibraryBookApi
