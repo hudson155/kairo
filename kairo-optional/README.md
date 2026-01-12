@@ -56,6 +56,6 @@ to the class or property.
 ```kotlin
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 data class Update(
-  val value: Optional<String>,
+  val value: Optional<String> = Optional.Missing,
 )
 ```
