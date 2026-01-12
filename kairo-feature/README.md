@@ -75,7 +75,6 @@ class UserFeature(
 
   private val userHandler: UserHandler get() = koin.get()
 
-  @Routing
   override fun Application.routing() {
     routing {
       with(userHandler) { routing() }
@@ -111,7 +110,6 @@ class UserFeature(
       }
     }
 
-  @Routing
   override fun Application.routing() {
     routing {
       with(userHandler) { routing() }

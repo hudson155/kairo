@@ -51,13 +51,11 @@ rest {
 First, define your endpoints in a type-safe way.
 
 ```kotlin
-@Serializable
 data class UserRep(
   val id: UserId,
   val createdAt: Instant,
   val emailAddress: String,
 ) {
-  @Serializable
   data class Creator(
     val emailAddress: String,
   )
@@ -97,7 +95,6 @@ class UserHandler(
   private val userMapper: UserMapper,
   private val userService: UserService,
 ) : HasRouting {
-  @Routing
   override fun Application.routing() {
     routing {
       route(UserApi.Get::class) {
