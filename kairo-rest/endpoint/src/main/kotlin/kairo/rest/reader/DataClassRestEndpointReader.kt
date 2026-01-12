@@ -3,7 +3,6 @@ package kairo.rest.reader
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.MapperFeature
-import com.fasterxml.jackson.databind.json.JsonMapper
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.server.application.ApplicationCall
@@ -29,6 +28,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * in order to determine how to get the arguments from the [RoutingCall]
  * to call the primary constructor of the data class.
  */
+@OptIn(KairoJson.RawJsonMapper::class)
 internal class DataClassRestEndpointReader<I : Any, E : RestEndpoint<I, *>>(
   kClass: KClass<E>,
   json: KairoJson,
@@ -58,30 +58,28 @@ internal class DataClassRestEndpointReader<I : Any, E : RestEndpoint<I, *>>(
     return constructor.callBy(arguments)
   }
 
-  @OptIn(KairoJson.RawJsonMapper::class)
   private suspend fun arguments(call: ApplicationCall): Map<KParameter, Any?> =
     constructor.valueParameters.associateWith { param ->
       val paramName = checkNotNull(param.name)
       if (paramName == RestEndpoint<*, *>::body.name) {
         return@associateWith call.receive<I>(KairoType<I>(param.type).toKtor())
       }
-      // val targetType = json.delegate.constructType((param.type as KClass<*>).java)
-      val targetType = json.delegate.toJavaType(param.type)
-      val isMultiValuedTarget = targetType.isArrayType || targetType.isCollectionLikeType
+      val type = toJavaType(param.type)
+      val isMultiValuedTarget = type.isArrayType || type.isCollectionLikeType
       val values = call.parameters.getAll(paramName)
       return@associateWith if (isMultiValuedTarget) {
-        json.delegate.convertValue(values.orEmpty(), targetType)
+        json.delegate.convertValue(values.orEmpty(), type)
       } else {
-        values?.singleNullOrThrow()?.let { json.delegate.convertValue(it, targetType) }
+        values?.singleNullOrThrow()?.let { json.delegate.convertValue(it, type) }
       }
     }
-}
 
-@OptIn(ExperimentalStdlibApi::class)
-private fun JsonMapper.toJavaType(type: KType): JavaType {
-  val kClass = type.classifier as? KClass<*>
-  if (kClass != null && kClass.isValue) {
-    return constructType(kClass.java)
+  @OptIn(ExperimentalStdlibApi::class)
+  private fun toJavaType(type: KType): JavaType {
+    val kClass = type.classifier as? KClass<*>
+    if (kClass != null && kClass.isValue) {
+      return json.delegate.constructType(kClass.java)
+    }
+    return json.delegate.constructType(type.javaType)
   }
-  return typeFactory.constructType(type.javaType)
 }
