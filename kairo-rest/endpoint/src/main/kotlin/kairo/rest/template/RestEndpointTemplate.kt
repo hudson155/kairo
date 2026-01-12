@@ -16,8 +16,8 @@ import kotlin.reflect.full.valueParameters
 private val logger: KLogger = KotlinLogging.logger {}
 
 /**
- * A REST endpoint template instance represents a specific subclass of [kairo.rest.RestEndpoint].
- * In fact, it can be created from a [kairo.rest.RestEndpoint] class reference using [RestEndpointTemplate.from].
+ * A REST endpoint template instance represents a specific subclass of [RestEndpoint].
+ * In fact, it can be created from a [RestEndpoint] class reference using [RestEndpointTemplate.from].
  */
 internal data class RestEndpointTemplate(
   val method: HttpMethod,
