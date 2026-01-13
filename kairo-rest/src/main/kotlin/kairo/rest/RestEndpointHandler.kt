@@ -14,19 +14,18 @@ import kairo.rest.auth.AuthReceiver
 import kairo.rest.auth.authConfig
 import kairo.rest.reader.RestEndpointReader
 import kairo.rest.template.RestEndpointTemplate
-import kairo.rest.template.RestEndpointTemplateErrorBuilder
 import kairo.rest.template.toKtorPath
 import kotlin.reflect.KClass
 
-// TODO: Write tests for the DSL in this file.
+private val error: RestEndpointErrorBuilder = RestEndpointErrorBuilder
 
-private val error: RestEndpointTemplateErrorBuilder = RestEndpointTemplateErrorBuilder
-
+/**
+ * REST endpoint handlers are invoked for each call to the matching endpoint.
+ */
 public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal constructor(
   private val kClass: KClass<E>,
 ) {
-  internal var auth: (suspend AuthReceiver<E>.() -> Unit)? = null
-  internal val authOverriddenBy: MutableList<(suspend AuthReceiver<E>.() -> Unit)> = mutableListOf()
+  internal var auth: MutableList<(suspend AuthReceiver<E>.() -> Unit)> = mutableListOf()
   internal var handle: (suspend HandleReceiver<E>.() -> O)? = null
   internal var statusCode: (suspend StatusCodeReceiver<O>.() -> HttpStatusCode?)? = null
 
@@ -34,15 +33,16 @@ public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal const
    * Specifies auth for the endpoint.
    */
   public fun auth(auth: suspend AuthReceiver<E>.() -> Unit) {
-    require(this.auth == null) { "${error.endpoint(kClass)}: Auth already defined." }
-    this.auth = auth
+    require(this.auth.isEmpty()) { "${error.endpoint(kClass)}: Auth already defined." }
+    this.auth += auth
   }
 
   /**
-   * Specifies auth for the endpoint.
+   * Specifies overriding auth for the endpoint.
    */
   public fun authOverriddenBy(auth: suspend AuthReceiver<E>.() -> Unit) {
-    this.authOverriddenBy += auth
+    require(this.auth.isNotEmpty()) { "${error.endpoint(kClass)}: Auth not defined." }
+    this.auth += auth
   }
 
   /**
@@ -84,8 +84,8 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Route.route(
         endpoint = endpoint,
         default = with(authConfig) { { default() } },
       ).apply {
-        handler.auth?.let { auth(it) }
-        handler.authOverriddenBy.forEach { authOverriddenBy(it) }
+        handler.auth.firstOrNull()?.let { auth(it) }
+        handler.auth.drop(1).forEach { authOverriddenBy(it) }
         authOverriddenBy(with(authConfig) { { fallback() } })
       }.getOrThrow()
     }

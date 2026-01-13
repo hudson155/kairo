@@ -1,9 +1,7 @@
 package kairo.rest.auth
 
 import kotlin.time.Duration
-import kotlinx.serialization.Serializable
 
-@Serializable
 public data class VerifierConfig(
   val jwkUrl: String,
   val issuer: String,

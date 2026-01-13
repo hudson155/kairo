@@ -39,7 +39,6 @@ ktorClient-java = { module = "io.ktor:ktor-client-java" }
 ktorHttp = { module = "io.ktor:ktor-http" }
 
 ktorSerialization-jackson = { module = "io.ktor:ktor-serialization-jackson" }
-ktorSerialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 
 ktorServer-auth = { module = "io.ktor:ktor-server-auth" }
 ktorServer-authJwt = { module = "io.ktor:ktor-server-auth-jwt" }

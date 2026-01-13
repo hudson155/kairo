@@ -4,10 +4,10 @@ package kairo.rest.template
  * Part of [RestEndpointTemplate] that represents the path, including path params.
  * See the KDoc there.
  */
-internal data class RestEndpointTemplatePath(
+public data class RestEndpointTemplatePath(
   val components: List<Component>,
 ) {
-  constructor(vararg components: Component) : this(components.toList())
+  public constructor(vararg components: Component) : this(components.toList())
 
   override fun toString(): String =
     components.joinToString("/", prefix = "/") { component ->
@@ -17,21 +17,21 @@ internal data class RestEndpointTemplatePath(
       }
     }
 
-  internal sealed class Component {
-    internal data class Constant(val value: String) : Component() {
+  public sealed class Component {
+    public data class Constant(val value: String) : Component() {
       init {
         require(value.isNotEmpty())
       }
     }
 
-    internal data class Param(val value: String) : Component() {
+    public data class Param(val value: String) : Component() {
       init {
         require(value.isNotEmpty())
       }
     }
 
-    internal companion object {
-      fun from(string: String): Component =
+    public companion object {
+      public fun from(string: String): Component =
         if (string.startsWith(':')) {
           Param(string.substring(1))
         } else {

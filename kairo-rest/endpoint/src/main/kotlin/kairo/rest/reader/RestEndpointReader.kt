@@ -15,13 +15,13 @@ private val logger: KLogger = KotlinLogging.logger {}
  * Doing this dynamically at runtime involves some nontrivial JVM reflection magic,
  * but it's a huge win for reducing boilerplate.
  */
-internal abstract class RestEndpointReader<E : RestEndpoint<*, *>> {
-  abstract suspend fun read(call: RoutingCall): E
+public abstract class RestEndpointReader<E : RestEndpoint<*, *>> {
+  public abstract suspend fun read(call: RoutingCall): E
 
-  internal companion object {
+  public companion object {
     private val error: RestEndpointErrorBuilder = RestEndpointErrorBuilder
 
-    fun <I : Any, E : RestEndpoint<I, *>> from(
+    public fun <I : Any, E : RestEndpoint<I, *>> from(
       kClass: KClass<E>,
       json: KairoJson = KairoJson(),
     ): RestEndpointReader<E> {

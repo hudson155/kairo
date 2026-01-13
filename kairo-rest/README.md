@@ -281,5 +281,6 @@ Defaults to null, which means the plugin is disabled.
 We recommend excluding logs below the `INFO` level for this library.
 
 ```xml
+<Logger name="io.ktor.server.plugins.cors.CORS" level="warn"/>
 <Logger name="kairo.rest" level="info"/>
 ```
