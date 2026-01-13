@@ -142,7 +142,7 @@ private val gcpSecretSupplier: GcpSecretSupplier = DefaultGcpSecretSupplier()
 val config: Config =
   loadConfig(
     resolvers = listOf(
-      ConfigResolver.Resolver("gcp::") { gcpSecretSupplier[it]?.value },
+      ConfigResolver("gcp::") { gcpSecretSupplier[it]?.value },
     )
   )
 ```
