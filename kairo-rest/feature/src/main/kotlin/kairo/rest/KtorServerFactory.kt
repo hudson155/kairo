@@ -2,9 +2,10 @@ package kairo.rest
 
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
-import io.ktor.serialization.kotlinx.json.json
+import io.ktor.serialization.jackson.JacksonConverter
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
@@ -24,13 +25,9 @@ import io.ktor.server.response.respond
 import io.ktor.server.sse.SSE
 import kairo.exception.LogicalFailure
 import kairo.feature.Feature
-import kairo.optional.optionalModule
 import kairo.rest.auth.AuthConfig
 import kairo.rest.auth.authConfig
-import kairo.serialization.json
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonBuilder
-import kotlinx.serialization.modules.plus
+import kairo.serialization.KairoJson
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -41,7 +38,7 @@ public object KtorServerFactory {
     features: List<Feature>,
     ktorConfig: KtorServerConfig.() -> Unit,
     authConfig: AuthConfig?,
-    configureJson: JsonBuilder.() -> Unit,
+    json: KairoJson,
     ktorModule: Application.() -> Unit,
   ): KtorServer =
     embeddedServer(
@@ -58,7 +55,7 @@ public object KtorServerFactory {
       },
       module = {
         this.authConfig = authConfig
-        this.json = createJson(configureJson, features)
+        this.json = json
         plugins(config.plugins)
         auth()
         routing(features)
@@ -91,16 +88,6 @@ public object KtorServerFactory {
     }
   }
 
-  private fun createJson(
-    configureJson: JsonBuilder.() -> Unit,
-    features: List<Feature>,
-  ): Json =
-    json(prettyPrint = true) {
-      serializersModule += optionalModule()
-      configureJson()
-      features.filterIsInstance<ConfiguresJson>().forEach { with(it) { configure() } }
-    }
-
   private fun Application.plugins(config: RestFeatureConfig.Plugins) {
     installAutoHeadResponse(config.autoHeadResponse)
     installCallLogging(config.callLogging)
@@ -125,10 +112,14 @@ public object KtorServerFactory {
     }
   }
 
+  @OptIn(KairoJson.RawJsonMapper::class)
   private fun Application.installContentNegotiation(config: RestFeatureConfig.Plugins.ContentNegotiation?) {
     config ?: return
     install(ContentNegotiation) {
-      json(this@installContentNegotiation.json)
+      register(
+        contentType = ContentType.Application.Json,
+        converter = JacksonConverter(this@installContentNegotiation.json.delegate),
+      )
     }
   }
 

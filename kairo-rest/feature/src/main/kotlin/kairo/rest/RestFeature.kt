@@ -7,8 +7,8 @@ import kairo.feature.FeaturePriority
 import kairo.feature.LifecycleHandler
 import kairo.feature.lifecycle
 import kairo.rest.auth.AuthConfig
+import kairo.serialization.KairoJson
 import kotlinx.coroutines.CompletableDeferred
-import kotlinx.serialization.json.JsonBuilder
 
 /**
  * The REST Feature runs a Ktor server for the lifecycle of a Kairo application.
@@ -18,7 +18,7 @@ public class RestFeature(
   config: RestFeatureConfig,
   ktorConfig: KtorServerConfig.() -> Unit = {},
   authConfig: AuthConfig?,
-  configureJson: JsonBuilder.() -> Unit = {},
+  json: KairoJson = KairoJson(),
   ktorModule: Application.() -> Unit = {},
 ) : Feature() {
   override val name: String = "REST"
@@ -34,7 +34,7 @@ public class RestFeature(
             features = features,
             ktorConfig = ktorConfig,
             authConfig = authConfig,
-            configureJson = configureJson,
+            json = json,
             ktorModule = ktorModule,
           )
           this@RestFeature.ktorServer = ktorServer
