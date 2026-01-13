@@ -108,10 +108,6 @@ dependencies {
   val r2dbcPoolVersion = "1.0.2.RELEASE"
   constraints.api("io.r2dbc:r2dbc-pool:$r2dbcPoolVersion")
 
-  // serialization
-  // https://github.com/Kotlin/kotlinx.serialization/releases
-  api(platform("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.9.0"))
-
   // slack
   // https://github.com/slackapi/java-slack-sdk/releases
   val slackVersion = "1.46.0"

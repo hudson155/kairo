@@ -894,8 +894,6 @@ style:
     active: true
   UtilityClassWithPublicConstructor:
     active: true
-    ignoreAnnotated:
-      - 'kotlinx.serialization.Serializable'
   VarCouldBeVal:
     active: true
     ignoreLateinitVar: true
