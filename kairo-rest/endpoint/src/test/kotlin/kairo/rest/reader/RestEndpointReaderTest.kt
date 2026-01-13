@@ -1,7 +1,6 @@
 package kairo.rest.reader
 
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
 import io.kotest.matchers.throwable.shouldHaveMessage
@@ -10,7 +9,6 @@ import io.ktor.server.routing.RoutingCall
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import java.lang.reflect.InvocationTargetException
 import kairo.libraryBook.LibraryBookApi
 import kairo.libraryBook.LibraryBookId
 import kairo.libraryBook.LibraryBookRep
@@ -59,11 +57,7 @@ internal class RestEndpointReaderTest {
         }
       }
       reader.read(call)
-        .shouldBe(
-          LibraryBookApi.Get(
-            libraryBookId = LibraryBookId("library_book_2eDS1sMt"),
-          ),
-        )
+        .shouldBe(LibraryBookApi.Get(LibraryBookId("library_book_2eDS1sMt")))
     }
 
   @Test
@@ -74,11 +68,7 @@ internal class RestEndpointReaderTest {
         every { parameters } returns Parameters.Empty
       }
       reader.read(call)
-        .shouldBe(
-          LibraryBookApi.ListByIds(
-            libraryBookIds = emptyList(),
-          ),
-        )
+        .shouldBe(LibraryBookApi.ListByIds(emptyList()))
     }
 
   @Test
@@ -107,9 +97,7 @@ internal class RestEndpointReaderTest {
       val reader = RestEndpointReader.from(LibraryBookApi.ListAll::class)
       val call = mockk<RoutingCall>()
       reader.read(call)
-        .shouldBe(
-          LibraryBookApi.ListAll,
-        )
+        .shouldBe(LibraryBookApi.ListAll)
     }
 
   @Test
@@ -154,11 +142,7 @@ internal class RestEndpointReaderTest {
         }
       }
       reader.read(call)
-        .shouldBe(
-          LibraryBookApi.SearchByGenre(
-            genre = LibraryBookRep.Genre.Religion,
-          ),
-        )
+        .shouldBe(LibraryBookApi.SearchByGenre(LibraryBookRep.Genre.Religion))
     }
 
   @Test
@@ -186,11 +170,7 @@ internal class RestEndpointReaderTest {
         }
       }
       reader.read(call)
-        .shouldBe(
-          LibraryBookApi.SearchByIsbn(
-            isbn = "978-0060652920",
-          ),
-        )
+        .shouldBe(LibraryBookApi.SearchByIsbn("978-0060652920"))
     }
 
   @Test
@@ -224,8 +204,6 @@ internal class RestEndpointReaderTest {
           ),
         )
     }
-
-  // TODO: Test error handling for bodies. Probably in a different spot.
 
   @Test
   fun `create, happy path`(): Unit =
@@ -428,10 +406,6 @@ internal class RestEndpointReaderTest {
         }
       }
       reader.read(call)
-        .shouldBe(
-          LibraryBookApi.Delete(
-            libraryBookId = LibraryBookId("library_book_2eDS1sMt"),
-          ),
-        )
+        .shouldBe(LibraryBookApi.Delete(LibraryBookId("library_book_2eDS1sMt")))
     }
 }

@@ -28,7 +28,7 @@ internal class ContentTypeVariantsRestEndpointTemplateTest {
     }
 
   @Test
-  fun presentOnGet(): Unit =
+  fun `present on get`(): Unit =
     runTest {
       RestEndpointTemplate.from(ContentTypeVariantsLibraryBookApi.PresentOnGet::class)
         .shouldBe(
@@ -46,7 +46,7 @@ internal class ContentTypeVariantsRestEndpointTemplateTest {
     }
 
   @Test
-  fun notPresentOnPost(): Unit =
+  fun `not present on post`(): Unit =
     runTest {
       RestEndpointTemplate.from(ContentTypeVariantsLibraryBookApi.NotPresentOnPost::class)
         .shouldBe(

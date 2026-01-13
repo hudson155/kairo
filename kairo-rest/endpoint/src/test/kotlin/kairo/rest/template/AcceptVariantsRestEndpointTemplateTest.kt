@@ -28,7 +28,7 @@ internal class AcceptVariantsRestEndpointTemplateTest {
     }
 
   @Test
-  fun notPresentOnGet(): Unit =
+  fun `not present on get`(): Unit =
     runTest {
       RestEndpointTemplate.from(AcceptVariantsLibraryBookApi.NotPresentOnGet::class)
         .shouldBe(
@@ -46,7 +46,7 @@ internal class AcceptVariantsRestEndpointTemplateTest {
     }
 
   @Test
-  fun notPresentOnPost(): Unit =
+  fun `not present on post`(): Unit =
     runTest {
       RestEndpointTemplate.from(AcceptVariantsLibraryBookApi.NotPresentOnPost::class)
         .shouldBe(

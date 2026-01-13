@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 internal class BrokenRestEndpointTemplateTest {
   @Test
-  fun notDataClass(): Unit =
+  fun `not data class`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(BrokenLibraryBookApi.NotDataClass::class)
@@ -19,7 +19,7 @@ internal class BrokenRestEndpointTemplateTest {
     }
 
   @Test
-  fun notDataObject(): Unit =
+  fun `not data object`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(BrokenLibraryBookApi.NotDataObject::class)
@@ -30,7 +30,7 @@ internal class BrokenRestEndpointTemplateTest {
     }
 
   @Test
-  fun nonParamConstructorParameter(): Unit =
+  fun `non-param constructor parameter`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(BrokenLibraryBookApi.NonParamConstructorParameter::class)
@@ -41,7 +41,7 @@ internal class BrokenRestEndpointTemplateTest {
     }
 
   @Test
-  fun bodyAsPathParam(): Unit =
+  fun `body as path param`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(BrokenLibraryBookApi.BodyAsPathParam::class)
@@ -52,7 +52,7 @@ internal class BrokenRestEndpointTemplateTest {
     }
 
   @Test
-  fun bodyAsQueryParam(): Unit =
+  fun `body as query param`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(BrokenLibraryBookApi.BodyAsQueryParam::class)
@@ -63,7 +63,7 @@ internal class BrokenRestEndpointTemplateTest {
     }
 
   @Test
-  fun pathParamMarkedAsQueryParam(): Unit =
+  fun `path param marked as query param`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(BrokenLibraryBookApi.PathParamMarkedAsQueryParam::class)
@@ -74,7 +74,7 @@ internal class BrokenRestEndpointTemplateTest {
     }
 
   @Test
-  fun queryParamMarkedAsPathParam(): Unit =
+  fun `query param marked as path param`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(BrokenLibraryBookApi.QueryParamMarkedAsPathParam::class)
@@ -85,7 +85,7 @@ internal class BrokenRestEndpointTemplateTest {
     }
 
   @Test
-  fun paramIsPathAndQuery(): Unit =
+  fun `param is path and query`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(BrokenLibraryBookApi.ParamIsPathAndQuery::class)
@@ -96,7 +96,7 @@ internal class BrokenRestEndpointTemplateTest {
     }
 
   @Test
-  fun nullablePathParam(): Unit =
+  fun `nullable path param`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(BrokenLibraryBookApi.NullablePathParam::class)
@@ -107,13 +107,24 @@ internal class BrokenRestEndpointTemplateTest {
     }
 
   @Test
-  fun optionalPathParam(): Unit =
+  fun `optional path param`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(BrokenLibraryBookApi.OptionalPathParam::class)
       }.shouldHaveMessage(
         "REST endpoint ${BrokenLibraryBookApi::class.qualifiedName}.OptionalPathParam:" +
           " @RestEndpoint.PathParam must not be optional (param=libraryBookId).",
+      )
+    }
+
+  @Test
+  fun `nullable query param`(): Unit =
+    runTest {
+      shouldThrowExactly<IllegalArgumentException> {
+        RestEndpointTemplate.from(BrokenLibraryBookApi.NullableQueryParam::class)
+      }.shouldHaveMessage(
+        "REST endpoint ${BrokenLibraryBookApi::class.qualifiedName}.NullableQueryParam:" +
+          " Nullable @RestEndpoint.QueryParam must be optional (param=title).",
       )
     }
 }

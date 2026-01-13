@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 
 internal class PathVariantsRestEndpointTemplateTest {
   @Test
-  fun missingMethod(): Unit =
+  fun missing(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.Missing::class)
@@ -22,7 +22,7 @@ internal class PathVariantsRestEndpointTemplateTest {
     }
 
   @Test
-  fun emptyMethod(): Unit =
+  fun empty(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.Empty::class)
@@ -48,7 +48,7 @@ internal class PathVariantsRestEndpointTemplateTest {
     }
 
   @Test
-  fun missingLeadingSlash(): Unit =
+  fun `missing leading slash`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.MissingLeadingSlash::class)
@@ -59,7 +59,7 @@ internal class PathVariantsRestEndpointTemplateTest {
     }
 
   @Test
-  fun nullableParam(): Unit =
+  fun `nullable param`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.NullableParam::class)
@@ -70,7 +70,7 @@ internal class PathVariantsRestEndpointTemplateTest {
     }
 
   @Test
-  fun optionalParam(): Unit =
+  fun `optional param`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.OptionalParam::class)
@@ -81,7 +81,7 @@ internal class PathVariantsRestEndpointTemplateTest {
     }
 
   @Test
-  fun duplicateParam(): Unit =
+  fun `duplicate param`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.DuplicateParam::class)
@@ -92,7 +92,7 @@ internal class PathVariantsRestEndpointTemplateTest {
     }
 
   @Test
-  fun paramNotInConstructor(): Unit =
+  fun `param not in constructor`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.ParamNotInConstructor::class)
@@ -103,7 +103,7 @@ internal class PathVariantsRestEndpointTemplateTest {
     }
 
   @Test
-  fun paramNotInPath(): Unit =
+  fun `param not in path`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
         RestEndpointTemplate.from(PathVariantsLibraryBookApi.ParamNotInPath::class)
