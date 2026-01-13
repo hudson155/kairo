@@ -29,7 +29,7 @@ internal class RestEndpointReaderTest {
         reader.read(call)
       }.message.shouldStartWith(
         "No argument provided for a required parameter" +
-          ": parameter #0 libraryBookId"
+          ": parameter #0 libraryBookId",
       )
     }
 
@@ -111,7 +111,7 @@ internal class RestEndpointReaderTest {
         reader.read(call)
       }.message.shouldStartWith(
         "No argument provided for a required parameter" +
-          ": parameter #0 genre"
+          ": parameter #0 genre",
       )
     }
 
@@ -156,7 +156,7 @@ internal class RestEndpointReaderTest {
         reader.read(call)
       }.message.shouldStartWith(
         "No argument provided for a required parameter" +
-          ": parameter #0 isbn"
+          ": parameter #0 isbn",
       )
     }
 
@@ -250,7 +250,7 @@ internal class RestEndpointReaderTest {
         reader.read(call)
       }.message.shouldStartWith(
         "No argument provided for a required parameter" +
-          ": parameter #0 libraryBookId"
+          ": parameter #0 libraryBookId",
       )
     }
 
@@ -378,7 +378,7 @@ internal class RestEndpointReaderTest {
         reader.read(call)
       }.message.shouldStartWith(
         "No argument provided for a required parameter" +
-          ": parameter #0 libraryBookId"
+          ": parameter #0 libraryBookId",
       )
     }
 
