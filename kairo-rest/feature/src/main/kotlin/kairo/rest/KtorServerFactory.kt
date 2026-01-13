@@ -171,6 +171,9 @@ public object KtorServerFactory {
         call.response.status(cause.status)
         call.respond(cause.json)
       }
+      exception<Throwable> { _, cause ->
+        logger.warn(cause) { "Exception." }
+      }
     }
   }
 

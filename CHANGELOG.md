@@ -23,12 +23,14 @@ in favor of best-in-class external libraries that do the job far better.**
 With Kairo 6,
 there's also now a **bias toward Kotlin-first libraries instead of Java ones**,
 reflecting the ecosystem's maturity since Kairo started in 2019.
+_That said_, Kairo 6 still uses Jackson, and has not migrated to `kotlinx.serialization` at this time.
 
 ### Kairo 6.0 highlights
 
 - **Improved documentation.**
   Every library now has examples and testing guidance,
   reducing friction to adopt.
+  A documentation website and getting started guide have also been created.
 
 - **BOMs for dependency alignment.**
   Use `software.airborne.kairo:bom` for standalone libraries,

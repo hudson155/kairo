@@ -4,7 +4,7 @@
 
 Packed with a curated collection of proven, production-ready libraries,
 it saves you the pain of hunting down, testing, and wiring together dependencies yourself.
-Each library has been handcrafted for reliability, performance, and developer experience,
+Each library has been hand-selected for reliability, performance, and developer experience,
 meaning you can skip the boilerplate and get straight to building something great.
 
 Designed to work seamlessly together but flexible enough to slot into any project,
@@ -158,6 +158,8 @@ These libraries help when **building your full application with Kairo**.
 - [kairo-mailersend](./kairo-mailersend/README.md):
   Interface for [MailerSend](https://www.mailersend.com/),
   letting you easily send emails!
+- [kairo-rest](./kairo-rest/README.md):
+  Ktor-based REST implementation with advanced routing DSL.
 - [kairo-server](./kairo-server/README.md):
   Servers are composed of Features,
   and can be run as an application or as part of integration tests.
@@ -172,21 +174,6 @@ These libraries help when **building your full application with Kairo**.
 - [kairo-stytch](./kairo-stytch/README.md):
   Interface for [Stytch](https://stytch.com/),
   letting you easily manage identity.
-
-## Publishing
-
-Publish a local snapshot.
-
-```shell
-./gradlew publishToMavenLocal -Pversion=9999-SNAPSHOT
-# Or use the IntelliJ run configuration.
-```
-
-Publish a real version to Google Artifact Registry.
-
-```shell
-./gradlew --no-build-cache --no-configuration-cache publish -Pversion=0.0.0
-```
 
 ## Code style
 
@@ -210,17 +197,17 @@ Other than the rules defined here, please follow the
 - **Full sentences:**
   Use full sentences, ending with proper punctuation.
   This applies to both copy and to code comments and logs.
-  It also applies within bulleted and numbered lists.
+  It also applies within bulleted and numbered lists when they contain more than one clause.
 
 - **Ordering:**
   - Order members in code by **read-create-update-delete** where possible.
-  - Order lists alphabetically when there is no other natural order.
+  - Order lists alphabetically _when there is no other natural order_.
     This applies to both copy and to code (such as parameter/method lists and documentation).
 
 - **Plurality:**
   For naming, singular forms should be preferred over plural forms where possible.
   This includes for folder, package, and Feature names.
-  REST paths should be plural, due to convention.
+  - REST paths should be plural, due to convention.
 
 - **Abbreviations:**
   In general, abbreviations should be avoided.
