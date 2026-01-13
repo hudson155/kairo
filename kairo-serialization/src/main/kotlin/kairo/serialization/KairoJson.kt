@@ -105,7 +105,7 @@ public class KairoJson @RawJsonMapper constructor(
     KairoJson(
       delegate.rebuild().apply {
         kairo(builder)
-      }.build()
+      }.build(),
     )
 }
 
