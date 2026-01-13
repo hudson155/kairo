@@ -20,7 +20,7 @@ internal object RestEndpointTemplateQueryParser {
         val paramName = checkNotNull(param.name)
         RestEndpointTemplateQuery.Param(
           value = paramName,
-          required = !param.type.isMarkedNullable,
+          required = !param.isOptional,
         )
       },
     )
@@ -32,8 +32,10 @@ internal object RestEndpointTemplateQueryParser {
   ) {
     queryParams.forEach { param ->
       val paramName = checkNotNull(param.name)
-      require(!param.isOptional) {
-        "${error.endpoint(kClass)}: ${error.queryParamAnnotation} must not be optional (param=$paramName)."
+      if (param.type.isMarkedNullable) {
+        require(param.isOptional) {
+          "${error.endpoint(kClass)}: Nullable ${error.queryParamAnnotation} must be optional (param=$paramName)."
+        }
       }
     }
   }

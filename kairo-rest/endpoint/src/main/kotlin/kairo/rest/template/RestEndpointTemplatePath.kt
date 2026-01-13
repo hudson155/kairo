@@ -7,7 +7,7 @@ package kairo.rest.template
 internal data class RestEndpointTemplatePath(
   val components: List<Component>,
 ) {
-  internal constructor(vararg components: Component) : this(components.toList())
+  constructor(vararg components: Component) : this(components.toList())
 
   override fun toString(): String =
     components.joinToString("/", prefix = "/") { component ->

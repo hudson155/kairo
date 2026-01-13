@@ -63,11 +63,4 @@ internal object BrokenLibraryBookApi {
   internal data class OptionalPathParam(
     @PathParam val libraryBookId: LibraryBookId = LibraryBookId("library_book_2eDS1sMt"),
   ) : RestEndpoint<Unit, LibraryBookRep>()
-
-  @Rest("GET", "/library-books")
-  @Rest.Accept("application/json")
-  internal data class OptionalQueryParam(
-    @QueryParam val title: String? = null,
-    @QueryParam val author: String? = null,
-  ) : RestEndpoint<Unit, List<LibraryBookRep>>()
 }

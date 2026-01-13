@@ -7,7 +7,7 @@ package kairo.rest.template
 internal data class RestEndpointTemplateQuery(
   val params: List<Param>,
 ) {
-  internal constructor(vararg params: Param) : this(params.toList())
+  constructor(vararg params: Param) : this(params.toList())
 
   override fun toString(): String =
     params.joinToString(prefix = "(", postfix = ")") { (value, required) ->

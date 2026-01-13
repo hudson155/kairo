@@ -27,9 +27,12 @@ internal class RestEndpointReaderTest {
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.Empty
       }
-      shouldThrowExactly<InvocationTargetException> {
+      shouldThrowExactly<IllegalArgumentException> {
         reader.read(call)
-      }.message.shouldBeNull()
+      }.message.shouldStartWith(
+        "No argument provided for a required parameter" +
+          ": parameter #0 libraryBookId"
+      )
     }
 
   @Test
@@ -116,9 +119,12 @@ internal class RestEndpointReaderTest {
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.Empty
       }
-      shouldThrowExactly<InvocationTargetException> {
+      shouldThrowExactly<IllegalArgumentException> {
         reader.read(call)
-      }.message.shouldBeNull()
+      }.message.shouldStartWith(
+        "No argument provided for a required parameter" +
+          ": parameter #0 genre"
+      )
     }
 
   @Test
@@ -162,9 +168,12 @@ internal class RestEndpointReaderTest {
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.Empty
       }
-      shouldThrowExactly<InvocationTargetException> {
+      shouldThrowExactly<IllegalArgumentException> {
         reader.read(call)
-      }.message.shouldBeNull()
+      }.message.shouldStartWith(
+        "No argument provided for a required parameter" +
+          ": parameter #0 isbn"
+      )
     }
 
   @Test
@@ -192,13 +201,7 @@ internal class RestEndpointReaderTest {
         every { parameters } returns Parameters.Empty
       }
       reader.read(call)
-        .shouldBe(
-          LibraryBookApi.SearchByText(
-            title = null,
-            author = null,
-            limit = null,
-          ),
-        )
+        .shouldBe(LibraryBookApi.SearchByText())
     }
 
   @Test
@@ -265,9 +268,12 @@ internal class RestEndpointReaderTest {
           genre = Required.of(LibraryBookRep.Genre.Religion),
         )
       }
-      shouldThrowExactly<InvocationTargetException> {
+      shouldThrowExactly<IllegalArgumentException> {
         reader.read(call)
-      }.message.shouldBeNull()
+      }.message.shouldStartWith(
+        "No argument provided for a required parameter" +
+          ": parameter #0 libraryBookId"
+      )
     }
 
   @Test
@@ -390,9 +396,12 @@ internal class RestEndpointReaderTest {
       val call = mockk<RoutingCall> {
         every { parameters } returns Parameters.Empty
       }
-      shouldThrowExactly<InvocationTargetException> {
+      shouldThrowExactly<IllegalArgumentException> {
         reader.read(call)
-      }.message.shouldBeNull()
+      }.message.shouldStartWith(
+        "No argument provided for a required parameter" +
+          ": parameter #0 libraryBookId"
+      )
     }
 
   @Test

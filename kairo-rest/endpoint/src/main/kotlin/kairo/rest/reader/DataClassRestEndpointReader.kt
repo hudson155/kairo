@@ -59,25 +59,35 @@ internal class DataClassRestEndpointReader<I : Any, E : RestEndpoint<I, *>>(
   }
 
   private suspend fun arguments(call: ApplicationCall): Map<KParameter, Any?> =
-    constructor.valueParameters.associateWith { param ->
-      val paramName = checkNotNull(param.name)
-      if (paramName == RestEndpoint<*, *>::body.name) {
-        return@associateWith call.receive<I>(KairoType<I>(param.type).toKtor())
-      }
-      val type = toJavaType(param.type)
-      val isMultiValuedTarget = type.isArrayType || type.isCollectionLikeType
-      val values = call.parameters.getAll(paramName)
-      return@associateWith if (isMultiValuedTarget) {
-        json.delegate.convertValue(values.orEmpty(), type)
-      } else {
-        values?.singleNullOrThrow()?.let { json.delegate.convertValue(it, type) }
+    buildMap {
+      constructor.valueParameters.forEach { param ->
+        val paramName = checkNotNull(param.name)
+        if (paramName == RestEndpoint<*, *>::body.name) {
+          put(param, call.receive<I>(KairoType<I>(param.type).toKtor()))
+          return@forEach
+        }
+        val paramType = javaType(param.type)
+        val values = call.parameters.getAll(paramName)
+        if (paramType.isArrayType || paramType.isCollectionLikeType) {
+          put(param, json.delegate.convertValue(values.orEmpty(), paramType))
+        } else if (values != null) {
+          put(param, json.delegate.convertValue(values.singleNullOrThrow(), paramType))
+        }
       }
     }
 
+  /**
+   * Makes a best-effort attempt to extract the [JavaType] from the [KType].
+   * This is not tested comprehensively and might need to be updated in the future.
+   */
   @OptIn(ExperimentalStdlibApi::class)
-  private fun toJavaType(type: KType): JavaType {
+  private fun javaType(type: KType): JavaType {
     val kClass = type.classifier as? KClass<*>
     if (kClass != null && kClass.isValue) {
+      /**
+       * If it's a value class, we can't use [KType.javaType] since it will give the underlying type.
+       * However, we can't use this approach regularly because it erases generic type information.
+       */
       return json.delegate.constructType(kClass.java)
     }
     return json.delegate.constructType(type.javaType)

@@ -116,15 +116,4 @@ internal class BrokenRestEndpointTemplateTest {
           " @RestEndpoint.PathParam must not be optional (param=libraryBookId).",
       )
     }
-
-  @Test
-  fun optionalQueryParam(): Unit =
-    runTest {
-      shouldThrowExactly<IllegalArgumentException> {
-        RestEndpointTemplate.from(BrokenLibraryBookApi.OptionalQueryParam::class)
-      }.shouldHaveMessage(
-        "REST endpoint ${BrokenLibraryBookApi::class.qualifiedName}.OptionalQueryParam:" +
-          " @RestEndpoint.QueryParam must not be optional (param=title).",
-      )
-    }
 }

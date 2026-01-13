@@ -62,7 +62,7 @@ internal class RestEndpointTemplateToStringTest {
       RestEndpointTemplate.from(LibraryBookApi.SearchByText::class).toString()
         .shouldBe(
           "RestEndpointTemplate(value='[null -> application/json]" +
-            " GET /library-books (title?, author?)')",
+            " GET /library-books (title?, author?, limit?)')",
         )
     }
 

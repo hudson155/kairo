@@ -39,9 +39,9 @@ internal object LibraryBookApi {
   @Rest("GET", "/library-books")
   @Rest.Accept("application/json")
   internal data class SearchByText(
-    @QueryParam val title: String?,
-    @QueryParam val author: String?,
-    @QueryParam val limit: Int?,
+    @QueryParam val title: String? = null,
+    @QueryParam val author: String? = null,
+    @QueryParam val limit: Int = 10,
   ) : RestEndpoint<Unit, List<LibraryBookRep>>()
 
   @Rest("POST", "/library-books")
