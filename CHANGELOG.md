@@ -213,6 +213,8 @@ No changes.
 
 - The `@RestEndpoint.ContentType` and `@RestEndpoint.Accept` annotations are now optional.
 
+- List query params are now supported.
+
 - No more REST context class. Access Ktor's `RoutingCall` directly.
 
 - Native Ktor SSE support.
