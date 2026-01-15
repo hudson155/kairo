@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.StreamReadFeature
 import com.fasterxml.jackson.core.StreamWriteFeature
 import com.fasterxml.jackson.core.json.JsonReadFeature
 import com.fasterxml.jackson.core.json.JsonWriteFeature
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.core.util.DefaultIndenter
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
 import com.fasterxml.jackson.core.util.Separators
@@ -22,6 +21,7 @@ import com.fasterxml.jackson.databind.util.StdDateFormat
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.fasterxml.jackson.module.kotlin.kotlinModule
 import io.ktor.util.Attributes
 
@@ -74,12 +74,12 @@ public class KairoJson @RawJsonMapper constructor(
   public annotation class RawJsonMapper
 
   public inline fun <reified T> serialize(value: T?): String {
-    val writer = delegate.writerFor(object : TypeReference<T>() {})
+    val writer = delegate.writerFor(jacksonTypeRef<T>())
     return writer.writeValueAsString(value)
   }
 
   public inline fun <reified T> deserialize(string: String): T {
-    val reader = delegate.readerFor(object : TypeReference<T>() {})
+    val reader = delegate.readerFor(jacksonTypeRef<T>())
     val result = reader.readValue<T>(string)
     checkResult(result)
     return result
