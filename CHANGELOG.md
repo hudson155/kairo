@@ -64,6 +64,12 @@ _That said_, Kairo 6 still uses Jackson, and has not migrated to `kotlinx.serial
 
 ### Full Kairo 6.0 changelog
 
+#### Overall
+
+- Upgrade Gradle from 8 to 9.
+
+- Upgrade Kotlin from 2.2 to 2.3.
+
 #### Application
 
 - Introduction of `kairo-application`
@@ -97,7 +103,7 @@ No changes.
 
 #### Datetime
 
-* Introduced [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime).
+- Introduced [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime).
 
 #### Dependency Injection
 
