@@ -55,13 +55,7 @@ public data class RestEndpointTemplate(
     }
 
     private fun deriveParams(kClass: KClass<out RestEndpoint<*, *>>): List<KParameter> {
-      val params =
-        if (kClass.objectInstance != null) {
-          emptyList()
-        } else {
-          checkNotNull(kClass.primaryConstructor) { "Data classes always have primary constructors." }
-            .let { it.valueParameters }
-        }
+      val params = params(kClass)
       params.forEach { param ->
         val paramName = checkNotNull(param.name)
         val isPath = param.hasAnnotation<RestEndpoint.PathParam>()
@@ -80,6 +74,11 @@ public data class RestEndpointTemplate(
         }
       }
       return params
+    }
+
+    private fun params(kClass: KClass<out RestEndpoint<*, *>>): List<KParameter> {
+      if (kClass.objectInstance != null) return emptyList()
+      return checkNotNull(kClass.primaryConstructor).valueParameters
     }
   }
 }
