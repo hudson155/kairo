@@ -96,6 +96,7 @@ class UserHandler(
   private val userService: UserService,
 ) : HasRouting {
   override fun Application.routing() {
+    @Suppress("LongMethod")
     routing {
       route(UserApi.Get::class) {
         handle {
