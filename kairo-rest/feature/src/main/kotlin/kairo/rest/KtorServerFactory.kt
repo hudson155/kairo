@@ -84,7 +84,7 @@ public object KtorServerFactory {
     shutdownTimeout = lifecycle.shutdownTimeout.inWholeMilliseconds
     connector {
       host = connector.host
-      port = connector.port
+      port = connector.port.toInt()
     }
   }
 
