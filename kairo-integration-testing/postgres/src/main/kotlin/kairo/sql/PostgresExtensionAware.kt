@@ -2,8 +2,8 @@ package kairo.sql
 
 import java.sql.Connection
 import java.sql.DriverManager
-import kairo.feature.get
 import kairo.sql.PostgresExtension.Companion.namespace
+import kairo.testing.get
 import org.jetbrains.exposed.v1.core.vendors.PostgreSQLDialect
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.junit.jupiter.api.extension.ExtensionContext
