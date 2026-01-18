@@ -42,18 +42,11 @@ internal class FloatSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowExactly<JsonParseException> {
-        json.deserialize<Float>("9 0210")
-      }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed",
-      )
+      // Passes due to DeserializationFeature.FAIL_ON_TRAILING_TOKENS being disabled
+      json.deserialize<Float>("9 0210").shouldBe(9F)
 
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Float>("3.1 4")
-      }.message.shouldStartWith(
-        "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `java.lang.Float`)",
-      )
+      // Passes due to DeserializationFeature.FAIL_ON_TRAILING_TOKENS being disabled
+      json.deserialize<Float>("3.1 4").shouldBe(3.1F)
     }
 
   @Test

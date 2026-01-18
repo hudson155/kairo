@@ -1,6 +1,5 @@
 package kairo.rest.reader
 
-import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.MapperFeature
 import io.github.oshai.kotlinlogging.KLogger

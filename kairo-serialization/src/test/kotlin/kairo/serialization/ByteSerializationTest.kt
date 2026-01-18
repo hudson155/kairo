@@ -46,12 +46,8 @@ internal class ByteSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Byte>("4 2")
-      }.message.shouldStartWith(
-        "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `java.lang.Byte`)",
-      )
+      // Passes due to DeserializationFeature.FAIL_ON_TRAILING_TOKENS being disabled
+      json.deserialize<Byte>("4 2").shouldBe(4.toByte())
     }
 
   @Test

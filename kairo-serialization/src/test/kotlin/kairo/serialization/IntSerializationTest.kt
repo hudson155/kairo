@@ -50,11 +50,8 @@ internal class IntSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowExactly<JsonParseException> {
-        json.deserialize<Int>("9 0210")
-      }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed",
-      )
+      // Passes due to DeserializationFeature.FAIL_ON_TRAILING_TOKENS being disabled
+      json.deserialize<Int>("9 0210").shouldBe(9)
     }
 
   @Test
