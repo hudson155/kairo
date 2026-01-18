@@ -1,7 +1,6 @@
 package kairo.feature
 
 import kairo.dependencyInjection.KoinExtension
-import kairo.dependencyInjection.koin
 import kairo.server.Server
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.extension.AfterEachCallback

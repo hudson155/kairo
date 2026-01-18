@@ -1,7 +1,5 @@
 package kairo.dependencyInjection
 
-import kairo.dependencyInjection.KoinExtension.Companion.namespace
-import kairo.testing.get
 import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtensionContext
 import org.junit.jupiter.api.extension.ParameterContext
@@ -10,7 +8,7 @@ import org.koin.core.Koin
 import org.koin.core.KoinApplication
 import org.koin.dsl.koinApplication
 
-public open class KoinExtension : BeforeEachCallback, ParameterResolver {
+public open class KoinExtension : KoinExtensionAware, BeforeEachCallback, ParameterResolver {
   override fun beforeEach(context: ExtensionContext) {
     val koinApplication = koinApplication()
     context.koin = koinApplication
@@ -45,9 +43,3 @@ public open class KoinExtension : BeforeEachCallback, ParameterResolver {
       ExtensionContext.Namespace.create(KoinExtension::class)
   }
 }
-
-public var ExtensionContext.koin: KoinApplication?
-  get() = getStore(namespace).get<KoinApplication>("koin")
-  set(value) {
-    getStore(namespace).put("koin", value)
-  }

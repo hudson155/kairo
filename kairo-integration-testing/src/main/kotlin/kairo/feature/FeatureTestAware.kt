@@ -1,10 +1,11 @@
 package kairo.feature
 
+import kairo.dependencyInjection.KoinExtensionAware
 import kairo.server.Server
 import kairo.testing.get
 import org.junit.jupiter.api.extension.ExtensionContext
 
-public interface FeatureTestAware {
+public interface FeatureTestAware : KoinExtensionAware {
   public var ExtensionContext.server: Server?
     get() = getStore(FeatureTest.namespace).get<Server>("server")
     set(value) {
