@@ -25,7 +25,7 @@ internal data class MoneyAsObjectDelegate(
 private val key: AttributeKey<MoneyFormat> = AttributeKey("moneyFormat")
 
 public var KairoJson.Builder.moneyFormat: MoneyFormat
-  get() = attributes.getOrNull(key) ?: MoneyFormat.Object
+  get() = attributes.computeIfAbsent(key) { MoneyFormat.Object }
   set(value) {
     attributes[key] = value
   }
