@@ -41,11 +41,6 @@ internal class DataClassRestEndpointReader<I : Any, E : RestEndpoint<I, *>>(
          * Allowing coercion of scalars is necessary for non-string-like types to deserialize properly.
          */
         configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, true)
-        /**
-         * Jackson has a bug where deserializing value classes can lead to trailing tokens.
-         * See https://chatgpt.com/share/6965494f-a5e8-800c-ab1f-260ef33171c3.
-         */
-        configure(DeserializationFeature.FAIL_ON_TRAILING_TOKENS, false)
       }
     }
 
