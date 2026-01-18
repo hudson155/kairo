@@ -1,3 +1,4 @@
+import dev.detekt.gradle.Detekt
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
@@ -65,4 +66,8 @@ detekt {
   config.from(files("$rootDir/.detekt/config.yaml"))
   parallel = true
   autoCorrect = System.getenv("CI") != "true"
+}
+
+tasks.withType<Detekt> {
+  exclude("org/koin/ksp/generated")
 }
