@@ -21,7 +21,7 @@ public enum class BigDecimalFormat(
 private val key: AttributeKey<BigDecimalFormat> = AttributeKey("bigDecimalFormat")
 
 public var KairoJson.Builder.bigDecimalFormat: BigDecimalFormat
-  get() = attributes.getOrNull(key) ?: BigDecimalFormat.Double
+  get() = attributes.computeIfAbsent(key) { BigDecimalFormat.Double }
   set(value) {
     attributes[key] = value
   }

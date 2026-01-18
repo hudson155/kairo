@@ -21,7 +21,7 @@ public enum class BigIntegerFormat(
 private val key: AttributeKey<BigIntegerFormat> = AttributeKey("bigIntegerFormat")
 
 public var KairoJson.Builder.bigIntegerFormat: BigIntegerFormat
-  get() = attributes.getOrNull(key) ?: BigIntegerFormat.Long
+  get() = attributes.computeIfAbsent(key) { BigIntegerFormat.Long }
   set(value) {
     attributes[key] = value
   }
