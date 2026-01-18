@@ -42,18 +42,11 @@ internal class DoubleSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowExactly<JsonParseException> {
-        json.deserialize<Double>("9 0210")
-      }.message.shouldStartWith(
-        "Invalid numeric value: Leading zeroes not allowed",
-      )
+      // Passes due to DeserializationFeature.FAIL_ON_TRAILING_TOKENS being disabled
+      json.deserialize<Double>("9 0210").shouldBe(9.toDouble())
 
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Double>("3.1 4")
-      }.message.shouldStartWith(
-        "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `java.lang.Double`)",
-      )
+      // Passes due to DeserializationFeature.FAIL_ON_TRAILING_TOKENS being disabled
+      json.deserialize<Double>("3.1 4").shouldBe(3.1)
     }
 
   @Test

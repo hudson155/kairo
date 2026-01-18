@@ -49,12 +49,8 @@ internal class ShortSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Short>("1 55")
-      }.message.shouldStartWith(
-        "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `java.lang.Short`)",
-      )
+      // Passes due to DeserializationFeature.FAIL_ON_TRAILING_TOKENS being disabled
+      json.deserialize<Short>("1 55").shouldBe(1.toShort())
     }
 
   @Test

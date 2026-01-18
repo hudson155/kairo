@@ -50,12 +50,8 @@ internal class LongSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<Long>("9 876543210")
-      }.message.shouldStartWith(
-        "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `java.lang.Long`)",
-      )
+      // Passes due to DeserializationFeature.FAIL_ON_TRAILING_TOKENS being disabled
+      json.deserialize<Long>("9 876543210").shouldBe(9L)
     }
 
   @Test

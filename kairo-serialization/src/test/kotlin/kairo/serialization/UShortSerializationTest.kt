@@ -2,7 +2,6 @@ package kairo.serialization
 
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.core.exc.InputCoercionException
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
@@ -46,12 +45,8 @@ internal class UShortSerializationTest {
   @Test
   fun `deserialize, wrong format (has space)`(): Unit =
     runTest {
-      shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<UShort>("3 2923")
-      }.message.shouldStartWith(
-        "Trailing token (of type VALUE_NUMBER_INT) found after value" +
-          " (bound as `kotlin.UShort`)",
-      )
+      // Passes due to DeserializationFeature.FAIL_ON_TRAILING_TOKENS being disabled
+      json.deserialize<UShort>("3 2923").shouldBe(3.toUShort())
     }
 
   @Test
