@@ -55,7 +55,10 @@ public data class RestEndpointTemplate(
     }
 
     private fun deriveParams(kClass: KClass<out RestEndpoint<*, *>>): List<KParameter> {
-      val params = params(kClass)
+      val params = run {
+        if (kClass.objectInstance != null) return@run emptyList()
+        return@run checkNotNull(kClass.primaryConstructor).valueParameters
+      }
       params.forEach { param ->
         val paramName = checkNotNull(param.name)
         val isPath = param.hasAnnotation<RestEndpoint.PathParam>()
@@ -74,11 +77,6 @@ public data class RestEndpointTemplate(
         }
       }
       return params
-    }
-
-    private fun params(kClass: KClass<out RestEndpoint<*, *>>): List<KParameter> {
-      if (kClass.objectInstance != null) return emptyList()
-      return checkNotNull(kClass.primaryConstructor).valueParameters
     }
   }
 }

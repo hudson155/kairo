@@ -88,12 +88,11 @@ public class Server(
    * and this method throws.
    */
   private suspend fun onStart() {
-    val stages =
-      features
-        .flatMap { feature -> feature.lifecycle.map { Pair(feature, it) } }
-        .groupBy(keySelector = { it.second.priority }, valueTransform = { Pair(it.first, it.second) })
-        .entries
-        .sortedBy { it.key }
+    val stages = features
+      .flatMap { feature -> feature.lifecycle.map { Pair(feature, it) } }
+      .groupBy(keySelector = { it.second.priority }, valueTransform = { Pair(it.first, it.second) })
+      .entries
+      .sortedBy { it.key }
     stages.forEach { (priority, handlers) ->
       logger.info { "Starting Features (priority=$priority, handlers=${handlers.size})." }
       coroutineScope {
@@ -122,12 +121,11 @@ public class Server(
    * This method does not throw.
    */
   private suspend fun onStop() {
-    val stages =
-      features
-        .flatMap { feature -> feature.lifecycle.map { Pair(feature, it) } }
-        .groupBy(keySelector = { it.second.priority }, valueTransform = { Pair(it.first, it.second) })
-        .entries
-        .sortedByDescending { it.key }
+    val stages = features
+      .flatMap { feature -> feature.lifecycle.map { Pair(feature, it) } }
+      .groupBy(keySelector = { it.second.priority }, valueTransform = { Pair(it.first, it.second) })
+      .entries
+      .sortedByDescending { it.key }
     stages.forEach { (priority, handlers) ->
       logger.info { "Stopping Features (priority=$priority, handlers=${handlers.size})." }
       supervisorScope {
