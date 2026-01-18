@@ -31,7 +31,7 @@ public data class RestFeatureConfig(
 
   public data class Connector(
     val host: String = "0.0.0.0",
-    val port: Int,
+    val port: String,
   )
 
   public data class Plugins(
