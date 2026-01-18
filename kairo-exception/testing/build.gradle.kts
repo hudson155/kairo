@@ -4,6 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-exception"))
-  implementation(project(":kairo-testing"))
+  compileOnly(project(":kairo-exception")) // Forced peer dependency.
+  compileOnly(project(":kairo-testing"))
 }
