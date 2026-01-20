@@ -17,5 +17,6 @@ internal class KairoKotlinModule(
 
     addSerializer(Uuid::class.java, KotlinUuidSerializer())
     addDeserializer(Uuid::class.java, KotlinUuidDeserializer())
+    addKeyDeserializer(Uuid::class.java, KotlinUuidDeserializer.Key())
   }
 }
