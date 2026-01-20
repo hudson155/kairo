@@ -8,7 +8,7 @@ with support for async I/O using **R2DBC**.
 ### Why Exposed?
 
 - **Kotlin-first with async I/O:**
-  - JetBrains' own type-safe DSL is Kotlin-idomatic.
+  - JetBrains' own type-safe DSL is Kotlin-idiomatic.
   - R2DBC offers enables lightweight async I/O instead of JDBC's blocking approach.
 
 - **Production-ready defaults** with easy overrides.

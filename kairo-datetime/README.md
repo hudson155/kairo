@@ -1,7 +1,7 @@
 # Kairo Date/Time
 
-`kairo-datetime` extends [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
-& adds some **convenient helper functions**.
+`kairo-datetime` provides [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
+and adds some **convenient helper functions**.
 
 ## Installation
 
@@ -25,3 +25,14 @@ See [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime).
 - `LocalDateTime`, `LocalDate`, `YearMonth`, `LocalTime`
 - `TimeZone`
 - `Month` and `DayOfWeek` enums
+
+### Helper functions
+
+#### `Instant.Companion.epoch`
+
+A convenient way to get the Unix epoch instant.
+
+```kotlin
+Instant.epoch
+// => 1970-01-01T00:00:00Z
+```
