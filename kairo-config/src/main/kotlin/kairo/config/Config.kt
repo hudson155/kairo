@@ -2,9 +2,9 @@ package kairo.config
 
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
+import com.typesafe.config.ConfigRenderOptions
 import com.typesafe.config.ConfigValueFactory
 import com.typesafe.config.ConfigValueType
-import kairo.hocon.deserialize
 import kairo.reflect.KairoType
 import kairo.reflect.kairoType
 import kairo.serialization.KairoJson
@@ -32,7 +32,8 @@ public suspend fun <T : Any> loadConfig(
   val hocon = ConfigFactory.parseResources("config/$configName.conf")
     .let { it.resolve() }
     .let { applyConfigResolvers(it, resolvers) }
-  return json.deserialize(hocon, type)
+  val string = hocon.root().render(ConfigRenderOptions.concise())
+  return json.deserialize(string, type)
 }
 
 private suspend fun applyConfigResolvers(
