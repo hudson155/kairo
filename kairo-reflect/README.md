@@ -55,7 +55,7 @@ val kotlinType: KType = type.kotlinType
 Infer a generic type parameter at runtime with **no manual plumbing**.
 
 ```kotlin
-abstract class MyClass<T : Any> {
+abstract class MyClass<T> {
   val type: KairoType<T> = KairoType.from(MyClass::class, 0, this::class)
 }
 ```

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
  * Tests [KairoType.from].
  */
 internal class KairoTypeInferenceTest {
-  internal abstract class AbstractExampleClass<T : Any> {
+  internal abstract class AbstractExampleClass<T> {
     val type: KairoType<T> = KairoType.from(AbstractExampleClass::class, 0, this::class)
   }
 
@@ -19,7 +19,7 @@ internal class KairoTypeInferenceTest {
 
   internal class AbstractExampleStringListSubclass : AbstractExampleClass<List<String>>()
 
-  internal class ConcreteExampleClass<T : Any> {
+  internal class ConcreteExampleClass<T> {
     val type: KairoType<T> = KairoType.from(ConcreteExampleClass::class, 0, this::class)
   }
 
