@@ -30,7 +30,7 @@ internal class CharSerializationTest {
         json.deserialize<Char>("\"\"")
       }.message.shouldStartWith(
         "Cannot coerce empty String (\"\")" +
-          " to `java.lang.Character` value",
+          " to `char` value",
       )
     }
 
@@ -41,7 +41,7 @@ internal class CharSerializationTest {
         json.deserialize<Char>("\"Hello, World!\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"Hello, World!\")" +
-          " to `java.lang.Character` value",
+          " to `char` value",
       )
     }
 
@@ -52,7 +52,7 @@ internal class CharSerializationTest {
         json.deserialize<Char>("0")
       }.message.shouldStartWith(
         "Cannot coerce Integer value (0)" +
-          " to `java.lang.Character` value",
+          " to `char` value",
       )
     }
 }

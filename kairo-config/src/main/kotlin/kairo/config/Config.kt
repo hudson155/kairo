@@ -2,9 +2,11 @@ package kairo.config
 
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
-import com.typesafe.config.ConfigRenderOptions
 import com.typesafe.config.ConfigValueFactory
 import com.typesafe.config.ConfigValueType
+import kairo.hocon.deserialize
+import kairo.reflect.KairoType
+import kairo.reflect.kairoType
 import kairo.serialization.KairoJson
 
 /**
@@ -16,17 +18,24 @@ public suspend inline fun <reified T : Any> loadConfig(
    * If unset, defaults to the "CONFIG" environment variable.
    */
   configName: String = requireNotNull(System.getenv("CONFIG")) { "CONFIG environment variable not set." },
-  json: KairoJson = KairoJson(),
   resolvers: List<ConfigResolver> = emptyList(),
+  json: KairoJson = KairoJson(),
+): T =
+  loadConfig(configName, resolvers, json, kairoType())
+
+public suspend fun <T : Any> loadConfig(
+  configName: String,
+  resolvers: List<ConfigResolver> = emptyList(),
+  json: KairoJson = KairoJson(),
+  type: KairoType<T>,
 ): T {
   val hocon = ConfigFactory.parseResources("config/$configName.conf")
     .let { it.resolve() }
     .let { applyConfigResolvers(it, resolvers) }
-  val string = hocon.root().render(ConfigRenderOptions.concise())
-  return json.deserialize<T>(string)
+  return json.deserialize(hocon, type)
 }
 
-public suspend fun applyConfigResolvers(
+private suspend fun applyConfigResolvers(
   hocon: Config,
   resolvers: List<ConfigResolver>,
 ): Config =

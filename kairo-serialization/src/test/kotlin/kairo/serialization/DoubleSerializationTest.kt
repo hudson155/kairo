@@ -109,7 +109,7 @@ internal class DoubleSerializationTest {
         json.deserialize<Double>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.lang.Double` value",
+          " to `double` value",
       )
     }
 }

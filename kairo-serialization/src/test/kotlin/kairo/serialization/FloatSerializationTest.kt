@@ -109,7 +109,7 @@ internal class FloatSerializationTest {
         json.deserialize<Float>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.lang.Float` value",
+          " to `float` value",
       )
     }
 }
