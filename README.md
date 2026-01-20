@@ -104,6 +104,9 @@ These libraries **can be used anywhere**
 - [kairo-gcp-secret-supplier](./kairo-gcp-secret-supplier/README.md):
   Lightweight and coroutine-friendly
   Google Secret Manager wrapper.
+- [kairo-hocon](./kairo-hocon/README.md):
+  Wrapper around [lightbend/config](https://github.com/lightbend/config),
+  along with JSON serialization support.
 - [kairo-id](./kairo-id/README.md):
   Human-readable semantic identifiers with variable entropy.
   Compile-time safety without runtime overhead.
