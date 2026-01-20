@@ -4,12 +4,13 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-hocon"))
   implementation(project(":kairo-reflect"))
-  implementation(project(":kairo-serialization"))
-  implementation(project(":kairo-util"))
+  compileOnly(project(":kairo-serialization")) // Forced peer dependency.
+
+  api(libs.hocon)
 
   testImplementation(project(":kairo-protected-string"))
+  testImplementation(project(":kairo-serialization"))
   testImplementation(project(":kairo-testing"))
 }
 
