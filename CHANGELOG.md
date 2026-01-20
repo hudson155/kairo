@@ -147,6 +147,10 @@ No changes.
 
 - Health checks now have timeouts.
 
+#### HOCON
+
+- Introduction of `kairo-hocon`, which supports `kairo-config`.
+
 #### ID
 
 - **Safer IDs with zero runtime cost.**
