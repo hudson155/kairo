@@ -4,11 +4,10 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-hocon"))
   implementation(project(":kairo-reflect"))
   implementation(project(":kairo-serialization"))
   implementation(project(":kairo-util"))
-
-  implementation(libs.hocon)
 
   testImplementation(project(":kairo-protected-string"))
   testImplementation(project(":kairo-testing"))
