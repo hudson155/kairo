@@ -67,21 +67,21 @@ internal class BooleanSerializationTest {
         json.deserialize<Boolean>("-1")
       }.message.shouldStartWith(
         "Cannot coerce Integer value (-1)" +
-          " to `java.lang.Boolean` value",
+          " to `boolean` value",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Boolean>("0")
       }.message.shouldStartWith(
         "Cannot coerce Integer value (0)" +
-          " to `java.lang.Boolean` value",
+          " to `boolean` value",
       )
 
       shouldThrowExactly<InvalidFormatException> {
         json.deserialize<Boolean>("1")
       }.message.shouldStartWith(
         "Cannot coerce Integer value (1)" +
-          " to `java.lang.Boolean` value",
+          " to `boolean` value",
       )
     }
 
@@ -92,14 +92,14 @@ internal class BooleanSerializationTest {
         json.deserialize<Boolean>("\"true\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"true\")" +
-          " to `java.lang.Boolean` value",
+          " to `boolean` value",
       )
 
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Boolean>("\"false\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"false\")" +
-          " to `java.lang.Boolean` value",
+          " to `boolean` value",
       )
     }
 }

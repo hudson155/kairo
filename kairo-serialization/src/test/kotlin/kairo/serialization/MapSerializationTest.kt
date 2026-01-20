@@ -90,7 +90,7 @@ internal class MapSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Map<String, Nothing>>("""[]""")
       }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.LinkedHashMap<java.lang.Object,java.lang.Object>`" +
+        "Cannot deserialize value of type `java.util.LinkedHashMap<java.lang.String,java.lang.Void>`" +
           " from Array value",
       )
     }

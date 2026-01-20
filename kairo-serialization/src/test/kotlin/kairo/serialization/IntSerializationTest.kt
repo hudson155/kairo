@@ -71,7 +71,7 @@ internal class IntSerializationTest {
         json.deserialize<Int>("1e0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (1e0)" +
-          " to `java.lang.Integer` value",
+          " to `int` value",
       )
     }
 
@@ -119,7 +119,7 @@ internal class IntSerializationTest {
         json.deserialize<Int>("0.0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (0.0)" +
-          " to `java.lang.Integer` value",
+          " to `int` value",
       )
     }
 
@@ -130,7 +130,7 @@ internal class IntSerializationTest {
         json.deserialize<Int>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.lang.Integer` value",
+          " to `int` value",
       )
     }
 }

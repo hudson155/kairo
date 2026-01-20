@@ -21,9 +21,10 @@ import com.fasterxml.jackson.databind.util.StdDateFormat
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.fasterxml.jackson.module.kotlin.kotlinModule
 import io.ktor.util.Attributes
+import kairo.reflect.KairoType
+import kairo.reflect.kairoType
 
 /**
  * A wrapper around Jackson's [JsonMapper].
@@ -73,15 +74,21 @@ public class KairoJson @RawJsonMapper constructor(
   @Target(AnnotationTarget.CONSTRUCTOR, AnnotationTarget.PROPERTY)
   public annotation class RawJsonMapper
 
-  public inline fun <reified T> serialize(value: T?): String {
-    val writer = delegate.writerFor(jacksonTypeRef<T>())
+  public inline fun <reified T> serialize(value: T?): String =
+    serialize(value, kairoType())
+
+  public fun <T> serialize(value: T?, type: KairoType<T>): String {
+    val writer = delegate.writerFor(type.jacksonTypeReference())
     return writer.writeValueAsString(value)
   }
 
-  public inline fun <reified T> deserialize(string: String): T {
-    val reader = delegate.readerFor(jacksonTypeRef<T>())
+  public inline fun <reified T> deserialize(string: String): T =
+    deserialize(string, kairoType<T>())
+
+  public fun <T> deserialize(string: String, type: KairoType<T>): T {
+    val reader = delegate.readerFor(type.jacksonTypeReference())
     val result = reader.readValue<T>(string)
-    checkResult(result)
+    checkResult(result, type)
     return result
   }
 
@@ -91,12 +98,11 @@ public class KairoJson @RawJsonMapper constructor(
    *
    * Adapted from [com.fasterxml.jackson.module.kotlin.checkTypeMismatch].
    */
-  public inline fun <reified T> checkResult(result: T?) {
-    if (result !is T) {
-      val nullability = if (null is T) "?" else "(non-null)"
+  private fun <T> checkResult(result: T?, type: KairoType<T>) {
+    if (result == null && !type.kotlinType.isMarkedNullable) {
       throw RuntimeJsonMappingException(
         "Deserialized value did not match the specified type; " +
-          "specified ${T::class.qualifiedName}$nullability but was ${result?.let { it::class.qualifiedName }}",
+          "specified ${type.kotlinClass.qualifiedName}(non-null) but was null.",
       )
     }
   }

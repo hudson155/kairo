@@ -71,7 +71,7 @@ internal class LongSerializationTest {
         json.deserialize<Long>("1e0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (1e0)" +
-          " to `java.lang.Long` value",
+          " to `long` value",
       )
     }
 
@@ -119,7 +119,7 @@ internal class LongSerializationTest {
         json.deserialize<Long>("0.0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (0.0)" +
-          " to `java.lang.Long` value",
+          " to `long` value",
       )
     }
 
@@ -130,7 +130,7 @@ internal class LongSerializationTest {
         json.deserialize<Long>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.lang.Long` value",
+          " to `long` value",
       )
     }
 }

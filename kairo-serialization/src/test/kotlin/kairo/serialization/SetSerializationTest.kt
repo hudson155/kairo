@@ -72,7 +72,7 @@ internal class SetSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<Set<Nothing>>("""{}""")
       }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.HashSet<java.lang.Object>`" +
+        "Cannot deserialize value of type `java.util.HashSet<java.lang.Void>`" +
           " from Object value",
       )
     }

@@ -67,7 +67,7 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("1e0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (1e0)" +
-          " to `java.lang.Byte` value",
+          " to `byte` value",
       )
     }
 
@@ -115,7 +115,7 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("0.0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (0.0)" +
-          " to `java.lang.Byte` value",
+          " to `byte` value",
       )
     }
 
@@ -126,7 +126,7 @@ internal class ByteSerializationTest {
         json.deserialize<Byte>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.lang.Byte` value",
+          " to `byte` value",
       )
     }
 }

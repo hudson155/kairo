@@ -70,7 +70,7 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("1e0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (1e0)" +
-          " to `java.lang.Short` value",
+          " to `short` value",
       )
     }
 
@@ -118,7 +118,7 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("0.0")
       }.message.shouldStartWith(
         "Cannot coerce Floating-point value (0.0)" +
-          " to `java.lang.Short` value",
+          " to `short` value",
       )
     }
 
@@ -129,7 +129,7 @@ internal class ShortSerializationTest {
         json.deserialize<Short>("\"0\"")
       }.message.shouldStartWith(
         "Cannot coerce String value (\"0\")" +
-          " to `java.lang.Short` value",
+          " to `short` value",
       )
     }
 }

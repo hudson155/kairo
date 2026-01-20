@@ -72,7 +72,7 @@ internal class ListSerializationTest {
       shouldThrowExactly<MismatchedInputException> {
         json.deserialize<List<Nothing>>("""{}""")
       }.message.shouldStartWith(
-        "Cannot deserialize value of type `java.util.ArrayList<java.lang.Object>`" +
+        "Cannot deserialize value of type `java.util.ArrayList<java.lang.Void>`" +
           " from Object value",
       )
     }
