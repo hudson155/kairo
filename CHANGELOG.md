@@ -203,7 +203,7 @@ No changes.
 
 #### Reflect
 
-No changes.
+- Added support for nullable `KairoType`s.
 
 #### REST
 
