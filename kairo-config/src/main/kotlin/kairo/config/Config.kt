@@ -5,6 +5,9 @@ import com.fasterxml.jackson.core.StreamReadFeature
 import com.fasterxml.jackson.databind.MapperFeature
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
+import com.typesafe.config.ConfigList
+import com.typesafe.config.ConfigObject
+import com.typesafe.config.ConfigValue
 import com.typesafe.config.ConfigValueFactory
 import com.typesafe.config.ConfigValueType
 import kairo.hocon.deserialize
@@ -53,17 +56,46 @@ private suspend fun applyConfigResolvers(
   hocon: Config,
   resolvers: List<ConfigResolver>,
 ): Config =
-  hocon.entrySet().fold(hocon) { config, (path, value) ->
-    if (value.valueType() != ConfigValueType.STRING) {
+  (applyConfigResolvers(hocon.root(), resolvers) as ConfigObject).toConfig()
+
+private suspend fun applyConfigResolvers(
+  hocon: ConfigValue,
+  resolvers: List<ConfigResolver>,
+): ConfigValue {
+  when (hocon.valueType()) {
+    ConfigValueType.OBJECT -> {
+      val objectValue = hocon as ConfigObject
+      return ConfigValueFactory.fromMap(
+        objectValue.entries.associate { (key, value) -> key to applyConfigResolvers(value, resolvers) },
+      )
+    }
+    ConfigValueType.LIST -> {
+      val listValue = hocon as ConfigList
+      return ConfigValueFactory.fromIterable(
+        listValue.map { applyConfigResolvers(it, resolvers) },
+      )
+    }
+    ConfigValueType.NUMBER -> {
       // Only strings can be resolved using config resolvers. Other primitives are left alone.
-      return@fold config
+      return hocon
     }
-    val string = value.unwrapped() as String
-    val resolver = resolvers.singleNullOrThrow { string.startsWith(it.prefix) }
-    if (resolver == null) {
-      // No config resolver matched the prefix; leave the string alone.
-      return@fold config
+    ConfigValueType.BOOLEAN -> {
+      // Only strings can be resolved using config resolvers. Other primitives are left alone.
+      return hocon
     }
-    val resolved = resolver.resolve(string.removePrefix(resolver.prefix))
-    return@fold config.withValue(path, ConfigValueFactory.fromAnyRef(resolved))
+    ConfigValueType.NULL -> {
+      // Only strings can be resolved using config resolvers. Other primitives are left alone.
+      return hocon
+    }
+    ConfigValueType.STRING -> {
+      val string = hocon.unwrapped() as String
+      val resolver = resolvers.singleNullOrThrow { string.startsWith(it.prefix) }
+      if (resolver == null) {
+        // No config resolver matched the prefix; leave the string alone.
+        return hocon
+      }
+      val resolved = resolver.resolve(string.removePrefix(resolver.prefix))
+      return ConfigValueFactory.fromAnyRef(resolved)
+    }
   }
+}
