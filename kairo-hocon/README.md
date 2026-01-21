@@ -29,7 +29,7 @@ data class Config(
 
 val json: KairoJson = KairoJson()
 
-val hocon = ConfigFactory.parseResources("hocon/$configName.conf").resolve()
+val hocon = ConfigFactory.parseResources("config/$configName.conf").resolve()
 
 json.deserialize<Config>(hocon)
 ```

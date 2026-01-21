@@ -56,7 +56,7 @@ internal class LoadConfigTest {
   fun test(): Unit =
     runTest {
       val config = loadConfig<Config>(
-        configName = "test",
+        configName = configName("test"),
         resolvers = listOf(
           ConfigResolver("fake::") { raw ->
             if (raw == "missing") return@ConfigResolver null

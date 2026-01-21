@@ -117,7 +117,7 @@ sql {
 Back to your Kotlin code — load the config and deserialize it into your config class.
 
 ```kotlin
-val config: Config = loadConfig<Config>("production")
+val config: Config = loadConfig<Config>(configName("production"))
 ```
 
 If you want to dynamically choose which config to load,
