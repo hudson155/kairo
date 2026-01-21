@@ -2,7 +2,9 @@ package kairo.config
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.throwable.shouldHaveMessage
 import kairo.protectedString.ProtectedString
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -54,7 +56,7 @@ internal class LoadConfigTest {
   fun test(): Unit =
     runTest {
       val config = loadConfig<Config>(
-        configName = "test",
+        configName = configName("test"),
         resolvers = listOf(
           ConfigResolver("fake::") { raw ->
             if (raw == "missing") return@ConfigResolver null
@@ -84,5 +86,13 @@ internal class LoadConfigTest {
           protectedString = ProtectedString("supersecretvalue"),
         ),
       )
+    }
+
+  @Test
+  fun `missing file`(): Unit =
+    runTest {
+      shouldThrowExactly<IllegalArgumentException> {
+        loadConfig<Config>(configName("missing"))
+      }.shouldHaveMessage("resource config/missing.conf not found.")
     }
 }

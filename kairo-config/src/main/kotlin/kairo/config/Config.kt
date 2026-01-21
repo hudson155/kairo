@@ -8,6 +8,10 @@ import kairo.hocon.deserialize
 import kairo.reflect.KairoType
 import kairo.reflect.kairoType
 import kairo.serialization.KairoJson
+import kairo.util.resource
+
+public fun configName(configName: String, prefix: String = "config"): String =
+  "$prefix/$configName.conf"
 
 /**
  * Call this to load your config file.
@@ -17,7 +21,7 @@ public suspend inline fun <reified T : Any> loadConfig(
    * The name of the config file, in your resources' "config" package.
    * If unset, defaults to the "CONFIG" environment variable.
    */
-  configName: String = requireNotNull(System.getenv("CONFIG")) { "CONFIG environment variable not set." },
+  configName: String = configName(requireNotNull(System.getenv("CONFIG")) { "CONFIG environment variable not set." }),
   resolvers: List<ConfigResolver> = emptyList(),
   json: KairoJson = KairoJson(),
 ): T =
@@ -29,7 +33,8 @@ public suspend fun <T : Any> loadConfig(
   json: KairoJson = KairoJson(),
   type: KairoType<T>,
 ): T {
-  val hocon = ConfigFactory.parseResources("config/$configName.conf")
+  // Parsing URL instead of resource to avoid swallowing not found errors.
+  val hocon = ConfigFactory.parseURL(resource(configName))
     .let { it.resolve() }
     .let { applyConfigResolvers(it, resolvers) }
   return json.deserialize(hocon, type)

@@ -9,6 +9,8 @@ dependencies {
   implementation(project(":kairo-serialization"))
   implementation(project(":kairo-util"))
 
+  implementation(libs.guava) // For [Resources]
+
   testImplementation(project(":kairo-protected-string"))
   testImplementation(project(":kairo-testing"))
 }

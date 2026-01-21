@@ -55,7 +55,7 @@ internal class DeserializeTest {
   @Test
   fun test(): Unit =
     runTest {
-      val hocon = ConfigFactory.parseResources("hocon/test.conf").resolve()
+      val hocon = ConfigFactory.parseResources("config/test.conf").resolve()
       val config = json.deserialize<Config>(hocon)
       config.shouldBe(
         Config(
