@@ -10,11 +10,12 @@ import kairo.reflect.kairoType
 import kairo.serialization.KairoJson
 import kairo.util.resource
 
-public fun configName(configName: String): String = listOf(
-  "config/",
-  configName,
-  ".conf",
-).joinToString("")
+public fun configName(configName: String): String =
+  listOf(
+    "config/",
+    configName,
+    ".conf",
+  ).joinToString("")
 
 /**
  * Call this to load your config file.
