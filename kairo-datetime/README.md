@@ -1,7 +1,7 @@
 # Kairo Date/Time
 
 `kairo-datetime` extends [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
-& adds some **convenient helper functions**.
+and adds some **convenient helper functions**.
 
 ## Installation
 
