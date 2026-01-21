@@ -70,8 +70,14 @@ private suspend fun resolve(
         listValue.map { resolve(it, resolvers) },
       )
     }
-    ConfigValueType.NUMBER,
-    ConfigValueType.BOOLEAN,
+    ConfigValueType.NUMBER -> {
+      // Only strings can be resolved using config resolvers. Other primitives are left alone.
+      return hocon
+    }
+    ConfigValueType.BOOLEAN -> {
+      // Only strings can be resolved using config resolvers. Other primitives are left alone.
+      return hocon
+    }
     ConfigValueType.NULL -> {
       // Only strings can be resolved using config resolvers. Other primitives are left alone.
       return hocon
