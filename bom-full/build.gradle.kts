@@ -20,7 +20,7 @@ dependencies {
 
   // gcp
   // https://github.com/googleapis/java-cloud-bom/releases
-  api(platform("com.google.cloud:libraries-bom:26.73.0"))
+  api(platform("com.google.cloud:libraries-bom:26.74.0"))
 
   // gcp-socket-factory
   // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases

@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-logging"))
   implementation(project(":kairo-reflect"))
   compileOnly(project(":kairo-serialization")) // Forced peer dependency.
 

@@ -11,7 +11,6 @@ import kairo.hocon.deserialize
 import kairo.reflect.KairoType
 import kairo.reflect.kairoType
 import kairo.serialization.KairoJson
-import kairo.util.resource
 
 public fun configName(configName: String, prefix: String = "config"): String =
   "$prefix/$configName.conf"
@@ -44,8 +43,8 @@ public suspend fun <T : Any> loadConfig(
     // Environment variables always come in as strings.
     configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, true)
     // Don't include source in location, since configs can contain sensitive values.
-    // configure(JsonParser.Feature.INCLUDE_SOURCE_IN_LOCATION, false)
-    // configure(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION, false)
+    configure(JsonParser.Feature.INCLUDE_SOURCE_IN_LOCATION, false)
+    configure(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION, false)
   }
   return configJson.deserialize(hocon, type)
 }
