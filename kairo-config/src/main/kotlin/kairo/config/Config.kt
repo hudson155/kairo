@@ -1,5 +1,8 @@
 package kairo.config
 
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.core.StreamReadFeature
+import com.fasterxml.jackson.databind.MapperFeature
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
 import com.typesafe.config.ConfigValueFactory
@@ -37,7 +40,14 @@ public suspend fun <T : Any> loadConfig(
   val hocon = ConfigFactory.parseURL(resource(configName))
     .let { it.resolve() }
     .let { applyConfigResolvers(it, resolvers) }
-  return json.deserialize(hocon, type)
+  val configJson = json.copy {
+    // Environment variables always come in as strings.
+    configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, false)
+    // Don't include source in location, since configs can contain sensitive values.
+    configure(JsonParser.Feature.INCLUDE_SOURCE_IN_LOCATION, false)
+    configure(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION, false)
+  }
+  return configJson.deserialize(hocon, type)
 }
 
 private suspend fun applyConfigResolvers(

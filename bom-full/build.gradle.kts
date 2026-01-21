@@ -34,8 +34,8 @@ dependencies {
   api(platform("com.google.guava:guava-bom:33.5.0-jre"))
 
   // jackson
-  // https://github.com/FasterXML/jackson/releases
-  api(platform("com.fasterxml.jackson:jackson-bom:2.20.1"))
+  // https://mvnrepository.com/artifact/com.fasterxml.jackson/jackson-bom
+  api(platform("com.fasterxml.jackson:jackson-bom:2.21.0"))
 
   // hocon
   // https://github.com/lightbend/config/releases
