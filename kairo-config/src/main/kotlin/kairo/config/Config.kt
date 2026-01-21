@@ -5,6 +5,9 @@ import com.fasterxml.jackson.core.StreamReadFeature
 import com.fasterxml.jackson.databind.MapperFeature
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
+import com.typesafe.config.ConfigList
+import com.typesafe.config.ConfigObject
+import com.typesafe.config.ConfigValue
 import com.typesafe.config.ConfigValueFactory
 import com.typesafe.config.ConfigValueType
 import kairo.hocon.deserialize
@@ -36,9 +39,7 @@ public suspend fun <T : Any> loadConfig(
   type: KairoType<T>,
 ): T {
   // Parsing URL instead of resource to avoid swallowing not found errors.
-  val hocon = ConfigFactory.parseResources(configName)
-    .let { it.resolve() }
-    .let { applyConfigResolvers(it, resolvers) }
+  val hocon = ConfigFactory.parseResources(configName).resolve().resolve(resolvers)
   val configJson = json.copy {
     // Environment variables always come in as strings.
     configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, true)
@@ -49,21 +50,41 @@ public suspend fun <T : Any> loadConfig(
   return configJson.deserialize(hocon, type)
 }
 
-private suspend fun applyConfigResolvers(
-  hocon: Config,
+private suspend fun Config.resolve(resolvers: List<ConfigResolver>): Config =
+  (resolve(root(), resolvers) as ConfigObject).toConfig()
+
+private suspend fun resolve(
+  hocon: ConfigValue,
   resolvers: List<ConfigResolver>,
-): Config =
-  hocon.entrySet().fold(hocon) { config, (path, value) ->
-    if (value.valueType() != ConfigValueType.STRING) {
+): ConfigValue {
+  when (hocon.valueType()) {
+    ConfigValueType.OBJECT -> {
+      val objectValue = hocon as ConfigObject
+      return ConfigValueFactory.fromMap(
+        objectValue.mapValues { resolve(it.value, resolvers) },
+      )
+    }
+    ConfigValueType.LIST -> {
+      val listValue = hocon as ConfigList
+      return ConfigValueFactory.fromIterable(
+        listValue.map { resolve(it, resolvers) },
+      )
+    }
+    ConfigValueType.NUMBER,
+    ConfigValueType.BOOLEAN,
+    ConfigValueType.NULL -> {
       // Only strings can be resolved using config resolvers. Other primitives are left alone.
-      return@fold config
+      return hocon
     }
-    val string = value.unwrapped() as String
-    val resolver = resolvers.singleNullOrThrow { string.startsWith(it.prefix) }
-    if (resolver == null) {
-      // No config resolver matched the prefix; leave the string alone.
-      return@fold config
+    ConfigValueType.STRING -> {
+      val string = hocon.unwrapped() as String
+      val resolver = resolvers.singleNullOrThrow { string.startsWith(it.prefix) }
+      if (resolver == null) {
+        // No config resolver matched the prefix; leave the string alone.
+        return hocon
+      }
+      val resolved = resolver.resolve(string.removePrefix(resolver.prefix))
+      return ConfigValueFactory.fromAnyRef(resolved)
     }
-    val resolved = resolver.resolve(string.removePrefix(resolver.prefix))
-    return@fold config.withValue(path, ConfigValueFactory.fromAnyRef(resolved))
   }
+}
