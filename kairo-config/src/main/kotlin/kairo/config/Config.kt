@@ -66,7 +66,7 @@ private suspend fun applyConfigResolvers(
     ConfigValueType.OBJECT -> {
       val objectValue = hocon as ConfigObject
       return ConfigValueFactory.fromMap(
-        objectValue.entries.associate { (key, value) -> key to applyConfigResolvers(value, resolvers) },
+        objectValue.mapValues { applyConfigResolvers(it.value, resolvers) },
       )
     }
     ConfigValueType.LIST -> {
