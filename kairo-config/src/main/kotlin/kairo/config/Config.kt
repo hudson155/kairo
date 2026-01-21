@@ -8,6 +8,7 @@ import kairo.hocon.deserialize
 import kairo.reflect.KairoType
 import kairo.reflect.kairoType
 import kairo.serialization.KairoJson
+import kairo.util.resource
 
 /**
  * Call this to load your config file.
@@ -29,7 +30,8 @@ public suspend fun <T : Any> loadConfig(
   json: KairoJson = KairoJson(),
   type: KairoType<T>,
 ): T {
-  val hocon = ConfigFactory.parseResources("config/$configName.conf")
+  val url = resource("config/$configName.conf")
+  val hocon = ConfigFactory.parseURL(url)
     .let { it.resolve() }
     .let { applyConfigResolvers(it, resolvers) }
   return json.deserialize(hocon, type)
