@@ -39,9 +39,7 @@ public suspend fun <T : Any> loadConfig(
   type: KairoType<T>,
 ): T {
   // Parsing URL instead of resource to avoid swallowing not found errors.
-  val hocon = ConfigFactory.parseResources(configName)
-    .let { it.resolve() }
-    .let { applyConfigResolvers(it, resolvers) }
+  val hocon = ConfigFactory.parseResources(configName).resolve().resolve(resolvers)
   val configJson = json.copy {
     // Environment variables always come in as strings.
     configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, true)
@@ -52,13 +50,10 @@ public suspend fun <T : Any> loadConfig(
   return configJson.deserialize(hocon, type)
 }
 
-private suspend fun applyConfigResolvers(
-  hocon: Config,
-  resolvers: List<ConfigResolver>,
-): Config =
-  (applyConfigResolvers(hocon.root(), resolvers) as ConfigObject).toConfig()
+private suspend fun Config.resolve(resolvers: List<ConfigResolver>): Config =
+  (resolve(root(), resolvers) as ConfigObject).toConfig()
 
-private suspend fun applyConfigResolvers(
+private suspend fun resolve(
   hocon: ConfigValue,
   resolvers: List<ConfigResolver>,
 ): ConfigValue {
@@ -66,23 +61,17 @@ private suspend fun applyConfigResolvers(
     ConfigValueType.OBJECT -> {
       val objectValue = hocon as ConfigObject
       return ConfigValueFactory.fromMap(
-        objectValue.mapValues { applyConfigResolvers(it.value, resolvers) },
+        objectValue.mapValues { resolve(it.value, resolvers) },
       )
     }
     ConfigValueType.LIST -> {
       val listValue = hocon as ConfigList
       return ConfigValueFactory.fromIterable(
-        listValue.map { applyConfigResolvers(it, resolvers) },
+        listValue.map { resolve(it, resolvers) },
       )
     }
-    ConfigValueType.NUMBER -> {
-      // Only strings can be resolved using config resolvers. Other primitives are left alone.
-      return hocon
-    }
-    ConfigValueType.BOOLEAN -> {
-      // Only strings can be resolved using config resolvers. Other primitives are left alone.
-      return hocon
-    }
+    ConfigValueType.NUMBER,
+    ConfigValueType.BOOLEAN,
     ConfigValueType.NULL -> {
       // Only strings can be resolved using config resolvers. Other primitives are left alone.
       return hocon
