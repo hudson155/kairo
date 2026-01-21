@@ -34,13 +34,11 @@ internal class DataClassRestEndpointReader<I : Any, E : RestEndpoint<I, *>>(
 ) : RestEndpointReader<E>() {
   private val json: KairoJson =
     json.copy {
-      configure {
-        /**
-         * [ApplicationCall.parameters] always contains strings, even if the underlying type is not string-like.
-         * Allowing coercion of scalars is necessary for non-string-like types to deserialize properly.
-         */
-        configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, true)
-      }
+      /**
+       * [ApplicationCall.parameters] always contains strings, even if the underlying type is not string-like.
+       * Allowing coercion of scalars is necessary for non-string-like types to deserialize properly.
+       */
+      configure(MapperFeature.ALLOW_COERCION_OF_SCALARS, true)
     }
 
   private val constructor: KFunction<E> = checkNotNull(kClass.primaryConstructor)

@@ -63,7 +63,7 @@ public class KairoJson @RawJsonMapper constructor(
     builder: Builder.() -> Unit = {},
   ) : this(
     JsonMapper.builder().apply {
-      kairo(builder)
+      kairo(Builder().apply(builder))
     }.build(),
   )
 
@@ -107,16 +107,8 @@ public class KairoJson @RawJsonMapper constructor(
     }
   }
 
-  public fun copy(builder: Builder.() -> Unit = {}): KairoJson =
-    KairoJson(
-      delegate.rebuild().apply {
-        kairo(builder)
-      }.build(),
-    )
-}
-
-public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder.() -> Unit = {}) {
-  kairo(KairoJson.Builder().apply(builder))
+  public fun copy(configure: JsonMapper.Builder.() -> Unit): KairoJson =
+    KairoJson(delegate.rebuild().apply(configure).build())
 }
 
 @Suppress("LongMethod")
