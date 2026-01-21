@@ -92,7 +92,7 @@ internal class LoadConfigTest {
   fun `missing file`(): Unit =
     runTest {
       shouldThrowExactly<IllegalArgumentException> {
-        loadConfig<Config>("missing")
+        loadConfig<Config>(configName("missing"))
       }.shouldHaveMessage("resource config/missing.conf not found.")
     }
 }
