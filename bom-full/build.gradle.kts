@@ -24,7 +24,8 @@ dependencies {
 
   // gcp-socket-factory
   // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
-  val gcpSocketFactoryVersion = "1.28.0"
+  val gcpSocketFactoryVersion = "1.25.1" // NOTE: Downgraded until GCP BOM updates.
+  // https://chatgpt.com/g/g-p-68a4b4ddffc48191a5a87456c2f5b739-highbeam/c/693709b4-94dc-832d-a1b9-781a535232e3
   constraints.api("com.google.cloud.sql:postgres-socket-factory:$gcpSocketFactoryVersion")
   constraints.api("com.google.cloud.sql:cloud-sql-connector-r2dbc-postgres:$gcpSocketFactoryVersion")
 
