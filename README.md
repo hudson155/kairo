@@ -98,7 +98,7 @@ These libraries **can be used anywhere**
   maintaining human-readability.
 - [kairo-datetime](./kairo-datetime/README.md):
   Extends [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
-  & adds some convenient helper functions.
+  and adds some convenient helper functions.
 - [kairo-exception](./kairo-exception/README.md):
   Differentiate between logical failures and real exceptions.
 - [kairo-gcp-secret-supplier](./kairo-gcp-secret-supplier/README.md):
