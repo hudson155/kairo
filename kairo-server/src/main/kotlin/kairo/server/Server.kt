@@ -3,6 +3,7 @@ package kairo.server
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.feature.Feature
+import kairo.feature.LifecycleHandler
 import kotlin.time.measureTime
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.joinAll
