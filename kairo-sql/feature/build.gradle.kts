@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-dependency-injection")) // Optional peer dependency.
-  compileOnly(project(":kairo-feature")) // Forced peer dependency.
+  implementation(project(":kairo-dependency-injection"))
+  compileOnly(project(":kairo-feature"))
   api(project(":kairo-protected-string")) // In config.
   api(project(":kairo-sql"))
 

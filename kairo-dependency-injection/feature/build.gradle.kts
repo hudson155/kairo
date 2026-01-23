@@ -5,5 +5,5 @@ plugins {
 
 dependencies {
   api(project(":kairo-dependency-injection"))
-  compileOnly(project(":kairo-feature")) // Forced peer dependency.
+  compileOnly(project(":kairo-feature"))
 }

@@ -7,5 +7,5 @@ dependencies {
   api(project(":kairo-dependency-injection"))
   api(project(":kairo-dependency-injection:testing"))
   api(project(":kairo-server"))
-  compileOnly(project(":kairo-testing")) // Forced peer dependency.
+  compileOnly(project(":kairo-testing"))
 }

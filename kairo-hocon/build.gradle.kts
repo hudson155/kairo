@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
   implementation(project(":kairo-reflect"))
-  compileOnly(project(":kairo-serialization")) // Forced peer dependency.
+  compileOnly(project(":kairo-serialization"))
 
   api(libs.hocon)
 
