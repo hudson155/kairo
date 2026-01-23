@@ -130,7 +130,7 @@ public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder) {
   configure(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS, true)
   configure(MapperFeature.OVERRIDE_PUBLIC_ACCESS_MODIFIERS, true)
   configure(MapperFeature.INVERSE_READ_WRITE_ACCESS, false)
-  configure(MapperFeature.USE_STATIC_TYPING, true)
+  configure(MapperFeature.USE_STATIC_TYPING, false)
   configure(MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL, false)
   configure(MapperFeature.INFER_BUILDER_TYPE_BINDINGS, false)
   configure(MapperFeature.REQUIRE_TYPE_ID_FOR_SUBTYPES, true)
