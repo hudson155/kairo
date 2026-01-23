@@ -115,7 +115,7 @@ dependencies {
 
   // stytch
   // https://github.com/stytchauth/stytch-java/releases
-  val stytchVersion = "9.0.0"
+  val stytchVersion = "9.2.0"
   constraints.api("com.stytch.java:sdk:$stytchVersion")
 
   // testcontainers
