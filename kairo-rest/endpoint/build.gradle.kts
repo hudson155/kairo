@@ -7,11 +7,11 @@ dependencies {
   implementation(project(":kairo-logging"))
   api(project(":kairo-optional")) // Available for usage.
   implementation(project(":kairo-reflect"))
-  compileOnly(project(":kairo-serialization")) // Forced peer dependency.
+  compileOnly(project(":kairo-serialization"))
   implementation(project(":kairo-util"))
 
   api(libs.ktorHttp) // Available for usage.
-  compileOnly(libs.ktorServer) // Forced peer dependency.
+  compileOnly(libs.ktorServer)
 
   testImplementation(project(":kairo-id"))
   testImplementation(project(":kairo-serialization"))

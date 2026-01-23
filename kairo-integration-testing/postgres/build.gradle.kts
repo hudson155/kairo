@@ -4,10 +4,10 @@ plugins {
 }
 
 dependencies {
-  compileOnly(project(":kairo-integration-testing")) // Forced peer dependency.
-  compileOnly(project(":kairo-sql:feature")) // Forced peer dependency.
-  compileOnly(project(":kairo-sql:postgres")) // Forced peer dependency.
-  compileOnly(project(":kairo-testing")) // Forced peer dependency.
+  compileOnly(project(":kairo-integration-testing"))
+  compileOnly(project(":kairo-sql:feature"))
+  compileOnly(project(":kairo-sql:postgres"))
+  compileOnly(project(":kairo-testing"))
 
   /**
    * Although R2DBC is typically used in Kairo applications,

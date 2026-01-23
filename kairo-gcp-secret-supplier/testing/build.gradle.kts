@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  compileOnly(project(":kairo-gcp-secret-supplier")) // Forced peer dependency.
+  compileOnly(project(":kairo-gcp-secret-supplier"))
 
   testImplementation(project(":kairo-gcp-secret-supplier"))
   testImplementation(project(":kairo-testing"))

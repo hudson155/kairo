@@ -4,10 +4,10 @@ plugins {
 }
 
 dependencies {
-  compileOnly(project(":kairo-feature")) // Forced peer dependency.
+  compileOnly(project(":kairo-feature"))
   api(project(":kairo-health-check"))
   implementation(project(":kairo-logging"))
-  compileOnly(project(":kairo-rest")) // Forced peer dependency.
+  compileOnly(project(":kairo-rest"))
 
   testImplementation(project(":kairo-testing"))
 }

@@ -9,7 +9,7 @@ dependencies {
   implementation(project(":kairo-reflect"))
   api(project(":kairo-rest:endpoint"))
   api(project(":kairo-rest:serialization"))
-  compileOnly(project(":kairo-serialization")) // Forced peer dependency.
+  compileOnly(project(":kairo-serialization"))
 
   api(libs.ktorServer) // Available for usage.
   api(libs.ktorServer.auth) // Available for usage.

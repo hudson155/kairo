@@ -5,8 +5,8 @@ plugins {
 
 dependencies {
   api(project(":kairo-client"))
-  implementation(project(":kairo-dependency-injection")) // Optional peer dependency.
-  compileOnly(project(":kairo-feature")) // Forced peer dependency.
+  implementation(project(":kairo-dependency-injection"))
+  compileOnly(project(":kairo-feature"))
   implementation(project(":kairo-optional")) // For serialization.
-  compileOnly(project(":kairo-serialization")) // Forced peer dependency.
+  compileOnly(project(":kairo-serialization"))
 }

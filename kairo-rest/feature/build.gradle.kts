@@ -4,10 +4,10 @@ plugins {
 }
 
 dependencies {
-  compileOnly(project(":kairo-feature")) // Forced peer dependency.
+  compileOnly(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
   api(project(":kairo-rest"))
-  compileOnly(project(":kairo-serialization")) // Forced peer dependency.
+  compileOnly(project(":kairo-serialization"))
 
   implementation(libs.ktorSerialization.jackson)
   implementation(libs.ktorServer.autoHeadResponse)
