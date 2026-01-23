@@ -11,13 +11,18 @@
       <name>com.fasterxml.jackson.core.JsonGenerator.*</name>
       <name>com.fasterxml.jackson.core.JsonParser.*</name>
       <name>com.fasterxml.jackson.databind.AnnotationIntrospector.*</name>
+      <name>com.fasterxml.jackson.databind.Module</name>
       <name>com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat.*</name>
+      <name>com.fasterxml.jackson.databind.jsonschema.JsonSchema</name>
       <name>com.google.cloud.secretmanager.v1beta1.*</name>
       <name>com.google.cloud.secretmanager.v1beta2.*</name>
+      <name>com.ibm.icu.*</name>
+      <name>com.openhtmltopdf.bidi.ParagraphSplitter.*</name>
       <name>com.sun.jdi.ReferenceType</name>
       <name>com.sun.jdi.Type</name>
       <name>com.sun.jdi.connect.spi.Connection</name>
       <name>com.sun.jndi.ldap.Connection</name>
+      <name>com.sun.jndi.url.rmi.rmiURLContext.Parser</name>
       <name>com.sun.media.sound.*</name>
       <name>com.sun.org.apache.bcel.*</name>
       <name>com.sun.org.apache.xalan.internal.*</name>
@@ -26,19 +31,31 @@
       <name>com.sun.security.ntlm.Server</name>
       <name>com.sun.tools.classfile.Attributes</name>
       <name>com.sun.tools.classfile.Type</name>
+      <name>com.sun.tools.example.debug.*</name>
       <name>com.sun.tools.javac.*</name>
+      <name>com.sun.tools.javap.Context</name>
       <name>com.sun.tools.jdeps.Analyzer.*</name>
+      <name>com.sun.tools.jdeps.DepsAnalyzer.*</name>
       <name>com.sun.tools.jdeps.ModuleDotGraph.*</name>
+      <name>com.typesafe.config.ConfigResolver</name>
       <name>com.typesafe.config.Optional</name>
+      <name>dev.langchain4j.agent.tool.Tool</name>
+      <name>dev.langchain4j.model.openai.internal.*</name>
       <name>io.kotest.core.spec.style.AnnotationSpec.*</name>
       <name>io.kotest.core.spec.style.Test</name>
       <name>io.kotest.engine.runBlocking</name>
+      <name>io.ktor.content.TextContent</name>
       <name>io.ktor.http.ContentDisposition.*</name>
       <name>io.ktor.http.ContentType.*</name>
       <name>io.ktor.http.HttpHeaders.*</name>
       <name>io.ktor.http.LinkHeader.*</name>
       <name>io.ktor.http.auth.HttpAuthHeader.*</name>
+      <name>io.ktor.http.content.TextContent</name>
+      <name>io.ktor.server.application.hooks.ResponseBodyReadyForSend.*</name>
+      <name>io.ktor.server.auth.AuthenticationStrategy.*</name>
       <name>io.ktor.server.plugins.cors.CORS</name>
+      <name>io.ktor.server.routing.route</name>
+      <name>io.ktor.server.routing.routing</name>
       <name>io.ktor.util.date.Month</name>
       <name>io.ktor.util.reflect.Type</name>
       <name>io.ktor.utils.io.CancellationException</name>
@@ -66,14 +83,19 @@
       <name>java.util.concurrent.Flow</name>
       <name>java.util.concurrent.atomic.AtomicBoolean</name>
       <name>java.util.jar.Attributes</name>
+      <name>java.util.logging.LogManager</name>
+      <name>javax.lang.model.element.Element</name>
       <name>javax.lang.model.type.ReferenceType</name>
+      <name>javax.naming.Context</name>
       <name>javax.naming.directory.Attributes</name>
-      <name>javax.print.DocFlavor.URL</name>
+      <name>javax.print.DocFlavor.*</name>
       <name>javax.security.auth.login.Configuration.*</name>
       <name>javax.sound.*</name>
       <name>javax.swing.*</name>
+      <name>javax.tools.Tool</name>
       <name>javax.xml.catalog.CatalogFeatures.*</name>
       <name>javax.xml.datatype.Duration</name>
+      <name>javax.xml.validation.Schema</name>
       <name>jdk.internal.*</name>
       <name>jdk.javadoc.internal.*</name>
       <name>jdk.jfr.ContentType</name>
@@ -87,29 +109,52 @@
       <name>kairo.rest.RestFeatureConfig.*</name>
       <name>kairo.sql.SqlFeatureConfig.*</name>
       <name>kotlin.coroutines</name>
-      <name>kotlin.reflect.javaType</name>
+      <name>kotlin.reflect.jvm.javaType</name>
       <name>kotlinx.coroutines.time.delay</name>
       <name>kotlinx.coroutines.time.withTimeout</name>
       <name>kotlinx.datetime.Instant</name>
       <name>kotlinx.datetime.ZoneOffset</name>
       <name>kotlinx.serialization.Required</name>
       <name>net.bytebuddy.*</name>
+      <name>org.apache.logging.log4j.core.config.plugins.validation.constraints.Required</name>
+      <name>org.apache.logging.log4j.core.jmx.Server</name>
+      <name>org.apache.logging.log4j.core.time.Instant</name>
+      <name>org.apache.logging.log4j.core.tools.picocli.CommandLine.*</name>
+      <name>org.apache.pdfbox.pdmodel.common.function.type4.Parser</name>
+      <name>org.apache.tools.ant.taskdefs.AbstractCvsTask.*</name>
+      <name>org.apache.tools.ant.taskdefs.MacroInstance.*</name>
+      <name>org.apache.tools.ant.taskdefs.XSLTProcess.*</name>
+      <name>org.flywaydb.core.internal.*</name>
+      <name>org.gradle.api.artifacts.ResolutionStrategy.*</name>
       <name>org.gradle.api.internal.*</name>
       <name>org.gradle.api.tasks.Optional</name>
       <name>org.gradle.declarative.*</name>
+      <name>org.gradle.execution.EntryTaskSelector.*</name>
       <name>org.gradle.internal.*</name>
       <name>org.gradle.launcher.*</name>
+      <name>org.gradle.nativeplatform.Tool</name>
+      <name>org.gradle.platform.base.Application</name>
+      <name>org.gradle.plugins.ide.idea.model.Module</name>
+      <name>org.gradle.tooling.model.Element</name>
       <name>org.gradle.util.internal.*</name>
       <name>org.intellij.lang.annotations.Flow</name>
+      <name>org.jetbrains.kotlin.com.google.gson.internal.*</name>
+      <name>org.jsoup.*</name>
+      <name>org.junit.platform.engine.discovery.DiscoverySelectorIdentifierParser.*</name>
+      <name>org.junit.platform.engine.support.discovery.SelectorResolver.*</name>
       <name>org.koin.core.annotation.KoinApplication</name>
       <name>org.koin.core.annotation.Module</name>
       <name>org.koin.core.extension.KoinExtension</name>
       <name>org.testcontainers.containers.PostgreSQLContainer</name>
       <name>org.testcontainers.shaded.com.trilead.ssh2.Connection</name>
       <name>org.threeten.bp.*</name>
-      <name>org.w3c.dom.TypeInfo</name>
+      <name>org.w3c.dom.*</name>
       <name>org.xml.sax.Attributes</name>
+      <name>org.xml.sax.Parser</name>
+      <name>reactor.util.context.Context</name>
+      <name>summit.chat.message.MessageRep.*</name>
       <name>sun.awt.Mutex</name>
+      <name>sun.awt.image.ImageWatched.*</name>
       <name>sun.jvm.hotspot.*</name>
       <name>sun.net.ftp.FtpDirEntry.*</name>
       <name>sun.net.www.http.HttpClient</name>
@@ -125,6 +170,7 @@
       <name>sun.security.util.Resources</name>
       <name>sun.text.Normalizer</name>
       <name>sun.tools.jconsole.*</name>
+      <name>sun.tools.jstat.Parser</name>
       <name>sun.util.locale.provider.LocaleProviderAdapter.*</name>
     </excluded-names>
   </component>
