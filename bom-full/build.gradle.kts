@@ -80,7 +80,7 @@ dependencies {
 
   // mockk
   // https://github.com/mockk/mockk/releases
-  val mockkVersion = "1.14.6"
+  val mockkVersion = "1.14.7"
   constraints.api("io.mockk:mockk:$mockkVersion")
 
   // moneta
