@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
-import java.time.ZoneId
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.TimeZone
 import org.junit.jupiter.api.Test
@@ -24,16 +23,16 @@ internal class KotlinTimeZoneSerializationTest {
   @Test
   fun deserialize(): Unit =
     runTest {
-      json.deserialize<ZoneId>("\"Etc/GMT+12\"").shouldBe(ZoneId.of("Etc/GMT+12"))
-      json.deserialize<ZoneId>("\"UTC\"").shouldBe(ZoneId.of("UTC"))
-      json.deserialize<ZoneId>("\"Pacific/Kiritimati\"").shouldBe(ZoneId.of("Pacific/Kiritimati"))
+      json.deserialize<TimeZone>("\"Etc/GMT+12\"").shouldBe(TimeZone.of("Etc/GMT+12"))
+      json.deserialize<TimeZone>("\"UTC\"").shouldBe(TimeZone.of("UTC"))
+      json.deserialize<TimeZone>("\"Pacific/Kiritimati\"").shouldBe(TimeZone.of("Pacific/Kiritimati"))
     }
 
   @Test
   fun `deserialize, wrong format (lowercase)`(): Unit =
     runTest {
       shouldThrowExactly<InvalidFormatException> {
-        json.deserialize<ZoneId>("\"pacific/kiritimati\"")
+        json.deserialize<TimeZone>("\"pacific/kiritimati\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.ZoneId`" +
           " from String \"pacific/kiritimati\"",
@@ -44,7 +43,7 @@ internal class KotlinTimeZoneSerializationTest {
   fun `deserialize, unknown zone`(): Unit =
     runTest {
       shouldThrowExactly<InvalidFormatException> {
-        json.deserialize<ZoneId>("\"Pacific/Edmonton\"")
+        json.deserialize<TimeZone>("\"Pacific/Edmonton\"")
       }.message.shouldStartWith(
         "Cannot deserialize value of type `java.time.ZoneId`" +
           " from String \"Pacific/Edmonton\"",
@@ -55,7 +54,7 @@ internal class KotlinTimeZoneSerializationTest {
   fun `deserialize, wrong type (int)`(): Unit =
     runTest {
       shouldThrowExactly<MismatchedInputException> {
-        json.deserialize<ZoneId>("0")
+        json.deserialize<TimeZone>("0")
       }.message.shouldStartWith(
         "Unexpected token (VALUE_NUMBER_INT)",
       )
