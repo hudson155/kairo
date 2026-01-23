@@ -70,7 +70,7 @@ dependencies {
 
   // logging
   // https://github.com/oshai/kotlin-logging/releases
-  val loggingVersion = "7.0.13"
+  val loggingVersion = "7.0.14"
   constraints.api("io.github.oshai:kotlin-logging-jvm:$loggingVersion")
 
   // mailersend
