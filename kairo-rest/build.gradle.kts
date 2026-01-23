@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
   api(project(":kairo-exception")) // Available for usage.
+  compileOnly(project(":kairo-dependency-injection"))
   implementation(project(":kairo-logging"))
   implementation(project(":kairo-reflect"))
   api(project(":kairo-rest:endpoint"))
