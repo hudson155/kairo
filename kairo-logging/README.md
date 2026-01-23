@@ -83,6 +83,7 @@ dependencies {
       <AppenderRef ref="Console"/>
     </Root>
     <Logger name="io.ktor.server.plugins.cors.CORS" level="warn"/>
+    <Logger name="io.r2dbc.postgresql.client.ReactorNettyClient" level="info"/>
     <Logger name="kairo.darb" level="info"/>
     <Logger name="kairo.gcpSecretSupplier" level="info"/>
     <Logger name="kairo.rest" level="info"/>
