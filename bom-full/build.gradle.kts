@@ -90,7 +90,7 @@ dependencies {
 
   // postgres-jdbc
   // https://github.com/pgjdbc/pgjdbc/releases
-  val postgresJdbcVersion = "42.7.8"
+  val postgresJdbcVersion = "42.7.9"
   constraints.api("org.postgresql:postgresql:$postgresJdbcVersion")
 
   // postgres-r2dbc
