@@ -1,27 +1,26 @@
 package kairo.validation
 
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import org.junit.jupiter.api.Test
 
 internal class ValidatorTest {
   @Test
   fun `email address`() {
-    // Valid email addresses.
-    Validator.emailAddress.matches("jeff@example.com").shouldBe(true)
-    Validator.emailAddress.matches("kairo-sample@airborne.software").shouldBe(true)
-    Validator.emailAddress.matches("user@domain.co.uk").shouldBe(true)
-    Validator.emailAddress.matches("test.name+tag@sub.domain.org").shouldBe(true)
-    Validator.emailAddress.matches("a@b.co").shouldBe(true)
-    Validator.emailAddress.matches("user123@test-domain.com").shouldBe(true)
+    Validator.emailAddress.matches("jeff@example.com").shouldBeTrue()
+    Validator.emailAddress.matches("kairo-sample@airborne.software").shouldBeTrue()
+    Validator.emailAddress.matches("user@domain.co.uk").shouldBeTrue()
+    Validator.emailAddress.matches("test.name+tag@sub.domain.org").shouldBeTrue()
+    Validator.emailAddress.matches("a@b.co").shouldBeTrue()
+    Validator.emailAddress.matches("user123@test-domain.com").shouldBeTrue()
 
-    // Invalid email addresses.
-    Validator.emailAddress.matches("").shouldBe(false)
-    Validator.emailAddress.matches("not-an-email").shouldBe(false)
-    Validator.emailAddress.matches("@domain.com").shouldBe(false)
-    Validator.emailAddress.matches("user@").shouldBe(false)
-    Validator.emailAddress.matches("user@.com").shouldBe(false)
-    Validator.emailAddress.matches("user@@domain.com").shouldBe(false)
-    Validator.emailAddress.matches("user@domain..com").shouldBe(false)
-    Validator.emailAddress.matches("user name@domain.com").shouldBe(false)
+    Validator.emailAddress.matches("").shouldBeFalse()
+    Validator.emailAddress.matches("not-an-email").shouldBeFalse()
+    Validator.emailAddress.matches("@domain.com").shouldBeFalse()
+    Validator.emailAddress.matches("user@").shouldBeFalse()
+    Validator.emailAddress.matches("user@.com").shouldBeFalse()
+    Validator.emailAddress.matches("user@@domain.com").shouldBeFalse()
+    Validator.emailAddress.matches("user@domain..com").shouldBeFalse()
+    Validator.emailAddress.matches("user name@domain.com").shouldBeFalse()
   }
 }

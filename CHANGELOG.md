@@ -291,8 +291,7 @@ No changes.
 
 #### Validation
 
-- Introduction of `kairo-validation` with common validation patterns,
-  including an email address regex following the WHATWG HTML Standard.
+- Introduction of `kairo-validation` with common validation patterns.
 
 #### Removed libraries
 

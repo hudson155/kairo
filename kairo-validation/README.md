@@ -1,6 +1,6 @@
 # Kairo Validation
 
-Common validation patterns for Kairo applications.
+Common validation patterns.
 
 ## Installation
 
