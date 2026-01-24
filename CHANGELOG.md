@@ -289,6 +289,11 @@ No changes.
 
 - Addition of the `resource()` Guava wrapper.
 
+#### Validation
+
+- Introduction of `kairo-validation` with common validation patterns,
+  including an email address regex following the WHATWG HTML Standard.
+
 #### Removed libraries
 
 - **Alternative Money Formatters**
