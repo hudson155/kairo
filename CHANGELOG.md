@@ -289,6 +289,10 @@ No changes.
 
 - Addition of the `resource()` Guava wrapper.
 
+#### Validation
+
+- Introduction of `kairo-validation` with common validation patterns.
+
 #### Removed libraries
 
 - **Alternative Money Formatters**

@@ -135,6 +135,8 @@ These libraries **can be used anywhere**
   Kotlin-esque JUnit-style testing, with coroutine and mocking support.
 - [kairo-util](./kairo-util/README.md):
   A home for simple utilities.
+- [kairo-validation](./kairo-validation/README.md):
+  Common validation patterns.
 
 ### Application libraries
 
