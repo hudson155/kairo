@@ -6,5 +6,5 @@ plugins {
 dependencies {
   implementation(project(":kairo-logging"))
 
-  api(libs.stytch).
+  api(libs.stytch)
 }

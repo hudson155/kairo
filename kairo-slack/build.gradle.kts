@@ -6,6 +6,6 @@ plugins {
 dependencies {
   api(project(":kairo-protected-string")) // In interface.
 
-  api(libs.slack).
-  api(libs.slack.kotlin).
+  api(libs.slack)
+  api(libs.slack.kotlin)
 }

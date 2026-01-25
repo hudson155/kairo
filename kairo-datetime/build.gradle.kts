@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(libs.datetime).
+  api(libs.datetime)
 
   testImplementation(project(":kairo-testing"))
 }

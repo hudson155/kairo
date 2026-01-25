@@ -4,6 +4,6 @@ plugins {
 }
 
 dependencies {
-  api(libs.koin).
-  api(libs.koin.annotations).
+  api(libs.koin)
+  api(libs.koin.annotations)
 }
