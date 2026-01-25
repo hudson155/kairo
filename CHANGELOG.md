@@ -1,8 +1,6 @@
 # Kairo changelog
 
-_Only non-bugfix release versions since Kairo 6.0 are included here._
-
-## Kairo 6.0 - UNRELEASED
+## Kairo 6.0
 
 **Kairo 6.0** is a major release, with several breaking changes.
 
