@@ -1,5 +1,13 @@
 # Kairo changelog
 
+## Kairo 6.1 - UNRELEASED
+
+### Full Kairo 6.1 changelog
+
+#### Validation
+
+- Introduction of `kairo-validation` with common validation patterns.
+
 ## Kairo 6.0
 
 **Kairo 6.0** is a major release, with several breaking changes.
@@ -286,10 +294,6 @@ No changes.
 - Addition of `firstCauseOf<T>()` for exceptions.
 
 - Addition of the `resource()` Guava wrapper.
-
-#### Validation
-
-- Introduction of `kairo-validation` with common validation patterns.
 
 #### Removed libraries
 
