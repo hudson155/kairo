@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(kotlin("reflect")) // Available for usage.
+  api(kotlin("reflect")).
 
   testImplementation(project(":kairo-testing"))
 }

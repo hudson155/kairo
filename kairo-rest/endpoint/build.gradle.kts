@@ -5,12 +5,12 @@ plugins {
 
 dependencies {
   implementation(project(":kairo-logging"))
-  api(project(":kairo-optional")) // Available for usage.
+  api(project(":kairo-optional")).
   implementation(project(":kairo-reflect"))
   compileOnly(project(":kairo-serialization"))
   implementation(project(":kairo-util"))
 
-  api(libs.ktorHttp) // Available for usage.
+  api(libs.ktorHttp).
   compileOnly(libs.ktorServer)
 
   testImplementation(project(":kairo-id"))
