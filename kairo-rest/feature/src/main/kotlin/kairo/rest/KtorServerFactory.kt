@@ -181,6 +181,7 @@ public object KtorServerFactory {
         call.logicalFailure(cause)
       }
       exception<BadRequestException> { call, cause ->
+        // Detect Jackson deserialization errors.
         val e = ((cause.cause as? JsonConvertException)?.cause as? JsonMappingException)
         call.logicalFailure(e?.toLogicalFailure() ?: return@exception)
       }
