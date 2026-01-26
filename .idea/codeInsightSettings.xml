@@ -41,6 +41,7 @@
       <name>com.typesafe.config.Optional</name>
       <name>dev.langchain4j.agent.tool.Tool</name>
       <name>dev.langchain4j.model.openai.internal.*</name>
+      <name>io.konform.validation.jsonschema.*</name>
       <name>io.kotest.core.spec.style.AnnotationSpec.*</name>
       <name>io.kotest.core.spec.style.Test</name>
       <name>io.kotest.engine.runBlocking</name>
@@ -96,6 +97,7 @@
       <name>javax.xml.catalog.CatalogFeatures.*</name>
       <name>javax.xml.datatype.Duration</name>
       <name>javax.xml.validation.Schema</name>
+      <name>javax.xml.validation.Validator</name>
       <name>jdk.internal.*</name>
       <name>jdk.javadoc.internal.*</name>
       <name>jdk.jfr.ContentType</name>
@@ -168,6 +170,7 @@
       <name>sun.security.util.KnownOIDs.*</name>
       <name>sun.security.util.RegisteredDomain.*</name>
       <name>sun.security.util.Resources</name>
+      <name>sun.security.validator.Validator</name>
       <name>sun.text.Normalizer</name>
       <name>sun.tools.jconsole.*</name>
       <name>sun.tools.jstat.Parser</name>
