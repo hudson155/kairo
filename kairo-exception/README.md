@@ -61,7 +61,13 @@ data class UserNotFound(
   }
 }
 
-// => {"type":"UserNotFound","status":404,"message":"User not found","detail":null,"userId":"..."}
+// => {
+//      "type": "UserNotFound",
+//      "status": 404,
+//      "message": "User not found",
+//      "detail": null,
+//      "userId": "..."
+//    }
 ```
 
 ### Testing

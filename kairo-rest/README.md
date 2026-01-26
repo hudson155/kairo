@@ -277,6 +277,67 @@ Configures Ktor's `Sse` plugin.
 
 Defaults to null, which means the plugin is disabled.
 
+## Exception handling
+
+If you use Kairo's [logical errors](../kairo-exception/README.md),
+they will automatically be mapped to semantic HTTP responses.
+
+```kotlin
+data class UserNotFound(
+  val userId: UserId?,
+) : LogicalFailure("User not found") {
+  override val type: String = "UserNotFound"
+  override val status: HttpStatusCode = HttpStatusCode.NotFound
+
+  override fun Map<String, Any?>.buildJson() {
+    put("userId", userId)
+  }
+}
+
+// => {
+//      "type": "UserNotFound",
+//      "status": 404,
+//      "message": "User not found",
+//      "detail": null,
+//      "userId": "..."
+//    }
+```
+
+### Deserialization errors
+
+Deserialization errors will be mapped to semantic HTTP responses.
+
+```kotlin
+data class Rep(val value: Int)
+
+// POST {}
+// -> {
+//      "type": "MissingProperty",
+//      "status": 400,
+//      "message": "Missing property",
+//      "detail": null,
+//      "path": "/value"
+//    }
+
+// POST {"value":"Hello, World!"}
+// -> {
+//      "type": "InvalidProperty",
+//      "status": 400,
+//      "message": "Invalid property",
+//      "detail": null,
+//      "path": "/value"
+//    }
+
+// POST {"value":42,"other":"Hello, World!"}
+// -> {
+//      "type": "UnrecognizedProperty",
+//      "status": 400,
+//      "message": "Unrecognized property",
+//      "detail": null,
+//      "path": "/other"
+//    }
+```
+
 ## Logging config
 
 We recommend excluding logs below the `INFO` level for this library.

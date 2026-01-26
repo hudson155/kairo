@@ -1,18 +1,22 @@
 package kairo.rest
 
+import com.fasterxml.jackson.databind.JsonMappingException
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
+import io.ktor.serialization.JsonConvertException
 import io.ktor.serialization.jackson.JacksonConverter
 import io.ktor.server.application.Application
+import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
 import io.ktor.server.engine.applicationEnvironment
 import io.ktor.server.engine.connector
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import io.ktor.server.plugins.BadRequestException
 import io.ktor.server.plugins.autohead.AutoHeadResponse
 import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
@@ -27,6 +31,7 @@ import kairo.exception.LogicalFailure
 import kairo.feature.Feature
 import kairo.rest.auth.AuthConfig
 import kairo.rest.auth.authConfig
+import kairo.rest.exception.toLogicalFailure
 import kairo.serialization.KairoJson
 
 private val logger: KLogger = KotlinLogging.logger {}
@@ -165,11 +170,20 @@ public object KtorServerFactory {
   }
 
   private fun Application.installStatusPages() {
+    suspend fun ApplicationCall.logicalFailure(cause: LogicalFailure) {
+      logger.info(cause) { "Logical failure." }
+      response.status(cause.status)
+      respond(cause.json)
+    }
+
     install(StatusPages) {
       exception<LogicalFailure> { call, cause ->
-        logger.info(cause) { "Logical failure." }
-        call.response.status(cause.status)
-        call.respond(cause.json)
+        call.logicalFailure(cause)
+      }
+      exception<BadRequestException> { call, cause ->
+        // Detect Jackson deserialization errors.
+        val e = (cause.cause as? JsonConvertException)?.cause as? JsonMappingException
+        call.logicalFailure(e?.toLogicalFailure() ?: return@exception)
       }
       exception<Throwable> { _, cause ->
         logger.warn(cause) { "Exception." }

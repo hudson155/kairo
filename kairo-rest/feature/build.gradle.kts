@@ -19,4 +19,7 @@ dependencies {
   implementation(libs.ktorServer.forwardedHeader)
   implementation(libs.ktorServer.netty)
   implementation(libs.ktorServer.statusPages)
+
+  testImplementation(project(":kairo-serialization"))
+  testImplementation(project(":kairo-testing"))
 }

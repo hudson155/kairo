@@ -4,6 +4,42 @@
 
 ### Full Kairo 6.1 changelog
 
+#### REST
+
+- In previous version of Kairo,
+  deserialization errors resulted in an HTTP 400 response with no response body.
+  Now, deserialization errors are now mapped to semantic HTTP responses.
+  ```kotlin
+  data class Rep(val value: Int)
+  
+  // POST {}
+  // -> {
+  //      "type": "MissingProperty",
+  //      "status": 400,
+  //      "message": "Missing property",
+  //      "detail": null,
+  //      "path": "/value"
+  //    }
+  
+  // POST {"value":"Hello, World!"}
+  // -> {
+  //      "type": "InvalidProperty",
+  //      "status": 400,
+  //      "message": "Invalid property",
+  //      "detail": null,
+  //      "path": "/value"
+  //    }
+  
+  // POST {"value":42,"other":"Hello, World!"}
+  // -> {
+  //      "type": "UnrecognizedProperty",
+  //      "status": 400,
+  //      "message": "Unrecognized property",
+  //      "detail": null,
+  //      "path": "/other"
+  //    }
+  ```
+
 #### Validation
 
 - Introduction of `kairo-validation` with common validation patterns.
