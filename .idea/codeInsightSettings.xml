@@ -41,6 +41,7 @@
       <name>com.typesafe.config.Optional</name>
       <name>dev.langchain4j.agent.tool.Tool</name>
       <name>dev.langchain4j.model.openai.internal.*</name>
+      <name>io.konform.validation.jsonschema.*</name>
       <name>io.kotest.core.spec.style.AnnotationSpec.*</name>
       <name>io.kotest.core.spec.style.Test</name>
       <name>io.kotest.engine.runBlocking</name>
