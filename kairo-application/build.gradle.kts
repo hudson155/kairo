@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
   implementation(project(":kairo-coroutines")) // Arrow is used internally.
-  api(project(":kairo-server")) // Available for usage.
+  api(project(":kairo-server"))
 
   implementation(libs.arrow.suspend)
 }

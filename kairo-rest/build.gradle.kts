@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":kairo-exception")) // Available for usage.
+  api(project(":kairo-exception"))
   compileOnly(project(":kairo-dependency-injection"))
   implementation(project(":kairo-logging"))
   implementation(project(":kairo-reflect"))
@@ -12,8 +12,8 @@ dependencies {
   api(project(":kairo-rest:serialization"))
   compileOnly(project(":kairo-serialization"))
 
-  api(libs.ktorServer) // Available for usage.
-  api(libs.ktorServer.auth) // Available for usage.
+  api(libs.ktorServer)
+  api(libs.ktorServer.auth)
   compileOnly(libs.ktorServer.authJwt)
-  api(libs.ktorServer.sse) // Available for usage.
+  api(libs.ktorServer.sse)
 }

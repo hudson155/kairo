@@ -6,5 +6,5 @@ plugins {
 dependencies {
   implementation(project(":kairo-coroutines"))
 
-  api(libs.mailersend) // Available for usage.
+  api(libs.mailersend)
 }

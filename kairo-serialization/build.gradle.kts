@@ -7,9 +7,9 @@ dependencies {
   implementation(project(":kairo-datetime"))
   implementation(project(":kairo-reflect"))
 
-  api(libs.jackson) // Available for usage.
+  api(libs.jackson)
   implementation(libs.jackson.datatypeJsr310)
-  api(libs.jackson.moduleKotlin) // Available for usage.
+  api(libs.jackson.moduleKotlin)
   api(libs.ktorUtils) // For [Attributes].
 
   testImplementation(project(":kairo-testing"))

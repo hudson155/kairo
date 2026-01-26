@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-  api(libs.arrow.coroutines) // Available for usage.
-  api(libs.coroutines) // Available for usage.
+  api(libs.arrow.coroutines)
+  api(libs.coroutines)
 
   testImplementation(project(":kairo-testing"))
 }

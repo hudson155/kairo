@@ -6,7 +6,7 @@ plugins {
 dependencies {
   compileOnly(project(":kairo-serialization"))
 
-  api(libs.moneta) // Available for usage.
+  api(libs.moneta)
 
   testImplementation(project(":kairo-serialization"))
   testImplementation(project(":kairo-testing"))

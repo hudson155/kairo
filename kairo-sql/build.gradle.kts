@@ -4,10 +4,10 @@ plugins {
 }
 
 dependencies {
-  api(libs.exposed) // Available for usage.
-  api(libs.exposed.crypt) // Available for usage.
-  api(libs.exposed.json) // Available for usage.
-  api(libs.exposed.kotlinDatetime) // Available for usage.
-  api(libs.exposed.money) // Available for usage.
-  api(libs.exposed.r2dbc) // Available for usage.
+  api(libs.exposed)
+  api(libs.exposed.crypt)
+  api(libs.exposed.json)
+  api(libs.exposed.kotlinDatetime)
+  api(libs.exposed.money)
+  api(libs.exposed.r2dbc)
 }
