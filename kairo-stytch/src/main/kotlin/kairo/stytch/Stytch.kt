@@ -21,7 +21,7 @@ import com.stytch.java.consumer.api.webauthn.WebAuthn
 
 /**
  * This wrapper is necessary for testing to work properly,
- * because [StytchClient] uses [JvmStatic].
+ * because [StytchClient] uses [JvmField].
  * https://github.com/stytchauth/stytch-java/issues/138
  */
 public class Stytch(
