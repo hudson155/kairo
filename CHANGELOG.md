@@ -1,8 +1,8 @@
 # Kairo changelog
 
-## Kairo 6.1.0 - UNRELEASED
+## Kairo 6.1.0
 
-#### Semantic HTTP responses for deserialization errors
+### Semantic HTTP responses for deserialization errors
 
 In previous versions of Kairo,
 deserialization errors resulted in an HTTP 400 response with no response body.
@@ -55,7 +55,7 @@ HTTP 400 Bad Request
 }
 ```
 
-#### Validation
+### Validation
 
 Introduction of `kairo-validation` with common validation patterns.
 
@@ -64,9 +64,9 @@ Validator.emailAddress.matches("jeff@example.com") // true
 Validator.emailAddress.matches("not-an-email") // false
 ```
 
-## Kairo 6.0.1 - UNRELEASED
+## Kairo 6.0.1
 
-#### Fixed type erasure during REST (de)serialization
+### Fixed type erasure during REST (de)serialization
 
 Kairo already uses a Jackson wrapper in order to avoid runtime JVM type erasure issues.
 However, Ktor's `JacksonConverter` was bypassing this within some of the REST code (both client and server),
