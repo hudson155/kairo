@@ -1,50 +1,70 @@
 # Kairo changelog
 
-## Kairo 6.1 - UNRELEASED
+## Kairo 6.1.0 - UNRELEASED
 
-### Full Kairo 6.1 changelog
+#### Semantic HTTP responses for deserialization errors
 
-#### REST
+In previous versions of Kairo,
+deserialization errors resulted in an HTTP 400 response with no response body.
+Now, deserialization errors are now mapped to semantic HTTP responses.
 
-- In previous version of Kairo,
-  deserialization errors resulted in an HTTP 400 response with no response body.
-  Now, deserialization errors are now mapped to semantic HTTP responses.
-  ```kotlin
-  data class Rep(val value: Int)
-  
-  // POST {}
-  // -> {
-  //      "type": "MissingProperty",
-  //      "status": 400,
-  //      "message": "Missing property",
-  //      "detail": null,
-  //      "path": "/value"
-  //    }
-  
-  // POST {"value":"Hello, World!"}
-  // -> {
-  //      "type": "InvalidProperty",
-  //      "status": 400,
-  //      "message": "Invalid property",
-  //      "detail": null,
-  //      "path": "/value"
-  //    }
-  
-  // POST {"value":42,"other":"Hello, World!"}
-  // -> {
-  //      "type": "UnrecognizedProperty",
-  //      "status": 400,
-  //      "message": "Unrecognized property",
-  //      "detail": null,
-  //      "path": "/other"
-  //    }
-  ```
+Suppose you have this simple data class.
+
+```kotlin
+data class Rep(val value: Int)
+```
+
+Here are some example request/response pairs.
+
+```text
+POST {}
+
+HTTP 400 Bad Request
+{
+  "type": "MissingProperty",
+  "status": 400,
+  "message": "Missing property",
+  "detail": null,
+  "path": "/value"
+}
+```
+
+```text
+POST {"value":"Hello, World!"}
+
+HTTP 400 Bad Request
+{
+  "type": "InvalidProperty",
+  "status": 400,
+  "message": "Invalid property",
+  "detail": null,
+  "path": "/value"
+}
+```
+
+```text
+POST {"value":42,"other":"Hello, World!"}
+
+HTTP 400 Bad Request
+{
+  "type": "UnrecognizedProperty",
+  "status": 400,
+  "message": "Unrecognized property",
+  "detail": null,
+  "path": "/other"
+}
+```
 
 #### Validation
 
-- Introduction of `kairo-validation` with common validation patterns.
+Introduction of `kairo-validation` with common validation patterns.
 
-## Kairo 6.0
+```kotlin
+Validator.emailAddress.matches("jeff@example.com") // true
+Validator.emailAddress.matches("not-an-email") // false
+```
+
+## Kairo 6.0.0
 
 **Kairo 6.0** is a major release, with several breaking changes.
 
