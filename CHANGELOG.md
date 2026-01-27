@@ -1,6 +1,6 @@
 # Kairo changelog
 
-## Kairo 6.1 - UNRELEASED
+## Kairo 6.1.0 - UNRELEASED
 
 #### Semantic HTTP responses for deserialization errors
 
