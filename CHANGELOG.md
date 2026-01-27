@@ -64,7 +64,7 @@ Validator.emailAddress.matches("jeff@example.com") // true
 Validator.emailAddress.matches("not-an-email") // false
 ```
 
-## Kairo 6.0
+## Kairo 6.0.0
 
 **Kairo 6.0** is a major release, with several breaking changes.
 
