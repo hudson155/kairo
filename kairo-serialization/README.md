@@ -27,7 +27,7 @@ That said, being such an old library, Jackson has its fair share of baggage.
   **Kairo replaces these defaults with much stricter and less surprising ones.**
   You can still override Kairo's defaults the same way you would for Jackson.
 
-- Another issue with Jackson is that it loses type information during runtime serialization.
+- Another issue with Jackson is that it loses type information during runtime serialization (type erasure).
   This can lead to surprises
   like polymorphic type information not being included when serializing the type directly
   (rather than as a property).

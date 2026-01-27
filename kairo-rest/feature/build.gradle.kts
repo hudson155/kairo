@@ -5,11 +5,11 @@ plugins {
 
 dependencies {
   compileOnly(project(":kairo-feature"))
+  implementation(project(":kairo-ktor"))
   implementation(project(":kairo-logging"))
   api(project(":kairo-rest"))
   compileOnly(project(":kairo-serialization"))
 
-  implementation(libs.ktorSerialization.jackson)
   implementation(libs.ktorServer.autoHeadResponse)
   implementation(libs.ktorServer.callLogging)
   implementation(libs.ktorServer.contentNegotiation)

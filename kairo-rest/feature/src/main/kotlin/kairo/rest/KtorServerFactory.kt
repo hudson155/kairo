@@ -2,10 +2,8 @@ package kairo.rest
 
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
-import io.ktor.serialization.jackson.JacksonConverter
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
@@ -25,6 +23,7 @@ import io.ktor.server.response.respond
 import io.ktor.server.sse.SSE
 import kairo.exception.LogicalFailure
 import kairo.feature.Feature
+import kairo.ktor.kairoConversion
 import kairo.rest.auth.AuthConfig
 import kairo.rest.auth.authConfig
 import kairo.serialization.KairoJson
@@ -112,14 +111,10 @@ public object KtorServerFactory {
     }
   }
 
-  @OptIn(KairoJson.RawJsonMapper::class)
   private fun Application.installContentNegotiation(config: RestFeatureConfig.Plugins.ContentNegotiation?) {
     config ?: return
     install(ContentNegotiation) {
-      register(
-        contentType = ContentType.Application.Json,
-        converter = JacksonConverter(this@installContentNegotiation.json.delegate),
-      )
+      kairoConversion(this@installContentNegotiation.json)
     }
   }
 
