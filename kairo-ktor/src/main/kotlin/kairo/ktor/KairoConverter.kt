@@ -1,6 +1,7 @@
 package kairo.ktor
 
 import com.fasterxml.jackson.core.JsonParseException
+import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.JsonMappingException
 import io.ktor.http.ContentType
 import io.ktor.http.content.OutgoingContent
@@ -54,14 +55,10 @@ public class KairoConverter(private val json: KairoJson) : ContentConverter {
         val reader = content.toInputStream().reader(charset)
         json.reader(reader, type)
       }
-    } catch (e: Exception) {
-      val convertException = JsonConvertException("Illegal json parameter found: ${e.message}", e)
-
-      when (e) {
-        is JsonParseException -> throw convertException
-        is JsonMappingException -> throw convertException
-        else -> throw e
-      }
+    } catch (e: JsonParseException) {
+      throw wrapException(e)
+    } catch (e: JsonMappingException) {
+      throw wrapException(e)
     }
   }
 
@@ -69,6 +66,9 @@ public class KairoConverter(private val json: KairoJson) : ContentConverter {
     val kotlinType = checkNotNull(typeInfo.kotlinType) { "Refusing to serialize without proper type information." }
     return KairoType(kotlinType)
   }
+
+  private fun wrapException(e: JsonProcessingException): JsonConvertException =
+    JsonConvertException("Illegal json parameter found: ${e.message}", e)
 }
 
 public fun io.ktor.client.plugins.contentnegotiation.ContentNegotiationConfig.kairoConversion(
