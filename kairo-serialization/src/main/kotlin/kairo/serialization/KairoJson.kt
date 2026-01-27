@@ -23,6 +23,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.kotlinModule
 import io.ktor.util.Attributes
+import java.io.InputStream
+import java.io.OutputStream
+import java.io.Reader
 import kairo.reflect.KairoType
 import kairo.reflect.kairoType
 
@@ -74,20 +77,39 @@ public class KairoJson @RawJsonMapper constructor(
   @Target(AnnotationTarget.CONSTRUCTOR, AnnotationTarget.PROPERTY)
   public annotation class RawJsonMapper
 
+  public inline fun <reified T> outputStream(outputStream: OutputStream, value: T?) {
+    outputStream(outputStream, value, kairoType())
+  }
+
+  public fun <T> outputStream(outputStream: OutputStream, value: T?, type: KairoType<T>) {
+    val objectWriter = delegate.writerFor(type.jacksonTypeReference())
+    objectWriter.writeValue(outputStream, value)
+  }
+
   public inline fun <reified T> serialize(value: T?): String =
     serialize(value, kairoType())
 
   public fun <T> serialize(value: T?, type: KairoType<T>): String {
-    val writer = delegate.writerFor(type.jacksonTypeReference())
-    return writer.writeValueAsString(value)
+    val objectWriter = delegate.writerFor(type.jacksonTypeReference())
+    return objectWriter.writeValueAsString(value)
+  }
+
+  public inline fun <reified T> inputStream(inputStream: InputStream): T =
+    inputStream(inputStream, kairoType<T>())
+
+  public fun <T> inputStream(inputStream: InputStream, type: KairoType<T>): T {
+    val objectReader = delegate.readerFor(type.jacksonTypeReference())
+    val result = objectReader.readValue<T>(inputStream)
+    checkResult(result, type)
+    return result
   }
 
   public inline fun <reified T> deserialize(string: String): T =
     deserialize(string, kairoType<T>())
 
   public fun <T> deserialize(string: String, type: KairoType<T>): T {
-    val reader = delegate.readerFor(type.jacksonTypeReference())
-    val result = reader.readValue<T>(string)
+    val objectReader = delegate.readerFor(type.jacksonTypeReference())
+    val result = objectReader.readValue<T>(string)
     checkResult(result, type)
     return result
   }
@@ -98,7 +120,7 @@ public class KairoJson @RawJsonMapper constructor(
    *
    * Adapted from [com.fasterxml.jackson.module.kotlin.checkTypeMismatch].
    */
-  private fun <T> checkResult(result: T?, type: KairoType<T>) {
+  public fun <T> checkResult(result: T?, type: KairoType<T>) {
     if (result == null && !type.kotlinType.isMarkedNullable) {
       throw RuntimeJsonMappingException(
         "Deserialized value did not match the specified type; " +
@@ -340,4 +362,25 @@ public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder) {
   defaultDateFormat(StdDateFormat().withLenient(false))
 
   builder.configures.forEach { it() }
+}
+
+public inline fun <reified T> KairoJson.jsonGenerator(jsonGenerator: JsonGenerator, value: T?) {
+  jsonGenerator(jsonGenerator, value, kairoType())
+}
+
+@OptIn(KairoJson.RawJsonMapper::class)
+public fun <T> KairoJson.jsonGenerator(jsonGenerator: JsonGenerator, value: T?, type: KairoType<T>) {
+  val objectWriter = delegate.writerFor(type.jacksonTypeReference())
+  objectWriter.writeValue(jsonGenerator, value)
+}
+
+public inline fun <reified T> KairoJson.reader(reader: Reader): T =
+  reader(reader, kairoType<T>())
+
+@OptIn(KairoJson.RawJsonMapper::class)
+public fun <T> KairoJson.reader(reader: Reader, type: KairoType<T>): T {
+  val objectReader = delegate.readerFor(type.jacksonTypeReference())
+  val result = objectReader.readValue<T>(reader)
+  checkResult(result, type)
+  return result
 }

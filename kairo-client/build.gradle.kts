@@ -4,10 +4,10 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-ktor"))
   compileOnly(project(":kairo-serialization"))
 
   api(libs.ktorClient)
   implementation(libs.ktorClient.contentNegotiation)
   implementation(libs.ktorClient.java)
-  implementation(libs.ktorSerialization.jackson)
 }

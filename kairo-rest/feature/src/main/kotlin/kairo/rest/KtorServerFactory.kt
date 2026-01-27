@@ -3,11 +3,8 @@ package kairo.rest
 import com.fasterxml.jackson.databind.JsonMappingException
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
-import io.ktor.serialization.JsonConvertException
-import io.ktor.serialization.jackson.JacksonConverter
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.install
@@ -29,6 +26,7 @@ import io.ktor.server.response.respond
 import io.ktor.server.sse.SSE
 import kairo.exception.LogicalFailure
 import kairo.feature.Feature
+import kairo.ktor.kairoConversion
 import kairo.rest.auth.AuthConfig
 import kairo.rest.auth.authConfig
 import kairo.rest.exception.toLogicalFailure
@@ -117,14 +115,10 @@ public object KtorServerFactory {
     }
   }
 
-  @OptIn(KairoJson.RawJsonMapper::class)
   private fun Application.installContentNegotiation(config: RestFeatureConfig.Plugins.ContentNegotiation?) {
     config ?: return
     install(ContentNegotiation) {
-      register(
-        contentType = ContentType.Application.Json,
-        converter = JacksonConverter(this@installContentNegotiation.json.delegate),
-      )
+      kairoConversion(this@installContentNegotiation.json)
     }
   }
 
@@ -182,7 +176,7 @@ public object KtorServerFactory {
       }
       exception<BadRequestException> { call, cause ->
         // Detect Jackson deserialization errors.
-        val e = (cause.cause as? JsonConvertException)?.cause as? JsonMappingException
+        val e = cause.cause as? JsonMappingException
         call.logicalFailure(e?.toLogicalFailure() ?: return@exception)
       }
       exception<Throwable> { _, cause ->
