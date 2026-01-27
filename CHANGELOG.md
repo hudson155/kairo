@@ -64,6 +64,17 @@ Validator.emailAddress.matches("jeff@example.com") // true
 Validator.emailAddress.matches("not-an-email") // false
 ```
 
+## Kairo 6.0.1 - UNRELEASED
+
+#### Fixed type erasure during REST (de)serialization
+
+Kairo already uses a Jackson wrapper in order to avoid runtime JVM type erasure issues.
+However, Ktor's `JacksonConverter` was bypassing this within some of the REST code (both client and server),
+leading to incorrect (de)serialization in some instances.
+
+To fix this, a custom Ktor `ContentConverter` called `KairoConverter` was introduced,
+which replace Ktor's `JacksonConverter` and is used by default.
+
 ## Kairo 6.0.0
 
 **Kairo 6.0** is a major release, with several breaking changes.

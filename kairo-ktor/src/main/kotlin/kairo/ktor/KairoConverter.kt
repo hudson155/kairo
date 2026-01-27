@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 /**
- * Adapted from [JacksonConverter].
+ * Adapted from [JacksonConverter], but avoids type erasure.
  */
 @Suppress("MissingUseCall")
 @OptIn(KairoJson.RawJsonMapper::class)
