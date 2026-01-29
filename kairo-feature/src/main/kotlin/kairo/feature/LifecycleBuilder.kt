@@ -1,8 +1,8 @@
 package kairo.feature
 
 public class LifecycleBuilder internal constructor() {
-  internal var handlers: List<LifecycleHandler> = emptyList()
-    private set
+  internal val handlers: List<LifecycleHandler>
+    field: MutableList<LifecycleHandler> = mutableListOf()
 
   public fun handler(
     priority: Int = FeaturePriority.default,

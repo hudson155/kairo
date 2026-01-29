@@ -120,6 +120,13 @@ val json: KairoJson =
 json.serialize(Money.of("123.45", "USD"))
 ```
 
+### Kotlin explicit backing fields
+
+Kotlin 2.3 introduces [explicit backing fields](https://kotlinlang.org/docs/whatsnew23.html#explicit-backing-fields),
+which Kairo has adopted.
+
+We recommend enabling `-Xexplicit-backing-fields` so you can use them too.
+
 ## Kairo 6.0.1
 
 ### Fixed type erasure during REST (de)serialization

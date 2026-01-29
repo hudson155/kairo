@@ -45,7 +45,8 @@ public class KairoJson @RawJsonMapper internal constructor(
   @RawJsonMapper public val delegate: JsonMapper,
 ) {
   public class Builder internal constructor() {
-    internal val configures: MutableList<JsonMapper.Builder.() -> Unit> = mutableListOf()
+    internal val configures: List<JsonMapper.Builder.() -> Unit>
+      field: MutableList<JsonMapper.Builder.() -> Unit> = mutableListOf()
 
     public val attributes: Attributes = Attributes(concurrent = false)
 

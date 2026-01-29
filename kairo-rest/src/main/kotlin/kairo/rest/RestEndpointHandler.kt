@@ -25,7 +25,8 @@ private val error: RestEndpointErrorBuilder = RestEndpointErrorBuilder
 public class RestEndpointHandler<O : Any, E : RestEndpoint<*, O>> internal constructor(
   private val kClass: KClass<E>,
 ) {
-  internal val auth: MutableList<(suspend AuthReceiver<E>.() -> Unit)> = mutableListOf()
+  internal val auth: List<(suspend AuthReceiver<E>.() -> Unit)>
+    field: MutableList<(suspend AuthReceiver<E>.() -> Unit)> = mutableListOf()
   internal var handle: (suspend HandleReceiver<E>.() -> O)? = null
   internal var statusCode: (suspend StatusCodeReceiver<O>.() -> HttpStatusCode?)? = null
 
