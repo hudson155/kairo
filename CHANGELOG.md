@@ -64,6 +64,62 @@ Validator.emailAddress.matches("jeff@example.com") // true
 Validator.emailAddress.matches("not-an-email") // false
 ```
 
+### Money serialization improvements
+
+In addition to the default `Money` serialization format,
+Kairo now supports custom serialization formats.
+
+
+```kotlin
+// Default format
+
+val json: KairoJson =
+  KairoJson {
+    addModule(MoneyModule())
+  }
+
+json.serialize(Money.of("123.45", "USD"))
+// => {"amount":123.45,"currency":"USD"}
+```
+
+```kotlin
+// Custom format
+
+object CustomMoneyFormat : MoneyFormat() {
+  override val serializer: JsonSerializer<Money> =
+    object : StdSerializer<Money>(Money::class.java) {
+      override fun serialize(
+        value: Money,
+        gen: JsonGenerator,
+        provider: SerializerProvider,
+      ) {
+        // Your implementation.
+      }
+    }
+
+  override val deserializer: JsonDeserializer<Money> =
+    object : StdDeserializer<Money>(Money::class.java) {
+      override fun deserialize(
+        p: JsonParser,
+        ctxt: DeserializationContext,
+      ): Money {
+        // Your implementation.
+      }
+    }
+}
+
+val json: KairoJson =
+  KairoJson {
+    addModule(
+      MoneyModule {
+        moneyFormat = CustomMoneyFormat
+      }
+    )
+  }
+
+json.serialize(Money.of("123.45", "USD"))
+```
+
 ## Kairo 6.0.1
 
 ### Fixed type erasure during REST (de)serialization
