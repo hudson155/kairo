@@ -44,3 +44,42 @@ json.serialize(Money.of("123.45", "USD"))
 json.deserialize<Money>("""{"amount":123.45,"currency":"USD"}""")
 // => Money.of("123.45", "USD")
 ```
+
+#### Custom serializer
+
+If you want to customize `Money` serialization,
+set `moneyFormat` when you instantiate `MoneyModule`.
+
+```kotlin
+object CustomMoneyFormat : MoneyFormat() {
+  override val serializer: JsonSerializer<Money> =
+    object : StdSerializer<Money>(Money::class.java) {
+      override fun serialize(
+        value: Money,
+        gen: JsonGenerator,
+        provider: SerializerProvider,
+      ) {
+        // Your implementation.
+      }
+    }
+
+  override val deserializer: JsonDeserializer<Money> =
+    object : StdDeserializer<Money>(Money::class.java) {
+      override fun deserialize(
+        p: JsonParser,
+        ctxt: DeserializationContext,
+      ): Money {
+        // Your implementation.
+      }
+    }
+}
+
+val json: KairoJson =
+  KairoJson {
+    addModule(
+      MoneyModule {
+        moneyFormat = CustomMoneyFormat
+      }
+    )
+  }
+```
