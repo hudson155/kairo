@@ -9,11 +9,7 @@ dependencies {
   compileOnly(project(":kairo-sql:postgres"))
   compileOnly(project(":kairo-testing"))
 
-  /**
-   * Although R2DBC is typically used in Kairo applications,
-   * JDBC is used here because R2DBC does not have DDL support.
-   */
-  api(libs.exposed.jdbc)
+  api(libs.exposed.jdbc) // JDBC is used here because R2DBC does not have DDL support.
   runtimeOnly(libs.postgres.jdbc)
   implementation(libs.testcontainers.postgres)
 }

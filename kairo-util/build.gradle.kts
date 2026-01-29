@@ -14,11 +14,6 @@ kotlin {
 }
 
 dependencies {
-  /**
-   * Guava is a large library.
-   * We only include it for compilation so that if a project isn't using it at runtime,
-   * kairo-util doesn't pull it in unnecessarily.
-   */
   compileOnly(libs.guava)
 
   testImplementation(project(":kairo-testing"))
