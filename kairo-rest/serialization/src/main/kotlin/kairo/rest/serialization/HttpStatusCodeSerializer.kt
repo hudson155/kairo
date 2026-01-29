@@ -14,6 +14,6 @@ internal class HttpStatusCodeSerializer : StdSerializer<HttpStatusCode>(
     provider: SerializerProvider,
   ) {
     val int = value.value
-    gen.writeNumber(int)
+    provider.defaultSerializeValue(int, gen)
   }
 }

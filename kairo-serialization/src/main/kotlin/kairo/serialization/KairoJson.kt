@@ -41,7 +41,7 @@ import kairo.reflect.kairoType
  * Supports Kotlin's nullability guarantees.
  */
 @OptIn(ExperimentalStdlibApi::class, KairoJson.RawJsonMapper::class)
-public class KairoJson @RawJsonMapper constructor(
+public class KairoJson @RawJsonMapper internal constructor(
   @RawJsonMapper public val delegate: JsonMapper,
 ) {
   public class Builder internal constructor() {
@@ -61,14 +61,6 @@ public class KairoJson @RawJsonMapper constructor(
       configures += configure
     }
   }
-
-  public constructor(
-    builder: Builder.() -> Unit = {},
-  ) : this(
-    JsonMapper.builder().apply {
-      kairo(Builder().apply(builder))
-    }.build(),
-  )
 
   /**
    * You must opt in to access the raw [JsonMapper].
@@ -362,6 +354,17 @@ public fun JsonMapper.Builder.kairo(builder: KairoJson.Builder) {
   defaultDateFormat(StdDateFormat().withLenient(false))
 
   builder.configures.forEach { it() }
+}
+
+@OptIn(KairoJson.RawJsonMapper::class)
+public fun KairoJson(
+  block: KairoJson.Builder.() -> Unit = {},
+): KairoJson {
+  val delegate = JsonMapper.builder().apply {
+    val builder = KairoJson.Builder().apply(block)
+    kairo(builder)
+  }.build()
+  return KairoJson(delegate)
 }
 
 public inline fun <reified T> KairoJson.jsonGenerator(jsonGenerator: JsonGenerator, value: T?) {
