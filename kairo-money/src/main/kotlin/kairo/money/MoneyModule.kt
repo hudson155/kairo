@@ -8,7 +8,7 @@ public class MoneyModule internal constructor(
   moneyFormat: MoneyFormat,
 ) : SimpleModule() {
   public class Builder {
-    public var moneyFormat: MoneyFormat? = null
+    public var moneyFormat: MoneyFormat = MoneyFormat.Default
   }
 
   init {
@@ -24,5 +24,5 @@ public fun MoneyModule(
   block: MoneyModule.Builder.() -> Unit = {},
 ): MoneyModule {
   val builder = MoneyModule.Builder().apply(block)
-  return MoneyModule(builder.moneyFormat ?: MoneyFormat.Default)
+  return MoneyModule(builder.moneyFormat)
 }
