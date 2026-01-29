@@ -13,6 +13,7 @@ public class CurrencyUnitSerializer : StdSerializer<CurrencyUnit>(
     gen: JsonGenerator,
     provider: SerializerProvider,
   ) {
-    gen.writeString(value.currencyCode)
+    val string = value.currencyCode
+    provider.defaultSerializeValue(string, gen)
   }
 }
