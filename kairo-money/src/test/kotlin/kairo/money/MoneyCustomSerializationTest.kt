@@ -16,6 +16,9 @@ import kotlinx.coroutines.test.runTest
 import org.javamoney.moneta.Money
 import org.junit.jupiter.api.Test
 
+/**
+ * Specifically tests when a custom money format is used.
+ */
 internal class MoneyCustomSerializationTest {
   internal object CustomMoneyFormat : MoneyFormat() {
     override val serializer: JsonSerializer<Money> =
