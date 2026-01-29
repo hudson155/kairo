@@ -2,20 +2,27 @@ package kairo.money
 
 import com.fasterxml.jackson.databind.module.SimpleModule
 import javax.money.CurrencyUnit
-import kairo.serialization.KairoJson
 import org.javamoney.moneta.Money
 
-public class MoneyModule(
-  builder: KairoJson.Builder,
+public class MoneyModule internal constructor(
+  moneyFormat: MoneyFormat,
 ) : SimpleModule() {
+  public class Builder {
+    public var moneyFormat: MoneyFormat? = null
+  }
+
   init {
     addSerializer(CurrencyUnit::class.java, CurrencyUnitSerializer())
     addDeserializer(CurrencyUnit::class.java, CurrencyUnitDeserializer())
 
-    addSerializer(Money::class.java, builder.moneyFormat.serializer.value)
-    addDeserializer(Money::class.java, builder.moneyFormat.deserializer.value)
+    addSerializer(Money::class.java, moneyFormat.serializer)
+    addDeserializer(Money::class.java, moneyFormat.deserializer)
   }
 }
 
-public fun KairoJson.Builder.MoneyModule(): MoneyModule =
-  MoneyModule(this)
+public fun MoneyModule(
+  block: MoneyModule.Builder.() -> Unit = {},
+): MoneyModule {
+  val builder = MoneyModule.Builder().apply(block)
+  return MoneyModule(builder.moneyFormat ?: MoneyFormat.Default)
+}
