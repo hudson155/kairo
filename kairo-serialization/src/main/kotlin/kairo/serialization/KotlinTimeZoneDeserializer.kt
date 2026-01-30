@@ -3,6 +3,7 @@ package kairo.serialization
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
+import java.time.ZoneId
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toKotlinTimeZone
 
@@ -13,7 +14,7 @@ internal class KotlinTimeZoneDeserializer : StdDeserializer<TimeZone>(
     p: JsonParser,
     ctxt: DeserializationContext,
   ): TimeZone {
-    val javaZoneId = ctxt.readValue(p, java.time.ZoneId::class.java)
+    val javaZoneId = ctxt.readValue(p, ZoneId::class.java)
     return javaZoneId.toKotlinTimeZone()
   }
 }

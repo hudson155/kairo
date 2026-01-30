@@ -12,7 +12,7 @@ dependencies {
   implementation("com.google.cloud.artifactregistry:artifactregistry-gradle-plugin:$artifactRegistryVersion")
 
   // https://github.com/detekt/detekt/releases
-  val detektVersion = "2.0.0-alpha.1"
+  val detektVersion = "2.0.0-alpha.2"
   implementation("dev.detekt:detekt-gradle-plugin:$detektVersion")
 
   // https://kotlinlang.org/docs/releases.html#release-details

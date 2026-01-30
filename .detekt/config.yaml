@@ -21,12 +21,12 @@ console-reports:
 comments:
   AbsentOrWrongFileLicense:
     active: false
-  CommentOverPrivateFunction:
-    active: false
-  CommentOverPrivateProperty:
-    active: false
   DeprecatedBlockTag:
     active: true
+  DocumentationOverPrivateFunction:
+    active: false
+  DocumentationOverPrivateProperty:
+    active: false
   EndOfSentenceFormat:
     active: true
   KDocReferencesNonPublicProperty:
@@ -594,6 +594,8 @@ performance:
     active: true
   SpreadOperator:
     active: true
+  UnnecessaryInitOnArray:
+    active: true
   UnnecessaryPartOfBinaryExpression:
     active: true
   UnnecessaryTemporaryInstantiation:
@@ -736,9 +738,7 @@ style:
   ForbiddenComment:
     active: false
   ForbiddenImport:
-    active: true
-    # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
-    imports: []
+    active: false
   ForbiddenMethodCall:
     active: false
   ForbiddenNamedParam:
@@ -819,8 +819,6 @@ style:
     active: true
     acceptableLength: 4
     allowNonStandardGrouping: false
-  UnnecessaryAnnotationUseSiteTarget:
-    active: true
   UnnecessaryAny:
     active: true
   UnnecessaryApply:
@@ -830,6 +828,8 @@ style:
   UnnecessaryBracesAroundTrailingLambda:
     active: true
   UnnecessaryFilter:
+    active: true
+  UnnecessaryFullyQualifiedName:
     active: true
   UnnecessaryInheritance:
     active: true

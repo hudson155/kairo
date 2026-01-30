@@ -127,6 +127,16 @@ which Kairo has adopted.
 
 We recommend enabling `-Xexplicit-backing-fields` so you can use them too.
 
+### Upgrade Detekt from 2.0.0-alpha.1 to 2.0.0-alpha.2
+
+Kairo uses the Detekt 2.x alpha versions for a few reasons.
+
+- 2.x supports modern Kotlin language features like context parameters.
+- 2.x has a larger rule library.
+- 2.x has better autoformatting.
+
+See Detekt 2.0.0-alpha.2's release notes [here](https://github.com/detekt/detekt/releases/tag/v2.0.0-alpha.2).
+
 ## Kairo 6.0.1
 
 ### Fixed type erasure during REST (de)serialization

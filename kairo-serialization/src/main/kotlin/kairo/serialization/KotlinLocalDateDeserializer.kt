@@ -13,6 +13,7 @@ internal class KotlinLocalDateDeserializer : StdDeserializer<LocalDate>(
     p: JsonParser,
     ctxt: DeserializationContext,
   ): LocalDate {
+    @Suppress("UnnecessaryFullyQualifiedName")
     val javaLocalDate = ctxt.readValue(p, java.time.LocalDate::class.java)
     return javaLocalDate.toKotlinLocalDate()
   }

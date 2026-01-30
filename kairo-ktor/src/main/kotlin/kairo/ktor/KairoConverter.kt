@@ -71,6 +71,7 @@ public class KairoConverter(private val json: KairoJson) : ContentConverter {
     JsonConvertException("Illegal json parameter found: ${e.message}", e)
 }
 
+@Suppress("UnnecessaryFullyQualifiedName")
 public fun io.ktor.client.plugins.contentnegotiation.ContentNegotiationConfig.kairoConversion(
   json: KairoJson = KairoJson(),
   contentType: ContentType = ContentType.Application.Json,
@@ -78,6 +79,7 @@ public fun io.ktor.client.plugins.contentnegotiation.ContentNegotiationConfig.ka
   register(contentType, KairoConverter(json))
 }
 
+@Suppress("UnnecessaryFullyQualifiedName")
 public fun io.ktor.server.plugins.contentnegotiation.ContentNegotiationConfig.kairoConversion(
   json: KairoJson = KairoJson(),
   contentType: ContentType = ContentType.Application.Json,

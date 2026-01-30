@@ -13,6 +13,7 @@ internal class KotlinDayOfWeekDeserializer : StdDeserializer<DayOfWeek>(
     p: JsonParser,
     ctxt: DeserializationContext,
   ): DayOfWeek {
+    @Suppress("UnnecessaryFullyQualifiedName")
     val javaDayOfWeek = ctxt.readValue(p, java.time.DayOfWeek::class.java)
     return javaDayOfWeek.toKotlinDayOfWeek()
   }
