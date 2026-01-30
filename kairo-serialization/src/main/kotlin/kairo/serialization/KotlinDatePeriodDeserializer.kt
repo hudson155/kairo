@@ -3,6 +3,7 @@ package kairo.serialization
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
+import java.time.Period
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.toKotlinDatePeriod
 
@@ -13,7 +14,7 @@ internal class KotlinDatePeriodDeserializer : StdDeserializer<DatePeriod>(
     p: JsonParser,
     ctxt: DeserializationContext,
   ): DatePeriod {
-    val javaPeriod = ctxt.readValue(p, java.time.Period::class.java)
+    val javaPeriod = ctxt.readValue(p, Period::class.java)
     return javaPeriod.toKotlinDatePeriod()
   }
 }

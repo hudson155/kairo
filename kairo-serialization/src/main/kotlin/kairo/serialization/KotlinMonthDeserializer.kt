@@ -13,6 +13,7 @@ internal class KotlinMonthDeserializer : StdDeserializer<Month>(
     p: JsonParser,
     ctxt: DeserializationContext,
   ): Month {
+    @Suppress("UnnecessaryFullyQualifiedName")
     val javaMonth = ctxt.readValue(p, java.time.Month::class.java)
     return javaMonth.toKotlinMonth()
   }
