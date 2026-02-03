@@ -120,22 +120,18 @@ val json: KairoJson =
 json.serialize(Money.of("123.45", "USD"))
 ```
 
-### Kotlin explicit backing fields
+### Other changes
 
-Kotlin 2.3 introduces [explicit backing fields](https://kotlinlang.org/docs/whatsnew23.html#explicit-backing-fields),
-which Kairo has adopted.
+- **Explicit backing fields:**
+  Kotlin 2.3 introduces [explicit backing fields](https://kotlinlang.org/docs/whatsnew23.html#explicit-backing-fields),
+  which Kairo has adopted.
+  We recommend enabling `-Xexplicit-backing-fields` so you can use them too.
 
-We recommend enabling `-Xexplicit-backing-fields` so you can use them too.
+- **Upgrade Detekt from 2.0.0-alpha.1 to 2.0.0-alpha.1:**
+  See Detekt's release notes [here](https://github.com/detekt/detekt/releases/tag/v2.0.0-alpha.2).
 
-### Upgrade Detekt from 2.0.0-alpha.1 to 2.0.0-alpha.2
-
-Kairo uses the Detekt 2.x alpha versions for a few reasons.
-
-- 2.x supports modern Kotlin language features like context parameters.
-- 2.x has a larger rule library.
-- 2.x has better autoformatting.
-
-See Detekt 2.0.0-alpha.2's release notes [here](https://github.com/detekt/detekt/releases/tag/v2.0.0-alpha.2).
+- **Upgrade Slack SDK from 1.46.0 to 1.47.0:**
+  See Slack SDK's release notes [here](https://github.com/slackapi/java-slack-sdk/releases/tag/v1.47.0).
 
 ## Kairo 6.0.1
 
