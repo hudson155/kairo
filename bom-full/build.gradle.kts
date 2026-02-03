@@ -105,7 +105,7 @@ dependencies {
 
   // slack
   // https://github.com/slackapi/java-slack-sdk/releases
-  val slackVersion = "1.46.0"
+  val slackVersion = "1.47.0"
   constraints.api("com.slack.api:slack-api-client:$slackVersion")
   constraints.api("com.slack.api:slack-api-client-kotlin-extension:$slackVersion")
 
