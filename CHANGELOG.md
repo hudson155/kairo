@@ -122,6 +122,9 @@ json.serialize(Money.of("123.45", "USD"))
 
 ### Other changes
 
+- Upgrade Kotlin from 2.3.0 to 2.3.10:
+  See Kotlin's release notes [here](https://github.com/JetBrains/kotlin/releases/tag/v2.3.10).
+
 - **Explicit backing fields:**
   Kotlin 2.3 introduces [explicit backing fields](https://kotlinlang.org/docs/whatsnew23.html#explicit-backing-fields),
   which Kairo has adopted.
