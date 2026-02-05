@@ -127,10 +127,10 @@ json.serialize(Money.of("123.45", "USD"))
   which Kairo has adopted.
   We recommend enabling `-Xexplicit-backing-fields` so you can use them too.
 
-- **Upgrade Detekt from 2.0.0-alpha.1 to 2.0.0-alpha.1:**
+- Upgrade Detekt from 2.0.0-alpha.1 to 2.0.0-alpha.2:
   See Detekt's release notes [here](https://github.com/detekt/detekt/releases/tag/v2.0.0-alpha.2).
 
-- **Upgrade Slack SDK from 1.46.0 to 1.47.0:**
+- Upgrade Slack SDK from 1.46.0 to 1.47.0:
   See Slack SDK's release notes [here](https://github.com/slackapi/java-slack-sdk/releases/tag/v1.47.0).
 
 ## Kairo 6.0.1
