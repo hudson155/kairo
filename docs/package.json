@@ -1,0 +1,15 @@
+{
+  "name": "kairo-docs",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "copy-readmes": "bash scripts/copy-readmes.sh",
+    "dev": "npm run copy-readmes && astro dev",
+    "build": "npm run copy-readmes && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.34",
+    "astro": "^5"
+  }
+}
