@@ -29,9 +29,14 @@ jobs:
         uses: "actions/setup-node@v4"
         with:
           node-version: "22"
-          cache: "npm"
-          cache-dependency-path: "docs/package-lock.json"
+      - name: "Cache node_modules"
+        id: "cache-deps"
+        uses: "actions/cache@v4"
+        with:
+          path: "docs/node_modules"
+          key: "docs-node-modules-${{ hashFiles('docs/package-lock.json') }}"
       - name: "Install dependencies"
+        if: steps.cache-deps.outputs.cache-hit != 'true'
         working-directory: "docs"
         run: npm ci
       - name: "Build docs"
