@@ -3,6 +3,8 @@ import starlight from "@astrojs/starlight";
 import moduleSidebar from "./src/generated-sidebar.json";
 
 export default defineConfig({
+  site: "https://hudson155.github.io/kairo",
+  base: "/kairo",
   integrations: [
     starlight({
       title: "Kairo",
