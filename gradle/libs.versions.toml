@@ -1,14 +1,127 @@
+[versions]
+
+# Arrow
+# https://github.com/arrow-kt/arrow/releases
+arrow = "2.2.1.1"
+
+# Coroutines
+# https://github.com/Kotlin/kotlinx.coroutines/releases
+coroutines = "1.10.2"
+
+# Exposed
+# https://github.com/JetBrains/Exposed/releases
+exposed = "1.0.0"
+
+# GCP
+# https://github.com/googleapis/java-cloud-bom/releases
+gcp = "26.74.0"
+
+# GCP Socket Factory
+# https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
+gcpSocketFactory = "1.25.1" # NOTE: Downgraded until GCP BOM updates.
+
+# Guava
+# https://github.com/google/guava/releases
+guava = "33.5.0-jre"
+
+# HOCON
+# https://github.com/lightbend/config/releases
+hocon = "1.4.5"
+
+# Jackson
+# https://mvnrepository.com/artifact/com.fasterxml.jackson/jackson-bom
+jackson = "2.21.0"
+
+# Koin
+# https://github.com/InsertKoinIO/koin/releases
+koin = "4.1.1"
+
+# Koin Annotations
+# https://github.com/InsertKoinIO/koin-annotations/releases
+koinAnnotations = "2.3.1"
+
+# Kotest
+# https://github.com/kotest/kotest/releases
+kotest = "6.0.7"
+
+# kotlinx-datetime
+# https://github.com/Kotlin/kotlinx-datetime/releases
+kotlinxDatetime = "0.7.1"
+
+# Ktor
+# https://github.com/ktorio/ktor/releases
+ktor = "3.3.3"
+
+# Log4j
+# https://github.com/apache/logging-log4j2/releases
+log4j = "2.25.3"
+
+# Logging
+# https://github.com/oshai/kotlin-logging/releases
+logging = "7.0.14"
+
+# MailerSend
+# https://github.com/mailersend/mailersend-java/releases
+mailersend = "1.4.1"
+
+# MockK
+# https://github.com/mockk/mockk/releases
+mockk = "1.14.6"
+
+# Moneta
+# https://github.com/JavaMoney/jsr354-ri/releases
+moneta = "1.4.5"
+
+# PostgreSQL JDBC
+# https://github.com/pgjdbc/pgjdbc/releases
+postgresJdbc = "42.7.9"
+
+# PostgreSQL R2DBC
+# https://github.com/pgjdbc/r2dbc-postgresql/releases
+postgresR2dbc = "1.1.1.RELEASE"
+
+# R2DBC Pool
+# https://github.com/r2dbc/r2dbc-pool/releases
+r2dbcPool = "1.0.2.RELEASE"
+
+# Slack
+# https://github.com/slackapi/java-slack-sdk/releases
+slack = "1.47.0"
+
+# SLF4J
+# https://github.com/qos-ch/slf4j/releases
+slf4j = "2.0.17"
+
+# Stytch
+# https://github.com/stytchauth/stytch-java/releases
+stytch = "9.2.0"
+
+# Testcontainers
+# https://github.com/testcontainers/testcontainers-java/releases
+testcontainers = "2.0.3"
+
 [libraries]
 
+# Arrow
+# https://github.com/arrow-kt/arrow/releases
+arrow-bom = { module = "io.arrow-kt:arrow-stack", version.ref = "arrow" }
 arrow-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
 arrow-suspend = { module = "io.arrow-kt:suspendapp" }
 
+# Coroutines
+# https://github.com/Kotlin/kotlinx.coroutines/releases
+coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "coroutines" }
 coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 
-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime" }
+# kotlinx-datetime
+# https://github.com/Kotlin/kotlinx-datetime/releases
+datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 
+# Exposed
+# https://github.com/JetBrains/Exposed/releases
+exposed-bom = { module = "org.jetbrains.exposed:exposed-bom", version.ref = "exposed" }
 exposed = { module = "org.jetbrains.exposed:exposed-core" }
 exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc" }
@@ -17,35 +130,60 @@ exposed-kotlinDatetime = { module = "org.jetbrains.exposed:exposed-kotlin-dateti
 exposed-money = { module = "org.jetbrains.exposed:exposed-money" }
 exposed-r2dbc = { module = "org.jetbrains.exposed:exposed-r2dbc" }
 
+# GCP
+# https://github.com/googleapis/java-cloud-bom/releases
+gcp-bom = { module = "com.google.cloud:libraries-bom", version.ref = "gcp" }
 gcp-secretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
 
+# GCP Socket Factory
+# https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
+gcpSocketFactory-postgres = { module = "com.google.cloud.sql:postgres-socket-factory", version.ref = "gcpSocketFactory" }
+gcpSocketFactory-r2dbcPostgres = { module = "com.google.cloud.sql:cloud-sql-connector-r2dbc-postgres", version.ref = "gcpSocketFactory" }
+
+# Guava
+# https://github.com/google/guava/releases
+guava-bom = { module = "com.google.guava:guava-bom", version.ref = "guava" }
 guava = { module = "com.google.guava:guava" }
 
-hocon = { module = "com.typesafe:config" }
+# HOCON
+# https://github.com/lightbend/config/releases
+hocon = { module = "com.typesafe:config", version.ref = "hocon" }
 
+# Jackson
+# https://mvnrepository.com/artifact/com.fasterxml.jackson/jackson-bom
+jackson-bom = { module = "com.fasterxml.jackson:jackson-bom", version.ref = "jackson" }
 jackson = { module = "com.fasterxml.jackson.core:jackson-databind" }
 jackson-datatypeJsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" }
 jackson-moduleKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
 
+# Koin
+# https://github.com/InsertKoinIO/koin/releases
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
 koin = { module = "io.insert-koin:koin-core" }
+
+# Koin Annotations
+# https://github.com/InsertKoinIO/koin-annotations/releases
+koinAnnotations-bom = { module = "io.insert-koin:koin-annotations-bom", version.ref = "koinAnnotations" }
 koin-annotations = { module = "io.insert-koin:koin-annotations" }
 
-kotest = { module = "io.kotest:kotest-runner-junit5" }
+# Kotest
+# https://github.com/kotest/kotest/releases
+kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
+# Ktor
+# https://github.com/ktorio/ktor/releases
+ktor-bom = { module = "io.ktor:ktor-bom", version.ref = "ktor" }
 ktorClient = { module = "io.ktor:ktor-client-core" }
 ktorClient-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation" }
 ktorClient-java = { module = "io.ktor:ktor-client-java" }
-
 ktorHttp = { module = "io.ktor:ktor-http" }
-
 ktorSerialization-jackson = { module = "io.ktor:ktor-serialization-jackson" }
-
+ktorServer = { module = "io.ktor:ktor-server-core" }
 ktorServer-auth = { module = "io.ktor:ktor-server-auth" }
 ktorServer-authJwt = { module = "io.ktor:ktor-server-auth-jwt" }
 ktorServer-autoHeadResponse = { module = "io.ktor:ktor-server-auto-head-response" }
 ktorServer-callLogging = { module = "io.ktor:ktor-server-call-logging" }
 ktorServer-contentNegotiation = { module = "io.ktor:ktor-server-content-negotiation" }
-ktorServer = { module = "io.ktor:ktor-server-core" }
 ktorServer-cors = { module = "io.ktor:ktor-server-cors" }
 ktorServer-defaultHeaders = { module = "io.ktor:ktor-server-default-headers" }
 ktorServer-doubleReceive = { module = "io.ktor:ktor-server-double-receive" }
@@ -53,27 +191,53 @@ ktorServer-forwardedHeader = { module = "io.ktor:ktor-server-forwarded-header" }
 ktorServer-netty = { module = "io.ktor:ktor-server-netty" }
 ktorServer-sse = { module = "io.ktor:ktor-server-sse" }
 ktorServer-statusPages = { module = "io.ktor:ktor-server-status-pages" }
-
 ktorUtils = { module = "io.ktor:ktor-utils" }
 
-logging = { module = "io.github.oshai:kotlin-logging-jvm" }
+# Log4j
+# https://github.com/apache/logging-log4j2/releases
+log4j-bom = { module = "org.apache.logging.log4j:log4j-bom", version.ref = "log4j" }
 
-mailersend = { module = "com.mailersend:java-sdk" }
+# Logging
+# https://github.com/oshai/kotlin-logging/releases
+logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "logging" }
 
-mockk = { module = "io.mockk:mockk" }
+# MailerSend
+# https://github.com/mailersend/mailersend-java/releases
+mailersend = { module = "com.mailersend:java-sdk", version.ref = "mailersend" }
 
-moneta = { module = "org.javamoney:moneta" }
+# MockK
+# https://github.com/mockk/mockk/releases
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
-postgres-jdbc = { module = "org.postgresql:postgresql" }
-postgres-r2dbc = { module = "org.postgresql:r2dbc-postgresql" }
+# Moneta
+# https://github.com/JavaMoney/jsr354-ri/releases
+moneta = { module = "org.javamoney:moneta", version.ref = "moneta" }
 
-r2dbc-pool = { module = "io.r2dbc:r2dbc-pool" }
+# PostgreSQL
+# https://github.com/pgjdbc/pgjdbc/releases
+# https://github.com/pgjdbc/r2dbc-postgresql/releases
+postgres-jdbc = { module = "org.postgresql:postgresql", version.ref = "postgresJdbc" }
+postgres-r2dbc = { module = "org.postgresql:r2dbc-postgresql", version.ref = "postgresR2dbc" }
 
-slack = { module = "com.slack.api:slack-api-client" }
-slack-kotlin = { module = "com.slack.api:slack-api-client-kotlin-extension" }
+# R2DBC Pool
+# https://github.com/r2dbc/r2dbc-pool/releases
+r2dbc-pool = { module = "io.r2dbc:r2dbc-pool", version.ref = "r2dbcPool" }
 
+# Slack
+# https://github.com/slackapi/java-slack-sdk/releases
+slack = { module = "com.slack.api:slack-api-client", version.ref = "slack" }
+slack-kotlin = { module = "com.slack.api:slack-api-client-kotlin-extension", version.ref = "slack" }
+
+# SLF4J
+# https://github.com/qos-ch/slf4j/releases
+slf4j-bom = { module = "org.slf4j:slf4j-bom", version.ref = "slf4j" }
 slf4j-api = { module = "org.slf4j:slf4j-api" }
 
-stytch = { module = "com.stytch.java:sdk" }
+# Stytch
+# https://github.com/stytchauth/stytch-java/releases
+stytch = { module = "com.stytch.java:sdk", version.ref = "stytch" }
 
+# Testcontainers
+# https://github.com/testcontainers/testcontainers-java/releases
+testcontainers-bom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
 testcontainers-postgres = { module = "org.testcontainers:testcontainers-postgresql" }
