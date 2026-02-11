@@ -4,6 +4,10 @@ import moduleSidebar from "./src/generated-sidebar.json";
 
 export default defineConfig({
   site: "https://kairo.airborne.software",
+  redirects: {
+    "/api": "/api/index.html",
+    "/api/": "/api/index.html",
+  },
   integrations: [
     starlight({
       title: "Kairo",
@@ -27,6 +31,15 @@ export default defineConfig({
           ],
         },
         ...moduleSidebar,
+        {
+          label: "API Reference",
+          items: [
+            {
+              label: "API Docs (Dokka)",
+              link: "/api/",
+            },
+          ],
+        },
       ],
     }),
   ],
