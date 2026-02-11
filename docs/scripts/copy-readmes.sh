@@ -45,6 +45,21 @@ done
 
 echo "Copied $(ls "$OUTPUT_DIR" | wc -l | tr -d ' ') module READMEs to $OUTPUT_DIR"
 
+# Copy the root CHANGELOG.md into the docs site.
+CHANGELOG_SRC="$ROOT_DIR/CHANGELOG.md"
+CHANGELOG_DST="$DOCS_DIR/src/content/docs/changelog.md"
+if [ -f "$CHANGELOG_SRC" ]; then
+  {
+    echo "---"
+    echo "title: \"Changelog\""
+    echo "---"
+    echo ""
+  } > "$CHANGELOG_DST"
+  # Skip the first H1 line (used as title in frontmatter).
+  tail -n +2 "$CHANGELOG_SRC" >> "$CHANGELOG_DST"
+  echo "Copied CHANGELOG.md to $CHANGELOG_DST"
+fi
+
 # Generate sidebar JSON from modules.json.
 # For each group, map module names to { slug: "modules/<name>" } entries,
 # but only include modules that have a generated doc file.

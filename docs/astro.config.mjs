@@ -24,6 +24,7 @@ export default defineConfig({
             { label: "Introduction", slug: "index" },
             { label: "Installation", slug: "getting-started" },
             { label: "Style guide", slug: "style-guide" },
+            { label: "Changelog", slug: "changelog" },
           ],
         },
         ...moduleSidebar,
