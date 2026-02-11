@@ -38,8 +38,8 @@ for readme in "$ROOT_DIR"/kairo-*/README.md; do
   # Append README content, skipping the first H1 line (already used as title).
   # Fix relative links to other module READMEs.
   tail -n +2 "$readme" \
-    | sed -E 's|\.\./?(kairo-[a-zA-Z0-9_-]+)/README\.md|/modules/\1/|g' \
-    | sed -E 's|\.\/(kairo-[a-zA-Z0-9_-]+)/README\.md|/modules/\1/|g' \
+    | sed -E 's|\.\./?(kairo-[a-zA-Z0-9_-]+)/README\.md|../\1/|g' \
+    | sed -E 's|\.\/(kairo-[a-zA-Z0-9_-]+)/README\.md|../\1/|g' \
     >> "$output_file"
 done
 

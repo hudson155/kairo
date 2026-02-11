@@ -6,6 +6,7 @@ plugins {
   `java-library`
   kotlin("jvm")
   id("dev.detekt")
+  id("org.jetbrains.dokka")
 }
 
 java {

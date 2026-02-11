@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "copy-readmes": "bash scripts/copy-readmes.sh",
-    "dev": "npm run copy-readmes && astro dev",
-    "build": "npm run copy-readmes && astro build",
+    "copy-dokka": "bash scripts/copy-dokka.sh",
+    "dev": "npm run copy-readmes && npm run copy-dokka && astro dev",
+    "build": "npm run copy-readmes && npm run copy-dokka && astro build",
     "preview": "astro preview"
   },
   "dependencies": {

@@ -11,6 +11,8 @@ Designed to work seamlessly together but flexible enough to slot into any projec
 Kairo's libraries let you move faster, write cleaner code,
 and focus on the parts of your app that actually matter.
 
+**[Documentation](https://kairo.airborne.software)** · **[API Reference](https://kairo.airborne.software/api/)**
+
 ## Getting started
 
 _This section assumes you're using Gradle._

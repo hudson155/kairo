@@ -15,6 +15,10 @@ dependencies {
   val detektVersion = "2.0.0-alpha.2"
   implementation("dev.detekt:detekt-gradle-plugin:$detektVersion")
 
+  // https://github.com/Kotlin/dokka/releases
+  val dokkaVersion = "2.1.0"
+  implementation("org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion")
+
   // https://kotlinlang.org/docs/releases.html#release-details
   val kotlinVersion = "2.3.10"
   implementation(kotlin("gradle-plugin", kotlinVersion))

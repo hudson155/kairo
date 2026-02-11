@@ -4,4 +4,5 @@ dist/
 src/content/docs/modules/
 src/content/docs/changelog.md
 src/generated-sidebar.json
+public/api/
 test-results/
