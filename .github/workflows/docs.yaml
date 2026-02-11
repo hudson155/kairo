@@ -11,8 +11,7 @@ on:
       - "main"
     paths:
       - "docs/**"
-      - "kairo-*/README.md"
-      - "README.md"
+      - "**/README.md"
   pull_request:
     paths:
       - "docs/**"
@@ -28,24 +27,21 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - name: "Check out"
-        uses: "actions/checkout@v6"
-      - name: "Set up Node.js"
-        uses: "actions/setup-node@v4"
+        uses: "actions/checkout@v6" # https://github.com/actions/checkout/releases
+      - name: "Set up Node"
+        uses: "actions/setup-node@v6" # https://github.com/actions/setup-node
         with:
-          node-version: "22"
-      - name: "Cache node_modules"
-        id: "cache-deps"
-        uses: "actions/cache@v4"
-        with:
-          path: "docs/node_modules"
-          key: "docs-node-modules-${{ hashFiles('docs/package-lock.json') }}"
+          node-version: "24"
+          cache: "pnpm"
+          cache-dependency-path: "docs/pnpm-lock.yaml"
       - name: "Install dependencies"
-        if: steps.cache-deps.outputs.cache-hit != 'true'
-        working-directory: "docs"
-        run: npm ci
+        run: |
+          pnpm install
+        working-directory: "./docs"
       - name: "Build docs"
-        working-directory: "docs"
-        run: npm run build
+        run: |
+          npm run build
+        working-directory: "./docs"
       - name: "Upload artifact"
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: "actions/upload-pages-artifact@v3"

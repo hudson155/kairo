@@ -1,7 +1,7 @@
 {
   "name": "kairo-docs",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "scripts": {
     "copy-readmes": "bash scripts/copy-readmes.sh",
     "dev": "npm run copy-readmes && astro dev",
