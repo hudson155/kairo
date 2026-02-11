@@ -16,8 +16,7 @@ on:
   pull_request:
     paths:
       - "docs/**"
-      - "kairo-*/README.md"
-      - "README.md"
+      - "**/README.md"
   workflow_dispatch:
 
 concurrency:
