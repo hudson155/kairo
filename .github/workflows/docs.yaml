@@ -28,6 +28,10 @@ jobs:
     steps:
       - name: "Check out"
         uses: "actions/checkout@v6" # https://github.com/actions/checkout/releases
+      - name: "Set up pnpm"
+        uses: "pnpm/action-setup@v4" # https://github.com/pnpm/action-setup/releases
+        with:
+          version: "10"
       - name: "Set up Node"
         uses: "actions/setup-node@v6" # https://github.com/actions/setup-node
         with:
