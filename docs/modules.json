@@ -1,0 +1,37 @@
+{
+  "Standalone libraries": [
+    "kairo-config",
+    "kairo-coroutines",
+    "kairo-darb",
+    "kairo-datetime",
+    "kairo-exception",
+    "kairo-gcp-secret-supplier",
+    "kairo-hocon",
+    "kairo-id",
+    "kairo-image",
+    "kairo-logging",
+    "kairo-money",
+    "kairo-optional",
+    "kairo-protected-string",
+    "kairo-reflect",
+    "kairo-serialization",
+    "kairo-testing",
+    "kairo-util",
+    "kairo-validation"
+  ],
+  "Application libraries": [
+    "kairo-application",
+    "kairo-client",
+    "kairo-dependency-injection",
+    "kairo-feature",
+    "kairo-health-check",
+    "kairo-integration-testing",
+    "kairo-ktor",
+    "kairo-mailersend",
+    "kairo-rest",
+    "kairo-server",
+    "kairo-slack",
+    "kairo-sql",
+    "kairo-stytch"
+  ]
+}

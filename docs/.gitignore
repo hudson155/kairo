@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+src/content/docs/modules/
+src/content/docs/changelog.md
+src/generated-sidebar.json
+test-results/

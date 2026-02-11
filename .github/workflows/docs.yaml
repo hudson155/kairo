@@ -1,0 +1,65 @@
+name: "Docs"
+
+permissions:
+  contents: "read"
+  pages: "write"
+  id-token: "write"
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "docs/**"
+      - "**/README.md"
+  pull_request:
+    paths:
+      - "docs/**"
+      - "**/README.md"
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Check out"
+        uses: "actions/checkout@v6" # https://github.com/actions/checkout/releases
+      - name: "Set up pnpm"
+        uses: "pnpm/action-setup@v4" # https://github.com/pnpm/action-setup/releases
+        with:
+          version: "10"
+      - name: "Set up Node"
+        uses: "actions/setup-node@v6" # https://github.com/actions/setup-node
+        with:
+          node-version: "24"
+          cache: "pnpm"
+          cache-dependency-path: "docs/pnpm-lock.yaml"
+      - name: "Install dependencies"
+        run: |
+          pnpm install
+        working-directory: "./docs"
+      - name: "Build docs"
+        run: |
+          npm run build
+        working-directory: "./docs"
+      - name: "Upload artifact"
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: "actions/upload-pages-artifact@v3"
+        with:
+          path: "docs/dist"
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: "build"
+    runs-on: "ubuntu-latest"
+    environment:
+      name: "github-pages"
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: "Deploy to GitHub Pages"
+        id: "deployment"
+        uses: "actions/deploy-pages@v4"
