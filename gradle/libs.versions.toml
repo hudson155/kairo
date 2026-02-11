@@ -17,6 +17,7 @@ exposed-kotlinDatetime = { module = "org.jetbrains.exposed:exposed-kotlin-dateti
 exposed-money = { module = "org.jetbrains.exposed:exposed-money" }
 exposed-r2dbc = { module = "org.jetbrains.exposed:exposed-r2dbc" }
 
+gcp-pubsub = { module = "com.google.cloud:google-cloud-pubsub" }
 gcp-secretManager = { module = "com.google.cloud:google-cloud-secretmanager" }
 
 guava = { module = "com.google.guava:guava" }
