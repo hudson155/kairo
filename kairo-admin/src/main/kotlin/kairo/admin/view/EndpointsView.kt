@@ -117,10 +117,16 @@ private fun FlowContent.endpointForm(endpoint: EndpointInfo) {
           classes = setOf(
             "flex",
             "items-center",
-            "gap-1",
+            "gap-1.5",
+            "px-3",
+            "py-1.5",
+            "rounded-md",
             "text-sm",
+            "font-medium",
             "text-gray-500",
             "hover:text-gray-700",
+            "hover:bg-gray-100",
+            "transition-colors",
             "cursor-pointer",
           )
           attributes["data-action"] = "toggle#toggle"
@@ -203,10 +209,6 @@ private fun FlowContent.endpointForm(endpoint: EndpointInfo) {
     }
 
     // Custom headers section.
-    h3 {
-      classes = setOf("text-base", "font-semibold", "text-gray-900")
-      +"Custom Headers"
-    }
     div {
       attributes["data-controller"] = "headers"
       div {
@@ -227,22 +229,6 @@ private fun FlowContent.endpointForm(endpoint: EndpointInfo) {
         attributes["data-action"] = "headers#add"
         +"+ Add Header"
       }
-    }
-
-    // Request body fields (collapsible).
-    if (endpoint.requestBodyFields.isNotEmpty()) {
-      collapsibleFieldsSection(
-        "Request Body Fields (${endpoint.requestBodyType})",
-        endpoint.requestBodyFields,
-      )
-    }
-
-    // Response fields (collapsible).
-    if (endpoint.responseFields.isNotEmpty()) {
-      collapsibleFieldsSection(
-        "Response Fields (${endpoint.responseType})",
-        endpoint.responseFields,
-      )
     }
 
     if (endpoint.requestBodyType != null) {
@@ -268,7 +254,7 @@ private fun FlowContent.endpointForm(endpoint: EndpointInfo) {
     }
 
     div {
-      classes = setOf("flex", "items-center", "gap-4")
+      classes = setOf("flex", "justify-end")
       button(type = ButtonType.button) {
         classes = setOf(
           "px-6",
@@ -282,10 +268,6 @@ private fun FlowContent.endpointForm(endpoint: EndpointInfo) {
         )
         attributes["data-action"] = "request#send"
         +"Send Request"
-      }
-      span {
-        classes = setOf("text-sm", "text-gray-500")
-        +"Response: ${endpoint.responseType}"
       }
     }
 
@@ -323,7 +305,7 @@ private fun FlowContent.endpointMetadataContent(endpoint: EndpointInfo) {
     classes = setOf("hidden", "mt-3")
     attributes["data-toggle-target"] = "content"
     div {
-      classes = setOf("bg-gray-50", "rounded-lg", "p-4")
+      classes = setOf("bg-gray-50", "rounded-lg", "p-4", "space-y-4")
       table {
         classes = setOf("w-full", "text-sm")
         tbody {
@@ -349,6 +331,18 @@ private fun FlowContent.endpointMetadataContent(endpoint: EndpointInfo) {
           }
         }
       }
+      if (endpoint.requestBodyFields.isNotEmpty()) {
+        collapsibleFieldsSection(
+          "Request Body Fields (${endpoint.requestBodyType})",
+          endpoint.requestBodyFields,
+        )
+      }
+      if (endpoint.responseFields.isNotEmpty()) {
+        collapsibleFieldsSection(
+          "Response Fields (${endpoint.responseType})",
+          endpoint.responseFields,
+        )
+      }
     }
   }
 }
@@ -358,6 +352,7 @@ private fun FlowContent.collapsibleFieldsSection(title: String, fields: List<Par
     attributes["data-controller"] = "toggle"
     button(type = ButtonType.button) {
       classes = setOf(
+        "mt-2",
         "flex",
         "items-center",
         "gap-2",

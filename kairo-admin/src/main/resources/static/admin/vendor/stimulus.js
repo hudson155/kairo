@@ -43,8 +43,18 @@ export class Application {
               instance[targetName + "Targets"] = []
               instance["has" + targetName.charAt(0).toUpperCase() + targetName.slice(1) + "Target"] = false
             })
-            // Wire up targets from DOM.
+            // Wire up targets from DOM, skipping elements inside nested controllers of the same type.
             el.querySelectorAll("[data-" + name + "-target]").forEach(t => {
+              let parent = t.parentElement
+              let nested = false
+              while (parent && parent !== el) {
+                if (parent.dataset.controller && parent.dataset.controller.split(/\s+/).includes(name)) {
+                  nested = true
+                  break
+                }
+                parent = parent.parentElement
+              }
+              if (nested) return
               const targetName = t.dataset[name + "Target"]
               instance[targetName + "Target"] = t
               if (!instance[targetName + "Targets"]) instance[targetName + "Targets"] = []
@@ -59,8 +69,18 @@ export class Application {
                 instance[propName] = el.dataset[key]
               }
             })
-            // Wire up actions.
+            // Wire up actions, skipping elements inside nested controllers of the same type.
             el.querySelectorAll("[data-action]").forEach(actionEl => {
+              let parent = actionEl.parentElement
+              let nested = false
+              while (parent && parent !== el) {
+                if (parent.dataset.controller && parent.dataset.controller.split(/\s+/).includes(name)) {
+                  nested = true
+                  break
+                }
+                parent = parent.parentElement
+              }
+              if (nested) return
               const actions = actionEl.dataset.action.split(/\s+/)
               actions.forEach(action => {
                 const parts = action.split("->")
