@@ -22,6 +22,7 @@ import kairo.admin.collector.JvmCollector
 import kairo.admin.collector.LoggingCollector
 import kairo.admin.collector.PoolCollector
 import kairo.admin.model.AdminIntegrationInfo
+import kairo.admin.model.SavedResponse
 import kairo.admin.model.DashboardStats
 import kairo.admin.view.adminLayout
 import kairo.admin.view.authView
@@ -132,9 +133,24 @@ internal class AdminDashboardHandler(
       val index = call.parameters["index"]?.toIntOrNull() ?: 0
       val endpoints = endpointCollector.collect()
       if (index in endpoints.indices) {
+        val savedResponse = call.request.queryParameters["resp"]?.let { encoded ->
+          try {
+            val json = String(java.util.Base64.getDecoder().decode(encoded))
+            val rbody = call.request.queryParameters["rbody"]?.let { b ->
+              try {
+                String(java.util.Base64.getDecoder().decode(b))
+              } catch (_: Exception) {
+                b
+              }
+            }.orEmpty()
+            SavedResponse.fromJson(json, rbody)
+          } catch (_: Exception) {
+            null
+          }
+        }
         call.respondHtml {
           adminLayout(config, optionalTabs, "endpoints") {
-            endpointsView(config, endpoints, index)
+            endpointsView(config, endpoints, index, savedResponse)
           }
         }
       } else {
@@ -184,9 +200,17 @@ internal class AdminDashboardHandler(
       } catch (_: Exception) {
         null
       }
+      val sql = call.request.queryParameters["sql"]?.let { encoded ->
+        try {
+          String(java.util.Base64.getDecoder().decode(encoded))
+        } catch (_: Exception) {
+          encoded
+        }
+      }
+      val queryResult = sql?.takeIf { it.isNotBlank() }?.let { databaseCollector.executeQuery(it) }
       call.respondHtml {
         adminLayout(config, optionalTabs, "database") {
-          databaseView(config, tables, null, null, poolStats = poolStats)
+          databaseView(config, tables, null, null, queryResult, sql.orEmpty(), poolStats)
         }
       }
     }
@@ -212,6 +236,44 @@ internal class AdminDashboardHandler(
       call.respondHtml {
         adminLayout(config, optionalTabs, "database") {
           databaseView(config, tables, "$schema.$tableName", columns, poolStats = poolStats)
+        }
+      }
+    }
+
+    get("/database/query") {
+      val sql = call.request.queryParameters["sql"]?.let { encoded ->
+        try {
+          String(java.util.Base64.getDecoder().decode(encoded))
+        } catch (_: Exception) {
+          encoded
+        }
+      }.orEmpty()
+      val selectedTable = call.request.queryParameters["table"]
+      val result = if (sql.isNotBlank()) databaseCollector.executeQuery(sql) else null
+      val tables = try {
+        databaseCollector.listTables()
+      } catch (_: Exception) {
+        emptyList()
+      }
+      val columns = selectedTable?.let { table ->
+        val parts = table.split(".")
+        try {
+          databaseCollector.getTableColumns(
+            parts.getOrElse(0) { "public" },
+            parts.getOrElse(1) { table },
+          )
+        } catch (_: Exception) {
+          emptyList()
+        }
+      }
+      val poolStats = try {
+        poolCollector.collect()
+      } catch (_: Exception) {
+        null
+      }
+      call.respondHtml {
+        adminLayout(config, optionalTabs, "database") {
+          databaseView(config, tables, selectedTable, columns, result, sql, poolStats)
         }
       }
     }

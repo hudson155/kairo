@@ -16,8 +16,13 @@ import kotlinx.html.main
 import kotlinx.html.meta
 import kotlinx.html.nav
 import kotlinx.html.script
+import kotlinx.html.h3
 import kotlinx.html.span
+import kotlinx.html.table
+import kotlinx.html.tbody
+import kotlinx.html.td
 import kotlinx.html.title
+import kotlinx.html.tr
 import kotlinx.html.unsafe
 
 @Suppress("LongMethod", "CognitiveComplexMethod", "CyclomaticComplexMethod", "LongParameterList")
@@ -42,7 +47,8 @@ internal fun HTML.adminLayout(
   }
   body {
     classes = setOf("bg-white", "min-h-screen")
-    attributes["data-controller"] = "sidebar"
+    attributes["data-controller"] = "sidebar keyboard"
+    attributes["data-keyboard-prefix-value"] = config.pathPrefix
     // Overlay for mobile sidebar.
     div {
       classes = setOf("fixed", "inset-0", "bg-gray-900", "z-40", "hidden")
@@ -138,19 +144,43 @@ internal fun HTML.adminLayout(
             tabLink(label, tab, activeTab, config)
           }
         }
-        if (config.docsUrl != null || config.apiDocsUrl != null || config.kdocsUrl != null) {
-          hr {
-            classes = setOf("border-gray-700", "my-4")
+        hr {
+          classes = setOf("border-gray-700", "my-4")
+        }
+        div {
+          classes = setOf("space-y-1")
+          listOfNotNull(
+            config.docsUrl?.let { "Docs" to it },
+            "Kairo Docs" to "https://hudson155.github.io/kairo/",
+            config.kdocsUrl?.let { "KDocs" to it },
+          ).sortedBy { it.first }.forEach { (label, url) ->
+            externalLink(label, url)
           }
-          div {
-            classes = setOf("space-y-1")
-            listOfNotNull(
-              config.docsUrl?.let { "Docs" to it },
-              config.apiDocsUrl?.let { "Kairo Docs" to it },
-              config.kdocsUrl?.let { "KDocs" to it },
-            ).sortedBy { it.first }.forEach { (label, url) ->
-              externalLink(label, url)
-            }
+        }
+        hr {
+          classes = setOf("border-gray-700", "my-4")
+        }
+        button {
+          classes = setOf(
+            "flex",
+            "items-center",
+            "gap-2",
+            "w-full",
+            "rounded-md",
+            "p-2",
+            "text-sm",
+            "leading-6",
+            "font-semibold",
+            "text-gray-400",
+            "hover:text-white",
+            "hover:bg-gray-800",
+          )
+          attributes["data-action"] = "keyboard#toggleModal"
+          unsafe { +keyboardIcon }
+          +"Keyboard Shortcuts"
+          span {
+            classes = setOf("ml-auto", "text-xs", "text-gray-500")
+            +"?"
           }
         }
       }
@@ -159,6 +189,8 @@ internal fun HTML.adminLayout(
         content()
       }
     }
+    // Keyboard shortcuts modal.
+    shortcutsModal()
   }
 }
 
@@ -223,3 +255,95 @@ private val hamburgerIcon: String =
 @Suppress("MaximumLineLength")
 private val closeIcon: String =
   """<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>"""
+
+@Suppress("MaximumLineLength")
+private val keyboardIcon: String =
+  """<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"/></svg>"""
+
+@Suppress("LongMethod")
+private fun FlowContent.shortcutsModal() {
+  div {
+    attributes["data-keyboard-target"] = "modal"
+    attributes["style"] = "display: none; position: fixed; inset: 0; z-index: 100;"
+    // Backdrop.
+    div {
+      attributes["style"] = "position: absolute; inset: 0; background: rgba(0,0,0,0.5);"
+      attributes["data-action"] = "click->keyboard#closeModal"
+    }
+    // Modal card.
+    div {
+      attributes["style"] =
+        "position: relative; max-width: 32rem; margin: 6rem auto; background: white;" +
+          " border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); padding: 1.5rem;"
+      h3 {
+        classes = setOf("text-lg", "font-semibold", "text-gray-900", "mb-4")
+        +"Keyboard Shortcuts"
+      }
+      shortcutSection(
+        "Navigation",
+        listOf(
+          "g h" to "Go to Home",
+          "g c" to "Go to Config",
+          "g d" to "Go to Database",
+          "g e" to "Go to Endpoints",
+          "g f" to "Go to Features",
+          "g a" to "Go to Health",
+          "g i" to "Go to Integrations",
+          "g j" to "Go to JVM",
+          "g l" to "Go to Logging",
+          "g p" to "Go to Dependencies",
+          "g r" to "Go to Errors",
+        ),
+      )
+      shortcutSection(
+        "Actions",
+        listOf(
+          "/" to "Focus selector dropdown",
+          "\u2318/Ctrl + Enter" to "Send request / Run SQL query",
+          "?" to "Toggle this dialog",
+          "Esc" to "Close this dialog",
+        ),
+      )
+    }
+  }
+}
+
+private fun FlowContent.shortcutSection(title: String, shortcuts: List<Pair<String, String>>) {
+  div {
+    classes = setOf("mb-4")
+    span {
+      classes = setOf("text-sm", "font-semibold", "text-gray-500")
+      +title
+    }
+    table {
+      classes = setOf("w-full", "mt-2")
+      tbody {
+        shortcuts.forEach { (keys, description) ->
+          tr {
+            td {
+              classes = setOf("py-1", "pr-4")
+              keys.split(" + ").forEachIndexed { index, key ->
+                if (index > 0) {
+                  span {
+                    classes = setOf("text-xs", "text-gray-400", "mx-1")
+                    +"+"
+                  }
+                }
+                span {
+                  classes = setOf("text-xs", "font-mono", "bg-gray-100", "text-gray-700", "px-2", "py-1", "rounded")
+                  attributes["style"] =
+                    "border: 1px solid #e5e7eb; display: inline-block; min-width: 1.5rem; text-align: center;"
+                  +key
+                }
+              }
+            }
+            td {
+              classes = setOf("py-1", "text-sm", "text-gray-600")
+              +description
+            }
+          }
+        }
+      }
+    }
+  }
+}

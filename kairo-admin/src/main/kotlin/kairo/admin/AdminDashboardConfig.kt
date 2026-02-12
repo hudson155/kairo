@@ -5,7 +5,6 @@ public data class AdminDashboardConfig(
   val title: String = "Kairo Admin",
   val serverName: String? = null,
   val docsUrl: String? = null,
-  val apiDocsUrl: String? = null,
   val githubRepoUrl: String? = null,
   val kdocsUrl: String? = null,
 )

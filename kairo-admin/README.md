@@ -45,7 +45,6 @@ AdminDashboardConfig(
   title = "Kairo Admin",        // Dashboard title.
   serverName = null,            // Server name displayed in the sidebar.
   docsUrl = null,               // Link to external documentation.
-  apiDocsUrl = null,            // Link to API / framework docs.
   githubRepoUrl = null,         // Link to GitHub repo (enables "View on GitHub" links).
   kdocsUrl = null,              // KDocs URL (auto-detected if kairo-kdocs is present).
 )

@@ -105,15 +105,13 @@ internal fun FlowContent.homeView(config: AdminDashboardConfig, stats: Dashboard
       title = "JVM",
       description = "Monitor memory, threads, and garbage collection",
     )
-    if (config.apiDocsUrl != null) {
-      dashboardCard(
-        href = config.apiDocsUrl,
-        icon = apiDocsIcon,
-        title = "Kairo Docs",
-        description = "Kairo framework documentation and guides",
-        external = true,
-      )
-    }
+    dashboardCard(
+      href = "https://hudson155.github.io/kairo/",
+      icon = apiDocsIcon,
+      title = "Kairo Docs",
+      description = "Kairo framework documentation and guides",
+      external = true,
+    )
     dashboardCard(
       href = "${config.pathPrefix}/logging",
       icon = loggingIcon,

@@ -42,7 +42,6 @@ public fun main(): Unit = kairo {
         config = AdminDashboardConfig(
           serverName = "Sample",
           docsUrl = "https://github.com/hudson155/kairo/tree/main/sample-kairo-admin",
-          apiDocsUrl = "https://hudson155.github.io/kairo/",
           githubRepoUrl = "https://github.com/hudson155/kairo",
         ),
       ),

@@ -99,7 +99,15 @@ internal fun FlowContent.databaseView(
       tableSchemaCard(selectedTable, columns)
     }
     // SQL query area.
-    sqlQueryArea(config, selectedTable, querySql)
+    val defaultSql = if (querySql.isBlank() && selectedTable != null) {
+      val parts = selectedTable.split(".")
+      val schema = parts.getOrElse(0) { "public" }
+      val tableName = parts.getOrElse(1) { selectedTable }
+      "SELECT * FROM $schema.$tableName ORDER BY RANDOM() LIMIT 5;"
+    } else {
+      querySql
+    }
+    sqlQueryArea(config, selectedTable, defaultSql)
     // Query results (inline).
     if (queryResult != null) {
       queryResultCard(queryResult)
@@ -260,7 +268,7 @@ private fun FlowContent.queryResultCard(result: SqlQueryResult) {
 }
 
 @Suppress("LongMethod")
-private fun FlowContent.sqlQueryArea(config: AdminDashboardConfig, selectedTable: String?, currentSql: String = "") {
+private fun FlowContent.sqlQueryArea(config: AdminDashboardConfig, selectedTable: String?, currentSql: String) {
   div {
     classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-6")
     attributes["data-controller"] = "sql"
@@ -286,6 +294,7 @@ private fun FlowContent.sqlQueryArea(config: AdminDashboardConfig, selectedTable
       }
     }
     form(action = "${config.pathPrefix}/database/query", method = FormMethod.post) {
+      attributes["data-action"] = "submit->sql#submit"
       if (selectedTable != null) {
         hiddenInput(name = "table") { value = selectedTable }
       }
@@ -304,6 +313,7 @@ private fun FlowContent.sqlQueryArea(config: AdminDashboardConfig, selectedTable
           "resize-y",
         )
         attributes["data-sql-target"] = "queryInput"
+        attributes["data-action"] = "input->sql#updateUrl"
         placeholder = "SELECT * FROM ..."
         +currentSql
       }
