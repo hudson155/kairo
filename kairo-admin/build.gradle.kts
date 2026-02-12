@@ -7,6 +7,8 @@ dependencies {
   compileOnly(project(":kairo-feature"))
   compileOnly(project(":kairo-rest"))
   compileOnly(project(":kairo-rest:endpoint"))
+  implementation(project(":kairo-dependency-injection:feature"))
+  implementation(project(":kairo-health-check:feature"))
   implementation(project(":kairo-logging"))
   implementation(project(":kairo-ktor"))
 

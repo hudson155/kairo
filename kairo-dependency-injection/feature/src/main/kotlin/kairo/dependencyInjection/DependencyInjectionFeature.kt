@@ -4,6 +4,7 @@ import kairo.feature.Feature
 import kairo.feature.FeaturePriority
 import kairo.feature.LifecycleHandler
 import kairo.feature.lifecycle
+import org.koin.core.Koin
 import org.koin.core.KoinApplication
 
 /**
@@ -14,6 +15,8 @@ public class DependencyInjectionFeature(
   private val application: KoinApplication,
 ) : Feature() {
   override val name: String = "Dependency Injection"
+
+  public val koin: Koin get() = application.koin
 
   override val lifecycle: List<LifecycleHandler> =
     lifecycle {

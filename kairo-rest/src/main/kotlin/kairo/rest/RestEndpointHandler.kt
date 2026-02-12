@@ -72,6 +72,7 @@ public fun <I : Any, O : Any, E : RestEndpoint<I, O>> Route.route(
   kClass: KClass<E>,
   block: RestEndpointHandler<O, E>.() -> Unit,
 ) {
+  application.restEndpointClasses.add(kClass)
   val responseType = KairoType.from<O>(RestEndpoint::class, 1, kClass)
   val template = RestEndpointTemplate.from(kClass)
   val route = buildRoute(template)

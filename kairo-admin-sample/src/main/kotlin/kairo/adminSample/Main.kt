@@ -1,13 +1,8 @@
 package kairo.adminSample
 
-import io.r2dbc.spi.ConnectionFactory
-import kairo.admin.AdminConfigSource
 import kairo.admin.AdminDashboardConfig
 import kairo.admin.AdminDashboardFeature
-import kairo.admin.model.AdminIntegrationInfo
-import kairo.adminSample.author.AuthorApi
 import kairo.adminSample.author.AuthorFeature
-import kairo.adminSample.libraryBook.LibraryBookApi
 import kairo.adminSample.libraryBook.LibraryBookFeature
 import kairo.application.kairo
 import kairo.config.loadConfig
@@ -17,14 +12,13 @@ import kairo.rest.RestFeature
 import kairo.serialization.KairoJson
 import kairo.server.Server
 import kairo.sql.SqlFeature
-import org.koin.core.Koin
 import org.koin.dsl.koinApplication
 
 public fun main(): Unit = kairo {
   val json = KairoJson()
   val config: Config = loadConfig(json = json)
   val koinApplication = koinApplication()
-  val koin: Koin = koinApplication.koin
+  val koin = koinApplication.koin
 
   val server = Server(
     name = "Kairo Admin Sample",
@@ -47,64 +41,6 @@ public fun main(): Unit = kairo {
           docsUrl = "https://github.com/hudson155/kairo/tree/main/kairo-admin-sample",
           apiDocsUrl = "https://hudson155.github.io/kairo/",
           githubRepoUrl = "https://github.com/hudson155/kairo",
-        ),
-        configSources = listOf(
-          AdminConfigSource(
-            "common",
-            Thread.currentThread().contextClassLoader
-              .getResource("config/common.conf")!!
-              .readText(),
-          ),
-          AdminConfigSource(
-            "development",
-            Thread.currentThread().contextClassLoader
-              .getResource("config/development.conf")!!
-              .readText(),
-          ),
-        ),
-        endpointClasses = listOf(
-          LibraryBookApi.Get::class,
-          LibraryBookApi.ListAll::class,
-          LibraryBookApi.Create::class,
-          LibraryBookApi.Update::class,
-          LibraryBookApi.Delete::class,
-          AuthorApi.Get::class,
-          AuthorApi.ListAll::class,
-          AuthorApi.Create::class,
-          AuthorApi.Update::class,
-          AuthorApi.Delete::class,
-        ),
-        connectionFactory = {
-          try {
-            koin.get<ConnectionFactory>()
-          } catch (_: Exception) {
-            null
-          }
-        },
-        featureNames = listOf(
-          "DependencyInjection",
-          "Rest",
-          "Sql",
-          "HealthCheck",
-          "LibraryBook",
-          "Author",
-          "AdminDashboard",
-        ),
-        healthChecks = mapOf(
-          "sql" to {
-            koin.get<ConnectionFactory>()
-          },
-        ),
-        koinProvider = { koin },
-        integrations = listOf(
-          AdminIntegrationInfo(
-            name = "PostgreSQL",
-            type = "Database",
-            status = "connected",
-            details = mapOf(
-              "URL" to config.sql.connectionFactory.url,
-            ),
-          ),
         ),
       ),
     ),

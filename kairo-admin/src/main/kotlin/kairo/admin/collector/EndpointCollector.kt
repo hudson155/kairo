@@ -11,10 +11,10 @@ import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.full.valueParameters
 
 public class EndpointCollector(
-  private val endpointClasses: List<KClass<out RestEndpoint<*, *>>>,
+  private val endpointClassesProvider: () -> List<KClass<out RestEndpoint<*, *>>>,
 ) {
   public fun collect(): List<EndpointInfo> =
-    endpointClasses.map { kClass ->
+    endpointClassesProvider().map { kClass ->
       val template = RestEndpointTemplate.from(kClass)
       EndpointInfo(
         method = template.method.value,
