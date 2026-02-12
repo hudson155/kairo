@@ -11,7 +11,7 @@ Start a PostgreSQL database, then run:
 CONFIG=development \
 POSTGRES_USERNAME=postgres \
 POSTGRES_PASSWORD=password \
-./gradlew :kairo-admin-sample:run
+./gradlew :sample-kairo-admin:run
 ```
 
 The admin dashboard is available at [http://localhost:8080/_admin](http://localhost:8080/_admin).
@@ -21,7 +21,7 @@ The admin dashboard is available at [http://localhost:8080/_admin](http://localh
 To include generated API documentation in the dashboard:
 
 ```shell
-./gradlew :kairo-admin-sample:packageKdocs :kairo-admin-sample:run
+./gradlew :sample-kairo-admin:packageKdocs :sample-kairo-admin:run
 ```
 
 ## What's included

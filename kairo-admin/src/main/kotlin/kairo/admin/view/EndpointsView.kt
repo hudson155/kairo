@@ -92,33 +92,49 @@ private fun FlowContent.endpointForm(endpoint: EndpointInfo) {
     attributes["data-request-path-value"] = endpoint.path
     classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-6", "space-y-6")
 
-    // Method + path heading.
+    // Method + path heading with collapsible Details.
     div {
-      classes = setOf("flex", "items-center", "justify-between")
-      h3 {
-        classes = setOf("text-lg", "font-semibold", "text-gray-900", "flex", "items-center", "gap-3")
-        span {
-          classes = setOf(
-            "px-3",
-            "py-1",
-            "rounded-md",
-            "text-sm",
-            "font-bold",
-            "uppercase",
-            methodBadgeColor(endpoint.method),
-          )
-          +endpoint.method
+      attributes["data-controller"] = "toggle"
+      div {
+        classes = setOf("flex", "items-center", "justify-between")
+        h3 {
+          classes = setOf("text-lg", "font-semibold", "text-gray-900", "flex", "items-center", "gap-3")
+          span {
+            classes = setOf(
+              "px-3",
+              "py-1",
+              "rounded-md",
+              "text-sm",
+              "font-bold",
+              "uppercase",
+              methodBadgeColor(endpoint.method),
+            )
+            +endpoint.method
+          }
+          +endpoint.path
         }
-        +endpoint.path
+        button(type = ButtonType.button) {
+          classes = setOf(
+            "flex",
+            "items-center",
+            "gap-1",
+            "text-sm",
+            "text-gray-500",
+            "hover:text-gray-700",
+            "cursor-pointer",
+          )
+          attributes["data-action"] = "toggle#toggle"
+          +"Details"
+          span {
+            attributes["data-toggle-target"] = "icon"
+            attributes["style"] = "transition: transform 150ms"
+            unsafe { +chevronIcon }
+          }
+        }
       }
-      span {
-        classes = setOf("text-xs", "text-gray-400", "font-mono")
-        +endpoint.endpointClassName
-      }
+      // Collapsible endpoint details.
+      endpointMetadataContent(endpoint)
     }
-
-    // Collapsible metadata section.
-    endpointMetadata(endpoint)
 
     if (endpoint.pathParams.isNotEmpty()) {
       h3 {
@@ -302,57 +318,34 @@ private fun FlowContent.endpointForm(endpoint: EndpointInfo) {
 }
 
 @Suppress("LongMethod", "CognitiveComplexMethod")
-private fun FlowContent.endpointMetadata(endpoint: EndpointInfo) {
+private fun FlowContent.endpointMetadataContent(endpoint: EndpointInfo) {
   div {
-    attributes["data-controller"] = "toggle"
-    // Toggle button.
-    button(type = ButtonType.button) {
-      classes = setOf(
-        "flex",
-        "items-center",
-        "gap-2",
-        "text-sm",
-        "text-gray-500",
-        "hover:text-gray-700",
-        "cursor-pointer",
-      )
-      attributes["data-action"] = "toggle#toggle"
-      span {
-        attributes["data-toggle-target"] = "icon"
-        attributes["style"] = "transition: transform 150ms"
-        unsafe { +chevronIcon }
-      }
-      +"Endpoint Details"
-    }
-    // Collapsible content.
+    classes = setOf("hidden", "mt-3")
+    attributes["data-toggle-target"] = "content"
     div {
-      classes = setOf("hidden", "mt-3")
-      attributes["data-toggle-target"] = "content"
-      div {
-        classes = setOf("bg-gray-50", "rounded-lg", "p-4")
-        table {
-          classes = setOf("w-full", "text-sm")
-          tbody {
-            metadataRow("Class", endpoint.qualifiedClassName)
-            metadataRow("Kind", if (endpoint.isDataObject) "data object" else "data class")
-            metadataRow("Content-Type", endpoint.contentType ?: "none")
-            metadataRow("Accept", endpoint.accept ?: "none")
-            metadataRow("Input Type", endpoint.inputType)
-            metadataRow("Response Type", endpoint.responseType)
-            if (endpoint.pathParams.isNotEmpty()) {
-              metadataRow(
-                "Path Params",
-                endpoint.pathParams.joinToString(", ") { "${it.name}: ${it.type}" },
-              )
-            }
-            if (endpoint.queryParams.isNotEmpty()) {
-              metadataRow(
-                "Query Params",
-                endpoint.queryParams.joinToString(", ") {
-                  "${it.name}: ${it.type}${if (!it.required) "?" else ""}"
-                },
-              )
-            }
+      classes = setOf("bg-gray-50", "rounded-lg", "p-4")
+      table {
+        classes = setOf("w-full", "text-sm")
+        tbody {
+          metadataRow("Class", endpoint.qualifiedClassName)
+          metadataRow("Kind", if (endpoint.isDataObject) "data object" else "data class")
+          metadataRow("Content-Type", endpoint.contentType ?: "none")
+          metadataRow("Accept", endpoint.accept ?: "none")
+          metadataRow("Input Type", endpoint.inputType)
+          metadataRow("Response Type", endpoint.responseType)
+          if (endpoint.pathParams.isNotEmpty()) {
+            metadataRow(
+              "Path Params",
+              endpoint.pathParams.joinToString(", ") { "${it.name}: ${it.type}" },
+            )
+          }
+          if (endpoint.queryParams.isNotEmpty()) {
+            metadataRow(
+              "Query Params",
+              endpoint.queryParams.joinToString(", ") {
+                "${it.name}: ${it.type}${if (!it.required) "?" else ""}"
+              },
+            )
           }
         }
       }

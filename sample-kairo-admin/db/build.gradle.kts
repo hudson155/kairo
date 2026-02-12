@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-admin-sample"))
+  implementation(project(":sample-kairo-admin"))
   implementation(project(":kairo-hocon"))
   implementation(project(":kairo-protected-string"))
   implementation(project(":kairo-serialization"))
