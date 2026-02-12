@@ -36,10 +36,39 @@ for readme in "$ROOT_DIR"/kairo-*/README.md; do
   } > "$output_file"
 
   # Append README content, skipping the first H1 line (already used as title).
-  # Fix relative links to other module READMEs.
+  # Fix relative links to other module READMEs and nested submodule READMEs.
   tail -n +2 "$readme" \
     | sed -E 's|\.\./?(kairo-[a-zA-Z0-9_-]+)/README\.md|../\1/|g' \
     | sed -E 's|\.\/(kairo-[a-zA-Z0-9_-]+)/README\.md|../\1/|g' \
+    | sed -E 's|\./([a-zA-Z0-9_-]+)/README\.md|'"$module_dir"'/\1/|g' \
+    >> "$output_file"
+done
+
+# Copy nested submodule READMEs (e.g. kairo-integration-testing/postgres/README.md).
+for readme in "$ROOT_DIR"/kairo-*/*/README.md; do
+  [ -f "$readme" ] || continue
+  submodule_dir="$(basename "$(dirname "$readme")")"
+  module_dir="$(basename "$(dirname "$(dirname "$readme")")")"
+
+  title="$(head -20 "$readme" | grep -m1 '^# ' | sed 's/^# //')"
+  if [ -z "$title" ]; then
+    title="$submodule_dir"
+  fi
+
+  mkdir -p "$OUTPUT_DIR/$module_dir"
+  output_file="$OUTPUT_DIR/$module_dir/$submodule_dir.md"
+
+  {
+    echo "---"
+    echo "title: \"$title\""
+    echo "---"
+    echo ""
+  } > "$output_file"
+
+  # Fix relative links: parent README link and sibling module links.
+  tail -n +2 "$readme" \
+    | sed -E 's|\.\./README\.md|../'"$module_dir"'/|g' \
+    | sed -E 's|\.\./?(kairo-[a-zA-Z0-9_-]+)/README\.md|../\1/|g' \
     >> "$output_file"
 done
 
@@ -75,6 +104,7 @@ fi
 # Generate sidebar JSON from modules.json.
 # For each group, map module names to { slug: "modules/<name>" } entries,
 # but only include modules that have a generated doc file.
+# Modules with nested submodule docs get a collapsible sub-group.
 node -e "
 const fs = require('fs');
 const path = require('path');
@@ -84,7 +114,29 @@ const sidebar = Object.entries(groups).map(([label, modules]) => ({
   label,
   items: modules
     .filter(m => fs.existsSync(path.join(outputDir, m + '.md')))
-    .map(m => ({ slug: 'modules/' + m })),
+    .map(m => {
+      const subDir = path.join(outputDir, m);
+      const entry = { slug: 'modules/' + m };
+      if (fs.existsSync(subDir) && fs.statSync(subDir).isDirectory()) {
+        const subItems = fs.readdirSync(subDir)
+          .filter(f => f.endsWith('.md'))
+          .map(f => ({ slug: 'modules/' + m + '/' + f.replace(/\.md$/, '') }));
+        if (subItems.length > 0) {
+          const mdFile = path.join(outputDir, m + '.md');
+          const content = fs.readFileSync(mdFile, 'utf8');
+          const titleMatch = content.match(/^title:\\s*\"(.+)\"/m);
+          const groupLabel = titleMatch ? titleMatch[1] : m;
+          return {
+            label: groupLabel,
+            items: [
+              { label: 'Overview', slug: 'modules/' + m },
+              ...subItems,
+            ],
+          };
+        }
+      }
+      return entry;
+    }),
 }));
 fs.writeFileSync('$SIDEBAR_JSON', JSON.stringify(sidebar, null, 2) + '\n');
 console.log('Generated sidebar JSON with ' + sidebar.length + ' groups to $SIDEBAR_JSON');
