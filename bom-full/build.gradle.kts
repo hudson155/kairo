@@ -7,118 +7,79 @@ dependencies {
   api(platform(project(":bom")))
 
   // arrow
-  // https://github.com/arrow-kt/arrow/releases
-  api(platform("io.arrow-kt:arrow-stack:2.2.1.1"))
+  api(platform(libs.arrow.bom))
 
   // coroutines
-  // https://github.com/Kotlin/kotlinx.coroutines/releases
-  api(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2"))
+  api(platform(libs.coroutines.bom))
 
   // exposed
-  // https://github.com/JetBrains/Exposed/releases
-  api(platform("org.jetbrains.exposed:exposed-bom:1.0.0"))
+  api(platform(libs.exposed.bom))
 
   // gcp
-  // https://github.com/googleapis/java-cloud-bom/releases
-  api(platform("com.google.cloud:libraries-bom:26.74.0"))
+  api(platform(libs.gcp.bom))
 
   // gcp-socket-factory
-  // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases
-  val gcpSocketFactoryVersion = "1.25.1" // NOTE: Downgraded until GCP BOM updates.
-  // https://chatgpt.com/g/g-p-68a4b4ddffc48191a5a87456c2f5b739-highbeam/c/693709b4-94dc-832d-a1b9-781a535232e3
-  constraints.api("com.google.cloud.sql:postgres-socket-factory:$gcpSocketFactoryVersion")
-  constraints.api("com.google.cloud.sql:cloud-sql-connector-r2dbc-postgres:$gcpSocketFactoryVersion")
+  constraints.api(libs.gcpSocketFactory.postgres)
+  constraints.api(libs.gcpSocketFactory.r2dbcPostgres)
 
   // guava
-  // https://github.com/google/guava/releases
-  api(platform("com.google.guava:guava-bom:33.5.0-jre"))
+  api(platform(libs.guava.bom))
 
   // jackson
-  // https://mvnrepository.com/artifact/com.fasterxml.jackson/jackson-bom
-  api(platform("com.fasterxml.jackson:jackson-bom:2.21.0"))
+  api(platform(libs.jackson.bom))
 
   // hocon
-  // https://github.com/lightbend/config/releases
-  val hoconVersion = "1.4.5"
-  constraints.api("com.typesafe:config:$hoconVersion")
+  constraints.api(libs.hocon)
 
   // koin
-  // https://github.com/InsertKoinIO/koin/releases
-  api(platform("io.insert-koin:koin-bom:4.1.1"))
+  api(platform(libs.koin.bom))
 
   // koin-annotations
-  // https://github.com/InsertKoinIO/koin-annotations/releases
-  api(platform("io.insert-koin:koin-annotations-bom:2.3.1"))
+  api(platform(libs.koinAnnotations.bom))
 
   // kotest
-  // https://github.com/kotest/kotest/releases
-  val kotestVersion = "6.0.7"
-  constraints.api("io.kotest:kotest-runner-junit5:$kotestVersion")
+  constraints.api(libs.kotest)
 
   // kotlinx-datetime
-  // https://github.com/Kotlin/kotlinx-datetime/releases
-  val kotlinxDatetimeVersion = "0.7.1"
-  constraints.api("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetimeVersion")
+  constraints.api(libs.datetime)
 
   // ktor
-  // https://github.com/ktorio/ktor/releases
-  api(platform("io.ktor:ktor-bom:3.3.3"))
+  api(platform(libs.ktor.bom))
 
   // log4j
-  // https://github.com/apache/logging-log4j2/releases
-  api(platform("org.apache.logging.log4j:log4j-bom:2.25.3"))
+  api(platform(libs.log4j.bom))
 
   // logging
-  // https://github.com/oshai/kotlin-logging/releases
-  val loggingVersion = "7.0.14"
-  constraints.api("io.github.oshai:kotlin-logging-jvm:$loggingVersion")
+  constraints.api(libs.logging)
 
   // mailersend
-  // https://github.com/mailersend/mailersend-java/releases
-  val mailersendVersion = "1.4.1"
-  constraints.api("com.mailersend:java-sdk:$mailersendVersion")
+  constraints.api(libs.mailersend)
 
   // mockk
-  // https://github.com/mockk/mockk/releases
-  val mockkVersion = "1.14.6"
-  constraints.api("io.mockk:mockk:$mockkVersion")
+  constraints.api(libs.mockk)
 
   // moneta
-  // https://github.com/JavaMoney/jsr354-ri/releases
-  val monetaVersion = "1.4.5"
-  constraints.api("org.javamoney:moneta:$monetaVersion")
+  constraints.api(libs.moneta)
 
   // postgres-jdbc
-  // https://github.com/pgjdbc/pgjdbc/releases
-  val postgresJdbcVersion = "42.7.9"
-  constraints.api("org.postgresql:postgresql:$postgresJdbcVersion")
+  constraints.api(libs.postgres.jdbc)
 
   // postgres-r2dbc
-  // https://github.com/pgjdbc/r2dbc-postgresql/releases
-  val postgresR2dbcVersion = "1.1.1.RELEASE"
-  constraints.api("org.postgresql:r2dbc-postgresql:$postgresR2dbcVersion")
+  constraints.api(libs.postgres.r2dbc)
 
   // r2dbc-pool
-  // https://github.com/r2dbc/r2dbc-pool/releases
-  val r2dbcPoolVersion = "1.0.2.RELEASE"
-  constraints.api("io.r2dbc:r2dbc-pool:$r2dbcPoolVersion")
+  constraints.api(libs.r2dbc.pool)
 
   // slack
-  // https://github.com/slackapi/java-slack-sdk/releases
-  val slackVersion = "1.47.0"
-  constraints.api("com.slack.api:slack-api-client:$slackVersion")
-  constraints.api("com.slack.api:slack-api-client-kotlin-extension:$slackVersion")
+  constraints.api(libs.slack)
+  constraints.api(libs.slack.kotlin)
 
   // slf4j
-  // https://github.com/qos-ch/slf4j/releases
-  api(platform("org.slf4j:slf4j-bom:2.0.17"))
+  api(platform(libs.slf4j.bom))
 
   // stytch
-  // https://github.com/stytchauth/stytch-java/releases
-  val stytchVersion = "9.2.0"
-  constraints.api("com.stytch.java:sdk:$stytchVersion")
+  constraints.api(libs.stytch)
 
   // testcontainers
-  // https://github.com/testcontainers/testcontainers-java/releases
-  api(platform("org.testcontainers:testcontainers-bom:2.0.3"))
+  api(platform(libs.testcontainers.bom))
 }
