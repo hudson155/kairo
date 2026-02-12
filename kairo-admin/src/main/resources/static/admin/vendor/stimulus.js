@@ -37,7 +37,13 @@ export class Application {
           const Ctrl = app._controllers.get(name)
           if (Ctrl) {
             const instance = new Ctrl({ element: el })
-            // Wire up targets.
+            // Pre-initialize all declared targets as empty.
+            const declaredTargets = Ctrl.targets || []
+            declaredTargets.forEach(targetName => {
+              instance[targetName + "Targets"] = []
+              instance["has" + targetName.charAt(0).toUpperCase() + targetName.slice(1) + "Target"] = false
+            })
+            // Wire up targets from DOM.
             el.querySelectorAll("[data-" + name + "-target]").forEach(t => {
               const targetName = t.dataset[name + "Target"]
               instance[targetName + "Target"] = t

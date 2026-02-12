@@ -3,6 +3,7 @@ package kairo.adminSample
 import io.r2dbc.spi.ConnectionFactory
 import kairo.admin.AdminConfigSource
 import kairo.admin.AdminDashboardFeature
+import kairo.admin.model.AdminIntegrationInfo
 import kairo.adminSample.author.AuthorApi
 import kairo.adminSample.author.AuthorFeature
 import kairo.adminSample.libraryBook.LibraryBookApi
@@ -74,6 +75,30 @@ public fun main(): Unit = kairo {
             null
           }
         },
+        featureNames = listOf(
+          "DependencyInjection",
+          "Rest",
+          "Sql",
+          "HealthCheck",
+          "LibraryBook",
+          "Author",
+          "AdminDashboard",
+        ),
+        healthChecks = mapOf(
+          "sql" to {
+            koin.get<ConnectionFactory>()
+          },
+        ),
+        integrations = listOf(
+          AdminIntegrationInfo(
+            name = "PostgreSQL",
+            type = "Database",
+            status = "connected",
+            details = mapOf(
+              "URL" to config.sql.connectionFactory.url,
+            ),
+          ),
+        ),
       ),
     ),
   )

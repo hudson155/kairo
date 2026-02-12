@@ -12,6 +12,7 @@ import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.unsafe
 
+@Suppress("LongMethod")
 internal fun FlowContent.homeView(config: AdminDashboardConfig, stats: DashboardStats) {
   h1 {
     classes = setOf("text-3xl", "font-bold", "text-gray-900", "mb-8")
@@ -32,22 +33,58 @@ internal fun FlowContent.homeView(config: AdminDashboardConfig, stats: Dashboard
       description = "View ${stats.configFileCount} HOCON configuration files",
     )
     dashboardCard(
+      href = "${config.pathPrefix}/database",
+      icon = databaseIcon,
+      title = "Database",
+      description = "Browse ${stats.tableCount} tables and run read-only SQL queries",
+    )
+    dashboardCard(
+      href = "${config.pathPrefix}/health",
+      icon = healthIcon,
+      title = "Health",
+      description = "Run ${stats.healthCheckCount} health checks and monitor status",
+    )
+    dashboardCard(
       href = "${config.pathPrefix}/jvm",
       icon = jvmIcon,
       title = "JVM",
       description = "Monitor memory, threads, and garbage collection",
     )
     dashboardCard(
-      href = "${config.pathPrefix}/database",
-      icon = databaseIcon,
-      title = "Database",
-      description = "Browse tables and run read-only SQL queries",
+      href = "${config.pathPrefix}/features",
+      icon = featuresIcon,
+      title = "Features",
+      description = "View ${stats.featureCount} registered application features",
+    )
+    dashboardCard(
+      href = "${config.pathPrefix}/dependencies",
+      icon = dependenciesIcon,
+      title = "Dependencies",
+      description = "Inspect ${stats.dependencyCount} registered DI bindings",
+    )
+    dashboardCard(
+      href = "${config.pathPrefix}/integrations",
+      icon = integrationsIcon,
+      title = "Integrations",
+      description = "Monitor ${stats.integrationCount} external service connections",
+    )
+    dashboardCard(
+      href = "${config.pathPrefix}/logging",
+      icon = loggingIcon,
+      title = "Logging",
+      description = "View and change logger levels at runtime",
+    )
+    dashboardCard(
+      href = "${config.pathPrefix}/errors",
+      icon = errorsIcon,
+      title = "Errors",
+      description = "${stats.errorCount} errors recorded",
     )
   }
   div {
     classes = setOf("flex", "flex-wrap", "gap-3", "max-w-4xl")
     statBadge("${stats.endpointCount} endpoints")
-    statBadge("${stats.configFileCount} config files")
+    statBadge("${stats.featureCount} features")
     statBadge("${stats.tableCount} tables")
     statBadge("Uptime: ${stats.jvmUptime}")
   }
@@ -104,3 +141,21 @@ private val jvmIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class="
 
 @Suppress("MaximumLineLength")
 private val databaseIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/></svg>"""
+
+@Suppress("MaximumLineLength")
+private val healthIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>"""
+
+@Suppress("MaximumLineLength")
+private val featuresIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L12 12.75 6.429 9.75m11.142 0l4.179 2.25-9.75 5.25-9.75-5.25 4.179-2.25"/></svg>"""
+
+@Suppress("MaximumLineLength")
+private val dependenciesIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>"""
+
+@Suppress("MaximumLineLength")
+private val integrationsIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z"/></svg>"""
+
+@Suppress("MaximumLineLength")
+private val loggingIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>"""
+
+@Suppress("MaximumLineLength")
+private val errorsIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>"""

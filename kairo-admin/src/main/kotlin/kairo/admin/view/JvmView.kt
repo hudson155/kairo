@@ -67,16 +67,16 @@ private fun FlowContent.statsCard(title: String, data: Map<String, String>) {
       +title
     }
     table {
-      classes = setOf("w-full", "text-sm")
+      classes = setOf("w-full", "text-sm", "table-fixed")
       tbody {
         data.forEach { (key, value) ->
           tr {
             td {
-              classes = setOf("py-1", "pr-4", "text-gray-500", "font-medium")
+              classes = setOf("py-1", "pr-4", "text-gray-500", "font-medium", "whitespace-nowrap", "w-48")
               +key
             }
             td {
-              classes = setOf("py-1", "text-gray-900", "font-mono")
+              classes = setOf("py-1", "text-gray-900", "font-mono", "break-all")
               +value
             }
           }
