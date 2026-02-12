@@ -236,20 +236,51 @@ private fun FlowContent.endpointForm(endpoint: EndpointInfo) {
         classes = setOf("text-base", "font-semibold", "text-gray-900")
         +"Request Body (${endpoint.requestBodyType})"
       }
-      textArea {
-        classes = setOf(
-          "w-full",
-          "h-32",
-          "p-3",
-          "border",
-          "border-gray-300",
-          "shadow-sm",
-          "rounded-md",
-          "font-mono",
-          "text-sm",
-        )
-        attributes["data-request-target"] = "requestBody"
-        +(endpoint.requestBodyExample ?: """{"key": "value"}""")
+      div {
+        attributes["data-controller"] = "json-editor"
+        attributes["data-json-editor-schema-value"] =
+          endpoint.requestBodyFields.joinToString(",", "[", "]") { field ->
+            """{"name":"${field.name}","type":"${field.type}","required":${field.required}}"""
+          }
+        div {
+          attributes["style"] = "position: relative;"
+          pre {
+            classes = setOf("font-mono", "text-sm", "rounded-md")
+            attributes["data-json-editor-target"] = "highlight"
+            attributes["style"] = "position: absolute; top: 0; left: 0; right: 0; bottom: 0;" +
+              " padding: 0.75rem; overflow: hidden; pointer-events: none; background: white;" +
+              " white-space: pre-wrap; word-wrap: break-word; border: 1px solid transparent;" +
+              " margin: 0; line-height: 1.5; border-radius: 0.375rem;"
+          }
+          textArea {
+            classes = setOf(
+              "w-full",
+              "p-3",
+              "border",
+              "border-gray-300",
+              "shadow-sm",
+              "rounded-md",
+              "font-mono",
+              "text-sm",
+            )
+            attributes["data-request-target"] = "requestBody"
+            attributes["data-json-editor-target"] = "textarea"
+            attributes["data-action"] = "input->json-editor#onInput scroll->json-editor#onScroll paste->json-editor#onPaste"
+            attributes["style"] =
+              "color: transparent; caret-color: #1f2937; background: transparent;" +
+                " resize: none; position: relative; z-index: 1; line-height: 1.5;"
+            +(endpoint.requestBodyExample ?: """{"key": "value"}""")
+          }
+        }
+        div {
+          classes = setOf("hidden", "mt-2", "bg-red-50", "rounded-lg", "p-3")
+          attributes["data-json-editor-target"] = "error"
+          attributes["style"] = "border-left: 4px solid #f87171; display: none;"
+          div {
+            classes = setOf("text-sm", "text-red-800")
+            attributes["data-json-editor-target"] = "errorText"
+          }
+        }
       }
     }
 

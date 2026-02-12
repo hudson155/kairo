@@ -15,6 +15,10 @@ export class Controller {
   disconnect() {}
 }
 
+function kebabToCamel(str) {
+  return str.replace(/-([a-z])/g, (_, c) => c.toUpperCase())
+}
+
 export class Application {
   constructor() {
     this._controllers = new Map()
@@ -55,16 +59,17 @@ export class Application {
                 parent = parent.parentElement
               }
               if (nested) return
-              const targetName = t.dataset[name + "Target"]
+              const targetName = t.dataset[kebabToCamel(name) + "Target"]
               instance[targetName + "Target"] = t
               if (!instance[targetName + "Targets"]) instance[targetName + "Targets"] = []
               instance[targetName + "Targets"].push(t)
               instance["has" + targetName.charAt(0).toUpperCase() + targetName.slice(1) + "Target"] = true
             })
             // Wire up values.
+            const camelName = kebabToCamel(name)
             Object.keys(el.dataset).forEach(key => {
-              if (key.startsWith(name) && key.endsWith("Value")) {
-                const valueName = key.slice(name.length, -5)
+              if (key.startsWith(camelName) && key.endsWith("Value")) {
+                const valueName = key.slice(camelName.length, -5)
                 const propName = valueName.charAt(0).toLowerCase() + valueName.slice(1) + "Value"
                 instance[propName] = el.dataset[key]
               }
