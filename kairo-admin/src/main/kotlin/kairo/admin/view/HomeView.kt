@@ -16,7 +16,7 @@ import kotlinx.html.unsafe
 internal fun FlowContent.homeView(config: AdminDashboardConfig, stats: DashboardStats) {
   h1 {
     classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
-    +"Welcome to the ${config.title} admin dashboard!"
+    +"Welcome to the ${config.serverName ?: config.title} admin dashboard!"
   }
   div {
     classes = setOf("flex", "flex-wrap", "gap-3", "max-w-4xl", "mb-6")

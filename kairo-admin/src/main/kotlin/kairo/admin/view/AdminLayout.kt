@@ -28,7 +28,7 @@ internal fun HTML.adminLayout(
   head {
     meta(charset = "utf-8")
     meta(name = "viewport", content = "width=device-width, initial-scale=1")
-    title { +"${config.title} - Admin" }
+    title { +"${config.serverName ?: config.title} - Admin" }
     link(rel = "stylesheet", href = "${config.pathPrefix}/static/css/tailwind.css")
     script(src = "${config.pathPrefix}/static/vendor/turbo.es2017-esm.js") {
       attributes["type"] = "module"
@@ -71,7 +71,7 @@ internal fun HTML.adminLayout(
       }
       span {
         classes = setOf("text-white", "font-semibold", "ml-auto", "pr-4")
-        +config.title
+        +(config.serverName ?: config.title)
       }
     }
     div {
@@ -100,7 +100,7 @@ internal fun HTML.adminLayout(
         attributes["data-sidebar-target"] = "sidebar"
         a(href = "${config.pathPrefix}/") {
           classes = setOf("block", "text-lg", "font-semibold", "mb-6", "hover:text-gray-300", "tracking-tight")
-          +config.title
+          +(config.serverName ?: config.title)
         }
         div {
           classes = setOf("space-y-1")

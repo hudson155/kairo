@@ -38,6 +38,7 @@ public fun main(): Unit = kairo {
       AuthorFeature(koin),
       AdminDashboardFeature(
         config = AdminDashboardConfig(
+          serverName = "Kairo Admin Sample",
           docsUrl = "https://github.com/hudson155/kairo/tree/main/kairo-admin-sample",
           apiDocsUrl = "https://hudson155.github.io/kairo/",
           githubRepoUrl = "https://github.com/hudson155/kairo",
