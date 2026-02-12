@@ -60,6 +60,18 @@ if [ -f "$CHANGELOG_SRC" ]; then
   echo "Copied CHANGELOG.md to $CHANGELOG_DST"
 fi
 
+# Extract the latest version from CHANGELOG.md and write to a generated file.
+VERSION_JSON="$DOCS_DIR/src/generated-version.json"
+if [ -f "$CHANGELOG_SRC" ]; then
+  LATEST_VERSION="$(grep -m1 '^## Kairo ' "$CHANGELOG_SRC" | sed 's/^## Kairo //')"
+  if [ -n "$LATEST_VERSION" ]; then
+    echo "{\"latest\": \"$LATEST_VERSION\"}" > "$VERSION_JSON"
+    echo "Extracted latest version $LATEST_VERSION to $VERSION_JSON"
+  else
+    echo "Warning: Could not extract version from CHANGELOG.md"
+  fi
+fi
+
 # Generate sidebar JSON from modules.json.
 # For each group, map module names to { slug: "modules/<name>" } entries,
 # but only include modules that have a generated doc file.

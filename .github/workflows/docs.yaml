@@ -9,13 +9,11 @@ on:
   push:
     branches:
       - "main"
-    paths:
-      - "docs/**"
-      - "**/README.md"
   pull_request:
     paths:
       - "docs/**"
       - "**/README.md"
+      - "CHANGELOG.md"
   workflow_dispatch:
 
 concurrency:
@@ -28,6 +26,19 @@ jobs:
     steps:
       - name: "Check out"
         uses: "actions/checkout@v6" # https://github.com/actions/checkout/releases
+      - name: "GCP auth"
+        uses: "google-github-actions/auth@v3" # https://github.com/google-github-actions/auth/releases
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+      - name: "Set up Java"
+        uses: "actions/setup-java@v5" # https://github.com/actions/setup-java/releases
+        with:
+          java-version: "21"
+          distribution: "corretto"
+          cache: "gradle"
+      - name: "Generate Dokka API docs"
+        run: |
+          ./gradlew dokkaGenerate
       - name: "Set up pnpm"
         uses: "pnpm/action-setup@v4" # https://github.com/pnpm/action-setup/releases
         with:
