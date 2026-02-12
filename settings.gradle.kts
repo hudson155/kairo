@@ -53,3 +53,5 @@ include(":kairo-validation")
 include(":kairo-admin")
 include(":kairo-admin-sample")
 include(":kairo-admin-sample:db")
+
+include(":kairo-kdocs")

@@ -7,4 +7,5 @@ public data class AdminDashboardConfig(
   val docsUrl: String? = null,
   val apiDocsUrl: String? = null,
   val githubRepoUrl: String? = null,
+  val kdocsUrl: String? = null,
 )

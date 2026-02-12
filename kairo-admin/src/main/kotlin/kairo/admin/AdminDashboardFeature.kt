@@ -1,5 +1,7 @@
 package kairo.admin
 
+import com.typesafe.config.ConfigFactory
+import com.typesafe.config.ConfigRenderOptions
 import io.ktor.server.application.Application
 import io.r2dbc.spi.ConnectionFactory
 import kairo.admin.collector.ConfigCollector
@@ -61,11 +63,14 @@ public class AdminDashboardFeature(
 
           val resolvedConfigSources = configSources ?: autoDetectConfigSources()
           val resolvedIntegrations = integrations ?: autoDetectIntegrations(connectionFactory)
+          val resolvedConfig = resolveConfig(config)
+
+          val effectiveConfig = generateEffectiveConfig(resolvedConfigSources)
 
           adminDashboardHandler = AdminDashboardHandler(
-            config = config,
+            config = resolvedConfig,
             endpointCollector = EndpointCollector { ktorApplication!!.restEndpointClasses.toList() },
-            configCollector = ConfigCollector(resolvedConfigSources),
+            configCollector = ConfigCollector(resolvedConfigSources, effectiveConfig),
             jvmCollector = JvmCollector(),
             databaseCollector = DatabaseCollector(connectionFactory),
             poolCollector = PoolCollector(connectionFactory),
@@ -107,6 +112,14 @@ private fun discoverConnectionFactory(koin: Koin?): () -> ConnectionFactory? = {
   }
 }
 
+private fun resolveConfig(config: AdminDashboardConfig): AdminDashboardConfig {
+  if (config.kdocsUrl != null) return config
+  val kdocsAvailable = Thread.currentThread().contextClassLoader
+    .getResource("static/kdocs/index.html") != null
+  if (!kdocsAvailable) return config
+  return config.copy(kdocsUrl = "/_kdocs/index.html")
+}
+
 private fun autoDetectConfigSources(): List<AdminConfigSource> {
   val sources = mutableListOf<AdminConfigSource>()
   val cl = Thread.currentThread().contextClassLoader
@@ -121,6 +134,22 @@ private fun autoDetectConfigSources(): List<AdminConfigSource> {
   }
   return sources
 }
+
+@Suppress("SwallowedException")
+private fun generateEffectiveConfig(sources: List<AdminConfigSource>): String? =
+  try {
+    val renderOptions = ConfigRenderOptions.defaults()
+      .setOriginComments(false)
+      .setComments(false)
+      .setJson(false)
+    var merged = ConfigFactory.empty()
+    for (source in sources) {
+      merged = ConfigFactory.parseString(source.content).withFallback(merged)
+    }
+    merged.resolve().root().render(renderOptions)
+  } catch (_: Exception) {
+    null
+  }
 
 private fun autoDetectIntegrations(
   connectionFactory: () -> ConnectionFactory?,

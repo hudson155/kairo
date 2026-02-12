@@ -2,6 +2,7 @@ package kairo.adminSample
 
 import kairo.admin.AdminDashboardConfig
 import kairo.admin.AdminDashboardFeature
+import kairo.kdocs.KdocsFeature
 import kairo.adminSample.author.AuthorFeature
 import kairo.adminSample.libraryBook.LibraryBookFeature
 import kairo.application.kairo
@@ -36,6 +37,7 @@ public fun main(): Unit = kairo {
       HealthCheckFeature(),
       LibraryBookFeature(koin),
       AuthorFeature(koin),
+      KdocsFeature(),
       AdminDashboardFeature(
         config = AdminDashboardConfig(
           serverName = "Kairo Admin Sample",

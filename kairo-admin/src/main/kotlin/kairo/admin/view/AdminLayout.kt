@@ -105,28 +105,33 @@ internal fun HTML.adminLayout(
         div {
           classes = setOf("space-y-1")
           tabLink("Home", "", activeTab, config)
-          tabLink("Config", "config", activeTab, config)
-          tabLink("Database", "database", activeTab, config)
-          tabLink("Dependencies", "dependencies", activeTab, config)
-          tabLink("Endpoints", "endpoints", activeTab, config)
-          tabLink("Errors", "errors", activeTab, config)
-          tabLink("Features", "features", activeTab, config)
-          tabLink("Health", "health", activeTab, config)
-          tabLink("Integrations", "integrations", activeTab, config)
-          tabLink("JVM", "jvm", activeTab, config)
-          tabLink("Logging", "logging", activeTab, config)
+          listOf(
+            "Config" to "config",
+            "Database" to "database",
+            "Dependencies" to "dependencies",
+            "Endpoints" to "endpoints",
+            "Errors" to "errors",
+            "Features" to "features",
+            "Health" to "health",
+            "Integrations" to "integrations",
+            "JVM" to "jvm",
+            "Logging" to "logging",
+          ).sortedBy { it.first }.forEach { (label, tab) ->
+            tabLink(label, tab, activeTab, config)
+          }
         }
-        if (config.docsUrl != null || config.apiDocsUrl != null) {
+        if (config.docsUrl != null || config.apiDocsUrl != null || config.kdocsUrl != null) {
           hr {
             classes = setOf("border-gray-700", "my-4")
           }
           div {
             classes = setOf("space-y-1")
-            if (config.docsUrl != null) {
-              externalLink("Docs", config.docsUrl)
-            }
-            if (config.apiDocsUrl != null) {
-              externalLink("Kairo Docs", config.apiDocsUrl)
+            listOfNotNull(
+              config.docsUrl?.let { "Docs" to it },
+              config.apiDocsUrl?.let { "Kairo Docs" to it },
+              config.kdocsUrl?.let { "KDocs" to it },
+            ).sortedBy { it.first }.forEach { (label, url) ->
+              externalLink(label, url)
             }
           }
         }

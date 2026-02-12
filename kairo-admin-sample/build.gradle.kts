@@ -1,5 +1,6 @@
 plugins {
   id("kairo-library")
+  id("kairo-service-dokka")
   application
 }
 
@@ -12,6 +13,7 @@ tasks.withType<Zip> { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
 
 dependencies {
   implementation(project(":kairo-admin"))
+  implementation(project(":kairo-kdocs"))
   implementation(project(":kairo-application"))
   implementation(project(":kairo-config"))
   implementation(project(":kairo-dependency-injection:feature"))

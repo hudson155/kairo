@@ -128,19 +128,10 @@ internal class AdminDashboardHandler(
   private fun Route.configRoutes() {
     get("/config") {
       val sources = configCollector.collect()
+      val effectiveConfig = configCollector.effectiveConfig()
       call.respondHtml {
         adminLayout(config, "config") {
-          configView(config, sources, sources.firstOrNull()?.name)
-        }
-      }
-    }
-
-    get("/config/{name}") {
-      val name = call.parameters["name"].orEmpty()
-      val sources = configCollector.collect()
-      call.respondHtml {
-        adminLayout(config, "config") {
-          configView(config, sources, name)
+          configView(config, sources, effectiveConfig)
         }
       }
     }
