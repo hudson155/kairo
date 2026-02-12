@@ -9,7 +9,6 @@ import kotlinx.html.TBODY
 import kotlinx.html.a
 import kotlinx.html.classes
 import kotlinx.html.div
-import kotlinx.html.h1
 import kotlinx.html.input
 import kotlinx.html.p
 import kotlinx.html.span

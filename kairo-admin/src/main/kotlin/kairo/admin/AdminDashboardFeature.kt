@@ -176,7 +176,7 @@ private fun generateEffectiveConfig(sources: List<AdminConfigSource>): String? =
 private fun discoverSlackChannels(features: List<Feature>, koin: Koin?): Map<String, String>? =
   try {
     features.filterIsInstance<SlackFeature>().firstOrNull() ?: return null
-    koin?.get<SlackClient>()?.channels
+    koin?.run { get<SlackClient>().channels }
   } catch (_: NoClassDefFoundError) {
     null
   } catch (_: Exception) {
@@ -188,10 +188,23 @@ private fun discoverStytchModules(features: List<Feature>): List<String>? =
   try {
     features.filterIsInstance<StytchFeature>().firstOrNull() ?: return null
     listOf(
-      "Connected Apps", "Crypto Wallets", "Debug", "Fraud", "IDP",
-      "Impersonation", "M2M", "Magic Links", "OAuth", "OTPs",
-      "Passwords", "Project", "RBAC", "Sessions", "TOTPs",
-      "Users", "WebAuthn",
+      "Connected Apps",
+      "Crypto Wallets",
+      "Debug",
+      "Fraud",
+      "IDP",
+      "Impersonation",
+      "M2M",
+      "Magic Links",
+      "OAuth",
+      "OTPs",
+      "Passwords",
+      "Project",
+      "RBAC",
+      "Sessions",
+      "TOTPs",
+      "Users",
+      "WebAuthn",
     )
   } catch (_: NoClassDefFoundError) {
     null
@@ -201,7 +214,7 @@ private fun discoverStytchModules(features: List<Feature>): List<String>? =
 private fun discoverEmailTemplates(features: List<Feature>, koin: Koin?): Map<String, String>? =
   try {
     features.filterIsInstance<MailersendFeature>().firstOrNull() ?: return null
-    koin?.get<Mailer>()?.templates
+    koin?.run { get<Mailer>().templates }
   } catch (_: NoClassDefFoundError) {
     null
   } catch (_: Exception) {

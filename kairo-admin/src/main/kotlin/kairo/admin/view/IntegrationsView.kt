@@ -4,7 +4,6 @@ import kairo.admin.model.AdminIntegrationInfo
 import kotlinx.html.FlowContent
 import kotlinx.html.classes
 import kotlinx.html.div
-import kotlinx.html.h1
 import kotlinx.html.h3
 import kotlinx.html.p
 import kotlinx.html.span

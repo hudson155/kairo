@@ -10,6 +10,7 @@ import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.unsafe
 
+@Suppress("LongMethod")
 internal fun FlowContent.pageHeader(title: String, description: String) {
   div {
     attributes["data-controller"] = "toggle"

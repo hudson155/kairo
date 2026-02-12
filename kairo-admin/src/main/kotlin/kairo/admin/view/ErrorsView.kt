@@ -10,7 +10,6 @@ import kotlinx.html.classes
 import kotlinx.html.details
 import kotlinx.html.div
 import kotlinx.html.form
-import kotlinx.html.h1
 import kotlinx.html.p
 import kotlinx.html.pre
 import kotlinx.html.span

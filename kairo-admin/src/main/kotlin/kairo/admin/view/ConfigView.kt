@@ -5,7 +5,6 @@ import kairo.admin.AdminDashboardConfig
 import kotlinx.html.FlowContent
 import kotlinx.html.classes
 import kotlinx.html.div
-import kotlinx.html.h1
 import kotlinx.html.h2
 import kotlinx.html.p
 import kotlinx.html.pre

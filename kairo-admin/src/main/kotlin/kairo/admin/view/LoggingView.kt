@@ -10,7 +10,6 @@ import kotlinx.html.button
 import kotlinx.html.classes
 import kotlinx.html.div
 import kotlinx.html.form
-import kotlinx.html.h1
 import kotlinx.html.hiddenInput
 import kotlinx.html.option
 import kotlinx.html.p

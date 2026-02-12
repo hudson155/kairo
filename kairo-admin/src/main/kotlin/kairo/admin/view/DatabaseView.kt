@@ -12,7 +12,6 @@ import kotlinx.html.button
 import kotlinx.html.classes
 import kotlinx.html.div
 import kotlinx.html.form
-import kotlinx.html.h1
 import kotlinx.html.h3
 import kotlinx.html.hiddenInput
 import kotlinx.html.label
@@ -27,6 +26,11 @@ import kotlinx.html.textArea
 import kotlinx.html.th
 import kotlinx.html.thead
 import kotlinx.html.tr
+import kotlinx.html.unsafe
+
+@Suppress("MaximumLineLength")
+private val chevronIcon: String =
+  """<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>"""
 
 @Suppress("LongMethod", "CognitiveComplexMethod", "LongParameterList")
 internal fun FlowContent.databaseView(
@@ -103,62 +107,81 @@ internal fun FlowContent.databaseView(
   }
 }
 
-@Suppress("LongMethod")
+@Suppress("LongMethod", "CognitiveComplexMethod")
 private fun FlowContent.tableSchemaCard(selectedTable: String, columns: List<ColumnInfo>) {
   div {
     classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-6")
-    h3 {
-      classes = setOf("text-lg", "font-semibold", "text-gray-900", "mb-3")
-      +"Schema: $selectedTable"
-    }
-    if (columns.isEmpty()) {
-      p {
-        classes = setOf("text-gray-500")
-        +"No columns found."
+    attributes["data-controller"] = "toggle"
+    button(type = ButtonType.button) {
+      classes = setOf(
+        "flex",
+        "items-center",
+        "gap-2",
+        "text-lg",
+        "font-semibold",
+        "text-gray-900",
+        "cursor-pointer",
+      )
+      attributes["data-action"] = "toggle#toggle"
+      span {
+        attributes["data-toggle-target"] = "icon"
+        attributes["style"] = "transition: transform 150ms"
+        unsafe { +chevronIcon }
       }
-    } else {
-      table {
-        classes = setOf("w-full", "text-sm")
-        thead {
-          tr {
-            classes = setOf("border-b")
-            th {
-              classes = setOf("text-left", "py-2", "pr-4", "font-medium", "text-gray-500")
-              +"Column"
-            }
-            th {
-              classes = setOf("text-left", "py-2", "pr-4", "font-medium", "text-gray-500")
-              +"Type"
-            }
-            th {
-              classes = setOf("text-left", "py-2", "pr-4", "font-medium", "text-gray-500")
-              +"Nullable"
-            }
-            th {
-              classes = setOf("text-left", "py-2", "font-medium", "text-gray-500")
-              +"Default"
+      +"Schema: $selectedTable (${columns.size} columns)"
+    }
+    div {
+      classes = setOf("hidden", "mt-3")
+      attributes["data-toggle-target"] = "content"
+      if (columns.isEmpty()) {
+        p {
+          classes = setOf("text-gray-500")
+          +"No columns found."
+        }
+      } else {
+        table {
+          classes = setOf("w-full", "text-sm")
+          thead {
+            tr {
+              classes = setOf("border-b")
+              th {
+                classes = setOf("text-left", "py-2", "pr-4", "font-medium", "text-gray-500")
+                +"Column"
+              }
+              th {
+                classes = setOf("text-left", "py-2", "pr-4", "font-medium", "text-gray-500")
+                +"Type"
+              }
+              th {
+                classes = setOf("text-left", "py-2", "pr-4", "font-medium", "text-gray-500")
+                +"Nullable"
+              }
+              th {
+                classes = setOf("text-left", "py-2", "font-medium", "text-gray-500")
+                +"Default"
+              }
             }
           }
-        }
-        tbody {
-          columns.forEach { col ->
-            tr {
-              classes = setOf("border-b", "border-gray-100")
-              td {
-                classes = setOf("py-2", "pr-4", "font-mono")
-                +col.name
-              }
-              td {
-                classes = setOf("py-2", "pr-4")
-                +col.dataType
-              }
-              td {
-                classes = setOf("py-2", "pr-4")
-                +if (col.isNullable) "YES" else "NO"
-              }
-              td {
-                classes = setOf("py-2", "font-mono", "text-xs")
-                +(col.defaultValue ?: "-")
+          tbody {
+            columns.forEach { col ->
+              tr {
+                classes = setOf("border-b", "border-gray-100")
+                td {
+                  classes = setOf("py-2", "pr-4", "font-mono")
+                  +col.name
+                }
+                td {
+                  classes = setOf("py-2", "pr-4")
+                  +col.dataType
+                }
+                td {
+                  classes = setOf("py-2", "pr-4")
+                  +if (col.isNullable) "YES" else "NO"
+                }
+                td {
+                  classes = setOf("py-2", "font-mono", "text-xs")
+                  +(col.defaultValue ?: "-")
+                }
               }
             }
           }

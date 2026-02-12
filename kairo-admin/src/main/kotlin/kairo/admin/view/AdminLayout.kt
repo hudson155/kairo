@@ -20,7 +20,7 @@ import kotlinx.html.span
 import kotlinx.html.title
 import kotlinx.html.unsafe
 
-@Suppress("LongMethod", "CognitiveComplexMethod", "LongParameterList")
+@Suppress("LongMethod", "CognitiveComplexMethod", "CyclomaticComplexMethod", "LongParameterList")
 internal fun HTML.adminLayout(
   config: AdminDashboardConfig,
   optionalTabs: Set<String> = emptySet(),

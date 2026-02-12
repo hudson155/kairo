@@ -7,7 +7,6 @@ import kotlinx.html.HTML
 import kotlinx.html.body
 import kotlinx.html.classes
 import kotlinx.html.div
-import kotlinx.html.h1
 import kotlinx.html.h3
 import kotlinx.html.table
 import kotlinx.html.tbody

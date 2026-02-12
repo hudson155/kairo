@@ -2,13 +2,13 @@ package kairo.adminSample
 
 import kairo.admin.AdminDashboardConfig
 import kairo.admin.AdminDashboardFeature
-import kairo.kdocs.KdocsFeature
 import kairo.adminSample.author.AuthorFeature
 import kairo.adminSample.libraryBook.LibraryBookFeature
 import kairo.application.kairo
 import kairo.config.loadConfig
 import kairo.dependencyInjection.DependencyInjectionFeature
 import kairo.healthCheck.HealthCheckFeature
+import kairo.kdocs.KdocsFeature
 import kairo.rest.RestFeature
 import kairo.serialization.KairoJson
 import kairo.server.Server
