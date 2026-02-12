@@ -8,7 +8,6 @@ import kairo.admin.model.TableInfo
 import kotlinx.html.ButtonType
 import kotlinx.html.FlowContent
 import kotlinx.html.FormMethod
-import kotlinx.html.a
 import kotlinx.html.button
 import kotlinx.html.classes
 import kotlinx.html.div
@@ -16,7 +15,10 @@ import kotlinx.html.form
 import kotlinx.html.h1
 import kotlinx.html.h3
 import kotlinx.html.hiddenInput
+import kotlinx.html.label
+import kotlinx.html.option
 import kotlinx.html.p
+import kotlinx.html.select
 import kotlinx.html.span
 import kotlinx.html.table
 import kotlinx.html.tbody
@@ -37,59 +39,64 @@ internal fun FlowContent.databaseView(
   poolStats: PoolStats? = null,
 ) {
   h1 {
-    classes = setOf("text-2xl", "font-bold", "text-gray-900", "mb-6")
+    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
     +"Database"
   }
   if (poolStats != null) {
     poolStatsBar(poolStats)
   }
-  div {
-    classes = setOf("flex", "gap-6")
-    // Sidebar: table list.
+  // Table selector dropdown.
+  if (tables.isNotEmpty()) {
     div {
-      classes = setOf("w-56", "flex-shrink-0", "space-y-1")
-      if (tables.isEmpty()) {
-        p {
-          classes = setOf("text-gray-500", "text-sm")
-          +"No tables found."
-        }
+      classes = setOf("mb-6")
+      label {
+        classes = setOf("block", "text-sm", "font-medium", "text-gray-700", "mb-1")
+        +"Table"
       }
-      tables.forEach { tbl ->
-        val fullName = "${tbl.schema}.${tbl.name}"
-        val isActive = fullName == selectedTable
-        a(href = "${config.pathPrefix}/database/tables/${tbl.schema}/${tbl.name}") {
-          classes = if (isActive) {
-            setOf(
-              "block",
-              "px-3",
-              "py-2",
-              "rounded-md",
-              "bg-blue-100",
-              "text-blue-800",
-              "font-medium",
-              "text-sm",
-              "font-mono",
-            )
-          } else {
-            setOf("block", "px-3", "py-2", "rounded-md", "text-gray-600", "hover:bg-gray-100", "text-sm", "font-mono")
+      select {
+        classes = setOf(
+          "w-full",
+          "p-2",
+          "border",
+          "border-gray-300",
+          "shadow-sm",
+          "rounded-md",
+          "font-mono",
+          "text-sm",
+        )
+        attributes["onchange"] = "if(this.value) window.location.href=this.value"
+        option {
+          value = ""
+          selected = selectedTable == null
+          +"Select a table..."
+        }
+        tables.forEach { tbl ->
+          val fullName = "${tbl.schema}.${tbl.name}"
+          option {
+            value = "${config.pathPrefix}/database/tables/${tbl.schema}/${tbl.name}"
+            selected = fullName == selectedTable
+            +fullName
           }
-          +tbl.name
         }
       }
     }
-    // Main content.
-    div {
-      classes = setOf("flex-1", "space-y-6")
-      // Table schema.
-      if (selectedTable != null && columns != null) {
-        tableSchemaCard(selectedTable, columns)
-      }
-      // SQL query area.
-      sqlQueryArea(config, selectedTable, querySql)
-      // Query results (inline).
-      if (queryResult != null) {
-        queryResultCard(queryResult)
-      }
+  } else {
+    p {
+      classes = setOf("text-gray-500", "text-sm", "mb-6")
+      +"No tables found."
+    }
+  }
+  div {
+    classes = setOf("space-y-6")
+    // Table schema.
+    if (selectedTable != null && columns != null) {
+      tableSchemaCard(selectedTable, columns)
+    }
+    // SQL query area.
+    sqlQueryArea(config, selectedTable, querySql)
+    // Query results (inline).
+    if (queryResult != null) {
+      queryResultCard(queryResult)
     }
   }
 }
@@ -97,7 +104,7 @@ internal fun FlowContent.databaseView(
 @Suppress("LongMethod")
 private fun FlowContent.tableSchemaCard(selectedTable: String, columns: List<ColumnInfo>) {
   div {
-    classes = setOf("bg-white", "rounded-xl", "shadow-md", "p-6")
+    classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-6")
     h3 {
       classes = setOf("text-lg", "font-semibold", "text-gray-900", "mb-3")
       +"Schema: $selectedTable"
@@ -162,14 +169,14 @@ private fun FlowContent.tableSchemaCard(selectedTable: String, columns: List<Col
 @Suppress("LongMethod")
 private fun FlowContent.queryResultCard(result: SqlQueryResult) {
   div {
-    classes = setOf("bg-white", "rounded-xl", "shadow-md", "p-6")
+    classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-6")
     h3 {
       classes = setOf("text-lg", "font-semibold", "text-gray-900", "mb-3")
       +"Results"
     }
     if (result.error != null) {
       div {
-        classes = setOf("bg-red-50", "border", "border-red-200", "text-red-800", "px-4", "py-3", "rounded-lg")
+        classes = setOf("bg-red-50", "border", "border-red-200", "text-red-700", "px-4", "py-3", "rounded-lg")
         +result.error
       }
     } else {
@@ -230,7 +237,7 @@ private fun FlowContent.queryResultCard(result: SqlQueryResult) {
 @Suppress("LongMethod")
 private fun FlowContent.sqlQueryArea(config: AdminDashboardConfig, selectedTable: String?, currentSql: String = "") {
   div {
-    classes = setOf("bg-white", "rounded-xl", "shadow-md", "p-6")
+    classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-6")
     attributes["data-controller"] = "sql"
     h3 {
       classes = setOf("text-lg", "font-semibold", "text-gray-900", "mb-3")
@@ -265,6 +272,7 @@ private fun FlowContent.sqlQueryArea(config: AdminDashboardConfig, selectedTable
           "p-3",
           "border",
           "border-gray-300",
+          "shadow-sm",
           "rounded-md",
           "font-mono",
           "text-sm",
@@ -277,7 +285,16 @@ private fun FlowContent.sqlQueryArea(config: AdminDashboardConfig, selectedTable
       div {
         classes = setOf("mt-3")
         button(type = ButtonType.submit) {
-          classes = setOf("px-6", "py-2", "bg-blue-600", "text-white", "rounded-md", "hover:bg-blue-700", "font-medium")
+          classes = setOf(
+            "px-6",
+            "py-2",
+            "bg-indigo-600",
+            "text-white",
+            "rounded-md",
+            "hover:bg-indigo-500",
+            "font-semibold",
+            "shadow-sm",
+          )
           +"Run Query"
         }
       }
@@ -287,7 +304,7 @@ private fun FlowContent.sqlQueryArea(config: AdminDashboardConfig, selectedTable
 
 private fun FlowContent.poolStatsBar(stats: PoolStats) {
   div {
-    classes = setOf("bg-white", "rounded-xl", "shadow-md", "p-4", "mb-6", "flex", "flex-wrap", "gap-4", "items-center")
+    classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-4", "mb-6", "flex", "flex-wrap", "gap-4", "items-center")
     span {
       classes = setOf("text-sm", "font-semibold", "text-gray-700")
       +"Connection Pool"

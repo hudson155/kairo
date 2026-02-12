@@ -16,7 +16,7 @@ import kotlinx.html.tr
 
 internal fun FlowContent.jvmView(config: AdminDashboardConfig, jvmCollector: JvmCollector) {
   h1 {
-    classes = setOf("text-2xl", "font-bold", "text-gray-900", "mb-6")
+    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
     +"JVM"
   }
   div {
@@ -61,7 +61,7 @@ private fun FlowContent.jvmStatsContent(jvmCollector: JvmCollector) {
 
 private fun FlowContent.statsCard(title: String, data: Map<String, String>) {
   div {
-    classes = setOf("bg-white", "rounded-xl", "shadow-md", "p-5")
+    classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-5")
     h3 {
       classes = setOf("text-lg", "font-semibold", "text-gray-900", "mb-3")
       +title

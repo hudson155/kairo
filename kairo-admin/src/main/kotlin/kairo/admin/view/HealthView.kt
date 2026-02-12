@@ -21,7 +21,7 @@ internal fun FlowContent.healthView(
   hasChecks: Boolean,
 ) {
   h1 {
-    classes = setOf("text-2xl", "font-bold", "text-gray-900", "mb-6")
+    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
     +"Health Checks"
   }
   if (!hasChecks) {
@@ -35,7 +35,16 @@ internal fun FlowContent.healthView(
     classes = setOf("mb-4")
     form(action = "${config.pathPrefix}/health/run", method = FormMethod.post) {
       button(type = ButtonType.submit) {
-        classes = setOf("px-6", "py-2", "bg-blue-600", "text-white", "rounded-md", "hover:bg-blue-700", "font-medium")
+        classes = setOf(
+          "px-6",
+          "py-2",
+          "bg-indigo-600",
+          "text-white",
+          "rounded-md",
+          "hover:bg-indigo-500",
+          "font-semibold",
+          "shadow-sm",
+        )
         +"Run All Checks"
       }
     }
@@ -53,14 +62,14 @@ internal fun FlowContent.healthView(
 @Suppress("LongMethod")
 private fun FlowContent.healthCheckCard(result: HealthCheckResult) {
   div {
-    classes = setOf("bg-white", "rounded-xl", "shadow-md", "p-5")
+    classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-5")
     div {
       classes = setOf("flex", "items-center", "gap-3")
       span {
         classes = if (result.passed) {
-          setOf("px-2", "py-1", "text-xs", "bg-green-100", "text-green-800", "rounded-full", "font-medium")
+          setOf("px-2", "py-1", "text-xs", "bg-green-50", "text-green-700", "rounded-full", "font-medium")
         } else {
-          setOf("px-2", "py-1", "text-xs", "bg-red-100", "text-red-800", "rounded-full", "font-medium")
+          setOf("px-2", "py-1", "text-xs", "bg-red-50", "text-red-700", "rounded-full", "font-medium")
         }
         +if (result.passed) "PASS" else "FAIL"
       }
@@ -80,7 +89,7 @@ private fun FlowContent.healthCheckCard(result: HealthCheckResult) {
           "bg-red-50",
           "border",
           "border-red-200",
-          "text-red-800",
+          "text-red-700",
           "px-4",
           "py-3",
           "rounded-lg",

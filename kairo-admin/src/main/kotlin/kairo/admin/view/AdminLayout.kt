@@ -9,6 +9,7 @@ import kotlinx.html.button
 import kotlinx.html.classes
 import kotlinx.html.div
 import kotlinx.html.head
+import kotlinx.html.hr
 import kotlinx.html.link
 import kotlinx.html.main
 import kotlinx.html.meta
@@ -18,7 +19,7 @@ import kotlinx.html.span
 import kotlinx.html.title
 import kotlinx.html.unsafe
 
-@Suppress("LongMethod")
+@Suppress("LongMethod", "CognitiveComplexMethod")
 internal fun HTML.adminLayout(
   config: AdminDashboardConfig,
   activeTab: String,
@@ -37,7 +38,7 @@ internal fun HTML.adminLayout(
     }
   }
   body {
-    classes = setOf("bg-gray-50", "min-h-screen")
+    classes = setOf("bg-white", "min-h-screen")
     attributes["data-controller"] = "sidebar"
     // Overlay for mobile sidebar.
     div {
@@ -50,12 +51,26 @@ internal fun HTML.adminLayout(
     div {
       classes = setOf("md:hidden", "bg-gray-900", "p-3", "flex", "items-center")
       button {
-        classes = setOf("text-white", "p-2")
+        classes = setOf("text-gray-400", "hover:text-white", "p-2")
         attributes["data-action"] = "click->sidebar#toggle"
-        span { unsafe { +"&#9776;" } }
+        // Hamburger icon (visible when closed).
+        span {
+          attributes["data-sidebar-target"] = "openIcon"
+          unsafe {
+            +hamburgerIcon
+          }
+        }
+        // X icon (visible when open).
+        span {
+          classes = setOf("hidden")
+          attributes["data-sidebar-target"] = "closeIcon"
+          unsafe {
+            +closeIcon
+          }
+        }
       }
       span {
-        classes = setOf("text-white", "font-bold", "ml-auto", "pr-4")
+        classes = setOf("text-white", "font-semibold", "ml-auto", "pr-4")
         +config.title
       }
     }
@@ -64,11 +79,14 @@ internal fun HTML.adminLayout(
       // Sidebar: hidden off-screen on mobile, always visible on md+.
       nav {
         classes = setOf(
-          "w-64",
+          "w-72",
           "bg-gray-900",
           "text-white",
           "min-h-screen",
-          "p-4",
+          "flex",
+          "flex-col",
+          "gap-y-5",
+          "p-6",
           "fixed",
           "inset-y-0",
           "left-0",
@@ -81,23 +99,40 @@ internal fun HTML.adminLayout(
         )
         attributes["data-sidebar-target"] = "sidebar"
         a(href = "${config.pathPrefix}/") {
-          classes = setOf("block", "text-xl", "font-bold", "mb-8", "hover:text-gray-300")
+          classes = setOf("block", "text-lg", "font-semibold", "mb-6", "hover:text-gray-300", "tracking-tight")
           +config.title
         }
-        tabLink("Home", "", activeTab, config)
-        tabLink("Config", "config", activeTab, config)
-        tabLink("Database", "database", activeTab, config)
-        tabLink("Dependencies", "dependencies", activeTab, config)
-        tabLink("Endpoints", "endpoints", activeTab, config)
-        tabLink("Errors", "errors", activeTab, config)
-        tabLink("Features", "features", activeTab, config)
-        tabLink("Health", "health", activeTab, config)
-        tabLink("Integrations", "integrations", activeTab, config)
-        tabLink("JVM", "jvm", activeTab, config)
-        tabLink("Logging", "logging", activeTab, config)
+        div {
+          classes = setOf("space-y-1")
+          tabLink("Home", "", activeTab, config)
+          tabLink("Config", "config", activeTab, config)
+          tabLink("Database", "database", activeTab, config)
+          tabLink("Dependencies", "dependencies", activeTab, config)
+          tabLink("Endpoints", "endpoints", activeTab, config)
+          tabLink("Errors", "errors", activeTab, config)
+          tabLink("Features", "features", activeTab, config)
+          tabLink("Health", "health", activeTab, config)
+          tabLink("Integrations", "integrations", activeTab, config)
+          tabLink("JVM", "jvm", activeTab, config)
+          tabLink("Logging", "logging", activeTab, config)
+        }
+        if (config.docsUrl != null || config.apiDocsUrl != null) {
+          hr {
+            classes = setOf("border-gray-700", "my-4")
+          }
+          div {
+            classes = setOf("space-y-1")
+            if (config.docsUrl != null) {
+              externalLink("Docs", config.docsUrl)
+            }
+            if (config.apiDocsUrl != null) {
+              externalLink("Kairo Docs", config.apiDocsUrl)
+            }
+          }
+        }
       }
       main {
-        classes = setOf("flex-1", "p-6", "overflow-auto")
+        classes = setOf("flex-1", "p-8", "overflow-auto", "bg-gray-50")
         content()
       }
     }
@@ -114,10 +149,54 @@ private fun FlowContent.tabLink(
   val isActive = tab == activeTab
   a(href = href) {
     classes = if (isActive) {
-      setOf("block", "px-4", "py-2", "mb-1", "rounded-md", "bg-gray-700", "text-white", "font-medium")
+      setOf("block", "rounded-md", "p-2", "text-sm", "leading-6", "font-semibold", "bg-gray-800", "text-white")
     } else {
-      setOf("block", "px-4", "py-2", "mb-1", "rounded-md", "text-gray-300", "hover:bg-gray-800", "hover:text-white")
+      setOf(
+        "block",
+        "rounded-md",
+        "p-2",
+        "text-sm",
+        "leading-6",
+        "font-semibold",
+        "text-gray-400",
+        "hover:text-white",
+        "hover:bg-gray-800",
+      )
     }
     +label
   }
 }
+
+private fun FlowContent.externalLink(label: String, url: String) {
+  a(href = url) {
+    attributes["target"] = "_blank"
+    attributes["rel"] = "noopener noreferrer"
+    classes = setOf(
+      "flex",
+      "items-center",
+      "justify-between",
+      "rounded-md",
+      "p-2",
+      "text-sm",
+      "leading-6",
+      "font-semibold",
+      "text-gray-400",
+      "hover:text-white",
+      "hover:bg-gray-800",
+    )
+    +label
+    unsafe { +externalLinkIcon }
+  }
+}
+
+@Suppress("MaximumLineLength")
+private val externalLinkIcon: String =
+  """<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>"""
+
+@Suppress("MaximumLineLength")
+private val hamburgerIcon: String =
+  """<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>"""
+
+@Suppress("MaximumLineLength")
+private val closeIcon: String =
+  """<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>"""

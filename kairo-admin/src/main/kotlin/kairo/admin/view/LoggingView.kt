@@ -27,7 +27,7 @@ private val logLevels: List<String> = listOf("TRACE", "DEBUG", "INFO", "WARN", "
 @Suppress("LongMethod")
 internal fun FlowContent.loggingView(config: AdminDashboardConfig, loggers: List<LoggerInfo>) {
   h1 {
-    classes = setOf("text-2xl", "font-bold", "text-gray-900", "mb-6")
+    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
     +"Logging"
   }
   if (loggers.isEmpty()) {
@@ -38,7 +38,7 @@ internal fun FlowContent.loggingView(config: AdminDashboardConfig, loggers: List
     return
   }
   div {
-    classes = setOf("bg-white", "rounded-xl", "shadow-md", "p-6")
+    classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-6")
     table {
       classes = setOf("w-full", "text-sm")
       thead {
@@ -99,7 +99,7 @@ private fun TBODY.loggerRow(config: AdminDashboardConfig, logger: LoggerInfo) {
           }
         }
         button(type = ButtonType.submit) {
-          classes = setOf("px-3", "py-1", "text-xs", "bg-blue-600", "text-white", "rounded-md", "hover:bg-blue-700")
+          classes = setOf("px-3", "py-1", "text-xs", "bg-indigo-600", "text-white", "rounded-md", "hover:bg-indigo-500")
           +"Set"
         }
       }

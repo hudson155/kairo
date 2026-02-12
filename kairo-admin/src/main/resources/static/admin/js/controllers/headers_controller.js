@@ -10,12 +10,13 @@ export default class extends Controller {
     row.className = "flex items-center space-x-2 mb-2"
     row.innerHTML = `
       <input type="text" data-header-name placeholder="Header name"
-             class="flex-1 p-2 text-sm border border-gray-300 rounded-md font-mono focus:outline-none focus:ring-2 focus:ring-blue-500" />
+             class="flex-1 p-2 text-sm border border-gray-300 rounded-md font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500" />
       <input type="text" data-header-value placeholder="Header value"
-             class="flex-1 p-2 text-sm border border-gray-300 rounded-md font-mono focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      <button type="button" data-action="headers#remove"
-              class="px-2 py-1 text-sm text-red-800 bg-red-100 rounded-md hover:bg-red-200 cursor-pointer">&times;</button>
+             class="flex-1 p-2 text-sm border border-gray-300 rounded-md font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      <button type="button"
+              class="px-2 py-1 text-sm text-red-700 bg-red-50 rounded-md hover:bg-red-100 cursor-pointer">&times;</button>
     `
+    row.querySelector("button").addEventListener("click", (e) => this.remove(e))
     this.containerTarget.appendChild(row)
   }
 

@@ -14,20 +14,19 @@ import io.ktor.server.routing.routing
 import kairo.admin.AdminDashboardConfig
 import kairo.admin.collector.ConfigCollector
 import kairo.admin.collector.DatabaseCollector
+import kairo.admin.collector.DependencyCollector
 import kairo.admin.collector.EndpointCollector
 import kairo.admin.collector.ErrorCollector
 import kairo.admin.collector.HealthCheckCollector
 import kairo.admin.collector.JvmCollector
 import kairo.admin.collector.LoggingCollector
 import kairo.admin.collector.PoolCollector
-import kairo.admin.model.AdminDependencyInfo
 import kairo.admin.model.AdminIntegrationInfo
 import kairo.admin.model.DashboardStats
 import kairo.admin.view.adminLayout
 import kairo.admin.view.configView
 import kairo.admin.view.databaseView
 import kairo.admin.view.dependenciesView
-import kairo.admin.view.endpointDetailView
 import kairo.admin.view.endpointsView
 import kairo.admin.view.errorsView
 import kairo.admin.view.featuresView
@@ -51,7 +50,7 @@ internal class AdminDashboardHandler(
   private val healthCheckCollector: HealthCheckCollector,
   private val loggingCollector: LoggingCollector,
   private val integrations: List<AdminIntegrationInfo>,
-  private val dependencies: List<AdminDependencyInfo>,
+  private val dependencyCollector: DependencyCollector,
   private val errorCollector: ErrorCollector,
 ) : HasRouting {
   @Suppress("CognitiveComplexMethod", "SuspendFunSwallowedCancellation")
@@ -90,7 +89,7 @@ internal class AdminDashboardHandler(
         featureCount = featureNames.size,
         healthCheckCount = healthCheckCollector.runAll().size,
         integrationCount = integrations.size,
-        dependencyCount = dependencies.size,
+        dependencyCount = dependencyCollector.collect().size,
         errorCount = errorCollector.getAll().size,
       )
       call.respondHtml {
@@ -114,11 +113,10 @@ internal class AdminDashboardHandler(
     get("/endpoints/{index}") {
       val index = call.parameters["index"]?.toIntOrNull() ?: 0
       val endpoints = endpointCollector.collect()
-      val endpoint = endpoints.getOrNull(index)
-      if (endpoint != null) {
+      if (index in endpoints.indices) {
         call.respondHtml {
           adminLayout(config, "endpoints") {
-            endpointDetailView(config, endpoint, index)
+            endpointsView(config, endpoints, index)
           }
         }
       } else {
@@ -303,7 +301,7 @@ internal class AdminDashboardHandler(
     get("/dependencies") {
       call.respondHtml {
         adminLayout(config, "dependencies") {
-          dependenciesView(dependencies)
+          dependenciesView(dependencyCollector.collect(), config)
         }
       }
     }

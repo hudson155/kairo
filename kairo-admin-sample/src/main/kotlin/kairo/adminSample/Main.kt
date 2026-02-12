@@ -2,6 +2,7 @@ package kairo.adminSample
 
 import io.r2dbc.spi.ConnectionFactory
 import kairo.admin.AdminConfigSource
+import kairo.admin.AdminDashboardConfig
 import kairo.admin.AdminDashboardFeature
 import kairo.admin.model.AdminIntegrationInfo
 import kairo.adminSample.author.AuthorApi
@@ -42,6 +43,11 @@ public fun main(): Unit = kairo {
       LibraryBookFeature(koin),
       AuthorFeature(koin),
       AdminDashboardFeature(
+        config = AdminDashboardConfig(
+          docsUrl = "https://github.com/hudson155/kairo/tree/main/kairo-admin-sample",
+          apiDocsUrl = "https://hudson155.github.io/kairo/",
+          githubRepoUrl = "https://github.com/hudson155/kairo",
+        ),
         configSources = listOf(
           AdminConfigSource(
             "common",
@@ -89,6 +95,7 @@ public fun main(): Unit = kairo {
             koin.get<ConnectionFactory>()
           },
         ),
+        koinProvider = { koin },
         integrations = listOf(
           AdminIntegrationInfo(
             name = "PostgreSQL",

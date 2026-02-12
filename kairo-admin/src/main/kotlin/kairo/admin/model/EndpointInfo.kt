@@ -8,6 +8,12 @@ public data class EndpointInfo(
   val contentType: String?,
   val accept: String?,
   val requestBodyType: String?,
+  val requestBodyFields: List<ParamInfo>,
+  val requestBodyExample: String?,
   val responseType: String,
+  val responseFields: List<ParamInfo>,
   val endpointClassName: String,
+  val qualifiedClassName: String,
+  val inputType: String,
+  val isDataObject: Boolean,
 )

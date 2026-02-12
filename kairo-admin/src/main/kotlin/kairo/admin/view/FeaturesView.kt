@@ -16,7 +16,7 @@ import kotlinx.html.tr
 @Suppress("LongMethod")
 internal fun FlowContent.featuresView(featureNames: List<String>) {
   h1 {
-    classes = setOf("text-2xl", "font-bold", "text-gray-900", "mb-6")
+    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
     +"Features"
   }
   if (featureNames.isEmpty()) {
@@ -27,7 +27,7 @@ internal fun FlowContent.featuresView(featureNames: List<String>) {
     return
   }
   div {
-    classes = setOf("bg-white", "rounded-xl", "shadow-md", "p-6")
+    classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-6")
     table {
       classes = setOf("w-full", "text-sm")
       thead {
@@ -62,7 +62,7 @@ internal fun FlowContent.featuresView(featureNames: List<String>) {
             td {
               classes = setOf("py-2")
               span {
-                classes = setOf("px-2", "py-1", "text-xs", "bg-green-100", "text-green-800", "rounded-full")
+                classes = setOf("px-2", "py-1", "text-xs", "bg-green-50", "text-green-700", "rounded-full")
                 +"Running"
               }
             }

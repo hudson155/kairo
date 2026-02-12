@@ -15,7 +15,7 @@ import kotlinx.html.tr
 
 internal fun FlowContent.integrationsView(integrations: List<AdminIntegrationInfo>) {
   h1 {
-    classes = setOf("text-2xl", "font-bold", "text-gray-900", "mb-6")
+    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
     +"Integrations"
   }
   if (integrations.isEmpty()) {
@@ -36,7 +36,7 @@ internal fun FlowContent.integrationsView(integrations: List<AdminIntegrationInf
 @Suppress("LongMethod")
 private fun FlowContent.integrationCard(integration: AdminIntegrationInfo) {
   div {
-    classes = setOf("bg-white", "rounded-xl", "shadow-md", "p-5")
+    classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-5")
     div {
       classes = setOf("flex", "items-center", "gap-3", "mb-3")
       h3 {
@@ -45,8 +45,8 @@ private fun FlowContent.integrationCard(integration: AdminIntegrationInfo) {
       }
       span {
         classes = when (integration.status) {
-          "connected" -> setOf("px-2", "py-1", "text-xs", "bg-green-100", "text-green-800", "rounded-full")
-          "error" -> setOf("px-2", "py-1", "text-xs", "bg-red-100", "text-red-800", "rounded-full")
+          "connected" -> setOf("px-2", "py-1", "text-xs", "bg-green-50", "text-green-700", "rounded-full")
+          "error" -> setOf("px-2", "py-1", "text-xs", "bg-red-50", "text-red-700", "rounded-full")
           else -> setOf("px-2", "py-1", "text-xs", "bg-gray-100", "text-gray-700", "rounded-full")
         }
         +integration.status

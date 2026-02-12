@@ -4,6 +4,7 @@ import io.ktor.server.application.Application
 import io.r2dbc.spi.ConnectionFactory
 import kairo.admin.collector.ConfigCollector
 import kairo.admin.collector.DatabaseCollector
+import kairo.admin.collector.DependencyCollector
 import kairo.admin.collector.EndpointCollector
 import kairo.admin.collector.ErrorCollector
 import kairo.admin.collector.HealthCheckCollector
@@ -11,7 +12,6 @@ import kairo.admin.collector.JvmCollector
 import kairo.admin.collector.LoggingCollector
 import kairo.admin.collector.PoolCollector
 import kairo.admin.handler.AdminDashboardHandler
-import kairo.admin.model.AdminDependencyInfo
 import kairo.admin.model.AdminIntegrationInfo
 import kairo.feature.Feature
 import kairo.rest.HasRouting
@@ -19,6 +19,7 @@ import kairo.rest.RestEndpoint
 import kairo.rest.auth.AuthReceiver
 import kairo.rest.auth.public
 import kotlin.reflect.KClass
+import org.koin.core.Koin
 
 /**
  * The Admin Dashboard Feature adds a server-rendered admin UI under the configured path prefix.
@@ -36,7 +37,7 @@ public class AdminDashboardFeature(
   featureNames: List<String> = emptyList(),
   healthChecks: Map<String, suspend () -> Unit> = emptyMap(),
   integrations: List<AdminIntegrationInfo> = emptyList(),
-  dependencies: List<AdminDependencyInfo> = emptyList(),
+  koinProvider: () -> Koin? = { null },
 ) : Feature(), HasRouting {
   override val name: String = "Admin Dashboard"
 
@@ -53,7 +54,7 @@ public class AdminDashboardFeature(
     healthCheckCollector = HealthCheckCollector(healthChecks),
     loggingCollector = LoggingCollector(),
     integrations = integrations,
-    dependencies = dependencies,
+    dependencyCollector = DependencyCollector(koinProvider),
     errorCollector = errorCollector,
   )
 

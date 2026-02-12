@@ -15,6 +15,7 @@ dependencies {
   implementation(libs.kotlinxHtml)
   implementation(libs.ktorServer.htmlBuilder)
 
+  compileOnly(libs.koin)
   compileOnly(libs.hocon)
   compileOnly(libs.r2dbc.pool)
   compileOnly(libs.postgres.r2dbc)

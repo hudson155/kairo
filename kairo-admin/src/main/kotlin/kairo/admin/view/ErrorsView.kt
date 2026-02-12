@@ -19,7 +19,7 @@ import kotlinx.html.summary
 @Suppress("LongMethod")
 internal fun FlowContent.errorsView(config: AdminDashboardConfig, errors: List<ErrorRecord>) {
   h1 {
-    classes = setOf("text-2xl", "font-bold", "text-gray-900", "mb-6")
+    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
     +"Errors"
   }
   if (errors.isNotEmpty()) {
@@ -31,10 +31,10 @@ internal fun FlowContent.errorsView(config: AdminDashboardConfig, errors: List<E
             "px-4",
             "py-2",
             "text-sm",
-            "bg-red-100",
-            "text-red-800",
+            "bg-red-50",
+            "text-red-700",
             "rounded-md",
-            "hover:bg-red-200",
+            "hover:bg-red-100",
             "font-medium",
           )
           +"Clear All (${errors.size})"
@@ -59,12 +59,12 @@ internal fun FlowContent.errorsView(config: AdminDashboardConfig, errors: List<E
 
 private fun FlowContent.errorCard(error: ErrorRecord) {
   div {
-    classes = setOf("bg-white", "rounded-xl", "shadow-md", "p-5")
+    classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-5")
     div {
       classes = setOf("flex", "items-center", "gap-3", "mb-2")
       error.statusCode?.let { code ->
         span {
-          classes = setOf("px-2", "py-1", "text-xs", "bg-red-100", "text-red-800", "rounded-full", "font-mono")
+          classes = setOf("px-2", "py-1", "text-xs", "bg-red-50", "text-red-700", "rounded-full", "font-mono")
           +"$code"
         }
       }
