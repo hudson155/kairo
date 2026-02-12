@@ -18,10 +18,12 @@ import kotlinx.html.summary
 
 @Suppress("LongMethod")
 internal fun FlowContent.errorsView(config: AdminDashboardConfig, errors: List<ErrorRecord>) {
-  h1 {
-    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
-    +"Errors"
-  }
+  pageHeader(
+    "Errors",
+    "Recent server errors captured at runtime." +
+      " Shows error type, status code, message, and stack trace." +
+      " Errors are stored in memory and can be cleared.",
+  )
   if (errors.isNotEmpty()) {
     div {
       classes = setOf("mb-4")

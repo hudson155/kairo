@@ -24,9 +24,11 @@ import kairo.admin.collector.PoolCollector
 import kairo.admin.model.AdminIntegrationInfo
 import kairo.admin.model.DashboardStats
 import kairo.admin.view.adminLayout
+import kairo.admin.view.authView
 import kairo.admin.view.configView
 import kairo.admin.view.databaseView
 import kairo.admin.view.dependenciesView
+import kairo.admin.view.emailView
 import kairo.admin.view.endpointsView
 import kairo.admin.view.errorsView
 import kairo.admin.view.featuresView
@@ -36,6 +38,7 @@ import kairo.admin.view.integrationsView
 import kairo.admin.view.jvmStatsPartial
 import kairo.admin.view.jvmView
 import kairo.admin.view.loggingView
+import kairo.admin.view.slackView
 import kairo.rest.HasRouting
 
 @Suppress("LongMethod", "LongParameterList")
@@ -52,7 +55,16 @@ internal class AdminDashboardHandler(
   private val integrations: List<AdminIntegrationInfo>,
   private val dependencyCollector: DependencyCollector,
   private val errorCollector: ErrorCollector,
+  private val slackChannels: Map<String, String>? = null,
+  private val stytchModules: List<String>? = null,
+  private val emailTemplates: Map<String, String>? = null,
 ) : HasRouting {
+  private val optionalTabs: Set<String> = buildSet {
+    if (slackChannels != null) add("slack")
+    if (stytchModules != null) add("auth")
+    if (emailTemplates != null) add("email")
+  }
+
   @Suppress("CognitiveComplexMethod", "SuspendFunSwallowedCancellation")
   override fun Application.routing() {
     routing {
@@ -70,6 +82,9 @@ internal class AdminDashboardHandler(
         dependencyRoutes()
         integrationRoutes()
         errorRoutes()
+        if (slackChannels != null) slackRoutes()
+        if (stytchModules != null) authRoutes()
+        if (emailTemplates != null) emailRoutes()
       }
     }
   }
@@ -91,9 +106,12 @@ internal class AdminDashboardHandler(
         integrationCount = integrations.size,
         dependencyCount = dependencyCollector.collect().size,
         errorCount = errorCollector.getAll().size,
+        slackChannelCount = slackChannels?.size,
+        stytchModuleCount = stytchModules?.size,
+        emailTemplateCount = emailTemplates?.size,
       )
       call.respondHtml {
-        adminLayout(config, "") {
+        adminLayout(config, optionalTabs, "") {
           homeView(config, stats)
         }
       }
@@ -104,7 +122,7 @@ internal class AdminDashboardHandler(
     get("/endpoints") {
       val endpoints = endpointCollector.collect()
       call.respondHtml {
-        adminLayout(config, "endpoints") {
+        adminLayout(config, optionalTabs, "endpoints") {
           endpointsView(config, endpoints)
         }
       }
@@ -115,7 +133,7 @@ internal class AdminDashboardHandler(
       val endpoints = endpointCollector.collect()
       if (index in endpoints.indices) {
         call.respondHtml {
-          adminLayout(config, "endpoints") {
+          adminLayout(config, optionalTabs, "endpoints") {
             endpointsView(config, endpoints, index)
           }
         }
@@ -130,7 +148,7 @@ internal class AdminDashboardHandler(
       val sources = configCollector.collect()
       val effectiveConfig = configCollector.effectiveConfig()
       call.respondHtml {
-        adminLayout(config, "config") {
+        adminLayout(config, optionalTabs, "config") {
           configView(config, sources, effectiveConfig)
         }
       }
@@ -140,7 +158,7 @@ internal class AdminDashboardHandler(
   private fun Route.jvmRoutes() {
     get("/jvm") {
       call.respondHtml {
-        adminLayout(config, "jvm") {
+        adminLayout(config, optionalTabs, "jvm") {
           jvmView(config, jvmCollector)
         }
       }
@@ -167,7 +185,7 @@ internal class AdminDashboardHandler(
         null
       }
       call.respondHtml {
-        adminLayout(config, "database") {
+        adminLayout(config, optionalTabs, "database") {
           databaseView(config, tables, null, null, poolStats = poolStats)
         }
       }
@@ -192,7 +210,7 @@ internal class AdminDashboardHandler(
         null
       }
       call.respondHtml {
-        adminLayout(config, "database") {
+        adminLayout(config, optionalTabs, "database") {
           databaseView(config, tables, "$schema.$tableName", columns, poolStats = poolStats)
         }
       }
@@ -225,7 +243,7 @@ internal class AdminDashboardHandler(
         null
       }
       call.respondHtml {
-        adminLayout(config, "database") {
+        adminLayout(config, optionalTabs, "database") {
           databaseView(config, tables, selectedTable, columns, result, sql, poolStats)
         }
       }
@@ -235,7 +253,7 @@ internal class AdminDashboardHandler(
   private fun Route.featureRoutes() {
     get("/features") {
       call.respondHtml {
-        adminLayout(config, "features") {
+        adminLayout(config, optionalTabs, "features") {
           featuresView(featureNames)
         }
       }
@@ -245,7 +263,7 @@ internal class AdminDashboardHandler(
   private fun Route.healthRoutes() {
     get("/health") {
       call.respondHtml {
-        adminLayout(config, "health") {
+        adminLayout(config, optionalTabs, "health") {
           healthView(config, emptyList(), healthCheckCollector.hasChecks)
         }
       }
@@ -254,7 +272,7 @@ internal class AdminDashboardHandler(
     post("/health/run") {
       val results = healthCheckCollector.runAll()
       call.respondHtml {
-        adminLayout(config, "health") {
+        adminLayout(config, optionalTabs, "health") {
           healthView(config, results, true)
         }
       }
@@ -269,7 +287,7 @@ internal class AdminDashboardHandler(
         emptyList()
       }
       call.respondHtml {
-        adminLayout(config, "logging") {
+        adminLayout(config, optionalTabs, "logging") {
           loggingView(config, loggers)
         }
       }
@@ -291,7 +309,7 @@ internal class AdminDashboardHandler(
   private fun Route.dependencyRoutes() {
     get("/dependencies") {
       call.respondHtml {
-        adminLayout(config, "dependencies") {
+        adminLayout(config, optionalTabs, "dependencies") {
           dependenciesView(dependencyCollector.collect(), config)
         }
       }
@@ -301,7 +319,7 @@ internal class AdminDashboardHandler(
   private fun Route.integrationRoutes() {
     get("/integrations") {
       call.respondHtml {
-        adminLayout(config, "integrations") {
+        adminLayout(config, optionalTabs, "integrations") {
           integrationsView(integrations)
         }
       }
@@ -311,7 +329,7 @@ internal class AdminDashboardHandler(
   private fun Route.errorRoutes() {
     get("/errors") {
       call.respondHtml {
-        adminLayout(config, "errors") {
+        adminLayout(config, optionalTabs, "errors") {
           errorsView(config, errorCollector.getAll())
         }
       }
@@ -320,6 +338,36 @@ internal class AdminDashboardHandler(
     post("/errors/clear") {
       errorCollector.clear()
       call.respondRedirect("${config.pathPrefix}/errors")
+    }
+  }
+
+  private fun Route.slackRoutes() {
+    get("/slack") {
+      call.respondHtml {
+        adminLayout(config, optionalTabs, "slack") {
+          slackView(slackChannels!!)
+        }
+      }
+    }
+  }
+
+  private fun Route.authRoutes() {
+    get("/auth") {
+      call.respondHtml {
+        adminLayout(config, optionalTabs, "auth") {
+          authView(stytchModules!!)
+        }
+      }
+    }
+  }
+
+  private fun Route.emailRoutes() {
+    get("/email") {
+      call.respondHtml {
+        adminLayout(config, optionalTabs, "email") {
+          emailView(emailTemplates!!)
+        }
+      }
     }
   }
 }

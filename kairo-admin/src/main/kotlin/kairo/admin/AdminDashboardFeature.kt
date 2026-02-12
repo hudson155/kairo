@@ -21,8 +21,13 @@ import kairo.feature.FeaturePriority
 import kairo.feature.LifecycleHandler
 import kairo.feature.lifecycle
 import kairo.healthCheck.HealthCheckFeature
+import kairo.mailersend.Mailer
+import kairo.mailersend.MailersendFeature
 import kairo.rest.HasRouting
 import kairo.rest.restEndpointClasses
+import kairo.slack.SlackClient
+import kairo.slack.SlackFeature
+import kairo.stytch.StytchFeature
 import org.koin.core.Koin
 
 /**
@@ -67,6 +72,10 @@ public class AdminDashboardFeature(
 
           val effectiveConfig = generateEffectiveConfig(resolvedConfigSources)
 
+          val slackChannels = discoverSlackChannels(features, koin)
+          val stytchModules = discoverStytchModules(features)
+          val emailTemplates = discoverEmailTemplates(features, koin)
+
           adminDashboardHandler = AdminDashboardHandler(
             config = resolvedConfig,
             endpointCollector = EndpointCollector { ktorApplication!!.restEndpointClasses.toList() },
@@ -80,6 +89,9 @@ public class AdminDashboardFeature(
             integrations = resolvedIntegrations,
             dependencyCollector = DependencyCollector { koin },
             errorCollector = errorCollector,
+            slackChannels = slackChannels,
+            stytchModules = stytchModules,
+            emailTemplates = emailTemplates,
           )
         }
       }
@@ -93,16 +105,25 @@ public class AdminDashboardFeature(
   public companion object
 }
 
-private fun discoverHealthChecks(features: List<Feature>): Map<String, suspend () -> Unit> {
-  val hcFeature = features.filterIsInstance<HealthCheckFeature>().firstOrNull()
-    ?: return emptyMap()
-  return hcFeature.registeredHealthChecks.mapValues { (_, check) ->
-    suspend { check.check() }
+@Suppress("SwallowedException")
+private fun discoverHealthChecks(features: List<Feature>): Map<String, suspend () -> Unit> =
+  try {
+    val hcFeature = features.filterIsInstance<HealthCheckFeature>().firstOrNull()
+      ?: return emptyMap()
+    hcFeature.registeredHealthChecks.mapValues { (_, check) ->
+      suspend { check.check() }
+    }
+  } catch (_: NoClassDefFoundError) {
+    emptyMap()
   }
-}
 
+@Suppress("SwallowedException")
 private fun discoverKoin(features: List<Feature>): Koin? =
-  features.filterIsInstance<DependencyInjectionFeature>().firstOrNull()?.koin
+  try {
+    features.filterIsInstance<DependencyInjectionFeature>().firstOrNull()?.koin
+  } catch (_: NoClassDefFoundError) {
+    null
+  }
 
 private fun discoverConnectionFactory(koin: Koin?): () -> ConnectionFactory? = {
   try {
@@ -147,6 +168,42 @@ private fun generateEffectiveConfig(sources: List<AdminConfigSource>): String? =
       merged = ConfigFactory.parseString(source.content).withFallback(merged)
     }
     merged.resolve().root().render(renderOptions)
+  } catch (_: Exception) {
+    null
+  }
+
+@Suppress("SwallowedException")
+private fun discoverSlackChannels(features: List<Feature>, koin: Koin?): Map<String, String>? =
+  try {
+    features.filterIsInstance<SlackFeature>().firstOrNull() ?: return null
+    koin?.get<SlackClient>()?.channels
+  } catch (_: NoClassDefFoundError) {
+    null
+  } catch (_: Exception) {
+    null
+  }
+
+@Suppress("SwallowedException")
+private fun discoverStytchModules(features: List<Feature>): List<String>? =
+  try {
+    features.filterIsInstance<StytchFeature>().firstOrNull() ?: return null
+    listOf(
+      "Connected Apps", "Crypto Wallets", "Debug", "Fraud", "IDP",
+      "Impersonation", "M2M", "Magic Links", "OAuth", "OTPs",
+      "Passwords", "Project", "RBAC", "Sessions", "TOTPs",
+      "Users", "WebAuthn",
+    )
+  } catch (_: NoClassDefFoundError) {
+    null
+  }
+
+@Suppress("SwallowedException")
+private fun discoverEmailTemplates(features: List<Feature>, koin: Koin?): Map<String, String>? =
+  try {
+    features.filterIsInstance<MailersendFeature>().firstOrNull() ?: return null
+    koin?.get<Mailer>()?.templates
+  } catch (_: NoClassDefFoundError) {
+    null
   } catch (_: Exception) {
     null
   }

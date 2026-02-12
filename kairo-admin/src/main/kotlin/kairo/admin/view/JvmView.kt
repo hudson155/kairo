@@ -15,10 +15,11 @@ import kotlinx.html.td
 import kotlinx.html.tr
 
 internal fun FlowContent.jvmView(config: AdminDashboardConfig, jvmCollector: JvmCollector) {
-  h1 {
-    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
-    +"JVM"
-  }
+  pageHeader(
+    "JVM",
+    "Live JVM metrics including memory usage, thread counts, runtime info, and garbage collector statistics." +
+      " Auto-refreshes every 5 seconds.",
+  )
   div {
     attributes["data-controller"] = "refresh"
     attributes["data-refresh-url-value"] = "${config.pathPrefix}/jvm/refresh"

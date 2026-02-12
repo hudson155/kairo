@@ -3,7 +3,6 @@ package kairo.admin.view
 import kotlinx.html.FlowContent
 import kotlinx.html.classes
 import kotlinx.html.div
-import kotlinx.html.h1
 import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.table
@@ -14,15 +13,26 @@ import kotlinx.html.thead
 import kotlinx.html.tr
 
 @Suppress("LongMethod")
-internal fun FlowContent.featuresView(featureNames: List<String>) {
+internal fun FlowContent.emailView(templates: Map<String, String>) {
   pageHeader(
-    "Features",
-    "All Kairo features registered and running in this server instance.",
+    "Email",
+    "MailerSend email integration. Shows configured email templates and their IDs.",
   )
-  if (featureNames.isEmpty()) {
+  div {
+    classes = setOf("flex", "items-center", "gap-3", "mb-6")
+    span {
+      classes = setOf("px-2", "py-1", "text-xs", "bg-green-50", "text-green-700", "rounded-full", "font-medium")
+      +"Connected"
+    }
+    span {
+      classes = setOf("text-sm", "text-gray-500")
+      +"MailerSend"
+    }
+  }
+  if (templates.isEmpty()) {
     p {
       classes = setOf("text-gray-500")
-      +"No features registered."
+      +"No email templates configured."
     }
     return
   }
@@ -35,36 +45,25 @@ internal fun FlowContent.featuresView(featureNames: List<String>) {
           classes = setOf("border-b")
           th {
             classes = setOf("text-left", "py-2", "pr-4", "font-medium", "text-gray-500")
-            +"#"
-          }
-          th {
-            classes = setOf("text-left", "py-2", "pr-4", "font-medium", "text-gray-500")
-            +"Feature"
+            +"Template Name"
           }
           th {
             classes = setOf("text-left", "py-2", "font-medium", "text-gray-500")
-            +"Status"
+            +"Template ID"
           }
         }
       }
       tbody {
-        featureNames.forEachIndexed { index, name ->
+        templates.entries.sortedBy { it.key }.forEach { (name, id) ->
           tr {
             classes = setOf("border-b", "border-gray-100")
-            td {
-              classes = setOf("py-2", "pr-4", "text-gray-400", "font-mono", "text-xs")
-              +"${index + 1}"
-            }
             td {
               classes = setOf("py-2", "pr-4", "font-medium")
               +name
             }
             td {
-              classes = setOf("py-2")
-              span {
-                classes = setOf("px-2", "py-1", "text-xs", "bg-green-50", "text-green-700", "rounded-full")
-                +"Running"
-              }
+              classes = setOf("py-2", "font-mono", "text-xs", "text-gray-600")
+              +id
             }
           }
         }

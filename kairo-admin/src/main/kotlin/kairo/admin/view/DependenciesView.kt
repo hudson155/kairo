@@ -26,10 +26,11 @@ internal fun FlowContent.dependenciesView(
   dependencies: List<AdminDependencyInfo>,
   config: AdminDashboardConfig,
 ) {
-  h1 {
-    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
-    +"Dependencies"
-  }
+  pageHeader(
+    "Dependencies",
+    "View all Koin dependency injection bindings registered in the application." +
+      " Search and expand entries to see details like scope, qualifier, and type.",
+  )
   if (dependencies.isEmpty()) {
     p {
       classes = setOf("text-gray-500")

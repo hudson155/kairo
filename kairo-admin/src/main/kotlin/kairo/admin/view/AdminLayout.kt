@@ -10,6 +10,7 @@ import kotlinx.html.classes
 import kotlinx.html.div
 import kotlinx.html.head
 import kotlinx.html.hr
+import kotlinx.html.img
 import kotlinx.html.link
 import kotlinx.html.main
 import kotlinx.html.meta
@@ -19,9 +20,10 @@ import kotlinx.html.span
 import kotlinx.html.title
 import kotlinx.html.unsafe
 
-@Suppress("LongMethod", "CognitiveComplexMethod")
+@Suppress("LongMethod", "CognitiveComplexMethod", "LongParameterList")
 internal fun HTML.adminLayout(
   config: AdminDashboardConfig,
+  optionalTabs: Set<String> = emptySet(),
   activeTab: String,
   content: FlowContent.() -> Unit,
 ) {
@@ -29,6 +31,7 @@ internal fun HTML.adminLayout(
     meta(charset = "utf-8")
     meta(name = "viewport", content = "width=device-width, initial-scale=1")
     title { +"${config.serverName ?: config.title} - Admin" }
+    link(rel = "icon", type = "image/png", href = "${config.pathPrefix}/static/img/logo.png")
     link(rel = "stylesheet", href = "${config.pathPrefix}/static/css/tailwind.css")
     script(src = "${config.pathPrefix}/static/vendor/turbo.es2017-esm.js") {
       attributes["type"] = "module"
@@ -99,24 +102,39 @@ internal fun HTML.adminLayout(
         )
         attributes["data-sidebar-target"] = "sidebar"
         a(href = "${config.pathPrefix}/") {
-          classes = setOf("block", "text-lg", "font-semibold", "mb-6", "hover:text-gray-300", "tracking-tight")
-          +(config.serverName ?: config.title)
+          classes = setOf(
+            "flex",
+            "items-center",
+            "gap-3",
+            "mb-6",
+            "hover:text-gray-300",
+          )
+          img(src = "${config.pathPrefix}/static/img/logo.png", alt = "Logo") {
+            classes = setOf("h-8", "w-8", "rounded-lg")
+          }
+          span {
+            classes = setOf("text-lg", "font-semibold", "tracking-tight")
+            +(config.serverName ?: config.title)
+          }
         }
         div {
           classes = setOf("space-y-1")
           tabLink("Home", "", activeTab, config)
-          listOf(
-            "Config" to "config",
-            "Database" to "database",
-            "Dependencies" to "dependencies",
-            "Endpoints" to "endpoints",
-            "Errors" to "errors",
-            "Features" to "features",
-            "Health" to "health",
-            "Integrations" to "integrations",
-            "JVM" to "jvm",
-            "Logging" to "logging",
-          ).sortedBy { it.first }.forEach { (label, tab) ->
+          buildList {
+            if ("auth" in optionalTabs) add("Auth" to "auth")
+            add("Config" to "config")
+            add("Database" to "database")
+            add("Dependencies" to "dependencies")
+            if ("email" in optionalTabs) add("Email" to "email")
+            add("Endpoints" to "endpoints")
+            add("Errors" to "errors")
+            add("Features" to "features")
+            add("Health" to "health")
+            add("Integrations" to "integrations")
+            add("JVM" to "jvm")
+            add("Logging" to "logging")
+            if ("slack" in optionalTabs) add("Slack" to "slack")
+          }.sortedBy { it.first }.forEach { (label, tab) ->
             tabLink(label, tab, activeTab, config)
           }
         }

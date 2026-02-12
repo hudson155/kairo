@@ -14,10 +14,10 @@ import kotlinx.html.unsafe
 
 @Suppress("LongMethod")
 internal fun FlowContent.homeView(config: AdminDashboardConfig, stats: DashboardStats) {
-  h1 {
-    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
-    +"Welcome to ${config.serverName ?: config.title}!"
-  }
+  pageHeader(
+    "Welcome to ${config.serverName ?: config.title}!",
+    "Overview of your server with quick stats and navigation to all admin sections.",
+  )
   div {
     classes = setOf("flex", "flex-wrap", "gap-3", "max-w-4xl", "mb-6")
     statBadge("${stats.endpointCount} endpoints")
@@ -27,6 +27,14 @@ internal fun FlowContent.homeView(config: AdminDashboardConfig, stats: Dashboard
   }
   div {
     classes = setOf("grid", "grid-cols-1", "md:grid-cols-2", "lg:grid-cols-3", "gap-4", "max-w-4xl", "mb-8")
+    if (stats.stytchModuleCount != null) {
+      dashboardCard(
+        href = "${config.pathPrefix}/auth",
+        icon = authIcon,
+        title = "Auth",
+        description = "${stats.stytchModuleCount} Stytch auth modules available",
+      )
+    }
     dashboardCard(
       href = "${config.pathPrefix}/config",
       icon = configIcon,
@@ -52,6 +60,14 @@ internal fun FlowContent.homeView(config: AdminDashboardConfig, stats: Dashboard
         title = "Docs",
         description = "README, guides, and project documentation",
         external = true,
+      )
+    }
+    if (stats.emailTemplateCount != null) {
+      dashboardCard(
+        href = "${config.pathPrefix}/email",
+        icon = emailIcon,
+        title = "Email",
+        description = "${stats.emailTemplateCount} MailerSend email templates configured",
       )
     }
     dashboardCard(
@@ -105,6 +121,14 @@ internal fun FlowContent.homeView(config: AdminDashboardConfig, stats: Dashboard
       title = "Logging",
       description = "View and change logger levels at runtime",
     )
+    if (stats.slackChannelCount != null) {
+      dashboardCard(
+        href = "${config.pathPrefix}/slack",
+        icon = slackIcon,
+        title = "Slack",
+        description = "${stats.slackChannelCount} channel mappings configured",
+      )
+    }
   }
 }
 
@@ -191,3 +215,12 @@ private val docsIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class=
 
 @Suppress("MaximumLineLength")
 private val apiDocsIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>"""
+
+@Suppress("MaximumLineLength")
+private val slackIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>"""
+
+@Suppress("MaximumLineLength")
+private val authIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"/></svg>"""
+
+@Suppress("MaximumLineLength")
+private val emailIcon: String = """<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>"""

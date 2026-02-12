@@ -33,10 +33,11 @@ internal fun FlowContent.endpointsView(
   endpoints: List<EndpointInfo>,
   selectedIndex: Int? = null,
 ) {
-  h1 {
-    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
-    +"Endpoints"
-  }
+  pageHeader(
+    "Endpoints",
+    "Browse and test registered REST API endpoints." +
+      " Select an endpoint to view its metadata, fill in parameters, and send requests directly from the browser.",
+  )
   if (endpoints.isEmpty()) {
     p {
       classes = setOf("text-gray-500")

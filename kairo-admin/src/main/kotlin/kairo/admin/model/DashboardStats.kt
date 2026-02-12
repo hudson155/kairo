@@ -11,4 +11,7 @@ public data class DashboardStats(
   val integrationCount: Int,
   val dependencyCount: Int,
   val errorCount: Int,
+  val slackChannelCount: Int? = null,
+  val stytchModuleCount: Int? = null,
+  val emailTemplateCount: Int? = null,
 )

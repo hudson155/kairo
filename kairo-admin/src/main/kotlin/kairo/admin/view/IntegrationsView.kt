@@ -14,10 +14,10 @@ import kotlinx.html.td
 import kotlinx.html.tr
 
 internal fun FlowContent.integrationsView(integrations: List<AdminIntegrationInfo>) {
-  h1 {
-    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
-    +"Integrations"
-  }
+  pageHeader(
+    "Integrations",
+    "Auto-detected external service integrations and their current connection status.",
+  )
   if (integrations.isEmpty()) {
     p {
       classes = setOf("text-gray-500")

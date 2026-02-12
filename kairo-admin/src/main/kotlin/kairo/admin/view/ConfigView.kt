@@ -16,10 +16,11 @@ internal fun FlowContent.configView(
   sources: List<AdminConfigSource>,
   effectiveConfig: String?,
 ) {
-  h1 {
-    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
-    +"Config"
-  }
+  pageHeader(
+    "Config",
+    "View HOCON configuration sources loaded by the server." +
+      " Shows individual config files and the merged effective configuration. Values are read-only.",
+  )
   if (sources.isEmpty() && effectiveConfig == null) {
     p {
       classes = setOf("text-gray-500")

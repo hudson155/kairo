@@ -26,10 +26,11 @@ private val logLevels: List<String> = listOf("TRACE", "DEBUG", "INFO", "WARN", "
 
 @Suppress("LongMethod")
 internal fun FlowContent.loggingView(config: AdminDashboardConfig, loggers: List<LoggerInfo>) {
-  h1 {
-    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
-    +"Logging"
-  }
+  pageHeader(
+    "Logging",
+    "View and change log levels for registered loggers at runtime." +
+      " Changes take effect immediately but do not persist across server restarts.",
+  )
   if (loggers.isEmpty()) {
     p {
       classes = setOf("text-gray-500")

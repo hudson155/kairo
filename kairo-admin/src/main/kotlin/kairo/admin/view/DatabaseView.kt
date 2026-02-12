@@ -38,10 +38,12 @@ internal fun FlowContent.databaseView(
   querySql: String = "",
   poolStats: PoolStats? = null,
 ) {
-  h1 {
-    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
-    +"Database"
-  }
+  pageHeader(
+    "Database",
+    "Browse database tables, view column schemas, and run read-only SQL queries." +
+      " Only SELECT, WITH, EXPLAIN, and SHOW statements are allowed." +
+      " All queries run in a READ ONLY transaction. Shows connection pool statistics.",
+  )
   if (poolStats != null) {
     poolStatsBar(poolStats)
   }

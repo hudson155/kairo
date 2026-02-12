@@ -3,8 +3,6 @@ package kairo.admin.view
 import kotlinx.html.FlowContent
 import kotlinx.html.classes
 import kotlinx.html.div
-import kotlinx.html.h1
-import kotlinx.html.p
 import kotlinx.html.span
 import kotlinx.html.table
 import kotlinx.html.tbody
@@ -14,17 +12,21 @@ import kotlinx.html.thead
 import kotlinx.html.tr
 
 @Suppress("LongMethod")
-internal fun FlowContent.featuresView(featureNames: List<String>) {
+internal fun FlowContent.authView(modules: List<String>) {
   pageHeader(
-    "Features",
-    "All Kairo features registered and running in this server instance.",
+    "Auth",
+    "Stytch authentication provider. Shows available auth methods and API modules.",
   )
-  if (featureNames.isEmpty()) {
-    p {
-      classes = setOf("text-gray-500")
-      +"No features registered."
+  div {
+    classes = setOf("flex", "items-center", "gap-3", "mb-6")
+    span {
+      classes = setOf("px-2", "py-1", "text-xs", "bg-green-50", "text-green-700", "rounded-full", "font-medium")
+      +"Connected"
     }
-    return
+    span {
+      classes = setOf("text-sm", "text-gray-500")
+      +"Stytch"
+    }
   }
   div {
     classes = setOf("bg-white", "rounded-lg", "shadow-sm", "p-6")
@@ -39,7 +41,7 @@ internal fun FlowContent.featuresView(featureNames: List<String>) {
           }
           th {
             classes = setOf("text-left", "py-2", "pr-4", "font-medium", "text-gray-500")
-            +"Feature"
+            +"Module"
           }
           th {
             classes = setOf("text-left", "py-2", "font-medium", "text-gray-500")
@@ -48,7 +50,7 @@ internal fun FlowContent.featuresView(featureNames: List<String>) {
         }
       }
       tbody {
-        featureNames.forEachIndexed { index, name ->
+        modules.forEachIndexed { index, name ->
           tr {
             classes = setOf("border-b", "border-gray-100")
             td {
@@ -63,7 +65,7 @@ internal fun FlowContent.featuresView(featureNames: List<String>) {
               classes = setOf("py-2")
               span {
                 classes = setOf("px-2", "py-1", "text-xs", "bg-green-50", "text-green-700", "rounded-full")
-                +"Running"
+                +"Available"
               }
             }
           }

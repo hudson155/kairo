@@ -20,10 +20,11 @@ internal fun FlowContent.healthView(
   results: List<HealthCheckResult>,
   hasChecks: Boolean,
 ) {
-  h1 {
-    classes = setOf("text-2xl", "font-semibold", "text-gray-900", "mb-6")
-    +"Health Checks"
-  }
+  pageHeader(
+    "Health Checks",
+    "Run registered health checks to verify service dependencies." +
+      " Results show pass/fail status and execution time for each check.",
+  )
   if (!hasChecks) {
     p {
       classes = setOf("text-gray-500")
