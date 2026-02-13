@@ -25,14 +25,16 @@ public class HealthCheckFeature(
 
   private val serverIsRunning: AtomicBoolean = AtomicBoolean(false)
 
+  public val registeredHealthChecks: Map<String, HealthCheck> = buildMap {
+    putAll(healthChecks)
+    if (includeDefaultHealthCheck) {
+      put("server", HealthCheck { check(serverIsRunning.load()) { "Server is not running." } })
+    }
+  }
+
   private val healthCheckHandler: HealthCheckHandler =
     HealthCheckHandler(
-      healthChecks = buildMap {
-        putAll(healthChecks)
-        if (includeDefaultHealthCheck) {
-          put("server", HealthCheck { check(serverIsRunning.load()) { "Server is not running." } })
-        }
-      },
+      healthChecks = registeredHealthChecks,
       timeout = timeout,
     )
 

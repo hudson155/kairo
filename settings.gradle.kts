@@ -49,3 +49,9 @@ include(":kairo-stytch:feature")
 include(":kairo-testing")
 include(":kairo-util")
 include(":kairo-validation")
+
+include(":kairo-admin")
+include(":sample-kairo-admin")
+include(":sample-kairo-admin:db")
+
+include(":kairo-kdocs")

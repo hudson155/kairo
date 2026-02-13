@@ -52,6 +52,22 @@ public class AuthReceiver<E : RestEndpoint<*, *>> internal constructor(
       return Result.failure(e)
     }
   }
+
+  public companion object {
+    private val sentinel: RestEndpoint<Unit, Unit> = object : RestEndpoint<Unit, Unit>() {}
+
+    /**
+     * Creates an [AuthReceiver] for call-level auth checks outside of REST endpoints
+     * (e.g. admin dashboard routes). The [endpoint] property should not be accessed.
+     */
+    @Suppress("UNCHECKED_CAST")
+    public fun forCall(call: RoutingCall): AuthReceiver<*> =
+      AuthReceiver(
+        call = call,
+        endpoint = sentinel,
+        default = { },
+      )
+  }
 }
 
 public fun AuthReceiver<*>.public(): Unit =

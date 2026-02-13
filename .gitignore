@@ -1,6 +1,7 @@
 # File types
 *.bak
 *.bat
+*.class
 *.dump
 *.log*
 *.pem
