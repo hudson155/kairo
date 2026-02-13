@@ -32,7 +32,7 @@ you don't need `kairo-feature` too.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-feature")
+  implementation("com.highbeam.kairo:kairo-feature")
 }
 ```
 

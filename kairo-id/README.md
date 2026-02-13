@@ -51,7 +51,7 @@ Install `kairo-id`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-id")
+  implementation("com.highbeam.kairo:kairo-id")
 }
 ```
 

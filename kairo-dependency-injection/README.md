@@ -38,7 +38,7 @@ plugins {
 
 dependencies {
   ksp("io.insert-koin:koin-ksp-compiler")
-  implementation("software.airborne.kairo:kairo-dependency-injection-feature")
+  implementation("com.highbeam.kairo:kairo-dependency-injection-feature")
 }
 ```
 

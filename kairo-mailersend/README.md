@@ -13,7 +13,7 @@ it's included by default.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-mailersend-feature")
+  implementation("com.highbeam.kairo:kairo-mailersend-feature")
 }
 ```
 

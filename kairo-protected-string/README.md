@@ -34,7 +34,7 @@ Install `kairo-protected-string`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-protected-string")
+  implementation("com.highbeam.kairo:kairo-protected-string")
 }
 ```
 

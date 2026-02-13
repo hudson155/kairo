@@ -16,7 +16,7 @@ it's included by default.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-rest-feature")
+  implementation("com.highbeam.kairo:kairo-rest-feature")
 }
 ```
 

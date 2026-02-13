@@ -9,12 +9,12 @@ internal val javaVersion: JavaLanguageVersion = JavaLanguageVersion.of(21)
 
 internal fun RepositoryHandler.artifactRegistry() {
   maven {
-    url = URI("artifactregistry://us-central1-maven.pkg.dev/airborne-software/maven")
+    url = URI("artifactregistry://us-central1-maven.pkg.dev/highbeam-kairo/maven")
   }
 }
 
 internal fun groupId(): String =
-  "software.airborne.kairo"
+  "com.highbeam.kairo"
 
 internal fun artifactId(path: String): String =
   path.trimStart(':').replace(':', '-')

@@ -16,7 +16,7 @@ they're included by default.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-coroutines")
+  implementation("com.highbeam.kairo:kairo-coroutines")
 }
 ```
 

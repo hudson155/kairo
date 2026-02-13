@@ -13,7 +13,7 @@ it's included by default.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-stytch-feature")
+  implementation("com.highbeam.kairo:kairo-stytch-feature")
 }
 ```
 

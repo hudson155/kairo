@@ -178,8 +178,8 @@ _That said_, Kairo 6 still uses Jackson, and has not migrated to `kotlinx.serial
   A documentation website and getting started guide have also been created.
 
 - **BOMs for dependency alignment.**
-  Use `software.airborne.kairo:bom` for standalone libraries,
-  or `software.airborne.kairo:bom-full` for Kairo applications.
+  Use `com.highbeam.kairo:bom` for standalone libraries,
+  or `com.highbeam.kairo:bom-full` for Kairo applications.
   Keeps both Kairo and key external libraries in sync automatically.
 
 - **Dependency injection with [Koin](https://insert-koin.io/) (replaces Guice).**

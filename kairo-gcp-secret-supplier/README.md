@@ -18,8 +18,8 @@ You can also install `kairo-gcp-secret-supplier-testing` for testing.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-gcp-secret-supplier")
-  testImplementation("software.airborne.kairo:kairo-gcp-secret-supplier-testing")
+  implementation("com.highbeam.kairo:kairo-gcp-secret-supplier")
+  testImplementation("com.highbeam.kairo:kairo-gcp-secret-supplier-testing")
 }
 ```
 

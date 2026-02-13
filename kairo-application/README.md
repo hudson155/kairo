@@ -14,7 +14,7 @@ Install `kairo-application`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-application")
+  implementation("com.highbeam.kairo:kairo-application")
 }
 ```
 

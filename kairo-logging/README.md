@@ -15,7 +15,7 @@ Install `kairo-logging`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-logging")
+  implementation("com.highbeam.kairo:kairo-logging")
 }
 ```
 
@@ -46,7 +46,7 @@ This is great for simple projects.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-logging")
+  implementation("com.highbeam.kairo:kairo-logging")
   runtimeOnly("org.slf4j:slf4j-simple")
 }
 ```
@@ -60,7 +60,7 @@ Or you could use Logback.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-logging")
+  implementation("com.highbeam.kairo:kairo-logging")
   runtimeOnly("org.apache.logging.log4j:log4j-core")
   runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl")
 }

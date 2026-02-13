@@ -49,7 +49,7 @@ You should also install the integration testing libraries for any other modules 
 // build.gradle.kts
 
 dependencies {
-  testImplementation("software.airborne.kairo:kairo-integration-testing")
+  testImplementation("com.highbeam.kairo:kairo-integration-testing")
 }
 ```
 

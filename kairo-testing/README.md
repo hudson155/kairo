@@ -31,7 +31,7 @@ Install `kairo-testing`.
 // build.gradle.kts
 
 dependencies {
-  testImplementation("software.airborne.kairo:kairo-testing")
+  testImplementation("com.highbeam.kairo:kairo-testing")
 }
 ```
 

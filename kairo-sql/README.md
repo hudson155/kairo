@@ -24,7 +24,7 @@ However, you must include a Postgres driver at runtime.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-sql-feature")
+  implementation("com.highbeam.kairo:kairo-sql-feature")
   runtimeOnly("org.postgresql:r2dbc-postgresql")
 }
 ```
@@ -230,8 +230,8 @@ To support Postgres, install `kairo-sql-postgres` and use `PostgreSQLDialect()`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-sql-feature")
-  implementation("software.airborne.kairo:kairo-sql-postgres")
+  implementation("com.highbeam.kairo:kairo-sql-feature")
+  implementation("com.highbeam.kairo:kairo-sql-postgres")
 }
 ```
 

@@ -13,7 +13,7 @@ they're included by default.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-client-feature")
+  implementation("com.highbeam.kairo:kairo-client-feature")
 }
 ```
 

@@ -10,7 +10,7 @@ Install `kairo-validation`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-validation")
+  implementation("com.highbeam.kairo:kairo-validation")
 }
 ```
 

@@ -16,7 +16,7 @@ it's included by default.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-slack-feature")
+  implementation("com.highbeam.kairo:kairo-slack-feature")
 }
 ```
 

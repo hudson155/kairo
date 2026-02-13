@@ -13,7 +13,7 @@ you don't need `kairo-server` too.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-server")
+  implementation("com.highbeam.kairo:kairo-server")
 }
 ```
 

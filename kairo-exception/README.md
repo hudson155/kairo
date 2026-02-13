@@ -40,8 +40,8 @@ You can also install `kairo-exception-testing` for testing.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-exception")
-  testImplementation("software.airborne.kairo:kairo-exception-testing")
+  implementation("com.highbeam.kairo:kairo-exception")
+  testImplementation("com.highbeam.kairo:kairo-exception-testing")
 }
 ```
 

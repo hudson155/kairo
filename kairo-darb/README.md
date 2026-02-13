@@ -54,7 +54,7 @@ Install `kairo-darb`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-darb")
+  implementation("com.highbeam.kairo:kairo-darb")
 }
 ```
 

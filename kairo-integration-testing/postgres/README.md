@@ -15,8 +15,8 @@ Install `kairo-integration-testing-postgres`.
 // build.gradle.kts
 
 dependencies {
-  testImplementation("software.airborne.kairo:kairo-integration-testing")
-  testImplementation("software.airborne.kairo:kairo-integration-testing-postgres")
+  testImplementation("com.highbeam.kairo:kairo-integration-testing")
+  testImplementation("com.highbeam.kairo:kairo-integration-testing-postgres")
 }
 ```
 

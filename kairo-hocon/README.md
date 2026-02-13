@@ -15,7 +15,7 @@ it's included by default.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-hocon")
+  implementation("com.highbeam.kairo:kairo-hocon")
 }
 ```
 

@@ -33,7 +33,7 @@ Install `kairo-optional`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-optional")
+  implementation("com.highbeam.kairo:kairo-optional")
 }
 ```
 

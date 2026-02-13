@@ -20,7 +20,7 @@ plugins {
 
 repositories {
   maven {
-    url = uri("artifactregistry://us-central1-maven.pkg.dev/airborne-software/maven")
+    url = uri("artifactregistry://us-central1-maven.pkg.dev/highbeam-kairo/maven")
   }
 }
 ```
@@ -36,7 +36,7 @@ you could just add it to your `dependencies` block as you normally would.
 <Code code={`// build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:YOUR-LIBRARY-OF-CHOICE:${versionData.latest}")
+  implementation("com.highbeam.kairo:YOUR-LIBRARY-OF-CHOICE:${versionData.latest}")
 }`} lang="kotlin" />
 
 However, we recommend using Kairo's BOM
@@ -45,8 +45,8 @@ to keep your Kairo dependencies aligned.
 <Code code={`// build.gradle.kts
 
 dependencies {
-  implementation(platform("software.airborne.kairo:bom:${versionData.latest}"))
-  implementation("software.airborne.kairo:YOUR-LIBRARY-OF-CHOICE")
+  implementation(platform("com.highbeam.kairo:bom:${versionData.latest}"))
+  implementation("com.highbeam.kairo:YOUR-LIBRARY-OF-CHOICE")
 }`} lang="kotlin" />
 
 ## Building a Kairo application
@@ -61,5 +61,5 @@ but also aligns several external library versions.
 <Code code={`// build.gradle.kts
 
 dependencies {
-  implementation(platform("software.airborne.kairo:bom-full:${versionData.latest}"))
+  implementation(platform("com.highbeam.kairo:bom-full:${versionData.latest}"))
 }`} lang="kotlin" />

@@ -20,7 +20,7 @@ Install `kairo-health-check-feature`.
 // build.gradle.kts
 
 dependencies {
-  implementation("software.airborne.kairo:kairo-health-check-feature")
+  implementation("com.highbeam.kairo:kairo-health-check-feature")
 }
 ```
 
