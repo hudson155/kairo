@@ -24,6 +24,7 @@ import kairo.healthCheck.HealthCheckFeature
 import kairo.mailersend.Mailer
 import kairo.mailersend.MailersendFeature
 import kairo.rest.HasRouting
+import kairo.rest.auth.AuthReceiver
 import kairo.rest.restEndpointClasses
 import kairo.slack.SlackClient
 import kairo.slack.SlackFeature
@@ -48,6 +49,7 @@ public class AdminDashboardFeature(
   private val config: AdminDashboardConfig = AdminDashboardConfig(),
   private val configSources: List<AdminConfigSource>? = null,
   private val integrations: List<AdminIntegrationInfo>? = null,
+  private val auth: (suspend AuthReceiver<*>.() -> Unit)? = null,
 ) : Feature(), HasRouting {
   override val name: String = "Admin Dashboard"
 
@@ -92,6 +94,7 @@ public class AdminDashboardFeature(
             slackChannels = slackChannels,
             stytchModules = stytchModules,
             emailTemplates = emailTemplates,
+            auth = auth,
           )
         }
       }

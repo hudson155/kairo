@@ -7,6 +7,7 @@ import io.ktor.server.http.content.staticResources
 import io.ktor.server.request.receiveParameters
 import io.ktor.server.response.respondRedirect
 import io.ktor.server.routing.Route
+import io.ktor.server.routing.RoutingContext
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
@@ -43,6 +44,7 @@ import kairo.admin.view.jvmView
 import kairo.admin.view.loggingView
 import kairo.admin.view.slackView
 import kairo.rest.HasRouting
+import kairo.rest.auth.AuthReceiver
 
 @Suppress("LongMethod", "LongParameterList")
 internal class AdminDashboardHandler(
@@ -61,6 +63,7 @@ internal class AdminDashboardHandler(
   private val slackChannels: Map<String, String>? = null,
   private val stytchModules: List<String>? = null,
   private val emailTemplates: Map<String, String>? = null,
+  private val auth: (suspend AuthReceiver<*>.() -> Unit)? = null,
 ) : HasRouting {
   private val optionalTabs: Set<String> = buildSet {
     if (slackChannels != null) add("slack")
@@ -92,9 +95,21 @@ internal class AdminDashboardHandler(
     }
   }
 
+  private fun Route.authGet(path: String = "", body: suspend RoutingContext.() -> Unit): Route =
+    get(path) {
+      auth?.invoke(AuthReceiver.forCall(call))
+      body()
+    }
+
+  private fun Route.authPost(path: String = "", body: suspend RoutingContext.() -> Unit): Route =
+    post(path) {
+      auth?.invoke(AuthReceiver.forCall(call))
+      body()
+    }
+
   @Suppress("SuspendFunSwallowedCancellation")
   private fun Route.homeRoute() {
-    get("/") {
+    authGet("/") {
       val stats = DashboardStats(
         endpointCount = endpointCollector.collect().size,
         configFileCount = configCollector.collect().size,
@@ -122,7 +137,7 @@ internal class AdminDashboardHandler(
   }
 
   private fun Route.endpointRoutes() {
-    get("/endpoints") {
+    authGet("/endpoints") {
       val endpoints = endpointCollector.collect()
       call.respondHtml {
         adminLayout(config, optionalTabs, "endpoints") {
@@ -131,7 +146,7 @@ internal class AdminDashboardHandler(
       }
     }
 
-    get("/endpoints/{index}") {
+    authGet("/endpoints/{index}") {
       val index = call.parameters["index"]?.toIntOrNull() ?: 0
       val endpoints = endpointCollector.collect()
       if (index in endpoints.indices) {
@@ -162,7 +177,7 @@ internal class AdminDashboardHandler(
   }
 
   private fun Route.configRoutes() {
-    get("/config") {
+    authGet("/config") {
       val sources = configCollector.collect()
       val effectiveConfig = configCollector.effectiveConfig()
       call.respondHtml {
@@ -174,7 +189,7 @@ internal class AdminDashboardHandler(
   }
 
   private fun Route.jvmRoutes() {
-    get("/jvm") {
+    authGet("/jvm") {
       call.respondHtml {
         adminLayout(config, optionalTabs, "jvm") {
           jvmView(config, jvmCollector)
@@ -182,7 +197,7 @@ internal class AdminDashboardHandler(
       }
     }
 
-    get("/jvm/refresh") {
+    authGet("/jvm/refresh") {
       call.respondHtml(HttpStatusCode.OK) {
         jvmStatsPartial(jvmCollector)
       }
@@ -191,7 +206,7 @@ internal class AdminDashboardHandler(
 
   @Suppress("SuspendFunSwallowedCancellation", "CognitiveComplexMethod", "CyclomaticComplexMethod")
   private fun Route.databaseRoutes() {
-    get("/database") {
+    authGet("/database") {
       val tables = try {
         databaseCollector.listTables()
       } catch (_: Exception) {
@@ -223,7 +238,7 @@ internal class AdminDashboardHandler(
       }
     }
 
-    get("/database/tables/{schema}/{name}") {
+    authGet("/database/tables/{schema}/{name}") {
       val schema = call.parameters["schema"] ?: "public"
       val tableName = call.parameters["name"].orEmpty()
       val tables = try {
@@ -248,7 +263,7 @@ internal class AdminDashboardHandler(
       }
     }
 
-    get("/database/query") {
+    authGet("/database/query") {
       val sql = call.request.queryParameters["sql"]?.let { encoded ->
         try {
           String(Base64.getDecoder().decode(encoded))
@@ -292,7 +307,7 @@ internal class AdminDashboardHandler(
       }
     }
 
-    post("/database/query") {
+    authPost("/database/query") {
       val params = call.receiveParameters()
       val sql = params["sql"].orEmpty()
       val selectedTable = params["table"]
@@ -327,7 +342,7 @@ internal class AdminDashboardHandler(
   }
 
   private fun Route.featureRoutes() {
-    get("/features") {
+    authGet("/features") {
       call.respondHtml {
         adminLayout(config, optionalTabs, "features") {
           featuresView(featureNames)
@@ -337,7 +352,7 @@ internal class AdminDashboardHandler(
   }
 
   private fun Route.healthRoutes() {
-    get("/health") {
+    authGet("/health") {
       call.respondHtml {
         adminLayout(config, optionalTabs, "health") {
           healthView(config, emptyList(), healthCheckCollector.hasChecks)
@@ -345,7 +360,7 @@ internal class AdminDashboardHandler(
       }
     }
 
-    post("/health/run") {
+    authPost("/health/run") {
       val results = healthCheckCollector.runAll()
       call.respondHtml {
         adminLayout(config, optionalTabs, "health") {
@@ -356,7 +371,7 @@ internal class AdminDashboardHandler(
   }
 
   private fun Route.loggingRoutes() {
-    get("/logging") {
+    authGet("/logging") {
       val loggers = try {
         loggingCollector.listLoggers()
       } catch (_: Exception) {
@@ -369,7 +384,7 @@ internal class AdminDashboardHandler(
       }
     }
 
-    post("/logging/level") {
+    authPost("/logging/level") {
       val params = call.receiveParameters()
       val loggerName = params["logger"].orEmpty()
       val level = params["level"].orEmpty()
@@ -383,7 +398,7 @@ internal class AdminDashboardHandler(
   }
 
   private fun Route.dependencyRoutes() {
-    get("/dependencies") {
+    authGet("/dependencies") {
       call.respondHtml {
         adminLayout(config, optionalTabs, "dependencies") {
           dependenciesView(dependencyCollector.collect(), config)
@@ -393,7 +408,7 @@ internal class AdminDashboardHandler(
   }
 
   private fun Route.integrationRoutes() {
-    get("/integrations") {
+    authGet("/integrations") {
       call.respondHtml {
         adminLayout(config, optionalTabs, "integrations") {
           integrationsView(integrations)
@@ -403,7 +418,7 @@ internal class AdminDashboardHandler(
   }
 
   private fun Route.errorRoutes() {
-    get("/errors") {
+    authGet("/errors") {
       call.respondHtml {
         adminLayout(config, optionalTabs, "errors") {
           errorsView(config, errorCollector.getAll())
@@ -411,14 +426,14 @@ internal class AdminDashboardHandler(
       }
     }
 
-    post("/errors/clear") {
+    authPost("/errors/clear") {
       errorCollector.clear()
       call.respondRedirect("${config.pathPrefix}/errors")
     }
   }
 
   private fun Route.slackRoutes() {
-    get("/slack") {
+    authGet("/slack") {
       call.respondHtml {
         adminLayout(config, optionalTabs, "slack") {
           slackView(slackChannels!!)
@@ -428,7 +443,7 @@ internal class AdminDashboardHandler(
   }
 
   private fun Route.authRoutes() {
-    get("/auth") {
+    authGet("/auth") {
       call.respondHtml {
         adminLayout(config, optionalTabs, "auth") {
           authView(stytchModules!!)
@@ -438,7 +453,7 @@ internal class AdminDashboardHandler(
   }
 
   private fun Route.emailRoutes() {
-    get("/email") {
+    authGet("/email") {
       call.respondHtml {
         adminLayout(config, optionalTabs, "email") {
           emailView(emailTemplates!!)
