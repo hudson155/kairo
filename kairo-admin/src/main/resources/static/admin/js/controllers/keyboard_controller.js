@@ -25,9 +25,16 @@ export default class extends Controller {
   }
 
   _handleKeyDown(e) {
-    // Don't intercept when typing in inputs.
+    // Escape: blur focused input/select/textarea to re-enable shortcuts.
     const tag = e.target.tagName
     const editable = e.target.isContentEditable
+    if (e.key === "Escape" && (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA" || editable)) {
+      e.preventDefault()
+      e.target.blur()
+      return
+    }
+
+    // Don't intercept when typing in inputs.
     if (tag === "INPUT" || tag === "SELECT" || editable) return
     // Allow Cmd/Ctrl+Enter in textareas for submit.
     if (tag === "TEXTAREA" && !(e.key === "Enter" && (e.metaKey || e.ctrlKey))) return
