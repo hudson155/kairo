@@ -1,7 +1,7 @@
 import { Controller } from "../../vendor/stimulus.js"
 
 export default class extends Controller {
-  static targets = ["queryInput"]
+  static targets = ["queryInput", "resultData"]
 
   connect() {
     const params = new URLSearchParams(window.location.search)
@@ -10,6 +10,15 @@ export default class extends Controller {
         this.queryInputTarget.value = this._fromBase64(params.get("sql"))
       } catch {
         this.queryInputTarget.value = params.get("sql")
+      }
+    }
+    // Sync result data from server-rendered HTML into the URL for permalink sharing.
+    if (this.hasResultDataTarget) {
+      const resultB64 = this.resultDataTarget.dataset.result
+      if (resultB64) {
+        params.set("result", resultB64)
+        const search = params.toString()
+        history.replaceState(null, "", window.location.pathname + (search ? "?" + search : ""))
       }
     }
   }
@@ -47,6 +56,8 @@ export default class extends Controller {
     } else {
       params.delete("sql")
     }
+    // Clear saved results when SQL is edited (results are now stale).
+    params.delete("result")
     const search = params.toString()
     const newUrl = window.location.pathname + (search ? "?" + search : "")
     history.replaceState(null, "", newUrl)

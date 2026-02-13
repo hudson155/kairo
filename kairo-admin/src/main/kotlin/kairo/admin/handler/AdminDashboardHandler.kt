@@ -11,6 +11,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
+import java.util.Base64
 import kairo.admin.AdminDashboardConfig
 import kairo.admin.collector.ConfigCollector
 import kairo.admin.collector.DatabaseCollector
@@ -22,8 +23,9 @@ import kairo.admin.collector.JvmCollector
 import kairo.admin.collector.LoggingCollector
 import kairo.admin.collector.PoolCollector
 import kairo.admin.model.AdminIntegrationInfo
-import kairo.admin.model.SavedResponse
 import kairo.admin.model.DashboardStats
+import kairo.admin.model.SavedResponse
+import kairo.admin.model.SqlQueryResult
 import kairo.admin.view.adminLayout
 import kairo.admin.view.authView
 import kairo.admin.view.configView
@@ -135,10 +137,10 @@ internal class AdminDashboardHandler(
       if (index in endpoints.indices) {
         val savedResponse = call.request.queryParameters["resp"]?.let { encoded ->
           try {
-            val json = String(java.util.Base64.getDecoder().decode(encoded))
+            val json = String(Base64.getDecoder().decode(encoded))
             val rbody = call.request.queryParameters["rbody"]?.let { b ->
               try {
-                String(java.util.Base64.getDecoder().decode(b))
+                String(Base64.getDecoder().decode(b))
               } catch (_: Exception) {
                 b
               }
@@ -187,7 +189,7 @@ internal class AdminDashboardHandler(
     }
   }
 
-  @Suppress("SuspendFunSwallowedCancellation", "CognitiveComplexMethod")
+  @Suppress("SuspendFunSwallowedCancellation", "CognitiveComplexMethod", "CyclomaticComplexMethod")
   private fun Route.databaseRoutes() {
     get("/database") {
       val tables = try {
@@ -202,12 +204,18 @@ internal class AdminDashboardHandler(
       }
       val sql = call.request.queryParameters["sql"]?.let { encoded ->
         try {
-          String(java.util.Base64.getDecoder().decode(encoded))
+          String(Base64.getDecoder().decode(encoded))
         } catch (_: Exception) {
           encoded
         }
       }
-      val queryResult = sql?.takeIf { it.isNotBlank() }?.let { databaseCollector.executeQuery(it) }
+      val queryResult = call.request.queryParameters["result"]?.let { encoded ->
+        try {
+          SqlQueryResult.fromJson(String(Base64.getDecoder().decode(encoded)))
+        } catch (_: Exception) {
+          null
+        }
+      } ?: sql?.takeIf { it.isNotBlank() }?.let { databaseCollector.executeQuery(it) }
       call.respondHtml {
         adminLayout(config, optionalTabs, "database") {
           databaseView(config, tables, null, null, queryResult, sql.orEmpty(), poolStats)
@@ -243,13 +251,19 @@ internal class AdminDashboardHandler(
     get("/database/query") {
       val sql = call.request.queryParameters["sql"]?.let { encoded ->
         try {
-          String(java.util.Base64.getDecoder().decode(encoded))
+          String(Base64.getDecoder().decode(encoded))
         } catch (_: Exception) {
           encoded
         }
       }.orEmpty()
       val selectedTable = call.request.queryParameters["table"]
-      val result = if (sql.isNotBlank()) databaseCollector.executeQuery(sql) else null
+      val result = call.request.queryParameters["result"]?.let { encoded ->
+        try {
+          SqlQueryResult.fromJson(String(Base64.getDecoder().decode(encoded)))
+        } catch (_: Exception) {
+          null
+        }
+      } ?: if (sql.isNotBlank()) databaseCollector.executeQuery(sql) else null
       val tables = try {
         databaseCollector.listTables()
       } catch (_: Exception) {

@@ -1,5 +1,6 @@
 package kairo.admin.view
 
+import java.util.Base64
 import kairo.admin.AdminDashboardConfig
 import kairo.admin.model.ColumnInfo
 import kairo.admin.model.PoolStats
@@ -15,6 +16,7 @@ import kotlinx.html.form
 import kotlinx.html.h3
 import kotlinx.html.hiddenInput
 import kotlinx.html.label
+import kotlinx.html.optGroup
 import kotlinx.html.option
 import kotlinx.html.p
 import kotlinx.html.select
@@ -76,12 +78,16 @@ internal fun FlowContent.databaseView(
           selected = selectedTable == null
           +"Select a table..."
         }
-        tables.forEach { tbl ->
-          val fullName = "${tbl.schema}.${tbl.name}"
-          option {
-            value = "${config.pathPrefix}/database/tables/${tbl.schema}/${tbl.name}"
-            selected = fullName == selectedTable
-            +fullName
+        tables.groupBy { it.schema }.toSortedMap().forEach { (schema, schemaTables) ->
+          optGroup(schema) {
+            schemaTables.forEach { tbl ->
+              val fullName = "${tbl.schema}.${tbl.name}"
+              option {
+                value = "${config.pathPrefix}/database/tables/${tbl.schema}/${tbl.name}"
+                selected = fullName == selectedTable
+                +fullName
+              }
+            }
           }
         }
       }
@@ -110,7 +116,12 @@ internal fun FlowContent.databaseView(
     sqlQueryArea(config, selectedTable, defaultSql)
     // Query results (inline).
     if (queryResult != null) {
-      queryResultCard(queryResult)
+      div {
+        attributes["data-sql-target"] = "resultData"
+        attributes["data-result"] =
+          Base64.getEncoder().encodeToString(queryResult.toJson().toByteArray())
+        queryResultCard(queryResult)
+      }
     }
   }
 }

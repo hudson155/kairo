@@ -8,6 +8,7 @@ import kotlinx.html.body
 import kotlinx.html.button
 import kotlinx.html.classes
 import kotlinx.html.div
+import kotlinx.html.h3
 import kotlinx.html.head
 import kotlinx.html.hr
 import kotlinx.html.img
@@ -16,7 +17,6 @@ import kotlinx.html.main
 import kotlinx.html.meta
 import kotlinx.html.nav
 import kotlinx.html.script
-import kotlinx.html.h3
 import kotlinx.html.span
 import kotlinx.html.table
 import kotlinx.html.tbody
@@ -274,7 +274,7 @@ private fun FlowContent.shortcutsModal() {
     div {
       attributes["style"] =
         "position: relative; max-width: 32rem; margin: 6rem auto; background: white;" +
-          " border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); padding: 1.5rem;"
+        " border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); padding: 1.5rem;"
       h3 {
         classes = setOf("text-lg", "font-semibold", "text-gray-900", "mb-4")
         +"Keyboard Shortcuts"

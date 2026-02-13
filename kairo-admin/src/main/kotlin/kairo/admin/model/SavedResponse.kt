@@ -17,8 +17,8 @@ public data class SavedResponse(
       val msMatch = Regex(""""ms"\s*:\s*(\d+)""").find(json)
       return SavedResponse(
         status = sMatch.groupValues[1].toInt(),
-        statusText = tMatch?.groupValues?.get(1).orEmpty(),
-        elapsedMs = msMatch?.groupValues?.get(1)?.toIntOrNull() ?: 0,
+        statusText = tMatch?.run { groupValues[1] }.orEmpty(),
+        elapsedMs = msMatch?.run { groupValues[1].toIntOrNull() } ?: 0,
         body = body,
       )
     }
